@@ -6,50 +6,49 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-03 ~ 2026-06-01
-- 运行时间：2026-06-01 03:20:33 UTC
+- 最新运行日期：2026-06-01
+- 运行时间：2026-06-01 22:13:23 UTC
 - 运行状态：成功
-- 本次总论文数：10
-- 精读区：3
-- 速读区：7
+- 本次总论文数：9
+- 精读区：1
+- 速读区：8
 
 ### 今日简报（AI）
-本周期重点精读了两篇高分论文，分别关注进化增强多智能体强化学习在协同空战中的应用，以及协同威胁感知自主系统（CTAA）的技术框架。最值得深入的方向是面向复杂任务的多智能体协同决策，尤其是进化策略与强化学习的结合在空战场景中的优势。建议下一步实际尝试将层次化动态加权多智能体强化学习方法（7.0分）应用于无人机多任务协同场景，以验证其在中低复杂度任务中的泛化性。
-- 详情：[/20260503-20260601/README](/20260503-20260601/README)
+今日多智能体强化学习焦点：面向任务无人机网络的能效优化与个体奖励机制。  
+精读推荐《Scaling up Energy-Aware Multi-Agent Reinforcement Learning for Mission-Oriented Drone Networks with Individual Reward》（9.0分），提出了在规模扩展中兼顾能效与个体奖励的方法。  
+建议进一步关注延迟补偿、约束强化学习等实际部署中的关键挑战，以平衡个体奖励与系统协同。
+- 详情：[/202606/01/README](/202606/01/README)
 
 ### 精读区论文标签
-1. [Evolutionary Enhanced Multi-Agent Reinforcement Learning for Cooperative Air Combat](/20260503-20260601/2605.25091v1-evolutionary-enhanced-multi-agent-reinforcement-learning-for-cooperative-air-combat)  
+1. [Scaling up Energy-Aware Multi-Agent Reinforcement Learning for Mission-Oriented Drone Networks with Individual Reward](/202606/01/2605.24992v1-scaling-up-energy-aware-multi-agent-reinforcement-learning-for-mission-oriented-drone-networks-with-individual-reward)  
    标签：评分：9.0/10、query:ui
-   evidence：多智能体强化学习用于UCAV协同空战
-2. [Collaborative Threat-Aware Autonomy (CTAA)](/20260503-20260601/2605.25741v1-collaborative-threat-aware-autonomy-ctaa)  
-   标签：评分：9.0/10、query:ui
-   evidence：多智能体框架，包含拦截、护航和诱饵角色，用于团队级任务成功
-3. [Quality-Aware Exploration Budget Allocation for Cooperative Multi-Agent Reinforcement Learning](/20260503-20260601/2605.01865v1-quality-aware-exploration-budget-allocation-for-cooperative-multi-agent-reinforcement-learning)  
-   标签：评分：8.0/10、query:ui
-   evidence：多智能体强化学习探索方法可用于无人机群协调
+   evidence：面向任务导向无人机网络的能量感知多智能体强化学习与个体奖励
 
 ### 速读区论文标签
-1. [Technical Report: A Hierarchical Dynamically Weighting Deep Reinforcement Learning Method for Multi-UAV Multi-Task Coordination](/20260503-20260601/2605.08623v1-technical-report-a-hierarchical-dynamically-weighting-deep-reinforcement-learning-method-for-multi-uav-multi-task-coordination)  
+1. [Decoupled Delay Compensation: Enhancing Pre-trained MARL Policies via Learned Dynamics Filtering](/202606/01/2605.26286v1-decoupled-delay-compensation-enhancing-pre-trained-marl-policies-via-learned-dynamics-filtering)  
    标签：评分：7.0/10、query:ui
-   evidence：多无人机协调的层次化DRL，可应用于集群围捕
-2. [Learning a Kinodynamic Trajectory Manifold for Impact-Aware Compliant Catching of Fast-Moving Objects](/20260503-20260601/2605.28462v1-learning-a-kinodynamic-trajectory-manifold-for-impact-aware-compliant-catching-of-fast-moving-objects)  
+   evidence：针对MARL策略的延迟补偿模块，可解决无人机集群通信延迟问题
+2. [Scalable Constrained Multi-Agent Reinforcement Learning via State Augmentation and Consensus for Separable Dynamics](/202606/01/2605.30461v1-scalable-constrained-multi-agent-reinforcement-learning-via-state-augmentation-and-consensus-for-separable-dynamics)  
    标签：评分：7.0/10、query:ui
-   evidence：强化学习用于快速运动物体捕获，类比无人机拦截
-3. [The Computational and Neural Basis of Zero-Shot Control in Dynamic Pursuit](/20260503-20260601/biorxiv-10-64898-2026-03-30-715455-v2-the-computational-and-neural-basis-of-zero-shot-control-in-dynamic-pursuit)  
+   evidence：分布式约束多智能体强化学习与共识方法，可用于无人机集群协同
+3. [Generalized Intention Modeling in Multi-Agent Reinforcement Learning](/202606/01/2605.31318v1-generalized-intention-modeling-in-multi-agent-reinforcement-learning)  
    标签：评分：7.0/10、query:ui
-   evidence：动态追逃任务匹配UAV追逃博弈主题
-4. [Shared Backbone PPO for Multi-UAV Communication Coverage with Connection Preservation](/20260503-20260601/2605.17999v1-shared-backbone-ppo-for-multi-uav-communication-coverage-with-connection-preservation)  
+   evidence：多智能体强化学习中的通用意图建模，可直接用于无人机集群对抗场景
+4. [Dreaming Of Others: Latent Teammate Modeling In World Models For Multi-Agent Reinforcement Learning](/202606/01/2605.31361v1-dreaming-of-others-latent-teammate-modeling-in-world-models-for-multi-agent-reinforcement-learning)  
+   标签：评分：7.0/10、query:ui
+   evidence：世界模型中的队友建模方法可提升多智能体协同能力，适用于无人机集群
+5. [Ratio-Variance Regularized Policy Optimization](/202606/01/2605.26784v1-ratio-variance-regularized-policy-optimization)  
    标签：评分：6.0/10、query:ui
-   evidence：多无人机集群共享骨干PPO实现通信覆盖协作行为
-5. [Interaction-Breaking Adversarial Learning Framework for Robust Multi-Agent Reinforcement Learning](/20260503-20260601/2605.18024v1-interaction-breaking-adversarial-learning-framework-for-robust-multi-agent-reinforcement-learning)  
+   evidence：通用强化学习策略优化方法，可应用于无人机控制任务
+6. [SCALE-COMM: Shared, Contrastively-Aligned Latent Embeddings for MARL Communication](/202606/01/2605.27532v1-scale-comm-shared-contrastively-aligned-latent-embeddings-for-marl-communication)  
    标签：评分：6.0/10、query:ui
-   evidence：鲁棒多智能体强化学习框架可用于无人机协同任务
-6. [Transferable Reinforcement Learning via Probabilistic Latent Embeddings and Dynamic Policy Adaptation for Sim-to-Real Deployment](/20260503-20260601/2605.27659v1-transferable-reinforcement-learning-via-probabilistic-latent-embeddings-and-dynamic-policy-adaptation-for-sim-to-real-deployment)  
+   evidence：自监督的稳定多智能体通信学习框架，适用于无人机集群协同
+7. [CA-AC-MPC: CUDA-Accelerated Actor-Critic Model Predictive Control](/202606/01/2605.29155v1-ca-ac-mpc-cuda-accelerated-actor-critic-model-predictive-control)  
    标签：评分：6.0/10、query:ui
-   evidence：适用于无人机拦截策略部署的通用RL迁移框架
-7. [A Surveillance Evasion Game with Continuous Sensor Redeployment via Bilevel Optimization](/20260503-20260601/2605.27917v1-a-surveillance-evasion-game-with-continuous-sensor-redeployment-via-bilevel-optimization)  
+   evidence：CUDA加速的actor-critic模型预测控制用于敏捷无人机竞速，方法可迁移至拦截控制
+8. [FLAG: Flow Policy MaxEnt-RL by Latent Augmented Guidance](/202606/01/2605.30749v1-flag-flow-policy-maxent-rl-by-latent-augmented-guidance)  
    标签：评分：6.0/10、query:ui
-   evidence：无人机追逃博弈，涉及连续传感器重新部署
+   evidence：生成式流策略最大化熵强化学习，可应用于无人机控制
 
 
 <div class="dpr-home-promo-card">

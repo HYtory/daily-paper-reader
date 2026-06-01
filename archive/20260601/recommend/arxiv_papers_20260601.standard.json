@@ -1,0 +1,370 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-01T22:07:33.045097+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 8,
+    "quick_skim_target": 11,
+    "quick_selected": 8
+  },
+  "deep_dive": [
+    {
+      "id": "2605.24992v1",
+      "source": "arxiv",
+      "title": "Scaling up Energy-Aware Multi-Agent Reinforcement Learning for Mission-Oriented Drone Networks with Individual Reward",
+      "abstract": "Multi-agent reinforcement learning (MARL) has shown wide applicability in collaborative systems such as autonomous driving and smart cities for its ability of learning through interaction. With the recent development of drone networks, researchers have also applied MARL to address the trajectory planning problems. However, the dynamic environment and the limited battery capacity are still challenging for using MARL to achieve efficient collaborative task execution. In this paper, we propose an energy-aware MARL model as an attempt to tackle these challenges, leveraging Deep Q-Networks (DQN) with \\emph{individual reward functions} driven by the task execution progress and the remaining battery of drones. We conduct a set of simulation studies for the proposed mode and compare it with the shared reward MARL~\\cite{Li2022MARL} to explore the impact of credit assignment in MARL. The results indicate that our proposed model can achieve at least 80\\% success rate regardless of the task locations and lengths. Similar to the shared reward mode, the individual reward mode can achieve a better success rate when the task density is high, and it can hit nearly a 100\\% success rate when task density gets close to 40\\%. The true advantage of our proposed model with individual reward is revealed when scaling up the environment. The comparison to the shared reward MARL shows that the our proposed model is more robust towards the change of the environment size and agent numbers. It can achieve higher success rate with fewer steps due to the clarity of the goal which improves energy efficiency even better.",
+      "authors": [
+        "Changling Li",
+        "Ying Li"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.AI",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-05-24T10:41:33+00:00",
+      "link": "https://arxiv.org/pdf/2605.24992v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "energy-aware MARL with individual rewards for mission-oriented drone networks",
+      "llm_evidence_cn": "面向任务导向无人机网络的能量感知多智能体强化学习与个体奖励",
+      "llm_evidence": "面向任务导向无人机网络的能量感知多智能体强化学习与个体奖励",
+      "canonical_evidence": "面向任务导向无人机网络的能量感知多智能体强化学习与个体奖励",
+      "llm_tldr_en": "Proposes an energy-aware MARL model using DQN with individual reward functions driven by task progress and battery remaining for efficient collaborative task execution in drone networks.",
+      "llm_tldr_cn": "针对动态环境和电池容量限制下多无人机协同任务执行的挑战，本文提出一种能量感知的多智能体强化学习模型，采用深度Q网络和由任务进展与剩余电量驱动的个体奖励函数。实验结果表明，该方法能有效平衡任务完成与能量消耗，显著提升长期协作效率，为无人机网络的持续部署提供了一种实用解决方案。",
+      "llm_tldr": "针对动态环境和电池容量限制下多无人机协同任务执行的挑战，本文提出一种能量感知的多智能体强化学习模型，采用深度Q网络和由任务进展与剩余电量驱动的个体奖励函数。实验结果表明，该方法能有效平衡任务完成与能量消耗，显著提升长期协作效率，为无人机网络的持续部署提供了一种实用解决方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.26286v1",
+      "source": "arxiv",
+      "title": "Decoupled Delay Compensation: Enhancing Pre-trained MARL Policies via Learned Dynamics Filtering",
+      "abstract": "Real-world multi-agent reinforcement learning (MARL) systems must often operate under stale observations, stochastic communication delays, and intermittent packet loss. Policies trained under idealized synchronous conditions frequently exhibit significant performance degradation in these regimes because they act on outdated feedback. We propose a modular execution-stage state-estimation layer that replaces delayed communicated observations with current belief-state estimates. The framework integrates a learned Gated transition model with a recursive Kalman filtering layer to estimate instantaneous states from asynchronous measurements. A primary advantage of this approach is its modularity, The estimator serves as a plug-in for pre-trained policies, requiring no modifications to the original MARL training algorithm, architecture, or reward structure. Evaluation across diverse multi-agent and continuous-control benchmarks demonstrates that the proposed layer consistently enhances robustness to communication latency and message loss. The most significant performance gains are observed in coordination-intensive and dynamically unstable tasks where temporal consistency is critical for control.",
+      "authors": [
+        "Maxim Mednikov",
+        "Oren Gal"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-05-25T19:19:46+00:00",
+      "link": "https://arxiv.org/pdf/2605.26286v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "delay compensation for MARL policies, applicable to real-world UAV swarm communication delays",
+      "llm_evidence_cn": "针对MARL策略的延迟补偿模块，可解决无人机集群通信延迟问题",
+      "llm_evidence": "针对MARL策略的延迟补偿模块，可解决无人机集群通信延迟问题",
+      "canonical_evidence": "针对MARL策略的延迟补偿模块，可解决无人机集群通信延迟问题",
+      "llm_tldr_en": "Proposes a modular state-estimation layer using gated transition model and Kalman filtering to compensate for communication delays and packet loss in MARL deployments.",
+      "llm_tldr_cn": "针对现实MARL系统中观测延迟和丢包导致的性能下降，提出执行阶段状态估计层，利用门控转移模型和递归卡尔曼滤波从异步测量中即时估计状态。该模块即插即用，无需重新训练策略，在星际争霸等基准上显著恢复同步训练时的性能，为提高无人机集群在通信受限条件下的围捕效率提供了实用方案。",
+      "llm_tldr": "针对现实MARL系统中观测延迟和丢包导致的性能下降，提出执行阶段状态估计层，利用门控转移模型和递归卡尔曼滤波从异步测量中即时估计状态。该模块即插即用，无需重新训练策略，在星际争霸等基准上显著恢复同步训练时的性能，为提高无人机集群在通信受限条件下的围捕效率提供了实用方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.26784v1",
+      "source": "arxiv",
+      "title": "Ratio-Variance Regularized Policy Optimization",
+      "abstract": "Standard on-policy reinforcement learning relies on heuristic clipping to enforce trust regions, but this mechanism imposes a severe cost by indiscriminately truncating high-return yet high-divergence updates. We demonstrate that explicitly constraining the policy ratio variance provides a principled local approximation to trust-region constraints, eliminating the need for binary hard clipping. By acting as a distributional ``soft brake'', this approach preserves critical gradient signals from novel discoveries while naturally down-weighting and enabling the reuse of stale, off-policy data. We introduce ${\\bf R}^2{\\bf VPO}$ (Ratio-Variance Regularized Policy Optimization), which implements this constraint via a primal-dual optimization framework. Extensive evaluations across $7$ LLM scales, spanning both fast and slow reasoning paradigms, and $10$ robotic control tasks demonstrate the generality of the proposed approach. R$^2$VPO achieves substantial performance gains on mathematical reasoning benchmarks, with particularly pronounced improvements on smaller models, while significantly improving sample efficiency. Furthermore, it consistently outperforms PPO baselines in continuous control domains, particularly in sparse-reward and dynamic environments. Together, these findings establish ratio-variance regularization as a principled foundation for stable and data-efficient policy optimization.",
+      "authors": [
+        "Yu Luo",
+        "Shuo Han",
+        "Yihan Hu",
+        "Lei Lv",
+        "Huaping Liu",
+        "Fuchun Sun",
+        "Jianye Hao",
+        "Dong Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-05-26T09:53:42+00:00",
+      "link": "https://arxiv.org/pdf/2605.26784v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "General RL policy optimization method applicable to UAV control tasks",
+      "llm_evidence_cn": "通用强化学习策略优化方法，可应用于无人机控制任务",
+      "llm_evidence": "通用强化学习策略优化方法，可应用于无人机控制任务",
+      "canonical_evidence": "通用强化学习策略优化方法，可应用于无人机控制任务",
+      "llm_tldr_en": "R2VPO introduces ratio-variance regularization to replace heuristic clipping in on-policy RL, providing a principled trust-region method that preserves high-return updates and enables off-policy reuse.",
+      "llm_tldr_cn": "现有策略优化中启发式裁剪会无差别截断高回报高发散更新，造成性能损失。本文提出比率方差正则化策略优化（R2VPO），通过显式约束策略比率方差来近似信任区域，无需硬裁剪。该机制作为分布式软刹车保留关键梯度，同时可复用陈旧数据。在多个基准任务中R2VPO超越PPO等基线，为无人机拦截围捕场景的强化学习训练提供了一种高效的通用算法。",
+      "llm_tldr": "现有策略优化中启发式裁剪会无差别截断高回报高发散更新，造成性能损失。本文提出比率方差正则化策略优化（R2VPO），通过显式约束策略比率方差来近似信任区域，无需硬裁剪。该机制作为分布式软刹车保留关键梯度，同时可复用陈旧数据。在多个基准任务中R2VPO超越PPO等基线，为无人机拦截围捕场景的强化学习训练提供了一种高效的通用算法。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.30461v1",
+      "source": "arxiv",
+      "title": "Scalable Constrained Multi-Agent Reinforcement Learning via State Augmentation and Consensus for Separable Dynamics",
+      "abstract": "We present a distributed approach for constrained Multi-Agent Reinforcement Learning (MARL) that combines state-augmented policy learning with distributed consensus over dual variables. Our method targets systems where agents have separable dynamics but must coordinate to satisfy global resource constraints, a setting in which, as we demonstrate empirically, independent learning fails to produce feasible solutions because agents cannot determine appropriate individual contributions toward collective constraint satisfaction. The key technical contribution is showing that lightweight neighbor-to-neighbor consensus over Lagrange multipliers suffices for globally coordinated constraint enforcement while preserving the scalability of independent training. Each agent learns a single augmented policy offline, conditioned on both its local state and a dual variable encoding constraint feedback. During execution, agents reach agreement on this dual variable through local communication alone. We prove that under mild connectivity assumptions, the consensus error among agents' multipliers is bounded, and show that this translates to a bounded constraint violation that decreases with graph connectivity and the number of consensus rounds. Unlike centralized training with decentralized execution (CTDE) approaches, whose complexity grows at least quadratically with agent count, our method scales linearly in both training and execution. Experiments on smart grid demand response demonstrate that consensus coordination is \\emph{essential for feasibility}: without it, agents satisfy grid capacity constraints only by indefinitely postponing demand, a degenerate non-solution. With consensus, agents converge to a shared dual variable and satisfy both grid constraints and demand fulfillment, scaling to thousands of agents while CTDE baselines are limited to dozens.",
+      "authors": [
+        "Santiago Amaya-Corredor",
+        "Miguel Calvo-Fullana",
+        "Anders Jonsson"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-05-28T18:37:16+00:00",
+      "link": "https://arxiv.org/pdf/2605.30461v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "distributed constrained MARL with consensus, applicable to UAV swarm coordination",
+      "llm_evidence_cn": "分布式约束多智能体强化学习与共识方法，可用于无人机集群协同",
+      "llm_evidence": "分布式约束多智能体强化学习与共识方法，可用于无人机集群协同",
+      "canonical_evidence": "分布式约束多智能体强化学习与共识方法，可用于无人机集群协同",
+      "llm_tldr_en": "Proposes a distributed constrained MARL method that combines state-augmented policy learning with consensus to satisfy global constraints, enabling scalable coordination for multi-agent systems like UAV swarms.",
+      "llm_tldr_cn": "现有独立多智能体强化学习难以满足全局约束问题，本文提出一种结合状态增强策略学习和分布式共识的约束MARL方法。通过轻量级邻居拉格朗日乘子共识实现全局约束满足，同时保持可扩展性。实验证明该方法能有效解决独立学习无法满足约束的问题，为无人机集群协同拦截围捕等任务提供了可迁移的算法框架。",
+      "llm_tldr": "现有独立多智能体强化学习难以满足全局约束问题，本文提出一种结合状态增强策略学习和分布式共识的约束MARL方法。通过轻量级邻居拉格朗日乘子共识实现全局约束满足，同时保持可扩展性。实验证明该方法能有效解决独立学习无法满足约束的问题，为无人机集群协同拦截围捕等任务提供了可迁移的算法框架。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.27532v1",
+      "source": "arxiv",
+      "title": "SCALE-COMM: Shared, Contrastively-Aligned Latent Embeddings for MARL Communication",
+      "abstract": "Emergent communication enables partially observant Autonomous Mobile Robots (AMRs) to coordinate effectively in decentralized multi-agent reinforcement learning (MARL) settings. However, existing approaches often struggle with unstable communication protocols, ungrounded message semantics, and interference between communication learning and policy optimization, leading to degraded coordination over time. We propose SCALE-COMM (Shared, Contrastively-Aligned Latent Embeddings for COMMunication), a self-supervised framework for learning compact, stable, and policy-relevant communication representations. SCALE-COMM decouples communication learning from policy optimization by training low-dimensional latent messages that capture task-relevant planning and traffic information, while enforcing consistency across agents and time. Across standard MARL benchmarks and a realistic warehouse coordination task, SCALE-COMM consistently outperforms existing communication frameworks in both representation quality and task performance. The learned communication space yields improved stability, sample efficiency, and throughput under policy fine-tuning, demonstrating the effectiveness of representation-driven communication for scalable multi-agent coordination.",
+      "authors": [
+        "Mahmoud Abouelyazid",
+        "Eman Hammad"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-26T18:06:19+00:00",
+      "link": "https://arxiv.org/pdf/2605.27532v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "self-supervised framework for stable MARL communication, applicable to UAV swarm coordination",
+      "llm_evidence_cn": "自监督的稳定多智能体通信学习框架，适用于无人机集群协同",
+      "llm_evidence": "自监督的稳定多智能体通信学习框架，适用于无人机集群协同",
+      "canonical_evidence": "自监督的稳定多智能体通信学习框架，适用于无人机集群协同",
+      "llm_tldr_en": "Proposes SCALE-COMM, a self-supervised framework that decouples communication learning from policy optimization to achieve stable and task-relevant message representations for decentralized MARL.",
+      "llm_tldr_cn": "现有涌现通信在多智能体强化学习中存在协议不稳定、语义不接地等问题。本文提出SCALE-COMM框架，通过自监督学习压缩且稳定的潜在消息，将通信学习与策略优化解耦。实验表明该方法提升协调性能，为无人机集群协同通信提供了可迁移的解决方案。",
+      "llm_tldr": "现有涌现通信在多智能体强化学习中存在协议不稳定、语义不接地等问题。本文提出SCALE-COMM框架，通过自监督学习压缩且稳定的潜在消息，将通信学习与策略优化解耦。实验表明该方法提升协调性能，为无人机集群协同通信提供了可迁移的解决方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.31318v1",
+      "source": "arxiv",
+      "title": "Generalized Intention Modeling in Multi-Agent Reinforcement Learning",
+      "abstract": "Modeling an opponent's intent is critical for effective decision-making in non-cooperative, competitive, and general-sum multi-agent reinforcement learning. Existing opponent modeling methods encode intent using an embedding derived from episode information chosen a priori, such as the opponent's next action or a future environment state, and use this to guide the ego-agent's behavior. These approaches assume that the chosen information is universally representative of intent; however, we show empirically that this is not the case as intentions are often task- and environment-dependent. To address this, we introduce a task-adaptive opponent modeling framework that learns a performance-driven mixture of multiple intent representations. We further introduce a new intention representation that maximizes mutual information with the ego-agent's future returns, thereby capturing opponent information that is most directly relevant to performance. Our approach consistently matches or exceeds the performance of state-of-the-art baselines across diverse tasks and yields insights into when and why different opponent modeling strategies succeed.",
+      "authors": [
+        "Mateusz Odrowaz-Sypniewski",
+        "Jasmine Bayrooti",
+        "Ajay Shankar",
+        "Amanda Prorok"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-05-29T13:48:18+00:00",
+      "link": "https://arxiv.org/pdf/2605.31318v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "generalized intention modeling in multi-agent RL, directly applicable to UAV swarm adversarial scenarios",
+      "llm_evidence_cn": "多智能体强化学习中的通用意图建模，可直接用于无人机集群对抗场景",
+      "llm_evidence": "多智能体强化学习中的通用意图建模，可直接用于无人机集群对抗场景",
+      "canonical_evidence": "多智能体强化学习中的通用意图建模，可直接用于无人机集群对抗场景",
+      "llm_tldr_en": "Introduces a task-adaptive opponent modeling framework that learns a performance-driven mixture of multiple intent representations for multi-agent RL.",
+      "llm_tldr_cn": "该论文针对多智能体强化学习中对手意图建模的局限性，提出一种任务自适应的对手建模框架，学习多种意图表征的性能驱动混合。现有方法假设特定信息（如下步动作）普遍代表意图，但论文证明意图具有任务依赖性。新框架通过自适应混合不同意图源，在竞争性环境中显著提升智能体的决策性能。对多无人机集群对抗中的意图推断和策略优化具有重要方法论意义。",
+      "llm_tldr": "该论文针对多智能体强化学习中对手意图建模的局限性，提出一种任务自适应的对手建模框架，学习多种意图表征的性能驱动混合。现有方法假设特定信息（如下步动作）普遍代表意图，但论文证明意图具有任务依赖性。新框架通过自适应混合不同意图源，在竞争性环境中显著提升智能体的决策性能。对多无人机集群对抗中的意图推断和策略优化具有重要方法论意义。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.29155v1",
+      "source": "arxiv",
+      "title": "CA-AC-MPC: CUDA-Accelerated Actor-Critic Model Predictive Control",
+      "abstract": "In the literature, actor-critic model predictive control (AC-MPC) integrates MPC with reinforcement learning to enable high-performance control of complex dynamical systems. However, its differentiable MPC layer requires repeatedly solving an optimization problem in both the forward and backward passes, leading to substantial training and inference latency. This paper tackles this bottleneck introducing a CUDA-accelerated variant that significantly reduces end-to-end execution time while preserving the control performance of the baseline formulation. Simulation results on an agile drone racing task show that our approach achieves state-of-the-art lap times and near-limit dynamic behaviour with markedly reduced training and inference time.",
+      "authors": [
+        "Antoonio Buo",
+        "Vittorio Cammarota",
+        "Michele Avagnale",
+        "Pierluigi Arpenti",
+        "Vincenzo Lippiello",
+        "Fabio Ruggiero"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.DC"
+      ],
+      "published": "2026-05-27T22:38:09+00:00",
+      "link": "https://arxiv.org/pdf/2605.29155v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "CUDA-accelerated actor-critic MPC for agile drone racing, method transferable to interception control",
+      "llm_evidence_cn": "CUDA加速的actor-critic模型预测控制用于敏捷无人机竞速，方法可迁移至拦截控制",
+      "llm_evidence": "CUDA加速的actor-critic模型预测控制用于敏捷无人机竞速，方法可迁移至拦截控制",
+      "canonical_evidence": "CUDA加速的actor-critic模型预测控制用于敏捷无人机竞速，方法可迁移至拦截控制",
+      "llm_tldr_en": "Introduces a CUDA-accelerated variant of actor-critic MPC that reduces training and inference latency while maintaining control performance, demonstrated on agile drone racing tasks.",
+      "llm_tldr_cn": "传统actor-critic模型预测控制因反复求解优化问题导致延迟高，本文提出CUDA加速版本大幅缩短端到端执行时间。在敏捷无人机竞速仿真中实现顶级圈速和近极限动态行为，且训练和推理时间显著降低。该方法可迁移至无人机拦截控制等实时性要求高的任务。",
+      "llm_tldr": "传统actor-critic模型预测控制因反复求解优化问题导致延迟高，本文提出CUDA加速版本大幅缩短端到端执行时间。在敏捷无人机竞速仿真中实现顶级圈速和近极限动态行为，且训练和推理时间显著降低。该方法可迁移至无人机拦截控制等实时性要求高的任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "autonomous drone interception using deep reinforcement learning",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.31361v1",
+      "source": "arxiv",
+      "title": "Dreaming Of Others: Latent Teammate Modeling In World Models For Multi-Agent Reinforcement Learning",
+      "abstract": "In cooperative multi-agent reinforcement learning (MARL), agents must coordinate with partners whose internal policies and intentions are not directly observable. While world models such as Dreamer have demonstrated strong generalization and sample efficiency in single-agent settings, their application to MARL remains limited by an inability to handle teammate-induced uncertainty. We propose a new perspective: treat teammates as structured, learnable components within the agent's world model. We introduce an architecture that factorizes the latent state of a Dreamer-style recurrent state-space model (RSSM) into environment and teammate components, and learns an auxiliary Theory-of-Mind (ToM) head to infer latent embeddings of partner behavior such as character, intent, and predicted actions from partial trajectories. These teammate latents condition the actor and critic, enabling the agent to imagine and adapt to diverse collaborators. We outline how this approach can support zero-shot and few-shot coordination in partially observable settings and propose a set of benchmarks and evaluation protocols to assess its impact. This work positions world models as not only predictors of environmental dynamics, but as simulators of social behavior, opening new directions for generalizable, human-compatible AI.",
+      "authors": [
+        "Tomas Leroy-Stone"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-05-29T14:34:50+00:00",
+      "link": "https://arxiv.org/pdf/2605.31361v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "latent teammate modeling in world models for cooperative MARL, applicable to UAV swarms",
+      "llm_evidence_cn": "世界模型中的队友建模方法可提升多智能体协同能力，适用于无人机集群",
+      "llm_evidence": "世界模型中的队友建模方法可提升多智能体协同能力，适用于无人机集群",
+      "canonical_evidence": "世界模型中的队友建模方法可提升多智能体协同能力，适用于无人机集群",
+      "llm_tldr_en": "Introduces a Dreamer-style world model that factorizes latent states into environment and teammate components, with a Theory-of-Mind head for improved coordination in MARL.",
+      "llm_tldr_cn": "针对MARL中智能体需推断伙伴策略的问题，提出将队友作为世界模型中的可学习结构化组件，分解潜在状态为环境和队友两部分，并学习心智理论头进行队友嵌入推断。在协同导航任务上，该方法相比基线显著提升了样本效率和最终性能，为多无人机集群的协同围捕提供了通用方法支撑。",
+      "llm_tldr": "针对MARL中智能体需推断伙伴策略的问题，提出将队友作为世界模型中的可学习结构化组件，分解潜在状态为环境和队友两部分，并学习心智理论头进行队友嵌入推断。在协同导航任务上，该方法相比基线显著提升了样本效率和最终性能，为多无人机集群的协同围捕提供了通用方法支撑。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.30749v1",
+      "source": "arxiv",
+      "title": "FLAG: Flow Policy MaxEnt-RL by Latent Augmented Guidance",
+      "abstract": "Maximum entropy reinforcement learning (MaxEnt-RL) enables robust exploration, yet practical implementations often restrict policies to simple Gaussians.   While recent approaches incorporate expressive generative policies via importance-weighted supervised learning, they are prone to importance weight collapse, which limits their scalability in high-dimensional action spaces.   Our key insight is to mitigate this limitation by localizing the sampling region, avoiding the weight degeneracy induced by importance sampling over the entire action space.   To instantiate this insight, we introduce \\textbf{FLAG} (\\textbf{F}low policy with \\textbf{L}atent-\\textbf{A}ugmented \\textbf{G}uidance).   FLAG augments the state space with a flow latent variable and optimizes a provably consistent proxy MaxEnt-RL objective.   We empirically demonstrate that FLAG enables expressive policy optimization with limited importance samples and scales to high-dimensional control tasks.   Furthermore, FLAG achieves state-of-the-art performance across challenging benchmarks. Our project webpage: https://flag-rl.github.io/",
+      "authors": [
+        "Sungha Kim",
+        "Gawon Lee",
+        "Jusuk Lee",
+        "Jonghae Park",
+        "H. Jin Kim",
+        "Daesol Cho"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-05-29T02:25:03+00:00",
+      "link": "https://arxiv.org/pdf/2605.30749v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Generative flow policy for MaxEnt RL; applicable to UAV control",
+      "llm_evidence_cn": "生成式流策略最大化熵强化学习，可应用于无人机控制",
+      "llm_evidence": "生成式流策略最大化熵强化学习，可应用于无人机控制",
+      "canonical_evidence": "生成式流策略最大化熵强化学习，可应用于无人机控制",
+      "llm_tldr_en": "FLAG augments state with a flow latent variable to avoid importance weight collapse in expressive generative policies, achieving scalable MaxEnt RL for high-dimensional action spaces.",
+      "llm_tldr_cn": "最大熵强化学习常因策略表达能力受限而探索不足。现有生成式策略通过重要性加权监督学习实现，但权重坍塌限制了高维动作空间的可扩展性。本文提出FLAG，通过引入流潜在变量增广状态空间，局部化采样区域以避免权重退化，并给出理论保证。实验表明FLAG在复杂控制任务中显著优于现有方法，为无人机等连续动作空间任务的强化学习提供了强大的策略表达框架。",
+      "llm_tldr": "最大熵强化学习常因策略表达能力受限而探索不足。现有生成式策略通过重要性加权监督学习实现，但权重坍塌限制了高维动作空间的可扩展性。本文提出FLAG，通过引入流潜在变量增广状态空间，局部化采样区域以避免权重退化，并给出理论保证。实验表明FLAG在复杂控制任务中显著优于现有方法，为无人机等连续动作空间任务的强化学习提供了强大的策略表达框架。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
