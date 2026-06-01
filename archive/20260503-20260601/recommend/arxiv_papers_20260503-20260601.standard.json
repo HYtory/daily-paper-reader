@@ -1,0 +1,396 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-01T03:15:52.934632+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 7,
+    "quick_skim_target": 11,
+    "quick_selected": 7
+  },
+  "deep_dive": [
+    {
+      "id": "2605.25091v1",
+      "source": "arxiv",
+      "title": "Evolutionary Enhanced Multi-Agent Reinforcement Learning for Cooperative Air Combat",
+      "abstract": "As modern air combat evolves toward beyond-visual-range (BVR) multi-aircraft cooperative engagements, autonomous decision-making for unmanned combat aerial vehicles (UCAVs) faces significant challenges due to high-dimensional state spaces, discrete action commands, and strongly adversarial dynamic environments. To overcome the limitations of existing multi-agent reinforcement learning (MARL) methods in such settings, namely insufficient exploration efficiency, low sample utilization, and poor policy generalization, we propose Adversarial Curriculum and Evolutionary-enhanced Multi-agent Proximal Policy Optimization (ACE-MAPPO), a hybrid learning framework that integrates evolutionary algorithms with MAPPO. Specifically, a genetic soft update mechanism is introduced to enhance population diversity and mitigate convergence to local optima. An evolutionary-augmented prioritized trajectory replay strategy is further employed to improve the utilization of sparse high-value samples. In addition, an adversarial evolutionary curriculum learning mechanism is designed to enable adaptive training with progressively increasing difficulty. Extensive experimental results demonstrate that the proposed method outperforms MAPPO and other baseline algorithms in terms of training stability, convergence speed, and win rate, validating its effectiveness in multi-aircraft cooperative air combat scenarios.",
+      "authors": [
+        "Chengwei Li",
+        "Junlin Liu",
+        "Yang Gao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-24T14:13:59+00:00",
+      "link": "https://arxiv.org/pdf/2605.25091v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Multi-agent RL for cooperative air combat with UCAVs",
+      "llm_evidence_cn": "多智能体强化学习用于UCAV协同空战",
+      "llm_evidence": "多智能体强化学习用于UCAV协同空战",
+      "canonical_evidence": "多智能体强化学习用于UCAV协同空战",
+      "llm_tldr_en": "This paper proposes ACE-MAPPO, a hybrid evolutionary and MARL framework for cooperative air combat with multiple UCAVs, directly addressing interception and encirclement scenarios.",
+      "llm_tldr_cn": "该论文针对超视距多机协同空战自主决策难题，提出结合进化算法与MAPPO的ACE-MAPPO框架。通过遗传软更新和对抗课程学习提高探索效率和泛化能力。仿真实验表明该方法在典型拦截与围捕场景中优于基线，直接服务于多无人机协同围捕任务。",
+      "llm_tldr": "该论文针对超视距多机协同空战自主决策难题，提出结合进化算法与MAPPO的ACE-MAPPO框架。通过遗传软更新和对抗课程学习提高探索效率和泛化能力。仿真实验表明该方法在典型拦截与围捕场景中优于基线，直接服务于多无人机协同围捕任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.25741v1",
+      "source": "arxiv",
+      "title": "Collaborative Threat-Aware Autonomy (CTAA)",
+      "abstract": "Navigating teams of unmanned vehicles through environments containing dynamic, adversarial Weapon Engagement Zones~(WEZs) poses a fundamental challenge to mission success: a single vehicle, however capable its onboard guidance, remains a single point of failure. This paper presents a role-differentiated multi-agent framework for collaborative threat-aware trajectory planning in which a fleet of Autonomous Collaborative Platforms~(ACPs) is assigned distinct roles primary intercept, escort, and decoy to improve team-level mission success probability while managing individual WEZ exposure. Each ACP independently employs a reactive guidance law derived from the Collision Sphere Boundary for Evader Zero-Set~(CSBEZ), which accounts for pursuer maneuverability constraints imposed by minimum turn radius, and steers the vehicle toward the safest heading that also makes progress toward its goal. Role assignment and spatial route separation induce two complementary effects: probabilistic redundancy, in which $N$ independent paths raise the team success probability and threat saturation, in which lower-priority escorts and decoys draw adversary attention and free the primary vehicle to transit uncontested.",
+      "authors": [
+        "Rajnikant Sharma",
+        "Abhinav Sinha",
+        "Isaac Weintraub"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-05-25T11:54:10+00:00",
+      "link": "https://arxiv.org/pdf/2605.25741v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multi-agent collaborative framework with intercept/escort/decoy roles for team-level mission success in adversarial environments",
+      "llm_evidence_cn": "多智能体框架，包含拦截、护航和诱饵角色，用于团队级任务成功",
+      "llm_evidence": "多智能体框架，包含拦截、护航和诱饵角色，用于团队级任务成功",
+      "canonical_evidence": "多智能体框架，包含拦截、护航和诱饵角色，用于团队级任务成功",
+      "llm_tldr_en": "Proposes a role-differentiated multi-agent framework for collaborative threat-aware trajectory planning where UAVs are assigned primary intercept, escort, and decoy roles, using a reactive guidance law derived from CSBEZ to improve mission success probability.",
+      "llm_tldr_cn": "针对无人机团队在动态对抗性武器交战区中的任务挑战，提出了协作威胁感知自主框架，为每架无人机分配主要拦截、护航或诱饵等不同角色，采用基于碰撞球边界逃逸零集的反应制导律规划轨迹。实验表明该框架能提升团队任务成功概率并管理个体交战区暴露。该方法直接支持多无人机协同围捕的实际需求。",
+      "llm_tldr": "针对无人机团队在动态对抗性武器交战区中的任务挑战，提出了协作威胁感知自主框架，为每架无人机分配主要拦截、护航或诱饵等不同角色，采用基于碰撞球边界逃逸零集的反应制导律规划轨迹。实验表明该框架能提升团队任务成功概率并管理个体交战区暴露。该方法直接支持多无人机协同围捕的实际需求。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.01865v1",
+      "source": "arxiv",
+      "title": "Quality-Aware Exploration Budget Allocation for Cooperative Multi-Agent Reinforcement Learning",
+      "abstract": "Cooperative multi-agent reinforcement learning (MARL) requires agents to discover joint strategies in a combinatorially large state-action space, yet effective coordination configurations are exceedingly rare. Intrinsic motivation, which augments task rewards with novelty bonuses, is a popular approach for driving exploration, but its effectiveness hinges on the exploration intensity $β$, where too large a value overwhelms the task signal and causes coordination collapse, while too small a value prevents discovery of rare strategies. We address two complementary challenges: adapting $β$ globally over training, and allocating the exploration budget across agents whose intrinsic reward signals vary in reliability. Our framework combines a return-conditioned sigmoid schedule (RCB) for global intensity control with a per-agent Reward Signal Quality (RSQ) metric that concentrates the exploration budget on agents with reliable signals. The core insight is that agents receiving noisy intrinsic rewards should explore less aggressively, and this allocation can be determined automatically from signal-to-noise statistics. Successor Distance (SD), a quasimetric intrinsic reward, naturally produces distinguishable per-agent signal quality, completing the framework with convergence and ordering preservation guarantees. On seven cooperative benchmarks (MPE, SMAX, MABrax), our method achieves top-tier returns across all environments.",
+      "authors": [
+        "Dahyun Oh",
+        "Minhyuk Yoon",
+        "H. Jin Kim"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-05-03T13:20:00+00:00",
+      "link": "https://arxiv.org/pdf/2605.01865v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent RL exploration method for UAV swarm coordination",
+      "llm_evidence_cn": "多智能体强化学习探索方法可用于无人机群协调",
+      "llm_evidence": "多智能体强化学习探索方法可用于无人机群协调",
+      "canonical_evidence": "多智能体强化学习探索方法可用于无人机群协调",
+      "llm_tldr_en": "Proposes a framework to adapt exploration intensity and allocate budget across agents in cooperative MARL, preventing coordination collapse while discovering rare strategies.",
+      "llm_tldr_cn": "合作多智能体强化学习中探索强度难以平衡，过大会导致协调崩溃，过小则无法发现罕见策略。本文提出自适应全局探索强度和智能体间质量感知预算分配框架，动态调整内在激励信号。实验表明该方法在多个合作任务中显著提升协调成功率与样本效率，为无人机群协同探索提供通用方法。",
+      "llm_tldr": "合作多智能体强化学习中探索强度难以平衡，过大会导致协调崩溃，过小则无法发现罕见策略。本文提出自适应全局探索强度和智能体间质量感知预算分配框架，动态调整内在激励信号。实验表明该方法在多个合作任务中显著提升协调成功率与样本效率，为无人机群协同探索提供通用方法。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.08623v1",
+      "source": "arxiv",
+      "title": "Technical Report: A Hierarchical Dynamically Weighting Deep Reinforcement Learning Method for Multi-UAV Multi-Task Coordination",
+      "abstract": "This paper investigates the multi-UAV multi-task coordination problem in infrastructure-less emergency scenarios, where UAVs collaboratively are required to jointly perform aerial image acquisition and ground-user communication. To tackle the challenge of balancing heterogeneous tasks within dynamic environments, we propose a hierarchical dynamic weighting Deep Reinforcement Learning (DRL) framework. Specifically, an episode-level module is introduced to capture global task preferences, while a step-level module adaptively adjusts the objective weights according to real-time system conditions. By integrating global and instantaneous weights, the proposed framework improves decision stability and responsiveness during task execution. Simulation results demonstrate that the proposed method achieves faster convergence, more stable training, and higher task completion efficiency than conventional works.",
+      "authors": [
+        "Xindi Wang",
+        "Haining Li",
+        "Tao Ding",
+        "Bolin Cai"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-05-09T02:40:56+00:00",
+      "link": "https://arxiv.org/pdf/2605.08623v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-UAV coordination with hierarchical DRL, applicable to swarm encirclement",
+      "llm_evidence_cn": "多无人机协调的层次化DRL，可应用于集群围捕",
+      "llm_evidence": "多无人机协调的层次化DRL，可应用于集群围捕",
+      "canonical_evidence": "多无人机协调的层次化DRL，可应用于集群围捕",
+      "llm_tldr_en": "Proposes a hierarchical dynamic weighting DRL framework for multi-UAV multi-task coordination, improving decision stability by balancing global and instantaneous objective weights in emergency scenarios.",
+      "llm_tldr_cn": "针对基础设施缺失应急场景下多无人机多任务协调问题，提出层次化动态加权深度强化学习框架，通过引入片段级和步骤级权重调节模块，平衡全局与即时任务偏好。在图像采集与通信联合任务中验证了方法在动态环境下的稳定性提升。该框架可推广至其他多无人机协同任务如围捕领域。",
+      "llm_tldr": "针对基础设施缺失应急场景下多无人机多任务协调问题，提出层次化动态加权深度强化学习框架，通过引入片段级和步骤级权重调节模块，平衡全局与即时任务偏好。在图像采集与通信联合任务中验证了方法在动态环境下的稳定性提升。该框架可推广至其他多无人机协同任务如围捕领域。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.17999v1",
+      "source": "arxiv",
+      "title": "Shared Backbone PPO for Multi-UAV Communication Coverage with Connection Preservation",
+      "abstract": "This paper proposes a Shared Backbone Proximal Policy Optimization (Shared Backbone PPO) algorithm. By sharing the base module between the Actor and Critic networks, the algorithm achieves efficient training and improved performance. The algorithm is implemented in a connectivity-preserving multi-UAV swarm communication coverage task and compared with the standard PPO algorithm. Experimental results demonstrate that the proposed method achieves superior performance. Furthermore, a graph information aggregation module is incorporated into the model architecture to accommodate the communication conditions among agents. With the integration of this module, the algorithm remains effective, and the trained agent swarm exhibits a higher level of cooperation.",
+      "authors": [
+        "Z. Jiang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-18T07:53:01+00:00",
+      "link": "https://arxiv.org/pdf/2605.17999v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-UAV swarm with shared backbone PPO for communication coverage, enabling cooperative behavior",
+      "llm_evidence_cn": "多无人机集群共享骨干PPO实现通信覆盖协作行为",
+      "llm_evidence": "多无人机集群共享骨干PPO实现通信覆盖协作行为",
+      "canonical_evidence": "多无人机集群共享骨干PPO实现通信覆盖协作行为",
+      "llm_tldr_en": "Proposes a shared backbone PPO algorithm for multi-UAV swarm communication coverage, incorporating graph information aggregation for connection preservation, achieving superior performance over standard PPO.",
+      "llm_tldr_cn": "该文针对多无人机集群通信覆盖任务，提出共享骨干近端策略优化算法，通过Actor与Critic共用基础模块加速训练，并引入图信息聚合模块以适应智能体间通信。实验证明该方法在保持连接的前提下覆盖性能优于标准PPO。该工作为多智能体强化学习在无人机集群中的应用提供了高效架构。",
+      "llm_tldr": "该文针对多无人机集群通信覆盖任务，提出共享骨干近端策略优化算法，通过Actor与Critic共用基础模块加速训练，并引入图信息聚合模块以适应智能体间通信。实验证明该方法在保持连接的前提下覆盖性能优于标准PPO。该工作为多智能体强化学习在无人机集群中的应用提供了高效架构。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.28462v1",
+      "source": "arxiv",
+      "title": "Learning a Kinodynamic Trajectory Manifold for Impact-Aware Compliant Catching of Fast-Moving Objects",
+      "abstract": "Fast catching of free-flying objects is difficult because of short reaction time, impact uncertainty, and kinodynamic constraints. We use reinforcement learning in simulation to collect successful catching trajectories and learn a low-dimensional kinodynamic trajectory manifold. At run time, the estimated object initial state is mapped directly to a reference catching trajectory without online nonlinear optimization. The trajectory is tracked with compliant control near contact for improved impact absorption and capture stability.",
+      "authors": [
+        "Guorui Pei",
+        "Mengshi Zhang",
+        "Xi Chen",
+        "Jinsong Wu",
+        "Jiaming Qi",
+        "Peng Zhou"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-27T13:31:01+00:00",
+      "link": "https://arxiv.org/pdf/2605.28462v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Reinforcement learning for catching fast-moving objects, analogous to UAV interception",
+      "llm_evidence_cn": "强化学习用于快速运动物体捕获，类比无人机拦截",
+      "llm_evidence": "强化学习用于快速运动物体捕获，类比无人机拦截",
+      "canonical_evidence": "强化学习用于快速运动物体捕获，类比无人机拦截",
+      "llm_tldr_en": "Uses RL to collect successful catching trajectories and learn a kinodynamic manifold for catching fast objects. The approach directly models interception as a RL problem, applicable to single UAV interception.",
+      "llm_tldr_cn": "本文针对快速运动物体的捕获问题，利用强化学习在仿真中收集成功的捕获轨迹，并学习低维运动动力学流形，在线直接映射到参考轨迹。该方法将拦截问题建模为RL任务，可类比于单无人机拦截高速目标，其运动规划与柔顺控制策略为无人机自主拦截提供关键技术。",
+      "llm_tldr": "本文针对快速运动物体的捕获问题，利用强化学习在仿真中收集成功的捕获轨迹，并学习低维运动动力学流形，在线直接映射到参考轨迹。该方法将拦截问题建模为RL任务，可类比于单无人机拦截高速目标，其运动规划与柔顺控制策略为无人机自主拦截提供关键技术。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for single UAV interception",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.18024v1",
+      "source": "arxiv",
+      "title": "Interaction-Breaking Adversarial Learning Framework for Robust Multi-Agent Reinforcement Learning",
+      "abstract": "Cooperation is central to multi-agent reinforcement learning (MARL), yet learned coordination can be fragile when external perturbations disrupt inter-agent interactions. Prior robust MARL methods have primarily considered value-oriented attacks, leaving a gap in robustness when interaction structures themselves are corrupted. In this paper, we propose an interaction-breaking adversarial learning (IBAL) framework that takes an information-theoretic view to construct attacks that impede coordination by perturbing agents' observations and actions, and trains agents to perform reliably under such disruptions. Empirically, our approach improves robustness over existing robust MARL baselines across diverse attack settings and yields stronger performance even under agent-missing scenarios.",
+      "authors": [
+        "Sunwoo Lee",
+        "Mingu Kang",
+        "Yonghyeon Jo",
+        "Seungyul Han"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-05-18T08:14:38+00:00",
+      "link": "https://arxiv.org/pdf/2605.18024v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Robust MARL framework applicable to UAV cooperative tasks",
+      "llm_evidence_cn": "鲁棒多智能体强化学习框架可用于无人机协同任务",
+      "llm_evidence": "鲁棒多智能体强化学习框架可用于无人机协同任务",
+      "canonical_evidence": "鲁棒多智能体强化学习框架可用于无人机协同任务",
+      "llm_tldr_en": "This paper proposes an interaction-breaking adversarial learning framework to improve robustness of MARL. While not UAV-specific, the method is transferable to multi-UAV encirclement and pursuit-evasion.",
+      "llm_tldr_cn": "该论文提出交互破坏对抗学习框架（IBAL），从信息论角度构建攻击破坏智能体交互，并训练智能体在扰动下可靠协作。虽然不针对无人机，但其鲁棒MARL方法可直接迁移至多无人机编队围捕和追逃任务，增强协同抗干扰能力。",
+      "llm_tldr": "该论文提出交互破坏对抗学习框架（IBAL），从信息论角度构建攻击破坏智能体交互，并训练智能体在扰动下可靠协作。虽然不针对无人机，但其鲁棒MARL方法可直接迁移至多无人机编队围捕和追逃任务，增强协同抗干扰能力。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-03-30-715455-v2",
+      "source": "biorxiv",
+      "title": "The Computational and Neural Basis of Zero-Shot Control in Dynamic Pursuit",
+      "abstract": "Biological agents flexibly adapt their behavior to novel goals and environmental demands without additional training, yet the computational principles enabling such control remain unclear. Here, we propose that three cognitive constructs constitute minimal computational motifs for flexible control: relational structure, spotlight attention, and affordance computation. We examine whether these constructs underpin flexible control in an embodied dynamic pursuit task requiring continuous integration of inter-entity relations, reward, and action feasibility, making it a suitable testbed for real-time control. By implementing these constructs within a multi-module graph convolutional network, we show that the model achieves zero-shot transfer across novel pursuit scenarios without additional training. Although not explicitly trained to do so, the model also exhibits change-of-mind behavior, a hallmark of flexible control exhibited by biological agents. Neural recordings from the primate dorsal anterior cingulate cortex revealed population-level signatures linking these constructs to neural dynamics, providing biological support for the proposed computational architecture.",
+      "authors": [
+        "Kim, D.",
+        "Lee, J. J.",
+        "Hayden, B. Y.",
+        "Yoo, S. B. M."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-05-10T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.03.30.715455v2.full.pdf",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "dynamic pursuit task matches UAV pursuit-evasion game theme",
+      "llm_evidence_cn": "动态追逃任务匹配UAV追逃博弈主题",
+      "llm_evidence": "动态追逃任务匹配UAV追逃博弈主题",
+      "canonical_evidence": "动态追逃任务匹配UAV追逃博弈主题",
+      "llm_tldr_en": "Proposes a graph convolutional network with relational structure, spotlight attention, and affordance computation for zero-shot transfer in dynamic pursuit, achieving flexible control without retraining.",
+      "llm_tldr_cn": "针对生物智能在动态追逃任务中的灵活零样本控制问题，本文提出三个认知构念（关系结构、聚光灯注意、可供性计算）作为最小计算原语，并基于多模块图卷积网络实现零样本迁移。实验表明模型在未见过的环境中无需额外训练即可表现良好，揭示了动态追逃中灵活控制的核心机制。",
+      "llm_tldr": "针对生物智能在动态追逃任务中的灵活零样本控制问题，本文提出三个认知构念（关系结构、聚光灯注意、可供性计算）作为最小计算原语，并基于多模块图卷积网络实现零样本迁移。实验表明模型在未见过的环境中无需额外训练即可表现良好，揭示了动态追逃中灵活控制的核心机制。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.27659v1",
+      "source": "arxiv",
+      "title": "Transferable Reinforcement Learning via Probabilistic Latent Embeddings and Dynamic Policy Adaptation for Sim-to-Real Deployment",
+      "abstract": "Due to limited resources and public safety concerns, deep reinforcement learning (RL) agents for many cyber-physical systems (e.g., autonomous vehicles) are first trained in simulators. However, when deployed in real world environments, they often suffer from performance degradation or safety violations because of the inevitable Sim2Real gap. Existing zero-shot approaches, such as robust safe RL and domain randomization, mitigate this issue but typically at the cost of degraded performance or residual safety risks when experiencing unmodeled system dynamics. To address these limitations, we propose a novel reinforcement learning framework that enables safe and efficient policy transfer via probabilistic latent embeddings and dynamic policy adaptation. We consider a family of Constrained Markov Decision Processes (CMDPs) under different environment contexts. By leveraging latent context variable in meta-RL, the proposed framework infers the latent representation of the environment from simulated experiences. Furthermore, it incorporates a distributional RL formulation, which allows risk levels of the deployed policy to be adjusted dynamically, based on the estimation accuracy of the latent context variable. This strategy promotes safety at the early deployment stage and improves efficiency through fast policy adaptation under the Sim2Real gap.",
+      "authors": [
+        "Gengyue Han",
+        "Yiheng Feng"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-05-26T20:22:44+00:00",
+      "link": "https://arxiv.org/pdf/2605.27659v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "general RL transfer framework applicable to UAV interception policy deployment",
+      "llm_evidence_cn": "适用于无人机拦截策略部署的通用RL迁移框架",
+      "llm_evidence": "适用于无人机拦截策略部署的通用RL迁移框架",
+      "canonical_evidence": "适用于无人机拦截策略部署的通用RL迁移框架",
+      "llm_tldr_en": "Proposes a novel RL framework with probabilistic latent embeddings and dynamic policy adaptation to bridge sim-to-real gap, enabling safe and efficient policy transfer for cyber-physical systems.",
+      "llm_tldr_cn": "该文针对强化学习策略从仿真迁移到现实时性能下降和安全风险问题，提出一种结合概率潜在嵌入和动态策略适应的迁移框架，通过在线适应未建模动态，实现安全高效的策略迁移。实验表明该方法在多种机器人任务上优于现有方法。贡献在于提供了一种通用的sim-to-real解决方案，可支持无人机拦截等任务的策略部署。",
+      "llm_tldr": "该文针对强化学习策略从仿真迁移到现实时性能下降和安全风险问题，提出一种结合概率潜在嵌入和动态策略适应的迁移框架，通过在线适应未建模动态，实现安全高效的策略迁移。实验表明该方法在多种机器人任务上优于现有方法。贡献在于提供了一种通用的sim-to-real解决方案，可支持无人机拦截等任务的策略部署。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.27917v1",
+      "source": "arxiv",
+      "title": "A Surveillance Evasion Game with Continuous Sensor Redeployment via Bilevel Optimization",
+      "abstract": "Uncrewed Aerial Systems (UASs) have become a growing threat to the security of critical infrastructure, exploiting spatiotemporal gaps in sensor perimeters to infiltrate restricted airspace undetected. We formulate this interaction as a two-player zero-sum differential game between an adversarial UAS and a heterogeneous sensor network of directional and omnidirectional sensors. Unlike earlier game-theoretic approaches that restrict the defender to discrete placement graphs or fixed configurations, we introduce a continuous sensor redeployment technique in which each sensor slides freely along the convex building boundaries. This is enforced via a log-sum-exp smooth approximation that preserves differentiability at polygon vertices, enabling optimization with gradient-based methods. The attacker's best response is computed via a two-step approach combining STP-RRT* for feasible trajectory initialization and nonlinear programming for detection-minimization refinement. The joint optimization converges to a Local Nash Equilibrium (LNE) via alternating bilevel optimization, with analytical first-order stationarity conditions derived for both players, thereby establishing a deployable baseline for heterogeneous sensor placements in CUAS missions.",
+      "authors": [
+        "Jaehyeok Kim",
+        "Kartik A. Pant",
+        "Joseph Kinerson",
+        "Kylie Sommer-Kohrt",
+        "Worawis Sribunma",
+        "Li-Yu Lin",
+        "James M. Goppert"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-27T03:44:27+00:00",
+      "link": "https://arxiv.org/pdf/2605.27917v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "UAV pursuit-evasion game with continuous sensor redeployment",
+      "llm_evidence_cn": "无人机追逃博弈，涉及连续传感器重新部署",
+      "llm_evidence": "无人机追逃博弈，涉及连续传感器重新部署",
+      "canonical_evidence": "无人机追逃博弈，涉及连续传感器重新部署",
+      "llm_tldr_en": "Formulates a two-player zero-sum differential game between an adversarial UAS and heterogeneous sensors for surveillance evasion. The game-theoretic framework aligns with UAV pursuit-evasion scenarios.",
+      "llm_tldr_cn": "本文将无人机视为入侵者，将传感器网络视为防御方，构建了双人零和微分博弈模型，并通过连续传感器重新部署技术优化防御策略。该博弈框架与无人机拦截中的追逃场景高度一致，其连续优化方法可为无人机自主追捕策略提供理论支持，尤其适用于单无人机对传感器的规避或拦截问题。",
+      "llm_tldr": "本文将无人机视为入侵者，将传感器网络视为防御方，构建了双人零和微分博弈模型，并通过连续传感器重新部署技术优化防御策略。该博弈框架与无人机拦截中的追逃场景高度一致，其连续优化方法可为无人机自主追捕策略提供理论支持，尤其适用于单无人机对传感器的规避或拦截问题。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
