@@ -68,6 +68,37 @@ subscriptions:
           source: manual
           note: ''
       updated_at: '2026-06-01T02:58:39.340Z'
+    - tag: wm-uav
+      description: 查找世界模型用在无人机控制上的论文
+      enabled: true
+      paper_sources:
+        - arxiv
+        - biorxiv
+      keywords:
+        - keyword: world model
+          keyword_cn: 世界模型
+          query: world model
+        - keyword: unmanned aerial vehicle
+          keyword_cn: 无人飞行器
+          query: unmanned aerial vehicle
+        - keyword: drone control
+          keyword_cn: 无人机控制
+          query: drone control
+        - keyword: reinforcement learning
+          keyword_cn: 强化学习
+          query: reinforcement learning
+      intent_queries:
+        - query: world model for unmanned aerial vehicle control
+          query_cn: 世界模型用于无人飞行器控制
+          enabled: true
+          source: manual
+          note: ''
+        - query: learning world model for quadrotor control
+          query_cn: 学习世界模型用于四旋翼控制
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-06-01T03:06:56.633Z'
 source_backends:
   arxiv:
     papers_table: arxiv_papers
