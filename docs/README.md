@@ -6,49 +6,49 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-01
-- 运行时间：2026-06-01 22:13:23 UTC
+- 最新运行日期：2026-06-02
+- 运行时间：2026-06-02 21:43:16 UTC
 - 运行状态：成功
 - 本次总论文数：9
 - 精读区：1
 - 速读区：8
 
 ### 今日简报（AI）
-今日多智能体强化学习焦点：面向任务无人机网络的能效优化与个体奖励机制。  
-精读推荐《Scaling up Energy-Aware Multi-Agent Reinforcement Learning for Mission-Oriented Drone Networks with Individual Reward》（9.0分），提出了在规模扩展中兼顾能效与个体奖励的方法。  
-建议进一步关注延迟补偿、约束强化学习等实际部署中的关键挑战，以平衡个体奖励与系统协同。
-- 详情：[/202606/01/README](/202606/01/README)
+1) 今日精读一篇基于JAX的GPU加速可微分四旋翼模拟器，速读涵盖无人机跟踪、多机器人运动规划与鲁棒控制。  
+2) 最值得关注：Crazyflow模拟器以8.0分展现了高精度可微分仿真的潜力；扩散模型结合多智能体强化学习的运动规划方法也是亮点。  
+3) 建议优先精读Crazyflow论文了解其设计，并留意速读中扩散模型与NMPC-CBF控制的最新进展。
+- 详情：[/202606/02/README](/202606/02/README)
 
 ### 精读区论文标签
-1. [Scaling up Energy-Aware Multi-Agent Reinforcement Learning for Mission-Oriented Drone Networks with Individual Reward](/202606/01/2605.24992v1-scaling-up-energy-aware-multi-agent-reinforcement-learning-for-mission-oriented-drone-networks-with-individual-reward)  
-   标签：评分：9.0/10、query:ui
-   evidence：面向任务导向无人机网络的能量感知多智能体强化学习与个体奖励
+1. [Crazyflow: An Accurate, GPU-Accelerated, Differentiable Drone Simulator in JAX](/202606/02/2606.01478v1-crazyflow-an-accurate-gpu-accelerated-differentiable-drone-simulator-in-jax)  
+   标签：评分：8.0/10、query:ui
+   evidence：GPU加速可微分无人机模拟器，支持集群强化学习
 
 ### 速读区论文标签
-1. [Decoupled Delay Compensation: Enhancing Pre-trained MARL Policies via Learned Dynamics Filtering](/202606/01/2605.26286v1-decoupled-delay-compensation-enhancing-pre-trained-marl-policies-via-learned-dynamics-filtering)  
+1. [Dual-branch Distilled Transformer for Efficient Asymmetric UAV Tracking](/202606/02/2605.28018v1-dual-branch-distilled-transformer-for-efficient-asymmetric-uav-tracking)  
    标签：评分：7.0/10、query:ui
-   evidence：针对MARL策略的延迟补偿模块，可解决无人机集群通信延迟问题
-2. [Scalable Constrained Multi-Agent Reinforcement Learning via State Augmentation and Consensus for Separable Dynamics](/202606/01/2605.30461v1-scalable-constrained-multi-agent-reinforcement-learning-via-state-augmentation-and-consensus-for-separable-dynamics)  
+   evidence：高效无人机跟踪框架，对单无人机拦截至关重要
+2. [Generative Multi-Robot Motion Planning via Diffusion Modeling with Multi-Agent Reinforcement Learning Guidance](/202606/02/2606.00933v1-generative-multi-robot-motion-planning-via-diffusion-modeling-with-multi-agent-reinforcement-learning-guidance)  
    标签：评分：7.0/10、query:ui
-   evidence：分布式约束多智能体强化学习与共识方法，可用于无人机集群协同
-3. [Generalized Intention Modeling in Multi-Agent Reinforcement Learning](/202606/01/2605.31318v1-generalized-intention-modeling-in-multi-agent-reinforcement-learning)  
+   evidence：多机器人运动规划与MARL引导，可用于多无人机围捕
+3. [Robust Integrated Planning and Control for Quadrotors in Dynamic Environments via NMPC with CBF Penalties](/202606/02/2606.01038v1-robust-integrated-planning-and-control-for-quadrotors-in-dynamic-environments-via-nmpc-with-cbf-penalties)  
    标签：评分：7.0/10、query:ui
-   evidence：多智能体强化学习中的通用意图建模，可直接用于无人机集群对抗场景
-4. [Dreaming Of Others: Latent Teammate Modeling In World Models For Multi-Agent Reinforcement Learning](/202606/01/2605.31361v1-dreaming-of-others-latent-teammate-modeling-in-world-models-for-multi-agent-reinforcement-learning)  
+   evidence：四旋翼鲁棒规划与控制，适用于拦截机动
+4. [Network Distributed Multi-Agent Reinforcement Learning for Consensus Control of Quadcopters](/202606/02/2606.02107v1-network-distributed-multi-agent-reinforcement-learning-for-consensus-control-of-quadcopters)  
    标签：评分：7.0/10、query:ui
-   evidence：世界模型中的队友建模方法可提升多智能体协同能力，适用于无人机集群
-5. [Ratio-Variance Regularized Policy Optimization](/202606/01/2605.26784v1-ratio-variance-regularized-policy-optimization)  
+   evidence：基于网络分布式MARL的四旋翼一致性控制，直接适用于无人机群围捕
+5. [Coordination Graphs for Constrained Multi-Agent Reinforcement Learning](/202606/02/2606.02337v1-coordination-graphs-for-constrained-multi-agent-reinforcement-learning)  
+   标签：评分：7.0/10、query:ui
+   evidence：约束多智能体强化学习的协调图
+6. [Critical Infrastructure Defense Against Aerial Swarms Under Sensing Uncertainty: Online Allocation With Finite-Time Guarantees](/202606/02/2605.26838v1-critical-infrastructure-defense-against-aerial-swarms-under-sensing-uncertainty-online-allocation-with-finite-time-guarantees)  
    标签：评分：6.0/10、query:ui
-   evidence：通用强化学习策略优化方法，可应用于无人机控制任务
-6. [SCALE-COMM: Shared, Contrastively-Aligned Latent Embeddings for MARL Communication](/202606/01/2605.27532v1-scale-comm-shared-contrastively-aligned-latent-embeddings-for-marl-communication)  
+   evidence：防御空中无人机群，类似围捕任务
+7. [LLM-ALSO: LLM-Driven Adaptive Learning-Signal Optimization for Multi-Agent Reinforcement Learning](/202606/02/2605.29293v1-llm-also-llm-driven-adaptive-learning-signal-optimization-for-multi-agent-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：自监督的稳定多智能体通信学习框架，适用于无人机集群协同
-7. [CA-AC-MPC: CUDA-Accelerated Actor-Critic Model Predictive Control](/202606/01/2605.29155v1-ca-ac-mpc-cuda-accelerated-actor-critic-model-predictive-control)  
+   evidence：多智能体强化学习与LLM驱动机智信号设计；为多无人机强化学习提供方法桥梁
+8. [Market-Based Replanning for Safety-Critical UAV Swarms in Search and Rescue Missions](/202606/02/2606.01970v1-market-based-replanning-for-safety-critical-uav-swarms-in-search-and-rescue-missions)  
    标签：评分：6.0/10、query:ui
-   evidence：CUDA加速的actor-critic模型预测控制用于敏捷无人机竞速，方法可迁移至拦截控制
-8. [FLAG: Flow Policy MaxEnt-RL by Latent Augmented Guidance](/202606/01/2605.30749v1-flag-flow-policy-maxent-rl-by-latent-augmented-guidance)  
-   标签：评分：6.0/10、query:ui
-   evidence：生成式流策略最大化熵强化学习，可应用于无人机控制
+   evidence：无人机蜂群市场机制重规划，涉及多智能体协调
 
 
 <div class="dpr-home-promo-card">

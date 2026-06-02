@@ -1,0 +1,370 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-02T21:37:59.413011+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 8,
+    "quick_skim_target": 11,
+    "quick_selected": 8
+  },
+  "deep_dive": [
+    {
+      "id": "2606.01478v1",
+      "source": "arxiv",
+      "title": "Crazyflow: An Accurate, GPU-Accelerated, Differentiable Drone Simulator in JAX",
+      "abstract": "High-quality, large-scale synthetic data from simulations is becoming a cornerstone for pushing the capabilities of robot algorithms. While aerial robotics simulators have evolved to support specialized needs such as fidelity, differentiability, and swarms independently, a unified platform that can synthesize data across all these domains is missing. In this work, we propose Crazyflow, a simulator designed to push the limits of aerial-robotics algorithm development, from model-based to data-driven methods, gradient-based to sampling-based approaches, and single-agent to multi-agent systems. Compared to existing state-of-the-art drone simulators, it achieves speeds more than an order of magnitude faster for a single drone and can simulate thousands of swarms of 4000 drones each. Real-world experiments show Crazyflow supports both analytical-gradient-based policy learning, achieving sub-centimeter trajectory tracking accuracy without domain randomization, and sampling-based obstacle avoidance at speeds exceeding half a billion steps per second. Breaking the traditional train-then-deploy paradigm, we show that its unprecedented speed even enables in-flight reinforcement learning; we demonstrate this by throwing a physical drone into the air and training a recovery policy from scratch in 0.38 seconds, successfully stabilizing the drone. Crazyflow supports multiple levels of simulation abstraction, is directly compatible with all open-source Crazyflie models, and enables rapid reconfiguration across custom drone platforms and applications by providing a light-weight system identification pipeline. By pushing accuracy, speed, and differentiability simultaneously, Crazyflow serves as an open-source resource for synthetic data generation, with emerging capabilities for large-scale parallelization for online, in-execution learning and optimization, opening the door to novel algorithm development.",
+      "authors": [
+        "Martin Schuck",
+        "Marcel P. Rath",
+        "Yufei Hua",
+        "AbhisheK Goudar",
+        "SiQi Zhou",
+        "Angela P. Schoellig"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.MA",
+        "eess.SY"
+      ],
+      "published": "2026-05-31T22:38:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.01478v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "GPU-accelerated differentiable UAV simulator enabling RL for swarms",
+      "llm_evidence_cn": "GPU加速可微分无人机模拟器，支持集群强化学习",
+      "llm_evidence": "GPU加速可微分无人机模拟器，支持集群强化学习",
+      "canonical_evidence": "GPU加速可微分无人机模拟器，支持集群强化学习",
+      "llm_tldr_en": "Crazyflow is a fast, differentiable drone simulator in JAX that supports single and multi-agent RL, enabling scalable research on UAV swarms and interception strategies.",
+      "llm_tldr_cn": "无人机算法开发需要统一的高保真可微分大规模仿真平台，Crazyflow填补这一空白：基于JAX实现GPU加速和可微分，单个无人机仿真速度比现有模拟器快一个数量级以上，可同时模拟数千架无人机；支持从模型驱动到数据驱动、从单智能体到多智能体的多种方法。该模拟器将直接推动多无人机围捕和拦截的强化学习研究。",
+      "llm_tldr": "无人机算法开发需要统一的高保真可微分大规模仿真平台，Crazyflow填补这一空白：基于JAX实现GPU加速和可微分，单个无人机仿真速度比现有模拟器快一个数量级以上，可同时模拟数千架无人机；支持从模型驱动到数据驱动、从单智能体到多智能体的多种方法。该模拟器将直接推动多无人机围捕和拦截的强化学习研究。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.28018v1",
+      "source": "arxiv",
+      "title": "Dual-branch Distilled Transformer for Efficient Asymmetric UAV Tracking",
+      "abstract": "Given the real-time demands of UAV tracking, many methods simplify the backbone to reduce computation, but this often weakens feature representation and degrades performance in complex scenarios. To alleviate this issue, we propose EATrack, an efficient and asymmetric UAV tracking framework centered around a teacher-guided dual-branch distillation strategy that enhances the feature expressiveness of the lightweight student model. Specifically, EATrack investigates two complementary perspectives of knowledge transfer: spatially focused feature-level distillation that compensates for weakened representations by guiding the student to learn strong target representations, and prediction-level distillation that enhances spatial localization by learning the teacher's capability for accurate target localization. Furthermore, to enhance robustness against appearance variations, we introduce a fine-grained target-aware distillation strategy that selectively transfers the teacher's target modeling capacity to the student. A temporal adaptation module is incorporated at inference to enhance robustness over time. Experiments on five UAV benchmarks demonstrate that EATrack achieves a favorable balance between accuracy and speed. Code: https://github.com/GXNU-ZhongLab/EATrack",
+      "authors": [
+        "Hongtao Yang",
+        "Bineng Zhong",
+        "Qihua Liang",
+        "Yaozong Zheng",
+        "Xiantao Hu",
+        "Yuanliang Xue",
+        "Shuxiang Song"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-05-27T06:20:13+00:00",
+      "link": "https://arxiv.org/pdf/2605.28018v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "efficient UAV tracking framework, essential for single UAV interception",
+      "llm_evidence_cn": "高效无人机跟踪框架，对单无人机拦截至关重要",
+      "llm_evidence": "高效无人机跟踪框架，对单无人机拦截至关重要",
+      "canonical_evidence": "高效无人机跟踪框架，对单无人机拦截至关重要",
+      "llm_tldr_en": "This paper proposes EATrack, a teacher-guided dual-branch distillation transformer for efficient asymmetric UAV tracking. It directly supports target tracking in single UAV interception scenarios.",
+      "llm_tldr_cn": "无人机跟踪受限于实时性需求导致轻量化模型表征能力弱。本文提出教师引导的双分支蒸馏框架，通过空间聚焦的特征级蒸馏和预测级蒸馏提升学生模型性能。实验表明EATrack在复杂场景下保持高效的同时达到高精度。该方法可直接用于单无人机拦截中的目标持续跟踪。",
+      "llm_tldr": "无人机跟踪受限于实时性需求导致轻量化模型表征能力弱。本文提出教师引导的双分支蒸馏框架，通过空间聚焦的特征级蒸馏和预测级蒸馏提升学生模型性能。实验表明EATrack在复杂场景下保持高效的同时达到高精度。该方法可直接用于单无人机拦截中的目标持续跟踪。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for single UAV interception",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.26838v1",
+      "source": "arxiv",
+      "title": "Critical Infrastructure Defense Against Aerial Swarms Under Sensing Uncertainty: Online Allocation With Finite-Time Guarantees",
+      "abstract": "This article presents a closed-loop, uncertainty-aware framework for defending a protected zone against coordinated incursions by swarms of small uncrewed aircraft systems (UAS). The interaction structure of the attackers is modeled as time-varying, while defenders operate under imperfect sensing. The proposed criticality-driven defender-to-attacker assignment strategy integrates three components: a probabilistic graph-based representation of the attacking swarm inferred from uncertain observations; a risk-aware attacker criticality model combining time-to-breach urgency with uncertainty; an online defender allocation mechanism that assigns and selectively reassigns defenders while limiting switching-induced instability through robust execution constraints. Analytical guarantees are established within a filtration-based first-hitting-time framework. In particular, finite-time triggering of the first capture event following detection is proven, and explicit mixed linear-geometric upper bounds are derived for the expected neutralization time. Monte Carlo simulations demonstrate the effectiveness of the proposed framework, achieving 85.6% neutralization efficiency under probabilistic sensing and 99.9% under deterministic sensing. Systematic ablation and sensitivity studies further quantify how detection thresholds and coordination parameters influence reliability and time-to-first-capture.",
+      "authors": [
+        "Shriya Pandey",
+        "Devaprakash Muniraj"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-05-26T10:54:20+00:00",
+      "link": "https://arxiv.org/pdf/2605.26838v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Defense against aerial swarms, similar to encirclement",
+      "llm_evidence_cn": "防御空中无人机群，类似围捕任务",
+      "llm_evidence": "防御空中无人机群，类似围捕任务",
+      "canonical_evidence": "防御空中无人机群，类似围捕任务",
+      "llm_tldr_en": "Proposes closed-loop uncertainty-aware framework for defending against UAS swarms; uses probabilistic graph and risk-aware assignment. Relevant to multi-UAV encirclement.",
+      "llm_tldr_cn": "针对防御区域受协同无人机群入侵时的传感不确定性问题，提出闭环不确定感知框架：推断概率图表示攻击群，结合时变交互结构；建立风险感知的关键性模型；在线分配防御者并限制切换。该框架直接回应多无人机围捕需求，但未强化学习主导。",
+      "llm_tldr": "针对防御区域受协同无人机群入侵时的传感不确定性问题，提出闭环不确定感知框架：推断概率图表示攻击群，结合时变交互结构；建立风险感知的关键性模型；在线分配防御者并限制切换。该框架直接回应多无人机围捕需求，但未强化学习主导。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.00933v1",
+      "source": "arxiv",
+      "title": "Generative Multi-Robot Motion Planning via Diffusion Modeling with Multi-Agent Reinforcement Learning Guidance",
+      "abstract": "Coordinating multiple robots in shared environments requires generating feasible trajectories for each agent while accounting for interactions among agents. Centralized planning approaches become difficult to scale as the number of robots increases, while decentralized approaches that allow each agent to plan independently do not inherently account for inter-agent interactions. This paper presents a framework for coordinated multi-robot motion planning that combines decentralized generative trajectory planning with multi-agent reinforcement learning (MARL)-based coordination. Each robot independently generates candidate trajectories using a diffusion model trained on single-agent motion data, leveraging the generative model's ability to produce feasible and diverse trajectories. To reduce conflicts between agents, a centralized value function trained via MARL guides the reverse diffusion process through gradient-based steering, enabling interaction-aware trajectory generation without centralized joint planning or retraining of the generative model. This guidance follows an exponential tilting formulation, in which the value function biases the denoising distribution toward trajectories with higher expected multi-agent return. The framework is evaluated in a simulated maze environment with four mobile robots. Experimental results show that the proposed value-guided diffusion planning reduces the inter-agent interference rate from 55.4% to 41.8%, demonstrating that coordination can be effectively achieved while preserving the scalability of decentralized trajectory generation. These results suggest that MARL-based value guidance can effectively introduce coordination into decentralized generative planners without requiring a fully joint multi-robot model.",
+      "authors": [
+        "Suk Ki Lee",
+        "Venkata Sai Deepak Mutta",
+        "Hyunwoong Ko"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-30T23:54:04+00:00",
+      "link": "https://arxiv.org/pdf/2606.00933v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-robot motion planning with MARL guidance for coordinated encirclement",
+      "llm_evidence_cn": "多机器人运动规划与MARL引导，可用于多无人机围捕",
+      "llm_evidence": "多机器人运动规划与MARL引导，可用于多无人机围捕",
+      "canonical_evidence": "多机器人运动规划与MARL引导，可用于多无人机围捕",
+      "llm_tldr_en": "Combines decentralized diffusion trajectory generation with MARL-based coordination for multi-robot motion planning. This framework is directly transferable to multi-UAV encirclement tasks.",
+      "llm_tldr_cn": "多机器人协调运动规划面临规模化与交互建模的挑战。本文提出扩散模型生成候选轨迹与多智能体强化学习协调相结合的框架，每个机器人独立生成轨迹后通过MARL选择最优联合方案。仿真实验证明该方法在避免碰撞的同时实现了高效协调。该框架可直接用于多无人机围捕任务中的轨迹规划与协同。",
+      "llm_tldr": "多机器人协调运动规划面临规模化与交互建模的挑战。本文提出扩散模型生成候选轨迹与多智能体强化学习协调相结合的框架，每个机器人独立生成轨迹后通过MARL选择最优联合方案。仿真实验证明该方法在避免碰撞的同时实现了高效协调。该框架可直接用于多无人机围捕任务中的轨迹规划与协同。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi UAV encirclement with reinforcement learning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.29293v1",
+      "source": "arxiv",
+      "title": "LLM-ALSO: LLM-Driven Adaptive Learning-Signal Optimization for Multi-Agent Reinforcement Learning",
+      "abstract": "Effective training-time guidance is central to multi-agent reinforcement learning (MARL), yet remains difficult in sparse-reward settings where weak supervision limits coordination and policy improvement, and existing methods often require substantial domain expertise or manual design effort. Large language models (LLMs) provide a promising alternative for flexible learning-signal design, yet existing LLM-based methods remain largely single-agent-oriented, one-shot, or weakly validated for the evolving training dynamics of cooperative MARL. To address these limitations, we propose LLM-ALSO, an iterative LLM-driven adaptive learning-signal optimization framework for MARL. Rather than directly deploying LLM-generated rewards, LLM-ALSO decomposes adaptation into iterative diagnosis, proposal, and validation: a Critic LLM diagnoses stage-specific learning and coordination failures from sparse-return metrics and compact behavior evidence, a Generator LLM proposes candidate reward-shaping configurations conditioned on the diagnosis, and branch-validation feedback refines candidates before they affect the main training trajectory. Through short-horizon validation and stage-aware adaptation, LLM-ALSO promotes only validated updates into training, reducing the risk of unreliable LLM-generated modifications. Experiments on sparse-reward cooperative MARL tasks show that LLM-ALSO improves sparse-evaluation performance and learning efficiency.",
+      "authors": [
+        "Xiaoguang Wu",
+        "Zhi Zheng",
+        "Hui Xiong"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-05-28T03:19:08+00:00",
+      "link": "https://arxiv.org/pdf/2605.29293v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "MARL with LLM-driven reward design; methodological bridge for multi-UAV RL",
+      "llm_evidence_cn": "多智能体强化学习与LLM驱动机智信号设计；为多无人机强化学习提供方法桥梁",
+      "llm_evidence": "多智能体强化学习与LLM驱动机智信号设计；为多无人机强化学习提供方法桥梁",
+      "canonical_evidence": "多智能体强化学习与LLM驱动机智信号设计；为多无人机强化学习提供方法桥梁",
+      "llm_tldr_en": "Proposes LLM-ALSO, an iterative LLM-driven framework for adaptive learning-signal optimization in cooperative MARL, addressing sparse rewards.",
+      "llm_tldr_cn": "该论文针对合作多智能体强化学习中的稀疏奖励问题，提出LLM-ALSO框架，利用大语言模型迭代优化学习信号（如奖励函数），无需大量领域知识。方法适用于无人机编队围捕等合作场景，可提升多智能体协调策略训练效率。实验验证了在稀疏奖励环境中策略改进效果。",
+      "llm_tldr": "该论文针对合作多智能体强化学习中的稀疏奖励问题，提出LLM-ALSO框架，利用大语言模型迭代优化学习信号（如奖励函数），无需大量领域知识。方法适用于无人机编队围捕等合作场景，可提升多智能体协调策略训练效率。实验验证了在稀疏奖励环境中策略改进效果。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.01038v1",
+      "source": "arxiv",
+      "title": "Robust Integrated Planning and Control for Quadrotors in Dynamic Environments via NMPC with CBF Penalties",
+      "abstract": "This paper presents a new robust integrated planning and control (IPC) strategy for multirotor uncrewed aerial vehicles. We propose a nonlinear model predictive control (NMPC) formulation that embeds control barrier functions (CBFs) as exponential penalties, improving feasibility while ensuring smooth obstacle avoidance under tight input bounds. The penalty weights provide a practical tuning knob to trade off tracking accuracy against avoidance aggressiveness. We enhance the system robustness by employing a high-gain disturbance observer (HGDO) to estimate and compensate for external disturbances. We also incorporate a Kalman filter (KF) for computationally efficient, real-time prediction of obstacle motion, enabling avoidance of moving obstacles. Comparative studies against both conventional NMPC and NMPC with hard CBF constraints, validated in Gazebo and hardware experiments, demonstrate superior feasibility, safety, and robustness. To the best of our knowledge, this is the first hardware-validated NMPC-CBF IPC framework, offering a practical step toward safe quadrotor deployment in dynamic environments.",
+      "authors": [
+        "Zeinab Shayan",
+        "Mohammadreza Izadi",
+        "Reza Faieghi"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-31T06:08:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.01038v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "robust planning and control for quadrotors, suitable for interception maneuvering",
+      "llm_evidence_cn": "四旋翼鲁棒规划与控制，适用于拦截机动",
+      "llm_evidence": "四旋翼鲁棒规划与控制，适用于拦截机动",
+      "canonical_evidence": "四旋翼鲁棒规划与控制，适用于拦截机动",
+      "llm_tldr_en": "This paper proposes an NMPC with CBF penalties for robust quadrotor planning and control in dynamic environments, including obstacle avoidance and disturbance rejection. It is directly applicable to single UAV interception tasks.",
+      "llm_tldr_cn": "四旋翼无人机在动态环境中的规划与控制面临输入约束与扰动挑战。本文提出嵌入控制障碍函数作为指数惩罚的非线性模型预测控制，在保证可行性同时实现平滑避障，并采用高增益扰动观测器与卡尔曼滤波器增强鲁棒性。仿真验证了其在规避动态障碍物方面的有效性。该方法可直接用于单无人机拦截中的机动规划。",
+      "llm_tldr": "四旋翼无人机在动态环境中的规划与控制面临输入约束与扰动挑战。本文提出嵌入控制障碍函数作为指数惩罚的非线性模型预测控制，在保证可行性同时实现平滑避障，并采用高增益扰动观测器与卡尔曼滤波器增强鲁棒性。仿真验证了其在规避动态障碍物方面的有效性。该方法可直接用于单无人机拦截中的机动规划。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.01970v1",
+      "source": "arxiv",
+      "title": "Market-Based Replanning for Safety-Critical UAV Swarms in Search and Rescue Missions",
+      "abstract": "Reliable autonomous UAV swarms in Search and Rescue (SAR) missions require fault-tolerant coordination capable of sustaining operations despite agent degradation. This paper introduces the Intelligent Replanning Drone Swarm (IRDS), a distributed coordination architecture designed for resource-constrained environments. The proposed framework employs a Reverse-Auction market mechanism where agents bid to service search sectors based on a distance-weighted cost function, coupled with a geometric consensus protocol for target verification. We evaluate the approach through physics-based simulations (N=8 agents, 8x8 grid) subjected to stochastic fault injection. Results indicate that the swarm autonomously reallocates tasks from failed agents with low latency relative to the total mission duration, maintaining a mission success rate of 93% under 25% workforce degradation. The proposed framework demonstrates a robust, empirically tested method for self-healing aerial robotic coordination.",
+      "authors": [
+        "Luiz Giacomossi",
+        "Andrea Haglund",
+        "Claire Namatovu",
+        "Emily Zainali",
+        "Esaias Målqvist",
+        "Yonatan M. Beyene",
+        "Ivan Tomasic",
+        "Baran Çürüklü",
+        "Håkan Forsberg"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.MA",
+        "eess.SY"
+      ],
+      "published": "2026-06-01T09:33:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.01970v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "UAV swarm coordination with market-based replanning, related to multi-agent RL",
+      "llm_evidence_cn": "无人机蜂群市场机制重规划，涉及多智能体协调",
+      "llm_evidence": "无人机蜂群市场机制重规划，涉及多智能体协调",
+      "canonical_evidence": "无人机蜂群市场机制重规划，涉及多智能体协调",
+      "llm_tldr_en": "This paper introduces a market-based replanning architecture for fault-tolerant UAV swarms in SAR. While not interception, its coordination method is transferable to encirclement tasks.",
+      "llm_tldr_cn": "搜救任务中的无人机蜂群需具备故障容错协调能力。本文提出智能重规划蜂群框架，采用反向拍卖市场机制进行任务分配，结合几何一致性协议验证目标。物理仿真表明蜂群能自动重分配故障无人机任务，保持覆盖率。该市场机制可借鉴用于多无人机围捕中的动态任务分配。",
+      "llm_tldr": "搜救任务中的无人机蜂群需具备故障容错协调能力。本文提出智能重规划蜂群框架，采用反向拍卖市场机制进行任务分配，结合几何一致性协议验证目标。物理仿真表明蜂群能自动重分配故障无人机任务，保持覆盖率。该市场机制可借鉴用于多无人机围捕中的动态任务分配。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.02107v1",
+      "source": "arxiv",
+      "title": "Network Distributed Multi-Agent Reinforcement Learning for Consensus Control of Quadcopters",
+      "abstract": "This paper proposes a Network Distributed Multi-Agent Reinforcement Learning (ND-MARL) framework for quadcopter consensus control. Compared to conventional multi-agent MARL formulations that rely on centralized planning or fully decentralized execution, ND-MARL incorporates the swarm communication graph into the decision process. Under a 2-Neighbor communication topology, each agent observes information of only two neighbors and outputs an action through a distributed policy. A high-level distributed consensus planner is trained using Multi-Agent Soft Actor-Critic (MASAC) and embedded in a hierarchical stack to generate reference target positions tracked by a low-level quadcopter controller. Results demonstrate smooth consensus trajectories and planner-tracker integration when compared to a centralized MARL controller. Most notably, the learned controller exhibits zero-shot scalability, as policies trained on a three-agent system are deployed to swarms of up to 250 agents under the same 2-Neighbor communication topology without retraining or fine-tuning, achieving consistent convergence with increasing steady-state spread at large team sizes due to sparse information propagation. These findings highlight ND-MARL as a stable framework for distributed, communication-aware quadcopter consensus control.",
+      "authors": [
+        "Youssef Mahran",
+        "Zeyad Gamal",
+        "Aamir Ahmad",
+        "Ayman El-Badawy"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-01T11:39:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.02107v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Network distributed MARL for quadcopter consensus control, directly applicable to UAV swarm encirclement",
+      "llm_evidence_cn": "基于网络分布式MARL的四旋翼一致性控制，直接适用于无人机群围捕",
+      "llm_evidence": "基于网络分布式MARL的四旋翼一致性控制，直接适用于无人机群围捕",
+      "canonical_evidence": "基于网络分布式MARL的四旋翼一致性控制，直接适用于无人机群围捕",
+      "llm_tldr_en": "Proposes ND-MARL for quadcopter consensus using distributed policy and MASAC training; method directly supports multi-UAV coordination tasks like encirclement.",
+      "llm_tldr_cn": "针对四旋翼群一致性控制问题，提出网络分布式多智能体强化学习框架，将通信拓扑融入决策过程。每个智能体仅观测两个邻居信息，通过分布式策略输出动作。高层分布式共识规划器使用MASAC训练，生成参考目标位置，底层控制器跟踪。实验证明平滑一致性轨迹，该方法可直接扩展至多无人机围捕等任务。",
+      "llm_tldr": "针对四旋翼群一致性控制问题，提出网络分布式多智能体强化学习框架，将通信拓扑融入决策过程。每个智能体仅观测两个邻居信息，通过分布式策略输出动作。高层分布式共识规划器使用MASAC训练，生成参考目标位置，底层控制器跟踪。实验证明平滑一致性轨迹，该方法可直接扩展至多无人机围捕等任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.02337v1",
+      "source": "arxiv",
+      "title": "Coordination Graphs for Constrained Multi-Agent Reinforcement Learning",
+      "abstract": "Constrained Multi-agent reinforcement learning (CMARL) faces two intertwined challenges: the joint action space grows exponentially with the number of agents, and additional requirements couple agents in ways that reward structure alone does not capture. We introduce Coordination Graphs for Constrained Multi-Agent Reinforcement Learning (CG-CMARL), a framework that addresses both challenges by combining coordination graphs with Lagrangian duality. The system decomposes the joint problem into pairwise regions, each served by a set of shared Q-functions, one for the primary objective and one for each of the constraints, so that the number of learned models is independent of the number of agents. At execution time, Max-Sum message passing coordinates actions across the factor graph, while a Lagrangian multiplier controls the objective--constraint tradeoff, allowing a single trained model to trace a Pareto front without retraining. We provide convergence guarantees under mild conditions, together with a compositional error bound that decomposes into separate interpretable sources, each traceable to a specific design choice and independently controllable. Experiments on cooperative navigation tasks (where teams of up to 10 agents must coordinate to reach target positions while satisfying pairwise constraints) show that our method produces Pareto fronts dominating established baselines trained at fixed reward-shaping ratios, while scaling to team sizes where centralized approaches become intractable.",
+      "authors": [
+        "Santiago Amaya-Corredor",
+        "Miguel Calvo-Fullana",
+        "Anders Jonsson"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-01T14:46:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.02337v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "coordination graphs for constrained multi-agent reinforcement learning",
+      "llm_evidence_cn": "约束多智能体强化学习的协调图",
+      "llm_evidence": "约束多智能体强化学习的协调图",
+      "canonical_evidence": "约束多智能体强化学习的协调图",
+      "llm_tldr_en": "Introduces Coordination Graphs for Constrained Multi-Agent RL (CG-CMARL), combining coordination graphs with Lagrangian duality to handle exponential action spaces and constraints.",
+      "llm_tldr_cn": "针对约束多智能体强化学习中联合动作空间指数增长和耦合约束问题，提出协调图与拉格朗日对偶相结合的框架。将问题分解为成对区域，使用共享Q函数，学习模型数量与智能体数量解耦，执行时通过Max-Sum消息传递协调动作。",
+      "llm_tldr": "针对约束多智能体强化学习中联合动作空间指数增长和耦合约束问题，提出协调图与拉格朗日对偶相结合的框架。将问题分解为成对区域，使用共享Q函数，学习模型数量与智能体数量解耦，执行时通过Max-Sum消息传递协调动作。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
