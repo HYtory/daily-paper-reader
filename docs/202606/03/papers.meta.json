@@ -1,0 +1,54 @@
+{
+  "label": "2026-06-03",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03T21:41:50",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202606/03/2606.01325v1-search-optimistic-policy-selection-between-scene-noise-and-drift-for-uav-radar-search",
+      "section": "quick",
+      "title_en": "SEArch: Optimistic Policy Selection Between Scene Noise and Drift for UAV Radar Search",
+      "authors": "Noor Khial, Naram Mhaisen, Loay Ismail, Amr Mohamed",
+      "date": "2026-05-31",
+      "pdf": "https://arxiv.org/pdf/2606.01325v1",
+      "score": "6.0",
+      "evidence": "无人机雷达搜索中的策略选择，与追逃博弈相关",
+      "tldr": "无人机雷达搜索面临环境噪声与场景漂移的挑战，固定检测器性能不佳。本文采用多策略范式，将任务建模为在线策略选择问题。基于SEA框架提出SEArch和W-SEArch算法，实现乐观自适应学习。在动态非平稳场景中，相比非自适应基线，遗憾值降低高达30%。",
+      "tags": "query:ui",
+      "abstract_en": "Unmanned Aerial Vehicles (UAVs) equipped with radar sensors are deployed for target search missions in diverse environments, where targets exhibit characteristic signatures (e.g., respiration micro-motion in human search) detectable through occlusions. A fundamental challenge arises from shifts in radar statistics as the UAV moves through a dynamic and potentially non-stationary environment, rendering any fixed signal-processing strategy suboptimal; yet perception and adaptation must run onboard a resource-constrained aerial node in real time. Since no single detector performs well across all conditions, we adopt a multi-policy paradigm and formulate UAV target search as an online policy selection problem over a library of specialized detectors, with performance measured by regret, the cumulative loss gap relative to the best policy in each scene. The setting couples in-scene stochastic noise with inter-scene shifts. Whereas prior methods capture only one regime, we account for both through the Stochastically Extended Adversary (SEA) framework, without requiring oracle knowledge of scene dynamics. Because adaptation must run at the UAV, we instantiate SEA through \\textsc{SEArch}, a lightweight optimistic Follow the Regularized Leader (OFTRL) selector with an adaptive learning rate, achieving regret $O(\\barσ_T \\sqrt{T} + \\sqrt{J})$, where $\\barσ_T$ captures radar measurement noise and $J$ is the number of scene transitions over the mission horizon $T$. To enable rapid adaptation under frequent scene changes, we further introduce \\textsc{W-SEArch}, a windowed variant that restarts every $w$ rounds and achieves regret $O(\\barσ_I \\sqrt{w})$ under at most one transition per window. Experiments show up to 30\\% regret reduction compared to non-adaptive baselines across a range of non-stationary settings.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/03/2606.01397v1-autopilot-preserving-residual-q-learning-with-hjb-inspired-finite-action-risk-filtering-for-fixed-wing-uav-command-supervision",
+      "section": "quick",
+      "title_en": "Autopilot-Preserving Residual Q-Learning with HJB-Inspired Finite-Action Risk Filtering for Fixed-Wing UAV Command Supervision",
+      "authors": "Mehmet Iscan, Batuhan Temiz",
+      "date": "2026-05-31",
+      "pdf": "https://arxiv.org/pdf/2606.01397v1",
+      "score": "6.0",
+      "evidence": "基于强化学习的固定翼无人机指令监督，可迁移至拦截任务",
+      "tldr": "固定翼无人机在风扰下自动驾驶仪难以同时维持空速、高度、航向，提出保留自动驾驶仪结构的残差指令监督方法。HJB半离散值迭代评价候选残差，结合控制李雅普诺夫与屏障函数的有限动作盾牌确保安全。仿真中路径跟踪误差从338.6米降至44.8米（降86.77%），优于Q学习残差，但空速误差略升。该方法在保持原有自动驾驶仪可靠性同时大幅提升精度。",
+      "tags": "query:ui",
+      "abstract_en": "A fixed-wing UAV must hold airspeed, altitude, and heading references under wind, gusts, and turbulence, channels coupled so that correcting one can degrade another. Classical autopilots stabilize the airframe well but adapt poorly when a hard crosswind meets an aggressive turn, while reinforcement-learning (RL) policies acting directly on the surfaces concentrate exploration risk at the actuator interface. We place a learned supervisor above an unchanged autopilot rather than inside it: it selects a residual from a finite, bounded action set on the commanded airspeed, altitude, and heading; the modified reference is projected into an admissible command envelope before reaching the autopilot, which stays the only actuator-facing controller. What is new is how the residual is chosen. HJB residual scores candidates with a semi-discrete value-iteration critic in the spirit of the Hamilton-Jacobi-Bellman (HJB) equation, ranks them by a no-op-relative Hamiltonian advantage, and filters them through a control-Lyapunov- and control-barrier-inspired finite-action shield that always keeps a no-op fallback. On a shared 12-state runtime holding the plant, autopilot, and actuator model fixed, so the comparison is at the package level, HJB residual lowers mean RMS path-tracking error to 44.809 m, against 338.617 m for the baseline autopilot and 88.809 m for a tabular-Q residual, an 86.77% reduction over the baseline and 49.54% over Q-learning. The gain concentrates where the baseline fails worst and comes with a measured rise in airspeed error, so no method dominates every metric. We present this autopilot-preserving residual command-supervision design and benchmark with its trade-offs reported intact.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/03/2606.03963v1-self-refining-agentic-reinforcement-learning-for-vision-conditioned-uav-navigation",
+      "section": "quick",
+      "title_en": "Self-Refining Agentic Reinforcement Learning for Vision-Conditioned UAV Navigation",
+      "authors": "Roohan Ahmed Khan, Yasheerah Yaqoot, Muhammad Ahsan Mustafa, Dzmitry Tsetserukou",
+      "date": "2026-06-02",
+      "pdf": "https://arxiv.org/pdf/2606.03963v1",
+      "score": "6.0",
+      "evidence": "面向视觉无人机导航的自精炼智能体RL框架，直接相关无人机自主性",
+      "tldr": "针对无人机导航中依赖人工设计奖励函数和反复调参的问题，提出AgenticRL框架，利用多模态GPT智能体自动生成奖励函数、训练策略并自我批判改进。闭环精炼使策略行为提升71%，在多种导航任务上验证，并实现91%真实世界成功率和94% sim-to-real准确率。",
+      "tags": "query:ui",
+      "abstract_en": "Deep reinforcement learning has shown strong potential for enabling autonomous robots to learn complex navigational tasks. However, its practical use still depends heavily on human designed reward functions and repeated manual fine tuning, which is time consuming and does not guarantee high success in the desired task. This paper presents AgenticRL, agent guided reinforcement learning framework that increases autonomy in reward design, policy refinement, and real world deployment for unmanned aerial vehicles (UAV) navigation tasks. AgenticRL uses a multimodal generative pre-trained tansformer (GPT) agent to interpret task information and visual scene observations, generate task specific reward functions, train policies using Proximal Policy Optimization (PPO) algorithm, and then act as a critic by evaluating the trained policy through diagnosis packets to generate feedback. Based on this feedback, the agent identifies failure modes and refines the reward function in a closed loop self improvement process. To further leverage the multimodal GPT agent during inference, AgenticRL uses real world images and natural language task information to automatically identify the active scenario and select the appropriate trained policy for execution. The framework is evaluated on multiple navigational tasks, including gate traversal, obstacle avoidance, wall barrier crossing with landing, trajectory following, and motion behavior learning. Experimental results show that the closed loop refinement process improves policy behavior compared with initial rewards by 71%. We also demonstrate sim-to-real transfer of the proposed framework, achieving a real world success rate of 91% and a sim-to-real accuracy of 94%.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
