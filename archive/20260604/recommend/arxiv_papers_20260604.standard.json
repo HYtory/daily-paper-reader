@@ -1,0 +1,254 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-04T21:19:51.306707+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2606.04518v1",
+      "source": "arxiv",
+      "title": "Cooperative Circumnavigation for Multiple Unmanned Surface Vehicles Without External Localization",
+      "abstract": "This paper proposes a cooperative target circumnavigation framework for multiple unmanned surface vehicles (USVs) operating without external localization. The objective is to maintain a uniform circular formation of a specified radius around a target using only limited onboard sensing. The framework adopts a heterogeneous perception strategy that distinguishes between the asymmetric sensing relationships with the target and among the USVs. Specifically, the USVs obtain relative range and displacement measurements through active perception and inter-vehicle communication, while bearing measurements to a non-cooperative target are acquired via passive sensors. To estimate relative positions--both among USVs and between each USV and the target--we employ a Maximum Correntropy Kalman Filter and a Pseudo-Linear Kalman Filter, respectively. A coupled oscillator-based formation controller is designed to ensure system observability while achieving circumnavigation. Theoretical analysis demonstrates that the controller ensures the relative motions between the USVs, as well as that between each USV and the target, satisfy the persistent excitation condition, thereby guaranteeing observability of the Kalman-based filters. The effectiveness of the proposed approach is validated through numerical simulations.",
+      "authors": [
+        "Xueming Liu",
+        "Lin Li",
+        "Xiang Zhou",
+        "Tianjiang Hu",
+        "Qingrui Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-03T06:54:01+00:00",
+      "link": "https://arxiv.org/pdf/2606.04518v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Cooperative circumnavigation for multiple unmanned vehicles, directly analogous to multi-UAV encirclement",
+      "llm_evidence_cn": "多无人车协同环绕，直接类比多无人机围捕",
+      "llm_evidence": "多无人车协同环绕，直接类比多无人机围捕",
+      "canonical_evidence": "多无人车协同环绕，直接类比多无人机围捕",
+      "llm_tldr_en": "Proposes a cooperative target circumnavigation framework for multiple USVs to maintain uniform circular formation around a target using only onboard sensing, addressing a similar task to multi-UAV encirclement.",
+      "llm_tldr_cn": "针对多无人艇在无外部定位条件下的协同目标环绕问题，提出一种异构感知框架，利用主动感知和被动传感器估计相对位置，实现均匀圆形编队。该方法虽面向水面艇，但其环绕控制策略可直接迁移至多无人机围捕场景，为协同包围提供技术参考。",
+      "llm_tldr": "针对多无人艇在无外部定位条件下的协同目标环绕问题，提出一种异构感知框架，利用主动感知和被动传感器估计相对位置，实现均匀圆形编队。该方法虽面向水面艇，但其环绕控制策略可直接迁移至多无人机围捕场景，为协同包围提供技术参考。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.05021v1",
+      "source": "arxiv",
+      "title": "Enhancing the MADDPG Algorithm for Multi-Agent Learning via Action Inference and Importance Sampling",
+      "abstract": "We investigate multi-agent deep reinforcement learning and propose two enhancements to the Multi-Agent Deep Deterministic Policy Gradient (MADDPG) algorithm. First, we introduce a novel Action Inference mechanism that enables each agent to predict other agents' intended actions, thereby improving the accuracy and stability of its own policy. Second, we apply an importance sampling strategy, using geometric distribution, in the replay buffer to prioritize more recent and informative experiences, which helps mitigate the non-stationarity inherent in multi-agent environments. We evaluate both modifications on the discrete-action Predator-Prey task provided by the PettingZoo library, a flexible Python interface for general multi-agent reinforcement learning benchmarks. Our results indicate that Action Inference is effective in improving learning stability and inter-agent cooperation and that importance sampling using geometric distribution can lead to significant improvements in exploration efficiency over standard MADDPG. Code available at https://github.com/shaashwathsivakumar/MARL_Proj",
+      "authors": [
+        "Marc Walden",
+        "Jason Liu",
+        "Shaashwath Sivakumar",
+        "Ryan Liu",
+        "Hamza Khan"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-03T15:44:56+00:00",
+      "link": "https://arxiv.org/pdf/2606.05021v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "MADDPG enhancements evaluated on Predator-Prey, akin to UAV pursuit-evasion",
+      "llm_evidence_cn": "在捕食者-猎物任务上改进MADDPG，类似无人机追逃博弈",
+      "llm_evidence": "在捕食者-猎物任务上改进MADDPG，类似无人机追逃博弈",
+      "canonical_evidence": "在捕食者-猎物任务上改进MADDPG，类似无人机追逃博弈",
+      "llm_tldr_en": "Enhances MADDPG with action inference and importance sampling, tested on Predator-Prey task; directly applicable to multi-agent UAV pursuit-evasion.",
+      "llm_tldr_cn": "针对多智能体深度强化学习中非平稳性问题，提出动作推断和重要性采样两项改进，增强MADDPG算法。在捕食者-猎物离散动作任务上验证，该方法能提升策略稳定性和样本效率，可迁移至无人机追逃博弈场景。",
+      "llm_tldr": "针对多智能体深度强化学习中非平稳性问题，提出动作推断和重要性采样两项改进，增强MADDPG算法。在捕食者-猎物离散动作任务上验证，该方法能提升策略稳定性和样本效率，可迁移至无人机追逃博弈场景。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.03963v1",
+      "source": "arxiv",
+      "title": "Self-Refining Agentic Reinforcement Learning for Vision-Conditioned UAV Navigation",
+      "abstract": "Deep reinforcement learning has shown strong potential for enabling autonomous robots to learn complex navigational tasks. However, its practical use still depends heavily on human designed reward functions and repeated manual fine tuning, which is time consuming and does not guarantee high success in the desired task. This paper presents AgenticRL, agent guided reinforcement learning framework that increases autonomy in reward design, policy refinement, and real world deployment for unmanned aerial vehicles (UAV) navigation tasks. AgenticRL uses a multimodal generative pre-trained tansformer (GPT) agent to interpret task information and visual scene observations, generate task specific reward functions, train policies using Proximal Policy Optimization (PPO) algorithm, and then act as a critic by evaluating the trained policy through diagnosis packets to generate feedback. Based on this feedback, the agent identifies failure modes and refines the reward function in a closed loop self improvement process. To further leverage the multimodal GPT agent during inference, AgenticRL uses real world images and natural language task information to automatically identify the active scenario and select the appropriate trained policy for execution. The framework is evaluated on multiple navigational tasks, including gate traversal, obstacle avoidance, wall barrier crossing with landing, trajectory following, and motion behavior learning. Experimental results show that the closed loop refinement process improves policy behavior compared with initial rewards by 71%. We also demonstrate sim-to-real transfer of the proposed framework, achieving a real world success rate of 91% and a sim-to-real accuracy of 94%.",
+      "authors": [
+        "Roohan Ahmed Khan",
+        "Yasheerah Yaqoot",
+        "Muhammad Ahsan Mustafa",
+        "Dzmitry Tsetserukou"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-02T17:50:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.03963v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "autonomous drone navigation using deep reinforcement learning",
+      "llm_evidence_cn": "使用深度强化学习的自主无人机导航",
+      "llm_evidence": "使用深度强化学习的自主无人机导航",
+      "canonical_evidence": "使用深度强化学习的自主无人机导航",
+      "llm_tldr_en": "AgenticRL uses a GPT agent to autonomously design reward functions and refine policies for vision-conditioned UAV navigation via deep RL, reducing manual tuning and improving success rates in complex tasks.",
+      "llm_tldr_cn": "该论文针对深度强化学习在无人机导航中依赖人工设计奖励函数和手动调参的问题，提出了AgenticRL框架。该框架利用多模态GPT智能体自动生成任务相关奖励函数，并通过PPO算法训练策略。实验结果表明，该方法在复杂导航任务中显著减少了人工干预，并提高了任务成功率。AgenticRL为无人机自主决策提供了一种更高效的强化学习范式，可潜在应用于拦截与围捕场景。",
+      "llm_tldr": "该论文针对深度强化学习在无人机导航中依赖人工设计奖励函数和手动调参的问题，提出了AgenticRL框架。该框架利用多模态GPT智能体自动生成任务相关奖励函数，并通过PPO算法训练策略。实验结果表明，该方法在复杂导航任务中显著减少了人工干预，并提高了任务成功率。AgenticRL为无人机自主决策提供了一种更高效的强化学习范式，可潜在应用于拦截与围捕场景。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "autonomous drone interception using deep reinforcement learning",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.00151v1",
+      "source": "arxiv",
+      "title": "Emergence of Exploration in Policy Gradient Reinforcement Learning via Retrying",
+      "abstract": "In reinforcement learning (RL), agents benefit from exploration only because they repeatedly encounter similar states: trying different actions can improve performance or reduce uncertainty; without such retries, a greedy policy is optimal. We formalize this intuition with ReMax, an objective that evaluates a policy by the expected maximum return over $M$ samples, where $M$ is a positive integer, while accounting for return uncertainty. Optimizing this objective induces stochastic exploration as an emergent property, without explicit bonus terms. For efficient policy optimization, we derive a new policy-gradient formulation for ReMax and introduce ReMax PPO (RePPO), a PPO variant that optimizes ReMax while generalizing the discrete retry count $M$ to a continuous parameter $m > 0$, enabling fine-grained control of exploration. Empirically, RePPO promotes exploration, without any explicit exploration bonuses, on the MinAtar and Craftax benchmarks.",
+      "authors": [
+        "Soichiro Nishimori",
+        "Paavo Parmas",
+        "Sotetsu Koyamada",
+        "Tadashi Kozuno",
+        "Toshinori Kitamura",
+        "Shin Ishii",
+        "Yutaka Matsuo"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-05-29T03:35:13+00:00",
+      "link": "https://arxiv.org/pdf/2606.00151v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "emergent exploration in policy gradient RL via retrying, applicable to UAV interception RL training",
+      "llm_evidence_cn": "通过重试机制在策略梯度强化学习中涌现探索，可应用于无人机拦截的RL训练",
+      "llm_evidence": "通过重试机制在策略梯度强化学习中涌现探索，可应用于无人机拦截的RL训练",
+      "canonical_evidence": "通过重试机制在策略梯度强化学习中涌现探索，可应用于无人机拦截的RL训练",
+      "llm_tldr_en": "ReMax objective and RePPO algorithm induce emergent exploration without explicit bonuses, improving RL sample efficiency for tasks like UAV interception.",
+      "llm_tldr_cn": "该论文针对强化学习中探索与利用的平衡问题，提出ReMax目标函数，通过最大化M次采样的期望最大回报来自然诱导随机探索，无需额外奖励项。推导出了新的策略梯度公式，并提出RePPO算法。理论分析和实验表明，该方法在多种环境中提升了探索效率和最终性能。这种通用探索增强方法可迁移至无人机拦截与围捕的RL训练中，提升策略学习效果。",
+      "llm_tldr": "该论文针对强化学习中探索与利用的平衡问题，提出ReMax目标函数，通过最大化M次采样的期望最大回报来自然诱导随机探索，无需额外奖励项。推导出了新的策略梯度公式，并提出RePPO算法。理论分析和实验表明，该方法在多种环境中提升了探索效率和最终性能。这种通用探索增强方法可迁移至无人机拦截与围捕的RL训练中，提升策略学习效果。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.04492v1",
+      "source": "arxiv",
+      "title": "Episodic Memory Temporal Consistency for Cooperative Multi-Agent Reinforcement Learning",
+      "abstract": "Cooperative Multi-Agent Reinforcement Learning (MARL) frequently suffers from severe reward sparsity and exploration bottlenecks. While episodic memory mechanisms mitigate these issues by reusing high-return trajectories, they often trap agents in local optima due to unconstrained incentive distribution and semantic representation collapse. To address this, we propose Episodic Memory Temporal Consistency (EMTC), a framework that robustly constructs and selectively leverages historical experiences. EMTC introduces two synergistic components: (1) a Temporally Consistent Semantic Embedder that integrates contrastive learning with time-conditioned state reconstruction, preventing representation collapse and enabling precise memory retrieval; and (2) a Temporal Consistency Gating Mechanism that dynamically modulates episodic incentives based on temporal consistency error. This adaptive gate filters misleading signals from pseudo-successful trajectories, effectively mitigating Q-value overestimation. We provide theoretical guarantees, establishing a strict error bound that directly links the observable temporal consistency error to the underlying trajectory optimality and representation quality. Extensive evaluations on the SMAC and GRF benchmarks demonstrate that EMTC consistently outperforms state-of-the-art baselines. Notably, compared to the strongest episodic baseline, EMTC achieves absolute win-rate improvements of up to 24% in super-hard SMAC scenarios and an average improvement of 28% across GRF tasks.",
+      "authors": [
+        "Zicheng Zhao",
+        "Yu Lan",
+        "Chengzhengxu Li",
+        "Zhaohan Zhang",
+        "Xiaoming Liu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.GT"
+      ],
+      "published": "2026-06-03T06:15:39+00:00",
+      "link": "https://arxiv.org/pdf/2606.04492v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Episodic memory temporal consistency for cooperative multi-agent RL, applicable to multi-UAV swarm tasks",
+      "llm_evidence_cn": "面向合作多智能体强化学习的经验记忆时间一致性，可应用于多无人机集群任务",
+      "llm_evidence": "面向合作多智能体强化学习的经验记忆时间一致性，可应用于多无人机集群任务",
+      "canonical_evidence": "面向合作多智能体强化学习的经验记忆时间一致性，可应用于多无人机集群任务",
+      "llm_tldr_en": "Proposes EMTC, a framework that enhances episodic memory with temporal consistency to overcome reward sparsity and exploration bottlenecks in cooperative MARL, which can benefit multi-UAV swarm training.",
+      "llm_tldr_cn": "针对合作多智能体强化学习中的奖励稀疏和探索瓶颈问题，提出经验记忆时间一致性框架，通过时间一致语义嵌入器和选择性经验利用机制，防止表示崩溃并提升记忆检索效率。该方法为多无人机集群的协同拦截与围捕提供了高效的训练范式。",
+      "llm_tldr": "针对合作多智能体强化学习中的奖励稀疏和探索瓶颈问题，提出经验记忆时间一致性框架，通过时间一致语义嵌入器和选择性经验利用机制，防止表示崩溃并提升记忆检索效率。该方法为多无人机集群的协同拦截与围捕提供了高效的训练范式。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.02313v1",
+      "source": "arxiv",
+      "title": "Towards Precise Intent-Aligned VLA Aerial Navigation via Expert-Guided GRPO",
+      "abstract": "Vision-Language-Action (VLA) models offer a promising end-to-end paradigm for unmanned aerial vehicles (UAVs) to accomplish complex tasks specified by fine-grained instructions. However, standard supervised fine-tuning (SFT) suffers from data scarcity, limited generalization, and weak supervision for nuanced and complicated human intents. Reinforcement fine-tuning offers a natural way to mitigate these challenges and align policy behaviors with human intents through designable feedback, but applying it to aerial navigation remains challenging due to inefficient exploration in expansive continuous spaces. To address these challenges, we introduce an efficient reinforcement learning (RL) framework for VLA-based aerial navigation. At its core, we propose EG-GRPO (Expert-Guided Group Relative Policy Optimization) to augment online rollouts with few-shot expert data. Additionally, we design a heterogeneous pipeline enabling parallel simulation and inference, which reduces rollout time by 43.5%. Across multiple tasks specified by complex human intents, EG-GRPO improves the success rate to 2.13x that of the SFT baseline, while improving intent alignment performance by 60.9%. These results demonstrate that our framework can move aerial navigation toward precise intent-aligned flight.",
+      "authors": [
+        "Tianyang Chen",
+        "Wenjun Li",
+        "Xin zhou",
+        "Yuze Wu",
+        "Fei Gao"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-01T14:31:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.02313v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "RL fine-tuning for VLA aerial navigation, applicable to UAV interception tasks",
+      "llm_evidence_cn": "强化学习微调用于VLA空中导航，可应用于无人机拦截任务",
+      "llm_evidence": "强化学习微调用于VLA空中导航，可应用于无人机拦截任务",
+      "canonical_evidence": "强化学习微调用于VLA空中导航，可应用于无人机拦截任务",
+      "llm_tldr_en": "Proposes expert-guided GRPO for efficient RL fine-tuning of VLA models in aerial navigation, achieving precise intent alignment.",
+      "llm_tldr_cn": "针对视觉-语言-动作模型在无人机精细指令导航中监督微调数据稀缺、泛化差的问题，本文提出基于专家引导的GRPO强化学习框架。通过设计可反馈的奖励和高效探索策略，在连续空间中实现精确的意图对齐。实验表明该方法在复杂导航任务中优于SFT基线，为无人机自主任务提供了端到端强化学习方案。",
+      "llm_tldr": "针对视觉-语言-动作模型在无人机精细指令导航中监督微调数据稀缺、泛化差的问题，本文提出基于专家引导的GRPO强化学习框架。通过设计可反馈的奖励和高效探索策略，在连续空间中实现精确的意图对齐。实验表明该方法在复杂导航任务中优于SFT基线，为无人机自主任务提供了端到端强化学习方案。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

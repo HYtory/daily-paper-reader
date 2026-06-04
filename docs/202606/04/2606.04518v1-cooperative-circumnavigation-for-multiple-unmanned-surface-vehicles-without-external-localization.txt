@@ -1,0 +1,1988 @@
+Title: Cooperative Circumnavigation for Multiple Unmanned Surface Vehicles Without External Localization
+
+URL Source: https://arxiv.org/pdf/2606.04518v1
+
+Published Time: Thu, 04 Jun 2026 00:40:09 GMT
+
+Number of Pages: 17
+
+Markdown Content:
+# Cooperative Circumnavigation for Multiple Unmanned Surface Vehicles Without External Localization 
+
+Xueming Liu †
+
+Lin Li †
+
+Xiang Zhou Tianjiang Hu Qingrui Zhang 
+
+School of Aeronautics and Astronautics, Sun Yat-sen University (Shenzhen Campus), Shenzhen, China 
+
+Abstract— This paper proposes a cooperative target circum-navigation framework for multiple unmanned surface vehicles (USVs) operating without external localization. The objective is to maintain a uniform circular formation of a specified radius around a target using only limited onboard sensing. The frame-work adopts a heterogeneous perception strategy that distinguishes between the asymmetric sensing relationships with the target and among the USVs. Specifically, the USVs obtain relative range and displacement measurements through active perception and inter-vehicle communication, while bearing measurements to a non-cooperative target are acquired via passive sensors. To estimate relative positions — both among USVs and between each USV and the target — we employ a Maximum Correntropy Kalman Filter and a Pseudo-Linear Kalman Filter, respectively. A coupled-oscillator-based formation controller is designed to ensure system observability while achieving circumnavigation. Theoretical anal-ysis demonstrates that the controller ensures the relative motions between the USVs, as well as that between each USV and the target, satisfy the persistent excitation condition, thereby guaranteeing observability of the Kalman-based filters. The effectiveness of the proposed approach is validated through numerical simulations. 
+
+Index Terms— Multi-USV System, Circumnavigation, Kalman Filter, Observability, Formation Control. 
+
+I. INTRODUCTION 
+
+# TARGET tracking is a core capability that enables unmanned surface vehicles (USVs) to conduct mis-sions such as marine environmental monitoring, surface rescue operations, and maritime law enforcement [1]– [3]. Compared to a single USV, coordinated multi-USV systems demonstrate greater efficiency and robustness in these tracking missions [4]–[6]. A prevalent coordination strategy for such systems is circumnavigation tracking, where multiple USVs maintain a uniform formation on a 
+
+0018-9251 © 2022 IEEE 
+
+KEY NOMENCLATURE 
+
+(·)i, (·)j , (·)o State of USV i, USV j, or target o.
+
+(·)ij , (·)io Relative states or parameters for inter-USV or USV-Target pairs. 
+
+p, v ∈ R2, x ∈ R4 Position, velocity, and their combined state vec-tor. 
+
+θi, v i, ω i ∈ R Yaw angle, surge speed, and yaw rate of USV i.
+
+δ, b ∈ R2, r ∈ R Displacement, bearing vector, and range. 
+
+zio ∈ R2, z ij ∈ R Equivalent measurements for USV-Target and inter-USV cases, respectively. 
+
+ˆ(·)−, ˆ(·)+ Prior and posterior estimated states. 
+
+P −
+
+> (·)
+
+, P +(·) Prior and posterior error covariance matrices, with (·) ∈ { ij, io }.
+
+˜(·), (·)∗ Measured and desired value of (·), respectively. 
+
+φi Desired phase angle of USV i.
+
+U(·) ∈ R Upper bound of (·).
+
+μ(·), R(·) Measurement noise and its covariance matrix for measurement (·). The dimension depends on that of (·).
+
+circle of a specified radius around the target [6]–[8]. Much of the existing studies [9]–[16] focus on controller design for USVs, which typically rely on the assumption that the positions of all USVs and the target are perfectly known. This assumption, however, is challenged by the lack of external positioning infrastructure ( e.g. in GPS-denied environments), which leads to unreliable localization [6], [7], [17], [18]. Under these constraints, effective circumnavigation requires each USV to estimate both the target state and its relative positions to neighboring vehicles. To tackle this challenge, several solutions have been developed based on limited onboard measurements typically range measurements [6], [19]–[21] or bearing measurements [18], [22], [23]. A key limitation of these studies is the ignorance of the intrinsic asymmetry between cooperation and noncooperation in the system, as they assume homo-geneous sensing modalities for both targets and neighbors. In reality, however, USVs often cooperate during target tracking, while the target itself is typically noncoopera-tive. This asymmetry leads to distinct sensor configuration challenges across different perception strategies. In par-ticular, bearing measurements can be obtained through passive sensing modalities, such as monocular cameras [18], [24], [25]. This passivity makes them well-suited for monitoring non-cooperative targets. However, they are ill-suited for inter-USV measurements for two main reasons. First, due to the limited field of view (FOV), monocular cameras can only cover a restricted area, meaning not all neighboring surroundings can be observed. While omnidirectional cameras could mitigate FOV limits, they entail additional burdens, including higher hardware costs and increased calibration complexity, which can be of-ten prohibitive for practical deployment. Second, bearing measurements become unreliable under non-line-of-sight (NLOS) conditions, thus causing measurement failures like mutual occlusion among USVs. In contrast, range measurements have received significant attention in multi-
+
+IEEE TRANSACTIONS ON AEROSPACE AND ELECTRONIC SYSTEMS VOL. XX, No. XX XXXXX 2022 1
+
+> arXiv:2606.04518v1 [cs.RO] 3 Jun 2026
+
+unmanned systems, especially with the increasing matu-rity of Ultra-Wideband (UWB) sensors [26]–[29]. More-over, the omnidirectionality of UWB technology enables it to avoid the limited FOV problem characteristic of vision-based approaches. In this paper, we propose a heterogeneous sensing strategy for multi-USV target circumnavigation. Each USV acquires bearing measurements of the target via onboard sensors. A Pseudo-Linear Kalman Filter (PLKF) [30] is introduced to estimate the target states. Alterna-tively, relative positioning between USVs is determined through range measurements. A common approach for estimating high-dimensional relative positions from one-dimensional ranges is to fuse them with inertial odometry information [26], [28], [29], [31]. This fusion enables the construction of a pseudo-linear measurement model by leveraging the spatial geometry between successive odometry displacements and range measurements [26], [28], [31]. However, existing studies either disregard the measurement noises [26], [31] or directly assume that UWB measurement noises follow a Gaussian distribution [28]. Recent findings indicate that UWB measurement noises are inherently non-Gaussian and exhibit a heavy-tailed distribution [32]. Such non-Gaussian features of UWB measurement noises can lead to significant esti-mation errors in practice, if not properly accounted for. To address these limitations, we adopt the Maximum Correntropy Kalman Filter (MCKF) [33], which mitigates the impact of such noises through the Maximum Corren-tropy Criterion (MCC), thereby enhancing the reliability of relative localization between USVs. The key difference between the MCKF and the standard Kalman filter (KF) or extended Kalman filter (EKF) lies in their optimization criteria. Conventional filters minimize the Mean Square Error (MSE), an approach that is optimal only under Gaussian noise assumptions. In contrast, MCKF employs the MCC as a robust similarity measure, which effectively downweights large outliers and is thus particularly suited to handling heavy-tailed non-Gaussian noise. Furthermore, both bearing and range measurements provide only partial positional information. Consequently, Kalman filter-based estimators must satisfy the observ-ability condition to ensure convergent state estimation. This requirement can be met by guaranteeing persistent excitation (PE) of the relative motions among the USVs as well as between each USV and the target [26], [30]. Si-multaneously, the multi-USV system must achieve target circumnavigation by forming an evenly spaced circular formation around the target. This leads to a complex dual control problem [24], [34]. To address this problem, this paper proposes a two-stage control framework. In the first stage, a coupled oscillator model [27], [35], [36] is em-ployed to generate time-varying desired relative positions. This dynamic guidance strategy actively induces the rel-ative motions required to satisfy the PE condition. In the second stage, a classical formation controller is applied by using these desired positions along with the estimated relative states to achieve circumnavigation. Furthermore, the proposed framework is also robust to temporary target occlusion. In such cases, the USVs maintain the enclosing formation by preserving their relative positions with neighboring vehicles. In summary, unlike previous works [6], [18]–[23] that assume homogeneous sensing for target circumnavigation, a heterogeneous sensing strategy is proposed to address sensor adaptation issues in practical applications. Re-garding relative positioning among USVs, prior range-based studies [26], [28], [31] assume PE for estimator convergence without guaranteeing it; in contrast, a co-operative control strategy is actively designed to ensure the PE condition in our work. For bearing-only target localization and tracking, unlike [30] which considers a single agent, a multi-USV system is analyzed with a rigorous observability proof. Most importantly, the above two objectives are not achieved separately but within a unified framework, simultaneously ensuring both estimator convergence under heterogeneous sensing and the goal of cooperative circumnavigation. Thus, the main contributions of this work are as follows. 1) A general framework is designed for a multi-USV system to perform target circumnavigation under limited onboard sensing, operating without global positioning. It explicitly addresses the in-herent sensing asymmetry by estimating the non-cooperative target with passive bearing measure-ments while localizing neighboring USVs via ac-tive ranging, thereby enhancing adaptability to practical constraints. 2) A pseudo-linear Maximum Correntropy Kalman Filter is proposed for range-odometry-based rela-tive localization between USVs. By systematically handling non-Gaussian noise from range sensors, this method overcomes a key limitation in prior work [26], [28], [31] and significantly enhances estimation robustness and localization reliability under practical sensing constraints. 3) A dual-purpose cooperative controller is designed that not only organizes the USVs into a stable cir-cular formation but also generates the PE required for estimator observability under partial observa-tions. The theoretical validity of this approach is rigorously established. The strategy also maintains the formation during temporary target occlusion, enhancing robustness in complex scenarios. The remainder of this paper is structured as follows. Section II introduces the motion and measurement models of the USVs. Section III then details the estimation of rel-ative positions between USVs and the target state. Based on this, Section IV presents the controller design, while Section V analyzes the observability of the proposed estimators. Finally, Section VI provides simulation results for verification.    
+
+> 2IEEE TRANSACTIONS ON AEROSPACE AND ELECTRONIC SYSTEMS VOL. XX, No. XX XXXXX 2022
+
+II. PROBLEM FORMULATION 
+
+Consider a team of n USVs, denoted by Vi for i ∈{1, . . . , n }, which cooperatively circumnavigate a moving target on a horizontal plane, as illustrated in Fig. 1. The sensing and communication assumptions for this task are as follows. 1) Global positioning is unavailable to each USV. However, each vehicle is equipped with an inertial measurement unit (IMU) that provides ego-motion information, enabling periodic odometry displace-ment measurements. 2) Each USV can measure relative ranges to all other USVs ( e.g. , via UWB sensors). 3) Each USV can obtain bearing measurements of the target ( e.g. , using visual sensors). During the mission, some USVs may temporarily lose target measurements due to occlusion; however, at any given time, at least one USV in the team maintains a valid measurement of the target. 4) For each vehicle Vi, the neighbor set is defined as 
+
+Ni = {1, . . . , n }\{ i}, indicating that every USV is mutually interconnected with all others and can exchange essential information accordingly. Based on the above sensing and communication as-sumptions, the two main objectives of this work are as follows: 1) Estimation of the relative positions between the USVs and the target only using onboard measure-ments. 2) Design of a cooperative controller to guide all vehicles to circumnavigate the target at a prede-fined radius with a uniform spatial distribution and ensure the observability of the relative position estimation. 
+
+Fig. 1: Illustration of the multi-USV cooperative circum-navigation task. At time step k, each USV i obtains its own displacement δi,k , the relative range rij,k to neighboring USV j, and the bearing vector bio,k to the target. The desired positions of USV i and USV j are denoted by dashed lines, where p∗ 
+
+> io,k
+
+and p∗ 
+
+> jo,k
+
+are their respective desired relative position. 
+
+A. Motion Model 
+
+In this paper, we focus on the fundamental issues of target circumnavigation, specifically relative localiza-tion and cooperative control. Hence, a simplified surge-yaw model [6] is employed to represent the motion characteristics of the USV (1). considering disturbances or hydrodynamic uncertainties. The discrete surge-yaw kinematic model for each Vi is described as follows 
+
+pi,k +1 = pi,k +
+
+cos θi,k 
+
+sin θi,k 
+
+
+
+vi,k ∆tθi,k +1 = θi,k + ωi,k ∆t
+
+(1) where pi,k ∈ R2 and θi,k ∈ R denote the position and yaw angle of Vi at time k∆t, respectively, with ∆t being the sampling period; vi,k ∈ R and ωi,k ∈ R are the control inputs, representing the surge speed and yaw rate, respectively. According to (1), the velocity of Vi at time step k is given by 
+
+vi,k = vi,k 
+
+cos θi,k 
+
+sin θi,k 
+
+
+
+(2) A real USV system generally has limited speed and turning rate. Hence, the control inputs are assumed to be bounded with |vi,k | ≤ Uvi and |ωi,k | ≤ Uωi , where Uvi
+
+and Uωi are positive constants. We denote the target state as xo,k = pTo,k vTo,k 
+
+T ∈
+
+R4, where po,k ∈ R2 represents the target position, and 
+
+vo,k ∈ R2 represents the target velocity. For the non-cooperative moving target, this paper employs a noise-driven double-integrator model [30], [37] 
+
+xo,k = Ax o,k −1 + wo,k −1 (3) where wo,k ∼ N (0, Qo) are the zero-mean Gaussian process noises with Qo denoting the covariance matrix, and 
+
+A =
+
+I2 ∆tI2
+
+02 I2
+
+
+
+(4) The process noise wo,k is introduced to characterize the unknown maneuverability of the target. The magnitude of the target velocity vo,k is assumed to be bounded by a constant Uvo > 0.
+
+B. Onboard Measurement Model 
+
+1) Odometry-based displacement measurements: As a core capability, autonomous navigation enables a USV to estimate its ego-motion by fusing data from propriocep-tive sensors ( e.g. IMUs) with exteroceptive sensors ( e.g. 
+
+vision, LiDAR). In this context, the self-displacement ˜δi,k 
+
+of the USV is measured at a fixed time intervals ∆t. The measurement model is defined as 
+
+ ˜δi,k = δi,k + μδi,k 
+
+δi,k = pi,k − pi,k −1
+
+(5) where δi,k denote the true displacement values, and 
+
+μδi,k ∼ N (0, Rδi ) represent the zero-mean Gaussian measurement noises with the covariance matrix given by 
+
+Rδi . 
+
+> AUTHOR ET AL.: SHORT ARTICLE TITLE 3
+
+2) Inter-USV range measurements: It is assumed that each USV is capable of measuring the relative distance to their neighboring vehicles. Formally, the range mea-surement ˜rij,k between neighbouring vehicles Vi and Vj ,with i, j ∈ { 1, . . . , n }, is specified as 
+
+ ˜rij,k = rij,k + μrij ,k 
+
+rij,k = ∥pi,k − pj,k ∥ (6) where rij,k denote the true inter-USV range measure-ments, and μrij ,k represent the measurement noises. In real-world applications, the inter-USV range measure-ments can be acquried using UWB sensors [26], [27], [32]. However, as noted in [27], [32], a large body of current work assumes that UWB measurement noise follows a Gaussian distribution, despite the presence of outliers in actual sensor noise. To address this, this paper models the measurement noise using a Gaussian mixture model to account for such outliers. 
+
+μrij ,k ∼ (1 − ϵ)N (0 , Rμrij ) + ϵN (0 , Routliers μrij 
+
+) (7) where ϵ denotes the proportion of outliers, Rμrij is the nominal covariance and Routliers μrij 
+
+is the covariance associ-ated with the outlier component. Furthermore, as reported in [32], the analysis of real UWB sensor data reveals that the measurement noise exhibits an asymmetric and heavy-tailed distribution. Therefore, this paper also considers a log-normal distribution model for the measurement noise. 
+
+ln  μrij ,k + rs
+
+ ∼ N (0 , Rμr ) (8) where Rμr represents the equivalent covariance and rs
+
+represents the shift parameter, which is used to adjust the degree of left skewness. In Section III-A, the common characteristics of the noise in the final equivalent mea-surement values under these two different models will be further analyzed. 
+
+3) Bearing measurement of target: The bearing vector from the target to the USV Vi is defined as [30], [37] 
+
+( ˜bio,k = bio,k + μbio ,k 
+
+bio,k = pi,k −po,k   
+
+> ∥pi,k −po,k ∥
+
+(9) where bio,k denote the true bearing vectors, and μbio ,k ∼N (0, Rbio ) are the zero-mean Gaussian measurement noise with the covariance matrix defined by Rbio . In prac-tice, bearing information can be acquired using vision-based sensors, such as a servo camera [30], [37]. Conse-quently, the USV is assumed to be capable of consistently obtaining these measurements from the target, except in cases where the line of sight is obstructed by obstacles. 
+
+III. STATE ESTIMATION 
+
+In this section, we introduce the filtering algorithms to achieve the relative localization among USVs and es-timate the target state, respectively. Firstly, a MCKF [33] is developed for the relative localization among USVs using range and displacement measurements. Secondly, a PLKF [30] is designed to estimate the target state using bearing-only measurements. 
+
+A. Relative Localization Inter-USVs 
+
+Denote the relative position between Vi and Vj as 
+
+pij,k = pi,k − pj,k (10) As established in [35], spatial geometric constraints de-rived from consecutive relative distance and displacement measurements lead to the following model via the cosine law 
+
+12
+
+ r 2 
+
+> ij,k
+
+− r 2 
+
+> ij,k −1
+
++ ∥δij,k ∥2 = δTij,k pij,k (11) with δij,k = δi,k − δj,k denoting the relative displacement between Vi and Vj . For Vi, it can receive the displacement 
+
+δj,k from Vj via inter-vehicle communication. Since the ideal value in (11) is corrupted by noise in practice, we formulate the measurement model as 
+
+zij,k = ˜δTij,k pij,k + μzij ,k (12) where 
+
+ zij,k = 12
+
+ ˜r 2 
+
+> ij,k
+
+− ˜r 2 
+
+> ij,k −1
+
++ ∥˜δij,k ∥2
+
+˜δij,k = ˜δi,k − ˜δj,k = δij,k + μδij ,k 
+
+(13) with μδij ,k ∼ N (0, Rδij ) is the zero-mean Gaussian measurement noise with the covariance matrix given by Rδij = Rδi + Rδj , and μzij ,k are the equivalent measurement noises with a zero mean and a covariance matrix Rzij ,k .Note that the equivalent measurement noises μzij ,k in model (12) are compound noises with complex properties. The displacement measurement noises from an IMU are typically much smaller than range measurement noise over short intervals, so they are assumed to be negligible. The equivalent measurement noises μzij ,k arise from the combined effect of linear and quadratic terms. Through derivation, it can be shown that 
+
+μzij ,k ≈rij,k μrij ,k − rij,k −1μrij ,k −1
+
++ 12
+
+
+
+μ2  
+
+> rij ,k
+
+− μ2 
+
+> rij ,k −1
+
+ (14) In practical scenarios, the relative distance rij between USVs typically undergoes only slight variations over a short sampling interval. Consequently, the statistical characteristics of the equivalent noise μzij ,k are predom-inantly governed by the terms (μrij ,k − μrij ,k −1) and 
+
+(μ2  
+
+> rij ,k
+
+− μ2 
+
+> rij ,k −1
+
+). Since these terms involve subtracting two identically distributed random variables, structural analysis reveals that, regardless of whether the range measurement noise μrij ,k follows model (7) or model (8), the equivalent noise μzij ,k exhibits the following statistical properties: (i) it is approximately symmetric about zero; (ii) it has a sharp peak near zero; and (iii) it displays heavy-tailed behavior on both sides. For robust relative localization between USVs under the non-Gaussian noise in measurement model (12), this paper implements the MCKF. This algorithm addresses the limitations of conventional Kalman filters in heavy-tailed or impulsive noise by adopting the maximum correntropy criterion (MCC). Unlike the minimum mean square error criterion, which uses a quadratic cost function    
+
+> 4IEEE TRANSACTIONS ON AEROSPACE AND ELECTRONIC SYSTEMS VOL. XX, No. XX XXXXX 2022
+
+sensitive to outliers, MCC evaluates similarity through a Gaussian kernel-based measure of joint probability density. This approach accounts for higher-order statistics, inherently suppressing large errors and improving estima-tion accuracy in challenging noise conditions. The flowchart of the MCKF-based relative positioning algorithm is presented below, while detailed theoretical foundations can be found in [33]. 1) Let the prior and posterior estimates of pij,k at time step k be denoted as ˆp− 
+
+> ij,k
+
+and ˆp+
+
+> ij,k
+
+, respectively, with corresponding error covariances P − 
+
+> ij,k
+
+and P +
+
+> ij,k
+
+. For ini-tialization, select appropriate Gaussian kernel bandwidths 
+
+σ = [ σ1, σ 2, σ 3] and a sufficiently small tolerance ι > 0.The algorithm is initialized with a given initial guess 
+
+( ˆ p+
+
+> ij, 0
+
+, P +
+
+> ij, 0
+
+).2) For k ≥ 1, USV Vi obtains its own displacement 
+
+˜δi,k from ego-motion and sends it to neighbor Vj ; simul-taneously, it receives ˜δj,k form Vj . The relative position is then propagated as follows 
+
+ˆp− 
+
+> ij,k
+
+= ˆ p+ 
+
+> ij,k −1
+
++ ˜δij,k 
+
+P − 
+
+> ij,k
+
+= P + 
+
+> ij,k −1
+
++ Rδij 
+
+(15) 3) Perform Cholesky decompositions on P − 
+
+> ij,k
+
+and 
+
+Rzij ,k to obtain Bpij ,k and Bzij ,k , respectively, such that 
+
+P − 
+
+> ij,k
+
+= Bpij ,k BT 
+
+> pij ,k
+
+, Rzij ,k = Bzij ,k BTzij ,k (16) Then, construct the augmented block matrix 
+
+Bij,k =
+
+Bpij ,k 00 Bzij ,k 
+
+
+
+(17) Further, compute the following matrices 
+
+Dij,k = B−1
+
+> ij,k
+
+ ˆp−
+
+> ij,k
+
+zij,k 
+
+
+
+, Wij,k = B−1
+
+> ij,k
+
+ I2
+
+˜δTij,k 
+
+
+
+(18) 4) The posterior estimate ˆp+ 
+
+> ij,k
+
+at the time step k is obtained as the convergent value of the iterative sequence 
+
+ˆp(s)
+
+> ij,k
+
+. The sequence is initialized with ˆp(0)  
+
+> ij,k
+
+= ˆ p− 
+
+> ij,k
+
+and updated for s > 0 by 
+
+ˆp(s) 
+
+> ij,k
+
+= ˆ p− 
+
+> ij,k
+
++ ¯Kij,k 
+
+ zij,k − ˜δTij,k ˆp−
+
+> ij,k
+
+ (19) where the gain matrix ¯Kij,k and related terms are given by 
+
+¯Kij,k = ¯P − 
+
+> ij,k
+
+˜δij,k 
+
+ ˜δTij,k ¯P − 
+
+> ij,k
+
+˜δij,k + ¯Rij,k 
+
+−1
+
+¯P − 
+
+> ij,k
+
+= Bpij ,k ( ¯Cpij ,k )−1BT 
+
+> pij ,k
+
+¯R− 
+
+> ij,k
+
+= Bzij ,k ( ¯Czij ,k )−1BTzij ,k 
+
+¯Cpij ,k = diag Gσ1 (w1
+
+> ij,k
+
+), G σ2 (w2
+
+> ij,k
+
+)
+
+¯Czij ,k = diag Gσ3 (w3
+
+> ij,k
+
+)
+
+wij,k = Dij,k − Wij,k ˆp(s−1) 
+
+> ij,k
+
+Here, wlij,k (for l = 1 , 2, 3) denotes the l-th element of 
+
+wij,k , and 
+
+Gσl (wlij,k ) = exp −
+
+ wlij,k 
+
+2
+
+2 σ2
+
+> l
+
+!
+
+where Gσl (wlij,k ) is the Gaussian kernel function. 5) The iteration stops once the condition in (20) is satisfied, and the posterior estimate is assigned as 
+
+ˆp+ 
+
+> ij,k
+
+= ˆ p(s)
+
+> ij,k
+
+. Otherwise, the index s is incremented, and the iteration continues. To ensure real-time computational determinism, a maximum number of iterations Lmax is further imposed as a secondary stopping criterion. 
+
+∥ ˆp(s) 
+
+> ij,k
+
+− ˆp(s−1)  
+
+> ij,k
+
+∥∥ ˆp(s−1)  
+
+> ij,k
+
+∥ ≤ ι (20) 6) Update the posterior covariance matrix using 
+
+P + 
+
+> ij,k
+
+=( I − ¯Kij,k ˜δTij,k )P −
+
+> ij,k
+
+(I − ¯Kij,k ˜δTij,k )T
+
++ ¯Kij,k Rij,k ¯KTij,k 
+
+(21) With this, the estimation cycle for time step k is complete. The algorithm then proceeds to time step k + 1 to acquire new measurements and repeat the updating process. The kernel bandwidth σl has a significant influence on the performance of the MCKF algorithm. As σl
+
+approaches positive infinity, the MCKF reduces to the classical Kalman filter. Hence, a large σl value should be selected, when the measurement noise exhibits mild heavy-tailed characteristics. Conversely, for significant heavy-tailed measurement noises, a small σl value are suggested to enhance the filtering robustness against out-liers. 
+
+B. USV–Target Relative State Estimation 
+
+The relative state xio,k between USV Vi and the target, derived from motion models (1) and (3), is defined by 
+
+xio,k ≜
+
+pio,k 
+
+vio,k 
+
+
+
+=
+
+pi,k − po,k 
+
+vi,k − vo,k 
+
+
+
+which comprises the relative position pio,k and relative velocity vio,k .Following the PLKF in [30], the pseudo-linear bearing measurement equation is formulated as 
+
+zio,k ≜ 02×1 = G˜bio ,k pio,k + μzio ,k (22) Here, G˜bio ,k = I2×2 − ˜bio,k ˜bTio,k is an orthogonal pro-jection operator, and μzio ,k is the equivalent measure-ment noise given by μzio ,k = rio,k G˜bio ,k μbio ,k , where 
+
+rio,k = ∥po,k −pi,k ∥ denotes the true distance between Vi
+
+and the target. Fig. 2 illustrates the geometric relationship between the orthogonal projection operator Gbio,k and the relative position vector pio,k . The plane spanned by 
+
+Gbio,k is orthogonal to bio,k . Since bio,k represents the unit direction vector of pio,k , it follows that Gbio ,k is also orthogonal to pio,k , thereby satisfying Gbio,k pio,k = 0.However, due to measurement noise, G˜bio ,k is not per-fectly orthogonal to pio,k , leading to a deviation captured by the measurement model in (22). To estimate the relative state xio,k , we formulate the final measurement equation via matrix augmentation as 
+
+zio,k ≜ 02×1 =
+
+h
+
+G˜bio ,k 02×2
+
+i
+
+xio,k + μzio ,k (23)  
+
+> AUTHOR ET AL.: SHORT ARTICLE TITLE 5
+
+Fig. 2: Schematic diagram illustrating the geometric re-lationship where the bearing vector bio,k is orthogonal to its projection matrix Gbio,k = I − bio,k bTio,k .Thus, the propagation step for the state estimate xio,k 
+
+is performed as follows 
+
+ˆx− 
+
+> io,k
+
+= A ˆx+
+
+> io,k −1
+
+P − 
+
+> io,k
+
+= AP +
+
+> io,k −1
+
+AT + Qo
+
+(24) Here, ˆx− 
+
+> io,k
+
+and ˆx+ 
+
+> io,k
+
+are the prior and posterior state estimates, and P − 
+
+> io,k
+
+and P + 
+
+> io,k
+
+are their corresponding error covariance matrices. Since the true distance rio,k is unavailable, the predicted distance ˆr− 
+
+> io,k
+
+= ∥ [I 0] ˆ x−
+
+> io,k
+
+∥ is used in-stead, which yields the noise covariance Rzio ,k =(ˆ r−
+
+> io,k
+
+)2G˜bio ,k Rbio GT 
+
+> ˜bio ,k
+
+of μzio ,k . With Hio,k ≜
+
+h
+
+G˜bio ,k 02×2
+
+i
+
+, the correction update is then performed 
+
+Kio,k = P −
+
+> io,k
+
+HTio,k 
+
+
+
+Hio,k P −
+
+> io,k
+
+HTio,k + Rzio ,k 
+
+†
+
+ˆx+ 
+
+> io,k
+
+= ˆ x− 
+
+> io,k
+
+− Kio,k Hio,k ˆx−
+
+> io,k
+
+P + 
+
+> io,k
+
+= ( I − Kio,k Hio,k ) P −
+
+> io,k
+
+(25) where † represents the pseudoinverse. It should be noted that vision-based bearing measure-ments may fail due to obstruction by obstacles. In this case, the PLKF reverts to a prediction-only step 
+
+ˆx+ 
+
+> io,k
+
+= ˆ x−
+
+> io,k
+
+, P + 
+
+> io,k
+
+= P − 
+
+> io,k
+
+(26) This skips the measurement update to prevent the in-jection of spurious data. The resulting increase in P +
+
+> io,k
+
+properly reflects the growing state uncertainty. Standard PLKF updates resume once valid bearing measurements are restored. 
+
+IV. CIRCUMNAVIGATION CONTROL 
+
+To achieve coordinated circumnavigation, a two-stage control strategy is designed for each USV using the relative estimates from the previous section. This strategy first employs a coupled oscillator model to autonomously negotiate desired relative positions, then applies a forma-tion control law to realize the maneuver. Additionally, a vector-field-based obstacle avoidance strategy is incorpo-rated for safe navigation. An overview of the proposed heterogeneous percep-tion and control architecture for each USV is illustrated in Fig. 3. Specifically, for vehicle Vi, the relative inter-USV localization is estimated using the MCKF, based on 
+
+Fig. 3: System architecture of the proposed USV circum-navigation framework. Each USV relies solely on onboard measurements to achieve relative state estimation for both USV-USV and USV-target interactions, and then imple-ments circumnavigation control based on the estimated values and the desired references generated by a coupled oscillator model. The USVs exchange critical information with one another via a communication network. the received information δj,k from Vj via communication network. Meanwhile, the relative state between the USV and the target is estimated using the PLKF. Concurrently, 
+
+Vi receives the phase angle φj,k from neighboring USVs through communication, which is then used in the cou-pled oscillator model to generate the reference relative positions for circular formation. These estimates, along with the reference formation geometry, are subsequently fed into the circumnavigation control module. This archi-tecture effectively addresses the asymmetry inherent in heterogeneous sensing while ensuring stable circumnavi-gation performance in complex environments. 
+
+A. Desired Relative Positions Design 
+
+The desired relative position between USV Vi and the target at time step k is defined as 
+
+p∗ 
+
+> io,k
+
+= r∗
+
+> io
+
+ cos φi,k 
+
+sin φi,k 
+
+
+
+(27) where r∗ 
+
+> io
+
+is the specified circumnavigation radius and 
+
+φi,k is the desired phase angle. To achieve autonomous negotiation of a uniform distribution around the target, a coupled oscillator model [36], [38] is employed, wherein neighboring USVs exchange their desired phase angles. The phase dynamics are governed by 
+
+φi,k +1 = φi,k + ω∗ 
+
+> i
+
+∆t
+
++ ∆ t
+
+> n
+
+X
+
+> j=1
+> n
+
+X
+
+> m=1
+
+Km
+
+mn sin ( m [φi,k − φj,k ]) (28) where Km ∈ R (for m ∈ { 1, . . . , n }) are appropriate coupling gains, and ω∗ 
+
+> i
+
+> 0 denotes the constant desired yaw rate. Thus, the corresponding desired relative velocity between USV Vi and the target is 
+
+v∗ 
+
+> io,k
+
+= 1∆t (p∗ 
+
+> io,k +1
+
+− p∗
+
+> io,k
+
+) (29) Furthermore, the desired relative position between Vi and 
+
+Vj is given by 
+
+p∗ 
+
+> ij,k
+
+= p∗ 
+
+> io,k
+
+− p∗ 
+
+> jo,k
+
+(30)    
+
+> 6IEEE TRANSACTIONS ON AEROSPACE AND ELECTRONIC SYSTEMS VOL. XX, No. XX XXXXX 2022
+
+Under the assumption that each USV Vi communi-cates mutually with all its neighbors, the system (28) converges exponentially fast to a stable state [38, Theorem 5.4]. Furthermore, when the system encounters dynamic changes such as USVs joining or leaving, it can promptly re-converge to a new equilibrium, thereby maintaining a uniform distribution of USVs around the target [27], [36]. 
+
+B. Cooperative Formation Control 
+
+Based on the estimated relative positions ˆp+
+
+> ij,k
+
+, relative states ˆx+ 
+
+> io,k
+
+≜ ( ˆ p+
+
+> io,k
+
+)T (ˆ v+
+
+> io,k
+
+)T T , and the desired rel-ative positions, a displacement-based formation controller [36], [39] for each USV Vi is designed as follows 
+
+(vi,k = cos θi,k sin θi,k 
+
+ vci,k 
+
+ωi,k = sat (Uωci , ω ci,k ) + ω∗
+
+> i
+
+(31) Here, sat (U, u) = (min {U, ∥u∥} /∥u∥) u defines a satu-ration function, and Uωci > 0 bounds the correction yaw rate ωci,k , given by 
+
+ωci,k = 1∆t arccos 
+
+1 0 vci,k 
+
+∥vci,k ∥
+
+!
+
+− θi,k 
+
+!
+
+The desired velocity command vci,k is given by 
+
+vci,k = sat (Uvfi
+
+, vfi,k ) + vti,k (32) where (
+
+vfi,k = P 
+
+> j∈N i∪{ o}
+
+κij 
+
+
+
+p∗ 
+
+> ij,k
+
+− ˆp+
+
+> ij,k
+
+
+
+vti,k = sat (Uvo , ˆvio,k ) + v∗
+
+> io,k
+
+(33) In (33), κij > 0 represent control gains, and Uvfi
+
+> 0 is the bound of vfi,k . Specifically, vfi,k is a consensus-based formation control term that depends on relative positions, while vti,k is a feedforward tracking term comprising the estimated target velocity ˆvio,k = vi,k − ˆv+ 
+
+> io,k
+
+and the desired relative velocity v∗
+
+> io,k
+
+. The estimated target velocity ˆv+ 
+
+> o,k
+
+is reasonably bounded by Uvo , consistent with the actual target velocity. Thus, the velocity of each USV is bounded by 
+
+Uvi = Uvfi
+
++ Uvo + Uv∗
+
+> io
+
+From the form of Uvi , it can be seen that the velocity of the USV is greater than that of the target, thereby enabling the tracking task. In addition, Uvo and Uvi are determined by the target’s maximum speed and the USV’s physical capabilities, respectively. In the controller design, 
+
+Uv∗ 
+
+> io
+
+should be set as large as possible, and Uvfi
+
+as relatively small. This parameter tuning ensures that the PE generated by v∗ 
+
+> io,k
+
+can effectively counterbalance the effects of vfi,k and ˆvio,k . Consequently, it guarantees that the relative motion induced by the controller satisfies the PE condition, a point that will be further analyzed in Section V. 
+
+C. Obstacle Avoidance Control 
+
+In practical applications, USVs must avoid obstacles such as reefs. To this end, each USV Vi is assumed to be capable of acquiring environmental obstacle information in real-world deployments using sensors such as omnidi-rectional sonar. This information includes, for example, the contours of reefs or islands. The obstacle boundaries are represented by a set of M discrete points relative to the vehicle {pim,k } for m = {1, . . . , M }. It is worth noting that the relative position of each obstacle boundary point is typically not obtained directly. For sensors such as sonar or LiDAR, these positions are derived by combining bearing and range information. A detailed treatment of this derivation is beyond the scope of this paper, and a simplified approach is adopted here. A collision avoidance mechanism is triggered if ∥pim,k ∥ < d s, where ds is the safety distance. The collision-free control term based on the vector field [40], [41] is given by 
+
+vsi,k =
+
+> M
+
+X
+
+> m=1
+
+k1 exp − ∥pim,k ∥2
+
+2k2d2
+
+> s
+
+!
+
+pim,k 
+
+∥pim,k ∥ (34) where k1, k 2 ∈ R are positive scalar gains, selected ac-cording to the safety distance ds. To incorporate obstacle avoidance, the safety term vsi,k is directly added to the control law in (32), yielding 
+
+vci,k = sat (Uvfi
+
+, vfi,k ) + vti,k + sat (Uvsi , vsi,k ) (35) where Uvsi > 0 is the upper bound for the collision avoid-ance term. Consequently, the final controller is identical in form to that defined in (31). 
+
+V. OBSERVABILITY ANALYSIS 
+
+In this section, we present the analysis results on the observability of the MCKF and PLKF under the cooperative circumnavigation control algorithm given in Section IV. The analysis is performed by assuming the coupled oscillator (28) has reached its equilibrium after some time step ks. In addition, measurement noises are neglected to focus on the theoretical analysis. It should be emphasized that observability is a prerequisite for the Kalman filtering framework to estimate the state from measurements. The effects of non-Gaussian noise on estimation accuracy and robustness are considered only under the premise that observability is guaranteed. The following assumptions are further introduced to support our follow-up analysis. ASSUMPTION 1 The desired yaw rate ω∗ 
+
+> i
+
+is sufficiently small, ensuring that for some integer N ≥ 2 and for any l ≥ ks, the vectors in {v∗
+
+> io,k
+
+}l+N −1 
+
+> k=l
+
+are pairwise non-collinear; that is, for any two distinct time steps 
+
+{k1, k 2} ⊆ { l, l + 1 , . . . , l + N − 1}, v∗ 
+
+> io,k 1
+
+and v∗
+
+> io,k 2
+
+are non-collinear. 
+
+Since the sampling interval ∆t is typically constrained by sensor capabilities, for a given ∆t, desired circum-navigation radius r∗
+
+> io
+
+, and maximum USV speed Uvi , 
+
+> AUTHOR ET AL.: SHORT ARTICLE TITLE 7
+
+Assumption 1 is readily satisfied in practice. Conse-quently, the USV requires at least N time steps to complete one full circumnavigation of the target. Based on Assumption 1, the desired relative velocities v∗ 
+
+> io,k
+
+and 
+
+v∗ 
+
+> ij,k
+
+= v∗ 
+
+> io,k
+
+− v∗ 
+
+> jo,k
+
+satisfy the PE condition. Formally, there exist λ∗ 
+
+> io, 2
+
+≥ λ∗ 
+
+> io, 1
+
+> 0, λ ∗ 
+
+> ij, 2
+
+≥ λ∗ 
+
+> ij, 1
+
+> 0 such that for all l ≥ ks
+
+λ∗
+
+> io, 1
+
+I ⩽ S∗ 
+
+> io,l
+
+≜ 
+
+> l+N−1
+
+X
+
+> k=l
+
+v∗
+
+> io,k
+
+(v∗
+
+> io,k
+
+)T ⩽ λ∗
+
+> io, 2
+
+I (36) 
+
+λ∗
+
+> ij, 1
+
+I ⩽ S∗ 
+
+> ij,l
+
+≜ 
+
+> l+N−1
+
+X
+
+> k=l
+
+v∗
+
+> ij,k
+
+(v∗
+
+> ij,k
+
+)T ⩽ λ∗
+
+> ij, 2
+
+I (37) A geometric interpretation of this relation is provided in [35]. Here, λ∗ 
+
+> io, 1
+
+and λ∗ 
+
+> io, 2
+
+(or λ∗ 
+
+> ij, 1
+
+and λ∗
+
+> ij, 2
+
+) denote the minimum and maximum eigenvalues of S∗ 
+
+> io,l
+
+(or S∗
+
+> ij,l
+
+), respectively. These eigenvalues are determined by the shift phase ω∗ 
+
+> i
+
+∆t, the specified radius r∗ 
+
+> io
+
+and the window size N . If N ω ∗ 
+
+> i
+
+∆t ≤ 2π, we have 
+
+
+
+λ∗
+
+> io, 1
+
+, λ ∗ 
+
+> io, 2
+
+= N U 2
+
+> v∗
+> io
+
+ 12 ± sin [( N − 1) ω∗ 
+
+> i
+
+∆t]2( N − 1) ω∗ 
+
+> i
+
+∆t
+
+
+
+λ∗
+
+> ij, 1
+
+, λ ∗ 
+
+> ij, 2
+
+= N U 2
+
+> v∗
+> ij
+
+ 12 ± sin [( N − 1) ω∗ 
+
+> i
+
+∆t]2( N − 1) ω∗ 
+
+> i
+
+∆t
+
+ (38) where Uv∗ 
+
+> io
+
+= 2r∗ 
+
+> io
+> ∆t
+
+sin 
+
+ ω∗ 
+
+> i∆t
+> 2
+
+
+
+, U v∗ 
+
+> ij
+
+= 2Uv∗ 
+
+> io
+> ∆t
+
+sin 
+
+ ω∗ 
+
+> i∆t
+> 2
+
+
+
+are the Euclidean norms of v∗ 
+
+> io,k
+
+and v∗
+
+> ij,k
+
+, respectively. Based on the preceding analysis, we now demonstrate that under controller (31), the relative velocities between USVs, vij,k = vi,k − vj,k , and those between each USV 
+
+Vi and the target, vio,k = vi,k − vo,k , also satisfy the PE condition. LEMMA 1 If (37) holds and appropriate values for ω∗ 
+
+> i
+
+∆t and r∗ 
+
+> io
+
+are chosen such that λ∗ 
+
+> ij, 1
+
+>
+
+√N
+
+
+
+Uvfi
+
++ Uvfj
+
++ 2 Uvo
+
+
+
+, then the relative velocities 
+
+vij,k between USVs satisfies the following PE condition for l ≥ ks
+
+λij, 1I ⩽ Sij,l ≜ 
+
+> l+N−1
+
+X
+
+> k=l
+
+vij,k vTij,k ⩽ λij, 2I (39) 
+
+where 
+
+λij, 1 =
+
+h
+
+λ∗ 
+
+> ij, 1
+
+− √N
+
+
+
+Uvfi
+
++ Uvfj
+
++ 2 Uvo
+
+i 2
+
+and 
+
+λij, 2 =
+
+h
+
+λ∗ 
+
+> ij, 2
+
++ √N
+
+
+
+Uvfi
+
++ Uvfj
+
++ 2 Uvo
+
+i 2
+
+Proof: 
+
+See Appendix A. LEMMA 2 If (36) holds and appropriate values for ω∗ 
+
+> i
+
+∆t
+
+and r∗ 
+
+> io
+
+are chosen such that λ∗ 
+
+> io, 1
+
+> √N
+
+
+
+Uvfi
+
++ 2 Uvo
+
+
+
+,then the relative velocities vio,k between Vi and the target satisfies the following PE condition for l ≥ ks
+
+λio, 1I ⩽ Sio,l ≜ 
+
+> l+N−1
+
+X
+
+> k=l
+
+vio,k vTio,k ⩽ λio, 2I (40) 
+
+where 
+
+λio, 1 =
+
+h
+
+λ∗ 
+
+> io, 1
+
+− √N
+
+
+
+Uvfi
+
++ 2 Uvo
+
+i 2
+
+and 
+
+λio, 2 =
+
+h
+
+λ∗ 
+
+> io, 2
+
++ √N
+
+
+
+Uvfi
+
++ 2 Uvo
+
+i 2
+
+Proof: 
+
+See Appendix B. To satisfy the PE conditions in Lemma 1 and Lemma 2, the desired radius r∗ 
+
+> io
+
+should be increased in response to a larger upper bound on the target’s speed, 
+
+Uvo . For a fixed r∗
+
+> io
+
+, the PE degree can be enhanced by increasing the desired yaw rate ω∗ 
+
+> i
+
+within the USV’s maximum speed constraint Uvi , which correspondingly elevates the relative velocity bounds Uv∗ 
+
+> io
+
+and Uv∗ 
+
+> ij
+
+. It is important to note that the theoretical analysis provides sufficient, not necessary, conditions for PE. The condition may still be satisfied even if the parameters do not meet the criteria outlined in the lemmas. Nevertheless, this analysis offers clear and practical guidelines for parameter selection. The core principle is to select sufficiently large values for r∗ 
+
+> io
+
+and ω∗ 
+
+> i
+
+such that the resulting relative speed bound Uv∗ 
+
+> io
+
+is large enough to dominate the combined ef-fects of the USV’s pursuit speed Uvfi
+
+and the target speed 
+
+Uvo , thereby fulfilling the PE condition. This requirement is substantially relaxed for stationary or uniformly moving targets. Based on Lemmas 1 and 2, we now present the main observability results for the MCKF and PLKF. Measurement noise is neglected in this analysis to focus on the system’s structural properties. THEOREM 1 Under the controller (31) and Assumption 1, the relative positions pij,k between Vi and Vj are observable in the MCKF system, which incorporates the process model (15) and the measurement model (12) .Specifically, the Gramian matrix for l ≥ ks
+
+Φij,l ≜ 
+
+> l+N−1
+
+X
+
+> k=l
+
+δij,k δTij,k > 0 (41) 
+
+is positive definite. Proof: 
+
+See Appendix C. To further analyze the relative state estimation be-tween the USV and the target, we first present the following assumptions. ASSUMPTION 2 It is assumed that the distance between each USV and the target satisfies ds ≤ ∥ pio,k ∥ ≤ Upio .Furthermore, parameters ω∗ 
+
+> i
+
+, ∆t and r∗ 
+
+> io
+
+can be selected such that λio, 1 > ∆t√N U pio 
+
+Given the finite perception range of onboard sensors, the distance between a USV and its target is reasonably assumed to be bounded above by Upio . This bound typi-cally decreases as the USV approaches the target during a tracking mission. Furthermore, as indicated by (38), λio, 1
+
+is approximately proportional to (r∗
+
+> io
+
+)4. This relationship    
+
+> 8IEEE TRANSACTIONS ON AEROSPACE AND ELECTRONIC SYSTEMS VOL. XX, No. XX XXXXX 2022
+
+suggests that system performance can be enhanced by initializing the task with a larger desired circumnavigation radius r∗
+
+> io
+
+. In addition, the desired yaw rate ω∗ 
+
+> i
+
+should be selected as large as possible and the sampling frequency should be increased ( i.e. , ∆t reduced), subject to the system’s physical constraints. Notably, this parameter selection criterion is consistent with the one obtained from Lemma 1 and Lemma 2. THEOREM 2 Under the controller (31) and subject to Assumption 2 and Lemma 2, the relative positions pio,k 
+
+between Vi and the unknown maneuvering target are observable in the PLKF system, which integrates the process model (24) and the measurement model (22) .Specifically, the Gramian matrix for l ≥ ks
+
+Φio,l ≜ 
+
+> l+N−1
+
+X
+
+> k=l
+
+GT
+
+> bio ,k
+
+Gbio ,k > 0 (42) 
+
+is positive definite, where Gbio ,k = I − bio,k bTio,k without considering noises. Proof: 
+
+See Appendix D. The analysis shows that to ensure observability, the USV must possess sufficiently high maneuverability to overcome the interference caused by unknown target maneuvers, thereby guaranteeing sufficiently rich relative motion. A direct corollary is that if the target is stationary or moving at constant velocity, its velocity also becomes observable. In practice, for targets with unknown ma-neuvers or when considering the influence of real-world factors such as water currents, the state estimation of the target can only be confined within a certain range. Nevertheless, this is sufficient to meet the requirements of most rescue and similar missions. 
+
+VI. SIMULATION 
+
+This section presents simulation studies designed to comprehensively validate the effectiveness and robustness of the proposed relative localization and cooperative cir-cumnavigation framework. The performance of the inter-USV relative positioning algorithm is first verified under non-Gaussian noise conditions, followed by a validation of the overall framework. All simulations are conducted on a personal computer equipped with an Intel Core i7-10850H CPU clocked at 2.70GHz and 32GB of RAM. The principal simulation parameters are summarized in Table I. The initial estimates of the inter-USV rela-tive positions are generated as ˆp+ 
+
+> ij, 0
+
+∼ N (pij, 0, P +
+
+> ij, 0
+
+).Likewise, the initial estimate of the relative state xio 
+
+between USV and the target is randomly drawn from 
+
+ˆx+ 
+
+> io, 0
+
+∼ N (xio, 0, P +
+
+> io, 0
+
+). In the implementation of the MCKF, the process noise follows a Gaussian distribution. Accordingly, the kernel bandwidth parameters σ1 and 
+
+σ2 are set to sufficiently large values such that the MCKF behaves similarly to the standard Kalman filter. In contrast, to address the heavy-tailed characteristics of the TABLE I: PARAMETERS IN SIMULATION                                            
+
+> Parameter Value
+> Sampling period ∆t0.1sDesired yaw rate ω∗
+> iπ/ 30 rad/s Safety distance ds3.0mPhysical upper bounds Uωci, U vi, U voπ/ 3,5,0.5
+> Controller upper bounds Uvfi
+> , U vsi1.5,0.7
+> Formation gains κij , κ io 1.5,0.9
+> Collision avoidance gains k1, k 21.7,0.5
+> Target process noise Qo0.01 I
+> Bearing measurement noise Rbio 10 −4I
+> Displacement measurement noise Rδi10 −6I
+> MCKF kernel bandwidths [σ1, σ 2, σ 3][9999 ,9999 ,0.8]
+> MCKF stopping threshold ι10 −6
+> MCKF maximum iterations Lmax 10
+> Initial covariance P+
+> ij, 025 I
+> Initial covariance P+
+> io, 0I
+
+equivalent measurement noise, the corresponding kernel bandwidth σ3 is set to a small value, thereby enhancing the filter’s robustness against outliers. In addition, the required number of iterations for MCKF is generally small and related to ι [33]. Typically, the smaller the ι,the larger the number of iterations. In the simulations of this paper, the maximum number of iterations does not exceed 4, and conservatively, Lmax = 10 is chosen. The following performance metrics are introduced to quantify the estimation and tracking performance. 1) Relative position estimation error epij,k among USVs are introduced to quantify the relative localization accurracy, which are defined as 
+
+epij,k = max 
+
+> i∈V i
+
+
+
+max 
+
+> j∈N i
+
+∥ ˆp+ 
+
+> ij,k
+
+− pij,k ∥
+
+
+
+where a smaller value of epij,k implies better relative localization performance. 2) Relative position estimation error epio,k and relative velocity estimation error evio,k between the USV and the target are introduced to quantify the target state estimation performance. 
+
+
+
+epio,k = max 
+
+> i∈V i
+
+∥ ˆp+ 
+
+> io,k
+
+− pio,k ∥
+
+evio,k = max 
+
+> i∈V i
+
+∥ˆv+ 
+
+> io,k
+
+− vio,k ∥
+
+where smaller values of epio,k and evio,k indicate better state estimation performance. 3) Tracking error ec,k between the formation center trajectory and the target position are employed to char-acterize the overall position tracking performance of the cooperative circumnavigation controller, which is defined as 
+
+ec,k = 1
+
+n
+
+X
+
+> i∈V i
+
+pi,k − po,k  
+
+> AUTHOR ET AL.: SHORT ARTICLE TITLE 9
+
+where a smaller value of ec,k shows better tracking performance. Additionally, the instant at which all USVs have first converged to the desired circular formation such that their radii lie within ±10% of the desired radius, and thereafter remain within this bound for the duration of the simulation is referred to as the settling time. Furthermore, the average execution time per iteration, denoted as Avg. Run Time, is used to validate the real-time feasibility and computational efficiency of the proposed framework. 
+
+A. Comparison of Inter-USV Relative Localization 
+
+The performance of the proposed MCKF algorithm is evaluated against several baseline estimators, including standard methods such as Recursive Least Squares (RLS) [26] and the classical Kalman Filter (KF), as well as robust approaches including the Adaptive Kalman Filter (AKF) [42] and Robust Least Squares with a Huber loss function (Huber-RLS) [43]. While AKF targets a different robustness aspect than the heavy-tailed mea-surement noise considered in this paper, it is included as a representative adaptive robust filter to provide a broader comparison landscape. In contrast, Huber-RLS directly relevant to heavy-tailed noise and serves as a direct robust comparator. To assess the effectiveness of the proposed algorithm, we consider two distinct noise mod-els in simulation. In addition, comparative experiments are conducted using a real-world UWB dataset. 
+
+1) Performance under different range measurement noise models for inter-USV relative localization: We com-pare the relative position estimation results obtained by the aforementioned estimators under two different range measurement noise models: the Gaussian mixture model (7) and the log-normal distribution model (8). For the Gaussian mixture model (7), we set ϵ = 0 .2, Rμrij =0.4, Routliers μrij 
+
+= 10 ; for the log-normal distribution model (8), we set Rμr = 0 .7, r s = 0 .75 . To isolate the effect of noise characteristics on inter-USV relative localization, we consider a scenario in which two USVs perform circular motion along desired trajectories with r∗ 
+
+> io
+
+= 5 mand ω∗ 
+
+> i
+
+= π/ 30 rad/s, in the absence of a target. 0 10 20 30 40 50 Time (s)     
+
+> 0.5 1.0 3.0 20.0
+> RMSE (m)
+> RLS Huber-RLS KF AKF MCKF
+
+Fig. 4: RMSE of relative position estimation under Gaus-sian mixture model. The shaded regions represent ±1standard deviation across Monte Carlo runs. The vertical axis is in logarithmic coordinates. A total of 100 Monte Carlo simulations are conducted, and the estimation accuracy is quantified using the root-0 10 20 30 40 50     
+
+> Time (s)
+> 0.5 1.0 3.0 20.0 30.0
+> RMSE (m)
+> RLS Huber-RLS KF AKF MCKF
+
+Fig. 5: RMSE of relative position estimation under log-normal distribution model. The shaded regions represent 
+
+±1 standard deviation across Monte Carlo runs. The vertical axis is in logarithmic coordinates. 0 10 20 30 40 50     
+
+> Time (s)
+> 0.5 1.0 3.0 20.0 50.0
+> RMSE (m)
+> RLS Huber-RLS KF AKF MCKF
+
+Fig. 6: RMSE of relative position estimation with real-world UWB dataset. The shaded regions represent ±1standard deviation across Monte Carlo runs. The vertical axis is in logarithmic coordinates. mean-square error (RMSE). The RMSE results of the different relative localization algorithms are shown in Fig. 4 and Fig. 5 for the Gaussian mixture model and the log-normal distribution model, respectively. A comparison of the two figures reveals that, despite the differences in the underlying range measurement noise models, the relative performance trends among the estimators remain consistent. The underlying reason is that, under both noise models, the resulting equivalent measurement noise μzij ,k 
+
+exhibits similar statistical characteristics—specifically, a symmetric heavy-tailed distribution with a sharp peak near zero. Notably, the RLS-based estimator yields a significantly higher RMSE compared to those based on the Kalman filter framework, accompanied by larger variance and less stable estimation results. In contrast, the KF-based algorithms produce smoother estimates. Among them, the proposed MCKF achieves a lower RMSE and a narrower standard deviation range than both the stan-dard KF and the AKF. Overall, the MCKF demonstrates superior estimation performance in handling heavy-tailed UWB noise. 
+
+2) Validation using real-world UWB dataset: To fur-ther evaluate the performance of the proposed algorithm with real sensor data, we conduct comparative experi-ments using the UTIL dataset [44], a real-world UWB measurement dataset. It should be noted that this dataset involves measurements between one dynamic agent and stationary anchors. Therefore, it reflects only a single pairwise ranging scenario and does not constitute a true multi-agent validation involving multiple moving USVs.    
+
+> 10 IEEE TRANSACTIONS ON AEROSPACE AND ELECTRONIC SYSTEMS VOL. XX, No. XX XXXXX 2022
+
+Based on this dataset, we assume a scenario of relative position estimation between one stationary USV and one moving USV. The experimental results are presented in Fig. 6. It can be observed that the RLS-based algorithm exhibits larger fluctuations and higher estimation errors, whereas the methods based on the Kalman filter framework pro-duce noticeably smoother estimates. Among them, the proposed MCKF achieves faster convergence and yields smaller estimation errors. Overall, the MCKF maintains superior performance when applied to real-world data. These results further demonstrate the practical advantages and application potential of the MCKF in real UWB sensor scenarios. 
+
+B. Effectiveness of the Overall Framework 
+
+In this subsection, a comprehensive evaluation of the proposed framework’s effectiveness under various operational conditions is conducted. The investigation begins by comparing the formation tracking performance when different relative position estimators are employed. Subsequently, the influence of the two considered noise models on positioning and tracking accuracy is analyzed. The scalability of the approach is then verified by con-figuring the formation with different radii and fleet sizes. To further assess robustness in challenging environments, scenarios involving a weakly maneuvering target and static obstacles are simulated. Finally, the framework’s resilience is tested under realistic communication con-straints, including message dropouts and the dynamic addition or removal of USVs during mission execution. 
+
+1) Performance under different relative position esti-mators: Consider a scenario in which four USVs track a target moving at a constant velocity of vo = [0 .5, 0] T m/s. The four USVs are initially located at (−6, −7) m, (6 , 6) m, 
+
+(−10 , 3) m, and (−5, 6) m, respectively, with the target initially positioned at (1 , 1) m. The initial matrices are set to P + 
+
+> ij, 0
+
+= 0.04 I and P + 
+
+> io, 0
+
+= I. The desired circumnavigation radius and yaw rate are set to r∗ 
+
+> io
+
+= 5 mand ω∗ 
+
+> i
+
+= π/ 30 rad/s, respectively. The range measurment noise is modeled as a Gaussian mixture distribution 
+
+μrij ,k ∼ 0.8N (0 , 0.4) + 0 .2N (0 , 10) .The tracking trajectories obtained using different inter-USV relative positioning algorithms are shown in Fig. 7. The trajectory of the RLS-based algorithm exhibits sig-nificant fluctuations, whereas those of the KF-based algo-rithms are notably smoother. This observation is consis-tent with the tracking error curves presented in Fig. 8. It should be noted that ec measures the deviation of the formation center from the target position. Hence, ec
+
+can be small even with significant individual deviations, provided these deviations are symmetrically distributed around the formation center, thereby preserving the loca-tion of the center itself. As shown in Table II, although the MCKF achieves a smaller estimation error compared to the AKF, its ec is slightly larger. Nevertheless, this difference is marginal and remains within acceptable −10 010 (a) RLS −10 010 (b) HUBER-RLS −10 010 (c) KF −10 010 (d) AKF −10 0 10 20 30 40 50 60  
+
+> X (m)
+> −10 010 20 USV1 USV2 USV3 USV4 Target Target Path USVs Path Formation Center Path Desired Circular Formation (e) MCKF
+> Y (m)
+
+Fig. 7: USV target tracking trajectories under different inter-USV relative positioning algorithms. bounds for practical mission requirements. Moreover, as can be observed from the trajectories in Fig. 7 and the quantitative results in Table II, the tracking error of the MCKF-based framework converges more rapidly than that of the AKF-based approach. Furthermore, owing to the iterative computation required for the MCC criterion to converge, the MCKF incurs a longer runtime per iteration. Nonetheless, this runtime remains substantially shorter than the sampling interval, rendering the difference neg-ligible in practice. A comprehensive evaluation indicates that the MCKF offers superior estimation accuracy and faster tracking convergence when applied to real sensor data characterized by non-Gaussian noise. Although its average runtime is slightly higher, it remains within an acceptable range. Additionally, it is observed that the RLS-based method yields a relatively large epio error (see Table II and Fig. 8). This may be attributed to excessive errors in inter-USV relative position estimation, which can lead to erratic control inputs and consequently disordered USV trajectories. Such degradation in formation reduces the observability of the PLKF algorithm, thereby resulting  
+
+> AUTHOR ET AL.: SHORT ARTICLE TITLE 11
+
+in larger epio error. This highlights the critical impact of inter-USV relative localization accuracy on overall system performance. 02.5 5.0     
+
+> ec, k (m)RLS HUBER-RLS KF AKF MCKF
+
+(a) 
+
+> 024
+> epij , k (m)
+
+(b) 
+
+> 05
+> epio , k (m)
+
+(c)      
+
+> 020 40 60 80 100 Time (s) 024
+> evio , k (m/s)
+
+(d) 
+
+Fig. 8: Error evolution for the constant-velocity target tracking scenario under different inter-USV relative po-sitioning algorithms. TABLE II: EVALUATION OF OVERALL FRAMEWORK 
+
+PERFORMANCE WITH DIFFERENT INTER -USV R ELA - 
+
+> TIVE
+
+POSITION ESTIMATORS                             
+
+> Estimators Mean
+> epij (m) Mean
+> epio (m) Mean
+> ec(m) Settling Time (s) Avg. Run Time (ms)
+> RLS 33.941 4.461 3.026 12.70 0.84 Huber-RLS 5.685 3.928 0.499 8.80 1.02 KF 1.160 1.101 0.485 9.60 0.95 AKF 0.467 0.717 0.179 19.70 1.01 MCKF 0.449 0.476 0.196 12.30 1.50
+
+2) Performance under different range measurement noise models: To further investigate the impact of the MCKF on overall system performance under different range measurement noise characteristics, simulation tests are conducted using both the Gaussian mixture model (7) and the log-normal distribution model (8). For the Gaussian mixture model (7), the parameters are set as 
+
+ϵ = 0 .1 and Routliers μrij 
+
+= 10 , while Rμrij is varied among 
+
+0.2, 0.5, and 0.7; For the log-normal distribution model (8), we set rs = Rμr , and select Rμr = 0 .2, 0.5, 0.7.The corresponding simulation results are summarized in Table III. As shown in Table III, the overall system performance remains relatively stable across different noise models, indicating that the MCKF can effectively accommodate variations in the range measurement noise μrij . The un-derlying reason is that the MCKF operates on equivalent measurement values derived from range measurements. From (14), it follows that the equivalent measurement noise μij exhibits consistent statistical characteristics across different noise models for μrij , specifically asymmetric heavy-tailed distribution with a sharp peak near zero. Furthermore, as the noise intensity increases, the estimation errors gradually increase, while the settling time of the tracking error remains generally stable within a certain range. TABLE III: E VALUATION OF OVERALL FRAMEWORK 
+
+PERFORMANCE WITH DIFFERENT RANGE MEASURE - 
+
+> MENT
+
+NOISE MODELS                                         
+
+> Noise μrij
+> Mean
+> epij (m) Mean
+> epio (m) Mean
+> ec(m) Settling Time (s) Avg. Run Time (ms)
+> Rμrij = 0 .20.692 0.629 0.089 11.66 1.84
+> Rμrij = 0 .50.696 0.658 0.115 10.98 1.88
+> Rμrij = 0 .70.699 0.625 0.141 11.40 1.76
+> Rμr= 0 .20.688 0.619 0.116 10.84 1.69
+> Rμr= 0 .50.689 0.624 0.098 12.64 1.67
+> Rμr= 0 .70.697 0.638 0.109 10.48 1.68
+
+3) Performance under different numbers of USVs and desired radii: This experiment evaluates the scalability of the proposed framework by varying both the number of USVs and the desired circumnavigation radius, and examines their impact on overall system performance. The range measurement noise is fixed as μrij ,k ∼
+
+0.8N (0 , 0.4) + 0 .2N (0 , 10) , and the desired yaw rate is set to ω∗ 
+
+> i
+
+= π/ 30 rad/s. To ensure that the USVs can successfully accomplish the circumnavigation task under a larger radius, the physical velocity bound of each USV is increased to Uvi = 10 , and the upper bound of the formation control term constraint is raised to Uvfi
+
+= 3 .As shown in Table IV, the tracking task is successfully accomplished under all tested configurations of radii and USV fleet sizes. The algorithm runtime increases with the number of USVs, as expected. Under the same radius, variations in the number of USVs do not lead to significant changes in either the relative position es-timation error or the tracking error. However, owing to the increased values of Uvi and Uvfi
+
+, more pronounced motion variations occur during the convergence phase when the radius is relatively small. Consequently, the settling time becomes longer in such cases. Nevertheless, these more aggressive motion variations simultaneously enhance the PE level of the relative motion among USVs. As a result, the inter-USV relative position estimation error epij is smaller compared to the results obtained with the MCKF in Table II. Furthermore, for a fixed number of USVs, an increase in the desired radius leads to a larger 
+
+Uv∗ 
+
+> io
+
+, since ω∗ 
+
+> i
+
+remains constant. This enhances the PE level of the relative motion between each USV and the target. Consequently, as shown in Table IV, the target state estimation error epio decreases with increasing radius. These observations are consistent with the theoretical analysis presented in Section V regarding the influence    
+
+> 12 IEEE TRANSACTIONS ON AEROSPACE AND ELECTRONIC SYSTEMS VOL. XX, No. XX XXXXX 2022
+
+of upper bound settings and the values of ω∗ 
+
+> i
+
+and r∗ 
+
+> io
+
+on estimation performance. TABLE IV: E VALUATION OF OVERALL FRAMEWORK 
+
+PERFORMANCE WITH DIFFERENT USV F LEET SIZES AND CIRCUMNAVIGATION RADII                                                               
+
+> USV Num. Radius
+> r∗
+> io (m) Mean
+> epij (m) Mean
+> epio (m) Mean
+> ec(m) Settling Time (s) Avg. Run Time (ms)
+> n=4 50.245 2.855 0.312 11.43 1.69 n=4 10 0.369 0.989 0.092 11.60 1.68 n=4 20 0.694 0.469 0.084 12.79 1.66 n=8 50.226 2.658 0.188 3.57 3.24 n=8 10 0.336 0.943 0.054 5.48 3.26 n=8 20 0.621 0.399 0.059 6.60 3.28 n=12 50.224 2.634 0.147 3.31 5.10 n=12 10 0.328 0.900 0.056 5.70 4.81 n=12 20 0.602 0.368 0.051 7.19 5.22 020 40 60 80 X (m) −10 010 20 Y (m)
+> USV1 USV2 USV3 USV4 Target Target Path USVs Path Formation Center Path Desired Circular Formation
+
+Fig. 9: Multi-USV circumnavigation a varying-velocity target in an obstacle-free environment. 024 ec, k(m)0 20 40 60 80 100 012     
+
+> epio ,k(m)evio ,k(m/s)epi j ,k(m)Time (s) Error
+
+Fig. 10: Error evolution for the varying-velocity target tracking scenario. 
+
+4) Perfomance for tracking maneuvering targets: We further evaluate the framework’s capability in tracking a maneuvering target. In this scenario, the target moves at a constant speed of 0.5m/s along a sinusoidal trajectory, which introduces continuous variations in both heading and lateral acceleration. Such motion dynamics pose a significant challenge for maintaining a stable formation center, as the target’s varying acceleration demands timely adjustments from the tracking controllers. Fig. 9 illus-trates the actual trajectories of the USVs. It can be ob-served that each USV maintains an approximately circular formation relative to the target even during acceleration and turning maneuvers, thereby confirming the frame-work’s effectiveness in tracking maneuvering targets. The error curves presented in Fig. 10 reveal that, although slight fluctuations occur during the target’s acceleration phases, all evaluation metrics converge to stable values within a finite time. Specifically, the tracking error of the formation center, as well as the estimation errors for the target’s position and velocity, remain within narrow and bounded ranges throughout the entire mission, despite the continuously varying motion profile of the target. 
+
+5) Performance in obstacle environment with occlu-sions: We further evaluate the framework’s performance in a complex environment containing two island-shaped obstacles. The simulation results are presented in Fig. 11 (a), where the red dashed lines indicate periods of line-of-sight occlusion, i.e., temporary unavailability of bearing measurements between USVs and the target. During such intervals, the PLKF reverts to a prediction-only step as defined in (26) to prevent the incorporation of unreliable visual observations. It can be observed that, despite the non-line-of-sight conditions, each USV maintains the formation structure by relying on relative positioning information exchanged with neighbors. Upon restoration of visual measurements, the USVs successfully reacquire the target and resume continuous encircling. As shown in Fig. 11 (b), the peak in ec,k at approximately t = 20 scorresponds to a deliberate deviation, during which the USVs prioritize maintaining the safety distance ds from obstacle 1. Due to intermittent measurement losses caused by occlusion and the evasive maneuvers required for obstacle avoidance, the error curves exhibit slight fluc-tuations. Nevertheless, the formation maintains effective encirclement of the target throughout the mission, thereby verifying the system’s robustness and safety-critical per-formance under complex environmental conditions. 
+
+6) Performance under USV joining and dropout with communication interruptions: To validate the role of the coupled oscillator model within the overall framework, simulations involving USV joining and dropout are con-ducted under non-ideal communication conditions. Both sets of tests are performed with a 5% communication packet loss rate. In each scenario, the desired formation radius is set to 20 m. Initially, four USVs are positioned at 
+
+(−3, 14) m, (2 , 12) m, (−1, 8) m, and (3 , 10) m, respectively, with the target located at (1 , 1) m. Fig. 12 illustrates the trajectories in the USV dropout scenario. Specifically, USV 4 is assumed to disconnect from the network at t = 50 s within a 100s simula-tion. Following the dropout, both the tracking error and estimation error of the system increase transiently, but quickly recover and converge within a short period (see Fig. 13). As can be observed from the trajectories in Fig. 12, the remaining USVs autonomously readjust to a uniformly spaced configuration, thereby maintaining effective encirclement of the target. Fig. 14 shows the trajectories in the USV join scenario. Here, USV 5 is introduced into the fleet at t = 50 s from an initial  
+
+> AUTHOR ET AL.: SHORT ARTICLE TITLE 13
+
+0.0 2.5 5.0 ec, k(m)0 20 40 60 80 100 
+
+0123
+
+epio , k(m) evio , k(m/s) epij , k(m)Time (s) 
+
+> Error
+
+obstacles avoidance 
+
+0 20 40 60 80 X (m) −20 −10 010 20   
+
+> Y (m)
+> Target Target Path USVs Path Desired Circular Formation Occluded Line
+> obstacle 1
+> obstacle 2
+> USV3 USV1 USV2 USV4
+> Formation Center Path
+
+(a) (b) Fig. 11: (a) Multi-USV circumnavigation a varying-velocity target with obstacle occlusion. Red dotted lines indicate line-of-sight occlusions between USVs and the target.(b)Error evolution for the obstacles occlusion sce-nario. −20 0 20 40 60 X(m) −20 020 Y(m)    
+
+> USV 1 USV 2 USV 3 USV 4 Target USV Path Formation Center Path Target Path Desired Orbit at Dropout Time Desired Orbit USV4 Dropout
+
+Fig. 12: Trajectories of the USVs and the target in the USV dropout scenario. 010 ec, k(m)Removal Time 
+
+0 20 40 60 80 100 Time (s) 024 epio , k(m) evio , k(m/s) epij , k(m)
+
+> Error
+
+Fig. 13: Error evolution for the USV dropout scenario. −20 0 20 40 60 X(m) −20 020 Y(m)     
+
+> USV 1 USV 2 USV 3 USV 4 USV 5 Target USV Path Formation Center Path Target Path Desired Orbit at Join Time Desired Orbit USV5 Join
+
+Fig. 14: Trajectories of the USVs and the target in the USV joining scenario. 010 ec, k(m)Joining Time 
+
+0 20 40 60 80 100 Time (s) 024 epio , k(m) evio , k(m/s) epij , k(m)
+
+> Error
+
+Fig. 15: Error evolution for the USV joining scenario. position of (21 , 1) m. Similarly, upon the change in fleet size, the system error exhibits a transient increase before converging rapidly (see Fig. 15). The proposed cou-pled oscillator model demonstrates remarkable resilience across both test cases, indicating that the system maintains stability without divergence despite sudden topological changes. Furthermore, the results show that the estimation error remains well within operational limits, even as the geometric constraints become more challenging due to the increased number of USVs. 
+
+VII. Conclusion 
+
+This paper has presented a comprehensive framework for cooperative target circumnavigation using multiple USVs only with onboard sensing. A heterogeneous per-ception strategy was developed, integrating active inter-USV ranging and passive USV-target bearing measure-ments. To address these distinct estimation tasks, a Maxi-mum Correntropy Kalman Filter was employed for inter-USV localization, while a Pseudo-Linear Kalman Filter was utilized for USV-target positioning. Furthermore, a coupled-oscillator-based controller is proposed to si-multaneously guarantee target circumnavigation and en-sure persistent excitation of the relative motions, thereby maintaining observability of the estimation system. The effectiveness and robustness of the proposed approach were validated through comprehensive simulations under    
+
+> 14 IEEE TRANSACTIONS ON AEROSPACE AND ELECTRONIC SYSTEMS VOL. XX, No. XX XXXXX 2022
+
+various scenarios, including different target motion mod-els and obstacle conditions. However, the USV dynamics model in this work is deliberately simplified and does not account for hydrodynamic effects. Consequently, to address these limitations, future research will investigate the integration of learning-based approaches to improve robustness against external disturbances and model uncer-tainties arising from hydrodynamics. 
+
+APPENDIX A. Proof of Lemma 1 
+
+From the combined analysis of controller (31) and vehicle dynamics (1) (2), we obtain vij,k = πij,k + v∗
+
+> ij,k
+
+,where 
+
+πij,k =[ sat (Uvfi
+
+, vfi,k ) + sat (Uvo , ˆvio,k )] 
+
+− [sat (Uvfj
+
+, vfj,k ) + sat (Uvo , ˆvjo,k )] 
+
+Thus, ∥πij,k ∥ ≤ Uvfi
+
++ Uvfj
+
++ 2 Uvo .To prove (39), it suffices to show that for any unit vector y ∈ R2, λij, 1 ≤ yT Sij,l y ≤ λij, 2. Define 
+
+(
+
+Vij,l = v∗
+
+> ij,l
+
+, ..., v∗ 
+
+> ij,l +N−1
+
+
+
+Πij,l = [ πij,l , ..., πij,l +N −1]
+
+Thus, one has 
+
+yT Sij,l y = V Tij,l y 2 + 2 V Tij,l y, ΠTij,l y + ΠTij,l y 2
+
+(43) where ⟨· , ·⟩ denotes the inner product. Note that 
+
+λ∗ 
+
+> ij, 1
+
+≤ ∥ V Tij,l y∥ ≤ λ∗
+
+> ij, 2
+
+and 
+
+∥ΠTij,l y∥ ≤ √N
+
+
+
+Uvfi
+
++ Uvfj
+
++ 2 Uvo
+
+
+
+By applying the Cauchy–Schwartz inequality, 
+
+− V Tij,l y ΠTij,l y ≤ V Tij,l y, ΠTij,l y
+
+≤ V Tij,l y ΠTij,l y
+
+It follows from the above inequalities that λij, 1 ≤
+
+yT Sij,l y ≤ λij, 2. Thus, we have completed the proof of the conclusion given in (39) of Lemma 1 . 
+
+B. Proof of Lemma 2 
+
+By analogy with the proof of Lemma 1, we obtain 
+
+vio,k = πio,k + v∗
+
+> io,k
+
+, where 
+
+πio,k = [ sat (Uvfi
+
+, vfi,k ) + sat (Uvo , ˆvio,k )] − vo,k 
+
+Consequently, ∥πio,k ∥ ≤ Uvfi
+
++2 Uvo . Then, following the same steps as in the proof of Lemma 1, we can readily establish the result stated in (40). 
+
+C. Proof of Theorem 1 
+
+By combining equations (1), (2) and (5) yields 
+
+δij,k = vi,k ∆t − vj,k ∆t = vij,k ∆t
+
+Since vij,k is persistently exciting (Lemma 1), it follows from (39) that 
+
+λij, 1∆tI ⩽ Φij,l ≜ 
+
+> l+N−1
+
+X
+
+> k=l
+
+δij,k δTij,k ⩽ λij, 2∆tI
+
+which completes the proof. 
+
+D. Proof of Theorem 2 
+
+We first show that the bearing vector bio,k realtive to 
+
+Vi and the target is persistently exciting. From the motion models in (1) and (3), we have pio,k +1 = pio,k + ∆ tvio,k .Given that vio,k is persistently exciting (Lemma 2), and 
+
+∥pio,k ∥ ≤ Upio (Assumption 2), we can follow the same reasoning as in the proof of Lemma 1 to obtain 
+
+(λio, 1 − ∆t√N U pio )2I ≤ 
+
+> l+N−1
+
+X
+
+> k=l
+
+pio,k pTio,k 
+
+≤ (λio, 2 + ∆ t√N U pio )2I
+
+By recalling the definition of bio,k in (9), it can show that the bio,k also satisfied the PE condition for l ≥ ks
+
+σij, 1I ⩽ 
+
+> l+N−1
+
+X
+
+> k=l
+
+bio,k bTio,k ⩽ σij, 2I
+
+where σij, 1 = ( λio, 1 − ∆t√N U pio )2/U 2 
+
+> pio
+
+and σij, 2 =(λio, 2 + ∆ t√N U pio )2/d 2
+
+> s
+
+.We now compute Φio,l to examine its structure. Using the fact that GT
+
+> bio ,k
+
+Gbio ,k = Gbio ,k , we obtain 
+
+Φio,l = 
+
+> l+N−1
+
+X
+
+> k=l
+
+ I − bio,k bTio,k 
+
+
+
+Let qio,k denote the unit vector orthogonal to bio,k , so that Gbio ,k = qio,k qTio,k . Thus, 
+
+Φio,l = 
+
+> l+N−1
+
+X
+
+> k=l
+
+qio,k qTio,k 
+
+Note that qio,k is also persistently exciting, satisfying 
+
+σij, 1I ⩽ 
+
+> l+N−1
+
+X
+
+> k=l
+
+qio,k qTio,k ⩽ σij, 2I
+
+Geometrically, this corresponds to a 90-degree rotation in the plane, which preserves the excitation properties of 
+
+bio,k . It follows that the Gramian matrix Φio,l is positive definite, implying observability of the relative positions 
+
+pio,k . This completes the proof. 
+
+REFERENCES     
+
+> [1] Y. Qiao, J. Yin, W. Wang, F. Duarte, J. Yang, and C. Ratti, “Survey of deep learning for autonomous surface vehicles in marine environments,” IEEE Trans. Intell. Transp. Syst. , vol. 24, no. 4, pp. 3678–3701, 2023. [2] Z. Liu, Y. Zhang, X. Yu, and C. Yuan, “Unmanned surface vehicles: An overview of developments and challenges,” Annu. Rev. Control , vol. 41, pp. 71–93, 2016.
+
+AUTHOR ET AL.: SHORT ARTICLE TITLE 15 [3] Q. Zhang, W. Pan, and V. Reppa, “Model-Reference Reinforcement Learning for Collision-Free Tracking Control of Autonomous Surface Vehicles,” IEEE Trans. Intell. Transport. Syst. , vol. 23, no. 7, pp. 8770–8781, Jul. 2022. [4] M. Tong, Y. Zhang, Q. Wang, and J. Shao, “A cooperative localization algorithm based on time delay square root cubature kalman filter for USVs,” in 2022 IEEE International Symposium on Inertial Sensors and Systems (INERTIAL) , 2022, pp. 1–4. [5] S. Gao, Z. Peng, L. Liu, H. Wang, and D. Wang, “Coordinated target tracking by multiple unmanned surface vehicles with communication delays based on a distributed event-triggered extended state observer,” Ocean Eng. , vol. 227, p. 108283, May 2021. [6] Z. Yan, H. Zheng, Z. Jiang, and W. Xu, “Distributed Control of Unmanned Marine Vehicles for Target Circumnavigation in Communication-Denied Environments,” IEEE/ASME Trans. Mechatron. , pp. 1–12, 2024. [7] Y. Zheng and L. Zhang, “Internal model observer-based distributed moving-target-fencing control of multiple underactuated ma-rine surface vehicles with intermittent communications,” Ocean Eng. , vol. 300, p. 117383, May 2024. [8] Z. Sun, H. Sun, P. Li, and J. Zou, “Cooperative strategy for pursuit-evasion problem with collision avoidance,” Ocean Eng. , vol. 266, p. 112742, Dec. 2022. [9] F. Che, Y. Niu, J. Li, and L. Wu, “Cooperative standoff tracking of moving targets using modified lyapunov vector field guidance,” 
+
+Appl. Sci. , vol. 10, no. 11, p. 3709, 2020. [10] H. Zhong, Y. Wang, Z. Miao, J. Tan, L. Li, H. Zhang, and R. Fierro, “Circumnavigation of a moving target in 3d by multi-agent systems with collision avoidance: An orthogonal vector fields-based approach,” Int. J. Control Autom. Syst. , vol. 17, no. 1, pp. 212–224, 2019. [11] V. Mwaffo, “Formation control and collision avoidance of un-manned water surface vehicles in maritime environments,” J. Franklin Inst. , vol. 361, no. 7, p. 106791, 2024. [12] C. Chen, X. Liang, Z. Zhang, D. Liu, C. Yu, and W. Li, “Coopera-tive game method of heterogeneous unmanned surface vehicles based on distributed decision-making framework,” Ocean Eng. ,vol. 338, p. 122048, 2025. [13] J. Liu, S. Yang, C. Dong, and P. Song, “Robust h∞ time-varying formation tracking for heterogeneous multi-agent systems with unknown control input,” Electronics , vol. 14, no. 12, p. 2494, 6 2025. [14] Q. Wang, C. Liu, Y. Meng, X. Ren, and X. Wang, “Rein-forcement learning-based moving-target enclosing control for an unmanned surface vehicle in multi-obstacle environments,” 
+
+Ocean Eng. , vol. 304, p. 117920, Jul. 2024. [15] X. Shao, F. Zhang, J. Liu, and Q. Zhang, “Finite-Time Learning-Based Optimal Elliptical Encircling Control for UAVs With Prescribed Constraints,” IEEE Trans. Intell. Transport. Syst. ,vol. 26, no. 5, pp. 7065–7080, May 2025. [16] Z. Mei, X. Shao, Y. Xia, and J. Liu, “Enhanced Fixed-Time Collision-Free Elliptical Circumnavigation Coordination for UAVs,” IEEE Trans. Aerosp. Electron. Syst. , vol. 60, no. 4, pp. 4257–4270, Aug. 2024. [17] X. Liang, X. Qu, Y. Hou, Y. Li, and R. Zhang, “Distributed coordinated tracking control of multiple unmanned surface vehicles under complex marine environments,” Ocean Eng. , vol. 205, p. 107328, Jun. 2020. [18] B.-B. Hu and H.-T. Zhang, “Bearing-Only Motional Target-Surrounding Control for Multiple Unmanned Surface Vessels,” 
+
+IEEE Trans. Ind. Electron. , vol. 69, no. 4, pp. 3988–3997, Apr. 2022. [19] N. T. Hung, N. Crasta, D. Moreno-Salinas, A. M. Pascoal, and T. A. Johansen, “Range-based target localization and pursuit with autonomous vehicles: An approach using posterior crlb and model predictive control,” Robot. Auton. Syst. , vol. 132, p. 103608, 2020. [20] X. Shao, S. Li, W. Zhang, and E. Q. Wu, “Distance-Based Elliptical Circumnavigation Control for Non-Holonomic Robots With Event-Triggered Unknown System Dynamics Estimators,” IEEE Trans. Intell. Transport. Syst. , vol. 24, no. 4, pp. 3986–3998, Apr. 2023. [21] N. T. Hung, F. F. C. Rego, and A. M. Pascoal, “Cooperative Distributed Estimation and Control of Multiple Autonomous Vehicles for Range-Based Underwater Target Localization and Pursuit,” IEEE Trans. Contr. Syst. Technol. , vol. 30, no. 4, pp. 1433–1447, Jul. 2022. [22] I. Shames, S. Dasgupta, B. Fidan, and B. D. O. Anderson, “Circumnavigation using distance measurements under slow drift,” IEEE Trans. Autom. Control , vol. 57, no. 4, pp. 889– 903, 2012. [23] S. Ju, J. Wang, and L. Dou, “Enclosing control for multiagent systems with a moving target of unknown bounded velocity,” 
+
+IEEE T. Cybern. , vol. 52, no. 11, pp. 11 561–11 570, 2022. [24] D. Sui, M. Deghat, Z. Sun, and M. Eskandari, “Adaptive Bearing-Only Target Localization and Circumnavigation Under Un-known Wind Disturbance: Theory and Experiments,” IEEE Robot. Autom. Lett. , vol. 9, no. 12, pp. 11 321–11 328, Dec. 2024. [25] L. Li, X. Liu, Z. Qiu, T. Hu, and Q. Zhang, “A Recursive Total Least Squares Solution for Bearing-Only Target Motion Anal-ysis and Circumnavigation,” in 2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) , Oct. 2025, pp. 18 942–18 947. [26] T.-M. Nguyen, Z. Qiu, T. H. Nguyen, M. Cao, and L. Xie, “Persistently Excited Adaptive Relative Localization and Time-Varying Formation of Robot Swarms,” IEEE Trans. Robot. ,vol. 36, no. 2, pp. 553–560, 04 2020. [27] X. Liu, L. Li, X. Zhou, Q. Zhang, and T. Hu, “Cooperative Circumnavigation for Multi-Quadrotor Systems Via Onboard Sensing,” IEEE Robot. Autom. Lett. , vol. 10, no. 49, pp. 9248– 9255, 2025. [28] K. Guo, X. Li, and L. Xie, “Ultra-Wideband and Odometry-Based Cooperative Relative Localization With Application to Multi-UAV Formation Control,” IEEE Trans. Cybern. , vol. 50, no. 6, pp. 2590–2603, Jun. 2020. [29] J. Zhao, W. Sun, W. Ding, Y. Li, P. Sun, and P. Sun, “Vehicle Co-operative Positioning With Tightly Coupled GNSS/INS/UWB Integration Based on Improved Multiple Fading Factors and Adaptive Cost Function,” IEEE Trans. Intell. Transport. Syst. ,vol. 26, no. 7, pp. 9740–9754, Jul. 2025. [30] J. Li, Z. Ning, S. He, C.-H. Lee, and S. Zhao, “Three-Dimensional Bearing-Only Target Following via Observability-Enhanced He-lical Guidance,” IEEE Trans. Robot. , pp. 1–18, 2022. [31] T.-M. Nguyen, T. H. Nguyen, M. Cao, Z. Qiu, and L. Xie, “Integrated UWB-Vision approach for autonomous docking of UAVs in GPS-denied environments,” in 2019 International Conference on Robotics and Automation (ICRA) , 5 2019, pp. 9603–9609. [32] A. Fishberg, B. Quiter, and J. P. How, “MURP: Multi-Agent Ultra-Wideband Relative Pose Estimation with Constrained Communications in 3D Environments,” IEEE Robot. Autom. Lett. , pp. 1–8, 2024. [33] B. Chen, X. Liu, H. Zhao, and J. C. Principe, “Maximum cor-rentropy Kalman filter,” Automatica , vol. 76, pp. 70–77, Feb. 2017. [34] M. Deghat, I. Shames, B. D. O. Anderson, and C. Yu, “Localiza-tion and Circumnavigation of a Slowly Moving Target Using Bearing Measurements,” IEEE Trans. Automat. Contr. , vol. 59, no. 8, pp. 2182–2188, Aug. 2014. [35] X. Liu, D. Zhang, Q. Zhang, and T. Hu, “Formation Control for Enclosing and Tracking via Relative Localization,” IEEE Trans. Aerosp. Electron. Syst. , vol. 61, no. 4, pp. 10 558–10 569, 2025. [36] X. Liu, K. Liu, T. Hu, and Q. Zhang, “Formation Control for Mov-ing Target Enclosing via Relative Localization,” in 2023 62nd 
+
+16 IEEE TRANSACTIONS ON AEROSPACE AND ELECTRONIC SYSTEMS VOL. XX, No. XX XXXXX 2022 IEEE Conference on Decision and Control (CDC) . Singapore, Singapore: IEEE, Dec. 2023, pp. 1400–1405. [37] C. Zheng, Y. Mi, H. Guo, H. Chen, Z. Lin, and S. Zhao, “Optimal spatial–temporal triangulation for bearing-only cooperative mo-tion estimation,” Automatica , vol. 175, p. 112216, May 2025. [38] F. D¨ orfler and F. Bullo, “Synchronization in complex networks of phase oscillators: A survey,” Automatica , vol. 50, no. 6, pp. 1539–1564, Jun. 2014. [39] K.-K. Oh, M.-C. Park, and H.-S. Ahn, “A survey of multi-agent formation control,” Automatica , vol. 53, pp. 424–440, Mar. 2015. [40] D. Zhou, Z. Wang, and M. Schwager, “Agile Coordination and Assistive Collision Avoidance for Quadrotor Swarms Using Virtual Structures,” IEEE Trans. Robot. , vol. 34, no. 4, pp. 916– 923, Aug. 2018. [41] F. Xue, J. Zuo, X. Liu, and Q. Zhang, “Collision-free time-varying formation control via relative localization,” in Intel-ligent Robotics and Applications , X. Lan, X. Mei, C. Jiang, F. Zhao, and Z. Tian, Eds. Singapore: Springer Nature Singapore, 2025, pp. 363–375. [42] Y. Huang, Y. Zhang, Z. Wu, N. Li, and J. Chambers, “A novel adaptive kalman filter with inaccurate process and measure-ment noise covariance matrices,” IEEE Trans. Autom. Control ,vol. 63, no. 2, pp. 594–601, 2018. [43] H. Tong, “Functional linear regression with huber loss,” J. Com-plex. , vol. 74, p. 101696, 2023. [44] W. Zhao, A. Goudar, X. Qiao, and A. P. Schoellig, “UTIL: An ultra-wideband time-difference-of-arrival indoor localization dataset,” Int. J. Robot. Res. , vol. 43, no. 10, pp. 1443–1456, Sep. 2024. 
+
+AUTHOR ET AL.: SHORT ARTICLE TITLE 17
