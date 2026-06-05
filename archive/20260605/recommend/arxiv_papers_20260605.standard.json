@@ -1,0 +1,95 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-05T21:50:43.877414+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.06011v1",
+      "source": "arxiv",
+      "title": "Merging model-based control with multi-agent reinforcement learning for multi-agent cooperative teaming strategies",
+      "abstract": "In this work, we propose a framework that combines multi-agent reinforcement learning (MARL) with model-based control to achieve safe, dynamically feasible actions in cooperative multi-agent tasks. Multi-agent reinforcement learning provides the advantage of learning cooperative policies for multi-agent teams from discrete non-differentiable rewards in a long planning horizon. Model-predictive control is robust and offers safe, dynamically feasible actions in a fast replanning framework for short horizons. We propose an algorithm that extends actor-critic model predictive control for MARL which we refer to as multi-agent actor-critic model predictive control (MA-AC-MPC). We demonstrate the capabilities of this algorithm by applying it to a multi-agent pursuit-evasion scenario. Specifically, we compare the evader team's strategy using the MA-AC-MPC model and a multi-layer perceptron model (MA-AC-MLP). The pursuer team uses augmented proportional navigation as it is accepted as an advanced adversarial control law. We also provide an example with a heterogeneous environment where a drone and omni-wheeled rover cooperate to achieve repeatable and successful landing with 100% success rate in hardware for MA-AC-MPC compared to 60% for MA-AC-MLP. We demonstrate the robustness of the proposed MA-AC-MPC algorithm in hardware for both environments.",
+      "authors": [
+        "Christian Llanes",
+        "Spencer W. Jensen",
+        "Samuel Coogan"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-06-04T11:01:00+00:00",
+      "link": "https://arxiv.org/pdf/2606.06011v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "cooperative multi-agent RL for teaming strategies applicable to UAV encirclement",
+      "llm_evidence_cn": "多智能体强化学习协作策略，适用于无人机围捕",
+      "llm_evidence": "多智能体强化学习协作策略，适用于无人机围捕",
+      "canonical_evidence": "多智能体强化学习协作策略，适用于无人机围捕",
+      "llm_tldr_en": "Proposes MA-AC-MPC combining MARL with model-predictive control for safe cooperative multi-agent tasks, directly applicable to multi-UAV encirclement.",
+      "llm_tldr_cn": "该工作提出了一种融合多智能体强化学习（MARL）与模型预测控制（MPC）的框架（MA-AC-MPC），用于多智能体协作任务中的安全与动态可行动作。MARL在长规划周期中从离散不可微奖励中学习协作策略，而MPC在短周期中提供鲁棒安全动作。该方法在协作任务中展示了能力，为多无人机围捕场景提供了可迁移的算法。",
+      "llm_tldr": "该工作提出了一种融合多智能体强化学习（MARL）与模型预测控制（MPC）的框架（MA-AC-MPC），用于多智能体协作任务中的安全与动态可行动作。MARL在长规划周期中从离散不可微奖励中学习协作策略，而MPC在短周期中提供鲁棒安全动作。该方法在协作任务中展示了能力，为多无人机围捕场景提供了可迁移的算法。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.00762v1",
+      "source": "arxiv",
+      "title": "STEM: Semantic Target Search and Exploration using MAVs in Cluttered Environments",
+      "abstract": "Autonomous target search is crucial for deploying Micro Aerial Vehicles (MAVs) in emergency response and rescue missions. Existing approaches either focus on 2D semantic navigation in structured environments -- which is less effective in complex 3D settings, or on robotic exploration in cluttered spaces -- which often lacks the semantic reasoning needed for efficient target search. This paper overcomes these limitations by proposing a novel framework that utilizes a semantically-guided viewpoint planner to minimize target search and exploration time in unstructured 3D environments using an MAV. Specifically, we develop a combinatorial planner that generates efficient semantic exploration plans by prioritizing viewpoints that likely lead to the target. To guide the planner towards the target, an active perception pipeline is developed that propagates semantic priorities of observed objects into neighboring frontier voxels for computing semantic information gains of frontier viewpoints. In addition, we demonstrate how LLM-based similarity scores can be leveraged as semantic priority input to our pipeline. Evaluations in two distinct simulation environments show that the proposed method consistently outperforms baselines by quickly finding the target while maintaining reasonable exploration times. Real-world experiments with an MAV further demonstrate the method's ability to handle practical constraints like limited battery life, small sensor range, and semantic uncertainty.",
+      "authors": [
+        "Nikhil Sethi",
+        "Max Lodel",
+        "Laura Ferranti",
+        "Robert Babuška",
+        "Javier Alonso-Mora"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-30T15:00:58+00:00",
+      "link": "https://arxiv.org/pdf/2606.00762v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "autonomous target search and exploration using MAVs in cluttered environments",
+      "llm_evidence_cn": "在杂乱环境中使用微型飞行器进行自主目标搜索和探索",
+      "llm_evidence": "在杂乱环境中使用微型飞行器进行自主目标搜索和探索",
+      "canonical_evidence": "在杂乱环境中使用微型飞行器进行自主目标搜索和探索",
+      "llm_tldr_en": "STEM framework uses semantically-guided viewpoint planning to minimize target search and exploration time for MAVs in unstructured 3D environments.",
+      "llm_tldr_cn": "该论文提出STEM框架，利用语义引导的视点规划器最小化微型飞行器在非结构化3D环境中的目标搜索和探索时间。与现有2D语义导航或纯探索方法不同，该方法结合组合规划器优先选择能导向目标的高信息量视点，显著提升搜索效率。",
+      "llm_tldr": "该论文提出STEM框架，利用语义引导的视点规划器最小化微型飞行器在非结构化3D环境中的目标搜索和探索时间。与现有2D语义导航或纯探索方法不同，该方法结合组合规划器优先选择能导向目标的高信息量视点，显著提升搜索效率。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,453 @@
+Title: STEM: Semantic Target Search and Exploration using MAVs in Cluttered Environments
+
+URL Source: https://arxiv.org/pdf/2606.00762v1
+
+Published Time: Tue, 02 Jun 2026 01:06:26 GMT
+
+Number of Pages: 20
+
+Markdown Content:
+# STEM: Semantic Target Search and Exploration using MAVs in Cluttered Environments 
+
+# Nikhil Sethi 1†, Max Lodel 1* †, Laura Ferranti 1, Robert Babuˇ ska 1,2 ,Javier Alonso-Mora 1
+
+> 1*
+
+Department of Cognitive Robotics, Delft University of Technology, Netherlands. 
+
+> 2
+
+CIIRC, Czech Technical University in Prague, Czech Republic. *Corresponding author(s). E-mail(s): max.lodel@gmail.com; Contributing authors: sethi.nirvil@gmail.com; l.ferranti@tudelft.nl; r.babuska@tudelft.nl; j.alonsomora@tudelft.nl; 
+
+> †
+
+These authors contributed equally to this work. 
+
+Abstract 
+
+Autonomous target search is crucial for deploying Micro Aerial Vehicles (MAVs) in emergency response and rescue missions. Existing approaches either focus on 2D semantic navigation in struc-tured environments – which is less effective in complex 3D settings, or on robotic exploration in cluttered spaces – which often lacks the semantic reasoning needed for efficient target search. This paper overcomes these limitations by proposing a novel framework that utilizes a semantically-guided viewpoint planner to minimize target search and exploration time in unstructured 3D environments using an MAV. Specifically, we develop a combinatorial planner that generates efficient semantic exploration plans by prioritizing viewpoints that likely lead to the target. To guide the planner towards the target, an active perception pipeline is developed that propagates semantic priorities of observed objects into neighboring frontier voxels for computing semantic information gains of fron-tier viewpoints. In addition, we demonstrate how LLM-based similarity scores can be leveraged as semantic priority input to our pipeline. Evaluations in two distinct simulation environments show that the proposed method consistently outperforms baselines by quickly finding the target while maintaining reasonable exploration times. Real-world experiments with an MAV further demonstrate the method’s ability to handle practical constraints like limited battery life, small sensor range, and semantic uncertainty. 
+
+Keywords: Informative path planning, Search and rescue, Drone exploration, Semantic exploration 
+
+# 1 Introduction 
+
+Micro Aerial Vehicles (MAVs) are a promising tool to effectively search and explore complex, unknown environments in domains such as search and rescue, inspection, and environmental moni-toring. To relieve human operators from the chal-lenging task of guiding MAVs through uncertain environments, methods for autonomous search of target objects are critical to improve the efficiency and effectiveness of such MAV missions. In large and cluttered environments with many occlusions, the time efficiency of the search strat-egy is crucial due to limited available flight time 1
+
+> arXiv:2606.00762v1 [cs.RO] 30 May 2026
+
+and onboard sensor capabilities. Humans can effi-ciently search unknown spaces by leveraging their experience as well as semantic information, such as observed objects, to reason about the target’s likely location. For example, dangerous chemicals are more likely to be found in a storage room than in an office. Building on this idea, recent work [1–9] has shown that learning such semantic pri-ors can significantly reduce the target search time by guiding the robot toward promising regions. However, as semantic observations or priors can be uncertain or unavailable in many real-world scenarios, purely relying on such semantic guid-ance may lead to inefficient behavior. Therefore, a robust target search strategy should balance semantic search and coverage-maximizing explo-ration to ensure an efficient and successful search. Existing works on semantically-guided target search [1–9] have focused on ground robots mov-ing in 2D, while MAVs’ 3D capabilities remain underexplored. In particular, MAVs can over-come occlusions in cluttered environments by changing their altitude and, therefore, improve search efficiency. Moreover, these target search methods rely on inferring semantic relationships from large pre-trained models [5], which might require fine-tuning for highly specific scenarios. This underlines the need for integrating and bal-ancing semantic search with efficient coverage-maximizing exploration approaches such as [10– 12]. These methods achieve high coverage effi-ciency by leveraging long-horizon combinatorial planning techniques, but ignore semantic infor-mation that could guide the search towards the target. In this work, we present STEM, a framework for Semantic Target Search and Exploration for 
+
+MAVs. By building on recent advances in explo-ration planning and semantics-driven navigation, our framework enables both semantically-guided and efficient exploration in complex 3D environ-ments. 
+
+# 1.1 Related Work 
+
+In this section, we discuss existing approaches and how they relate to our work, starting with plan-ning approaches for pure coverage exploration, and then focusing on target search approaches that leverage semantic information. 
+
+1.1.1 Exploration Planning 
+
+The problem of navigating a robot autonomously through an unknown environment to build acomplete map from sensor observations has been investigated using a variety of differ-ent approaches. The fundamental idea of most approaches is to choose robot actions or plans such that future viewpoints efficiently minimize unknown space in the environment. Viewpoints are poses in 3D space from which the robot can observe the environment. Sampling-based approaches randomly sample viewpoints in free space and evaluate their poten-tial information gain about the map. Rapidly Exploring Random Trees (RRT) have been used to plan a local tree of informative viewpoints [13–16], with [16] integrating object search by prioritizing salient objects in the environment. However, the high computational costs limit the planning horizon, leading to greedy and inefficient exploration. Frontier-based exploration methods focus on observing the boundary between known and unknown space, the frontiers , to incrementally reduce the unknown space. While early meth-ods [17] just choose the closest frontier as the next observation target, recent work shows that selecting frontiers to maintain high flight speed improves exploration efficiency [18]. Similarly to sampling-based approaches, these methods lack long-horizon planning capabilities. Recent works have shown that combining ele-ments of both sampling-based and frontier-based exploration with planning can improve explo-ration efficiency. The approaches in [10–12, 19, 20] sample viewpoints around different frontiers, and then find a time-optimal global plan that connects these viewpoints using combinatorial planning. Following this approach, [10–12] plan over frontier viewpoints by solving a Travelling Salesman Prob-lem (TSP). Specifically, the FUEL framework [10] considers drone dynamics in the TSP cost matrix to achieve efficient and agile exploration. In FAEL [19], a version of the minimum latency problem is used for planning that prioritizes frontier view-points with high coverage gains. Such approaches can be scaled to large environments using coarse global planning [11, 20]. The authors of FUEL [10] show that their approach achieves efficient and robust exploration 2performance on a real-world MAV platform in varying, complex 3D environments, due to an effective integration of global and local plan-ning. As we are interested in 3D semantically-guided exploration with MAVs, we build on the FUEL framework [10] as an exploration baseline, extending it with 3D semantic representations and planning to enable semantic target search. Our target search planner uses an MLP-based formulation similar to FAEL [19] and integrates semantic information to guide exploration toward target-relevant objects. 
+
+1.1.2 Target Search 
+
+Autonomously searching for a target object in an unknown environment has been primarily investi-gated in the domain of indoor structured environ-ments such as apartments, where clear semantic relationships between objects exist [1–9]. These approaches differ in the source of learned semantic priors and the planning strategy used to guide the robot toward the target. In ear-lier works, domain-specific environment datasets are used for training navigation policies using reinforcement learning (RL) [1, 2] and training cost-to-go functions using self-supervised learning [3, 4]. Conversely, recent works [5–9] use foun-dation models such as Vision-Language Models (VLM) [21, 22] or Large Language Models (LLM) [23] trained on internet-scale data. The works [5– 8] demonstrate zero-shot VLM/LLM-based target search in indoor environments using embedding similarity scores to choose exploration frontiers. In [5, 7, 8], the frontier selection is facilitated by propagating similarity scores into 2D [5, 7] or 3D [8] map representations. SEEK [9] proposes to distill semantic knowledge from an LLM into a lightweight model for efficient online inference. The planning strategies used in most of these works are either based on learned navigation poli-cies [1, 2] or greedy frontier selection [3–6]. In contrast, [9] uses a Bayesian network prediction model and value iteration planning to choose the best region to search. The main limitation of these methods is that they only consider greedy decision-making in 2D and structured indoor environments. In the domain of 3D aerial navigation, recent works have addressed target search by semantics-aware recon-struction of relevant objects [24] and efficient complete coverage of environments [25] to find arbitrary targets. In contrast, we aim to leverage the MAV’s capabilities for semantically-guided target search, as in the mentioned 2D methods, but for 3D unstructured environments. While [24] uses semantic classes to determine the required reconstruction resolution of objects, we propose a planning pipeline that prioritizes viewpoints by propagating priorities of semantic classes into 3D space, similar to [8]. Our planning pipeline employs a combinatorial planner, generating effi-cient tours over frontier viewpoints similar to the TSP-based planner in [25]. However, our weighted MLP formulation prioritizes semantically relevant frontiers, allowing for combining semantic tar-get search and efficient exploration. In addition, we demonstrate the use of LLM-based similarity scores as a possible source of semantic priorities, as proposed by [6]. 
+
+# 1.2 Contribution 
+
+The main contribution of this paper is a 3D semantic target search framework centered on a novel semantically-guided viewpoint planner designed to minimize expected search time. The combinatorial planner prioritizes frontier view-points that likely lead to the target, as evaluated by an active perception pipeline that efficiently propagates semantic priorities from observed objects into continuous, occlusion-aware informa-tion gains of 3D candidate viewpoints. Building on the FUEL exploration framework, our novel com-binatorial planner formulation, which leverages both semantic and coverage viewpoint gains, gen-erates semantically-guided exploration behavior. We present proof-of-concept experiments in both simulation and real-world environments using a Micro Aerial Vehicle (MAV) that validate the effectiveness of our approach. Our quantitative results show that our method consistently outper-forms exploration-only baselines in two distinct simulation environments, in terms of target search time and success rate. 
+
+# 2 Preliminaries 
+
+# 2.1 Problem Formulation 
+
+An MAV is tasked with exploring a previously unseen 3D environment represented as a bounded 3volume W ⊂ R3 to find a target object in mini-mum time. The MAV’s pose in the environment at time instant t is defined as xt ∈ SO (3), and we assume that fast and accurate position and atti-tude controllers are available, such that the robot can follow a trajectory by tracking pose incre-ments [26]. It has a maximum linear velocity vmax ,maximum acceleration amax , and maximum yaw rate ωmax . The robot is equipped with an RGB-D camera that provides a local observation of the environment. At each time instance t the robot receives a measurement tuple zt = ( xt, Ic, Id), where Ic and Id are the RGB and depth images, respectively. Using the RGB images, the robot can perform semantic segmentation to identify objects in the environment. A set S of possible objects of interest (OOIs) represented by natural language semantic labels is available for segmentation. Importantly, it is assumed that the objects in S have semantic relationships defined by a function F : S × S → 
+
+R+, that quantifies how semantically related two objects in S are. It can be exploited to guide the robot towards a target object o∗ ∈ S . A target is considered found when its relative semantic seg-mentation area in the robot’s field of view crosses a threshold λmin .
+
+Problem Statement: Given a target object o∗,a bounded volume W, and the robot’s initial pose 
+
+x0, find a collision-free global plan ϱ through W
+
+at each time instant t such that o∗ is discovered in minimum time, using the history of observations 
+
+z0: t and the semantic relationship function F .
+
+# 2.2 Background 
+
+2.2.1 Frontier Exploration Planning 
+
+The goal of robotic exploration is to efficiently build an occupancy map M of a bounded vol-ume W using local range observations such as depth images. This map is a 3D volumetric grid of voxels, with each voxel mk ∈ M storing the probability of occupancy Pk. These probabilities are updated using an inverse camera sensor model, and Bayesian Inference [27]. Building an occu-pancy map of an unknown environment requires the robot to reduce the unexplored space in M.Frontier-based exploration is an effective approach for reducing unknown space, which first detects a set F of frontiers , i.e., boundary vox-els between known and unknown space. Then, it directs the robot to observe these frontiers efficiently. In this work, we build on the recent frontier-based MAV exploration method FUEL presented in [10], which is introduced briefly below. To maintain efficiency, frontiers are clustered into groups of voxels using a region-growing algo-rithm, leading to a set of clusters K, each with a minimum size Fmin . That is, a cluster Ki ∈ K 
+
+with Ki ⊆ F is only valid if |Ki| ≥ Fmin . Around these clusters, a set V of viewpoints is sampled, which are poses in free space that can ’view’ the frontiers. Viewpoints are further filtered using a minimum information gain Imin , considering only those that view at least Imin frontier voxels. Unknown space in V can be reduced by finding the most efficient path through high-quality view-points. Recent frontier exploration methods such as FUEL [10] and FAEL [19] use combinatorial optimization methods to plan a non-myopic global path through the viewpoints in V.
+
+2.2.2 Semantic Relationships 
+
+Semantics are labels or categories that humans use to classify objects. Humans use accumu-lated semantic knowledge to derive relationships between objects of interest when looking for tar-gets. For instance, when searching for a laptop ,we first look for a table as opposed to a toilet 
+
+because the former is more correlated with the tar-get object. These relationships are formalized by the semantic relationship function F that maps a set S of semantic classes represented by language labels to scalar-valued similarity scores. Large language models (LLM) or vision-language models like CLIP [21] or BERT [23] can use their contextual understanding to infer such relationships. These models use a neural network to first transform the text input to vector embed-dings , which are real-valued representations of the text in a high-dimensional feature space. Objects that often occur close to each other often have similar vector embeddings, as they appear in sim-ilar contexts in the training data. Therefore, the cosine similarity score can be used to approximate the semantic relationship function F between two labels, obtained by calculating the dot product of 4their vector embeddings a and b:
+
+F (a, b) = a · b
+
+∥a∥∥ b∥ (1) Such similarity scores have been employed for target search in [5, 6]. 
+
+# 3 Methodology 
+
+# 3.1 Overview 
+
+To motivate our method, consider how humans search for important objects. We infer target-object relations from the environment context, create a mental map of interesting objects, and then search near these OOIs to find the target. For instance, we might search near a wardrobe to find clothes or under a table to locate a per-son during an earthquake (see Figure 1). Our method follows the same approach: To quickly find a target, it is essential to minimize unknown space near objects of interest that are concep-tually and spatially related to the target object. Therefore, we prioritize search in specific regions, unlike coverage-based exploration, which tries to minimize all unknown space. Additionally, bal-ancing both tasks is necessary to ensure that the method works even under semantic uncertainty and does not incur significant costs in exploration time. Our pipeline consists of three components. 
+
+• Semantic Priority Masking : This module processes the RGB image to segment objects, ranks them using a priority function, and compresses the segmentation image into a 2D priority mask (see Section 3.2 and Figure 1). 
+
+• Active Perception : This module uses the generated priority mask, the depth image, and the drone’s state to (a) sample a set of 3D frontier viewpoints in free space, and (b) evaluate the semantic information gain of each viewpoint (Section 3.3). 
+
+• Target Search Planner : This module solves a combinatorial optimization prob-lem over the 3D viewpoints to create aglobal plan that prioritizes high-gain view-points, minimizing the expected search time (Section 3.4). Figure 2 visualizes the active perception and planning parts of the pipeline. 
+
+# 3.2 Semantic Priority Masking 
+
+The goal of this module is to use the RGB image 
+
+Ic to generate a priority mask image Ip that has pixel-wise discrete priority values for each object of interest. A semantic segmentation image Is and a set St ∈ S of currently visible classes are gen-erated using Ic at time t. The user-defined set S
+
+consists of a variety of relevant objects that can be encountered in the present scenario. In this work, we assume the existence of a learning-based method, such as Mask-RCNN [28] or Fast-SAM [29], that can generate Is and St.Instead of using Is directly, we compress the semantic segmentation image into a priority mask 
+
+Ip. This image contains pixel-wise discrete inte-gers for each class, indicating their relative impor-tance to the target class. The process to generate this mask is demonstrated in Figure 1. A pri-ority mapping function r : S → N+ is derived 
+
+offline , for example, as detailed below, and then queried online. The priority mask Ip is created at runtime by replacing each pixel in Is with its corresponding priority value. 
+
+Offline Priority Inference: In the fol-lowing, we describe a method to generate asemantic priority function r using offline infer-ence with an LLM. First, situational context about the scenario is added to the target object label in the set S, using the formulation: [label ] [ preposition ] [ context ], e.g., human in earthquake . This helps to derive more accurate relationships between the target object and other objects in the environment. Second, each class in S is tokenized and passed through the LLM (bert-large-uncased [23]) to produce an output tensor of embeddings, which is averaged along the sequence dimension, resulting in τ of size ∥S∥× ne.Here, each row represents a class in the embed-ding space. The target embedding vector is τ ∗.To obtain cosine similarity scores for each class, each vector in τ is compared to τ ∗ using Eq. (1), producing values between 0 and 1. Finally, the similarity scores are scaled to integer values within the range [1, pmax ]. Here, the maximum priority value pmax is a tunable parameter controlling the sensitivity of the semantic search. The resulting priority mapping function r from the set of classes 5Fig. 1: Semantic priority masking with LLM-based priority function. Red arrows and blue arrows represent online and offline operations, respectively. At runtime, the priority of each class in St is queried from a pre-computed priority vec-tor to create the priority mask Ip.to integer-valued priorities is stored offline, and then queried online with the set St.
+
+# 3.3 Active Perception 
+
+The goal of the active perception module is to use the priority mask Ip, the depth image Id, and robot pose xt to create a set of viewpoints V in free space and corresponding information gains I
+
+for each viewpoint. Section 3.3.1 provides a method for mapping of semantic priorities in 3D and Section 3.3.2 describes a method to diffuse semantic priorities to neighboring frontiers. Section 3.3.3 describes the process of generating viewpoints in free space, and Section 3.3.4 describes our procedure to calcu-late information gain for each sampled viewpoint. Figure 2 shows an overview of the complete active perception pipeline. 
+
+3.3.1 Priority Map 
+
+The goal of this module is to represent the pri-ority values in Ip in 3D space, where the drone will subsequently navigate and collect new obser-vations. The priority mask Ip, the depth image 
+
+Id, and robot pose xt are used to create a 4D position-intensity point cloud observation Ω. Each point Ω k = [ qw, p w]T in this point cloud is rep-resented by the 3D position in the world frame 
+
+qw = [xw, y w, z w]T and the priority value pw
+
+as the intensity channel. Let di = [ ui, v i]T be a pixel in the depth image Id with depth value 
+
+zi = Id(di) and pw = Ip(di) be the correspond-ing priority value. The point cloud Ω is generated using standard projective transformations using the camera’s intrinsic and extrinsic parameters. The point cloud is also post-processed using voxel-grid filtering and statistical outlier removal. The priority value pw at each 3D point k in Ω is then used to update a discrete volumetric grid P
+
+at the corresponding voxel pk ∈ P using a simple weighted update (Eq. 2) 
+
+pk ← (1 − α)pk + αp w ∀k ∈ { 1, ..., |Ω|} . (2) Here α is a learning rate that updates the map progressively and prevents noise from being inte-grated, and |Ω| is the size of the point cloud. Finally, a local section Pl ⊂ P of the priority map centered around the drone is retrieved to keep the computational load bounded. Representing semantics as a single-channel scalar priority avoids the computational complex-ity of high-dimensional 3D semantic mapping or instance tracking. This reduces the mapping task to a simple problem computationally comparable to standard occupancy mapping. 
+
+3.3.2 Frontier Diffusion 
+
+The motivation for this section directly draws from the goal of minimizing unknown space near 
+
+objects of interest (Section 3.1). If frontiers can have increased importance near objects of inter-est, we can refine the search to interesting regions of the environment and find the target faster. This idea is implemented by diffusing the pri-ority values from the local map section Pl into neighboring frontier voxels using a 3D partial con-volution. We use a partial convolution for the diffusion process as it normalizes over only the valid (non-empty) voxels in the sparse frontier structure [30]. A Gaussian kernel with spread σ,and size W is used, thus making it a 3D Gaus-sian filter. Figure 2 shows a simulation example from RViz, where the diffusion process is applied to 3D frontiers. The diffusion process is applied to 6(b)  Cluster 𝐾 𝑖 ∈ 𝒦 
+
+> Viewpoint candidates
+
+ℐ𝑝 
+
+ℐ𝑑 
+
+𝐱 𝑡  Priority Map  Viewpoint 
+
+> Evaluation
+> Frontier
+> Diffusion
+> Target Search
+> Planner
+> Viewpoint
+> Sampling
+
+ℱ
+
+𝒫  𝐷 
+
+𝒦 
+
+𝒱 
+
+𝑇 
+
+𝐼 𝜈  
+
+> Occupancy Mapping,
+> Frontiers ( 𝓕 ), Clustering ( 𝓚 )
+> (d) (e)
+> (a)
+> (c)
+> 1
+> 2
+> 3
+> 4
+> 5
+> 6
+> 7
+> Current
+> pose
+
+Fig. 2 : Active perception and planning pipeline. The blue blocks are from the FUEL framework [10], and Subfigure (b) is inspired by [10]. In (d), the priority map voxels are cubes, and frontier voxels are spheres. each frontier voxel in a local region surrounding the drone to maintain computational efficiency. Diffusion transforms discrete priority values into a continuous spatial utility function, pre-venting sparsely sampled viewpoints from missing important frontiers and being discarded by the planner (Section 3.4). Furthermore, diffusing pri-orities into the volumetric map enables semantic viewpoint evaluations to account for 3D occlusions via raycasting (Section 3.3.4), ensuring the plan-ner prioritizes semantically relevant frontiers that are visually accessible. The frontier diffusion module thus results in semantic priorities attached to each frontier voxel, that is, a frontier priority function D : F →
+
+[1 , p max ], which can further be used for down-stream tasks like informative path planning. 
+
+3.3.3 Viewpoint Sampling 
+
+The goal of this section is to generate a set of viewpoints V which are candidate poses sampled in free space to ’view’ the frontiers in F. This module directly uses the approach from the FUEL framework [10], which we briefly describe here. The viewpoint generation is based on the fron-tier clusters K introduced in Section 2.2.1. Since even small regions of space can hold significance in semantic target search, we set the minimum cluster size threshold used in FUEL to Fmin = 0. Frontier viewpoints ν ∈ V are generated by uni-formly sampling free-space poses in a cylindrical coordinate system around the centroid of each frontier cluster (see Figure 2c). The yaw angle of each viewpoint is set to maximize the sensor cov-erage of the frontier cluster. For more details, see [10]. 73.3.4 Viewpoint Evaluation 
+
+This section describes a heuristic for computing a balanced coverage and semantic information gain for a viewpoint ν ∈ V , using the diffusion-based frontier priorities D(f ) of each frontier voxel f ∈F.Consider Figure 2d, where the frontier voxels are colored based on their priorities. Rays are cast from a candidate viewpoint ν toward the voxels in F to determine the priority value at the ends of valid rays. A ray is considered valid when it is unobstructed by occupied or unknown space in 
+
+M. Voxels at the end of valid rays create a new 
+
+visible frontier set Fν ⊂ F for each viewpoint ν ∈V. The frontier priority value D(f ) for each f ∈Fν is then passed through a transfer function Φ and summed up to give the total information gain 
+
+I(ν) of the viewpoint ν, as in Φ( f ) = max 
+
+n
+
+exp  γ(D(f ) − 1) , 1
+
+o
+
+(3) 
+
+I(ν) = X 
+
+> f∈F ν
+
+Φ( f ), (4) where γ ∈ R+ is a tuning parameter. To demonstrate this, consider high-priority frontier voxels near semantic objects (as in Figure 2d), which are exponentially weighted by the transfer function Φ. Thus, viewpoints oriented towards semantically meaningful regions of the 3D space achieve a high information gain Iν and can be prioritized in semantic target search. Con-versely, consider a frontier f far from semantically interesting objects with the lowest priority value, i.e., D(f ) = 1, resulting in a volumetric cover-age gain Φ( f ) = 1. The parameter γ weights the semantic priority against the coverage gain: a higher γ increases the difference between semanti-cally relevant and irrelevant areas, while a lower γ
+
+shifts the objective towards coverage exploration. For γ = 0, the viewpoint gain equals the number of covered voxels, i.e., I(ν) = |F ν |.The described method for information gain evaluation can integrate semantic priorities with volumetric coverage and uses a tunable exponen-tial weighting function to ensure that semantically relevant viewpoints are prioritized. 
+
+# 3.4 Target Search Planner 
+
+The goal of the global target search planner is to use the set of viewpoints V and their respective information gains I generated in the active per-ception module together with the drone’s state xt
+
+to plan a global path that minimizes the time to find the target object. Our approach extends the idea of combinato-rial planning between different viewpoints [10, 19] to determine their optimal visitation order. While FUEL [10] uses a TSP that minimizes the total traveling distance, semantic target search needs to prioritize viewpoints with high semantic infor-mation gain, which are expected to be close to the target. To this end, we propose to for-mulate the combinatorial target search problem as a variant of the Minimum Latency Problem (MLP) [31] that minimizes the average waiting time, or latency , of multiple tasks, which in our case are the viewpoints. Specifically, our weighted 
+
+MLP (WMLP) formulation prioritizes minimizing the latency of semantically promising viewpoints, using the information gains I(ν) as weights for each viewpoint ν ∈ V . This planner formulation is similar to our concurrent work [32], where we focus on leveraging priorities learned from human inputs, while this paper emphasizes efficient target search with an MAV. The WMLP is formulated over a modified set of viewpoints V∗: Firstly, we only consider view-points with a minimum information gain Imin ,i.e., V′ = {ν ∈ V | I(ν) ≥ Imin }, similar as done in [10]. Secondly, we add the drone’s cur-rent pose xt, i.e., V∗ = V′ ∪ { xt}, planning over 
+
+N = |V ∗| poses. The tour T describes a visitation order of the viewpoints ν ∈ V ∗, where T (i) = νj
+
+denotes the ith viewpoint in the tour being νj , for 
+
+i, j ∈ { 0, · · · , N − 1}. By definition, T (0) = xt, as each tour starts at the drone’s current pose. Let 
+
+C ∈ RN ×N be a cost matrix quantifying the trav-eling time between viewpoints, where Cij is the time required to move from viewpoint νi to νj .Then the WMLP is formulated as min 
+
+> TN
+
+X
+
+> i=1
+
+I(T (i)) 
+
+> i
+
+X
+
+> j=1
+
+CT (j−1) ,T (j), (5) where the inner sum computes the latency until visiting the ith viewpoint T (i), and the tour cost function is a weighted sum of these latencies 8using the viewpoints’ information gains I(T (i)). This formulation extends the classical MLP with uniform weights to weighted task latencies. Solving the problem in Eq. (5) means that viewpoints ν with higher information gain I(ν)get scheduled earlier in the tour. Since the infor-mation gain was calculated by balancing coverage and semantic priorities in Section 3.3.4, this objec-tive pursues both coverage and target search, and is thus more robust to semantic uncertainty. While defining the cost matrix C using Euclidean distances is common in TSP formula-tions and robotic exploration [11, 19], it does not account for the complex dynamics of MAVs. Thus, we use the kinematic cost function from [10] to compute the traveling times in the cost matrix C.
+
+Cij is then defined as the minimum time required to switch between two viewpoints νi, ν j ∈ V ∗.
+
+Cij = max length( νp 
+
+> i
+
+, ν p 
+
+> j
+
+)
+
+vmax 
+
+, |νψi − νψj |
+
+ωmax 
+
+!
+
+(6) Here, νp 
+
+> i
+
+is the 3D position, length( νp 
+
+> i
+
+, ν p 
+
+> j
+
+) com-putes the path length between νp 
+
+> i
+
+and νp 
+
+> j
+
+, and νψi
+
+is the yaw angle of the ith viewpoint from set V∗.The objective in Eq. (5) is approximately solved using a large neighborhood search (LNS) algorithm [33] that iteratively destroys and recon-structs the tour T . In each iteration, the custom LNS algorithm randomly removes up to 30% of the tour and then reconstructs it using the cheap-est insertion heuristic [34] followed by a 2-opt swapping search [35]. In summary, the tour T minimizes the time to arrive at regions of the environment that are semantically important with respect to the tar-get object, thus approximately minimizing target search time. 
+
+# 4 Experimental Setup 
+
+# 4.1 Simulation Environments 
+
+Two realistic simulation environments were used to evaluate the algorithm in the PX4-Gazebo SITL simulator 1. The Earthquake is a custom environment (Figure 3), and the Cave (Figure 4) 
+
+> 1docs.px4.io/main/en/simulation/ros interface.html rubble
+> table/plant
+> human
+> blood
+> dog
+
+Fig. 3 : Earthquake environment (Gazebo). 
+
+Fig. 4 : Cave environment (Gazebo). is a section of the ’Cave Circuit 02’ world from the DARPA SubT Challenge 2.Both environments contain a trapped human as the target, sufficiently occluded to make the problem challenging. A common superset of objects was used as semantic clues for both envi-ronments. This set combines object classes from the DARPA SubT challenge and common sense objects that are expected near a human target in search and rescue situations. These objects are placed in the environment according to their semantic relationship with the target, e.g., blood is the closest to the human, while the rubble is further away. We also included unimportant 
+
+> 2https://www.darpa.mil/program/ darpa-subterranean-challenge
+
+9distractor objects like toy and plant to evalu-ate whether the planner prioritizes semantically relevant objects rather than any observed object. We used ArUco markers as a robust proxy for 2D semantic segmentation. This decouples the evaluation of our target search pipeline from the performance fluctuations of specific segmentation models, ensuring that the results reflect the effi-ciency of the search strategy rather than the robustness of the vision module. These markers were placed near their respective semantic objects, and the 2D segmentation image then contains a pixel-wise label for each marker o ∈ S .Both environments were made sufficiently large to ensure realistic exploration, and the start pose was chosen to be far from the target to observe the effect of semantic exploration. Since we evaluate the experiments on the absolute time-to-target metric rather than a relative metric (see Section 5.1), starting from random start poses in a relatively small environment will not give comparable results. However, it was observed that there is substantial variance in the SITL simulation (Section 4.2), primarily caused by non-deterministic communication between different software nodes, resulting in different observed tra-jectories for multiple runs with the same start pose. Therefore, we ran the same experiment mul-tiple times for quantitative evaluation in each environment instead of varying the start pose. In the simulation experiments, we use the offline LLM inference described in Section 3.2 as the source of the semantic priority function r.
+
+# 4.2 Software Architecture 
+
+Our software stack is based on the Robotics Oper-ating System (ROS) and integrates our target search method described in Section 3 with the modified FUEL exploration pipeline [10]. The architecture is demonstrated in Figure 5. The FUEL pipeline contributes the implementations for 3D voxel mapping, frontier detection and clus-tering, and viewpoint sampling (see also Figure 2), as well as the local planner. A key capability of the software is that we use the same pipeline for both hardware and software experiments, with the only difference being the source of the measure-ment tuple zt. For simulation, this measurement comes from the Gazebo simulator, whereas for hardware experiments, this measurement comes Offboard computer MAV Wireless Network Motion capture system /Gazebo PX4 on FCU / SITL Realsense Camera / Gazebo Depth Stream Color Stream FUEL* STEM Mapping Target Pose Local planner Global planner Active perception Semantic priorities State estimation Controller Motors Odometry, 100 Hz png compression, 15Hz SW module Message synchronizer ROS package Hardware/SITL Current Pose ϱ
+
+Fig. 5 : Software architecture. A modified version of FUEL [10] is used for mapping and local plan-ning. 
+
+Table 1 : Parameter values for our pipeline used in all experiments. 
+
+Parameter Value Parameter Value 
+
+α 0.9 vmax 0.5 m/s 
+
+amax 0.5 m/s 2 ωmax 0.7 rad/s 
+
+h 480 w 848 
+
+σ 2 W 5
+
+pmax 8 γ 4
+
+Imin 10 λmin 0.01 
+
+∥S∥ 22 Fmin 0
+
+from the onboard camera and state-estimation based on motion capture and IMU information. The parameters used by the planning pipeline are summarized in Table 1. 
+
+# 4.3 Hardware Setup 
+
+Hardware experiments were performed with acustom-built Micro Aerial Vehicle (MAV) previ-ously used in [36] and modeled for the Gazebo sim-ulation experiments. The MAV is equipped with an Intel RealSense D455 camera and an Nvidia Jetson Xavier NX onboard computer. A Holy-Bro Kakute F7 V2 flight controller was used with PX4 autopilot software. The MAV was localized in the environment via a Vicon motion capture system. ArUco markers were placed in the envi-ronment as semantic objects of interest, and the 10 Fig. 6: Lab environment for hardware experi-ments experiments were conducted in sufficiently clut-tered configurations with screens and boxes as obstacles. The lab environments are created to be geometrically challenging due to obstacles and occlusions, but do not represent real scenarios with actual semantic relationships. Therefore, in the hardware experiments, we do not use LLM-based priority inference (see Section 3.3.1) used in the simulation experiments, but instead pro-vide a handcrafted priority function r. Note that in this case, the whole pipeline, including pri-ority masking, active perception, and planning, is still validated in the hardware experiments Figure 6 shows an exemplary environment for the experiment. 
+
+# 5 Simulation Results 
+
+In this section, we present and discuss the results of our proposed method STEM on the simula-tion environments from Section 4.1. Evaluation metrics are proposed in Section 5.1, and two base-lines are compared in Section 5.2. We provide the primary performance comparisons with baselines in Section 5.3, which are further supported using qualitative results in Section 5.4. Finally, we also conduct an ablation study to analyze the impor-tance of the proposed target search planner in Section 5.5. 
+
+# 5.1 Evaluation Metrics 
+
+We employ the following metrics: 
+
+Success % : This metric calculates the per-centage of episodes in which the target was successfully found across n trials. An object o
+
+is considered found when the fraction of object pixels λo crosses a threshold λmin in the segmen-tation image, with λo defined as λo = β/ (wh ). Here, β is the number of pixels belonging to the object’s ArUco marker, and w and h are the seg-mentation image width and height, respectively. The parameter λmin depends on the environment complexity and camera intrinsics. For example, a value of λo = 0 .02 means that the marker occupies 2% of the field of view in the image plane. 
+
+Time to target : A commonly used metric for ObjectNav tasks is Success weighted by Path Length (SPL) [37]. A notable drawback of this metric is that it only considers travel distance in SE(3), and for robots with complex dynamics (such as MAVs), the completion time is recom-mended [38]. Thus, we record the first time instant when a target o∗ was successfully detected (i.e., 
+
+λo∗ ≥ λmin ) and call this metric the Time to target t∗.
+
+Exploration time : Since balancing explo-ration and target search is a secondary goal for our method, we also measure the exploration time tf
+
+in seconds. An environment is considered explored when no visible frontier can be found for 10 con-secutive iterations. For a frontier to be considered 
+
+visible , it must have (1) at least Fmin number of clustered voxels, and (2) at least one viewpoint with minimum information gain Imin . These con-ditions are also used by the authors of FUEL [10]. 
+
+# 5.2 Baselines 
+
+We evaluate our method by comparing it with the highly efficient coverage-based exploration pipeline FUEL [10], since there are no seman-tically guided target search methods for MAVs. This allows us to isolate the performance gain achieved by adding semantic guidance to a cover-age framework. Our method is compared to two versions of the FUEL pipeline [10], differing by the two parameters Fmin and Imin : The FUEL-original baseline uses the original parametrization with Fmin = 100 and Imin = 20 as proposed in [10]. For the FUEL-complete baseline, these parameters were tuned to maximize target search success, as we noticed that finding the target in 11 small regions depended strongly on these param-eters. For the Earthquake scenario, Fmin = 0 and 
+
+Imin = 5 were used, and for the Cave scenario, 
+
+Fmin = 0 and Imin = 0. Additionally, frontier down-sampling (see [10]) was turned off due to the narrow passages and small frontier sizes in the Cave environment. The sensor range Rmax for both baselines was kept the same as our method to make comparisons fair. 
+
+# 5.3 Performance Results 
+
+This section presents the performance results of our method compared to the two baselines intro-duced in Section 5.2 using the metrics from Section 5.1. Table 2 summarises results for both the Earthquake and Cave simulation environ-ments. The data was gathered over 20 trials for each method and environment. The results are discussed below. STEM consistently finds the target faster than all methods and is as successful as the FUEL-complete baseline, which is tuned for high suc-cess rates. Moreover, it keeps the exploration times within reasonable bounds. The fast tar-get search times and high success rates have been achieved by the combination of the seman-tic viewpoint evaluation and the combined target search planner. The viewpoint evaluation based on the semantic frontier priorities diffused from relevant objects and subsequent filtering of view-points using Imin leads to a viewpoint set biased towards viewing regions of high likelihood of tar-get presence. This allows our method to find the target consistently. The combinatorial target search planner schedules high semantic gain view-points earlier, such that the MAV quickly reaches regions where the target is likely to be found. Conversely, FUEL-complete does not use semantic information to guide search and explores irrele-vant regions first, therefore taking more time to find the target while still achieving high success rates. The performance difference between FUEL-complete and STEM underlines the importance of the viewpoint gain threshold Imin : A lower Imin 
+
+retains viewpoints for small frontier clusters in tight spaces, and therefore enabling a high success rate for FUEL-complete. However, this also means that many small but unimportant regions are cov-ered, leading to inefficient and slow target search and exploration, as reflected by the exploration time results of FUEL-complete. This emphasizes the advantage of evaluating the semantic rel-evance of frontiers, as it allows retaining and prioritizing viewpoints in small but important regions while ignoring small, unimportant regions. FUEL-original rarely finds the target due to its increased minimum frontier size Fmin and viewpoint threshold Imin . As a result, frontier clusters or viewpoints in tight spaces that lead to the target are ignored. However, this base-line consistently completes exploration faster, since the clustering and thresholding facilitate more stable viewpoint sets V and more consis-tent global plans, allowing the MAV to maintain high speeds throughout the episode. Furthermore, FUEL-original solves a metric TSP using the LKH heuristic solver, generating robust and efficient global plans. 
+
+# 5.4 Qualitative Results 
+
+In this section, we visualize the behavior of our proposed method compared to the baselines to support the quantitative results from Section 5.3. Figure 7 shows a qualitative comparison of the trajectories produced by the three methods in the Earthquake environment until the target is found or exploration is completed. The results show that STEM finds the target quickly without tak-ing large detours, while FUEL-complete explores large parts of the environment before finding the target, and FUEL-original does not find the target. STEM achieves these results by focus-ing exploration on regions semantically related to the target, while both FUEL methods only aim at maximizing coverage gains. The trajectory of FUEL-complete shows that it came close to the target and highly relevant semantic cues ( blood 
+
+objects), but does not react to these cues and continues exploring irrelevant regions. Comparing FUEL-complete and FUEL-original emphasizes the effect of the thresholds 
+
+Fmin and Imin discussed in Section 5.3. When FUEL-original does not find any sufficiently large frontiers or viewpoints and completes explo-ration, there are still several small regions of the map left unexplored. FUEL-complete, however, is more thorough in its exploration but explores the environment less efficiently, as evidenced by more directional changes in its trajectory. 12 Table 2 : Comparison study with baselines in the Earthquake and Cave environments. Two baselines from Section 5.2 were compared to our method on success %, time to target t∗, and exploration time tf .Target search Exploration Env Method Success % Time t∗ (s) Time tf (s) Earthquake FUEL-original 5% 79 .8 ± 0.0 107 .3 ± 17 .3
+
+FUEL-complete 100% 76 .6 ± 33 .5 129 .4 ± 12 .9STEM (Ours) 100% 56 .9 ± 22 .8 139 .9 ± 11 .9Cave FUEL-original 40% 65 .0 ± 14 .8 93 .6 ± 30 .7
+
+FUEL-complete 90% 95 .3 ± 26 .6 166 .4 ± 31 .5STEM (Ours) 90% 64 .1 ± 20 .3 130 .7 ± 19 .8  
+
+> (a) STEM (b) FUEL-complete (c) FUEL-original
+
+Fig. 7 : Qualitative comparison with baselines for the Earthquake environment. Episodes were recorded until t∗ or tf , whichever comes first. The reconstructed point cloud from RViz is shown along with the drone’s trajectory (in blue). The camera FOV is shown in red, and the latest RGB camera image is displayed. Figure 8 further shows keyframes of our algo-rithm performing target search in the earthquake environment. The MAV starts at a disadvan-taged position and starts to explore first to gather information. When it comes across semantically relevant objects such as rubble or blood , it sam-ples informative viewpoints covering the nearby frontiers. Planning a path through such view-points, continually using the target search plan-ner, allows the MAV to find the hidden target quickly. In addition, the keyframes show that our approach correctly ignores the distractor objects like ”plant”. Figure 9 presents the trajectories of our method and the two baselines in the cave envi-ronment. The results show that STEM is able to handle a complex 3D environment with many occlusions and tight spaces, which underlines its ability to balance exploration and semantic tar-get search. After exploring initially, the MAV comes across objects such as radio and dog in the right arm of the cave, which STEM uses to guide the robot to the target quickly. Conversely, FUEL-complete misses the semantic cues and first explores the left arm of the cave before eventually discovering the target. FUEL-original coinciden-tally explores the right arm of the cave first, but does not find the target due to its thresholding of frontier clusters and viewpoint gains. 
+
+# 5.5 Planner Ablation Study 
+
+In this section, we evaluate the importance of the combinatorial target search planner in our method. We compare our full method with the WMLP-based planner from Section 3.4 with two simplified variants that use the same viewpoint sampling, evaluation, and filtering methods using semantics, but replace the planner. The first vari-ant uses a greedy viewpoint choice, planning to 13 Start  Semantics: 
+
+# rubbl e
+
+# Semantics: 
+
+# blood 
+
+# Target found! 
+
+# Exploration completed Fig. 8 : Key frames of target search using STEM in the Earthquake environment. The snapshots show the recorded RGB point cloud, the camera FOV in red, the trajectory in blue, and the current RGB image.   
+
+> (a) STEM (b) FUEL-complete (c) FUEL-original
+
+Fig. 9 : Qualitative comparison with baselines for the cave environment. Episodes were recorded until t∗
+
+or tf , whichever comes first. The reconstructed point cloud from RViz is shown along with the drone’s trajectory (in yellow). The camera FOV is shown in red, and the latest RGB camera image is displayed. the viewpoint with the highest information gain 
+
+Iν . The second variant uses the TSP planner from [10] to plan a path through the viewpoints in V,deploying the LKH heuristic to solve the optimiza-tion problem. The quantitative results are shown in Table 3. The results show that STEM with the WMLP planner outperforms both the TSP and greedy planners on target search metrics in both environ-ments. In the earthquake environment, all three variants achieve a 100% success rate, while in the cave environment, the success rate of the greedy planner is substantially lower than that of 14 Table 3 : Planner ablation study, comparing our proposed WMLP planner with a greedy and a TSP-based planner on success %, time to target t∗, and exploration time tf .Target search Exploration Env Method Success % Time, t∗(s) Time, tf (s) Earthquake Greedy 100% 71 .1 ± 39 .1 210 .5 ± 25 .8TSP-LKH 100% 65 .3 ± 26 .7 128 .5 ± 10 .8WMLP (STEM) 100% 56 .9 ± 22 .8 139 .9 ± 11 .9Cave Greedy 50% 64 .9 ± 18 .1 175 .8 ± 35 .8TSP-LKH 85% 93 .7 ± 19 .9 134 .1 ± 23 .5WMLP (STEM) 90% 64 .1 ± 20 .3 130 .7 ± 19 .8WMLP and TSP. This indicates that the com-plex geometry of the cave environment requires more consistent and efficient behavior of the com-binatorial planners than the simpler earthquake environment. The average target search times t∗ show sig-nificant differences between the planners in both environments. In the earthquake environment, the TSP planner is 15% slower, and the greedy plan-ner is 25% slower in finding the target than the WMLP planner. This underlines that the WMLP planner prioritizing semantically relevant viewpoints contributes substantially to STEM’s target search performance. However, it also shows that the performance gap between FUEL and STEM (Section 5.3) is only partially caused by the planning algorithm, and that the semantic diffusion-based viewpoint evaluation and filtering are also critical elements of the target search strat-egy. In the cave environment, the greedy planner achieves equally fast search times as WMLP when successful , while the TSP planner is 46% slower. This indicates that in some cases, maximizing semantic viewpoint gains via the greedy plan-ner helps to find the target quickly. The greedy strategy can work well when the environment con-strains the exploration options (e.g., by tunnels) and when unambiguous semantic cues are con-tinually observed. In contrast, the TSP planner treats all viewpoints as equally important and only optimizes for their efficient coverage. While WMLP and TSP show very similar exploration times, the greedy planner is signifi-cantly less efficient in covering the volume. This is due to the greedy planner’s tendency to oscillate between viewpoints with high information gain, leading to long detours and inefficient exploration paths. In summary, this ablation study shows that combinatorial planning contributes to more con-sistent performance for both target search and exploration, and that both the semantic viewpoint evaluation and the WMLP planner contribute substantially to the target search performance of STEM. 
+
+# 6 Real-world experiments 
+
+This section presents the results of real-world experiments conducted using the software archi-tecture from Section 4.2 and the hardware setup from Section 4.3. The results are visualized in Figures 10 to 12, showing our algorithm performing simultaneous target search and exploration in complex 3D envi-ronments set up in the laboratory. Figure 10 shows a scenario where the drone starts from the bottom right corner in the top-down view, and explores the environment searching for the target and rele-vant objects, represented by ArUco markers. The target is hidden behind a screen and a lower wall in the upper left section of the lab. The onboard camera images in Figure 10 show how the drone first discovers a high-priority object on top of the wall on the right and a low-priority on the left, and therefore prioritizes the unknown area behind the wall on the right due to the diffusion method (see Section 3.3.2). In image 2, a high-relevance object is detected behind the wall, creating additional high-priority frontiers around the pillar in the upper left corner, which leads the WMLP planner to prioritize exploring the area behind the wall and screen further. Therefore, the drone is able 15 Until target discovery Until exploration completed 121 323Target found! Fig. 10 : Hardware experiment 1 in the laboratory. The top row shows two top-down views. The color of the trajectory indicates the drone’s altitude z. The bottom row shows images from the onboard RGB camera at three time instances, which are marked by position and orientation in the left top-down view. The red circles in the onboard images indicate the high-priority objects detected by the framework, which guide the drone towards the target. The blue circle indicates a low-priority distractor object. The last onboard image shows the moment the target is discovered. Until target discovery Until exploration completed 1123Target found! 23
+
+Fig. 11 : Hardware experiment 2 in the laboratory, with the same format as Figure 10. 16 Until target discovery Until exploration completed 23Target found! 11 2 3Fig. 12 : Hardware experiment 3 in the laboratory, with the same format as Figure 10. to discover the target quickly and without large detours in image 3. Following target discovery, the framework guides the drone to further explore the environment efficiently, facilitated by the view-point evaluation method combining coverage and semantic information gain (see Section 3.3.4). This scenario underlines how our framework is able to search for a target using semantic clues in a cluttered 3D environment, guiding the drone to fly over obstacles (the wall close to viewpoint 2) to explore important hidden areas behind it. Figures 11 and 12 show two additional sce-narios, where the drone is able to find the target quickly using the ArUco marker objects as seman-tic clues, as described above. Both experiments show how our framework is able to guide the drone through different cluttered environments, handling occlusions and narrow passages, and to efficiently explore the environment after finding the target. In summary, the real-world experiments demonstrate the feasibility of our method in handling noisy onboard depth images and real-time constraints, and still efficiently guide the drone towards semantically important areas. This enables the drone to find the target quickly in three different complex 3D environments, and to explore the environment efficiently after target discovery. 
+
+# 7 Conclusion 
+
+In this paper, we introduced STEM, a novel framework for semantically-guided target search and exploration with Micro Aerial Vehicles (MAVs) in complex, cluttered 3D environments. The core contribution of this work is the inte-gration of efficient planning techniques com-monly used in coverage exploration with seman-tic relationships guiding target search. The key idea of our approach is to prioritize exploration around semantically relevant objects when plan-ning over all available exploration frontiers. Bal-ancing semantic and coverage objectives in this way, efficient behavior for both target search and exploration is achieved. Quantitative evaluation in two challeng-ing simulation environments demonstrates that STEM achieves consistently higher success rates of more than 90 % and up to 32% faster target discovery times compared to coverage-maximizing baseline methods. Real-world experiments fur-ther validate the practical applicability of our approach, proving that our approach can exhibit 17 effective target search with noisy camera inputs and realistic drone dynamics. STEM is designed to generalize to diverse environments by balanc-ing semantic and coverage exploration, such that the system defaults to coverage when semantic information is absent or ambiguous. Future work will conduct extensive experiments to evaluate how our method generalizes to environments with diverse topologies and semantic features. It will also investigate how uncertainty about seman-tic object detection and semantic relationships can be propagated into the active perception pipeline, and how foundation models can be used to infer semantic priorities beyond embedding similarities. 
+
+Supplementary information. A video of the drone experiments described in Section 6 is sub-mitted together with this paper. The code used for simulation and hardware experiments is available here: https://github.com/tud-amr/stem. 
+
+Acknowledgements. This work was sup-ported by the National Police of the Netherlands. All content represents the opinion of the authors, which is not necessarily shared or endorsed by their respective employers and/or sponsors. 
+
+# Declarations 
+
+• No conflict of interest. 
+
+• Author contribution: M.L. proposed the initial idea of extending frontier-based MAV exploration with semantic priorities, devel-oped and implemented the target search planner, and contributed to the experiments and writing of the paper. N.S. developed and implemented the pipelines for seman-tic priority masking and active perception and contributed to the experiments and writ-ing of the paper. L.F., R.B. and J.A.-M. provided discussions and feedback on the ideas, methods, results, and the writing of the paper. 
+
+# References 
+
+[1] Chaplot, D.S., Jiang, H., Gupta, S., Gupta, A.: Semantic Curiosity for Active Visual Learning. In: Proceedings of (ECCV) Euro-pean Conference on Computer Vision , pp. 309–326 (2020) [2] Kim, N., Kwon, O., Yoo, H., Choi, Y., Park, J., Oh, S.: Topological semantic graph mem-ory for image-goal navigation. In: Proceedings of The 6th Conference on Robot Learning ,vol. 205, pp. 393–402 (2023) [3] Ramakrishnan, S.K., Chaplot, D.S., Al-Halah, Z., Malik, J., Grauman, K.: PONI: Potential Functions for ObjectGoal Naviga-tion with Interaction-free Learning. In: 2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) (2022) [4] Hahn, M., Chaplot, D.S., Tulsiani, S., Mukadam, M., Rehg, J.M., Gupta, A.: No rl, no simulation: Learning to navigate without navigating. In: Advances in Neural Informa-tion Processing Systems , vol. 34, pp. 26661– 26673 (2021) [5] Yokoyama, N., Ha, S., Batra, D., Wang, J., Bucher, B.: VLFM: Vision-Language Fron-tier Maps for Zero-Shot Semantic Navigation. In: 2024 IEEE International Conference on Robotics and Automation (ICRA) (2024) [6] Chen, J., Li, G., Kumar, S., Ghanem, B., Yu, F.: How To Not Train Your Dragon: Training-free Embodied Object Goal Naviga-tion with Semantic Frontiers. In: Proceedings of Robotics: Science and Systems (2023) [7] Gadre, S.Y., Wortsman, M., Ilharco, G., Schmidt, L., Song, S.: Cows on pasture: Baselines and benchmarks for language-driven zero-shot object navigation. In: 2023 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) (2023) [8] Huang, C., Mees, O., Zeng, A., Burgard, W.: Visual language maps for robot navigation. In: 2023 IEEE International Conference on Robotics and Automation (ICRA) (2023) [9] Ginting, M.F., Kim, S.-K., Fan, D.D., Palieri, M., Kochenderfer, M.J., Agha-Mohammadi, A.-A.: SEEK: Semantic Reasoning for Object Goal Navigation in Real World Inspection 18 Tasks. In: Proceedings of Robotics: Science and Systems (2024) [10] Zhou, B., Zhang, Y., Chen, X., Shen, S.: Fuel: Fast UAV exploration using incremen-tal frontier structure and hierarchical plan-ning. IEEE Robotics and Automation Letters 
+
+6(2), 779–786 (2021) [11] Cao, C., Zhu, H., Ren, Z., Choset, H., Zhang, J.: Representation granularity enables time-efficient autonomous exploration in large, complex worlds. Science Robotics 8(80) (2023) [12] Meng, Z., Qin, H., Chen, Z., Chen, X., Sun, H., Lin, F., Ang, M.H.: A Two-Stage Opti-mized Next-View Planning Framework for 3-D Unknown Environment Exploration, and Structural Reconstruction. IEEE Robotics and Automation Letters 2(3), 1680–1687 (2017) [13] Bircher, A., Kamel, M., Alexis, K., Oleynikova, H., Siegwart, R.: Receding Horizon ”Next-Best-View” Planner for 3D Exploration. In: 2016 IEEE International Conference on Robotics and Automation (ICRA) , pp. 1462–1468 (2016) [14] Dharmadhikari, M., Dang, T., Solanka, L., Loje, J., Nguyen, H., Khedekar, N., Alexis, K.: Motion Primitives-based Path Planning for Fast and Agile Exploration using Aerial Robots. In: 2020 IEEE International Con-ference on Robotics and Automation (ICRA) 
+
+(2020) [15] Schmid, L., Pantic, M., Khanna, R., Ott, L., Siegwart, R., Nieto, J.: An Efficient Sampling-Based Method for Online Infor-mative Path Planning in Unknown Envi-ronments. IEEE Robotics and Automation Letters 5, 1–1 (2020) [16] Dang, T., Papachristos, C., Alexis, K.: Visual Saliency-Aware Receding Horizon Autonomous Exploration with Application to Aerial Robotics. In: 2018 IEEE Interna-tional Conference on Robotics and Automa-tion (ICRA) , pp. 2526–2533 (2018) [17] Yamauchi, B.: A frontier-based approach for autonomous exploration. In: Proceed-ings 1997 IEEE International Symposium on Computational Intelligence in Robotics and Automation CIRA’97 , pp. 146–151 (1997) [18] Cieslewski, T., Kaufmann, E., Scaramuzza, D.: Rapid exploration with multi-rotors: A frontier selection method for high speed flight. In: 2017 IEEE/RSJ International Conference on Intelligent Robots and Sys-tems (IROS) , pp. 2135–2142 (2017) [19] Huang, J., Zhou, B., Fan, Z., Zhu, Y., Jie, Y., Li, L., Cheng, H.: FAEL: Fast Autonomous Exploration for Large-scale Environments With a Mobile Robot. IEEE Robotics and Automation Letters 8(3), 1667–1674 (2023) [20] Zhang, Y., Chen, X., Feng, C., Zhou, B., Shen, S.: FALCON: Fast Autonomous Aerial Exploration Using Coverage Path Guidance. IEEE Transactions on Robotics (2024) [21] Radford, A., Kim, J.W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sas-try, G., Askell, A., Mishkin, P., Clark, J., Krueger, G., Sutskever, I.: Learning trans-ferable visual models from natural language supervision. In: Proceedings of the 38th Inter-national Conference on Machine Learning ,vol. 139, pp. 8748–8763 (2021) [22] Li, J., Li, D., Savarese, S., Hoi, S.: BLIP-2: Bootstrapping language-image pre-training with frozen image encoders and large lan-guage models. In: Proceedings of the 40th International Conference on Machine Learn-ing , vol. 202, pp. 19730–19742 (2023) [23] Devlin, J., Chang, M.-W., Lee, K., Toutanova, K.: BERT: pre-training of deep bidirectional transformers for language understanding. In: Proceedings of the 2019 Conference of the North American Chap-ter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT) , pp. 4171–4186 (2019) [24] Papatheodorou, S., Funk, N., Tzoumanikas, D., Choi, C., Xu, B., Leutenegger, S.: Finding 19 Things in the Unknown: Semantic Object-Centric Exploration with an MAV. In: 2023 IEEE International Conference on Robotics and Automation (ICRA) , pp. 3339–3345 (2023) [25] Luo, Y., Zhuang, Z., Pan, N., Feng, C., Shen, S., Gao, F., Cheng, H., Zhou, B.: Star-searcher: A complete and efficient aerial system for autonomous target search in com-plex unknown environments. IEEE Robotics and Automation Letters (2024) [26] Mellinger, D., Kumar, V.: Minimum snap trajectory generation and control for quadro-tors. In: 2011 IEEE International Conference on Robotics and Automation , pp. 2520–2525 (2011) [27] Han, L., Gao, F., Zhou, B., Shen, S.: Fiesta: Fast incremental euclidean distance fields for online motion planning of aerial robots. In: 
+
+2019 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) , pp. 4423–4430 (2019) [28] He, K., Gkioxari, G., Doll´ ar, P., Girshick, R.: Mask r-cnn. In: Proceedings of the IEEE International Conference on Computer Vision , pp. 2961–2969 (2017) [29] Zhang, C., Han, D., Qiao, Y., Kim, J.U., Bae, S.-H., Lee, S., Hong, C.S.: Faster segment anything: Towards lightweight sam for mobile applications. arXiv (2023) [30] Liu, G., Reda, F.A., Shih, K.J., Wang, T.-C., Tao, A., Catanzaro, B.: Image inpainting for irregular holes using partial convolutions. In: Proceedings of the European Conference on Computer Vision (ECCV) , pp. 85–100 (2018) [31] Blum, A., Chalasani, P., Coppersmith, D., Pulleyblank, B., Raghavan, P., Sudan, M.: The minimum latency problem. In: Proceed-ings of the Twenty-Sixth Annual ACM Sym-posium on Theory of Computing - STOC ’94 
+
+(1994) [32] Lodel, M., Wilde, N., Babuska, R., Alonso-Mora, J.: Learning semantic priorities for autonomous target search. Accepted to IEEE International Conference on Robotics and Automation (ICRA) (2026) [33] Pisinger, D., Ropke, S.: Large Neighborhood Search. In: Handbook of Metaheuristics , pp. 99–127 (2019) [34] Rosenkrantz, D.J., Stearns, R.E., Lewis, P.M. II: An Analysis of Several Heuristics for the Traveling Salesman Problem. SIAM Journal on Computing 6(3) (1977) [35] Croes, G.A.: A Method for Solving Traveling-Salesman Problems. Operations Research 
+
+6(6) (1958) [36] Chen, G., Wu, S., Shi, M., Dong, W., Zhu, H., Alonso-Mora, J.: Rast: Risk-aware spatio-temporal safety corridors for mav navigation in dynamic uncertain environments. IEEE Robotics and Automation Letters 8(2), 808– 815 (2023) [37] Batra, D., Gokaslan, A., Kembhavi, A., Maksymets, O., Mottaghi, R., Savva, M., Toshev, A., Wijmans, E.: ObjectNav Revis-ited: On Evaluation of Embodied Agents Navigating to Objects. arXiv:2006.13171 (2020) [38] Yokoyama, N., Ha, S., Batra, D.: Success weighted by completion time: A dynamics-aware evaluation criteria for embodied nav-igation. In: 2021 IEEE/RSJ International Conference on Intelligent Robots and Sys-tems (IROS) , pp. 1562–1569 (2021) 20
