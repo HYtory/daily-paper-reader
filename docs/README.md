@@ -6,27 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-05
-- 运行时间：2026-06-05 21:51:56 UTC
+- 最新运行日期：2026-06-06
+- 运行时间：2026-06-06 21:06:35 UTC
 - 运行状态：成功
 - 本次总论文数：2
 - 精读区：0
 - 速读区：2
 
 ### 今日简报（AI）
-今日阅读2篇速读论文，聚焦多智能体协同控制与无人机语义搜索两大方向。其中《Merging model-based control with multi-agent reinforcement learning》探讨将模型控制与强化学习融合提升团队协作效率，《STEM》则解决杂乱环境中MAV的语义目标搜索问题。建议优先阅读第一篇，其对多智能体协同策略的改进思路具有较强启发性。
-- 详情：[/202606/05/README](/202606/05/README)
+今日速读两篇论文，聚焦无人机（UAV）与强化学习（RL）在6G网络和导航中的前沿应用。  
+最值得关注的是数字孪生辅助多智能体DRL实现Open-RAN下的频谱与资源管理，以及自反思AgenticRL提升无人机视觉导航能力。  
+建议后续优先精读第一篇，深入理解数字孪生如何协同多智能体优化6G无人机网络性能。
+- 详情：[/202606/06/README](/202606/06/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Merging model-based control with multi-agent reinforcement learning for multi-agent cooperative teaming strategies](/202606/05/2606.06011v1-merging-model-based-control-with-multi-agent-reinforcement-learning-for-multi-agent-cooperative-teaming-strategies)  
+1. [Digital Twin-Assisted Adaptive Multi-Agent DRL for Intelligent Spectrum and Resource Management in Open-RAN UAV-Enabled 6G Networks](/202606/06/2606.01324v1-digital-twin-assisted-adaptive-multi-agent-drl-for-intelligent-spectrum-and-resource-management-in-open-ran-uav-enabled-6g-networks)  
    标签：评分：7.0/10、query:ui
-   evidence：多智能体强化学习协作策略，适用于无人机围捕
-2. [STEM: Semantic Target Search and Exploration using MAVs in Cluttered Environments](/202606/05/2606.00762v1-stem-semantic-target-search-and-exploration-using-mavs-in-cluttered-environments)  
+   evidence：多智能体深度强化学习用于无人机群频谱管理
+2. [AgenticRL: Self-Refining Agentic Reinforcement Learning for Vision-Conditioned UAV Navigation](/202606/06/2606.03963v2-agenticrl-self-refining-agentic-reinforcement-learning-for-vision-conditioned-uav-navigation)  
    标签：评分：6.0/10、query:ui
-   evidence：在杂乱环境中使用微型飞行器进行自主目标搜索和探索
+   evidence：同AgenticRL方法，用于UAV导航
 
 
 <div class="dpr-home-promo-card">
