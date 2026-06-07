@@ -1,0 +1,60 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-07T21:03:54.517652+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.04534v1",
+      "source": "arxiv",
+      "title": "MAD: Mapping-Aware World Models for Agile Quadrotor Flight",
+      "abstract": "Agile quadrotor flight in cluttered scenes requires more than a reactive mapping from a depth image to a control command: the vehicle must remember which regions have been observed, infer nearby occupied space, and act under partial visibility and tight latency. In this paper, we present Mapping-Aware Dreamer (MAD), a geometry-aware world model for vision-based quadrotor flight. Instead of using raw-image reconstruction as the main self-supervised objective, MAD learns recurrent latent dynamics that reconstruct robocentric occupancy and visibility grid maps together with proprioceptive states. This design forces the latent state to encode local geometry, visibility history, and ego-motion in a form that is directly relevant to collision avoidance. MAD is trained in DiffAero using a GPU-parallel map-construction module that provides high-throughput supervision for occupancy and visibility. The learned representation is used in three policy-learning modes: imagination-based MAD-Dreamer and feature-extractor variants based on PPO and SHAC. Across visual navigation and racing tasks, MAD-based agents achieve higher success rates, faster flight, and better cross-task transfer than corresponding vision-only baselines. The model also produces interpretable map predictions and accurate ego-motion estimates from depth observations. We further deploy the learned policy on a physical quadrotor with an Intel RealSense D435i and demonstrate safe indoor and outdoor flight under limited sensing, reaching 9.66 m/s in simulation and 5.05 m/s in real-world forest experiments. These results show that mapping-aware world models provide a practical middle ground between modular aerial navigation and end-to-end learning.",
+      "authors": [
+        "Xinhong Zhang",
+        "Runqing Wang",
+        "Yunfan Ren",
+        "Ding Yu",
+        "Boyu Zhou",
+        "Jian Sun",
+        "Fang Deng",
+        "Jie Chen",
+        "Gang Wang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-03T07:17:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.04534v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "World model for agile quadrotor flight enabling autonomous drone interception",
+      "llm_evidence_cn": "用于敏捷四旋翼飞行的世界模型，支持自主无人机拦截",
+      "llm_evidence": "用于敏捷四旋翼飞行的世界模型，支持自主无人机拦截",
+      "canonical_evidence": "用于敏捷四旋翼飞行的世界模型，支持自主无人机拦截",
+      "llm_tldr_en": "Proposes Mapping-Aware Dreamer (MAD), a geometry-aware world model for vision-based quadrotor flight that reconstructs occupancy and visibility maps, directly relevant to autonomous drone interception navigation.",
+      "llm_tldr_cn": "该论文提出了MAD（建图感知的梦想家），一种面向视觉四旋翼飞行的几何感知世界模型。它通过学习递归潜在动力学来重建机器人中心的占据和可见性网格地图，克服了传统原始图像重建的不足。该模型在部分可见和低延迟条件下对碰撞规避至关重要，因此可迁移至自主无人机拦截任务中的导航与控制环节，提升对动态环境的适应力。",
+      "llm_tldr": "该论文提出了MAD（建图感知的梦想家），一种面向视觉四旋翼飞行的几何感知世界模型。它通过学习递归潜在动力学来重建机器人中心的占据和可见性网格地图，克服了传统原始图像重建的不足。该模型在部分可见和低延迟条件下对碰撞规避至关重要，因此可迁移至自主无人机拦截任务中的导航与控制环节，提升对动态环境的适应力。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "autonomous drone interception using deep reinforcement learning",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-07",
+  "date": "2026-06-07",
+  "generated_at": "2026-06-07T21:04:45",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/07/2606.04534v1-mad-mapping-aware-world-models-for-agile-quadrotor-flight",
+      "section": "quick",
+      "title_en": "MAD: Mapping-Aware World Models for Agile Quadrotor Flight",
+      "authors": "Xinhong Zhang, Runqing Wang, Yunfan Ren, Ding Yu, Boyu Zhou, Jian Sun, Fang Deng, Jie Chen, Gang Wang",
+      "date": "2026-06-03",
+      "pdf": "https://arxiv.org/pdf/2606.04534v1",
+      "score": "6.0",
+      "evidence": "用于敏捷四旋翼飞行的世界模型，支持自主无人机拦截",
+      "tldr": "敏捷四旋翼飞行需要记住观测区域并推断邻近空间。本文提出MAD，一种几何感知的世界模型，通过重建机器人中心占据和可见性网格地图，结合本体状态进行自监督学习。在DiffAero中训练，支持想象驱动和特征提取策略。在导航和竞速任务中，MAD优于纯视觉基线，成功率和速度更高，跨任务泛化能力更强。实物部署达到9.66 m/s仿真和5.05 m/s实飞速度，展示了模块化导航与端到端学习之间的实用折中。",
+      "tags": "query:ui",
+      "abstract_en": "Agile quadrotor flight in cluttered scenes requires more than a reactive mapping from a depth image to a control command: the vehicle must remember which regions have been observed, infer nearby occupied space, and act under partial visibility and tight latency. In this paper, we present Mapping-Aware Dreamer (MAD), a geometry-aware world model for vision-based quadrotor flight. Instead of using raw-image reconstruction as the main self-supervised objective, MAD learns recurrent latent dynamics that reconstruct robocentric occupancy and visibility grid maps together with proprioceptive states. This design forces the latent state to encode local geometry, visibility history, and ego-motion in a form that is directly relevant to collision avoidance. MAD is trained in DiffAero using a GPU-parallel map-construction module that provides high-throughput supervision for occupancy and visibility. The learned representation is used in three policy-learning modes: imagination-based MAD-Dreamer and feature-extractor variants based on PPO and SHAC. Across visual navigation and racing tasks, MAD-based agents achieve higher success rates, faster flight, and better cross-task transfer than corresponding vision-only baselines. The model also produces interpretable map predictions and accurate ego-motion estimates from depth observations. We further deploy the learned policy on a physical quadrotor with an Intel RealSense D435i and demonstrate safe indoor and outdoor flight under limited sensing, reaching 9.66 m/s in simulation and 5.05 m/s in real-world forest experiments. These results show that mapping-aware world models provide a practical middle ground between modular aerial navigation and end-to-end learning.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

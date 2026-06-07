@@ -6,29 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-06
-- 运行时间：2026-06-06 21:06:35 UTC
+- 最新运行日期：2026-06-07
+- 运行时间：2026-06-07 21:04:38 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：1
 - 精读区：0
-- 速读区：2
+- 速读区：1
 
 ### 今日简报（AI）
-今日速读两篇论文，聚焦无人机（UAV）与强化学习（RL）在6G网络和导航中的前沿应用。  
-最值得关注的是数字孪生辅助多智能体DRL实现Open-RAN下的频谱与资源管理，以及自反思AgenticRL提升无人机视觉导航能力。  
-建议后续优先精读第一篇，深入理解数字孪生如何协同多智能体优化6G无人机网络性能。
-- 详情：[/202606/06/README](/202606/06/README)
+今天速读了一篇关于敏捷四旋翼飞行器的映射感知世界模型论文。  
+核心方向是将地图信息融入世界模型，提升复杂环境下的自主飞行能力。  
+建议关注地图表示与运动规划的结合点，这是当前机器人导航的热门方向。
+- 详情：[/202606/07/README](/202606/07/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Digital Twin-Assisted Adaptive Multi-Agent DRL for Intelligent Spectrum and Resource Management in Open-RAN UAV-Enabled 6G Networks](/202606/06/2606.01324v1-digital-twin-assisted-adaptive-multi-agent-drl-for-intelligent-spectrum-and-resource-management-in-open-ran-uav-enabled-6g-networks)  
-   标签：评分：7.0/10、query:ui
-   evidence：多智能体深度强化学习用于无人机群频谱管理
-2. [AgenticRL: Self-Refining Agentic Reinforcement Learning for Vision-Conditioned UAV Navigation](/202606/06/2606.03963v2-agenticrl-self-refining-agentic-reinforcement-learning-for-vision-conditioned-uav-navigation)  
+1. [MAD: Mapping-Aware World Models for Agile Quadrotor Flight](/202606/07/2606.04534v1-mad-mapping-aware-world-models-for-agile-quadrotor-flight)  
    标签：评分：6.0/10、query:ui
-   evidence：同AgenticRL方法，用于UAV导航
+   evidence：用于敏捷四旋翼飞行的世界模型，支持自主无人机拦截
 
 
 <div class="dpr-home-promo-card">

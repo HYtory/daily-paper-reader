@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-06-07 <!--dpr-date:20260607-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/07/2606.04534v1-mad-mapping-aware-world-models-for-agile-quadrotor-flight" data-sidebar-item="{&quot;title&quot;: &quot;MAD: Mapping-Aware World Models for Agile Quadrotor Flight&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.04534v1-mad-mapping-aware-world-models-for-agile-quadrotor-flight&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;用于敏捷四旋翼飞行的世界模型，支持自主无人机拦截&quot;}">MAD: Mapping-Aware World Models for Agile Quadrotor Flight</a>
   * 2026-06-06 <!--dpr-date:20260606-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/06/2606.01324v1-digital-twin-assisted-adaptive-multi-agent-drl-for-intelligent-spectrum-and-resource-management-in-open-ran-uav-enabled-6g-networks" data-sidebar-item="{&quot;title&quot;: &quot;Digital Twin-Assisted Adaptive Multi-Agent DRL for Intelligent Spectrum and Resource Management in Open-RAN UAV-Enabled 6G Networks&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.01324v1-digital-twin-assisted-adaptive-multi-agent-drl-for-intelligent-spectrum-and-resource-management-in-open-ran-uav-enabled-6g-networks&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;多智能体深度强化学习用于无人机群频谱管理&quot;}">Digital Twin-Assisted Adaptive Multi-Agent DRL for Intelligent Spectrum and Resource Management in Open-RAN UAV-Enabled 6G Networks</a>
