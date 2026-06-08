@@ -6,26 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-07
-- 运行时间：2026-06-07 21:04:38 UTC
+- 最新运行日期：2026-06-08
+- 运行时间：2026-06-08 21:55:37 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：2
 - 精读区：0
-- 速读区：1
+- 速读区：2
 
 ### 今日简报（AI）
-今天速读了一篇关于敏捷四旋翼飞行器的映射感知世界模型论文。  
-核心方向是将地图信息融入世界模型，提升复杂环境下的自主飞行能力。  
-建议关注地图表示与运动规划的结合点，这是当前机器人导航的热门方向。
-- 详情：[/202606/07/README](/202606/07/README)
+今日阅读两篇速读论文，聚焦无人机精准导航与智能体强化学习训练框架。  
+值得关注的方向：VLA导航的专家引导GRPO方法，以及多智能体灵活训练框架AgentJet。  
+建议优先精读《Towards Precise Intent-Aligned VLA Aerial Navigation via Expert-Guided GRPO》，理解其意图对齐机制，再对比AgentJet的分布式训练设计。
+- 详情：[/202606/08/README](/202606/08/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [MAD: Mapping-Aware World Models for Agile Quadrotor Flight](/202606/07/2606.04534v1-mad-mapping-aware-world-models-for-agile-quadrotor-flight)  
-   标签：评分：6.0/10、query:ui
-   evidence：用于敏捷四旋翼飞行的世界模型，支持自主无人机拦截
+1. [Towards Precise Intent-Aligned VLA Aerial Navigation via Expert-Guided GRPO](/202606/08/2606.02313v1-towards-precise-intent-aligned-vla-aerial-navigation-via-expert-guided-grpo)  
+   标签：评分：7.0/10、query:ui
+   evidence：强化学习用于意图对齐的无人机导航，可用于单无人机拦截
+2. [AgentJet: A Flexible Swarm Training Framework for Agentic Reinforcement Learning](/202606/08/2606.04484v1-agentjet-a-flexible-swarm-training-framework-for-agentic-reinforcement-learning)  
+   标签：评分：7.0/10、query:ui
+   evidence：分布式多智能体强化学习框架，适用于无人机集群训练
 
 
 <div class="dpr-home-promo-card">
