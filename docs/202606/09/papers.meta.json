@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-09",
+  "date": "2026-06-09",
+  "generated_at": "2026-06-09T21:39:53",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/09/2606.08039v1-mujoco-drones-gym-a-gpu-accelerated-multi-drone-simulator-for-control-and-reinforcement-learning",
+      "section": "deep",
+      "title_en": "MuJoCo-Drones-Gym: A GPU-Accelerated Multi-Drone Simulator for Control and Reinforcement Learning",
+      "authors": "Manan Tayal",
+      "date": "2026-06-06",
+      "pdf": "https://arxiv.org/pdf/2606.08039v1",
+      "score": "8.0",
+      "evidence": "多无人机强化学习仿真器",
+      "tldr": "现有四旋翼学习环境在物理保真度、多智能体支持和训练吞吐量之间难以兼顾。本文提出MuJoCo-Drones-Gym，基于MuJoCo引擎构建GPU加速的多无人机模拟器，支持任意数量Crazyflie 2.x无人机，提供模块化API选择物理模型（如刚体、地面效应等）、动作接口（转速、推力等）和观测空间（状态、RGB/深度图像等），并集成PettingZoo多智能体强化学习接口。涵盖悬停、速度跟踪、编队飞行等7个任务环境，利用MuJoCo的接触处理和并行性优势，实现高保真与高效率。该开源平台为多无人机控制与RL研究提供了灵活、高性能的综合测试基准。",
+      "tags": "query:ui",
+      "abstract_en": "Robotic simulators are a cornerstone of modern research in aerial robotics, serving both as a vehicle for the development of new control algorithms and as the data source for training reinforcement learning (RL) policies. Yet, existing quadcopter learning environments often face a trade-off between physical fidelity, multi-agent support, and the throughput required by modern deep RL pipelines. In this paper, we present MuJoCo-Drones-Gym, an open-source Gymnasium-compatible multi-drone environment built on top of the MuJoCo physics engine. MuJoCo-Drones-Gym supports an arbitrary number of Bitcraze Crazyflie 2.x nano-quadcopters and exposes a modular API for selecting (i)~the physics model (rigid-body MuJoCo, explicit Python dynamics, or any subset of ground effect, blade drag, and inter-drone downwash), (ii)~the action interface (per-motor RPMs, collective normalized thrust, velocity setpoints, or PID waypoint commands), and (iii)~the observation space (kinematic state vectors, RGB / depth / segmentation cameras, or neighbourhood adjacency information). A PettingZoo ParallelEnv wrapper enables drop-in multi-agent reinforcement learning, while a suite of seven task environments, hover, velocity tracking, multi-drone hover, waypoint navigation, formation flight, gate racing, and a generic multi-agent template, demonstrates the breadth of the interface. We describe the environment design, the underlying physics and quadcopter dynamics, and illustrate its use through control and learning examples that mirror those of the closely related gym-pybullet-drones project, while taking advantage of MuJoCo's improved contact handling, rendering, and parallelizability.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/09/2606.09099v1-laei-layered-autonomous-edge-intelligence-framework-for-robust-uav-swarm-operations",
+      "section": "deep",
+      "title_en": "LAEI: Layered Autonomous Edge Intelligence Framework for Robust UAV Swarm Operations",
+      "authors": "Changmin Park, Wooyong Jung, Hwangnam Kim",
+      "date": "2026-06-08",
+      "pdf": "https://arxiv.org/pdf/2606.09099v1",
+      "score": "8.0",
+      "evidence": "分层自主边缘智能用于鲁棒无人机蜂群操作",
+      "tldr": "无人机群在通信受限、环境动态和部件故障下，亟需兼顾分布式自主与任务一致性的协调方案。LAEI框架采用分层自主边缘智能设计，底层机载策略执行感知、避障与动作选择，监督层提供任务级指导（目标重分配、故障恢复）。模拟实验中，LAEI在完成时间、覆盖效率和碰撞率上均优于传统方法，尤其在故障场景下表现鲁棒。该框架通过解耦局部决策与全局监督，实现了弹性扩展与故障容忍，为无人机蜂群提供了鲁棒高效的协调方案。",
+      "tags": "query:ui",
+      "abstract_en": "Autonomous UAV swarms require scalable coordination mechanisms that maintain mission performance under limited communication, environmental uncertainty, and component failures. Centralized approaches provide global coordination but suffer from communication bottlenecks and single-node vulnerabilities, whereas fully decentralized methods often lack mission-level consistency. This paper presents Layered Autonomous Edge Intelligence (LAEI), a UAV-swarm framework that combines onboard learned policies with lightweight mission-level supervision. Each UAV performs local perception, obstacle avoidance, and action selection onboard, while the supervisory layer provides adaptive goal reassignment, fault-aware recovery, and context-dependent policy guidance without directly controlling low-level actions. LAEI further incorporates recovery strategies, including dynamic reassociation, backup supervisory support, and fallback local autonomy, to maintain mission continuity under representative failure scenarios. We evaluate LAEI in simulated UAV-swarm scenarios using mission completion time, collision rate, and coverage efficiency. The results show that LAEI reduces mission completion time and improves operational efficiency while maintaining collision-aware distributed UAV-level decision-making.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

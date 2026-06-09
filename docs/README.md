@@ -6,29 +6,31 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-08
-- 运行时间：2026-06-08 21:55:37 UTC
+- 最新运行日期：2026-06-09
+- 运行时间：2026-06-09 21:39:46 UTC
 - 运行状态：成功
 - 本次总论文数：2
-- 精读区：0
-- 速读区：2
+- 精读区：2
+- 速读区：0
 
 ### 今日简报（AI）
-今日阅读两篇速读论文，聚焦无人机精准导航与智能体强化学习训练框架。  
-值得关注的方向：VLA导航的专家引导GRPO方法，以及多智能体灵活训练框架AgentJet。  
-建议优先精读《Towards Precise Intent-Aligned VLA Aerial Navigation via Expert-Guided GRPO》，理解其意图对齐机制，再对比AgentJet的分布式训练设计。
-- 详情：[/202606/08/README](/202606/08/README)
+今日精读两篇高分论文，聚焦GPU加速多无人机仿真与鲁棒集群边缘智能框架。
+
+最值得关注的是《MuJoCo-Drones-Gym》提供的强化学习仿真利器，以及《LAEI》提出的分层自主边缘智能架构。
+
+建议结合仿真器测试LAEI框架的鲁棒性，或在强化学习任务中引入边缘智能调度策略。
+- 详情：[/202606/09/README](/202606/09/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [MuJoCo-Drones-Gym: A GPU-Accelerated Multi-Drone Simulator for Control and Reinforcement Learning](/202606/09/2606.08039v1-mujoco-drones-gym-a-gpu-accelerated-multi-drone-simulator-for-control-and-reinforcement-learning)  
+   标签：评分：8.0/10、query:ui
+   evidence：多无人机强化学习仿真器
+2. [LAEI: Layered Autonomous Edge Intelligence Framework for Robust UAV Swarm Operations](/202606/09/2606.09099v1-laei-layered-autonomous-edge-intelligence-framework-for-robust-uav-swarm-operations)  
+   标签：评分：8.0/10、query:ui
+   evidence：分层自主边缘智能用于鲁棒无人机蜂群操作
 
 ### 速读区论文标签
-1. [Towards Precise Intent-Aligned VLA Aerial Navigation via Expert-Guided GRPO](/202606/08/2606.02313v1-towards-precise-intent-aligned-vla-aerial-navigation-via-expert-guided-grpo)  
-   标签：评分：7.0/10、query:ui
-   evidence：强化学习用于意图对齐的无人机导航，可用于单无人机拦截
-2. [AgentJet: A Flexible Swarm Training Framework for Agentic Reinforcement Learning](/202606/08/2606.04484v1-agentjet-a-flexible-swarm-training-framework-for-agentic-reinforcement-learning)  
-   标签：评分：7.0/10、query:ui
-   evidence：分布式多智能体强化学习框架，适用于无人机集群训练
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
