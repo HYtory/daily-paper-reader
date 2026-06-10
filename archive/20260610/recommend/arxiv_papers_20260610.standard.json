@@ -1,0 +1,169 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-10T22:41:06.065848+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2606.09099v1",
+      "source": "arxiv",
+      "title": "LAEI: Layered Autonomous Edge Intelligence Framework for Robust UAV Swarm Operations",
+      "abstract": "Autonomous UAV swarms require scalable coordination mechanisms that maintain mission performance under limited communication, environmental uncertainty, and component failures. Centralized approaches provide global coordination but suffer from communication bottlenecks and single-node vulnerabilities, whereas fully decentralized methods often lack mission-level consistency. This paper presents Layered Autonomous Edge Intelligence (LAEI), a UAV-swarm framework that combines onboard learned policies with lightweight mission-level supervision. Each UAV performs local perception, obstacle avoidance, and action selection onboard, while the supervisory layer provides adaptive goal reassignment, fault-aware recovery, and context-dependent policy guidance without directly controlling low-level actions. LAEI further incorporates recovery strategies, including dynamic reassociation, backup supervisory support, and fallback local autonomy, to maintain mission continuity under representative failure scenarios. We evaluate LAEI in simulated UAV-swarm scenarios using mission completion time, collision rate, and coverage efficiency. The results show that LAEI reduces mission completion time and improves operational efficiency while maintaining collision-aware distributed UAV-level decision-making.",
+      "authors": [
+        "Changmin Park",
+        "Wooyong Jung",
+        "Hwangnam Kim"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-08T06:50:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.09099v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "UAV swarm framework with onboard RL policies for robust operations",
+      "llm_evidence_cn": "无人机群框架，结合机载强化学习策略实现鲁棒操作",
+      "llm_evidence": "无人机群框架，结合机载强化学习策略实现鲁棒操作",
+      "canonical_evidence": "无人机群框架，结合机载强化学习策略实现鲁棒操作",
+      "llm_tldr_en": "A layered framework for UAV swarms using onboard RL policies and lightweight supervision, directly enabling cooperative encirclement missions.",
+      "llm_tldr_cn": "无人机群在通信受限和环境不确定下难以保持任务一致性。本文提出分层自主边缘智能（LAEI）框架，每架无人机机载运行强化学习策略进行本地感知和决策，监督层提供自适应目标重分配和故障恢复。实验表明该框架在多种退化条件下维持了高任务完成率。其分层设计天然支持多无人机协作围捕任务。",
+      "llm_tldr": "无人机群在通信受限和环境不确定下难以保持任务一致性。本文提出分层自主边缘智能（LAEI）框架，每架无人机机载运行强化学习策略进行本地感知和决策，监督层提供自适应目标重分配和故障恢复。实验表明该框架在多种退化条件下维持了高任务完成率。其分层设计天然支持多无人机协作围捕任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.04444v1",
+      "source": "arxiv",
+      "title": "Scaling Datasets for Multi-Sensor, Multi-Agent, and Multi-Domain Learning in Autonomous Systems",
+      "abstract": "Existing datasets cannot support large-scale learning in multi-agent, multi-sensor, or multi-domain autonomy, where diversity and coordination are essential. We present a modular dataset generation pipeline that creates terabyte-scale, ground-truth-labeled data for ground, aerial, and infrastructure-based systems using the AVstack framework and CARLA simulator. Supporting single- and multi-agent configurations with flexible sensor suites, the pipeline enables controllable experimentation across challenging conditions. Representative perception and fusion studies show how generated data can support application-specific training and collaborative autonomy.",
+      "authors": [
+        "R. Spencer Hallyburton",
+        "David Hunt",
+        "Miroslav Pajic"
+      ],
+      "primary_category": "eess.IV",
+      "categories": [
+        "eess.IV",
+        "cs.LG"
+      ],
+      "published": "2026-06-03T04:46:44+00:00",
+      "link": "https://arxiv.org/pdf/2606.04444v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "scalable dataset generation for multi-agent aerial systems enabling MARL",
+      "llm_evidence_cn": "适用于多智能体空中系统的可扩展数据集生成，支持多智能体强化学习",
+      "llm_evidence": "适用于多智能体空中系统的可扩展数据集生成，支持多智能体强化学习",
+      "canonical_evidence": "适用于多智能体空中系统的可扩展数据集生成，支持多智能体强化学习",
+      "llm_tldr_en": "AVstack-based pipeline generates terabyte-scale multi-agent aerial datasets, enabling training of multi-agent RL for UAV swarms.",
+      "llm_tldr_cn": "该论文提出一个模块化数据集生成流水线，利用AVstack和CARLA模拟器创建TB级的多传感器、多智能体、多域标注数据，支持地面、空中和基础设施系统。该数据集特别支持单/多智能体配置，可用于训练无人机集群的多智能体强化学习模型。代表性感知和融合研究展示了其在协作自主中的应用潜力。该工作为拦截围捕中的多无人机协同提供了数据基础，是重要的使能方法。",
+      "llm_tldr": "该论文提出一个模块化数据集生成流水线，利用AVstack和CARLA模拟器创建TB级的多传感器、多智能体、多域标注数据，支持地面、空中和基础设施系统。该数据集特别支持单/多智能体配置，可用于训练无人机集群的多智能体强化学习模型。代表性感知和融合研究展示了其在协作自主中的应用潜力。该工作为拦截围捕中的多无人机协同提供了数据基础，是重要的使能方法。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.07855v1",
+      "source": "arxiv",
+      "title": "Path Planning Using Deep Deterministic Policy Gradient: A Reinforcement Learning Approach",
+      "abstract": "Path-planning for autonomous vehicles in threat-laden environments is a fundamental challenge because the problem is nonlinear and nonconvex even in simplest scenarios. While traditional optimal control methods can be used to find ideal paths, the computational time is often too slow for real-time decision-making. To solve this challenge, we propose a method based on Deep Deterministic Policy Gradient (DDPG) and model the threat as possibly multiple circular 'no-go' zones. A mission is regarded as a failure if the vehicle enters this restricted zone at any time or does not reach a neighborhood of the destination. The DDPG agent is trained through trial and error in a simulated environment, learning a direct mapping from its current state (position and heading) to a series of feasible actions that guide the agent to safely reach its destination. The reword function has three parts: (a) an attractive field centered at the final destination, (b) some repulsive fields centered at the origins of circular obstacles, and (c) a penalty of control energy consumption (the magnitude of heading change) that indirectly in favor for straight path. The DDPG trains the agent using these incentives to find the largest possible set of starting points wherein a safe path to the destination is guaranteed. This provides critical information for mission planning, showing beforehand whether a task is achievable from a given starting point, assisting pre-mission planning activities. The approach is validated in simulation. A comparison between the DDPG method and a traditional optimal control (pseudo-spectral) method is carried out. The results show that the learning-based agent produces effective paths while being significantly faster, making it a better fit for real-time applications.",
+      "authors": [
+        "Qiang Le",
+        "Yaguang Yang",
+        "Isaac E. Weintraub"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "math.OC"
+      ],
+      "published": "2026-06-05T21:35:54+00:00",
+      "link": "https://arxiv.org/pdf/2606.07855v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "RL-based path planning in threat environments applicable to UAV interception",
+      "llm_evidence_cn": "基于DDPG的威胁环境路径规划，可应用于无人机拦截",
+      "llm_evidence": "基于DDPG的威胁环境路径规划，可应用于无人机拦截",
+      "canonical_evidence": "基于DDPG的威胁环境路径规划，可应用于无人机拦截",
+      "llm_tldr_en": "Proposes DDPG for path planning in threat-laden environments, avoiding circular no-go zones, which is directly transferable to UAV interception scenarios.",
+      "llm_tldr_cn": "该论文提出使用深度确定性策略梯度（DDPG）算法解决威胁环境中的路径规划问题。将威胁建模为圆形禁飞区，智能体需在不进入禁飞区的情况下到达目标。该方法学习从状态到动作的直接映射，适用于实时决策。该框架可直接迁移至无人机拦截任务，其中禁飞区可被视为威胁或障碍。",
+      "llm_tldr": "该论文提出使用深度确定性策略梯度（DDPG）算法解决威胁环境中的路径规划问题。将威胁建模为圆形禁飞区，智能体需在不进入禁飞区的情况下到达目标。该方法学习从状态到动作的直接映射，适用于实时决策。该框架可直接迁移至无人机拦截任务，其中禁飞区可被视为威胁或障碍。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.10857v1",
+      "source": "arxiv",
+      "title": "Embodiment-conditioned Generalist Control for Multirotor Aerial Robots",
+      "abstract": "We present a generalist position control policy capable of controlling arbitrary multirotor configurations of a certain rotor count (e.g., hexarotors or quadrotors) with a single set of network weights. The policy is conditioned on a physics-grounded embodiment descriptor: a mass and inertia-normalized control allocation matrix that captures how mass-normalized motor thrusts generate linear and angular accelerations in the body-frame. To train the policy, we sample from a broad distribution of arbitrary multirotor configurations, including non-planar and asymmetric systems, and optimize a single, compact network using Proximal Policy Optimization. Training requires only five minutes on an RTX 3090 GPU using a custom NVIDIA Warp-based dynamics simulator. Through extensive simulation experiments, we show that embodiment conditioning enables robust generalist control across arbitrary morphologies. We demonstrate zero-shot real-world transfer of this generalist policy on three diverse hexarotor systems, including a planar robot, a partially symmetric non-planar system, and a random asymmetric, non-planar configuration.",
+      "authors": [
+        "Orestis Konstantaropoulos",
+        "Welf Rehberg",
+        "Mihir Kulkarni",
+        "Kostas Alexis"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-06-09T13:36:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.10857v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "RL-based generalist control for multirotor UAVs applicable to interception",
+      "llm_evidence_cn": "基于强化学习的多旋翼通用控制，可应用于拦截任务",
+      "llm_evidence": "基于强化学习的多旋翼通用控制，可应用于拦截任务",
+      "canonical_evidence": "基于强化学习的多旋翼通用控制，可应用于拦截任务",
+      "llm_tldr_en": "Embodiment-conditioned PPO policy controls arbitrary multirotor configurations, providing a foundational capability for UAV interception maneuvers.",
+      "llm_tldr_cn": "该论文提出一种基于PPO的通用位置控制策略，可控制任意构型的多旋翼无人机，包括非平面和非对称系统。策略通过物理基元的控制分配矩阵实现条件化，在NVIDIA Warp仿真器中仅需五分钟训练。该工作为无人机提供了敏捷的底层控制能力，可直接支持拦截围捕所需的机动动作，是相关任务的重要基础。在多种构型上验证了泛化性。",
+      "llm_tldr": "该论文提出一种基于PPO的通用位置控制策略，可控制任意构型的多旋翼无人机，包括非平面和非对称系统。策略通过物理基元的控制分配矩阵实现条件化，在NVIDIA Warp仿真器中仅需五分钟训练。该工作为无人机提供了敏捷的底层控制能力，可直接支持拦截围捕所需的机动动作，是相关任务的重要基础。在多种构型上验证了泛化性。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
