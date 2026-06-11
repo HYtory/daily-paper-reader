@@ -1,0 +1,841 @@
+Title: Planar-Sector LOS Guidance for Interception of Agile Targets with Lifting-Wing Quadcopters
+
+URL Source: https://arxiv.org/pdf/2606.10639v2
+
+Published Time: Thu, 11 Jun 2026 00:54:56 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+# Planar-Sector LOS Guidance for Interception of Agile Targets with Lifting-Wing Quadcopters 
+
+Linkai Liu 1, Kun Yang 2, Han Zou 1, Chen Min 1, Shuli Lv 1, Shuai Wang 1 and Quan Quan 1
+
+Abstract — This paper proposes a Planar-Sector Line-of-Sight (PS-LOS) guidance law and an accompanying control stack for lifting-wing quadcopters, enabling robust image-based interception of agile targets. The PS-LOS relaxes conventional conical constraints, preserving maneuverability while reducing aerodynamic penalties. For perception, we employ a delay-compensated Extended Kalman Filter (EKF) to provide low-latency, continuous target estimates. The controller is tailored to lifting-wing quadcopter dynamics and includes coordinated-turn compensation. Outdoor flight experiments demonstrate interceptions against unpredictable agile targets up to 138 m, validating the method’s range and robustness. 
+
+I. I NTRODUCTION 
+
+With the rapid expansion of the Unmanned Aerial Vehicle (UAV) industry [1], misuse and threats to public safety have become increasingly prominent [2]. This trend has created an urgent need for cost-effective, reliable anti-drone solutions, particularly for small, highly maneuverable autonomous drones [3]. Such platforms are often compact, communication-silent, and capable of aggressive, noncooperative maneuvers, which significantly reduce the effectiveness of conventional ground-based defenses. Consequently, there is growing inter-est in interceptor UAVs equipped with onboard sensing and autonomous interception capabilities that can localize, track, and engage non-cooperative targets in real-time. Research in autonomous drone interception is mainly divided into position-based and Image-Based Visual Servo (IBVS) methods. The former, demonstrated in MBZIRC 2020 [4], [5], relies on a perception-planning-control pipeline and requires large drones with GPS and electro-optical pods [6]. IBVS simplifies the loop by directly mapping image features into control commands, for instance, the work [7] developed a precise interception framework, highlighting the potential of IBVS for GPS-denied scenarios, while the work [8] demonstrated reliable high-speed interceptions against both stationary and circling maneuvering targets, validating the effectiveness of monocular IBVS in dynamic flight experiments. However, most studies rely on quadrotors [5], [8], [9], without a performance gap between the target and the interceptor. Line-of-Sight (LOS) constraints are typically modeled as conic regions centered on the optical axis [8], which preserve visibility but restrict feasible thrust vectors. Prior validations also focus on constant-velocity or relatively       
+
+> 1School of Automation Science and Electrical Engineering, Beihang Uni-versity, Beijing, China. {link liu, zouhan2002, min chen, lvshuli, wsh buaa, qq buaa }@buaa.edu.cn
+> 2Research and Development Center, China Academy of Launch Vehicle Technology, Beijing, China. yangkun buaa@buaa.edu.cn CUAV V5 Nano
+> Lifting Wing
+> NVADIA Jetson Orin NX
+> Monocular Camera
+> 350 mm
+> 500 mm
+> (a) (b)
+> Fig. 1. Lift-wing quadcopter platform in experiments. (a) Wing span and distance between motors. (b) Core sensing and computing components.
+
+regular circular trajectories [8]–[10], neglecting evasive targets with unpredictable lateral or vertical accelerations. Recent work integrating IBVS with proportional navigation and FOV-holding control improved interception precision [7], but still relied on quadrotors and keeps the target near the image center. As a hybrid configuration between conventional quadrotors and tail-sitter UAVs, lifting-wing quadcopter platforms (Fig. 1) combine the advantages of both configurations. Compared with quadrotors, they achieve higher flight speeds, lower energy consumption, and substantially longer range [11], [12]; compared with fixed-wing aircraft, they offer shorter take-off/landing distances and greater maneuverability; compared with tail-sitters, they provide more agile lateral control and a simpler, more reliable launch and landing procedure [12]. Moreover, the work [13] demonstrated that such platforms can perform aggressive inverted dive maneuvers with stable control and recovery. Consequently, deploying a lifting-wing quadcopter as the interceptor preserves reliability and low deployment complexity while enabling high control agility, faster closing speeds, and a larger interception envelope—often yielding a performance overmatch against quadrotor targets. Building upon previous IBVS work on quadrotors [8], we consider a more challenging scenario: replace quadcopters with a quadcopter-surpassing lifting-wing quadcopter [11] with a fixed monocular camera (Fig. 1) to achieve longer-range interception of targets exhibiting uncertain lateral and vertical accelerations. This motivates three primary research challenges: 1) Restrictive LOS Constraints: FOV-centered conic de-signs overly restrict the feasible net-acceleration enve-lope during aggressive maneuvers. 2) Platform Limitation: Quadcopter-based studies cannot exploit the aerodynamic efficiency of lifting-wing quadcopters. 3) Unrealistic Target Maneuvers: Existing validations rarely involve evasive targets with significant lateral or vertical accelerations. 
+
+> arXiv:2606.10639v2 [cs.RO] 10 Jun 2026 ioixiyImage Plane PS -LOS
+> Constraint
+> Conic -LOS
+> Constraint
+
+Fig. 2. The constraint region of two LOS configurations. 
+
+Inspired by the practices of FPV pilots in aggressive visual tracking 1 (Fig. 2), we propose constraining the LOS to a planar sector aligned with the camera symmetry plane—tight along the image’s horizontal axis but relaxed along the vertical axis. This strategy preserves target visibility while ensuring sufficient maneuvering authority for lifting-wing quadcopters. Moreover, it directly addresses Challenge 1 (FOV-induced thrust and acceleration limits) and Challenge 3 (irregular lateral and vertical target accelerations), thereby guiding the subsequent control–estimation design. The main contributions of this work are summarized as follows:  
+
+> •
+
+A novel Planar-Sector Line-of-Sight (PS-LOS) guid-ance law that enlarges the feasible acceleration set, and ensures target visibility during agile maneuvers.  
+
+> •
+
+System implementation on a lifting-wing quadcopter ,featuring a two-layer controller with coordinated-turn compensation, along with a formal proof of closed-loop stability.  
+
+> •
+
+Experimental validation on unpredictably agile tar-gets : outdoor interceptions under irregular lateral and vertical accelerations, achieving successful interceptions up to 138 m , surpassing quadrotor IBVS baselines in range and robustness. Together, these contributions form a unified framework for robustly intercepting unpredictably agile targets. II. M ODEL AND PROBLEM FORMULATION 
+
+This section formalizes the models and problem state-ment that constitute the basis of the proposed interception framework, including the coordinate frames, the lifting-wing quadcopter dynamics, the target kinematics, the camera imaging model and the definition of the PS-LOS constraint. 
+
+A. Coordinate Systems and Models 1) Coordinate Systems: For the vision-based lifting-wing quadcopter interception task, we employ six right-handed coordinate frames, illustrated in Figs. 3 and 4:  
+
+> •
+
+Earth-fixed frame (EFF) {e}: inertial reference for global positions and velocities.  
+
+> •
+
+Body frame (BF) {b}: quadcopter body-fixed frame describing the aircraft attitude.  
+
+> •
+
+Lifting-wing frame (LWF) {l}: frame attached to the lifting wing.  
+
+> •
+
+Wind frame (WF) {w}: local airflow frame used for aerodynamic quantities. 
+
+> 1
+
+World’s Best FPV Drone Shot?, Red Bull, 2022. Available at: https: //youtu.be/13OtZFWdhwQ?si=zKxB967XPjZH8pgI Target     
+
+> Lifting -Wing
+> Quadcopter
+> Interceptor e
+> tpipixiyeoexeyez
+> Image Plane boepbybz
+> EFF
+> BF
+> IF
+> CF
+> PS -LOS
+> Constraint Region bxtniocz
+> Target
+> Lifting -Wing
+> Quadcopter
+> Interceptor e
+> tpipixiyeoexeyez
+> Image Plane boepbybz
+> EFF
+> BF
+> IF
+> CF
+> PS -LOS
+> Constraint Region bxtniocz
+
+Fig. 3. Description of the interception problem. The green areas with the red border in IF and CF mark the PS-LOS constraint region designed in this article.  
+
+> •
+
+Camera frame (CF) {c}: camera pose relative to the vehicle.  
+
+> •
+
+Image frame (IF) {i}: 2-D image coordinates in the sensor plane. Vectors expressed in frame F ∈ { e, b, l, w, c, i} are denoted by the superscript F r. The rotation matrix RF2 
+
+> F1
+
+∈ SO(3) 
+
+denotes the orientation of frame F2 with respect to frame F1
+
+(i.e., it rotates vectors from F2 to F1). (a) Front View  
+
+> (c) Top View (d) 3D View
+> (b) Left View
+> 1
+> 24
+> 3
+> 
+> CoG
+> CoG
+> CoG
+> c
+> b
+> CoG
+
+Fig. 4. Configuration and key properties of the lifting-wing quadcopter [11]. Properties shown: CoG: center of gravity; η: motor lateral tilt; b: wingspan; 
+
+c: mean chord; κ: wing installation angle; dx, d y : motor thrust moment arms; va: airspeed direction; α, β : angle of attack and sideslip; δar , δ al :right/left aileron deflections. 
+
+The origin of the CF coincides with that of the BF, i.e., the translation vector tbc = 0, and the rotation matrix Rbc is constant. In this work, the camera is rigidly mounted to the vehicle body. Therefore, interception is considered successful once the camera directly contacts the target. 
+
+2) Lifting-Wing Quadcopter Model: The lifting-wing quad-copter model formulated under the special orthogonal group 
+
+SO(3) , to describe its dynamics [14]: 
+
+ 
+
+> e
+
+˙p = ev, 
+
+> e
+
+˙v =ea = 1
+
+> m
+> e
+
+f ,
+
+˙Reb = Reb
+
+bω
+
+> ×
+
+,
+
+J b ˙ω = −bω × J bω + bm
+
+(1) where ep, ev and ea are the position, velocity and acceleration of the aircraft in the EFF, J and bω are the inertia matrix and angular velocity of the aircraft in the BF, m is the mass of the aircraft and [bω]× denotes the skew-symmetric matrix. The external forces and moments are given by 
+
+( ef = Reb · bfr + Rel · lfa + efg ,
+
+> b
+
+m = bmr + Rbl · lma. (2) Here bfr = [0 0 frz ]T the force produced by actuators, efg =[0 0 mg ]T is the gravitational force, and lfa, lma are the aerodynamic forces and moments generated by the lifting wing, modeled following [14]. 
+
+3) Target Model: The target is modeled as a point mass:  
+
+> e
+
+˙pt = evt, e ˙vt = eat. (3) Define the relative states in the EFF as 
+
+> e
+
+pr = ep − ept, evr = ev − evt, ear = ea − eat. (4) The target acceleration eat is not directly measured by vision and is treated as a (bounded) disturbance in both controller and estimator design. 
+
+4) Camera Imaging Model: Perspective projection maps 
+
+R3 to the image plane R2. Denote the image coordinate by 
+
+> i
+
+p = [ ipx ipy ]T and the relative position by pr. The LOS unit vector in the EFF is 
+
+nt = − pr
+
+∥pr∥ = RebRbc
+
+ ipx ipy foc 
+
+T
+
+ ipx ipy foc 
+
+T , (5) where foc is the camera focal length and Rbc , Reb are mounting/attitude rotations. The sensor field of view (FOV) is defined by horizontal and vertical half-angles 12 αhfov and 12 αvfov :          
+
+> C=ip|arctan( ipx/f oc )≤αhfov /2,arctan( ipy/f oc )≤αvfov /2
+
+(6) and the target is observable if ipt ∈ C .
+
+5) IBVS Model: The image Jacobian relates the normalized image velocity to the camera twist:  
+
+> i
+
+˙¯p = Ls(i ¯p, cpz) c ˜v, c ˜v =
+
+cv
+
+> c
+
+ω
+
+
+
+, (7) with i ¯p = [ i ¯px i ¯py ]T = [ ipx/f oc ipy /f oc ]. The Jacobian 
+
+Ls ∈ R2×6 is formulated as [8]. 
+
+B. State-Space Representation 
+
+The vehicle attitude is represented by a unit quaternion 
+
+q ∈ R4. Define the state as 
+
+x = qT pTr vTr i ¯pT bTgyr bTacc 
+
+T ∈ R18 ,
+
+comprising attitude, relative position and velocity (Eq. (8) ), normalized image feature, and IMU biases. The discrete-time state update used in the estimator is compactly written as 
+
+ˆxk+1 = f (xk, uk, wk), (8) where uk = [ ωTgyr ,k aTacc ,k ]T (measured IMU inputs) and process noise 
+
+wk ∼ N (0, Qk), Qk = diag( Qω , Qa). (9) 
+
+wk = nT 
+
+> bgyr
+
+nT
+
+> bacc
+
+T . (10) IMU biases are modeled as random-walk (Wiener) pro-cesses, and measurements are corrected by subtracting the estimated bias (compact form): 
+
+> e
+
+ω = Reb(ωgyr − bgyr ), ea = Reb(aacc − bacc ),
+
+with ˙bgyr = ngyr , ˙bacc = nacc , where ngyr and nacc are zero-mean Gaussian random vectors. 
+
+C. PS-LOS: Theoretical Results and Motivation 1) Motivation: In the previous work [8], the LOS constraint is enforced as a conical region about the camera optical axis with an apex angle αcone of roughly 40 ◦:
+
+Scone =
+
+n
+
+n ∈ S2 cos( αcone ) < nTd n ≤ 1
+
+o
+
+, (11) where S2 denotes the two-dimensional manifold of unit vectors in R3 and nd is the desired LOS direction. While this cone keeps the target near the image center and preserves some maneuverability, it substantially restricts the actuator force envelope—reducing the available maximum thrust by up to approximately 50% for a large subset of LOS directions, i.e., the directions most required during aggressive target maneuvers (see Fig. 5(a)). Empirical observations of elite FPV pilots show a con-sistent strategy: when pursuing agile targets—accelerating, decelerating, climbing, descending, or turning—they keep the target locked near the FOV centerline, enforcingtight alignment along the image’s horizontal axis while allowing substantial deviation along the vertical axis (Fig. 2). How-ever, the conventional conic constraint used in interception control defined in [8], which doesn’t capture this asymmetric tolerance, thus limiting maneuvering freedom near the FOV edges. 
+
+Definition 1 (PS-LOS). The PS-LOS is defined in CF as 
+
+SPS =
+
+n
+
+n ∈ S2 nThd n < sin( αlon ), nTvd n ≤ sin( αlat )
+
+o
+
+,
+
+(12) where n is the LOS unit vector, and the two vectors are defined as nhd = [0 1 0] T ∈ S2 and nvd = [1 0 0] T ∈ S2 in CF. The horizontal constraint αlon = αhfov /2−αsafe > α cone 
+
+(relaxed toward the horizontal FOV edges), while The vertical constraint αlat ≤ ε (ε → 0). In IF the PS-LOS constraint region shows in Fig. 3. 
+
+Remark 1. The role of the LOS constraint region is to keep the target features within this region throughout the interception process; it acts as a limitation on the controller 
+
+rather than a restriction on the visual perception range .
+
+2) Enhanced Agility through PS-LOS: A key insight of this work is that only two attitude angles —roll ϕ and pitch 
+
+θ are sufficient to steer the acceleration toward any desired direction, while maintaining LOS of the target in the Planer-Sector region (which imposes instantaneous yaw limits). This observation forms the theoretical foundation of our PS-LOS design. 
+
+Lemma 1 (cf. [15]): Let et = [0 0 − 1] T and let Rx(ϕ),
+
+Ry (θ) ∈ SO(3) denote rotations about the body x- and y-axes respectively. For any unit vector t = [ tx ty tz ]T ∈ R3Fig. 5. Comparison of maximum available net force ef for a lifting-wing quadcopter (maximum thrust 25 N, mass 1 kg) under two LOS constraints. Each point on the sphere is color-coded by the magnitude of the maximum achievable ef in that direction. (a) LOS constrained to a cone about the camera optical axis of 40 ◦. (b) LOS constrained to a planar sector confined to the camera symmetry plane (horizontal constraint relaxed toward the FOV edges of 55 ◦, lateral constraint tightened). 
+
+there exist angles θ, ϕ (except the degenerate case tx = ±1)such that 
+
+t = Rx(ϕ)Ry (θ) ez .
+
+One convenient choice is 
+
+θ = − arcsin( tx), ϕ = atan2( ty , −tz ),
+
+with the usual convention for atan2 .
+
+Remark 2. Lemma 1 shows that two orthogonal attitude angles (roll ϕ and pitch θ) suffice to align the thrust vector et
+
+with any target direction satisfying tx̸ = ±1. This geometric result provides a rigorous foundation for the subsequent PS-LOS guidance law. We note that, due to the limitation of FOV (6), the LOS is constrained within a sector rather than completely circular along the body symmetry plane with a fixed angular span. Within this sector, although the allowable θ range limits the direct orientation of the thrust vector fr, the combined effect of fg , and ma allows the adequate net force ef acting on the vehicle to cover a sufficiently large range of translational accelerations (see Fig. 5(b)) for typical interception tasks (see Fig. 6) (in directions that thrust cannot directly achieve, the available maximum ef is reduced to different extents but remains effective through PS-LOS). Target     
+
+> ef
+> Acceleration Deceleration
+> Lateral
+> Acceleration
+> (Left/Right)
+> LOS Vertical
+> Acceleration
+> PS-LOS
+> Constraiant Region
+> Interceptor
+> Fig. 6. Maneuverability of lifting-wing quadcopters under PS-LOS constraints.
+
+3) Theoretical Benefit: The proposed PS-LOS brings two main theoretical benefits: 
+
+Stronger bearing regulation and agility, robust to distur-bances. By tightening the vertical bound while relaxing the horizontal bound of the LOS region (see Fig. 2), the PS-LOS enforces precise bearing control and enhances agility along the LOS direction; meanwhile, stronger corrections along the tangent of the LOS manifold improve robustness against external perturbations (e.g., wind gusts), enabling persistent, low-latency tracking under aggressive target maneuvers. 
+
+Aerodynamic efficiency on lifting-wing platforms. For lifting-wing quadcopter dynamics, aerodynamic loads and actuator forces concentrate near the vehicle symmetry plane (sideslip maneuvers are inefficient and energy-wasting) [11]. The PS-LOS confines the required maneuvering forces within the symmetry plane (see Fig. 6), reducing aerodynamic penalties while preserving maneuverability. 
+
+4) Model for Control: Modeling the PS-LOS constraint yields the following control errors: 
+
+ z1 = nThd nt ≤ ch
+
+z2 = nTvd nt
+
+, (13) where nt is the LOS unit vector defined in (5) . The constant 
+
+ch = sin( αlon ) (αlon defined as Eq. (12)). 
+
+D. Controller and Estimator Objectives 
+
+We consider a lifting-wing quadcopter interceptor pursuing an agile target with irregular lateral and vertical accelerations; let the relative states be epr, evr and the LOS unit vector nt.The interception time is T ⋆ = inf {t ≥ 0 | ∥ epr(t)∥ ≤ rhit }
+
+with capture radius rhit > 0. Assume ∥eat(t)∥ ≤ amax and sufficient actuation frd (t) > mg + amax .The objectives are: (i) sector invariance nThd nt ≤ ch with 
+
+z2(t) → 0; (ii) interception epr(t) → 0 (i.e., T ⋆ < ∞). To achieve this, we employ a PS-LOS guidance law (Eq. (13) ) with a two-layer controller (Fig. 7); stability follows from a composite Lyapunov analysis (cf. Eq. (22) ). Target-state low-latency feedback is provided by a delay-compensated EKF (Fig. 8). III. I NTERCEPTION CONTROL BASED ON 
+
+PLANAR -S ECTOR GUIDANCE 
+
+This section develops the interception controller leveraging the PS-LOS constraint introduced in Section II-C. We translate the PS-LOS objectives into an outer-loop thrust/LOS law and an inner-loop attitude tracker with coordinated-turn compensation, and provide a Lyapunov-based analysis of closed-loop safety and convergence. Implementation details and pseudocode are summarized in Fig. 7 and Algorithm 1 .
+
+A. Outer-Loop Thrust Control 
+
+Building on the PS-LOS constraint above, we design an outer-loop thrust law that (i) enforces the PS-LOS and (ii) drives the vehicle to the target. Recall the LOS errors z1, z 2
+
+(Eq. (13) ) and define the relative-position error z3 = epr
+
+alongside with the velocity tracking error z4 = vr − vrd 
+
+(vrd = −c1epr, c1 > 0 is a tuning gain.). We adopt compact Lyapunov terms together with a Barrier Lyapunov Function [16]: 
+
+L1 = 12 log c2
+
+> h
+
+c2 
+
+> h
+
+− z21
+
+, L2 = 12 z22 , L3 = 12 zT3 z3,
+
+and the composite candidate 
+
+L4 = L1 + L2 + 12 zT4 z4. (14) Lifting -Wing    
+
+> Quadcopter &
+> FPV camera
+> (II -A)
+> Attitude
+> Controller
+> (III -B)
+> Thrust
+> Controller
+> (III -A)
+> LOS -Constrained Interception Controller
+> Delay -Compensated
+> EKF
+> (III -E)
+> Coordinated Turn
+> Compensation and
+> Moment Control
+> (III -D)bte
+
+,n R
+
+> Target Detector
+> (YOLO v5s )
+
+Monocular Image b 1
+
+b 2
+
+b d
+
+i k D−pi r, r, ˆ ˆ ˆ, ,k k kp p vIMU e
+
+> b
+
+Re dfb
+
+> rd
+
+mrd fFig. 7. Interception controller structure. 
+
+Introduce Kh = z1/(c2 
+
+> h
+
+− z21 ) (ch defined as Eq. (13) ), 
+
+Kv = z2, which appear naturally in the time-derivatives of 
+
+L1 and L2 and serve as barrier gains. Design an implementable outer-loop command that yields 
+
+˙L4 < 0 is 
+
+> e
+
+frd = − Rel lfa − efg − m
+
+
+
+− c1evr − c2z4 − epr
+
+− Kh
+
+∥pr∥
+
+ I − ntnTt
+
+nhd − Kv
+
+∥pr∥
+
+ I − ntnTt
+
+nvd 
+
+
+
+,
+
+(15) alongside with the LOS-convergence angular-rate command 
+
+> b
+
+ω1 = cω RebT
+
+Kh(nt × nhd ) + Kv (nt × nvd )
+
+
+
+. (16) This desired angular velocity component term is used for LOS convergence, where c2, c ω > 0 are other two tuning gains. These gains ( c1, c 2, c ω ) can be freely adjusted according to different control requirements, and in our experiments, they were varied within the range of 0.3 ∼ 2.0. Intuitively, the terms (I − ntnTt ) produce corrections tangent to the LOS manifold and realize the barrier effect on z1, z 2, while the remaining terms regulate approach rate and damping. The outer loop, therefore, preserves the LOS sector and produces the desired thrust direction/magnitude for the inner-loop attitude controller to track. 
+
+B. Inner-Loop Attitude Control 
+
+The inner loop tracks the outer-loop thrust command. Let 
+
+nfd =
+
+> e
+
+frd 
+
+∥efrd ∥ , (17) and choose Rd to align the body thrust axis nf = Rebe3
+
+(e3 = [0 0 1] T) with nfd . A Rodrigues construction is: 
+
+r = nf × nfd 
+
+∥nf × nfd ∥ , ϕr = arccos( nTf nfd ).
+
+Then Rtilt = I + sin ϕr [r]× + (1 − cos ϕr )[ r]2 
+
+> ×
+
+and Rd =
+
+Rtilt Reb.Based on the attitude error zω = 12 vex  RTd Reb −RebTRd
+
+,define 
+
+L5 = Ψ( Rd, Reb) = 14 I − RTd Reb
+
+> 2F
+
+. (18) Then, design inner-loop feedback that yields ˙L5 ≤ 0 as 
+
+> b
+
+ω2 = − cω zω , cω > 0, (19) which gives 
+
+˙L5 = − cω zT 
+
+> ω
+
+zω ≤ 0. (20) Combining this with the LOS-convergence term bω1 from Eq. (16) and applying actuator saturation to obtain the commanded signals yields: 
+
+( frd = ∥efrd ∥
+
+> b
+
+ωd = bω1 + bω2
+
+. (21) 
+
+C. Stability Analysis 
+
+This subsection formalizes the closed-loop safety and convergence properties of the proposed PS-LOS guidance and two-layer controller. The theorem below establishes sector invariance and asymptotic convergence of the relative position. 
+
+Theorem 1 (Constraint Satisfaction and Convergence): 
+
+If nThd nt(0) ≤ ch, then under the control law in (21) ,the closed-loop trajectory remains in SPS and pr → 0 as 
+
+t → ∞ .
+
+Proof. Consider the composite Lyapunov function L = L4 +
+
+L5, L4 and L5 defined in Eq. (14) and Eq. (18) . Substituting Eq. (15) into ˙L4 and combining with Eq. (20) , and using the body-rate command in Eq. (21), yield 
+
+˙L ≤ − c1 pTr pr − c2 zT4 z4 − cω zT 
+
+> ω
+
+zω ≤ 0, (22) with positive gains c1, c 2, c ω . Hence L is nonincreasing and bounded below, implying forward invariance of nThd nt(t) ≤
+
+ch and boundedness of the closed-loop signals. By standard LaSalle/Barbalat arguments [17], zω → 0 and z4 → 0, and the translational error dynamics then imply pr → 0. This proves safety and convergence. The detailed expansion and proof process is similar to that in [8] and is omitted here for brevity. ■
+
+D. Coordinated-Turn Compensation and Moment Control 
+
+With high flight speed, sideslip reduces aerodynamic efficiency for lifting-wing quadcopters. We therefore add a coordinated-turn correction that blends a desired yaw rate for sideslip compensation with the nominal attitude command. The coordinated yaw rate is ˙ψct = (g tan ϕ)/V , where 
+
+V is vehicle speed. Then the coordinated-turn angular-rate correction is defined as 
+
+Ωct = 0 0 g tan ϕ/V T . (23) The coordinated-turn correction is weighted by a speed-dependent factor [11]: 
+
+w = sat 
+
+ V − Vmin 
+
+Vmax − Vmin 
+
+, 0, 1
+
+
+
+, (24) and the desired body angular-rate command is then given by 
+
+> b
+
+ωct ,d = bωd + w Ωct . (25) Finally, the moment command that includes coordination compensation is implemented as a saturated PID-style law [11]: 
+
+> b
+
+mrd = − Rbl lma + J  − Kp(bω − bωct ,d)
+
+− md,1 − Kd(b ˙ω − b ˙ωct ,d), (26) with md,l = Ki
+
+R   bω − bωct ,d
+
+ dt the integral term and 
+
+Kp, Ki, Kd PID gains. Here sat( ·) performs vector saturation as defined in [11]. This formulation explicitly compensates for coordinated turn requirements and preserves aerodynamic efficiency during high-speed maneuvers. 
+
+Algorithm 1 Interception Controller 
+
+Require: Image i ¯p, velocity V , vehicle attitude 
+
+Ensure: Desired frd , bmrd  
+
+> 1:
+
+Initialize control parameters  
+
+> 2:
+
+for t = 1 to T ⋆ do  
+
+> 3:
+
+Acquire i ¯p, estimate ˆpr, ˆvr via Algorithm 2  
+
+> 4:
+
+Compute frd , ω d (Eq. (21))  
+
+> 5:
+
+if V ≥ Vmin then  
+
+> 6:
+
+Compute bωct (Eq. (25))  
+
+> 7:
+
+end if  
+
+> 8:
+
+Compute bmrd (Eq. (26))  
+
+> 9:
+
+end for 
+
+E. Delay-Compensated EKF 
+
+Onboard sensor and vision delays ( 0.13 ∼ 0.16 s ) can induce large estimation errors for highly maneuvering targets (e.g., a 1.2 m shift at 8 m /s), risking target loss during interception. To mitigate this issue, we adopt a delay-compensated Extended Kalman Filter (DC-EKF) that fuses high-rate IMU propagation with delayed monocular feature updates. The overall workflow is illustrated in Fig. 8, while the recursive filtering logic is summarized in Algorithm 2 .k-D k-D+1  ...  k-1 k k+1  ... ...  k-D-1                    
+
+> (a) (b)
+> (c)
+> (d) ikD−p
+> IMU M easurement s
+> k-Dk-D+1 ... k-1kk+1 ... ... k-D-1
+> (a) (b)
+> (c)
+> (d) ikD−p
+> IMU M easurement s
+> Fig. 8. Workflow of the DC-EKF. (a) Nominal IMU propagation when no image features are available. (b) Maintaining an IMU data buffer for later use in delay compensation. (c) EKF update with delayed visual features at time tk−D. (d) Re-propagation of the corrected state from tk−Dto the current time tkusing the buffered IMU measurements.
+
+Remark 3. The proposed DC-EKF generalizes the DKF in [8]. While both filters compensate for image-processing latency by re-propagating states from delayed updates, our DC-EKF (i) employs nonlinear state propagation (Eq. (27) ) instead of a linearized model, (ii) introduces refined quaternion update rules (Eq. (28) ), and (iii) corrects several omissions in the state-transition equations. These refinements ensure stable estimation for highly maneuvering targets and lifting-wing quadcopter dynamics, while retaining the computational tractability of an EKF framework. Specifically, the DC-EKF propagates the state using the following nonlinear dynamics: 
+
+
+
+ˆqk+1 = δq ⊗ qk, qk+1 = ˆqk+1 
+
+∥ˆqk+1 ∥ ,
+
+pr,k +1 = pr,k + vr,k ∆t + 12eak∆t2,
+
+vr,k +1 = vr,k + eak∆t,  
+
+> i
+
+¯pk+1 = i ¯pk + ∆ t Ls(i ¯pk, Rcepr,k ) vTr,k Rec ωT 
+
+> k
+
+Rec
+
+T ,
+
+bgyr ,k +1 = bgyr ,k + ngyr ∆t, 
+
+bacc ,k +1 = bacc ,k + nacc ∆t, 
+
+(27) which serve as the prediction model within the EKF frame-work. Where 
+
+δq =
+
+
+
+cos 
+
+ ∥ωk∥∆t
+
+2
+
+ ωk
+
+∥ωk∥ sin 
+
+ ∥ωk∥∆t
+
+2
+
+ T
+
+. (28) 
+
+Algorithm 2 DC-EKF Pseudocode 
+
+Require: Image features i ¯p, IMU rates eω, accelerations ea
+
+Ensure: Estimated states ˆxt 
+
+> 1:
+
+Initialize x0, P0, and IMU buffer  
+
+> 2:
+
+for t = 1 to T ⋆ do  
+
+> 3:
+
+if no image features then  
+
+> 4:
+
+Propagate state (Eq. (27) ) and covariance; buffer IMU data  
+
+> 5:
+
+else  
+
+> 6:
+
+Delayed update at t − D 
+
+> 7:
+
+Re-propagate from t − D + 1 to t using buffered IMU  
+
+> 8:
+
+end if  
+
+> 9:
+
+end for 
+
+IV. L IFTING -W ING INTERCEPTION EXPERIMENT 
+
+A. Experimental Setup 
+
+The platform (Fig. 1) is a lifting-wing quadcopter equipped with a fixed monocular camera (640 ×480 px, 120 ◦ FOV) and onboard real-time processing. Target features were extracted using YOLOv5s 2 at 20–25 Hz. All perception, estimation, and high-level control algorithms run fully onboard an NVIDIA Jetson Orin NX (16 GB), enabling real-time, self-contained operation without offboard computation. Experiments involved intercepting a balloon suspended from a quadrotor (Fig. 9(a,b)) in outdoor wind conditions of 3–8 m/s (Beaufort 2–5), where the balloon exhibited rapid, random lateral and vertical maneuvers under the combined influence of wind and the towing quadrotor, including                         
+
+> 2YOLOv5s: Ultralytics, available at https://github.com/ ultralytics/yolov5 45.6 m
+> 138.0 m
+> Interceptor
+> Target Towing Quadcopter
+> Target
+> 52.3 m
+> 82.9 m
+> Interceptor
+> Target Towing Quadcopter Target
+> (a)
+> (b)
+> (c)
+> (d) 140
+> 0.5
+> 0
+> -0.5
+> 25 20 15 10 50
+> 8
+> 6
+> 4
+> 2
+> 0
+> 020 40 60 80 4100 120
+> 2
+> 20
+> 0
+> -2
+> 10
+> -4
+> 0
+> 100
+> 1
+> 0
+> -1 18 16 14 12 10 86420
+> 10
+> 8
+> 6
+> 4
+> 2
+> 0
+> 010 20 30 40 50 60 70 80 90 10
+> 15
+> 5
+> 10
+> 0
+> 5
+> 0
+> (e)(f)
+> (g)(h)Fig. 9. Experimental results: (a) Trajectories for the interception lasting 138 m. (b) Trajectories for the interception lasting 89 m. (c,d) image-feature. (e,f) Trajectory and velocity profiles for two trails (max 8.9 / 10.8 m/s). (g,h) Attitude variation.
+
+motions beyond the quadrotor’s own capability . Two scenarios were tested: 
+
+Static: The towing quadrotor hovered while the balloon oscillated in the wind. 
+
+Dynamic: The towing quadrotor was manually flown at 6– 8 m/s along arbitrary escape trajectories, adding both motion and aerodynamic disturbances. Multiple trials were conducted with varying initial separa-tions to ensure statistical reliability (see Table I). 
+
+B. DC-EKF Performance 
+
+Fig. 10 shows the effectiveness of the DC-EKF filter in the experiment. The figure demonstrates that, when observing a dynamic target, the filter leverages the IMU to accurately predict the target position approximately 0.1 ∼ 0.2 s before the visual feature measurements arrive (this value is adjustable depending on the hardware used in this work), thereby effectively compensating for the measurement delay. The filter also addresses frame drops by maintaining continuity of the target position estimate when image features are temporarily lost, ensuring real-time and accurate target position estimation during agile motion. 
+
+C. Experimental Data Analysis 
+
+The experimental results of the trials demonstrate a 90% interception success rate for static targets and a 71% success rate for dynamic targets (see Table I). Notably, in two trials the interceptor successfully achieved precise interceptions of unpredictable dynamic targets exhibit-ing high-frequency, large-amplitude oscillations at distances of 89 m and 138 m (Fig. 9(a,b)), thoroughly validating the  
+
+> Fig. 10. DC-EKF performance. The plot shows the temporal evolution of the horizontal and vertical coordinates of the target image features in the IF during an interception, both before and after filtering.
+
+robustness of the algorithm. Fig. 9(e,f) present the velocity-trajectory plots for two interception missions, demonstrating maximum interception velocities of 8.9 m/s and 10.8 m/s, respectively. Fig. 9(g,h) illustrate the attitude variations during these two interception scenarios, while Fig. 9(c,d) depict the distribution of target features within the FOV throughout the interception processes. Collectively, these six subfigures demonstrate that when the target maneuvers, the lifting-wing quadcopter interceptor rapidly executes maneuvering adjustments and achieves swift acceleration to accomplish the subsequent tracking and interception. The controller effectively maintains the unpredictable agile target near the PS-LOS region, ensuring accurate and continuous target tracking. D. Performance Comparison 
+
+The controller proposed in this work represents an enhance-ment over the methodology described in [8]. Compared to the previous work, this approach demonstrates significant improvements in interception range and achieves accurate interception capabilities under unpredictable maneuverable target and wind gusting conditions. The detailed comparison is presented in Table II. Compared to [8], our work yields substantially greater interception range (138 m v.s. 55 m) and improved robustness to target agility and wind gusts (Table II). 
+
+TABLE I INTERCEPTION PERFORMANCE 
+
+Towing Quad-copter Interception Distance Number of Trials Successful Interceptions Previous Work [8] 
+
+Proposed 
+
+Static 20–30 m 5 5 (100%) 5 (100%) 
+
+30–50 m 5 4 (80%) 4 (80%) 
+
+Dynamic 30–50 m 8 4 (50%) 7 (87.5%) 
+
+50–70 m 8 2 (25%) 6 (75%) 
+
+≥ 70 m 5 - 3 (60%) 
+
+TABLE II COMPARISON OF DYNAMIC TARGET INTERCEPTION EXPERIMENTS 
+
+Experimental Condition Previous Work [8] Proposed 
+
+Maximum Interception Distance 55 m 138 m 
+
+Towing Quadcopter Speed 5–6 m/s (nearly constant) 
+
+6–8 m/s (variable) 
+
+Target Agility Minimal unpredictable and significant 
+
+Wind Gusts Negligible Beaufort 2–5 
+
+V. C ONCLUSION 
+
+This paper introduced a Planer-Sector Line-of-Sight guid-ance method for long-range interception of agile targets using lifting-wing quadcopters. By replacing conventional conic FOV constraints with a planar-sector bound aligned with the camera symmetry plane, PS-LOS significantly enlarges feasible acceleration with reliable target tracking. For lifting-wing quadcopter interception platform, we designed a two-layer control architecture : an outer thrust/LOS law enforcing the sector through barrier terms, and an inner attitude tracker with coordinated-turn compensation. Theoretical analysis using a composite Lyapunov function guarantees sector invariance and asymptotic convergence 
+
+of the relative position. To handle delayed and intermittent monocular sensing, a delay-compensated EKF fuses high-rate IMU propagation with visual updates, providing low-latency target-state estimates. 
+
+Experimental validation demonstrated persistent intercep-tions up to 138 m under irregular target maneuvers and Beaufort 2–5 winds, achieving 90% success in static and 71% in dynamic scenarios. Compared with quadrotor-based IBVS baselines, our approach substantially extends range and robustness. Future work will focus on enabling longer-horizon and more accurate target-state prediction, coupled with a more systematic pursuit planning approach. REFERENCES [1] D. Floreano and R. J. Wood, “Science, technology and the future of small autonomous drones,” Nature , vol. 521, no. 7553, pp. 460–466, May 2015. [2] M. Ritchie, F. Fioranelli, and H. Borrion, “Micro UAV crime prevention: Can we help princess Leia?” in Crime Prevention in the 21st Century ,B. LeClerc and E. U. Savona, Eds. Cham: Springer International Publishing, 2017, pp. 359–376. [3] B. Fu, K. S. Shankar, and N. Michael, “RaD-VIO: Rangefinder-aided downward visual-inertial odometry,” in 2019 International Conference on Robotics and Automation (ICRA) . Montreal, QC, Canada: IEEE, May 2019, pp. 1841–1847. [4] Y. Stasinchuk, M. Vrba, M. Petrl ´ık, T. B ´a ˇca, V. Spurn `y, D. Hert, D. ˇZaitl ´ık, T. Nascimento, and M. Saska, “A multi-UAV system for detection and elimination of multiple targets,” in 2021 IEEE International Conference on Robotics and Automation (ICRA) . IEEE, 2021, pp. 555–561. [5] M. Vrba, Y. Stasinchuk, T. B ´a ˇca, V. Spurn ´y, M. Petrl ´ık, D. He ˇrt, D. ˇZaitl ´ık, and M. Saska, “Autonomous capture of agile flying objects using UAVs: The MBZIRC 2020 challenge,” Robotics and Autonomous Systems , vol. 149, p. 103970, Mar. 2022. [6] H. Tao, D. Lin, S. He, T. Song, and R. Jin, “Optimal terminal-velocity-control guidance for intercepting non-cooperative maneuvering quadcopter,” Journal of Field Robotics , vol. 39, no. 4, pp. 457–472, Jun. 2022. [7] H. Yan, K. Yang, Y. Cheng, Z. Wang, and D. Li, “Precise interception flight targets by image-based visual servoing of multicopter,” arXiv preprint arXiv:2409.17497 , 2024. [8] K. Yang, C. Bai, Z. She, and Q. Quan, “High-speed interception multicopter control by image-based visual servoing,” IEEE Transactions on Control Systems Technology , vol. 33, no. 1, pp. 119–135, Jan. 2025. [9] J. Li, Z. Ning, S. He, C.-H. Lee, and S. Zhao, “Three-dimensional bearing-only target following via observability-enhanced helical guid-ance,” IEEE Transactions on Robotics , vol. 39, no. 2, pp. 1509–1526, Apr. 2023. [10] K. Yang and Q. Quan, “An autonomous intercept drone with image-based visual servo,” in 2020 IEEE International Conference on Robotics and Automation (ICRA) . Paris, France: IEEE, May 2020, pp. 2230– 2236. [11] Q. Quan, S. Wang, and W. Gao, “Lifting-wing quadcopter modeling and unified control,” Journal of Guidance, Control, and Dynamics ,vol. 48, no. 3, pp. 689–699, 2025. [12] H. Zhang, S. Tan, Z. Song, and Q. Quan, “Performance evaluation and design method of lifting-wing multicopters,” IEEE/ASME Transactions on Mechatronics , vol. 27, no. 3, pp. 1606–1616, Jun. 2022. [13] W. Gao, S. Wang, and Q. Quan, “Dodging like a bird: An inverted dive maneuver taking by lifting-wing multicopters,” in 2023 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) ,2023, pp. 1063–1069. [14] S. Wang, X. Chen, H. Wei, and Q. Quan, “Heading adjustment by admittance control for lifting-wing quadcopters in strong winds,” IEEE Robotics and Automation Letters , vol. 10, no. 4, pp. 3558–3565, 2025. [15] J. L. Junkins and M. D. Shuster, “The geometry of the Euler angles,” 
+
+Journal of the Astronautical Sciences , vol. 41, no. 4, pp. 531–543, 1993. [16] K. P. Tee, S. S. Ge, and E. H. Tay, “Barrier Lyapunov functions for the control of output-constrained nonlinear systems,” Automatica , vol. 45, no. 4, pp. 918–927, Apr. 2009. [17] H. K. Khalil, Nonlinear Systems , 3rd ed. Upper Saddle River, NJ: Prentice Hall, 2002.

@@ -1,0 +1,338 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-11T22:18:56.703318+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 7,
+    "quick_skim_target": 11,
+    "quick_selected": 7
+  },
+  "deep_dive": [
+    {
+      "id": "2606.10639v1",
+      "source": "arxiv",
+      "title": "Planar-Sector LOS Guidance for Interception of Agile Targets with Lifting-Wing Quadcopters",
+      "abstract": "Autonomous visual interception of agile aerial targets is challenging due to unpredictable target motion, limited sensing, and the strong coupling between target visibility and interceptor maneuverability. Most existing strapdown-camera interception methods preserve visibility using conic line-of-sight (LOS) constraints that keep the target near the image center. While safe, such symmetric constraints unnecessarily restrict maneuverability and can significantly reduce the usable thrust for pursuit. Motivated by the observation that aggressive FPV pilots do not maintain equal visibility margins in all image directions, this paper proposes a Planar-Sector Line-of-Sight (PS-LOS) guidance framework for autonomous interception using a lifting-wing quadcopter equipped with only a strapdown monocular camera. PS-LOS tightly constrains lateral image error while relaxing longitudinal image error within a safe field-of-view margin, preserving visibility while releasing maneuverability for acceleration-intensive pursuit. Under the lifting-wing quadcopter model, PS-LOS provides nearly 50% more available thrust near the LOS direction than conventional conic LOS constraints. To realize LOS-only interception without direct depth measurements, a delay-compensated state-estimation framework and a nonlinear guidance-and-control architecture are developed for lifting-wing quadcopters. Extensive outdoor flight experiments demonstrate autonomous interception of agile targets exhibiting large-amplitude, high-frequency, and unpredictable motion under real wind disturbances. The proposed system achieves successful interceptions at ranges up to 138 m while maintaining continuous visual tracking throughout the engagement. The results validate PS-LOS as a visibility-preserving, maneuverability-aware guidance framework for long-range visual interception of agile aerial targets.",
+      "authors": [
+        "Linkai Liu",
+        "Kun Yang",
+        "Han Zou",
+        "Chen Min",
+        "Shuli Lv",
+        "Shuai Wang",
+        "Quan Quan"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-09T09:44:54+00:00",
+      "link": "https://arxiv.org/pdf/2606.10639v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "single UAV interception guidance",
+      "llm_evidence_cn": "单无人机拦截制导",
+      "llm_evidence": "单无人机拦截制导",
+      "canonical_evidence": "单无人机拦截制导",
+      "llm_tldr_en": "Proposes Planar-Sector LOS guidance for autonomous visual interception of agile targets using lifting-wing quadcopters, improving maneuverability over conic constraints.",
+      "llm_tldr_cn": "针对敏捷目标拦截中视觉约束与机动性耦合的问题，提出平面扇形视线制导框架PS-LOS，通过非对称约束保留追踪余量，提升可拦截区域。实验表明该方法比传统圆锥约束制导更有效地利用推力，适用于单无人机敏捷目标拦截场景。",
+      "llm_tldr": "针对敏捷目标拦截中视觉约束与机动性耦合的问题，提出平面扇形视线制导框架PS-LOS，通过非对称约束保留追踪余量，提升可拦截区域。实验表明该方法比传统圆锥约束制导更有效地利用推力，适用于单无人机敏捷目标拦截场景。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.10639v2",
+      "source": "arxiv",
+      "title": "Planar-Sector LOS Guidance for Interception of Agile Targets with Lifting-Wing Quadcopters",
+      "abstract": "Autonomous visual interception of agile aerial targets is challenging due to unpredictable target motion, limited sensing, and the strong coupling between target visibility and interceptor maneuverability. Most existing strapdown-camera interception methods preserve visibility using conic line-of-sight (LOS) constraints that keep the target near the image center. While safe, such symmetric constraints unnecessarily restrict maneuverability and can significantly reduce the usable thrust for pursuit. Motivated by the observation that aggressive FPV pilots do not maintain equal visibility margins in all image directions, this paper proposes a Planar-Sector Line-of-Sight (PS-LOS) guidance framework for autonomous interception using a lifting-wing quadcopter equipped with only a strapdown monocular camera. PS-LOS tightly constrains lateral image error while relaxing longitudinal image error within a safe field-of-view margin, preserving visibility while releasing maneuverability for acceleration-intensive pursuit. Under the lifting-wing quadcopter model, PS-LOS provides nearly 50% more available thrust near the LOS direction than conventional conic LOS constraints. To realize LOS-only interception without direct depth measurements, a delay-compensated state-estimation framework and a nonlinear guidance-and-control architecture are developed for lifting-wing quadcopters. Extensive outdoor flight experiments demonstrate autonomous interception of agile targets exhibiting large-amplitude, high-frequency, and unpredictable motion under real wind disturbances. The proposed system achieves successful interceptions at ranges up to 138 m while maintaining continuous visual tracking throughout the engagement. The results validate PS-LOS as a visibility-preserving, maneuverability-aware guidance framework for long-range visual interception of agile aerial targets.",
+      "authors": [
+        "Linkai Liu",
+        "Kun Yang",
+        "Han Zou",
+        "Chen Min",
+        "Shuli Lv",
+        "Shuai Wang",
+        "Quan Quan"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-09T09:44:54+00:00",
+      "link": "https://arxiv.org/pdf/2606.10639v2",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "autonomous visual interception of agile aerial targets",
+      "llm_evidence_cn": "空中敏捷目标自主视觉拦截",
+      "llm_evidence": "空中敏捷目标自主视觉拦截",
+      "canonical_evidence": "空中敏捷目标自主视觉拦截",
+      "llm_tldr_en": "A planar-sector LOS guidance framework for autonomous interception of agile targets using lifting-wing quadcopters.",
+      "llm_tldr_cn": "本文针对敏捷空中目标的自主拦截问题，提出平面扇区视线（PS-LOS）制导框架，通过放宽对称约束提升拦截机动性。该方法受FPV飞行员启发，仅保持目标在图像平面水平方向，显著增加可用推力。仿真验证了其对机动目标的有效性，为单无人机拦截提供了非RL的制导方案。",
+      "llm_tldr": "本文针对敏捷空中目标的自主拦截问题，提出平面扇区视线（PS-LOS）制导框架，通过放宽对称约束提升拦截机动性。该方法受FPV飞行员启发，仅保持目标在图像平面水平方向，显著增加可用推力。仿真验证了其对机动目标的有效性，为单无人机拦截提供了非RL的制导方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.04812v2",
+      "source": "arxiv",
+      "title": "Scenario Generation for Risk-Aware Reinforcement Learning with Probably Approximately Safe Guarantees",
+      "abstract": "Guaranteeing safety is critical to the deployment of reinforcement learning (RL) agents in the real-world, especially as policies learned using deep RL may demonstrate susceptibility to transition perturbations that result in unknown or unsafe behaviour. A method of policy verification is to construct probabilistic barrier-certificates by sampling policy trajectories with respect to safety constraints, thereby demarcating known safe behaviour from unknown behaviour. Obtaining tight upper and lower bounds on the probability of violation of these constraints may be difficult if the policy is susceptible to transition uncertainty or perturbation that places the agent in insufficiently explored states. To address this, we approximate the distribution of the encountered state-space using a variational autoencoder (VAE) and construct upper and lower-bound barrier-certificates using latent characteristics of states to optimize for regions of known, safe behaviour with high confidence. We frame this in our work as a dual optimization problem where the lower-bound barrier-certificate presents a more conservative estimate of the safe region than the upper-bound barrier-certificate. Sampling states that lie within the set difference of the two during training, i.e. the non-robust region, allows us to tighten the upper and lower bounds to provide sharper probabilistic guarantees on safety. Within our study, we describe the guarantees placed and demonstrate the tightness of our bounds experimentally.",
+      "authors": [
+        "Mohit Prashant",
+        "Arvind Easwaran"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-03T12:36:43+00:00",
+      "link": "https://arxiv.org/pdf/2606.04812v2",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "scenario generation for risk-aware RL with safe guarantees, applicable to UAV pursuit-evasion safety",
+      "llm_evidence_cn": "风险感知强化学习场景生成与安全保证，可应用于无人机追逃安全",
+      "llm_evidence": "风险感知强化学习场景生成与安全保证，可应用于无人机追逃安全",
+      "canonical_evidence": "风险感知强化学习场景生成与安全保证，可应用于无人机追逃安全",
+      "llm_tldr_en": "Generates scenarios to construct probabilistic barrier certificates for RL policy verification, enhancing safety in environments with transition perturbations, applicable to pursuit-evasion.",
+      "llm_tldr_cn": "保证强化学习智能体的安全性至关重要，尤其是面对状态转移扰动时。本文提出场景生成方法，通过采样策略轨迹构建概率屏障证书，界定已知安全行为与未知行为。针对策略易受扰动且探索不足的情况，该方法能收紧安全违背概率的上下界，为追逃等对抗场景中的安全RL提供支撑。",
+      "llm_tldr": "保证强化学习智能体的安全性至关重要，尤其是面对状态转移扰动时。本文提出场景生成方法，通过采样策略轨迹构建概率屏障证书，界定已知安全行为与未知行为。针对策略易受扰动且探索不足的情况，该方法能收紧安全违背概率的上下界，为追逃等对抗场景中的安全RL提供支撑。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.11274v1",
+      "source": "arxiv",
+      "title": "Multi-agent rendezvous in fluid flows via reinforcement learning",
+      "abstract": "Rendezvous is a critical task for multi-agent systems, requiring agents to coordinate to meet at an unspecified location. However, achieving this in fluid environments presents a challenge, as it remains unclear how agents can exploit underlying fluid kinematics to facilitate convergence. In this study, we adopt a multi-agent reinforcement learning (MARL) approach to develop physics-informed rendezvous strategies in vortical flows. Compared to a naive strategy, where agents navigate toward their counterparts, MARL strategies significantly improve the rendezvous rate. MARL strategies also show transferability across varying vortex intensities, vortex scales, and swarm sizes. By breaking the symmetry of the state-action map, MARL strategy leverages a non-intuitive mechanism that prevents agents from becoming trapped in separate vortices, thereby enhancing rendezvous success. Additionally, a heuristic strategy is extracted from the learned strategy and also outperforms the naive strategy. Furthermore, a theoretical analysis demonstrates that fluid deformation impedes the rendezvous process. Large finite-time Lyapunov exponents identify where fluid effects separate adjacent agents, suggesting that targets should be planned in weak-deformation regions. Our findings reveal the important role that agent-fluid interactions play in multi-agent tasks and highlight the MARL capability to explore swarm intelligence in complex flow environments.",
+      "authors": [
+        "Bocheng Li",
+        "Jingran Qiu",
+        "Lihao Zhao"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.LG",
+        "physics.flu-dyn"
+      ],
+      "published": "2026-06-09T09:44:53+00:00",
+      "link": "https://arxiv.org/pdf/2606.11274v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent RL for coordinated swarm behavior",
+      "llm_evidence_cn": "多智能体强化学习用于集群协调",
+      "llm_evidence": "多智能体强化学习用于集群协调",
+      "canonical_evidence": "多智能体强化学习用于集群协调",
+      "llm_tldr_en": "This paper uses MARL to solve the rendezvous problem in fluid flows, achieving high success rates and transferability across vortex intensities and swarm sizes. The method is directly relevant to multi-UAV cooperative tasks like encirclement, where swarm coordination is key.",
+      "llm_tldr_cn": "本文针对多智能体在流体环境中会合的问题，采用多智能体强化学习方法，使智能体学习利用流体动力学进行协调。实验表明，与直接导航相比，该方法显著提高了会合成功率，且在不同涡旋强度和规模下具有鲁棒性和可迁移性。该方法对于多无人机围捕等集群协调任务具有重要参考价值。",
+      "llm_tldr": "本文针对多智能体在流体环境中会合的问题，采用多智能体强化学习方法，使智能体学习利用流体动力学进行协调。实验表明，与直接导航相比，该方法显著提高了会合成功率，且在不同涡旋强度和规模下具有鲁棒性和可迁移性。该方法对于多无人机围捕等集群协调任务具有重要参考价值。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.05015v1",
+      "source": "arxiv",
+      "title": "Generalization of World Models under Environmental Variability for Vision-based Quadrotor Navigation",
+      "abstract": "World models, learned generative models that predict how an environment evolves, have become a promising tool for sample-efficient robot learning. Yet how robust they are to environmental variability remains poorly understood. To address this, we conduct a systematic study using vision-based quadrotor navigation as a testbed problem, training DreamerV3-based world models under varying levels of environmental randomness and evaluating them across all levels through cross-environment validation, spanning both Self-Supervised Learning (SSL) pretraining and Reinforcement Learning (RL) fine-tuning. We then deploy all world models and associated navigation policies on a real quadrotor in unseen environments, including an open-loop run where the model receives just 2.5s of real sensory input before all sensors are cut off, leaving the system to navigate entirely in imagination over a 12m traverse. Our results show that world model robustness during SSL pretraining is a strong predictor of sim-to-real transfer: every model that generalized well in cross-environment SSL validation deployed successfully in the real world, passing through gaps as narrow as 0.67m, whereas the model that dominated simulation policy evaluation failed on the real platform. We further identify (a) the discrete latent size and (b) the training-sequence length as the dominant factors governing world model quality.",
+      "authors": [
+        "Luca Zanatta",
+        "Grzegorz Malczyk",
+        "Kostas Alexis"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-03T15:38:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.05015v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "world models and RL for vision-based quadrotor navigation, method transferable to UAV interception scenarios",
+      "llm_evidence_cn": "世界模型和强化学习用于视觉四旋翼导航，方法可迁移到无人机拦截场景",
+      "llm_evidence": "世界模型和强化学习用于视觉四旋翼导航，方法可迁移到无人机拦截场景",
+      "canonical_evidence": "世界模型和强化学习用于视觉四旋翼导航，方法可迁移到无人机拦截场景",
+      "llm_tldr_en": "Investigates robustness of DreamerV3-based world models under environmental variability for quadrotor navigation, using SSL and RL, with real-world deployment, offering transferable methods for UAV control.",
+      "llm_tldr_cn": "世界模型在环境变化下的鲁棒性尚不清楚。本文以视觉四旋翼导航为测试平台，训练基于DreamerV3的世界模型，在不同环境随机性级别下评估，包括自监督预训练和强化学习微调。将世界模型和导航策略部署到真实四旋翼在未见环境中测试。结果表明世界模型在环境变化下具有一定泛化能力，方法可迁移到无人机拦截等控制任务。",
+      "llm_tldr": "世界模型在环境变化下的鲁棒性尚不清楚。本文以视觉四旋翼导航为测试平台，训练基于DreamerV3的世界模型，在不同环境随机性级别下评估，包括自监督预训练和强化学习微调。将世界模型和导航策略部署到真实四旋翼在未见环境中测试。结果表明世界模型在环境变化下具有一定泛化能力，方法可迁移到无人机拦截等控制任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.08533v1",
+      "source": "arxiv",
+      "title": "Autonomous Aerial Manipulation via Contextual Contrastive Meta Reinforcement Learning",
+      "abstract": "Unmanned aerial vehicles (UAVs) are increasingly being deployed in logistics, service robotics, and other real-world applications, creating a growing demand for autonomous payload acquisition and delivery. Existing approaches typically assume pre-attached payloads or rely on specialized grippers, leaving versatile end-to-end aerial delivery largely unresolved, where different payloads induce highly variable flight dynamics, requiring a single policy to adapt online without manual calibration or explicit system identification. To this end, we study \\textbf{A}utonomous \\textbf{A}erial Manipulation via \\textbf{Co}ntextual \\textbf{Co}ntrastive Meta Reinforcement Learning (\\textbf{\\textit{Aco2}}), a fully autonomous aerial delivery setting in which a quadrotor equipped with a lightweight hook continuously picks up, transports, and delivers diverse handle-equipped objects between randomized locations, all without human intervention. First, we design a contextual observation encoder that infers a compact latent context from recent interaction history, enabling the policy to adapt online to payload-dependent dynamics. To further improve the quality of this context, we introduce a contrastive objective that structures the context embedding around task-relevant variations, improving generalization across diverse payloads without requiring explicit system identification. Trained entirely in simulation with extensive domain randomization, \\textit{Aco2} can be directly deployed on a physical quadrotor without real-world fine-tuning.",
+      "authors": [
+        "Lixuan Jin",
+        "Bingxuan Lan",
+        "Xinyi Bao",
+        "Xiangyuan Xie",
+        "Chunjie Zhang",
+        "Zheng Chen",
+        "Tianshuo Liu",
+        "Ruijie Tian",
+        "Jinyu Ru",
+        "Gang Wang",
+        "Lei Yuan",
+        "Yang Yu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-06-07T09:26:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.08533v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "UAV autonomous aerial manipulation using meta-RL, relevant to UAV autonomy and RL for interception",
+      "llm_evidence_cn": "无人机自主空中操作使用元强化学习，与无人机自主和拦截RL相关",
+      "llm_evidence": "无人机自主空中操作使用元强化学习，与无人机自主和拦截RL相关",
+      "canonical_evidence": "无人机自主空中操作使用元强化学习，与无人机自主和拦截RL相关",
+      "llm_tldr_en": "Meta-RL enables UAVs to adapt to varying payloads for aerial manipulation without manual tuning; principles transfer to interception tasks requiring online adaptation.",
+      "llm_tldr_cn": "现有无人机空中操作依赖预先安装的载荷或专用夹爪，难以适应不同载荷带来的动力学变化。本文提出上下文对比元强化学习方法，使无人机能够在线适应不同载荷的飞行动力学，实现端到端的自主空中操作。实验表明，该方法无需手动标定即可适应多种载荷，且具有良好的泛化能力。该研究为无人机在拦截任务中实时适应目标动态提供了可行的技术路径。",
+      "llm_tldr": "现有无人机空中操作依赖预先安装的载荷或专用夹爪，难以适应不同载荷带来的动力学变化。本文提出上下文对比元强化学习方法，使无人机能够在线适应不同载荷的飞行动力学，实现端到端的自主空中操作。实验表明，该方法无需手动标定即可适应多种载荷，且具有良好的泛化能力。该研究为无人机在拦截任务中实时适应目标动态提供了可行的技术路径。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.11087v1",
+      "source": "arxiv",
+      "title": "Test-Time Gradient Guidance of Flow Policies in Reinforcement Learning",
+      "abstract": "Expressive continuous control policies, such as diffusion and flow models, form the backbone of recent advances in scaling imitation learning for simulated and real robot control. While they are known to scale stably in the supervised imitation learning setting, incorporating them into reinforcement learning (RL) pipelines for policy improvement has proven more difficult. It often requires specialized training objectives or backpropagating through denoising processes, which cause well-known issues with stability and affect scalability. In this paper we study the question of whether simple policy improvement schemes at test time alone, leaving stable supervised policy training intact, can be a competitive alternative which sidesteps these issues. To this end, we propose QGF (Q-Guided Flow), an RL algorithm that performs policy optimization entirely at test time. QGF works by pre-training both a reference flow policy (via a standard behavioral cloning objective) and a value function critic and, at test time, using the value gradient to guide the reference policy to generate higher-value actions without any additional policy learning. Empirically, QGF outperforms prior test-time RL methods on single-task and goal-conditioned offline RL benchmarks with high-dimensional action spaces, and is competitive with state-of-the-art training-time algorithms while being much cheaper to run. Moreover, it exhibits favorable scaling with model size by avoiding the instability of actor-critic training, offering a practical and effective alternative RL algorithm with expressive policies.",
+      "authors": [
+        "Zhiyuan Zhou",
+        "Andy Peng",
+        "Charles Xu",
+        "Qiyang Li",
+        "Tobias Springenberg",
+        "Kevin Frans",
+        "Sergey Levine"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-09T16:45:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.11087v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "test-time policy improvement for RL continuous control, transferable to UAV interception policies",
+      "llm_evidence_cn": "强化学习测试时策略改进方法，可迁移到无人机拦截策略",
+      "llm_evidence": "强化学习测试时策略改进方法，可迁移到无人机拦截策略",
+      "canonical_evidence": "强化学习测试时策略改进方法，可迁移到无人机拦截策略",
+      "llm_tldr_en": "Proposes test-time gradient guidance of flow policies as a simple alternative to complex RL training for continuous control, applicable to UAV control tasks.",
+      "llm_tldr_cn": "扩散和流模型在模仿学习中表现优异，但融入强化学习训练困难。本文研究是否仅靠测试时的简单策略改进就能成为竞争性替代方案。提出测试时梯度引导流策略方法，避免修改训练过程。实验表明该方法在连续控制任务上具有竞争力，可应用于无人机拦截等策略优化。",
+      "llm_tldr": "扩散和流模型在模仿学习中表现优异，但融入强化学习训练困难。本文研究是否仅靠测试时的简单策略改进就能成为竞争性替代方案。提出测试时梯度引导流策略方法，避免修改训练过程。实验表明该方法在连续控制任务上具有竞争力，可应用于无人机拦截等策略优化。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.12306v1",
+      "source": "arxiv",
+      "title": "UGV-Conditioned Multi-UAV Informative Planning on a Shared Exposure Belief",
+      "abstract": "Safe ground navigation in large, threat-augmented environments requires aerial support that actively reduces the risks that a ground vehicle faces along its route. Existing aerial reconnaissance systems focus on mapping or covering the environment, but do not direct sensing toward regions that are most relevant for ground vehicle safety. In this paper, we address the problem of coordinating a team of unmanned aerial vehicles (UAVs) to improve the safety of an unmanned ground vehicle (UGV) navigating through unknown threat zones. A key aspect of our approach is a shared exposure belief that is updated online from aerial observations and used jointly by the UAV team and the ground vehicle. This enables us to direct aerial sensing towards route-relevant regions while allowing the UGV to replan around newly revealed threats. We coordinate the UAV team through spatial region assignment to avoid redundant sensing. Simulation experiments show that our approach reduces cumulative UGV exposure by 38% compared to a system that does not account for hazard levels, and reduces redundant aerial coverage from 38.8% to 3.7% under our multi-UAV coordination scheme.",
+      "authors": [
+        "Lars Oerlemans",
+        "Moji Shi",
+        "Marija Popovic"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-10T16:42:08+00:00",
+      "link": "https://arxiv.org/pdf/2606.12306v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-UAV cooperative planning for ground vehicle safety, resembles encirclement coordination",
+      "llm_evidence_cn": "多无人机协同规划保障地面车辆安全，类似于围捕协同",
+      "llm_evidence": "多无人机协同规划保障地面车辆安全，类似于围捕协同",
+      "canonical_evidence": "多无人机协同规划保障地面车辆安全，类似于围捕协同",
+      "llm_tldr_en": "Coordinates a team of UAVs to improve ground vehicle safety in threat zones using a shared exposure belief, directing sensing to route-relevant areas, applicable to multi-UAV encirclement.",
+      "llm_tldr_cn": "地面车辆在大范围威胁环境中安全导航需要空中支持。本文解决协调多无人机提升未知威胁区域中地面车辆安全的问题。关键方法是共享暴露信念，由空中观测在线更新，并被无人机团队和地面车辆联合使用。该方法将空中感知导向路径相关区域，类似于围捕中的协同信息共享，但任务目标不同。",
+      "llm_tldr": "地面车辆在大范围威胁环境中安全导航需要空中支持。本文解决协调多无人机提升未知威胁区域中地面车辆安全的问题。关键方法是共享暴露信念，由空中观测在线更新，并被无人机团队和地面车辆联合使用。该方法将空中感知导向路径相关区域，类似于围捕中的协同信息共享，但任务目标不同。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

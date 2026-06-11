@@ -1,0 +1,330 @@
+Title: UGV-Conditioned Multi-UAV Informative Planning on a Shared Exposure Belief
+
+URL Source: https://arxiv.org/pdf/2606.12306v1
+
+Published Time: Thu, 11 Jun 2026 01:27:02 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+# UGV-Conditioned Multi-UAV Informative Planning on a Shared Exposure Belief 
+
+Lars Oerlemans*, Moji Shi*, and Marija Popovi´ c
+
+Abstract — Safe ground navigation in large, threat-augmented environments requires aerial support that actively reduces the risks that a ground vehicle faces along its route. Existing aerial reconnaissance systems focus on mapping or covering the environment, but do not direct sensing toward regions that are most relevant for ground vehicle safety. In this paper, we address the problem of coordinating a team of unmanned aerial vehicles (UAVs) to improve the safety of an unmanned ground vehicle (UGV) navigating through unknown threat zones. A key aspect of our approach is a shared exposure belief that is updated online from aerial observations and used jointly by the UAV team and the ground vehicle. This enables us to direct aerial sensing towards route-relevant regions while allowing the UGV to replan around newly revealed threats. We coordinate the UAV team through spatial region assignment to avoid redundant sensing. Simulation experiments show that our approach reduces cumulative UGV exposure by 38 % compared to a system that does not account for hazard levels, and reduces redundant aerial coverage from 38 .8% to 3.7% under our multi-UAV coordination scheme. 
+
+I. I NTRODUCTION 
+
+Hybrid aerial-ground robotic teams are increasingly rele-vant for missions that require both rapid situational aware-ness and persistent ground access. Unmanned aerial vehi-cles (UAVs) can quickly survey large areas and gather re-mote observations, while unmanned ground vehicles (UGVs) carry out the mission under stronger mobility and safety constraints. Aerial reconnaissance can improve downstream ground navigation in applications such as search and res-cue [1], off-road guidance [2], [3], and exploration [4], [5]. However, in large-scale environments with uncertain hazards, success depends not only on reaching the goal or covering the map efficiently, but also on reducing the exposure en-countered by the ground vehicle along its route. This calls for aerial sensing that is useful not only for exploration in general, but specifically for safer UGV navigation. Existing UAV–UGV systems have shown that aerial obser-vations can support UGV planning by providing traversabil-ity layers, terrain representations, or route guidance cues [5], [6], [4]. However, many of these systems remain limited to small-scale environments or simplified ground planning formulations. In parallel, multi-UAV sensing systems often focus on generic mapping or exploration rather than on a UGV’s downstream safety objective [7], [8], [9]. Crucially, existing approaches rarely close the loop between cooper-ative multi-UAV informative planning and exposure-aware UGV routing: there is no shared environment belief that simultaneously drives UAV sensing priorities and adapts UGV path selection as new information arrives online. 
+
+> *Equal contribution. Authors are with the MAVLab, Faculty of Aerospace Engineering, TU Delft, The Netherlands.
+
+Fig. 1: Three UAVs perform coordinated reconnaissance to support a UGV navigating through unknown threat zones. Each UAV is assigned a spatial region (R1, R 2, R 3) and directs sensing toward the corridor of the current UGV route. UAV observations update a shared exposure belief (blue) that triggers route replanning away from high-exposure areas (solid vs. dashed yellow). By coupling aerial sensing to the shared exposure belief, our approach enables safer UGV navigation in large-scale, threat-augmented environments. To address this gap, we propose a multi-UAV-assisted UGV planning framework built around a shared exposure-aware environment belief. UAV observations update this shared map online, and the UGV replans on it to balance traversal efficiency and exposure. The current UGV plan then guides the UAV objective toward regions that are most relevant for safer ground navigation. In this way, aerial sensing is driven not only by exploration value, but by its expected impact on the downstream UGV mission. The main contribution of this paper is a UGV-conditioned multi-UAV informative planning framework that couples aerial reconnaissance directly to exposure-aware ground nav-igation. The key idea is to maintain a shared exposure belief that is updated from UAV observations and queried by both the UGV planner and the UAV team, as illustrated in Fig. 1. The UGV uses this belief to replan exposure-aware routes online, while the UAV team exploits the current route to prioritise observations that are most relevant to UGV safety. We extend this formulation to multiple UAVs through region-conditioned coordination, which assigns spatial ownership to reduce redundant sensing while matching responsiveness to newly relevant regions. We make the following three key claims. First, coupling 
+
+> arXiv:2606.12306v1 [cs.RO] 10 Jun 2026
+
+the UAV sensing actions to a shared exposure-aware belief improves downstream UGV safety compared to planning based on prior terrain information alone. Second, condi-tioning the UAV objective on the current UGV route fo-cuses sensing effort on mission-relevant regions rather than generic exploration. Third, in the multi-UAV setting, region-conditioned coordination reduces redundant sensing while maintaining responsiveness to newly relevant areas. We val-idate our claims through controlled simulation experiments and ablation studies on real-world data from OpenStreetMap. II. R ELATED WORK 
+
+Our approach combines hybrid UAV–UGV reconnaissance-guidance systems, informative path planning, and multi-UAV coordination with exposure-aware environmental mapping. 
+
+Hybrid aerial-ground teams couple rapid aerial situational awareness with ground-level mobility. Delmerico et al. [4] demonstrate that active aerial exploration can generate traversability layers that improve UGV path planning, while Wagner et al. [6] extend this to online 2.5D terrain mapping for ground navigation. Resilient heterogeneous systems op-erating under GPS denial or perception degradation further motivate the paradigm [10], [11]. Beyond terrain mapping, UAV–UGV coordination has also been studied in road-network and path-discovery settings: Choudhury et al. [12] formulate coordinated path finding for UAVs and trucks over road networks, Bhadoriya et al. [13] study UAV-assisted UGV routing through stochastic networks, and Lakas et al. [14] consider cooperative UAV–UGV path dis-covery and planning. Recent vision-based and swarm sys-tems further show how aerial robots can assist ground naviga-tion through close perception and localisation coupling [15]. More recent work prioritises UAV observations that reduce UGV uncertainty in cluttered environments [16], [17]. Rock-enbauer et al. [5] propose a leader-follower framework in which a scout UAV plans explicitly toward the minimum-cost UGV route, making sensing decisions conditioned on the follower’s traversal objective. Risk-aware planning has also been studied through spatial risk maps that bias path selection away from hazardous regions [18]. However, these formulations still largely focus on single-UAV support, rela-tively small environments, static or externally specified risk maps, or limited forms of air-ground coupling. Nguyen and Akella [19] further consider dynamic UGV–UAV cooperative path planning on uncertain road networks, where one or more UAVs inspect potentially obstructed edges and trigger online UGV replanning, but the formulation remains graph-based and treats sensing primarily as edge-status verification rather than continuous spatial exposure management. Consequently, cooperative multi-UAV sensing is still only weakly connected to explicit exposure-aware UGV planning in large, continu-ous, partially observed environments. 
+
+Informative path planning (IPP) aims to select trajectories that maximise expected information gain under motion and budget constraints [7]. Classical frontier-based methods [20] greedily steer the robot toward the boundary between ex-plored and unexplored space, while next-best-view plan-ners [21], [22] and sampling-based approaches [23] evaluate many candidate trajectories to identify the one with the highest expected information gain. Multi-robot IPP extends this objective to teams of sensing agents [9]. A practical challenge is that replanning from scratch at every mission step is computationally expensive. Incremental adaptive IPP methods address this by reusing and updating the previous search tree rather than rebuilding it, maintaining respon-siveness under limited compute [24], [25]. IA-TIGRIS [26] exemplifies this direction by combining tree recycling with reward re-evaluation as the environment belief evolves. These methods, however, define planning utility in terms of generic uncertainty reduction or spatial coverage. In contrast, we de-fine the UAV planning utility through its expected impact on downstream UGV exposure, directing sensing effort toward regions that most improve ground-level safety. 
+
+Multi-UAV exploration and coordination introduces an additional challenge: as the team size grows, independently planned agents tend to converge on the same informative regions, leading to redundant sensing and reduced parallel efficiency [27], [28]. Coordination methods address this in different ways. Some rely on centralised task assign-ment [27], while others use decentralised negotiation through consensus-based bundle algorithms, contract-net protocols, or related multi-robot allocation schemes [29]. Another im-portant direction reduces overlap through spatial decompo-sition, for example by assigning agents to owned subregions of the environment. Zhou et al. [28] demonstrate that on-line space partitioning can support scalable decentralised exploration, while related approaches formalise Voronoi-style ownership with distributed guarantees and improved workload balancing [30], [31]. While these methods demon-strate scalable coordination, they are primarily designed for exploration, mapping, or coverage as ends in themselves. In our setting, coordination has a different role: it must reduce redundant sensing while preserving responsiveness to regions that become important as the UGV route evolves. Our coordination layer is therefore not designed for generic multi-UAV exploration, but for cooperative informative planning whose value is defined by downstream UGV safety. III. O UR APPROACH 
+
+We present an adaptive planning framework for multi-UAV-assisted UGV navigation in unknown environments. Fig. 2 summarises our framework. We maintain a shared probabilistic belief over the environment’s exposure field, updated online from aerial observations. The UGV uses this belief to replan routes that balance traversal time and cumulative exposure. Each UAV plans sensing trajectories whose value is defined by their expected impact on the current UGV route. In the multi-UAV setting, we assign spatial ownership to each agent to reduce redundant sensing while preserving responsiveness to route-relevant changes. 
+
+A. Shared Exposure Belief 
+
+A shared probabilistic map is central to our framework. It provides a consistent planning interface for both the UGV Multi-UAV coordination   
+
+> Voronoi ownership ·Reward masking
+> UAV informative planning
+> Mission-conditioned reward
+> Shared exposure belief
+> Log-normal entropy-driven update
+> UGV planner
+> Exposure-aware routing
+> region assignment
+> sensor observations reward map
+> exposure cost map current UGV route
+
+Fig. 2: Overview of our framework. Multi-UAV coordina-tion assigns Voronoi-based spatial ownership to each UAV planner (Sec. III-D). Aerial observations update the shared exposure belief (Sec. III-A), which drives both the mission-conditioned UAV reward (Sec. III-C) and UGV cost map (Sec. III-B). The current UGV route feeds back to update the reward map, closing the guidance-reconnaissance loop. and the UAV team, coupling aerial observations to ground-level routing decisions. We consider a heterogeneous team of one UGV and N
+
+UAVs operating in a bounded domain X ⊂ R2, discretised into a grid G. Prior terrain labels are available for each cell 
+
+x ∈ G and provide initial estimates of traversability and exposure. The latent exposure rate λ(x) ≥ 0 [ s−1], which quantifies the instantaneous detection or hazard rate at each location, is initially unknown and must be inferred online from aerial observations. We model λ(x) as a log-normal random variable, 
+
+λ(x) ∼ LogNormal  μln (x), σ 2ln (x) , (1) where μln (x) is initialised from terrain-class priors en-coding terrain-dependent detectability, and σln (x) captures epistemic uncertainty. The log-normal family is well-suited here: it yields closed-form expressions for the posterior mean E[λ(x)] and variance Var[ λ(x)] used in planning, enforces strictly non-negative exposure rates, and supports multiplicative amplification by detected threat zones. As a UAV observes a cell x, cumulative sensor coverage 
+
+cov( x, t ) ∈ [0 , 1] is mapped to an observation confidence via a Bernoulli-Shannon entropy H(x, t ) ∈ [0 , 1] , with H = 1 
+
+denoting full uncertainty and H = 0 a well-observed cell. The effective log-standard-deviation is then updated as 
+
+σeff ln (x, t ) = max((1 − κσ s(x, t )) σln (x), σ min ) , (2) where s(x, t ) = (1 −H(x, t )) γs maps entropy to observation confidence, γs > 0 controls the nonlinearity of this mapping, and κσ ∈ [0 , 1] caps the maximum uncertainty reduction per cell. The log-mean is updated analogously with a smaller co-efficient κμ ≪ κσ , reflecting that sensing primarily reduces uncertainty rather than shifting the estimated mean. Detected threat zones locally amplify the belief by a multiplicative factor kτ (x, t ) ≥ 1.Both planners query the shared belief through a scalar 
+
+risk-averse surrogate that penalises high-uncertainty cells: 
+
+λrisk (x, t ) = kτ (x, t )
+
+
+
+E[λ(x, t )] + αpVar[ λ(x, t )] 
+
+
+
+, (3) where α ≥ 0 controls risk aversion. Intuitively, high-uncertainty cells are treated as more hazardous than the expected value alone would suggest, creating an explicit benefit for UAV reconnaissance. Observing a cell reduces 
+
+σeff ln and thus λrisk , lowering the UGV routing cost. 
+
+B. Exposure-Aware UGV Replanning 
+
+Our goal is for the UGV to find a route that reaches the goal efficiently while minimising cumulative exposure under the current belief. We search for a path π = {xj }Kj=0 ∈
+
+Π( xs, x g ) from start xs to goal xg that minimises 
+
+π⋆g (t) = argmin  
+
+> π∈Π( xs,x g)
+
+h
+
+T (π) + β E (π, t )
+
+i
+
+, (4) where T (π) is the total traversal time, β ≥ 0 converts exposure into a time-equivalent cost, and 
+
+E(π, t ) = 
+
+> K−1
+
+X
+
+> j=0
+
+λrisk (xj , t ) ∆ tj (5) is the cumulative exposure under the risk-averse surrogate in Eq. 3. The per-step dwell time is ∆tj = Lj /v (xj ), where 
+
+Lj ∈ { δ, √2δ} is the step length on the eight-connected grid and v(xj ) is a terrain-dependent speed fraction. The resulting per-cell cost thus increases both in slow terrain and in regions with high or uncertain exposure. We solve Eq. 4 using the A* search algorithm on the cost map induced by the shared belief, with an admissible heuristic scaled by the minimum achievable per-step cost to preserve optimality. Replanning is triggered whenever a UAV detects a new threat zone, updating both the threat overlay kτ and the UGV route simultaneously. To maintain safe execution while replanning asynchronously, the UGV commits to a fixed-length trajectory prefix and initiates A* from its terminal cell. Each updated route reshapes the corridor used by the UAV reward map (Sec. III-C), closing the guidance-reconnaissance loop. 
+
+C. UGV-Conditioned Informative Planning 
+
+Our planner is designed to collect aerial observations that most improve the UGV’s exposure-aware routing. We build on incremental adaptive IPP [26], which maintains and recycles a sampling-based search tree across planning cycles. Our contribution is a mission-conditioned reward that directs this planner toward observations relevant to the current ground route rather than to generic map coverage. We search for a trajectory τi for UAV i maximising the accumulated mission-conditioned reward under a motion budget Bi:
+
+τ ⋆i = argmax 
+
+> τi
+
+X
+
+> x∈V (τi)
+
+R(x, t ) s.t. C(τi) ≤ Bi, (6) where V(τi) is the set of cells observed along τi and R(x, t )
+
+is the reward defined below. UGV   
+
+> UAV 0
+> UAV 1
+> UAV 2
+> (a) Trajectories (b) Exposure
+> 0.0
+> 0.5
+> 1.0
+> (c) Priority
+> 0.0
+> 0.5
+> 1.0 (d) Entropy
+> 0.0
+> 0.5
+> 1.0
+
+Fig. 3: Component maps of the gated reward architecture at a representative mission timestep. The UGV route defines the priority map, while exposure and entropy modulate where route-relevant observations are most valuable. The resulting reward concentrates UAV sensing near uncertain and exposure-relevant regions of the current UGV corridor. We construct R(x, t ) to reflect the operational objec-tive: corridor proximity should gate where exploration is meaningful, while exposure should modulate how urgently information is needed in those regions. Let P (x, t ) ∈ [0 , 1] 
+
+denote a corridor-relevance term that decays with distance from the current UGV route π⋆g (t), and let H(x, t ) ∈ [0 , 1] 
+
+be the coverage entropy of cell x. We first combine these into a base importance term, 
+
+Ibase (x, t ) = ( wpP (x, t ) + wh) H(x, t ), (7) which is then passed through a priority gate, 
+
+I(x, t ) = 
+
+
+
+δf + (1 − δf ) P (x, t )ηp
+
+
+
+· Ibase (x, t ), (8) where δf ∈ [0 , 1] ensures off-corridor cells retain a minimal reward, and ηp > 0 controls how sharply the gate suppresses distant regions. Intuitively, this ensures that a cell far from the UGV route receives low reward regardless of its local uncertainty or exposure level. However, corridor proximity alone does not capture how urgently a region needs to be observed, i.e. a low-exposure corridor segment requires less immediate sensing than one near a detected threat. We thus scale the gated importance by an exposure-dependent gain: 
+
+gexp (x, t ) = σ κ ¯λ(x, t ) − θσ
+
+ , (9) A sigmoid gate gexp (x, t ) activates in high-exposure regions, where ¯λ(x, t ) ∈ [0 , 1] is the normalised exposure estimate and θσ , κ control the threshold and slope. The final reward is 
+
+R(x, t ) = 
+
+
+
+γ0 + σg gexp (x, t )
+
+
+
+· ¯I(x, t ) + wλ ¯λ(x, t ), (10) where ¯I(x, t ) = I(x, t )/(wp + wh) normalises the gated importance to [0 , 1] and wλ provides a small direct exposure contribution that retains visibility of isolated threat zones. As the UGV replans, R(x, t ) is recomputed automatically, so that UAV sensing effort realigns with the updated corridor. Fig. 3 visualises how corridor priority, exposure, and entropy combine using our gated reward to concentrate UAV sensing near route-relevant, uncertain, and high-exposure regions. 
+
+D. Multi-UAV Region-Conditioned Coordination 
+
+When multiple UAVs independently maximise the shared reward R(x, t ), the team converges on the same high-value corridor regions, producing redundant observations. We ad-dress this by assigning each UAV spatial ownership of a region and shaping its effective reward accordingly. At each coordination period tTA , we partition G into 
+
+N disjoint regions {Ωi} using a Voronoi assignment on a hierarchical region graph. The graph concentrates spatial resolution near the UGV corridor, where precise ownership boundaries matter most, and uses coarser regions elsewhere to reduce assignment cost. We assign each region to the UAV with the lowest travel cost to its centroid, with a soft-claim bonus for the current owner to prevent ownership from switching back and forth when travel costs are similar. The effective reward for UAV i is then 
+
+Ri(x, t ) = mi(x, t ) R(x, t ), mi(x, t ) = 
+
+(
+
+1, x ∈ Ωi(t),vf , x / ∈ Ωi(t),
+
+(11) where vf ∈ [0 , 1] is a foreign visibility parameter. Setting 
+
+vf = 0 yields hard coordination in which each UAV perceives no reward outside its region, maximising spatial deconfliction. Setting vf > 0 retains a fraction of foreign-region reward, allowing UAVs to respond to high-value areas near their boundaries, particularly when threats emerge in neighbouring regions. Each UAV then solves: 
+
+τ ⋆i = argmax 
+
+> τi
+
+X
+
+> x∈V (τi)
+
+Ri(x, t ) s.t. C(τi) ≤ Bi. (12) Since the region assignment is recomputed each period and 
+
+R(x, t ) is updated at each UGV replan, coordination re-mains aligned with the current downstream ground objective throughout the mission. IV. E XPERIMENTAL RESULTS 
+
+Our experiments are designed to assess the three central components of our approach. First, we evaluate whether a shared exposure belief allows UAV reconnaissance to improve downstream UGV safety beyond terrain-semantic replanning. Second, we isolate the effect of the UGV-conditioned reward and analyse whether it directs sensing to-ward mission-relevant regions. Third, we test whether region-conditioned coordination improves multi-UAV sensing ef-ficiency by reducing redundant coverage while preserving responsiveness to newly relevant threat regions. 
+
+A. Experimental Setup Simulation setup . We evaluate our approach in paired Monte Carlo simulation on a 5 km ×5 km environment derived from OpenStreetMap data and discretised at 10 m resolution. Each trial samples the UGV start and goal, the UAV initial states, and ten initially unknown threat zones, with at least three threats intersecting the initial UGV route. The UAV team TABLE I: Terrain-dependent parameters used to initialise the exposure prior and UGV speed field from OpenStreetMap terrain semantics. ∆μℓ and σℓ define the log-normal exposure prior for terrain class ℓ, and vℓ is the UGV speed fraction.                            
+
+> Terrain ∆μℓσℓvℓ
+> Road 0.00 0.25 1.00 Grassland 0.10 0.35 0.50 Farmland -0.20 0.30 0.40 Wetland 0.40 0.50 0.20 Woodland -0.80 0.40 0.30 Forest -1.60 0.45 0.15 Building / water 1.20 / 0.80 0.40 0.00 Unknown 0.20 0.50 0.60
+
+collects observations that update the shared exposure belief online, while the UGV replans its route to trade traversal time against cumulative exposure. 
+
+Exposure ground truth . Each Monte Carlo trial contains a fixed ground-truth exposure field used for evaluation. We construct this field from terrain-dependent base exposure rates and sampled threat-zone multipliers. Terrain classes derived from OpenStreetMap define both the UGV speed fraction and the exposure prior according to Table I, e.g., roads allow faster travel with low base exposure, open grassland and wetland induce higher exposure, and forested areas provide lower exposure but slower traversal. Threat zones locally amplify the exposure field but are not available to planners until detected by UAV observations. Thus, the UGV is evaluated on the ground-truth field, while planners operate on the shared exposure belief described in Sec. III-A. 
+
+Evaluation metrics . We evaluate UGV safety post hoc on the ground-truth exposure field using the mission objective O =
+
+T + βE , realised cumulative exposure E, and its base and threat-induced components Ebase and Ethreat . We also report the detection probability Pdet (π) = 1 − exp( −E(π, t )) and tail risk CVaR 90 (λ) (the expected exposure rate in the worst 10% of outcomes across trials). We evaluate reconnaissance quality using corridor coverage CUGV (the fraction of the executed UGV trajectory observed by any UAV), redundant coverage Cred (the fraction of total area observed by more than one UAV), useful information efficiency ηuseful (the fraction of corridor- and threat-relevant information gain that is unique across UAVs), the t75 corridor-refinement milestone (the time at which CUGV first reaches 75%), and the priority-threat detection rate TDR (the fraction of threat zones within distance dprio of the UGV corridor detected before UGV traversal). 
+
+Implementation details . Unless stated otherwise, each result reports Nmc = 100 Monte Carlo paired trials under identical random seeds, sensing budgets, vehicle models, and planner parameters. UAVs fly at 30 m /s with Dubins constraints and a 200 m sensing footprint with N = 3 UAVs as default. The UGV replans whenever a new threat zone is detected, triggering a full recomputation of the UAV reward map. The corridor relevance P (x, t ) decays with distance from the current route and is combined with entropy and exposure using fixed reward parameters across all paired trials. For multi-UAV experiments, region ownership is recomputed     
+
+> 0100 200 300 400
+> 0
+> 1
+> 2
+> 3
+> 4
+> 5
+> Time [s]
+> Cumulative exposure  E Oracle
+> Static
+> Terrain-semantic
+> Exposure-aware
+
+Fig. 4: Cumulative UGV exposure over mission time. Solid and dashed curves show means over 100 paired trials; shaded regions denote 95% confidence intervals. Our exposure-aware replanning scheme consistently reduces accumulated exposure under the same aerial sensing budget. TABLE II: Oracle-normalised safety performance. Higher values indicate that a method is closer to the full-information oracle. Exposure-aware planning using our shared exposure belief closes substantially more of the safety gap.                      
+
+> Condition Ooracle [%] ↑Egt ,oracle [%] ↑Pdet ,oracle [%] ↑
+> Static 15.2 12.1 41.7 Terrain-semantic 52.8 45.4 60.7 Exposure-aware 77.0 72.0 79.8
+> Oracle 100.0 100.0 100.0
+
+every tTA = 30 s . Soft-regional coordination uses vf = 0 .4,while hard-regional coordination sets vf = 0 .
+
+B. Shared Exposure Belief 
+
+This experiment evaluates whether coupling UAV re-connaissance to a shared exposure belief improves down-stream UGV safety beyond terrain-semantic replanning alone. We compare four progressively informed conditions. The Static baseline uses no UAV support. Terrain-semantic 
+
+uses UAV reconnaissance and UGV replanning from seman-tic traversability and high-cost threat avoidance, but does not model the exposure distribution. Exposure-aware is our full shared-belief method. Oracle is an optimistic reference with full prior knowledge of the threat-augmented exposure field. Fig. 4 shows the cumulative UGV exposure over mis-sion time. UAV-supported replanning substantially reduces exposure relative to the static baseline, showing the benefit of updating the UGV route from aerial observations. The exposure-aware method further lowers total exposure, indi-cating that explicitly modelling exposure using our approach enables reconnaissance to improve UGV route safety. Table II summarises the final safety performance relative to the full-information oracle. UAV-supported replanning already closes much of the gap to the oracle. The main com-parison, however, is between terrain-semantic and exposure-aware planning, since both receive the same sensing bud-get and online replanning capability. Coupling sensing to the shared exposure belief substantially improves oracle-normalised performance. In absolute terms, this corresponds to a 31% reduction in mission objective and a 38% reduction 5353.5                      
+
+> 5355.0
+> 5356.5
+> Weighted Entropy Additive Reward Multiplicative Reward Gated Reward
+> 721 724 727
+> 5353.5
+> 5355.0
+> 5356.5
+> No Coordination
+> 721 724 727
+> Sampling Bias
+> 721 724 727
+> Soft Region-conditioned
+> 721 724 727
+> Hard Region-conditioned
+> Easting [km]
+> Northing [km]
+> 0.0
+> 0.5
+> 1.0
+> Reward
+> UGV initial UGV executed ×UGV start UGV goal UAV executed
+> ×UAV start UAV goal UAV 0 UAV 1 UAV 2
+
+Fig. 5: Example final mission states for the reward architecture coordination studies. We select each panel as the trial closest to the mean mission objective O over 100 trials for that condition. The background shows the final UAV reward map (darker blue indicates higher reward), curves show UGV and UAV trajectories, and orange circles indicate threat zones. Top row compares reward architectures (Sec. IV-C): unlike generic fusion, our proposed gated reward preserves corridor-focused sensing while reallocating attention to exposure-relevant regions, improving UGV safety. Bottom row compares UAV coordination strategies (Sec. IV-D): increasing coordination strength reduces trajectory overlap and redundant sensing, while soft visibility retains limited responsiveness to high-value regions outside a UAV’s assigned domain. TABLE III: Reward architecture ablation. Mission costs are means over 100 trials; t75 is the mean ±95% confidence interval. Our gated reward achieves the lowest mission objective while preserving corridor coverage and priority-threat detection. 
+
+Reward O [s] ↓ βE base [s] ↓ βE threat [s] ↓ CUGV [%] ↑ t75 [s] ↓ n75 [%] ↑ TDR [%] ↑
+
+Weighted entropy 2536.80 1707.80 495.04 72.3 242.8 ±14.3 74 41 
+
+Additive 2775.49 1746.28 695.60 64.4 248.1 ±19.3 43 33 Multiplicative 2565.74 1612.28 623.14 69.4 254.0 ±22.1 44 34 Gated 2496.50 1631.71 531.52 71.6 239.0 ±17.0 64 41 
+
+in cumulative exposure relative to terrain-semantic planning. The gain is mainly caused by threat-related exposure: Ethreat 
+
+reduces by about 55%, compared with a 33% reduction in base exposure. The same trend appears in the worst-case tail, where CVaR 90 decreases from 0.01154 s −1 to 
+
+0.00762 s −1. These results confirm that our proposed shared exposure belief links aerial observations to route-relevant risk reduction rather than only semantic map updates. 
+
+C. UGV-Conditioned Reward 
+
+We next evaluate the UAV reward architecture to test whether UGV-conditioned sensing improves mission-level navigation. Here, we consider only N = 1 UAV to isolate re-ward mapping from coordination effects. All methods use the same belief layers and differ only in how entropy, corridor relevance, and exposure are fused into a sensing reward. We set hyperparameters for each method using the same manual tuning procedure and number of tuning trials, so that our gated reward’s larger parameter count does not constitute an unfair advantage. The Weighted entropy baseline scales uncertainty by a corridor-priority overlay and represents a corridor-focused sensing policy. Additive and Multiplicative 
+
+combine the same terms through generic fusion rules. Gated 
+
+is our UGV-conditioned reward in Eq. 10. Table III shows that generic reward fusion does not auto-matically produce mission-relevant reconnaissance. Additive fusion spreads sensing effort too broadly, leading to the highest mission cost and the lowest corridor coverage among the evaluated rewards. The multiplicative reward improves base exposure but performs worse on threat-related exposure, corridor-refinement timing, and priority-threat detection. In contrast, our gated reward achieves the lowest overall mission objective while maintaining nearly the same corridor cover-age and priority-threat detection rate as weighted entropy. It also reaches the t75 corridor-refinement milestone earliest. The top row of Fig. 5 visualises representative trajectories for different reward formulations. Additive fusion produces a diffuse utility field and spreads sensing away from the UGV corridor, while the gated reward preserves corridor support and focuses on exposure-relevant areas, supporting the findings in Table III. Together, these results support our claim that conditioning the UAV objective on the current UGV route focuses sensing on mission-relevant information, rather than only on generic uncertainty or exposure. TABLE IV: Comparison of coordination methods for 3 UAVs over 100 trials. Region-conditioned masking sharply reduces redundant coverage and improves information efficiency, while soft masking preserves the priority-threat detection rate.                                                  
+
+> Regime IG [%] ↑ηuseful [%] ↑Cred [%] ↓CUGV [%] ↑O[s] ↓Tprio [s] ↓TDR [%] ↑
+> No coordination 41.02 66.2 38.8 85.3 1845.10 145.02 50 Sampling-bias 42.56 71.8 29.2 85.1 1876.19 130.43 51 Soft-regional 46.91 92.9 5.0 89.1 1816.81 128.40 55
+> Hard-regional 47.39 94.9 3.7 90.6 1804.91 127.64 45
+
+D. Region-Conditioned Multi-UAV Coordination 
+
+Finally, we validate that region-conditioned coordination prevents multiple UAVs from converging to the same high-reward regions while preserving responsiveness to newly relevant threat areas. We compare four regimes with increas-ing coordination strength: No coordination , where all UAVs optimise the same global reward; Sampling-bias , where Voronoi ownership biases sampling but reward visibility re-mains global; Soft-regional , where each UAV sees a reduced fraction of reward outside its region; and Hard-regional ,where foreign-region reward is fully masked. Table IV shows that sampling-bias only partly addresses redundant sensing: overlap remains high because of shared global reward maxima. Region-conditioned masking changes this behaviour. Soft- and hard-regional coordination reduce redundant coverage from 38 .8% to 5.0% and 3.7% , re-spectively, while increasing useful information efficiency from 66 .2% to more than 92% . They also improve final corridor coverage and mission cost, with hard-regional co-ordination achieving the lowest mean objective. The bot-tom row of Fig. 5 shows representative trajectories for the evaluated coordination regimes. Without coordination, the UAVs repeatedly visit the same high-reward corridor regions, while sampling-bias only partially separates the trajectories because of shared global reward. In contrast, soft-and hard-regional masking distribute the trajectories across complementary parts of the UGV corridor, reducing repeated sensing and supporting the redundancy trends in Table IV. The results also expose the intended trade-off between redundancy and responsiveness. Hard-regional masking gives the best spatial efficiency and mission objective, but its strict ownership lowers the priority-threat detection rate to 45% .Soft-regional masking retains limited cross-region visibility between UAVs, which yields the highest TDR , while still keeping redundancy low. Thus, explicit regional ownership is necessary to prevent multi-UAV collapse onto the same reward peaks, and soft visibility preserves responsiveness when newly relevant areas emerge near region boundaries. We further test whether region-conditioned coordination in our framework remains effective as the UAV team grows. Increasing the number of UAVs should provide more parallel sensing capacity, but only if the agents do not repeatedly pursue the same route-relevant reward regions. We therefore repeat the coordination experiment for N ∈ { 1, 2, 4, 6} using the same paired Monte Carlo protocol. Fig. 6 shows that additional UAVs increase total information gain, but with di-minishing returns. The key difference between coordination regimes is the amount of redundant sensing introduced as the                  
+
+> No coordination Sampling bias Soft regional Hard regional
+> 1246
+> 10
+> 30
+> 50
+> 70
+> 1246
+> 0
+> 100
+> 200
+> 1246
+> 100
+> 200
+> 300
+> 400
+> Number of UAVs
+> 1246
+> 0
+> 100
+> 200
+> 300
+> Number of UAVs
+> (a) [%] (b) [%]
+> (c) [s] (d) [s]
+
+Fig. 6: Scalability study with UAV team size over 100 trials. We compare (a) information gain, (b) redundant area cover-age, (c) corridor refinement time t75 , and (d) priority-threat detection time Tprio as the number of UAVs increases. Larger teams collect more information overall, but without coor-dination UAVs increasingly observe the same high-reward areas. Our region-conditioned masking approach reduces this redundancy and preserves useful parallel sensing. team grows. Without region-conditioned masking, redundant coverage grows rapidly with team size, indicating that UAVs continue to compete for the same high-reward regions. In contrast, soft- and hard-regional masking prevent redundancy while preserving higher useful parallel sensing. The timing metrics show that more UAVs do not auto-matically improve all mission-relevant outcomes. Corridor refinement and priority-threat detection improve at small team sizes but saturate once the most relevant regions are already covered. Notably, priority-threat detection time wors-ens beyond four UAVs under hard-regional coordination, suggesting that increased Voronoi fragmentation at larger team sizes creates ownership boundaries that isolate individ-ual UAVs from threats in neighbouring regions, effectively increasing response latency despite greater aggregate sensing capacity. This reinforces the trade-off that hard masking improves spatial efficiency, whereas soft visibility helps preserve responsiveness near region boundaries. 
+
+Limitations . Our evaluation assumes idealised sensing and communication. Namely, the belief update uses an entropy-driven heuristic rather than a full measurement-likelihood model, UAV observations are noise-free, and belief sharing is instantaneous and lossless. These assumptions mean that the reported exposure reductions should be interpreted as evidence for our planning and coordination mechanism, rather than as deployment-level validation. V. C ONCLUSION 
+
+In this paper, we presented a multi-UAV informative planning approach for supporting exposure-aware UGV nav-igation in unknown threat-augmented environments. Our approach maintains a shared exposure belief that couples aerial observations to ground-level route planning. The UGV uses this belief to replan safer routes online, while the UAVs prioritise observations that are relevant to the current ground route. To scale the approach to multiple UAVs, we use region-conditioned coordination that assigns spatial ownership and reduces redundant sensing. Our experiments demonstrate that coupling aerial recon-naissance to a shared exposure belief improves UGV safety compared to terrain-semantic replanning alone. Our pro-posed UGV-conditioned reward directs sensing effort toward mission-relevant regions, and the region-conditioned coordi-nation substantially reduces redundant aerial coverage while maintaining responsiveness to relevant threat regions. Future work will focus on extending the shared exposure belief with more realistic sensing and communication models, including noisy observations, limited detection confidence, and delayed belief sharing. We will also validate the approach in hardware experiments with heterogeneous air-ground teams. REFERENCES [1] M. De Petrillo, J. Beard, Y. Gu, and J. N. Gross, “Search Planning of a UAV/UGV Team With Localization Uncertainty in a Subterranean Environment,” IEEE Aerospace and Electronic Systems Magazine ,vol. 36, no. 6, 2021. [2] R. Wang, M. Fu, J. Yu, Y. Yang, and W. Song, “Risk-Inspired Aerial Active Exploration for Enhancing Autonomous Driving of UGV in Unknown Off-Road Environments,” in Proc. of the IEEE Intl. Conf. on Robotics & Automation (ICRA) , 2024. [3] J.-M. Fortin, O. Gamache, W. Fecteau, E. Daum, W. Larriv´ ee-Hardy, F. Pomerleau, and P. Gigu` ere, “UAV-Assisted Self-Supervised Terrain Awareness for Off-Road Navigation,” in Proc. of the IEEE Intl. Conf. on Robotics & Automation (ICRA) , 2025. [4] J. Delmerico, E. Mueggler, J. Nitsch, and D. Scaramuzza, “Active Autonomous Aerial Exploration for Ground Robot Path Planning,” 
+
+IEEE Robotics and Automation Letters (RA-L) , vol. 2, no. 2, pp. 664– 671, 2017. [5] F. M. Rockenbauer, J. Lim, M. G. M¨ uller, R. Siegwart, and L. Schmid, “Traversing Mars: Cooperative Informative Path Planning to Effi-ciently Navigate Unknown Scenes,” IEEE Robotics and Automation Letters (RA-L) , vol. 10, no. 2, pp. 1776–1783, 2025. [6] A. Wagner, J. Peterson, J. Donnelly, S. Chourey, and K. Kochersberger, “Online Aerial 2.5D Terrain Mapping and Active Aerial Vehicle Exploration for Ground Robot Navigation,” Journal of Intelligent and Robotic Systems (JIRS) , vol. 106, no. 58, 2022. [7] M. Popovi´ c, J. Ott, J. R¨ uckin, and M. J. Kochenderfer, “Learning-based methods for adaptive informative path planning,” Journal on Robotics and Autonomous Systems (RAS) , vol. 179, p. 104727, 2024. [8] M. Corah, C. O’Meadhra, K. Goel, and N. Michael, “Communication-Efficient Planning and Mapping for Multi-Robot Exploration in Large Environments,” IEEE Robotics and Automation Letters (RA-L) , vol. 4, no. 2, pp. 1715–1721, 2019. [9] N. Cao, K. H. Low, and J. M. Dolan, “Multi-robot informative path planning for active sensing of environmental phenomena: A tale of two algorithms,” in Proc. of the International Conf. on Autonomous Agents and Multi-Agent Systems (AAMAS) , 2013. [10] H. Qin, Z. Meng, W. Meng, X. Chen, H. Sun, F. Lin, and M. H. Ang, “Autonomous Exploration and Mapping System Using Heterogeneous UAVs and UGVs in GPS-Denied Environments,” IEEE Transactions on Vehicular Technology , vol. 68, no. 2, pp. 1339–1350, 2019. [11] D. Hu, V. J. Gan, T. Wang, and L. Ma, “Multi-agent robotic system (MARS) for UAV-UGV path planning and automatic sensory data collection in cluttered environments,” Building and Environment , vol. 221, p. 109349, 2022. [12] S. Choudhury, K. Solovey, M. Kochenderfer, and M. Pavone, “Co-ordinated Multi-Agent Pathfinding for Drones and Trucks over Road Networks,” in Proc. of the International Conf. on Autonomous Agents and Multi-Agent Systems (AAMAS) , 2022. [13] A. S. Bhadoriya, S. Rathinam, S. Darbha, D. W. Casbeer, and S. G. Manyam, “Assisted path planning for a ugv–uav team through a stochastic network,” Journal of the Indian Institute of Science , vol. 104, pp. 691–710, 2024. [14] A. Lakas, B. Belkhouche, O. Benkraouda, A. Shuaib, and H. J. Alas-mawi, “A Framework for a Cooperative UAV-UGV System for Path Discovery and Planning,” in Proc. of the Intl. Conf. on Innovations in Information Technology , 2018. [15] N. Chen, Z. Li, L. Quan, X. Chen, C. Xu, F. Gao, and Y. Cao, “Cost-effective swarm navigation system via close cooperation,” IEEE Robotics and Automation Letters (RA-L) , vol. 9, no. 11, pp. 9343– 9350, 2024. [16] Z. Li, R. Mao, N. Chen, C. Xu, F. Gao, and Y. Cao, “ColAG: A Collaborative Air-Ground Framework for Perception-Limited UGVs’ Navigation,” in Proc. of the IEEE Intl. Conf. on Robotics & Automation (ICRA) , 2024. [17] T. Yang, X. Bi, Y. Shi, J. Song, X. Li, and Y. Chen, “UGVs’ Naviga-tion Supported by Multi-UAVs in a ROS Environment,” Electronics ,vol. 13, no. 23, 2024. [18] S. Primatesta, G. Guglieri, and A. Rizzo, “A Risk-Aware Path Planning Strategy for UAVs in Urban Environments,” Journal of Intelligent and Robotic Systems (JIRS) , vol. 95, no. 2, pp. 629–643, 2019. [19] N. Nguyen and S. Akella, “Dynamic UGV-UAV Coopera-tive Path Planning in Uncertain Environments,” arXiv preprint arXiv:2604.25267 , 2026. [20] B. Yamauchi, “A Frontier-Based Approach for Autonomous Explo-ration,” in Proc. of the IEEE Intl. Symp. on Computer Intelligence in Robotics and Automation (CIRA) , 1997. [21] A. Bircher, M. Kamel, K. Alexis, H. Oleynikova, and R. Siegwart, “Receding horizon path planning for 3D exploration and surface inspection,” Autonomous Robots , vol. 42, no. 2, p. 291–306, 2018. [22] Y. Zhang, X. Chen, C. Feng, B. Zhou, and S. Shen, “FALCON: Fast Autonomous Aerial Exploration using Coverage Path Guidance,” IEEE Trans. on Robotics (TRO) , vol. 41, pp. 1365–1385, 2025. [23] B. Moon, S. Chatterjee, and S. Sebastian, “TIGRIS: An Informed Sampling-based Algorithm for Informative Path Planning,” in Proc. of the IEEE/RSJ Intl. Conf. on Intelligent Robots and Systems (IROS) ,2022. [24] J. R¨ uckin, F. Magistri, C. Stachniss, and M. Popovi´ c, “An Informative Path Planning Framework for Active Learning in UAV-Based Semantic Mapping,” IEEE Trans. on Robotics (TRO) , vol. 39, no. 6, pp. 4279– 4296, 2023. [25] L. Schmid, M. Pantic, R. Khanna, L. Ott, R. Siegwart, and J. Nieto, “An Efficient Sampling-Based Method for Online Informative Path Planning in Unknown Environments,” IEEE Robotics and Automation Letters (RA-L) , vol. 5, no. 2, pp. 1500–1507, 2020. [26] B. Moon, N. Suvarna, A. Jong, S. Chatterjee, J. Yuan, M. Cao, and S. Scherer, “IA-TIGRIS: An Incremental and Adaptive Sampling-Based Planner for Online Informative Path Planning,” IEEE Trans. on Robotics (TRO) , pp. 1–19, 2026. [27] W. Burgard, M. Moors, C. Stachniss, and F. E. Schneider, “Coor-dinated multi-robot exploration,” IEEE Trans. on Robotics (TRO) ,vol. 21, no. 3, p. 376–386, 2005. [28] B. Zhou, H. Xu, and S. Shen, “RACER: Rapid Collaborative Ex-ploration With a Decentralized Multi-UAV System,” IEEE Trans. on Robotics (TRO) , vol. 39, no. 3, pp. 1816–1835, 2023. [29] J. Chen, X. Qing, F. Ye, K. Xiao, K. You, and Q. Sun, “Consensus-based bundle algorithm with local replanning for heterogeneous multi-UAV system in the time-sensitive and dynamic environment,” The Journal of Supercomputing , vol. 78, p. 1712–1740, 2022. [30] Q. Dong, H. Xi, S. Zhang, Q. Bi, T. Li, Z. Wang, and X. Zhang, “Fast and Communication-Efficient Multi-UAV Exploration Via Voronoi Partition on Dynamic Topological Graph,” in Proc. of the IEEE/RSJ Intl. Conf. on Intelligent Robots and Systems (IROS) , 2024. [31] S. Kemna, J. G. Rogers, C. Nieto-Granda, S. Young, and G. S. Sukhatme, “Multi-robot coordination through dynamic voronoi par-titioning for informative adaptive sampling in communication-constrained environments,” in Proc. of the IEEE Intl. Conf. on Robotics & Automation (ICRA) , 2017.
