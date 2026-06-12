@@ -1,0 +1,137 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-12T21:49:03.355785+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.06967v1",
+      "source": "arxiv",
+      "title": "GenPO++: Generative Policy Optimization with Jacobian-free Likelihood Ratios",
+      "abstract": "Generative policies provide expressive and multimodal action distributions, making them attractive for reinforcement learning (RL) in complex continuous-control tasks. Among them, flow-based policies are especially appealing because they generate actions through deterministic transport maps. However, applying such generative policies to likelihood-based on-policy learning remains limited by the difficulty of evaluating the probability of executed actions. Existing flow RL methods either replace the true action-density ratio with approximate surrogates, which can introduce biased updates, or recover exact likelihoods through dummy-action augmentation, which enlarges the policy space and increases computation. In this work, we propose GenPO++, a reversible generative policy optimization framework that uses history states as auxiliary memory in a high-order reversible ODE solver, yielding exact inversion without changing the original action dimension. The resulting generative policy map has a log-determinant determined only by fixed solver coefficients, enabling exact and Jacobian-free likelihood-ratio computation. This design preserves the expressiveness of generative flow policies while avoiding both action ratio bias and dummy-action overhead. We evaluate GenPO++ on large-scale simulated control, fine-tuning, and real-world robotic manipulation tasks, where it achieves competitive or superior performance over state-of-the-art on-policy RL methods, while improving training stability and computational efficiency.",
+      "authors": [
+        "Ke Hu",
+        "Shutong Ding",
+        "Panxin Tao",
+        "Jingya Wang",
+        "Ye Shi"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-05T06:54:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.06967v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "generative policy optimization for RL in continuous control",
+      "llm_evidence_cn": "面向连续控制的生成策略优化方法",
+      "llm_evidence": "面向连续控制的生成策略优化方法",
+      "canonical_evidence": "面向连续控制的生成策略优化方法",
+      "llm_tldr_en": "GenPO++ proposes Jacobian-free likelihood ratios for generative policy optimization in RL, improving flow-based policies with unbiased updates and reduced computation.",
+      "llm_tldr_cn": "GenPO++针对生成策略在似然估计上的困难，提出无雅可比似然比方法，避免近似替代和伪动作增广带来的偏差和计算开销。通过无偏更新和高效计算，提升了流式策略在连续控制任务中的性能，可作为无人机拦截等任务中强化学习算法的通用改进方法。",
+      "llm_tldr": "GenPO++针对生成策略在似然估计上的困难，提出无雅可比似然比方法，避免近似替代和伪动作增广带来的偏差和计算开销。通过无偏更新和高效计算，提升了流式策略在连续控制任务中的性能，可作为无人机拦截等任务中强化学习算法的通用改进方法。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.08064v1",
+      "source": "arxiv",
+      "title": "Cooperative Long Rope Skipping via Multi-Agent Reinforcement Learning",
+      "abstract": "Humans exhibit remarkable motor agility, enabling a wide range of dynamic skills such as running and jumping, which highlights the great potential of humanoid robots for athletic locomotion. Among athletic sports, long rope skipping requires two rope turners to cooperatively swing the rope while adapting to a player under different jumping rhythms, making it a meaningful yet challenging task for humanoid robots. Although existing methods for humanoid sports have achieved success in single-agent and interaction-free settings, such as running, dancing, and parkour, task scenarios that require precise coordination among multiple participants remain largely unexplored. To this end, we propose Marope, a multi-agent reinforcement learning (MARL) framework for cooperative long rope skipping with multiple humanoid robots. Specifically, Marope adopts a hierarchical reinforcement learning framework for policy training. At the lower level, it learns decentralized rope manipulation policies through MARL, while at the upper level, a centralized scheduling policy is trained to coordinate the execution of the lower-level policies. To improve generalization across different player behavioral styles, Marope further incorporates diverse jumping policies into cooperative game training. We evaluate our approach on Unitree G1 humanoid robots in both simulation and real-world settings. Experimental results demonstrate that Marope outperforms various baselines, achieving more efficient and stable rope manipulation as well as more robust and adaptable cooperation with varied players.",
+      "authors": [
+        "Zihao Wang",
+        "Shijie Peng",
+        "Kerui Wu",
+        "Yu Huang",
+        "Ruiqi Xue",
+        "Dong Liu",
+        "Tian Xu",
+        "Lei Yuan",
+        "Yang Yu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-06T09:01:18+00:00",
+      "link": "https://arxiv.org/pdf/2606.08064v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent RL for cooperative coordination, transferable to UAV teams",
+      "llm_evidence_cn": "多智能体强化学习用于协同跳绳，方法可迁移到无人机编队",
+      "llm_evidence": "多智能体强化学习用于协同跳绳，方法可迁移到无人机编队",
+      "canonical_evidence": "多智能体强化学习用于协同跳绳，方法可迁移到无人机编队",
+      "llm_tldr_en": "Marope uses multi-agent RL to enable two humanoid robots to cooperatively swing a rope while adapting to a player, demonstrating precise multi-agent coordination.",
+      "llm_tldr_cn": "Marope提出多智能体强化学习框架，使两台类人机器人协同甩绳并适应跳绳者节奏，实现了高精度多机协作。尽管任务为跳绳，其协作机制可直接迁移到多无人机协同围捕和拦截任务中。",
+      "llm_tldr": "Marope提出多智能体强化学习框架，使两台类人机器人协同甩绳并适应跳绳者节奏，实现了高精度多机协作。尽管任务为跳绳，其协作机制可直接迁移到多无人机协同围捕和拦截任务中。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.09610v1",
+      "source": "arxiv",
+      "title": "Shape Formation for the Cooperative Transportation of Arbitrary Objects Using Multi-Agent Reinforcement Learning",
+      "abstract": "Cooperative object transportation is essential in numerous domains, including industrial to domestic services. A popular transportation strategy is to carry objects on top of multi-robot systems. The corresponding task is typically solved by decomposing it into three interconnected subproblems: formation control, cooperative navigation, and collision avoidance. A particular challenge posed by real-world objects is their potentially arbitrary shape and non-uniform mass distribution, necessitating robot formations that securely support the object. In this work, we address the challenge of pattern formation control for transporting such real-world objects by proposing a novel multi-agent reinforcement learning approach. Our approach enables a multi-robot system to autonomously position itself underneath an object to support its weight while avoiding obstacles during the formation process. Our evaluations with diverse environments and varying numbers of robots show that our approach leads to policies that reliably produce balanced formations and generalize to cluttered scenes and objects with complex geometry and non-uniform mass distribution.",
+      "authors": [
+        "Mohamed Sayed",
+        "Wolfram Burgard",
+        "Tanja Katharina Kaiser"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-08T15:18:14+00:00",
+      "link": "https://arxiv.org/pdf/2606.09610v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent RL for formation control transferable to UAV swarm",
+      "llm_evidence_cn": "多智能体强化学习形成控制方法可迁移至无人机集群",
+      "llm_evidence": "多智能体强化学习形成控制方法可迁移至无人机集群",
+      "canonical_evidence": "多智能体强化学习形成控制方法可迁移至无人机集群",
+      "llm_tldr_en": "Proposes MARL for shape formation in multi-robot object transport; formation control methods are transferable to multi-UAV cooperative tasks.",
+      "llm_tldr_cn": "针对多机器人合作运输任意形状物体的形状形成问题，提出一种多智能体强化学习方法，将任务分解为形成控制、合作导航与碰撞避免三个子问题。该方法通过学习最优队形策略，能够适应物体不规则形状与质量分布。实验验证了其有效性，其形成控制与多智能体协调机制可直接迁移至多无人机围捕等合作任务。",
+      "llm_tldr": "针对多机器人合作运输任意形状物体的形状形成问题，提出一种多智能体强化学习方法，将任务分解为形成控制、合作导航与碰撞避免三个子问题。该方法通过学习最优队形策略，能够适应物体不规则形状与质量分布。实验验证了其有效性，其形成控制与多智能体协调机制可直接迁移至多无人机围捕等合作任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "label": "2026-06-12",
+  "date": "2026-06-12",
+  "generated_at": "2026-06-12T21:50:59",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202606/12/2606.06967v1-genpo-generative-policy-optimization-with-jacobian-free-likelihood-ratios",
+      "section": "quick",
+      "title_en": "GenPO++: Generative Policy Optimization with Jacobian-free Likelihood Ratios",
+      "authors": "Ke Hu, Shutong Ding, Panxin Tao, Jingya Wang, Ye Shi",
+      "date": "2026-06-05",
+      "pdf": "https://arxiv.org/pdf/2606.06967v1",
+      "score": "6.0",
+      "evidence": "面向连续控制的生成策略优化方法",
+      "tldr": "现有基于流的生成式策略在强化学习中因难以准确评估执行动作的概率，导致更新有偏或计算开销大。GenPO++利用高阶可逆ODE求解器，将历史状态作为辅助记忆实现精确逆映射，无需改变动作维度即可得到雅可比自由的对数似然比。该方法保留了生成式流策略的表达力，避免了动作概率偏差和虚拟动作开销。在仿真控制、微调和真实机器人操作任务中，GenPO++达到了与最先进方法相当或更优的性能，并提升了训练稳定性和计算效率。",
+      "tags": "query:ui",
+      "abstract_en": "Generative policies provide expressive and multimodal action distributions, making them attractive for reinforcement learning (RL) in complex continuous-control tasks. Among them, flow-based policies are especially appealing because they generate actions through deterministic transport maps. However, applying such generative policies to likelihood-based on-policy learning remains limited by the difficulty of evaluating the probability of executed actions. Existing flow RL methods either replace the true action-density ratio with approximate surrogates, which can introduce biased updates, or recover exact likelihoods through dummy-action augmentation, which enlarges the policy space and increases computation. In this work, we propose GenPO++, a reversible generative policy optimization framework that uses history states as auxiliary memory in a high-order reversible ODE solver, yielding exact inversion without changing the original action dimension. The resulting generative policy map has a log-determinant determined only by fixed solver coefficients, enabling exact and Jacobian-free likelihood-ratio computation. This design preserves the expressiveness of generative flow policies while avoiding both action ratio bias and dummy-action overhead. We evaluate GenPO++ on large-scale simulated control, fine-tuning, and real-world robotic manipulation tasks, where it achieves competitive or superior performance over state-of-the-art on-policy RL methods, while improving training stability and computational efficiency.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/12/2606.08064v1-cooperative-long-rope-skipping-via-multi-agent-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Cooperative Long Rope Skipping via Multi-Agent Reinforcement Learning",
+      "authors": "Zihao Wang, Shijie Peng, Kerui Wu, Yu Huang, Ruiqi Xue, Dong Liu, Tian Xu, Lei Yuan, Yang Yu",
+      "date": "2026-06-06",
+      "pdf": "https://arxiv.org/pdf/2606.08064v1",
+      "score": "6.0",
+      "evidence": "多智能体强化学习用于协同跳绳，方法可迁移到无人机编队",
+      "tldr": "针对多人跳绳任务中多个人形机器人精确协调的挑战，提出多智能体强化学习框架Marope。采用分层策略，底层通过MARL学习分散的绳索操控，上层学习集中调度协调。引入多样化跳跃策略增强对不同玩家风格的泛化。在Unitree G1机器人仿真与实物实验中验证了高效稳定的绳索操控和适应性协同。",
+      "tags": "query:ui",
+      "abstract_en": "Humans exhibit remarkable motor agility, enabling a wide range of dynamic skills such as running and jumping, which highlights the great potential of humanoid robots for athletic locomotion. Among athletic sports, long rope skipping requires two rope turners to cooperatively swing the rope while adapting to a player under different jumping rhythms, making it a meaningful yet challenging task for humanoid robots. Although existing methods for humanoid sports have achieved success in single-agent and interaction-free settings, such as running, dancing, and parkour, task scenarios that require precise coordination among multiple participants remain largely unexplored. To this end, we propose Marope, a multi-agent reinforcement learning (MARL) framework for cooperative long rope skipping with multiple humanoid robots. Specifically, Marope adopts a hierarchical reinforcement learning framework for policy training. At the lower level, it learns decentralized rope manipulation policies through MARL, while at the upper level, a centralized scheduling policy is trained to coordinate the execution of the lower-level policies. To improve generalization across different player behavioral styles, Marope further incorporates diverse jumping policies into cooperative game training. We evaluate our approach on Unitree G1 humanoid robots in both simulation and real-world settings. Experimental results demonstrate that Marope outperforms various baselines, achieving more efficient and stable rope manipulation as well as more robust and adaptable cooperation with varied players.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/12/2606.09610v1-shape-formation-for-the-cooperative-transportation-of-arbitrary-objects-using-multi-agent-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Shape Formation for the Cooperative Transportation of Arbitrary Objects Using Multi-Agent Reinforcement Learning",
+      "authors": "Mohamed Sayed, Wolfram Burgard, Tanja Katharina Kaiser",
+      "date": "2026-06-08",
+      "pdf": "https://arxiv.org/pdf/2606.09610v1",
+      "score": "6.0",
+      "evidence": "多智能体强化学习形成控制方法可迁移至无人机集群",
+      "tldr": "合作物体运输中，面对任意形状和非均匀质量分布的物体，机器人需形成稳固支撑队形。本文提出多智能体强化学习方法，使多机器人系统自主定位物体下方并避障。实验表明该方法能产生平衡队形，泛化到复杂几何形状和非均匀质量分布的场景，解决了模式形成控制的关键挑战。",
+      "tags": "query:ui",
+      "abstract_en": "Cooperative object transportation is essential in numerous domains, including industrial to domestic services. A popular transportation strategy is to carry objects on top of multi-robot systems. The corresponding task is typically solved by decomposing it into three interconnected subproblems: formation control, cooperative navigation, and collision avoidance. A particular challenge posed by real-world objects is their potentially arbitrary shape and non-uniform mass distribution, necessitating robot formations that securely support the object. In this work, we address the challenge of pattern formation control for transporting such real-world objects by proposing a novel multi-agent reinforcement learning approach. Our approach enables a multi-robot system to autonomously position itself underneath an object to support its weight while avoiding obstacles during the formation process. Our evaluations with diverse environments and varying numbers of robots show that our approach leads to policies that reliably produce balanced formations and generalize to cluttered scenes and objects with complex geometry and non-uniform mass distribution.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
