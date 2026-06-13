@@ -1,0 +1,134 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-13T20:36:05.151466+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.11618v1",
+      "source": "arxiv",
+      "title": "Vision-Language-Action Models Meet World Models: Embodied Agentic AI for Low-Altitude Wireless Networks",
+      "abstract": "Low-Altitude Wireless Networks (LAWNs), composed of Unmanned Aerial Vehicles (UAVs) and other aerial platforms, provide integrated perception, communication, and computation services in low-altitude airspace. However, deploying large generative models in this domain faces three major challenges: 1) Limited embodied action mapping; 2) Inadequate physical environment modeling; 3) Insufficient closed-loop optimization. To address these challenges, this study proposes an Embodied Agentic UAV framework. Centered on a Vision-Language-Action (VLA) model as the execution core, the framework establishes an end-to-end embodied decision-making pipeline from multimodal environmental perception to continuous control generation. In addition, a World Model (WM) is introduced to capture the coupling between UAV actions and environmental state evolution, thereby supporting environment prediction, policy verification, and dynamic optimization. Furthermore, memory and reflection mechanisms are incorporated to form an adaptive closed-loop optimization paradigm of decision, execution, evaluation, and update, thereby enhancing the system's autonomous decision-making capability and continual evolution ability in complex dynamic environments. Experimental results validate its effectiveness in enabling robust, predictive, and sustainable autonomous control in LAWNs.",
+      "authors": [
+        "Feibo Jiang",
+        "Li Dong",
+        "Lei Mao",
+        "Kezhi Wang",
+        "Cunhua Pan",
+        "Dong In Kim",
+        "Naofal Al-Dhahir"
+      ],
+      "primary_category": "cs.IT",
+      "categories": [
+        "cs.IT"
+      ],
+      "published": "2026-06-10T03:30:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.11618v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "UAV embodied agent framework with VLA and world model, applicable to interception and encirclement",
+      "llm_evidence_cn": "无人机具身智能体框架结合视觉-语言-动作模型与世界模型，可用于拦截与围捕",
+      "llm_evidence": "无人机具身智能体框架结合视觉-语言-动作模型与世界模型，可用于拦截与围捕",
+      "canonical_evidence": "无人机具身智能体框架结合视觉-语言-动作模型与世界模型，可用于拦截与围捕",
+      "llm_tldr_en": "Proposes an embodied agentic UAV framework integrating Vision-Language-Action models and world models for end-to-end decision-making in low-altitude networks, directly relevant to autonomous drone interception and encirclement.",
+      "llm_tldr_cn": "该论文针对低空无线网络中的无人机提出一种具身智能体框架，以视觉-语言-动作模型为核心，结合世界模型实现从环境感知到连续控制的端到端决策。该方法可直接应用于自主无人机拦截与围捕任务，通过闭环优化提升实时性，为无人机追逃博弈提供了新范式。",
+      "llm_tldr": "该论文针对低空无线网络中的无人机提出一种具身智能体框架，以视觉-语言-动作模型为核心，结合世界模型实现从环境感知到连续控制的端到端决策。该方法可直接应用于自主无人机拦截与围捕任务，通过闭环优化提升实时性，为无人机追逃博弈提供了新范式。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.08137v1",
+      "source": "arxiv",
+      "title": "A Barrier-Modulated Architecture for Safe Affine Formation Control in Second-Order Multi-Agent Systems",
+      "abstract": "Affine formation control offers immense flexibility for coordinating multi-agent maneuvers, but guaranteeing the safety of agents under parametric uncertainties remains an open challenge. This paper proposes a novel safe affine formation control framework for second-order multi-agent systems by integrating Higher-Order Control Barrier Functions (HOCBFs) with Adaptive Dynamic Programming (ADP). We introduce a barrier-modulated control architecture that smoothly attenuates the nominal formation tracking objective when agents approach safety boundaries, preventing conflicting control inputs. Within this architecture, two distinct safety controllers are developed: (1) an analytical barrier-gradient repulsive controller that provides a computationally efficient, rigorous mathematical baseline, and (2) a data-driven optimal safety controller. The data-driven approach utilizes an actor-critic neural network to solve the Hamilton-Jacobi-Bellman (HJB) equation online, enabling optimal collision avoidance even in the presence of unknown system parameters. Using Nagumo's theorem and Lyapunov stability analysis, we formally prove that both controllers guarantee the forward invariance of the safe set ensuring absolute collision avoidance while maintaining Uniformly Ultimately Bounded (UUB) formation tracking errors. Finally, simulations validate the theoretical findings and demonstrate the robustness of the proposed controllers in dynamic obstacle avoidance scenarios.",
+      "authors": [
+        "Ashik Abrar Naeem",
+        "Mohammad Ariful Haque"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-06-06T12:27:48+00:00",
+      "link": "https://arxiv.org/pdf/2606.08137v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent formation control with adaptive dynamic programming, related to cooperative encirclement",
+      "llm_evidence_cn": "多智能体编队控制结合自适应动态规划，与协同围捕相关",
+      "llm_evidence": "多智能体编队控制结合自适应动态规划，与协同围捕相关",
+      "canonical_evidence": "多智能体编队控制结合自适应动态规划，与协同围捕相关",
+      "llm_tldr_en": "Proposes safe affine formation control for multi-agent systems using HOCBFs and ADP, enabling coordinated maneuvers with safety guarantees, applicable to UAV encirclement tasks.",
+      "llm_tldr_cn": "该论文针对多智能体系统提出一种安全的仿射编队控制框架，将高阶控制障碍函数与自适应动态规划相结合，在保证安全的前提下实现灵活的编队机动。该方法可推广至多无人机协同围捕场景，通过调节编队目标避免冲突，提供了可迁移的安全控制架构。",
+      "llm_tldr": "该论文针对多智能体系统提出一种安全的仿射编队控制框架，将高阶控制障碍函数与自适应动态规划相结合，在保证安全的前提下实现灵活的编队机动。该方法可推广至多无人机协同围捕场景，通过调节编队目标避免冲突，提供了可迁移的安全控制架构。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.11284v1",
+      "source": "arxiv",
+      "title": "Phi-Actor-Critic: Steering General-Sum Games to Pareto-Efficient Correlated Equilibria",
+      "abstract": "Real-world multi-agent systems, from traffic coordination to resource allocation, are often modeled as general-sum games where individual incentives conflict with collective welfare. In these settings, the central challenge is not merely finding an equilibrium, but selecting socially desirable outcomes among many suboptimal Nash equilibria. Standard deep multi-agent reinforcement learning (MARL) methods struggle with this problem, as value-decomposition approaches are constrained by monotonicity assumptions and policy-gradient methods often converge to stable but socially inefficient equilibria. To address this limitation, we propose $Φ$-Actor-Critic ($Φ$-AC), a framework that leverages swap regret minimization to steer learning toward high-welfare correlated equilibria (CE). To make counterfactual regret estimation tractable in deep MARL, $Φ$-AC employs a centralized attention critic that predicts vector-valued regrets in a single forward pass, avoiding computationally expensive counterfactual simulations. We further introduce a Lagrangian-based equilibrium selection mechanism that optimizes social welfare while enforcing stability through regret constraints. Experiments on matrix games, Multi-Agent Particle Environments (MPE), and the Melting Pot Harvest scenario demonstrate that $Φ$-AC learns efficient and stable coordination strategies across diverse mixed-motive settings while maintaining high collective return and competitive fairness.",
+      "authors": [
+        "Wongyu Lee",
+        "Francesco Lelli",
+        "Omran Ayoub",
+        "Massimo Tornatore"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.GT",
+        "cs.LG"
+      ],
+      "published": "2026-06-09T16:40:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.11284v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "MARL framework for general-sum games that can be applied to multi-UAV cooperative encirclement",
+      "llm_evidence_cn": "面向一般和博弈的多智能体强化学习框架，可应用于多无人机协同围捕",
+      "llm_evidence": "面向一般和博弈的多智能体强化学习框架，可应用于多无人机协同围捕",
+      "canonical_evidence": "面向一般和博弈的多智能体强化学习框架，可应用于多无人机协同围捕",
+      "llm_tldr_en": "Phi-Actor-Critic steers multi-agent learning to Pareto-efficient correlated equilibria using swap regret minimization, applicable to cooperative interception scenarios.",
+      "llm_tldr_cn": "多智能体系统中个体激励与集体福利冲突导致纳什均衡次优。本文提出Φ-Actor-Critic框架，通过交换遗憾最小化引导学习到帕累托有效的相关均衡。该方法克服了值分解的单调性假设和策略梯度收敛到低效均衡的问题。仿真结果表明，在一般和博弈中能实现更优的集体性能，为多无人机协同围捕等任务提供了理论支撑。",
+      "llm_tldr": "多智能体系统中个体激励与集体福利冲突导致纳什均衡次优。本文提出Φ-Actor-Critic框架，通过交换遗憾最小化引导学习到帕累托有效的相关均衡。该方法克服了值分解的单调性假设和策略梯度收敛到低效均衡的问题。仿真结果表明，在一般和博弈中能实现更优的集体性能，为多无人机协同围捕等任务提供了理论支撑。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

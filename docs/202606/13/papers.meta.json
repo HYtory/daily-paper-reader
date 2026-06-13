@@ -1,0 +1,54 @@
+{
+  "label": "2026-06-13",
+  "date": "2026-06-13",
+  "generated_at": "2026-06-13T20:37:26",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202606/13/2606.11618v1-vision-language-action-models-meet-world-models-embodied-agentic-ai-for-low-altitude-wireless-networks",
+      "section": "quick",
+      "title_en": "Vision-Language-Action Models Meet World Models: Embodied Agentic AI for Low-Altitude Wireless Networks",
+      "authors": "Feibo Jiang, Li Dong, Lei Mao, Kezhi Wang, Cunhua Pan, Dong In Kim, Naofal Al-Dhahir",
+      "date": "2026-06-10",
+      "pdf": "https://arxiv.org/pdf/2606.11618v1",
+      "score": "7.0",
+      "evidence": "无人机具身智能体框架结合视觉-语言-动作模型与世界模型，可用于拦截与围捕",
+      "tldr": "低空无线网络（LAWNs）中无人机部署大生成模型面临具身动作映射、环境建模和闭环优化不足三大挑战。本文提出具身代理无人机框架，以视觉-语言-动作（VLA）模型为执行核心，引入世界模型捕捉动作与环境耦合，并集成记忆与反思机制形成决策-执行-评估-更新的闭环优化。实验表明该方法能够实现鲁棒、预测性和可持续的自主控制，为LAWNs自主决策提供新范式。",
+      "tags": "query:ui",
+      "abstract_en": "Low-Altitude Wireless Networks (LAWNs), composed of Unmanned Aerial Vehicles (UAVs) and other aerial platforms, provide integrated perception, communication, and computation services in low-altitude airspace. However, deploying large generative models in this domain faces three major challenges: 1) Limited embodied action mapping; 2) Inadequate physical environment modeling; 3) Insufficient closed-loop optimization. To address these challenges, this study proposes an Embodied Agentic UAV framework. Centered on a Vision-Language-Action (VLA) model as the execution core, the framework establishes an end-to-end embodied decision-making pipeline from multimodal environmental perception to continuous control generation. In addition, a World Model (WM) is introduced to capture the coupling between UAV actions and environmental state evolution, thereby supporting environment prediction, policy verification, and dynamic optimization. Furthermore, memory and reflection mechanisms are incorporated to form an adaptive closed-loop optimization paradigm of decision, execution, evaluation, and update, thereby enhancing the system's autonomous decision-making capability and continual evolution ability in complex dynamic environments. Experimental results validate its effectiveness in enabling robust, predictive, and sustainable autonomous control in LAWNs.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/13/2606.08137v1-a-barrier-modulated-architecture-for-safe-affine-formation-control-in-second-order-multi-agent-systems",
+      "section": "quick",
+      "title_en": "A Barrier-Modulated Architecture for Safe Affine Formation Control in Second-Order Multi-Agent Systems",
+      "authors": "Ashik Abrar Naeem, Mohammad Ariful Haque",
+      "date": "2026-06-06",
+      "pdf": "https://arxiv.org/pdf/2606.08137v1",
+      "score": "6.0",
+      "evidence": "多智能体编队控制结合自适应动态规划，与协同围捕相关",
+      "tldr": "仿射编队控制面临参数不确定性下的安全挑战。本文融合高阶控制障碍函数与自适应动态规划，提出障碍调制架构，在代理接近安全边界时平滑削弱编队跟踪目标。设计了分析型与数据驱动型两种安全控制器，分别提供高效基线及在线最优避碰。理论证明保证绝对避碰与有界编队误差，仿真验证鲁棒性。",
+      "tags": "query:ui",
+      "abstract_en": "Affine formation control offers immense flexibility for coordinating multi-agent maneuvers, but guaranteeing the safety of agents under parametric uncertainties remains an open challenge. This paper proposes a novel safe affine formation control framework for second-order multi-agent systems by integrating Higher-Order Control Barrier Functions (HOCBFs) with Adaptive Dynamic Programming (ADP). We introduce a barrier-modulated control architecture that smoothly attenuates the nominal formation tracking objective when agents approach safety boundaries, preventing conflicting control inputs. Within this architecture, two distinct safety controllers are developed: (1) an analytical barrier-gradient repulsive controller that provides a computationally efficient, rigorous mathematical baseline, and (2) a data-driven optimal safety controller. The data-driven approach utilizes an actor-critic neural network to solve the Hamilton-Jacobi-Bellman (HJB) equation online, enabling optimal collision avoidance even in the presence of unknown system parameters. Using Nagumo's theorem and Lyapunov stability analysis, we formally prove that both controllers guarantee the forward invariance of the safe set ensuring absolute collision avoidance while maintaining Uniformly Ultimately Bounded (UUB) formation tracking errors. Finally, simulations validate the theoretical findings and demonstrate the robustness of the proposed controllers in dynamic obstacle avoidance scenarios.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/13/2606.11284v1-phi-actor-critic-steering-general-sum-games-to-pareto-efficient-correlated-equilibria",
+      "section": "quick",
+      "title_en": "Phi-Actor-Critic: Steering General-Sum Games to Pareto-Efficient Correlated Equilibria",
+      "authors": "Wongyu Lee, Francesco Lelli, Omran Ayoub, Massimo Tornatore",
+      "date": "2026-06-09",
+      "pdf": "https://arxiv.org/pdf/2606.11284v1",
+      "score": "6.0",
+      "evidence": "面向一般和博弈的多智能体强化学习框架，可应用于多无人机协同围捕",
+      "tldr": "多智能体一般和博弈中，个体与集体利益冲突导致标准MARL收敛到社会低效均衡。本文提出Φ-Actor-Critic框架，通过最小化交换后悔引导学习高效相关均衡。采用集中式注意力评论家单次预测向量后悔，避免反事实模拟，并结合拉格朗日方法在后悔约束下优化社会福利。实验表明该方法在矩阵游戏、MPE和Melting Pot场景中实现高集体回报与公平性。",
+      "tags": "query:ui",
+      "abstract_en": "Real-world multi-agent systems, from traffic coordination to resource allocation, are often modeled as general-sum games where individual incentives conflict with collective welfare. In these settings, the central challenge is not merely finding an equilibrium, but selecting socially desirable outcomes among many suboptimal Nash equilibria. Standard deep multi-agent reinforcement learning (MARL) methods struggle with this problem, as value-decomposition approaches are constrained by monotonicity assumptions and policy-gradient methods often converge to stable but socially inefficient equilibria. To address this limitation, we propose $Φ$-Actor-Critic ($Φ$-AC), a framework that leverages swap regret minimization to steer learning toward high-welfare correlated equilibria (CE). To make counterfactual regret estimation tractable in deep MARL, $Φ$-AC employs a centralized attention critic that predicts vector-valued regrets in a single forward pass, avoiding computationally expensive counterfactual simulations. We further introduce a Lagrangian-based equilibrium selection mechanism that optimizes social welfare while enforcing stability through regret constraints. Experiments on matrix games, Multi-Agent Particle Environments (MPE), and the Melting Pot Harvest scenario demonstrate that $Φ$-AC learns efficient and stable coordination strategies across diverse mixed-motive settings while maintaining high collective return and competitive fairness.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
