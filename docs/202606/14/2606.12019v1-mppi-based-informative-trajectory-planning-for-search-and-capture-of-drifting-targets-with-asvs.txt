@@ -1,0 +1,384 @@
+Title: MPPI-based Informative Trajectory Planning for Search and Capture of Drifting Targets with ASVs
+
+URL Source: https://arxiv.org/pdf/2606.12019v1
+
+Published Time: Thu, 11 Jun 2026 01:01:28 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+# MPPI-based Informative Trajectory Planning for Search and Capture of Drifting Targets with ASVs 
+
+Sanjeev Ramkumar Sudha, Marija Popovi´ c, and Erlend M. Coates 
+
+Abstract — Autonomous surface vehicles offer an efficient solution for environmental cleanup as well as search and rescue operations in open waters. Targets in these settings drift continuously, so efficient search must balance exploration of unobserved regions with tracking of known targets. However, most target tracking and pursuit scenarios consider simple guidance behaviours and short-term predictions for decision-making. In this letter, we address the problem of search and capture of multiple drifting targets, such as litter, in dynamic environments, using a hybrid planning framework. A key aspect of our strategy is a spatiotemporal informative plan-ning method based on model predictive path integral (MPPI) control, a sampling-based model predictive control approach. The planner directly generates kinematic-level commands by optimising continuous trajectories over long horizons. A multi-objective cost balances search and tracking objectives while ensuring safe, feasible trajectories. In the interception stage, we switch to a pure pursuit guidance controller for the physical capture of moving targets. Experiments show that our planner outperforms the chosen planning baselines. Finally, we validate our approach in field trials with an ASV. 
+
+I. I NTRODUCTION 
+
+Maritime search and capture operations are critical for both search and rescue and environmental cleanup. About 8–12 million tonnes of plastic enter the world’s oceans every year. Floating pollutants, such as plastic litter, can sink and degrade into toxic microplastics if allowed to persist, proving lethal to marine life [1], making timely mapping and subsequent cleanup essential. Autonomous robots for environmental monitoring [2] offer a safer and more cost-effective alternative compared to traditional approaches such as manual surveys [3] and static sensor networks [4]. How-ever, most existing robot monitoring methods rely on passive approaches for sensing [5], which do not actively adapt sensing toward regions of interest. This letter addresses the problem of search and capture of floating litter using an autonomous surface vehicle (ASV). Freely floating objects in open waters drift under the influ-ence of wind and currents. In a priori unknown environ-ments, the ASV has to simultaneously explore unobserved regions to detect new targets and track previously detected targets to intercept them before they drift away, creating an exploration-exploitation trade-off. Efficient monitoring in such scenarios requires planning vehicle trajectories over long horizons that reason over future target positions. Precise 
+
+> Sanjeev Ramkumar Sudha and Erlend M. Coates are with the Nor-wegian University of Science and Technology (NTNU), Norway. Email:
+
+{sanjeev.k.r.sudha, erlend.coates }@ntnu.no .Marija Popovi´ c is with TU Delft, The Netherlands. 
+
+m.popovic@tudelft.nl  
+
+> Fig. 1. (a) An autonomous surface vehicle (ASV) during field tests for search and capture. (b) A stereo camera is used for the detection and localisation of targets of interest. (c) We use a dynamic occupancy grid for mapping. A key aspect of our approach is the proposed informative planning method, based on model predictive path integral (MPPI) control.
+
+guidance and control, coupled with perception, are required to physically intercept drifting targets. Target search and tracking is a widely researched problem in robotics [6], where targets of interest are detected and lo-calised. Persistent monitoring is a related problem that gener-ally involves estimating the positions of non-adversarial and non-cooperative mobile targets, by periodically re-detecting them [7], [8]. However, decision-making in such scenarios is typically limited to greedy guidance behaviours that opti-mise a single objective over short horizons, without jointly reasoning over exploration and future target distributions. The informative planning problem deals with planning a sequence of actions that optimise an information-theoretic objective. Sampling-based planners are commonly used due to their efficiency in high-dimensional action spaces [9], [10]. Some studies also explore the use of trajectory optimisa-tion for active sensing and informative planning [11]–[14]. They usually offer better theoretical guarantees but generally require the objectives to be framed as convex, and further require solving optimisation problems online, which can be computationally expensive for real-time planning require-ments. Planning in dynamic and unknown environments is challenging, as it requires actively updating and predicting changes to the map while planning trajectories that estimate the informativeness of possible trajectories by accounting for both spatial and temporal variations in the map. The main contribution of this paper is a hybrid planning 
+
+> arXiv:2606.12019v1 [cs.RO] 10 Jun 2026
+
+framework to tackle the problem of search and capture of moving targets with an ASV in dynamic environments, such as litter in open water. Our planner switches between a global informative planner for exploration and target tracking and a pure pursuit guidance scheme for target interception. We develop a new spatiotemporal informative planning approach based on model predictive path integral (MPPI) control, a sampling-based model predictive control (MPC) approach. This allows us to output velocity-level commands directly while considering longer prediction horizons without requir-ing convex cost formulations. Our cost design enables plan-ning trajectories that effectively trade off multiple objectives, such as searching for targets (exploration) and intercepting detected targets (exploitation) while adhering to collision and dynamic constraints. When the vehicle is in close vicinity of a target, we switch to a different controller based on pure pursuit guidance to ensure successful capture of the target. To summarise, our contributions are as follows:  
+
+> •
+
+A hybrid planning framework combining an MPPI-based informative planner and a pure pursuit guidance controller for efficient search and capture of moving targets with an ASV.  
+
+> •
+
+A spatiotemporal informative planning approach based on MPPI with a multiobjective cost design that jointly optimises exploration and target interception over con-tinuous trajectories. Our planner outperforms both adap-tive and non-adaptive planning baselines in simulation, and ablation studies validate the effectiveness of each cost component.  
+
+> •
+
+Field experiments with an ASV demonstrating the framework’s validity in real-world monitoring scenarios. II. R ELATED WORK 
+
+Persistent monitoring and tracking of multiple moving targets with a single robot has been studied using spatio-temporal attention mechanisms [7] and hierarchical planning under motion uncertainty [8], where the goal is to plan trajectories that maintain accurate state estimates of non-cooperative targets. Multi-robot approaches have also been explored for cooperative target monitoring [15]–[18]. Pursuit and evasion is another related problem where the targets actively try to evade the pursuing robot [19]. However, the decision-making is often limited to greedy behaviours such as pursuing a single target, without jointly optimising explo-ration of unknown regions and interception over continuous trajectories. Our work differs in that we specifically consider search and physical capture of non-evasive drifting targets in unknown marine environments, where the robot must simultaneously discover new targets and intercept detected ones before they drift out of reach. While we focus on floating litter, the same formulation applies to closely related applications such as maritime search and rescue. Search and capture of floating targets with multiple robots has been investigated by Barrionuevo et al. [20] and Wang et al. [15]. However, these approaches are limited to simplified simulation environments and treat capture as a guaranteed event upon close proximity, without addressing the guidance and control challenges of physically intercepting drifting targets. Similar to our approach, Batista et al. [21] study search and capture with a single ASV, but their planning is limited to a passive lawnmower pattern with greedy target chasing, and the dynamic nature of drifting targets is not explicitly considered. In contrast, we propose a hybrid guidance approach that combines an informative planner for global exploration with pure pursuit guidance for terminal guidance during interception, explicitly accounting for target drift in the planning. Sampling-based planners are widely used for informative planning due to their efficiency in high-dimensional action spaces [9], [10]. Trajectory optimisation methods, including MPC-based approaches, have also been applied to active sensing and informative planning [11], [13], [22], with the advantage of explicitly reasoning over system dynamics and directly outputting lower-level control commands. However, these methods typically require convex or differentiable cost formulations, and solving the optimisation online is com-putationally expensive for real-time deployment. Receding horizon planners with a discrete set of control actions have been studied for spatiotemporal informative planning [23], [24], but discretisation of the action space limits trajectory diversity and the ability to jointly reason over multiple competing objectives in continuous space. Our approach addresses these limitations by building on MPPI, a sampling-based MPC method that handles non-convex costs while planning over continuous action spaces. MPPI [25] is a sampling-based MPC approach that com-putes approximate optimal control actions via importance-weighted Monte Carlo rollouts, without requiring convexity or differentiability of the cost function. Streichenberg et al. [26] employ MPPI for cooperative motion planning for ASVs in urban canal environments, and Zhai et al. [27] apply it to agile perception-aware quadrotor navigation in unknown environments, demonstrating its effectiveness for real-time navigation with complex objectives. Motivated by these works, we develop an MPPI-based spatiotemporal informative planner for search and capture in dynamic marine environments. Our multiobjective cost design jointly opti-mises exploration, target interception, and trajectory feasi-bility, reasoning over predicted future target distributions. III. P RELIMINARIES 
+
+A. Problem Statement 
+
+We consider search and capture of moving targets with an ASV in a priori unknown, dynamic environments, where targets drift freely under wind and currents. Our aim is to maximise the number of successful captures within a limited mission time. We frame this as an informative planning problem, where the goal is to find a trajectory T from the set of feasible trajectories Ψ that maximises an information-theoretic objective I(T ) subject to a resource constraint B:
+
+T ∗ = argmax  
+
+> T∈Ψ
+
+I(T ) s.t. C(T ) ≤ B, (1) where C(T ) is the resource value associated with executing trajectory T . In dynamic environments, predicting the spatial Fig. 2. Our proposed framework for search and capture in dynamic marine environments. A stereo camera detects and estimates target positions. We use a dynamic occupancy mapping approach to maintain a map of target positions. The key components of our hybrid planning approach include an informative trajectory planning formulation based on MPPI that enables efficient target search and capture. For target interception, we use pure pursuit guidance. 
+
+and temporal variations in target positions is necessary to plan informative trajectories. We use an MPPI-based planning approach (Sec. IV-B) to optimise trajectories in continuous action space, where we minimise a planning cost 
+
+J, equivalent to maximising I, over a finite receding horizon, with the constraint B enforced as the total mission duration. 
+
+B. Model Predictive Path Integral Control 
+
+MPC solves the optimal control problem over a finite horizon T at each time step. Given the current state x0, the goal is to find a control sequence U∗ = {u∗
+
+> 0
+
+, . . . , u∗ 
+
+> T−1
+
+} subject to dynamics xt+1 = f (xt , ut ), that minimises the total cost: 
+
+J(U) = φ (xT ) +  
+
+> T−1
+
+# ∑
+
+> t=0
+
+γtC(xt , ut ), (2) where γ is the discount factor, usually set to 1, C(xt , ut )
+
+is the stage cost and φ (xT ) is the terminal cost. Only the first control input u∗ 
+
+> 0
+
+is applied, before the optimisation is solved again in the next time step. Conventional MPC solvers rely on gradient-based optimisation, which requires the cost function and dynamics to be convex or differentiable, limiting real-time deployment with complex objectives. MPPI [25] uses importance-weighted Monte Carlo sam-pling to find an approximate solution to the optimal control problem, without requiring the costs to be convex or differen-tiable. Given a nominal control sequence U, trajectories are sampled by perturbing each control input with added noise 
+
+ε(k) 
+
+> t
+
+∼ N (0, Σ). The total cost of trajectory k is: 
+
+S(k) = φ
+
+
+
+x(k)
+
+> T
+
+
+
++ 
+
+> T−1
+
+# ∑
+
+> t=0
+
+γt h
+
+C
+
+
+
+x(k) 
+
+> t
+
+, ˜u(k)
+
+> t
+
+
+
++ λ Σ−1ε(k)
+
+> t
+
+i
+
+(3) where ˜u(k) 
+
+> t
+
+= ut + ε(k) 
+
+> t
+
+. The nominal control sequence is updated at each iteration as the weighted sum of the sampled perturbations: 
+
+w(k) =
+
+exp 
+
+
+
+− 1
+
+> λ
+
+
+
+S(k) − ρ
+
+ 
+
+∑Kj=1 exp  − 1
+
+> λ
+
+ S( j) − ρ , (4) 
+
+ut ← ut +
+
+> K
+
+# ∑
+
+> k=1
+
+w(k) ε(k) 
+
+> t
+
+, (5) where λ > 0 is a temperature parameter and ρ = min k S(k).This shifts the nominal trajectory toward lower-cost regions of the state space. The previous solution is used to warm-start the optimisation at each subsequent iteration. IV. O UR APPROACH 
+
+The proposed framework is illustrated in Fig. 2, for search and capture of moving targets with an ASV. We use a dynamic occupancy grid to represent the belief state of the environment. Our hybrid planner operates in two modes: a global informative planning mode for exploration and target tracking, and an interception mode for physical capture. The vehicle switches to interception mode when a target is detected within a range threshold rs, reverting to the informa-tive planner after a successful or failed capture attempt. Our key contribution is an MPPI-based informative planner that optimises multiple objectives, supporting effective search and capture in dynamic marine environments. In the interception mode, we use pure pursuit guidance based on the target depth estimate from the camera. 
+
+A. Mapping 
+
+We use a forward-facing camera to detect and localise targets of interest, and a dynamic occupancy grid to represent the positions of targets in a global map, following the approach of Ramkumar Sudha et al. [24]. For predictions, the wind measurements are used to approximate the motion of the occupied positions in the map due to drift, and we approximate the drift of the targets to 2-4% of the wind speed [28]. We model the field of view of the camera as an arc with an angular field of view corresponding to the camera intrinsics, and the radial field of view is limited to a distance 
+
+rd . For the occupancy grid, we use distance-based inverse sensor models with confidence decaying exponentially with distance, similar to [29], [30]. To account for time-varying uncertainty in the map, in addition to the occupancy grid, we maintain a visit score grid 
+
+V ∈ [0, 1]. Previously observed cells get progressively less confident over time, with 0 representing currently observed cells and more uncertain cells denoted by higher values of V. Let Ft ⊆ M denote the set of grid cells inside the field of view at time t. The grid is updated as follows: 
+
+vi, j =
+
+(
+
+0 (i, j) ∈ F t
+
+min  vi, j + η ∆to, 1 (i, j) /∈ F t , (6) where η is a decay rate hyperparameter and ∆to is the time step between successive observations. 
+
+B. Informative trajectory planning with MPPI 
+
+In this section, we describe the formulation of our MPPI-based spatiotemporal informative planning approach that enables planning trajectories in continuous space for efficient search and capture in dynamic environments. 
+
+1) System dynamics: We use the vehicle kinematics as approximate system dynamics for the MPPI planner. The state xt = [ xt , yt , ψt ]⊤ consists of the position (xt , yt ) and the heading ψt of the vehicle. The control input is u = [ u, r]⊤,consisting of the surge speed u and the yaw rate r. The discrete-time kinematic model is defined as: 
+
+xt+1 = xt +
+
+cos ψt 0sin ψt 00 1
+
+ ∆ts ut , (7) where ∆ts is the planning time step used in the predictions. This model approximates the vehicle motion in the horizontal plane while remaining lightweight enough for evaluating hundreds of parallel rollouts at high frequency for the MPPI planner. For each rollout, the occupancy grid updates are forward propagated for sampled poses on the trajectory to calculate the planning costs. This requires estimating the field of view along poses on each sample trajectory. 
+
+2) Planning costs: We design costs for the MPPI planner that balance between exploration and target interception while ensuring safe, feasible trajectories. The stage cost at a single time-step C is computed as: 
+
+C = a1Ce + a2Ct + a3Cc + a4Cp, (8) where Ce is the exploration cost to reduce uncertainty along the trajectory, Ct is the tracking cost that enables approaching the targets, Cc is the collision and boundary cost, and Cp
+
+is the path cost. The coefficients a1, a2, a3, a4 are hyperpa-rameters that we tune empirically to trade off between the different objectives and achieve the desired behaviour. The exploration cost reduces uncertainty in the map. It rewards trajectories that observe cells with high scores in the visit score grid. For each sampled trajectory, updates to the visit score grid V are simulated through parallelised computations. It is computed by summing the predicted visit scores V over cells in the field of view along each sampled trajectory, normalised by grid dimensions H × W :
+
+Ce = − 1
+
+HW ∑ 
+
+> (i,j)∈Ft
+
+vi, j. (9) Target tracking cost rewards trajectories that reduce the distance and bearing to targets. Spatiotemporal target pre-dictions ˆpi, j over the planning horizon are obtained with a modified UNet as described in [24]. The cost is defined as: 
+
+Ct = − ∑ 
+
+> (i,j)∈Ft
+
+ˆpi, j e−
+
+ c1 d2     
+
+> i,j+c2θ2
+> i,j
+
+
+
+, (10) where di, j and θi, j are the distance and the bearing of an arbitrary cell relative to the vehicle pose, and c1, c2 are scaling parameters that affect the strength of the virtual potential field around a target that pulls the vehicle towards it. The path cost reduces unnecessary turns by penalising large yaw rates and ensures that the vehicle moves with the desired speed by penalising deviations from the desired surge speed. It is calculated as: 
+
+Cp = ¯u2 
+
+> t
+
++ ¯r2 
+
+> t
+
+, (11) where ¯ut = ( ut − ud )/(umax − umin ) and ¯rt = |rt |/rmax are normalised surge speed and yaw rate, and ud is the desired surge speed. Collision cost ensures that the vehicle stays in the search area and avoids collisions. A penalty is applied as a soft barrier function on the minimum distance to any boundary of the navigable region: 
+
+Cc = log 
+
+
+
+1 + eds−dmin 
+
+
+
+, (12) where dmin is the minimum distance to any boundary of the navigable region and ds is a safety distance parameter. 
+
+3) Time-correlated noise: Standard MPPI samples in-dependent Gaussian noise at each time step, which can produce jerky control sequences and limit trajectory diver-sity. Incorporating structured sampling approaches such as Halton sequences has been shown to improve action space exploration in MPPI [31]. In a similar spirit, we replace the i.i.d. Gaussian noise with a discrete-time Ornstein-Uhlenbeck (OU) process to generate temporally correlated perturbations, to produce smoother and more diverse rollout trajectories. The OU noise for sample k is generated recursively over the planning horizon as: 
+
+ε(k) 
+
+> t
+
+= α ε (k) 
+
+> t−1
+
++
+
+p
+
+1 − α2 δ (k) 
+
+> t
+
+, δ (k) 
+
+> t
+
+∼ N (0, Σ), (13) where α ∈ (0, 1) controls the temporal correlation, with larger α producing smoother noise, and δ (k) 
+
+> t
+
+is uncorrelated Gaussian noise as in standard MPPI. Fig. 3 compares the sampling trajectory distributions generated with our time-correlated noise against random Gaussian noise. We do not use the cost associated with the added noise (see (3)) as we find that this produces better trajectories for our objectives, since it requires better exploration of the state space and the noise cost inhibits this by penalising added noise. 
+
+4) Warm-starting the optimisation: We apply control in-puts by performing the optimisation and applying control inputs at time steps of ∆tc. However, we use longer time-steps (∆ts) for the system dynamics in planning to reason over longer horizons, since covering such horizons at the finer step ∆tc would make the computation prohibitive for real-time planning. Each MPPI iteration is warm-started with the previous solution. In standard MPPI, the nominal sequence is shifted forward by one step each iteration, discarding the Fig. 3. Sampling trajectory distributions with random Gaussian noise and time-correlated OU process noise visualised. The latter generates a more diverse trajectory set, facilitating better exploration. The mean trajectory is shown in red, and the sampled trajectories are in blue. 
+
+already applied control input. Here we shift the nominal trajectory by one prediction step only once every ∆ts/∆tc
+
+iterations and reuse it unshifted otherwise, keeping the warm-start aligned with the coarser discretisation of the system dynamics. Moreover, the MPPI optimisation is still executed at the desired control frequency, i.e., 1 /∆tc Hz, even when the vehicle is in interception mode, to ensure that there are no lags in warm-starting the optimisation after switching between exploration and interception modes. 
+
+C. Target interception 
+
+For the physical capture of targets, we use pure pursuit guidance to guide the vehicle to intercept targets. The depth measurements from the camera are used to estimate the target position during interception, as the mapping resolution and time step of the global MPPI planner are too coarse for the precise terminal guidance required during interception. We compute the desired yaw rate for the vehicle as: 
+
+r = k ψd , (14) where k is a proportional gain parameter, and ψd is the desired relative bearing to a target, obtained from depth measurements. For a target with estimated position pt =(px, py, pz) in the vehicle coordinate frame, ψd is computed as ψd = tan −1(py/px). In interception mode, only the nearest target is pursued when multiple targets are in view. V. E XPERIMENTAL EVALUATION 
+
+Our experiments are designed to (i) validate the claim that our MPPI planner outperforms other planning baselines with greedy and exploratory behaviours; (ii) evaluate the effectiveness of our multiobjective cost design. Simulation experiments are performed in a high-fidelity Gazebo envi-ronment to validate these two claims. We also conduct field trials to validate our framework for real-world scenarios with a real ASV. 
+
+A. Experimental setup 
+
+We perform simulation experiments with the Virtual Robot-X (VRX) simulator [32]. Wind effects are modelled as a stochastic first-order Gauss-Markov process, and wave effects are additionally simulated to reproduce realistic sea conditions. A search area of 100 m ×100 m is considered under moderate to high wind speeds in the environment. To mimic floating litter, objects of 0 .4 m in diameter are generated with randomly distributed positions and allowed to freely drift due to the influence of the environmental forces. We create three scenarios for evaluation, with 10 targets in the first two scenarios and 20 in the other, under the influence of moderate-to-high mean wind speeds of 8–12 m/s. A single trial lasts for a maximum duration of 180 s or until all targets are captured, and Monte Carlo simulations are performed by repeating each scenario for 10 runs. For mapping, we use a grid resolution of 1 m. The visit score and occupancy grids are both updated at 5 Hz. For the MPPI planner, we use a horizon of 30 s with time steps of 2 s, and replanning is performed at 10 Hz for 150 samples at each step. We set the coefficients a1 = 1, a2 = 0.45 , a3 =
+
+0.1 and a4 = 0.05 after empirically tuning them. Simulation experiments are performed on a desktop with an AMD Ryzen 2950X CPU and Nvidia RTX 2080 Ti GPU. For evaluation, we choose the following metrics: (i) the total number of interceptions (N), denoting the rate of task completion, and (ii) the reduction in the Shannon entropy (∆H) of the occupancy grid at the end of mission time, which is indicative of the area explored in the map. 
+
+B. Comparison with planning baselines 
+
+The proposed MPPI informative planner is compared against other decision-making strategies within our planning framework to evaluate its performance in terms of the num-ber of captures within a given mission time in environments with no prior information about the targets. We choose the following planning baselines:  
+
+> •
+
+A receding horizon (RH) planner that greedily picks the trajectory with the lowest cost from a finite set of discretised control behaviours [33], with each trajectory corresponding to constant speed and yaw rate. It uses the same planning costs and horizon as our MPPI plan-ner to fairly isolate the effect of continuous trajectory optimisation over discrete action spaces.  
+
+> •
+
+A short-sighted frontier-based exploration strategy that selects a single waypoint for exploration based on the nearest frontiers approach [34].  
+
+> •
+
+Coverage planner with lawnmower motions, a non-adaptive strategy commonly used for monitoring [5]. For target capture, we consider two strategies to isolate the effect of the exploration strategy from the target interception behaviour. First, a greedy target chasing strategy where the vehicle switches to interception with pure pursuit guidance if there is a target in field of view ( rs = rd = 35 m). In the second strategy, we consider a different switching condition where we switch to interception mode only once the vehicle is within close proximity to a target ( rs = 8 m). From Table I, we observe that for the baseline planners, greedy target chasing consistently results in more captures when compared to switching to interception mode only when the targets are in close vicinity. This can be attributed to none of the baselines optimising trajectories over a continuous TABLE I NUMBER OF SUCCESSFUL CAPTURES (N) AND ENTROPY REDUCTION (∆H) FOR DIFFERENT PLANNING STRATEGIES .Scenario 1 Scenario 2 Scenario 3                                                                                                                                                          
+
+> Strategy N∆HN∆HN∆H
+> Coverage 1.3±0.675 0.236 ±0.008 1.6±0.699 0.246 ±0.003 1.9±1.286 0.24 ±0.007 Coverage-greedy 2.3±0.949 0.156 ±0.026 3.7±0.949 0.232 ±0.032 8.2±1.32 0.260 ±0.026 Frontier 3±0.816 0.347 ±0.028 2.3±0.948 0.353 ±0.043 2.3±2.002 0.334 ±0.052 Frontier-greedy 8.6±1.35 0.323 ±0.029 5.6±0.966 0.333 ±0.023 11 .2±2.30 0.307 ±0.035 RH 5.7±0.483 0.307 ±0.017 5.7±0.949 0.303 ±0.018 11 .4±2.17 0.311 ±0.018 RH-greedy 8.4±0.516 0.335 ±0.024 7.2±0.422 0.332 ±0.011 13 .6±1.07 0.323 ±0.016 Ours 9.4±0.516 0.319 ±0.022 8.5±0.707 0.333 ±0.038 15 .6±1.43 0.344 ±0.009
+> Ours-greedy 9.7±0.949 0.331 ±0.01 7.7±0.483 0.326 ±0.014 13 .9±0.994 0.324 ±0.012
+
+action space and accounting for target tracking along the trajectories. For our MPPI planner, however, the switching condition has little impact, i.e., greedy switching leads to 3.2% more captures in scenario 1 and fewer captures in scenarios 2 and 3 by 9 .4% and 10 .9% respectively. This is because our multiobjective cost ensures that the vehicle already plans trajectories that steer the vehicle to the vicinity of targets while in the global exploration mode. Coverage-greedy Frontier-greedy   
+
+> RH Ours
+> Fig. 4. A qualitative analysis of the paths followed with various planners for a single scenario. The path segments in grey and black denote portions when the vehicle is in interception and exploration modes, respectively, and the red crosses denote successful interceptions. The frontier and coverage planners rely on greedy target captures, as they both do not consider target capture explicitly in the planning utility. While the RH and our MPPI planner both use the same utility, our planner captures more targets as it directly optimises continuous trajectories as opposed to planning over discrete actions.
+
+The coverage planner performs the worst in terms of captures, as it is not an adaptive strategy. Frontier exploration records the highest entropy reduction in 2 of the 3 scenarios, showing that it is effective for spatial exploration. However, this does not lead to more captures as it is myopic and does not consider target tracking in the planning objective. Meanwhile, the RH and MPPI-based planners that use our planning costs outperform the frontier exploration strategy, highlighting the advantage of our cost design. Although the RH planner uses the same planning cost and horizon as the MPPI planner, it only plans over a discretised action space, thereby limiting the trajectory diversity, leading to marginally fewer captures. We notice that the RH planner with greedy interception is the best performing of the baselines, and yet leads to ≈ 10 .6, 15 .3 and 12 .8% fewer captures in the 3 scenarios respectively, as compared to our MPPI planner. This demonstrates the effectiveness of our cost function and the advantage of optimising trajectories in continuous space. We also plot the paths followed by the vehicle with each planning strategy in Fig. 4. 
+
+C. Ablation experiments 
+
+To validate our cost design, we study the effect of the different components in our multiobjective cost (8) by per-forming ablation experiments on the MPPI planning cost. Experiments from the previous section are repeated with our MPPI planner by setting the exploration, tracking, and path costs to zero, each in isolation. We also perform an experiment setting the coefficients c1 and c2 in (10) to zero to further analyse the tracking cost design. For switching, we switch when in close vicinity to the target, as greedy target capture does not accurately reflect the trajectory quality.                                                                                          
+
+> TABLE II ABLATION STUDY OF PLANNING COST .Scenario 2 Scenario 3
+> N∆HN∆H
+> None 8.5±0.71 0.33 ±0.04 15 .6±1.43 0.34 ±0.01
+> Ce=08±0.94 0.33 ±0.01 14 .7±1.77 0.34 ±0.02
+> Ct=02.4±0.84 0.28 ±0.01 6.6±2.06 0.28 ±0.01
+> Cp=08.1±0.57 0.34 ±0.01 14 .3±2.36 0.35 ±0.02
+> Ce,Cp=07.3±0.82 0.34 ±0.01 11 .8±2.35 0.30 ±0.04
+> c1,c2=02.8±1.13 0.28 ±0.03 6.7±1.95 0.27 ±0.03
+
+Table II reveals that for the purely exploratory case ( Ct =
+
+0), the captures degrade significantly, since the planner does not optimise for target captures along the sampled trajec-tories. This highlights that the tracking cost, incorporating the spatiotemporal target predictions, is the most important component as it steers the vehicle towards targets. Removing the exploration cost ( Ce = 0) or the path cost ( Cp = 0) also causes a marginal performance reduction in N, but does not t = 64 s t = 49 s t = 39 s t = 15 s           
+
+> low
+> high Fig. 5. Results from a field test showing the environment states at different time instants. At t=15 s, the ASV has detected all 3 targets and tracks 2 targets. Later at t=39 s, the ASV has captured 1 target and is pursuing the 2nd target, and at 49 s, the planner steers the vehicle into view of the final target after capturing the 2nd target. Finally, at t=64 s, all 3 targets have been captured. The portions of the path followed by the vehicle in grey and black denote the segments it is in intercept and exploration modes, respectively. The red crosses denote locations of target interceptions. The sampled MPPI trajectories at the time instants are also shown with darker shades representing lower cost trajectories that better optimise the objective.
+
+impact the reduction in entropy in the map ∆H. This indicates that the path cost implicitly enables spatial coverage, leading to more target detections by producing smooth forward-moving trajectories. Meanwhile, removing both the path and exploration costs causes a larger decline in N of up to 14 .1% and 24 .4% respectively in the two scenarios, as compared to the nominal case. Ablating the coefficients in the tracking cost also causes a huge decline in the number of captures. This is due to the planner rewarding trajectories that just keep targets in view, without approaching their vicinities. This further highlights the role of the tracking cost in supporting efficient target interception. These results validate our multiobjective cost design and confirm that jointly optimising exploration and target interception over continuous trajectories enables effective search and capture. 
+
+D. Field tests 
+
+We conduct field experiments with a 1 .2 m long catamaran ASV to validate our approach in real-world monitoring scenarios. It is equipped with an autopilot for state estimation and velocity control. The control commands output from the hybrid planner to the autopilot are the surge speed ( u) and yaw rate ( r). Our framework is implemented with ROS2 as middleware on a Jetson Orin NX on the ASV. A ZED 2i stereo camera is used for object detection, with a horizontal field of view of 72 ◦ and a radial field of view of 15 m. For the capture of targets, we intercept targets using pure pursuit guidance and collect them with a net placed between the two hulls of the catamaran. We perform tests on a 900 m 2 search area in a strait. Three buoy markers are used as targets as proxies for floating litter, that freely drift under the influence of moderate mean wind speed of 6 m/s observed during the tests. The surge speed and yaw rates are limited to u ∈ [0.3, 0.75 ] m/s and r ∈
+
+[−0.53 , 0.53 ] s−1 for the MPPI planner. For switching to pure pursuit, we take rs = 3 m. The perception pipeline, including the object detection and mapping updates, is executed at 4 Hz. The MPPI planner is executed at 10 Hz using 150 samples at every optimisation step. Our entire framework occupies ≈ 3 GB of RAM on the onboard computer.          
+
+> TABLE III SUMMARY OF THE FIELD RESULTS
+> No. captures Time taken
+> Trial 1 2/3–Trial 2 3/395 s Trial 3 3/361 s Trial 4 3/349 s
+
+To better assess the robustness of our approach, we perform four trials in the same settings with varying en-vironmental conditions, and the results are summarised in Table III. All targets except one are captured across four trials. A target is missed in trial 1 as it drifts out of the search area before being detected. Trial 2 takes longer to complete than the other successful trials. This is due to inaccurate mapping, as the wind speed used in the mapping predictions is kept fixed due to the absence of real-time wind measurements. Results from a demonstrative trial are visualised in Fig. 5 with snapshots of the occupancy grid state, path followed, and sampled trajectories showing how our planner steers the vehicle towards the moving targets without greedily chasing them. Video of the field trial is also made available 1.VI. C ONCLUSIONS AND FUTURE WORK 
+
+In this letter, we introduce an informative planning frame-work for search and capture with ASVs in unknown and dynamic environments. A key aspect of our approach is an MPPI-based planner with a multiobjective cost design to enable efficient search and capture. Evaluations show that our planner outperforms the chosen planning baselines. It also highlights the effectiveness of our proposed multiob-jective cost design for the MPPI. Field experiments further demonstrate its validity in real-world scenarios. Our mapping approach relies on wind measurements to predict target drift, and therefore, the mapping accuracy degrades in the absence of reliable wind measurements. Therefore, investigating better estimation techniques for pre-dicting target drift is an avenue for future work. While our approach performs well with a single robot in unobstructed search areas, it can be challenging in large or cluttered spaces. Therefore, further work also includes multirobot coordination for efficient monitoring. Another direction for further work is human-in-the-loop monitoring with vision language action (VLA) models. REFERENCES [1] J. R. Jambeck, R. Geyer, C. Wilcox, T. R. Siegler, M. Perryman, A. Andrady, R. Narayan, and K. L. Law, “Plastic waste inputs from land into the ocean,” science , vol. 347, no. 6223, pp. 768–771, 2015. [2] M. Dunbabin and L. Marques, “Robots for environmental monitoring: Significant advancements and applications,” IEEE Robot. & Automat. Mag. , vol. 19, no. 1, pp. 24–39, 2012. [3] R. R. Murphy, Disaster robotics . MIT press, 2017. [4] A. Lanzolla and M. Spadavecchia, “Wireless sensor networks for environmental monitoring,” Sensors , vol. 21, no. 4, 2021. [5] E. Galceran and M. Carreras, “A survey on coverage path planning for robotics,” Robot. and Auton. Sys. , vol. 61, no. 12, pp. 1258–1276, 2013. [6] C. Robin and S. Lacroix, “Multi-robot target detection and tracking: taxonomy and survey,” Auton. Robots , vol. 40, pp. 729–760, 2016. [7] Y. Wang, Y. Wang, Y. Cao, and G. Sartoretti, “Spatio-temporal attention network for persistent monitoring of multiple mobile targets,” in Proc. IEEE/RSJ Intl. Conf. on Intell. Robots and Sys. (IROS) , 2023. [8] J. Yuan, B. Moon, M. Cao, and S. Scherer, “Hierarchical planning for long-horizon multi-target tracking under target motion uncertainty,” 
+
+IEEE Robot. and Automat. Lett. , vol. 10, no. 12, pp. 13 113–13 120, 2025. [9] A. Bircher, M. Kamel, K. Alexis, H. Oleynikova, and R. Siegwart, “Receding horizon” next-best-view” planner for 3d exploration,” in 
+
+Proc. IEEE Intl. Conf. on Robot. & Automat. (ICRA) , 2016. [10] G. A. Hollinger and G. S. Sukhatme, “Sampling-based robotic infor-mation gathering algorithms,” Intl. Journal of Robot. Research (IJRR) ,vol. 33, no. 9, pp. 1271–1287, 2014. [11] B. Charrow, G. Kahn, S. Patil, S. Liu, K. Goldberg, P. Abbeel, N. Michael, and V. Kumar, “Information-theoretic planning with trajectory optimization for dense 3d mapping.” in Proc. of Robot. Sci. & Sys (RSS) , 2015. [12] A. Asgharivaskasi, S. Koga, and N. Atanasov, “Active mapping via gradient ascent optimization of shannon mutual information over continuous se (3) trajectories,” in Proc. IEEE/RSJ Intl. Conf. on Intell. Robots and Sys. (IROS) , 2022. [13] D. Falanga, P. Foehn, P. Lu, and D. Scaramuzza, “Pampc: Perception-aware model predictive control for quadrotors,” in Proc. IEEE/RSJ Intl. Conf. on Intell. Robots and Sys. (IROS) , 2018. 
+
+> 1
+
+Video from field trial at https://youtu.be/hfmq0VDAw6w 
+
+[14] P. Bostr¨ om-Rost, D. Axehill, and G. Hendeby, “On global optimization for informative path planning,” IEEE Control Sys. Lett. , vol. 2, no. 4, pp. 833–838, 2018. [15] P. Wang, M. Meghjani, and G. Chen, “Marine trash collection: A multi-agent, multi-target search,” in Proc. MTS/IEEE OCEANS Hampton Roads , 2022. [16] M. Jeong, C. Molinaro, T. Deb, Y. Zhang, A. Pugliese, E. Santos, V. Subrahmanian, and A. Q. Li, “Multi-object active search and tracking by multiple agents in untrusted, dynamically changing en-vironments,” Auton. Robots , vol. 50, no. 1, p. 1, 2026. [17] P. Dames, P. Tokekar, and V. Kumar, “Detecting, localizing, and tracking an unknown number of moving targets using a team of mobile robots,” Intl. Journal of Robot. Research (IJRR) , vol. 36, no. 13-14, pp. 1540–1553, 2017. [18] N. Hung, E. Cunha, F. Branco, and A. Pascoal, “Target localization and pursuit with networked robotic vehicles: Theory, simulation, and experiments,” Journal of Field Robot. (JFR) , vol. 42, no. 5, pp. 2124– 2135, 2025. [19] T. H. Chung, G. A. Hollinger, and V. Isler, “Search and pursuit-evasion in mobile robotics: A survey,” Auton. Robots , vol. 31, no. 4, pp. 299– 316, 2011. [20] A. M. Barrionuevo, S. Y. Luis, D. G. Reina, and S. L. T. Mar´ ın, “Op-timizing plastic waste collection in water bodies using heterogeneous autonomous surface vehicles with deep reinforcement learning,” IEEE Robot. and Automat. Lett. , vol. 10, no. 5, pp. 4930–4937, 2025. [21] L. F. W. Batista, S. Aravecchia, and C. Pradalier, “Sim-to-real transfer and robustness evaluation of reinforcement learning control with integrated perception on an asv for floating waste capture,” IEEE Trans. on Field Robot. , pp. 1–1, 2026. [22] M. Lodel, B. Brito, A. Serra-G´ omez, L. Ferranti, R. Babuˇ ska, and J. Alonso-Mora, “Where to look next: Learning viewpoint rec-ommendations for informative trajectory planning,” in Proc. IEEE Intl. Conf. on Robot. & Automat. (ICRA) , 2022. [23] W. Chen and L. Liu, “Multi-objective and model-predictive tree search for spatiotemporal informative planning,” in Proc. Conf. on Decision Making and Control (CDC) , 2019. [24] S. Ramkumar Sudha, M. Popovi´ c, and E. M. Coates, “An informative planning framework for target tracking and active mapping in dynamic environments with asvs,” IEEE Robot. and Automat. Lett. , vol. 11, no. 3, pp. 2690–2697, 2026. [25] G. Williams, N. Wagener, B. Goldfain, P. Drews, J. M. Rehg, B. Boots, and E. A. Theodorou, “Information theoretic mpc for model-based reinforcement learning,” in Proc. IEEE Intl. Conf. on Robot. &Automat. (ICRA) , 2017. [26] L. Streichenberg, E. Trevisan, J. J. Chung, R. Siegwart, and J. Alonso-Mora, “Multi-agent path integral control for interaction-aware motion planning in urban canals,” in Proc. IEEE Intl. Conf. on Robot. & Automat. (ICRA) , 2023. [27] Y. Zhai, R. Reiter, and D. Scaramuzza, “Pa-mppi: Perception-aware model predictive path integral control for quadrotor navigation in unknown environments,” IEEE Robot. and Automat. Lett. , vol. 11, no. 3, pp. 3804–3811, 2026. [28] J. R¨ ohrs and K. H. Christensen, “Drift in the uppermost part of the ocean,” Geophysical Research Lett. , vol. 42, no. 23, pp. 10–349, 2015. [29] B. Moon, S. Chatterjee, and S. Scherer, “Tigris: An informed sampling-based algorithm for informative path planning,” in 
+
+Proc. IEEE/RSJ Intl. Conf. on Intell. Robots and Sys. (IROS) , 2022. [30] M. Popovi´ c, T. Vidal-Calleja, G. Hitz, J. J. Chung, I. Sa, R. Siegwart, and J. Nieto, “An informative path planning framework for uav-based terrain monitoring,” Auton. Robots , vol. 44, no. 6, pp. 889–911, 2020. [31] M. Bhardwaj, B. Sundaralingam, A. Mousavian, N. D. Ratliff, D. Fox, F. Ramos, and B. Boots, “Storm: An integrated framework for fast joint-space model-predictive control for reactive manipulation,” in 
+
+Proc. of the Conf. on Robot Learning (CoRL) , 2022. [32] B. Bingham, C. Ag¨ uero, M. McCarrin, J. Klamo, J. Malia, K. Allen, T. Lum, M. Rawson, and R. Waqar, “Toward maritime robotic simu-lation in gazebo,” in Proc. MTS/IEEE OCEANS SEATTLE , 2019. [33] T. A. Johansen, A. Cristofaro, and T. Perez, “Ship collision avoidance using scenario-based model predictive control,” IFAC-PapersOnLine ,vol. 49, no. 23, pp. 14–21, 2016. [34] B. Yamauchi, “A frontier-based approach for autonomous exploration,” in Proc. IEEE Intl. Symposium on Comput. Intell. in Robot. and Automat. , 1997.

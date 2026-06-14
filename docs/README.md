@@ -6,30 +6,27 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-13
-- 运行时间：2026-06-13 20:37:19 UTC
+- 最新运行日期：2026-06-14
+- 运行时间：2026-06-14 21:05:13 UTC
 - 运行状态：成功
-- 本次总论文数：3
+- 本次总论文数：2
 - 精读区：0
-- 速读区：3
+- 速读区：2
 
 ### 今日简报（AI）
-今日速读3篇论文，聚焦具身智能、多智能体控制与博弈均衡领域。最值得关注的是将视觉-语言-动作模型与世界模型结合用于低空无线网络的7.0分研究，以及安全的仿射编队控制与帕累托高效关联均衡方法（均6.0分）。建议优先了解具身智能在无线网络的应用趋势，其次关注多智能体安全控制与博弈论优化方向。
-- 详情：[/202606/13/README](/202606/13/README)
+今日完成2篇速读，聚焦移动机器人轨迹规划与多智能体安全强化学习。值得关注的是基于MPPI的ASV搜索捕获漂移目标方法，以及CBF引导扩散模型实现离线多智能体安全学习。建议优先精读两篇论文，对比其算法在动态环境与安全约束下的实际效果。
+- 详情：[/202606/14/README](/202606/14/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Vision-Language-Action Models Meet World Models: Embodied Agentic AI for Low-Altitude Wireless Networks](/202606/13/2606.11618v1-vision-language-action-models-meet-world-models-embodied-agentic-ai-for-low-altitude-wireless-networks)  
-   标签：评分：7.0/10、query:ui
-   evidence：无人机具身智能体框架结合视觉-语言-动作模型与世界模型，可用于拦截与围捕
-2. [A Barrier-Modulated Architecture for Safe Affine Formation Control in Second-Order Multi-Agent Systems](/202606/13/2606.08137v1-a-barrier-modulated-architecture-for-safe-affine-formation-control-in-second-order-multi-agent-systems)  
+1. [MPPI-based Informative Trajectory Planning for Search and Capture of Drifting Targets with ASVs](/202606/14/2606.12019v1-mppi-based-informative-trajectory-planning-for-search-and-capture-of-drifting-targets-with-asvs)  
    标签：评分：6.0/10、query:ui
-   evidence：多智能体编队控制结合自适应动态规划，与协同围捕相关
-3. [Phi-Actor-Critic: Steering General-Sum Games to Pareto-Efficient Correlated Equilibria](/202606/13/2606.11284v1-phi-actor-critic-steering-general-sum-games-to-pareto-efficient-correlated-equilibria)  
+   evidence：利用MPPI搜索捕获漂移目标，与追逃博弈相关
+2. [Individual Control Barrier Functions-Guided Diffusion Model for Safe Offline Multi-Agent Reinforcement Learning](/202606/14/2606.12640v1-individual-control-barrier-functions-guided-diffusion-model-for-safe-offline-multi-agent-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：面向一般和博弈的多智能体强化学习框架，可应用于多无人机协同围捕
+   evidence：多智能体强化学习与安全保障
 
 
 <div class="dpr-home-promo-card">
