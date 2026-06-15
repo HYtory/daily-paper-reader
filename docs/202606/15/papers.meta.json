@@ -1,0 +1,69 @@
+{
+  "label": "2026-06-15",
+  "date": "2026-06-15",
+  "generated_at": "2026-06-15T22:45:48",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202606/15/2606.14130v1-contract-based-compositional-shielding-for-safe-multi-agent-reinforcement-learning",
+      "section": "deep",
+      "title_en": "Contract-Based Compositional Shielding for Safe Multi-Agent Reinforcement Learning",
+      "authors": "Omar Adalat, Edwin Hamel-De le Court, Francesco Belardinelli",
+      "date": "2026-06-12",
+      "pdf": "https://arxiv.org/pdf/2606.14130v1",
+      "score": "8.0",
+      "evidence": "多智能体安全RL与屏蔽协调，适用于多无人机围捕",
+      "tldr": "在多智能体强化学习中，全局安全难以由单个智能体独立保证，现有去中心化屏蔽会牺牲协调安全下的最优行为。本文提出基于合约的组合式屏蔽方法，智能体共享LTL_safe全局规范，选择局部义务元组合取蕴含全局规范，并通过非平稳多臂赌博机动态优化团队奖励。该方法在6个环境、15种变体中实现了端到端安全保证，无需集中式运行时控制即可恢复团队最优安全行为。",
+      "tags": "query:ui",
+      "abstract_en": "Safe coordination problems surface in multi-agent reinforcement learning when global safety cannot be enforced by any agent unilaterally: the admissibility of one agent's action may depend on the dynamics of other agents. Decentralised shields can enforce safety at runtime, but purely factorised permissions often exclude optimal team behaviour that is safe only through coordination. We study deterministic safety guarantees for agents trained and deployed under decentralised execution, recovering team-optimal safe behaviour without centralised runtime control. Agents have a shared global specification $φ$ in the safety fragment of Linear Temporal Logic ($\\mathsf{LTL}_{\\mathsf{safe}}$ ), and select among tuples of local $\\mathsf{LTL}_{\\mathsf{safe}}$ obligations whose conjunction implies the global specification $φ$. Each agent may rely on the other agents' local obligations as assumptions because the whole contract tuple is certified simultaneously and allows projection into local action masks. At learning time, a non-stationary multi-armed bandit chooses among a library of local $\\mathsf{LTL}_{\\mathsf{safe}}$ obligations to select the tuple that optimises team reward, all without forgoing end-to-end safety. We evaluate the approach across 6 environments and 15 algorithmic variants.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/15/2606.13891v1-tetrarl-a-self-adaptive-runtime-for-on-device-deep-reinforcement-learning-systems",
+      "section": "quick",
+      "title_en": "TetraRL: A Self-Adaptive Runtime for On-Device Deep Reinforcement Learning Systems",
+      "authors": "Zexin Li, Soheil Shirvani, Cong Liu",
+      "date": "2026-06-11",
+      "pdf": "https://arxiv.org/pdf/2606.13891v1",
+      "score": "7.0",
+      "evidence": "面向无人机机上深度强化学习的自适应运行时，优化实时性、奖励和资源消耗",
+      "tldr": "嵌入式深度强化学习（DRL）需在资源受限硬件上同时优化实时性、奖励、内存和能耗四个目标，独立优化导致次优行为。TetraRL提出自适应性运行时框架，通过统一优化和偏好条件化RL控制器动态平衡多目标，集成硬件感知DVFS控制和运行时覆盖层保证约束。在Jetson AGX Orin和Orin Nano上验证，有效均衡四目标，实现竞争性折衷且开销可忽略，单一策略支持运行时切换优化目标，为资源感知自适应性嵌入式DRL奠定基础。",
+      "tags": "query:ui",
+      "abstract_en": "Autonomous robotic systems, including autonomous vehicles, drones, and mobile robots, increasingly rely on on-device Deep Reinforcement Learning (DRL) to adapt to dynamic environments. Unlike cloud-based solutions, embedded DRL must perform training and inference directly on resource-constrained hardware while maintaining timely decision-making. This creates a fundamental challenge: balancing four tightly coupled objectives, real-time performance, task reward, memory utilization, and energy consumption. Optimizing these objectives independently often leads to suboptimal behavior, while conventional multi-objective methods may violate resource constraints and compromise reliability.   This paper presents TetraRL, a self-adaptive runtime framework for tetra-objective on-device DRL. TetraRL formulates embedded DRL as a unified optimization problem over real-time, reward, RAM, and reserve (energy) objectives, and employs a preference-conditioned reinforcement learning controller to dynamically navigate the resulting trade-off space. The framework integrates a unified resource-management abstraction, hardware-aware DVFS control, and a runtime Override Layer for robust constraint enforcement. We implement TetraRL on NVIDIA Jetson AGX Orin and Orin Nano platforms and evaluate it across diverse DRL environments. Results show that TetraRL effectively balances all four objectives, achieves competitive trade-offs under varying runtime preferences, and incurs negligible overhead. Moreover, a single trained policy can support runtime-switchable optimization goals, providing a practical foundation for resource-aware and self-adaptive on-device DRL.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/15/2606.10228v1-shapo-sharpness-aware-policy-optimization-for-safe-exploration",
+      "section": "quick",
+      "title_en": "SHAPO: Sharpness-Aware Policy Optimization for Safe Exploration",
+      "authors": "Kaustubh Mani, Yann Pequignot, Vincent Mai, Liam Paull",
+      "date": "2026-06-08",
+      "pdf": "https://arxiv.org/pdf/2606.10228v1",
+      "score": "6.0",
+      "evidence": "安全探索强化学习方法可迁移至无人机拦截",
+      "tldr": "在安全关键领域部署强化学习需要解决安全探索问题。本文从认知不确定性角度出发，提出锐度感知策略优化（SHAPO），利用参数扰动的灵敏度作为高不确定性区域代理。SHAPO通过在被扰动参数上计算梯度，使策略更新对认知不确定性保持悲观。理论分析表明该调整隐式重加权策略梯度，放大稀有危险动作影响并抑制已安全动作贡献，从而在未充分探索区域偏向保守行为。在连续控制任务中，SHAPO在安全性和任务性能上均优于现有基线，显著扩展帕累托前沿。",
+      "tags": "query:ui",
+      "abstract_en": "Safe exploration is a prerequisite for deploying reinforcement learning (RL) agents in safety-critical domains. In this paper, we approach safe exploration through the lens of epistemic uncertainty, where the actor's sensitivity to parameter perturbations serves as a practical proxy for regions of high uncertainty. We propose Sharpness-Aware Policy Optimization (SHAPO), a sharpness-aware policy update rule that evaluates gradients at perturbed parameters, making policy updates pessimistic with respect to the actor's epistemic uncertainty. Analytically we show that this adjustment implicitly reweighs policy gradients, amplifying the influence of rare unsafe actions while tempering contributions from already safe ones, thereby biasing learning toward conservative behavior in under-explored regions. Across several continuous-control tasks, our method consistently improves both safety and task performance over existing baselines, significantly expanding their Pareto frontiers.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/15/2606.14415v1-cspo-constraint-sensitive-policy-optimization-for-safe-reinforcement-learning",
+      "section": "quick",
+      "title_en": "CSPO: Constraint-Sensitive Policy Optimization for Safe Reinforcement Learning",
+      "authors": "Ayoub Belouadah, Sylvain Kubler, Yves Le Traon",
+      "date": "2026-06-12",
+      "pdf": "https://arxiv.org/pdf/2606.14415v1",
+      "score": "6.0",
+      "evidence": "安全强化学习方法可迁移至单无人机拦截",
+      "tldr": "安全强化学习常建模为CMDP，原始-对偶方法因延迟约束校正导致振荡和长期违规。本文提出CSPO，通过引入基于最短符号距离的约束敏感校正项，补偿乘子更新延迟，实现智能安全恢复。在导航和移动基准上，CSPO相比现有方法更快恢复安全并保持高回报，提高了约束回报。",
+      "tags": "query:ui",
+      "abstract_en": "Safe reinforcement learning (Safe RL) aims to maximize expected return while satisfying safety constraints, typically modeled as Constrained Markov Decision Processes (CMDPs). While primal-dual methods scale well to deep RL, they often suffer from delayed constraint correction, leading to oscillatory behavior and prolonged safety violations. In this paper, we propose Constraint-Sensitive Policy Optimization (CSPO), a first-order primal-dual method that incorporates local constraint sensitivity into policy updates. CSPO augments the primal objective with a constraint-sensitive correction derived from the shortest signed distance to the safety boundary, enabling smarter recovery steps back to safety, compensating for delayed Lagrange multiplier updates, reducing oscillations near the boundary, and preserving the KKT solutions of the original constrained problem. Experiments on navigation and locomotion benchmarks demonstrate that CSPO achieves faster safety recovery and high reward preservation, resulting in higher constrained returns compared to state-of-the-art primal-dual and penalty-based methods",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

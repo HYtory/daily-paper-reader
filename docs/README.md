@@ -6,27 +6,34 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-14
-- 运行时间：2026-06-14 21:05:13 UTC
+- 最新运行日期：2026-06-15
+- 运行时间：2026-06-15 22:45:38 UTC
 - 运行状态：成功
-- 本次总论文数：2
-- 精读区：0
-- 速读区：2
+- 本次总论文数：4
+- 精读区：1
+- 速读区：3
 
 ### 今日简报（AI）
-今日完成2篇速读，聚焦移动机器人轨迹规划与多智能体安全强化学习。值得关注的是基于MPPI的ASV搜索捕获漂移目标方法，以及CBF引导扩散模型实现离线多智能体安全学习。建议优先精读两篇论文，对比其算法在动态环境与安全约束下的实际效果。
-- 详情：[/202606/14/README](/202606/14/README)
+1. 今日精读与速读共4篇强化学习安全相关论文，其中多智能体合约式屏蔽方法获8.0高分，设备端自适应运行时系统7.0分紧随其后。  
+2. 最值得关注的方向是《Contract-Based Compositional Shielding》提出的模块化安全屏障设计，以及《TetraRL》展示的轻量级运行时适应方案。  
+3. 普通读者建议优先精读核心论文，并留意安全RL从理论框架向实际设备部署的迁移趋势。
+- 详情：[/202606/15/README](/202606/15/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Contract-Based Compositional Shielding for Safe Multi-Agent Reinforcement Learning](/202606/15/2606.14130v1-contract-based-compositional-shielding-for-safe-multi-agent-reinforcement-learning)  
+   标签：评分：8.0/10、query:ui
+   evidence：多智能体安全RL与屏蔽协调，适用于多无人机围捕
 
 ### 速读区论文标签
-1. [MPPI-based Informative Trajectory Planning for Search and Capture of Drifting Targets with ASVs](/202606/14/2606.12019v1-mppi-based-informative-trajectory-planning-for-search-and-capture-of-drifting-targets-with-asvs)  
+1. [TetraRL: A Self-Adaptive Runtime for On-Device Deep Reinforcement Learning Systems](/202606/15/2606.13891v1-tetrarl-a-self-adaptive-runtime-for-on-device-deep-reinforcement-learning-systems)  
+   标签：评分：7.0/10、query:ui
+   evidence：面向无人机机上深度强化学习的自适应运行时，优化实时性、奖励和资源消耗
+2. [SHAPO: Sharpness-Aware Policy Optimization for Safe Exploration](/202606/15/2606.10228v1-shapo-sharpness-aware-policy-optimization-for-safe-exploration)  
    标签：评分：6.0/10、query:ui
-   evidence：利用MPPI搜索捕获漂移目标，与追逃博弈相关
-2. [Individual Control Barrier Functions-Guided Diffusion Model for Safe Offline Multi-Agent Reinforcement Learning](/202606/14/2606.12640v1-individual-control-barrier-functions-guided-diffusion-model-for-safe-offline-multi-agent-reinforcement-learning)  
+   evidence：安全探索强化学习方法可迁移至无人机拦截
+3. [CSPO: Constraint-Sensitive Policy Optimization for Safe Reinforcement Learning](/202606/15/2606.14415v1-cspo-constraint-sensitive-policy-optimization-for-safe-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：多智能体强化学习与安全保障
+   evidence：安全强化学习方法可迁移至单无人机拦截
 
 
 <div class="dpr-home-promo-card">
