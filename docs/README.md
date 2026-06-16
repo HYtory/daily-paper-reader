@@ -6,34 +6,35 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-15
-- 运行时间：2026-06-15 22:45:38 UTC
+- 最新运行日期：2026-06-16
+- 运行时间：2026-06-16 22:40:52 UTC
 - 运行状态：成功
-- 本次总论文数：4
+- 本次总论文数：5
 - 精读区：1
-- 速读区：3
+- 速读区：4
 
 ### 今日简报（AI）
-1. 今日精读与速读共4篇强化学习安全相关论文，其中多智能体合约式屏蔽方法获8.0高分，设备端自适应运行时系统7.0分紧随其后。  
-2. 最值得关注的方向是《Contract-Based Compositional Shielding》提出的模块化安全屏障设计，以及《TetraRL》展示的轻量级运行时适应方案。  
-3. 普通读者建议优先精读核心论文，并留意安全RL从理论框架向实际设备部署的迁移趋势。
-- 详情：[/202606/15/README](/202606/15/README)
+今日推荐5篇论文，精读1篇关于护卫目标的最优距离追踪，速读4篇涵盖无人机集群轨迹规划与多模态威胁检测。最值得关注的是博弈论多智能体强化学习在低空无线网络中的应用，以及基于表征学习的多任务技能迁移方法。建议优先精读《Flyby Distance Pursuit》以理解防御策略的数学框架，再结合速读论文探索集群智能的实用化方向。
+- 详情：[/202606/16/README](/202606/16/README)
 
 ### 精读区论文标签
-1. [Contract-Based Compositional Shielding for Safe Multi-Agent Reinforcement Learning](/202606/15/2606.14130v1-contract-based-compositional-shielding-for-safe-multi-agent-reinforcement-learning)  
+1. [Flyby Distance Pursuit for Guarding a Target with an Inferior Guard](/202606/16/2606.13012v1-flyby-distance-pursuit-for-guarding-a-target-with-an-inferior-guard)  
    标签：评分：8.0/10、query:ui
-   evidence：多智能体安全RL与屏蔽协调，适用于多无人机围捕
+   evidence：基于飞越距离的追逃微分博弈，针对拦截目标
 
 ### 速读区论文标签
-1. [TetraRL: A Self-Adaptive Runtime for On-Device Deep Reinforcement Learning Systems](/202606/15/2606.13891v1-tetrarl-a-self-adaptive-runtime-for-on-device-deep-reinforcement-learning-systems)  
+1. [Game-Theoretic Multi-Agent Reinforcement Learning for Swarm Trajectory Planning in Low-Altitude Wireless Networks](/202606/16/2606.16386v1-game-theoretic-multi-agent-reinforcement-learning-for-swarm-trajectory-planning-in-low-altitude-wireless-networks)  
    标签：评分：7.0/10、query:ui
-   evidence：面向无人机机上深度强化学习的自适应运行时，优化实时性、奖励和资源消耗
-2. [SHAPO: Sharpness-Aware Policy Optimization for Safe Exploration](/202606/15/2606.10228v1-shapo-sharpness-aware-policy-optimization-for-safe-exploration)  
+   evidence：博弈论多智能体RL用于群轨迹规划，与围捕相关
+2. [DroneShield-AI: A Multi-Modal Sensor Fusion Framework for Real-Time Autonomous Drone Threat Detection, Behavioral Intent Classification, and Swarm Intelligence in Contested Airspace](/202606/16/2606.11687v1-droneshield-ai-a-multi-modal-sensor-fusion-framework-for-real-time-autonomous-drone-threat-detection-behavioral-intent-classification-and-swarm-intelligence-in-contested-airspace)  
    标签：评分：6.0/10、query:ui
-   evidence：安全探索强化学习方法可迁移至无人机拦截
-3. [CSPO: Constraint-Sensitive Policy Optimization for Safe Reinforcement Learning](/202606/15/2606.14415v1-cspo-constraint-sensitive-policy-optimization-for-safe-reinforcement-learning)  
+   evidence：针对竞争空域的无人机威胁检测与群体智能框架，与无人机拦截直接相关
+3. [Learning to Adapt: Representation-Based Reinforcement Learning for Multi-Task Skill Transfer](/202606/16/2606.12890v1-learning-to-adapt-representation-based-reinforcement-learning-for-multi-task-skill-transfer)  
    标签：评分：6.0/10、query:ui
-   evidence：安全强化学习方法可迁移至单无人机拦截
+   evidence：多任务RL与表示学习，可应用于无人机拦截与围捕技能迁移
+4. [Reinforcement Learning with Inner-loop Dynamics Estimator for Aerial Manipulation under Uncertainty](/202606/16/2606.16621v1-reinforcement-learning-with-inner-loop-dynamics-estimator-for-aerial-manipulation-under-uncertainty)  
+   标签：评分：6.0/10、query:ui
+   evidence：面向不确定性的空中操纵强化学习框架，可迁移至无人机拦截任务
 
 
 <div class="dpr-home-promo-card">

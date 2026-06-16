@@ -1,0 +1,208 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-16T22:37:33.049389+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2606.13012v1",
+      "source": "arxiv",
+      "title": "Flyby Distance Pursuit for Guarding a Target with an Inferior Guard",
+      "abstract": "Guarding a target against a fast Attacker with a slower Guard is posed as a differential game. Both players follow nonlinear, thrust-free, aerodynamic motion in the plane. The capturability problem inherent in this scenario is addressed by formulating the game such that the Attacker is constrained to terminate at its Target, and the game value is the flyby distance. The latter is made accessible at termination by introducing an auxiliary state variable that records the players' minimum separation distance throughout their flight. This novel combination of termination condition and auxiliary state removes a structural limitation of current pursuit games and opens a new class of solvable problems. It also enables us to embed attacker mission constraints directly. Taking an indirect approach, we formulate the game's Two-Point Boundary Value Problem, solve it numerically, and identify several solution types. When the Attacker's only constraint is to reach the Target, he can do so without being captured. These types of solutions, however, are less practical due to long flight times and slow terminal speeds. Imposing an Attacker terminal speed constraint yields simpler solutions and reveals the trade-off between terminal speed and flyby distance. We demonstrate that in such a setting, capture is possible in a relevant region of the parameter space.",
+      "authors": [
+        "Navot Israeli",
+        "Vitaly Shaferman",
+        "Oded Golan"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC"
+      ],
+      "published": "2026-06-11T07:47:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.13012v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "differential game for pursuit-evasion with flyby distance",
+      "llm_evidence_cn": "基于飞越距离的追逃微分博弈，针对拦截目标",
+      "llm_evidence": "基于飞越距离的追逃微分博弈，针对拦截目标",
+      "canonical_evidence": "基于飞越距离的追逃微分博弈，针对拦截目标",
+      "llm_tldr_en": "Formulates a differential game for guarding a target against a fast attacker using flyby distance, enabling capturability analysis and embedding attacker mission constraints.",
+      "llm_tldr_cn": "针对较慢守卫拦截快速攻击者的目标保护问题，提出基于飞越距离的微分博弈。通过引入辅助状态变量记录最小分离距离，解决了传统追逃博弈的结构性限制，使得攻击者任务约束可嵌入。该工作为单无人机拦截场景提供了理论分析框架，虽未使用强化学习但直接对应问题设定。",
+      "llm_tldr": "针对较慢守卫拦截快速攻击者的目标保护问题，提出基于飞越距离的微分博弈。通过引入辅助状态变量记录最小分离距离，解决了传统追逃博弈的结构性限制，使得攻击者任务约束可嵌入。该工作为单无人机拦截场景提供了理论分析框架，虽未使用强化学习但直接对应问题设定。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.16386v1",
+      "source": "arxiv",
+      "title": "Game-Theoretic Multi-Agent Reinforcement Learning for Swarm Trajectory Planning in Low-Altitude Wireless Networks",
+      "abstract": "The Low-Altitude Economy (LAE) is rapidly expanding, giving rise to low-altitude wireless networks (LAWNs), where large-scale cellular-connected unmanned aerial vehicle (UAV) deployments support heterogeneous mission-critical applications over multi-cell ground base station (GBS) infrastructures. To ensure mission success, each UAV must jointly optimize communication throughput and mission completion efficiency. In fifth-generation (5G) new radio (NR) systems, the equal resource block (RB) allocation policy induces strong strategic coupling among UAV trajectories: when a UAV enters a GBS cell, it reduces the RB share available to all co-served UAVs, thereby altering their achievable rates and trajectory incentives through shared wireless resources. Existing studies either ignore this coupling or focus on single-cell infrastructure, leaving the multi-cell, congestion-aware UAV trajectory planning problem insufficiently addressed. To fill this gap, we formulate the problem as a cooperative stochastic congestion game with a communication-and-mission-aware utility function, and propose a centralized-training decentralized-execution multi-agent proximal policy optimization (CTDE-MAPPO) algorithm to maximize social welfare under multi-cell RB congestion. Simulation results show that the proposed method outperforms QMIX, independent Q-learning, and random baselines in terms of aggregate utility and mission success rate, while achieving stable convergence within practical training budgets.",
+      "authors": [
+        "Nguyen Duc Minh Quang",
+        "Ruoxi Chong",
+        "Zhiqiang Wei",
+        "Chang Liu",
+        "Derrick Wing Kwan Ng"
+      ],
+      "primary_category": "cs.GT",
+      "categories": [
+        "cs.GT"
+      ],
+      "published": "2026-06-15T08:17:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.16386v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "game-theoretic multi-agent RL for swarm trajectory planning, relevant to encirclement",
+      "llm_evidence_cn": "博弈论多智能体RL用于群轨迹规划，与围捕相关",
+      "llm_evidence": "博弈论多智能体RL用于群轨迹规划，与围捕相关",
+      "canonical_evidence": "博弈论多智能体RL用于群轨迹规划，与围捕相关",
+      "llm_tldr_en": "Uses game-theoretic multi-agent RL to coordinate UAV swarm trajectories under resource allocation coupling, applicable to cooperative encirclement scenarios.",
+      "llm_tldr_cn": "本文针对低空无线网络中大规模无人机群的轨迹规划问题，提出博弈论多智能体强化学习方法。由于资源块分配导致轨迹间强耦合，方法将问题建模为博弈，各无人机分布式优化自身目标。仿真显示能有效协调多机轨迹，提高任务效率，其合作式规划思想可直接用于多无人机围捕任务。",
+      "llm_tldr": "本文针对低空无线网络中大规模无人机群的轨迹规划问题，提出博弈论多智能体强化学习方法。由于资源块分配导致轨迹间强耦合，方法将问题建模为博弈，各无人机分布式优化自身目标。仿真显示能有效协调多机轨迹，提高任务效率，其合作式规划思想可直接用于多无人机围捕任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi UAV encirclement with reinforcement learning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.11687v1",
+      "source": "arxiv",
+      "title": "DroneShield-AI: A Multi-Modal Sensor Fusion Framework for Real-Time Autonomous Drone Threat Detection, Behavioral Intent Classification, and Swarm Intelligence in Contested Airspace",
+      "abstract": "Unmanned Aerial Vehicle (UAV) threats have emerged as a defining security challenge of the 21st century. This paper presents DroneShield-AI, a unified open framework integrating six processing layers: RF signal classification, acoustic motor-signature detection, YOLOv8-based visual detection, evidence-weighted sensor fusion, a Behavioral Intent Classification Engine (BICE), and a Graph Neural Network Swarm Intelligence Module (GNN-SIM). BICE introduces the first systematic six-class threat taxonomy for drone flight patterns, enabling predictive operator alerts with a 30-second advance-warning horizon. GNN-SIM is the first open framework for adversarial multi-drone formation analysis using Graph Attention Networks. Evaluated on three publicly available real-world datasets, the fused pipeline achieves 96.1% detection accuracy, 3.2% false alarm rate, AUC-ROC: 0.981, and 142ms end-to-end latency on commodity CPU-class hardware at approximately $500-$780 USD total system cost. All code, model weights, and simulation datasets are publicly released at submission.",
+      "authors": [
+        "Marius Bayizere"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-06-10T06:00:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.11687v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Drone threat detection and swarm intelligence framework for contested airspace, directly relevant to UAV interception",
+      "llm_evidence_cn": "针对竞争空域的无人机威胁检测与群体智能框架，与无人机拦截直接相关",
+      "llm_evidence": "针对竞争空域的无人机威胁检测与群体智能框架，与无人机拦截直接相关",
+      "canonical_evidence": "针对竞争空域的无人机威胁检测与群体智能框架，与无人机拦截直接相关",
+      "llm_tldr_en": "DroneShield-AI integrates multi-modal sensing, behavior classification, and swarm intelligence for real-time drone threat detection and intent prediction.",
+      "llm_tldr_cn": "该论文针对无人机威胁检测挑战，提出DroneShield-AI框架，集成射频信号分类、声学检测、视觉检测、传感器融合、行为意图分类和群体智能模块。行为意图分类引擎首次系统定义了六种威胁飞行模式，可提前30秒预警。群体智能模块支持对抗空域中多无人机协同。该框架为无人机拦截提供了全面的感知和意图理解能力。",
+      "llm_tldr": "该论文针对无人机威胁检测挑战，提出DroneShield-AI框架，集成射频信号分类、声学检测、视觉检测、传感器融合、行为意图分类和群体智能模块。行为意图分类引擎首次系统定义了六种威胁飞行模式，可提前30秒预警。群体智能模块支持对抗空域中多无人机协同。该框架为无人机拦截提供了全面的感知和意图理解能力。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.12890v1",
+      "source": "arxiv",
+      "title": "Learning to Adapt: Representation-Based Reinforcement Learning for Multi-Task Skill Transfer",
+      "abstract": "Reinforcement learning has achieved remarkable success in learning complex control policies, yet its applicability remains limited due to sample inefficiency and poor generalization across tasks. In this work, we propose RepMT-SAC, a framework for multi-task RL that enables efficient knowledge sharing and robust transfer to new tasks. RepMT-SAC uses spectral MDP decomposition to capture transferable dynamics, structuring the value function into a task-agnostic core with a minimal task-specific adjustment. This design allows for strong zero-shot performance on in-distribution tasks and rapid few-shot adaptation to out-of-distribution tasks. We evaluate RepMT-SAC on quadcopter trajectory-following tasks across in-distribution and out-of-distribution contexts, demonstrating that it outperforms baselines by up to 30%.",
+      "authors": [
+        "Aryan Naveen",
+        "Haitong Ma",
+        "Haldun Balim",
+        "Na Li"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-11T04:33:03+00:00",
+      "link": "https://arxiv.org/pdf/2606.12890v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-task RL with representation learning, applicable to UAV interception and encirclement skill transfer",
+      "llm_evidence_cn": "多任务RL与表示学习，可应用于无人机拦截与围捕技能迁移",
+      "llm_evidence": "多任务RL与表示学习，可应用于无人机拦截与围捕技能迁移",
+      "canonical_evidence": "多任务RL与表示学习，可应用于无人机拦截与围捕技能迁移",
+      "llm_tldr_en": "RepMT-SAC enables efficient multi-task RL with zero-shot and few-shot transfer, demonstrated on quadcopter trajectory following, relevant for UAV interception policies.",
+      "llm_tldr_cn": "本文提出RepMT-SAC框架，通过谱MDP分解提取可迁移动力学，将值函数分为任务无关核心和任务特定调整。在四旋翼轨迹跟踪任务上实现了零样本和小样本迁移，可快速适应新拦截场景。该方法为无人机拦截与围捕任务中的策略迁移提供了高效工具。",
+      "llm_tldr": "本文提出RepMT-SAC框架，通过谱MDP分解提取可迁移动力学，将值函数分为任务无关核心和任务特定调整。在四旋翼轨迹跟踪任务上实现了零样本和小样本迁移，可快速适应新拦截场景。该方法为无人机拦截与围捕任务中的策略迁移提供了高效工具。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.16621v1",
+      "source": "arxiv",
+      "title": "Reinforcement Learning with Inner-loop Dynamics Estimator for Aerial Manipulation under Uncertainty",
+      "abstract": "Aerial manipulators enable physical interaction in hard-to-reach environments; however, the combined problem of direct whole-body aerial manipulation under rapid arm motion, payload changes, and related unknown dynamic uncertainty remains a largely unsolved problem. We present a hierarchical control framework that combines Reinforcement Learning (RL) with an inner-loop dynamics estimator to address this problem. The RL outer loop maps desired 6-degrees-of-freedom (DOF) end-effector targets to coordinated whole-body commands, enabling direct task-driven control without relying on a fully accurate coupled dynamic model in the policy layer. An inner loop then tracks these commands while compensating for transient inertial shifts and uncertainty during execution via a dynamics estimator scheme without requiring system model knowledge. We validate the proposed approach on a custom quadrotor equipped with a 3-DoF manipulator through hardware experiments under varying payload conditions. Compared with RL+PID and RL+INDI+PID baselines, the proposed method reduces end-effector tracking error and improves task success rate across the tested hardware conditions. These results show that combining learned whole-body coordination with estimator-based low-level compensation improves the precision and robustness of aerial manipulation under changing operating conditions.",
+      "authors": [
+        "Shivansh Pratap Singh",
+        "Samaksh Ujjwal",
+        "Ishita Chaudhary",
+        "V R Vasudevan",
+        "Rishabh Dev Yadav",
+        "Spandan Roy"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-15T12:16:01+00:00",
+      "link": "https://arxiv.org/pdf/2606.16621v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "RL for aerial manipulation under uncertainty, applicable to UAV interception tasks",
+      "llm_evidence_cn": "面向不确定性的空中操纵强化学习框架，可迁移至无人机拦截任务",
+      "llm_evidence": "面向不确定性的空中操纵强化学习框架，可迁移至无人机拦截任务",
+      "canonical_evidence": "面向不确定性的空中操纵强化学习框架，可迁移至无人机拦截任务",
+      "llm_tldr_en": "Hierarchical RL with inner-loop dynamics estimator for aerial manipulation under uncertainty, enabling direct task-driven control without accurate dynamics model.",
+      "llm_tldr_cn": "该论文针对空中操纵器在快速臂运动、载荷变化等不确定性下控制难题，提出一种分层强化学习框架，外环RL将末端执行器目标映射为全身指令，内环动力学估计器补偿惯性扰动。实验表明该方法在复杂环境中实现了鲁棒的操纵控制。该框架的核心思想可迁移至无人机拦截任务，提供处理不确定性的通用RL方法。",
+      "llm_tldr": "该论文针对空中操纵器在快速臂运动、载荷变化等不确定性下控制难题，提出一种分层强化学习框架，外环RL将末端执行器目标映射为全身指令，内环动力学估计器补偿惯性扰动。实验表明该方法在复杂环境中实现了鲁棒的操纵控制。该框架的核心思想可迁移至无人机拦截任务，提供处理不确定性的通用RL方法。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

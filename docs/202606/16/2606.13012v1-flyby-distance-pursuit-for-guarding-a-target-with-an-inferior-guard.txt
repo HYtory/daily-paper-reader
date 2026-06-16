@@ -1,0 +1,746 @@
+Title: Flyby Distance Pursuit for Guarding a Target with an Inferior Guard
+
+URL Source: https://arxiv.org/pdf/2606.13012v1
+
+Published Time: Fri, 12 Jun 2026 00:42:43 GMT
+
+Number of Pages: 27
+
+Markdown Content:
+# Flyby Distance Pursuit for Guarding a Target with an Inferior Guard 
+
+## Navot Israeli ∗
+
+## WALES Ltd., Ramat Gan, Israel, 5252226 Vitaly Shaferman †and Oded Golan ‡
+
+## Technion, Israel Institute of Technology, Haifa, Israel, 3200003 June 12, 2026 
+
+Abstract 
+
+Guarding a target against a fast Attacker with a slower Guard is posed as a differential game. Both players follow nonlinear, thrust-free, aerody-namic motion in the plane. The capturability problem inherent in this scenario is addressed by formulating the game such that the Attacker is constrained to terminate at its Target, and the game value is the flyby distance. The latter is made accessible at termination by introducing an auxiliary state variable that records the players’ minimum separation distance throughout their flight. This novel combination of termination condition and auxiliary state removes a structural limitation of current pursuit games and opens a new class of solvable problems. It also enables us to embed attacker mission constraints directly. Taking an indirect ap-proach, we formulate the game’s Two-Point Boundary Value Problem, solve it numerically, and identify several solution types. When the At-tacker’s only constraint is to reach the Target, he can do so without being captured. These types of solutions, however, are less practical due to long flight times and slow terminal speeds. Imposing an Attacker ter-minal speed constraint yields simpler solutions and reveals the trade-off between terminal speed and flyby distance. We demonstrate that in such a setting, capture is possible in a relevant region of the parameter space. 
+
+> ∗
+
+Researcher, WALES Ltd., navot.israeli@gmail.com,(Corresponding author). 
+
+> †
+
+Associate Professor, The Stephen B. Klein Faculty of Aerospace Engineering, Technion, vitalysh@technion.ac.il. 
+
+> ‡
+
+Full Research Fellow, The Stephen B. Klein Faculty of Aerospace Engineering, Technion, oded.golan@technion.ac.il. 
+
+1
+
+> arXiv:2606.13012v1 [math.OC] 11 Jun 2026
+
+# 1 Introduction 
+
+The classic “Guarding a Target” (GaT) game [11, 12] consists of an Attacker (Evader) that seeks to approach a Target, and a Guard (Pursuer) that seeks to catch it as far from the Target as possible. The original problem was defined with simple motion, but players’ dynamics can, in principle, be made more realistic. It is a zero-sum differential game (often termed a pursuit or pursuit-evasion game in the defense context) that assumes both players have conflicting objectives, play optimally, and have full information at all times. Game solu-tions are optimal Attacker and Guard trajectories that represent an equilibrium in the sense that if either side deviates, it does not gain. Differential games in general, and GaT in particular, are therefore a natural framework for the study of pursuit-evasion strategies in defense scenarios. Despite the elegance and promise of this approach, applications in realistic air and missile-defense scenarios have been limited. The use of differential games was pioneered by Isaacs [11] and has since become a well-established theory [2, 7]. A differential game is defined by the players’ dynamics, constraints, and objectives. Via the necessary optimality conditions, this leads to a Two-Point Boundary Value Problem (TPBVP), a dif-ferential equation for the problem’s state and co-state variables, with boundary conditions at the initial and final times. One reason for the limited application of differential games in realistic scenarios is that the TPBVP is often difficult to solve. Analytical solutions exist only for simple toy problems and linear systems. Numerical solutions are also quite challenging. For this reason, the application of differential games to air and missile defense was largely limited to problems that could be linearized. Endgame problems often justify lineariza-tion, and examples of differential games applications to endgame problems can be found in [1, 5, 9]. A second limitation, specific to GaT (and other problems with no predefined termination time), is that it is applicable only in the Usable Part of the terminal capture surface [2]. Namely, only in scenarios where capture is guaranteed by Guard superiority. The limitation arises by construction because Capture is chosen as the game-termination condition. If the Attacker is capable of escape, the termination condition is never satisfied, and the game admits no solutions. GaT is therefore inapplicable in scenarios where capture is not guaranteed by the players’ intrinsic capabilities. But the fact that GaT is inapplicable does not necessarily mean an Attacker’s success. For example, a fast Attacker may lose its velocity advantage on the ingress due to drag forces and be captured by an intrinsically inferior Guard. Note that by giving this simple example, we have introduced a subtle point. When we refer to “ingress”, we implicitly assume that the Attacker will eventually reach the target. He cannot simply disengage and escape. This fact is absent from GaT, which is agnostic to whether the Attacker is captured on a Target ingress trajectory (In Isaacs’ original simple-motion formulation, this distinction is immaterial, whereas under realistic aerodynamic flight dynamics it may fundamentally alter the engagement outcome). In other words, in our simple example, the Attacker is given a modified mission: reach the 2Target without being captured. Consequently, the Guard’s mission is modified to catch the Attacker on the Target ingress trajectories. These modified missions may be viable to either side, and their success or failure is determined not solely by intrinsic capabilities. The main contribution of our work is the formulation of a new pursuit game that implements these modified Guard and Attacker missions. We termed it Flyby Distance Pursuit (FBDP). As the name suggests, the game value in FBDP is the players’ flyby distance, i.e., the minimum separation throughout their flight. This value is made accessible at game termination by introducing an auxiliary state variable that records the minimum separation. FBDP termi-nates when the Attacker arrives at the Target, which is the only well-defined event (excluding game start) at our disposal 1. This terminal condition is con-venient because it allows us to introduce terminal constraints that are key to the Attacker’s mission (e.g., reaching the Target or maintaining sufficient speed) and limit its evasion abilities. The game admits solutions with arbitrary flyby distances, which can be interpreted as either Guard or Attacker success when compared to an appropriate capture distance. Our second contribution is game solutions. The TPBVP arising from FBDP is nonlinear and will probably defy analytic solution attempts. Numerical so-lutions, however, are possible through the use of CNLP methods that combine Collocation and Non Linear Programming (NLP) solvers [6]. Collocation en-ables efficient time discretization by transcribing the differential equations into algebraic constraints relating the state variables and controls on a sparse time grid. The problem is then passed to an NLP solver that searches for a satisfying variable assignment. Horie and Conway [10] and Carr et al. [8] used a CNLP optimal control solver to solve pursuit games. They developed hybrid semi-direct CNLP schemes that perform a direct one-player optimization over the other player’s indirect solution. Other authors have suggested iterative schemes in which direct opti-mization is applied alternately to one player while the other is held fixed [13]. “Direct” in this context means optimization via direct manipulation of the prob-lem’s controls, while “indirect” means optimization by satisfying the necessary conditions (i.e., the TPBVP solution). The appeal of direct optimization is that it eliminates the need for co-state variables, thereby reducing the problem dimension by half. It also eliminates the need to provide an initial guess for the co-state solution, which is often non-intuitive. Direct methods, however, are only appropriate for one-sided optimization, where the objective function is nonconflicting. The hybrid methods developed by these authors were meant to bypass this difficulty, at the cost of resorting to an iterative solver. Following the above examples, we adopt the CNLP approach but insist on a purely indi-rect solution. We use the optimal control solver PSOPT [3, 4] to solve FBDP 
+
+> 1One may suggest using flyby as a termination point, but flyby is not a well-defined event because it cannot be recognized in real time. Players’ separation may evolve through several minima (see examples in 3.3.1), and the global minimum can only be identified once the Target is reached.
+
+3TPBVP as is. 2
+
+The rest of the paper is organized as follows. The FBDP is defined in Sec. 2. The game is formulated for two players who follow thrust-free, aerodynamic motion in a constant altitude plane. Working in a 2D plane is the main simpli-fication that we make. We justify it by the fact that it contains the problem’s main ingredients (large-scale maneuvers with energy loss due to drag) and by the insight it provides for solving a 3D problem in the future. The FBDP is numerically solved, and the solutions are presented in Sec. 3. We focus on a head-on engagement of a fast Attacker by a slower Guard. Two types of Attacker terminal constraints are considered. In Sec. 3.2 we present solutions for cases where the Attacker is conscious of his terminal speed in order to maintain his kinematic advantage throughout the game. We do this by constraining the Attacker to reach the Target with specific terminal speeds. Varying the terminal speed constraint, we thus draw the At-tacker’s tradeoff between flyby distance and terminal speed. Our results show that reasonable terminal speed constraints lead to capture. Namely, defense is possible despite the Attacker’s kinematic advantage. Sec. 3.3 is devoted to solutions with free Attacker’s terminal speed. These solutions are generally impractical due to long flight times and low terminal speeds. They are, however, valuable because they expose multiple local pur-suit–evasion solution structures and illustrate the complexity of the underlying game. We identified four distinct solution types with free Attacker’s terminal speeds. In contrast to the constrained terminal speed case, the Attacker can evade the Guard and reach the Target with large flyby distances. Some of the free Attacker’s terminal speed solutions that we found may correspond to solu-tions to a degenerate version of the problem, in which the Attacker is allowed only maximal or zero control. This degenerate problem is studied in Appendix A. We find it useful for understanding the solution structure of the FBDP. Ap-pendix A may also be useful for supplying initial guesses for the CNLP solver. Our conclusions are given in Sec. 4. 
+
+# 2 Flyby Distance Pursuit 
+
+We begin by formulating the problem as a zero-sum differential game between Attacker and Guard. Both players move in a constant altitude (˜ x, ˜y) plane, with air density ˜ ρ. Their positions and velocities are denoted, respectively, by ˜r˜r˜ri = [˜ xi, ˜yi]T , ˜v˜v˜vi = [˜ vxi , ˜vyi ]T (1) where i ∈ { a, g } stand for Attacker/Guard respectively. We decorate these variables and parameters with ˜ □ because we will soon re-scale the problem and prefer the re-scaled expressions to be concise. 
+
+> 2Although PSOPT is an optimal control solver (designed for optimizing a cost functional of a controlled dynamic system), we only use it as a TPBVP solver with no optimization.
+
+4The players obey equations of motion of a point mass, thrust-free, instanta-neous Angle of Attack (AoA) control: 
+
+d˜r˜r˜ri
+
+d˜t =˜ v˜v˜vi
+
+d˜v˜v˜vi
+
+d˜t = ˜Si · ˜ρ · || ˜v˜v˜vi|| 
+
+2 · ˜mi
+
+·
+
+
+
+˜Cl αi · ˜ui · ˜v˜v˜vi⊥ − ( ˜Cd 0i + ˜Cd α2 
+
+> i
+
+· ˜u2 
+
+> i
+
+) · ˜v˜v˜vi
+
+ (2) The initial conditions are ˜r˜r˜ri(˜ t = 0) = ˜ r˜r˜ri0 , ˜v˜v˜vi(˜ t = 0) = ˜ v˜v˜vi0 (3) and the final conditions will be specified later as part of the formulation of the game. ˜Si, ˜ mi, ˜Cl αi , ˜Cd 0i , and ˜Cd α2 
+
+> i
+
+are the players’ reference area, mass, lift slope, parasitic drag, and induced drag coefficients. ˜ui are the players’ AoA controls in the horizontal plane. They are limited by |˜ui| ≤ ˜Ui. ˜v˜v˜vi⊥ =[−˜vyi , ˜vxi ]T are the perpendicular velocity vectors. In the sequel we will use 
+
+zzz⊥ ≡ [−zy , z x]T for any two dimensional vector zzz = [ zx, z y ]T . Note that the players’ radii of maximal turn (i.e., minimal radii) ˜Ri = 2· ˜mi    
+
+> ˜Si·˜ρ·˜Cl αi·˜Ui
+
+are time independent. Adopting ˜Ra and ˜Ta = ˜Ra
+
+> ˜V0a
+
+as our length and time units, we move to the scaled position rrri = ˜r˜r˜ri 
+
+> ¯Ra
+
+, velocity vvvi = ˜v˜v˜vi
+
+> ˜V0a
+
+and time t = ˜t
+
+> ˜Ta
+
+variables. ˜V0a = || ˜v˜v˜va(0) || here is the Attacker’s initial speed. The equations of motion Eq. 2 are rewritten as ˙rrri = vvvi, ˙vvvi = ζi · || vvvi|| · 
+
+
+
+ui · vvvi⊥ − (Cd 0i + Cd α2 
+
+> i
+
+· u2 
+
+> i
+
+) · vvvi
+
+
+
+(4) where ˙ □ ≡ d□ 
+
+> dt
+
+and 
+
+Cd 0i = ˜Cd 0i
+
+˜Cl αi · ˜Ui
+
+, Cd α2 
+
+> i
+
+=˜Cd α2 
+
+> i
+
+· ˜Ui
+
+˜Cl αi
+
+, ui = ˜ui
+
+˜Ui
+
+, ζa ≡ 1, ζg = ˜Ra
+
+˜Rg
+
+(5) The scaled controls ui are bounded by |ui| ≤ 1. We are thus left with only 5 parameters (compared to the initial 13). Using these scaled variables, the game state vector is given by 
+
+xxx = rrrTa , r rrTg , v vvTa , v vvTg , μ T (6) where μ is an auxiliary variable that records the players’ minimal separation. 
+
+## 2.1 Flyby Distance Variable 
+
+The flyby distance variable obeys the following dynamics: ˙μ = − Θ( μ − ∆r) · (μ − ∆r)
+
+τ , ∆r =
+
+q
+
+|| rrra − rrrg || 2 + δ2 (7) 5where ∆ r is the players’ distance with the cusp smoothed on a small scale δ,and τ is a small time constant. Θ ( ·) is a step function which is δ smoothed as well. We use the piecewise continuous expression Θ( x) = 
+
+
+
+1, δ < x 
+
+1 − (x−δ)2 
+
+> 2·δ2
+
+, 0 < x ≤ δ 
+
+> (x+δ)2
+> 2·δ2
+
+, −δ < x ≤ 00, x < −δ
+
+(8) which has a continuous first derivative. By this construction, the flyby distance variable μ converges exponentially to ∆ r when the players’ separation decreases below its former minimal value and remains constant otherwise. The scales τ , δ serve as small parameters that define the temporal and spatial resolution of the process. Smoothing by 
+
+δ here simply means that we are not interested in flyby distances smaller than 
+
+O(δ), which may loosely be interpreted as the capture radius (in our results, see Fig. 2(c), we find that μ(tf ) ≈ 2 · δ means almost zero actual flyby distance). With a constant closing speed ˙∆r, μ converges exponentially to a steady state that lags behind ∆ r a distance τ · ˙∆r. The time constant τ should therefore be on the scale of δ 
+
+> ˙∆r
+
+.
+
+## 2.2 Objective Function 
+
+The Attacker and Guard maximize and minimize, respectively, the following Mayer cost: 
+
+J = μ(tf ) + ϕva · || vvva(tf )|| − ϕvg · || vvvg (tf )|| (9) The primary cost is the terminal flyby distance μ(tf ). To this, we add terms that favor speed conservation. These terms are necessary because the terminal flyby distance is determined at some intermediate time tf b ≤ tf . Valuing the flyby distance alone provides no guidance (especially for the Guard) for tf b ≤
+
+t ≤ tf . Adding small ϕva , ϕ vg regularization terms removes this degeneracy without significantly altering the game. Adding significant ϕva , ϕ vg costs may be useful for studying the players’ trade-off between flyby distance and final speeds. This, however, is more conveniently achieved by setting concrete terminal speed constraints (see 2.5). In the sequel, ϕva , ϕ vg will only be used as small regulatory terms. 
+
+## 2.3 Hamiltonian and Co-states Dynamics 
+
+Following [2] we write the game Hamiltonian 
+
+H = λλλTra ˙rrra + λλλTrg ˙rrrg + λλλTva ˙vvva + λλλTvg ˙vvvg + λμ ˙μ (10) which defines the co-states 
+
+λλλ =
+
+h
+
+λλλTra , λ λλTrg , λ λλTva , λ λλTvg , λ μ
+
+iT
+
+(11) 6Co-states dynamics obey ˙λλλ = −   ∂H
+
+> ∂x xx
+
+, which expands to ˙λλλri = − (rrri − rrr¯i)∆r · λμ
+
+τ · [Θ ′(μ − ∆r) · (μ − ∆r) + Θ( μ − ∆r)] ˙λλλvi = − λλλri + ζi ·
+
+h 
+
+Cd 0i + Cd α2 
+
+> i
+
+· u2
+
+> i
+
+
+
+·  λλλTvi vvvi
+
+ − ui ·  λλλTvi vvvi⊥
+
+i
+
+· vvvi
+
+|| vvvi|| 
+
++ || vvvi|| · 
+
+h
+
+ui · λλλvi⊥ +
+
+
+
+Cd 0i + Cd α2 
+
+> i
+
+· u2
+
+> i
+
+
+
+· λλλvi
+
+io 
+
+˙λμ = λμ
+
+τ · [Θ ′(μ − ∆r) · (μ − ∆r) + Θ( μ − ∆r)] (12) where ¯ i = {a, g } \ i is the opponent of i.
+
+## 2.4 Optimal Controls 
+
+The controls ua and ug enter the Hamiltonian in Eq. 10 only through the terms λλλTva ˙vvva and λλλTvg ˙vvvg respectively. Isaacs condition (see [2] p. 428) that max 
+
+> |ua|≤ 1
+
+
+
+min  
+
+> |ug|≤ 1
+
+(H)
+
+
+
+= min  
+
+> |ug|≤ 1
+
+
+
+max 
+
+> |ua|≤ 1
+
+(H)
+
+
+
+therefore holds and the optimal controls are given by 
+
+u∗ 
+
+> a
+
+= argmax 
+
+> |ua|≤ 1
+
+ λλλTva ˙vvva
+
+
+
+u∗ 
+
+> g
+
+= argmin  
+
+> |ug|≤ 1
+
+
+
+λλλTvg ˙vvvg
+
+ (13) Therefore, the Attacker’s acceleration is attracted to his velocity co-state direction, and the Guard’s acceleration is repelled from his. Using Eq. 4 and omitting controls independent terms, we get 
+
+u∗ 
+
+> a
+
+= argmax 
+
+> |ua|≤ 1
+
+ ua · λλλTva vvva⊥ − Cd α2 
+
+> a
+
+· u2 
+
+> a
+
+· λλλTva vvva
+
+ (14) which depends on vvva and its co-state λλλva only through the angle 
+
+φa = atan 2  λλλTva vvva⊥ , λ λλTva vvva
+
+ (15) between them. Replacing 
+
+λλλTva vvva⊥ = || vvva|| · || λλλva || · sin φa, λλλTva vvva = || vvva|| · || λλλva || · cos φa (16) and canceling the || vvva|| · || λλλva || factors, we are left with 
+
+u∗ 
+
+> i
+
+= argmax 
+
+> |ui|≤ 1
+
+h
+
+sin φi · ui − Cd α2 
+
+> i
+
+· cos φi · u2
+
+> i
+
+i
+
+(17) which is applicable to the Guard as well, provided that we define 
+
+φg = atan 2
+
+
+
+−λλλTvg vvvg⊥ , −λλλTvg vvvg
+
+
+
+(18) 7as the angle between −λλλvg and vvvg . Equation 17 is solved by 
+
+u∗ 
+
+> i
+
+=
+
+
+
+1, φi > ¯φi 
+
+> tan φi
+> 2·Cd α2
+> i
+
+, |φi| ≤ ¯φi
+
+−1, φi < − ¯φi
+
+(19) with ¯ φi = tan −1
+
+
+
+2 · Cd α2
+
+> i
+
+
+
+. Note that the induced drag coefficient Cd α2 
+
+> i
+
+in-troduces a region ( − ¯φi, ¯φi) of moderated control. It has a stabilizing effect on the equations of motion Eq. 4 integration, which may otherwise be numeri-cally unstable. This is especially important at the termination time, where the boundary condition Eq. 27 dictates that the velocities will be aligned with their co-states. 
+
+## 2.5 Boundary Conditions 
+
+A solution of the game differential equations defined in Eq. 4 and Eq. 12 requires a total of 19 boundary conditions (8 kinematic state variables, 8 kinematic co-state variables, 1 flyby distance, 1 flyby distance co-state, 1 free termination time). Eight boundary conditions are determined by the initial state of Eq. 3: 
+
+rrra(t = 0) = rrra0 , vvva(t = 0) = vvva0
+
+rrrg (t = 0) = rrrg0 , vvvg (t = 0) = vvvg0
+
+(20) A ninth condition specifies the initial flyby distance value: 
+
+μ(t = 0) = ∆ r(t = 0) − τ · ˙∆r(t = 0) (21) This boundary condition puts μ in a steady state distance from ∆ r when the two players are initially moving closer with a constant closing speed (i.e., ˙∆r < 0). As μ(t) converges to ∆ r(t) − τ · ˙∆r(t) exponentially, this boundary condition has only a transient effect and does not change the overall solution significantly. As mentioned before, the game terminates when the Attacker reaches the Target. Namely, 
+
+rrra (tf ) = rrrtarget (22) We may also wish to apply an Attacker Terminal Speed (ATS) constraint 3.
+
+|| vvva (tf ) || = Vaterminal (23) These terminal conditions define a termination manifold upon which the vector ΓΓΓ = rrrTa (tf ) − rrrTtarget , || vvva (tf ) || − Vaterminal 
+
+T (24) vanishes. 
+
+> 3An inequality constraint here would have been more natural, but is harder to solve.
+
+8The transversality conditions are given by the gradient of the terminal cost with respect to the game final state, on the termination manifold: 
+
+λλλ(tf ) = 
+
+ ∂J
+
+∂x xx(tf )
+
+T
+
+> ΓΓΓ=0 00
+
+(25) This is achieved by replacing J in Eq. 25 with the augmented terminal cost ¯J = J + κκκT ΓΓΓ (26) where κκκ = [ κ1, κ 2, κ 3]T is a vector of arbitrary Lagrange multipliers. We get 
+
+λλλra (tf ) = 
+
+ ∂ ¯J
+
+∂r rra
+
+T
+
+= [ κ1, κ 2]T
+
+λλλrg (tf ) = 
+
+ ∂ ¯J
+
+∂r rrg
+
+T
+
+= 0
+
+λλλva (tf ) = 
+
+ ∂ ¯J
+
+∂v vva
+
+T
+
+= ( ϕva + κ3) · vvva(tf )
+
+|| vvva(tf )|| 
+
+λλλvg (tf ) = 
+
+ ∂ ¯J
+
+∂v vvg
+
+T
+
+= −ϕvg · vvvg (tf )
+
+|| vvvg (tf )|| 
+
+λμ (tf ) = ∂ ¯J
+
+∂μ = 1 (27) where 0 is a vector of zeros with appropriate dimensions. Note that since κκκ
+
+is arbitrary, λλλra (tf ) is completely free. In addition, when applying the ATS constraint, the weight ϕva is swallowed by κ3. ϕva , therefore, is meaningful only without the ATS constraint. The boundary condition for the Attacker’s velocity co-state can thus be summarized by 
+
+λλλva (tf ) ∥ vvva(tf ) (28) with ATS constraint, and 
+
+λλλva (tf ) = ϕva · vvva(tf )
+
+|| vvva(tf )|| (29) without ATS constraint. Note that these two types of boundary conditions are interchangeable. Any solution that satisfies the ATS boundary conditions (23) and (28) also satisfies the free ATS boundary condition (29) with ϕva =    
+
+> λλλTva (tf)vvva(tf)
+> || vvva(tf)||
+
+The last boundary condition is [7] 
+
+H (tf ) = 0 (30) 9Note that boundary condition λμ (tf ) = 1 together with the EOM in Eq. 12 suggests the approximation 
+
+λμ(t) ≈
+
+(
+
+e t−tf b τ t ≤ tf b 
+
+1 t > t f b 
+
+(31) Where tf b is the flyby time. 
+
+# 3 Flyby Distance Pursuit Solutions 
+
+## 3.1 Scenario 
+
+Consider a scenario where the Target and the Guard’s launch point are co-located at the origin. The Attacker is detected at a range of ≈ 6 along the 
+
+x-axis, heading towards the Target. After detection, the Guard needs to make a launch decision. He waits for the Attacker to approach a range L and then launches to a selected azimuth. Prior to the Guard’s launch, the Attacker has no reason to turn. Any change of heading on his part will be answered effortlessly by the Guard’s launch azimuth. In this state, the Guard launches towards the Attacker, along the positive x-axis. The game is thus started at a range L, in a head-on geometry. Game solutions from this initial state have a reflection symmetry about the x-axis. In the sequel, we focus on solutions in which the Attacker initially plays towards the positive y direction. We are interested in a situation in which the Attacker has a speed advan-tage while the Guard has a smaller (better) turn radius. For simplicity, this is achieved by the following parameter selection. Both players share the same aerodynamic properties, adopted (with some simplifications) from [14], with ˜Cl αi = 0 .75, ˜Cd 0i = 0 .012, ˜Cd α2 
+
+> i
+
+= 0 .6. In reality, they will differ, but we wish to focus the analysis on kinematical aspects. The Guard’s smaller turn radius is achieved by giving it a larger maximal AoA of ˜Ug = 30 ° while the Attacker is limited by ˜Ua = 15 °. In terms of our scaled parameters this is translated to 
+
+Cd 0a = 0 .061, Cd α2 
+
+> a
+
+= 0 .209, Cd 0g = 0 .031, Cd α2 
+
+> g
+
+= 0 .419 and ζg = 2. By our definition of the scaled variables, the initial Attacker’s speed is 1. The slower guard has an initial speed of 0.4. Although the Attacker slows down during his flight from the detection point to L, he can still produce larger lateral acceler-ations. For example, with L = 3, the Attacker’s initial maneuver capability is more than twice the Guard’s. In the general scenario above, we identified several solution types, with and without ATS constraints. Constrained Attacker Terminal Speed (CATS) solu-tions are more realistic and convey the important result that defense is possible despite the Attacker’s kinematic advantage. Solutions without ATS constraints (and small speed constants ϕva , ϕ vg ) tend to be impractical due to slow terminal speeds and long flight times. We refer to them as Free Attacker Terminal Speed (FATS) solutions. They are interesting from the pattern formation perspective and may suggest different types of pursuit-evasion strategies. In our workflow, 10 FATS were found first and later used as initial guesses for CATS. Here, we discuss CATS solutions first because of their practical importance. All the results presented in the sequel were computed using δ, τ << 1. The Guard’s speed cost weight was set to ϕvg = 0 .37. An identical Attacker’s speed cost weight of ϕva = 0 .37 was used for the FATS solutions as well. 
+
+## 3.2 Constrained Attacker Terminal Speed Solutions 
+
+The Attacker should not arrive at the Target too slow. Approaching the Target at a speed much slower than that of a Guard makes it vulnerable to additional interception attempts. With this in mind, we solved FBDP with different ATS constraint values and from different launch ranges L. Figure 1 presents players’ trajectories from game solutions with an ATS constraint of 0.4, matching the Guard’s launch speed. The Attacker is plotted in red while the Guard is in blue. Black markers on the players’ trajectories mark the flyby points, and the final value of the flyby distance variable μ(tf ) is denoted (in δ’s). The Attacker performs an evasion maneuver to the right, flies straight, and then makes a left turn that reaches the Target. The Guard makes a left turn to intercept the Attacker and, once the flyby point is passed, continues straight to conserve his speed. When the Guard launches at a range L = 6 .13, he misses the Attacker by 8δ. The flyby distance decreases with launch range, and at L = 2 .45 it shrinks to 2 δ.The Guard’s performance in Fig. 1 can be appreciated by a comparison with standard guidance laws. To this end, we plotted the green curve in Fig. 1 that shows the trajectory of a Proportional Navigation (PN) guided Guard, trying to intercept the L = 6 .13 Attacker trajectory. Compared with the game solution, the PN Guard is slow to apply a maximal turn at first and later does not relax his maximal turn at all (to conserve speed). The end result is a flyby distance of 31 δ, larger than the 8 δ flyby of the game solution. These results were obtained using a navigation constant of N = 4. A sharper reaction may be elicited by using a larger value of N , but N ≈ 100 is required for a good imitation of the early part of the Guard’s solution. Even with an impractical N = 100, the PN Guard performance is inferior to the game solution. Figure 2 presents additional information for the trajectories presented in Fig. 1. Figure 2(a) shows the players’ speeds, which decrease considerably with flight time. Figure 2(b) shows the players’ scaled controls. At the longest launch range L = 6 .13, the Attacker’s control is moderated while the Guard uses a maximal turn at first, reduces it at some point, and then sets it to zero at the flyby time. At shorter launch ranges, the Attacker’s control approaches its limiter while the Guard’s becomes moderated. At L = 2 .45, the Attacker’s control is almost maximal. It maximizes at L = 2 .21 (not shown), and below this range, there are no further solutions because the Attacker cannot shed sufficient speed from a shorter range. Note that both players always terminate with their controls set to zero, in agreement with the optimal control Eq. 19 and the transversality boundary conditions in Eq. 27 that align the velocity co-states with the velocity vectors at tf .11 Figure 1: Players’ trajectories with 0.4 Attacker terminal speed constraint. Figure 2(c) presents the flyby distance variable μ (green) and compares it with the actual players’ instantaneous separation distance (black). We observe that μ indeed follows the instantaneous separation until the flyby point and then detaches from it with a value that records the flyby distance. As the solid curves in Fig. 2(c) indicate, the recorded value is an upper bound with an accuracy of ≈ 2δ. Finally, Fig. 2(d) presents the flyby variable costate λμ. As expected from Eq. 31, λμ exhibits a sharp transition from 0 to 1 at the flyby time. The overshoots, however, are not accounted for by the approximation in Eq. 31 and are introduced by the finite width of the step function Θ. The players’ position and velocity co-states are also part of the solution, but we refrain from presenting them, as they are not very informative. Figure 3 presents the Attacker’s tradeoff between flyby distance and termi-nal speed. The different curves show the recorded flyby distance μ(tf ) as a function of launch range L for different values of the ATS constraint. With ATS constraint of 0.27 (blue), the Attacker can escape with flyby distances on the order of the Attacker’s turn radius, unless the Guard launches at a range of L ≈ 2.8, where μ(tf ) drops below 2 δ. As we mentioned earlier, μ(tf ) is an upper bound for the actual flyby distance with an accuracy of 2 δ. μ(tf ) ≤ 2δ,therefore, means that the Attacker is captured. At this point, the blue curve terminates because the Attacker cannot shed enough speed when starting to maneuver at shorter ranges. Flyby distances are reduced with increasing ATS constraint. ATS constraint of 0.33 (green) still results in large flyby distances at large launch ranges and capture at L ≈ 2.8. With ATS constraint of 0.4, the flyby distance is always below 10 δ and drops to 2 δ at L ≈ 3. Increasing the ATS constraint to 0.42 (red) extends the capture launch range to 3.7. The implications of these results are quite important. We demonstrated a scenario in which the combined constraints imposed on the Attacker determine the en-12 (a) Players speeds. (b) Players controls.  
+
+> (c) Flyby variable. (d) Flyby variable co-state.
+
+Figure 2: Game solutions with 0.4 Attacker terminal speed constraint. gagement outcome and make capture possible despite the Attacker’s kinematic advantage. 
+
+## 3.3 Free Attacker Terminal Speed Solutions 
+
+Relaxing the ATS constraint enables the Attacker a richer variety of evasion maneuvers. We discovered four types of such solutions (labeled Types A to D), which we describe here: 
+
+3.3.1 Type A Game Solution 
+
+Type A game solutions are presented in Fig. 4. Figure 4(a) presents the players’ trajectories for game solutions with different launch ranges L. The Attacker is again plotted in red, and the Guard is in blue. Black markers on the players’ trajectories mark the flyby points, and the terminal flyby variable μ(tf ) is de-noted in δ’s. The Attacker turns initially to the right, flies almost straight for a long distance, and then makes a maximal left turn towards the Target. The Guard tries to follow with a left turn but misses the Attacker by tens of δ’s. The flyby time is just before the Attacker arrives at the Target. 13 Figure 3: Flyby distances with different Attacker terminal speed constraints. Type A solutions are similar to the long Bang-Zero-Bang (BZB) solutions discussed in Appendix A. BZB solutions are Attacker and Guard trajectories re-sulting from a degenerate problem in which the Attacker is allowed two maximal-turn flight segments, separated by a straight-flight segment. The Guard is only allowed to execute a constant (possibly maximal) turn. With these constraints, the Attacker’s only degrees of freedom are the turn directions and the duration of the first turn. The Guard’s only degree of freedom is its constant control. Going back to Eq. 19 we note that the region ( − ¯φi, ¯φi) of moderated control vanishes in the small Cd α2 
+
+> i
+
+limit. In this low induced drag to lift ratio limit, only zero or maximal controls are optimal, and BZB solutions (with maximal Guard turns) thus solve FBDP as well. We used this fact to provide the CNLP solver with effective initial guess solutions in the low induced drag limit. Away from this limit, we used an iterative process that started with a low induced drag solution and gradually adjusted the problem parameters, using the previous iteration solution as a guess for the current one. Additional information for the Type A solutions can be found in the other three frames of Fig. 4. Figure 4(b) shows the players’ speeds, which decrease considerably with flight time. Figure 4(c) shows the flyby distance variable μ(t), compared with the actual players’ separation ∆ r(t). Note that these solutions have two flyby points: the primary flyby point that determines the game value just before termination and an earlier point with a larger flyby distance. In spite of this complexity, we again observe that μ records the minimal separation as a function of time with good accuracy ( ≈ 2δ). The difference between the flyby distances at the two points becomes smaller with launch range and equates at 
+
+LA ≈ 2. Type A solutions do not exist below this launch range because the Guard has no reason to continue the chase past the first flyby point once it becomes the primary, and transitions to a speed conservation strategy after the 14 (a) Players trajectories. (b) Players speed.  
+
+> (c) Flyby variable. (d) Players Controls.
+
+Figure 4: Type A solutions. first flyby. Figure 4(d) shows the players’ scaled controls. The Attacker’s control is moderated as the launch range increases because it has more time to execute its evasion maneuver. Both players again terminate with zero controls, in agree-ment with the transversality boundary conditions in Eq. 27 and the optimal controls Eq. 19. 
+
+3.3.2 Type B Game Solutions 
+
+In type B solutions, the Guard aims for the first flyby point. Examples are presented in Fig. 5. The Attacker executes a maximal right turn up to the flyby point, then makes a long left turn that brings him to the Target (Fig. 5(a)). The Guard makes a moderate left turn towards the flyby point and then con-tinues straight to conserve speed. Flyby distances are many tens of δ’s, flight times are approaching 100, and final speeds of the two players drop below 0.2 (Fig. 5(b)). The players scaled controls shown in Fig. 5(d) are plotted against a logarithmic time axis to better capture their behavior. The flyby variable μ
+
+shown in Fig. 5(c) is focused on the flyby time. The examples in Fig. 5 were selected to match the examples of Fig. 4(a) and to show an example of a type B 15 (a) Players trajectories. (b) Players speeds.  
+
+> (c) Flyby variable. (d) Players Controls.
+
+Figure 5: Type B solutions. solution with L < L A. Guard’s post-flyby behavior in these examples exhibits some artifacts due to our limited numerical accuracy at long flight times. These artifacts do not significantly affect the flyby distances. Figure 6 compares the performance of types A and B in terms of flyby distances and final Attacker speeds. Below LA ≈ 2, only type B exists. At 
+
+LA the two solution types provide the same flyby distance, and above LA, the two types coexist. Type A offers the Attacker flyby distances of 50-70 δ with terminal speeds of 0.17-0.27. Type B offers larger flyby distances and slower terminal speeds. We speculate that Type A can be enforced by the Guard by continuing his turn past the first flyby point. The alternative is that the Attacker can enforce type B by escaping to a great distance and then returning. But this could have also been done in type A, turning type A solutions into something different. The existence of type A therefore suggests that an escape maneuver is not beneficial and that the selection mechanism is the Guard’s decision to continue to the second flyby point. 16 (a) Flyby distance. (b) Attacker final speed. 
+
+Figure 6: Types A and B engagement performance. 
+
+3.3.3 Type C Game Solutions 
+
+Figure 7 presents the third type of solutions that we found. In order to avoid complete capture, we reduced the Guard’s AoA limiter ˜Ug from 30 ° to 20 °. The Guard’s scaled parameters are thus modified to Cd 0g = 0 .046, Cd α2 
+
+> g
+
+= 0 .279. Notice that the controls in Fig. 7(c) are nearly BZB. Type C solutions are indeed almost identical to the short BZB trajectories of Appendix A. Moreover, in agreement with the BZB analysis, type C solutions do not exist for launch ranges L ≥ √8. As explained in Appendix A, at this launch range, the short BZB branch merges with the long BZB and is no longer a saddle point. Figure 8 presents the performance of type C solutions in terms of flyby distances and final Attacker speeds. Even with the reduced Guard AoA limiter, type C offers the Attacker flyby distances shorter than solution types A or B. For launch ranges below 1.5, he is actually captured. The selection between type C and A/B solutions is done by shortening or prolonging the Attacker’s initial right turn. Type C solutions are therefore local saddle points because the Attacker can enforce types A/B. 
+
+3.3.4 Type D Game Solutions 
+
+The solutions we presented above consist of two basic Attacker maneuvers: eva-sion followed by Target homing. In contrast, the solution shown in Fig. 9 con-sists of a single one. The parameters are identical to those used in Sec. 3.3.1 except for the Attacker’s speed cost weight, which is reduced to ϕva = 0 .014. The Guard launches at the range L ≈ 2. It is clearly a local saddle point, since the Attacker is caught and, in the same situation with a larger speed cost (ϕva = 0 .37), he could have escaped with a flyby distance of more than 40 δ (see Fig. 6). The Guard here performs a rather elaborate trajectory, which may be interpreted as first blocking a direct approach and then flying to intercept the loop. Since the Attacker here is caught, his strategy is to exhaust the Guard (whose speed cost weight is ϕvg = 0 .37). The existence of this local saddle point 17 (a) Players trajectories. (b) Players speed.  
+
+> (c) Players Controls. (d) Flyby variable.
+
+Figure 7: Type C solutions.  
+
+> (a) Flyby distance. (b) Final Attacker speed.
+
+Figure 8: Type C solutions performance. suggests that there may be others. Given the complex behavior exhibited here, it may be difficult to identify and map all such solutions. To summarize this section, relaxing the ATS constraint leads to a rich vari-ety of solutions. We identified four distinct types and suspect that there may be 18 (a) Players trajectories. (b) Players speed.   
+
+> (c) Players controls. (d) μ
+
+Figure 9: Type D solution. additional types. Types A and B offer the Attacker large flyby distances at the cost of slow terminal speeds. Flyby distances in B are larger, and we currently don’t know how the selection mechanism between the two types works. Namely, it is not clear if A can be enforced by the Guard (making B a local saddle point) or B can be enforced by the Attacker (making A a local saddle point). We spec-ulate that the former is true, but cannot prove so at this time. Type C is clearly a local saddle point that the Attacker may select but yields suboptimal perfor-mance. Type D is another local saddle point that exhibits an elaborate chase that terminates with a capture. These local saddle points attest to the problem complexity, but are impractical as guidance laws. The obtained solutions should therefore be interpreted as local solutions of the nonlinear saddle-point game. 
+
+# 4 Conclusions 
+
+Guarding a target against an Attacker was posed as a differential game. The game is played in a scenario in which the Attacker has a kinematic advan-tage over the Guard. If the Guard’s mission was simply defined to catch the Attacker, he would fail. To mount a practical defense, we defined a viable de-19 fense mission and tasked the Guard with preventing the Attacker from hitting a specific Target. Namely, the Guard should catch the Attacker only on Target ingress trajectories. The Attacker’s mission is to hit the Target without being intercepted. Attacker’s trajectories that terminate elsewhere are considered a defense success. The above missions were translated into a novel differential game that we termed Flyby Distance Pursuit (FBDP). In contrast to classical Guarding a Tar-get (GaT) problems [11, 12] that terminate upon capture, FBDP is terminated when the Attacker reaches the target. The game value is determined by the flyby distance, i.e., the minimum separation between players throughout their flight. This value is made available upon game termination by introducing an auxiliary state variable that records the minimum separation. FBDP was formulated for two players moving in a constant-altitude plane. Playing on a plane is a main simplification in our work, which should obviously be extended in the future to three-dimensional space. The game equations were numerically solved for a reference scenario using the PSOPT optimal control solver. We applied two types of boundary conditions to the Attacker terminal speed: Free and Constrained Attacker Terminal Speeds (FATS and CATS). CATS solutions are practical in the sense that the Attacker is conscious of his terminal speed and maintains his kinematic advantage. Varying the terminal speed constraint, we were able to draw the Attacker’s tradeoff between flyby distance and terminal speed. Our results show that reasonable terminal speed constraints lead to capture. Namely, defense is possible despite the Attacker’s kinematic advantage. FATS solutions are quite impractical due to long flight times and slow ter-minal speeds. However, they allowed us to identify different possible pursuit-evasion strategies and to demonstrate the problem’s complexity. We identified four distinct types of FATS solutions. In contrast to CATS solutions, the At-tacker here can evade the Guard and reach the Target with large flyby distances (at the cost of terminal speed). 
+
+# Acknowledgements 
+
+This work was supported by an internal Technion - Israel Institute of Technology fund. 
+
+# A Appendix: Bang-Zero-Bang Flyby Distance Pursuit 
+
+It is instructive to study a degenerated version of the pursuit game where the Attacker is allowed a Bang-Zero-Bang (BZB) maneuver consisting of the three flight segments illustrated in Fig. 10: maximal right turn with an arc-length L1,straight flight for a distance L2 and maximal left turn with an arc-length L3.We work in the scaled units of Eq. 4 (Attacker turn radius is 1) and consider the 20 Figure 10: BZB Attacker trajectory. same head-on scenario of Sec. 3 where the Guard is co-located with the Target and launches at a range L.At the end of the first turn, the Attacker is at rrr1 = [ L − sin L1, 1 − cos L1]T .At the beginning of the second turn, he is at rrr2 = rrr1 − L2 · [cos L1, − sin L1]T
+
+and is turning left around the pivot point 
+
+ppp = rrr2−[sin L1, cos L1]T = [ L − 2 · sin L1 − L2 · cos L1, 1 − 2 · cos L1 + L2 · sin L1]T
+
+(32) For the Attacker to reach the Target at the origin, we must have || ppp|| 2 = 1. This is a quadratic equation for L2 with the solutions 
+
+L2 = L · cos L1 − sin L1 ±
+
+q
+
+1 − (L · sin L1 + cos L1 − 2) 2 (33) We therefore have two families of Attacker BZB solutions, short ( L(s)2 ) and long ( L(l)2 ), depending on the sign of the discriminant above. Figure 11(a) shows the two branches of L2 as a function of L1, for several (scaled) launch ranges 
+
+L. This figure was generated with the same parameters as in Sec. 3.3.3, and we indicate the actual launch ranges in the legend for convenient reference to Fig. 7(a). Solid/dashed curves show the L(l)2 /L(s)2 solutions respectively. Note that we are only interested in solutions with L2 ≥ 0. Negative values imply that the Attacker’s velocity is reversed at rrr1 and are non-physical. We emphasized those positive solutions in Fig. 11(a) using thicker lines. The discriminant in Eq. 33 becomes zero when 
+
+L · sin L1± + cos L1± − 2 = ±1 (34) The second (minus) option is solved by L1− = 0 and L1− = L1max = atan 2(2 L, 1−
+
+L2), the two values that bound the L1 interval with real L2 solutions. Note that 21 L2(L1 = 0) = L, which implies straight flight. L2(L1max ) = −L which is non-physical. When L < √8 the discriminant is positive for 0 < L 1 < L 1max and the two branches L(l)2 , L (s)2 do not meet. At L = √8 the two branches coincide with 
+
+L(l)2 = L(s)2 = 0 and for L > √8 they coincide with L2̸ = 0 values. The critical value L = √8 may be derived from the L1+ solution of Eq. 34 which we rewrite as 
+
+L = 3 − cos L1+ 
+
+sin L1+ 
+
+(35) This function has a single minimum in L1+ ∈ (0 , L 1max ), satisfying cos L1+ = 13 ,which leads to L = √8. The Guard is allowed a turn with a constant control ug ≤ 1, which he optimizes for each selection of an Attacker BZB trajectory. Since both players fly with piecewise constant turns, their equations of motion can be integrated analytically. Using Eq. 4, the speed vi(t) ≡ || vvvi(t)|| during a turn with constant 
+
+ui obeys 
+
+dv i(t)
+
+dt = −ζi · v2 
+
+> i
+
+(t) · Cdtotal , Cdtotal = Cd 0i + Cd α2 
+
+> i
+
+· u2 
+
+> i
+
+(36) and is solved by 
+
+vi(t) = ζi · Cdtotal · (t − t0) + v−1 
+
+> i
+
+(t0)−1 (37) The traveled distances grow as 
+
+li(t) = li(t0) + 1
+
+ζi · Cdtotal 
+
+· log  ζi · Cdtotal · (t − t0) + v−1 
+
+> i
+
+(t0) + log vi(t0)
+
+(38) Inverting Eq. 38, we get the flight time as a function of the traveled distance 
+
+t(li) = t0 + 1
+
+ζi · Cdtotal · vi(t0) · { exp [ ζi · Cdtotal · (li − li(t0))] − 1} (39) which allows us to draw the players’ trajectories as a function of time and compute flyby distances. Under the above restrictions, the Guard’s optimal trajectory is found by adjusting ug to minimize the flyby distance for every choice of an Attacker tra-jectory. The results are presented in Fig. 11(b). The different curves show the Guard-minimized flyby distances as a function of the initial arc-length 
+
+L1. Solid/dashed curves again denote L(l)2 /L(s)2 solutions. Curves maxima are marked by triangles where ∆ /∇ are the maxima of L(l)2 /L(s)2 curves, respectively. The maxima of L(l)2 solutions are the best result the Attacker can achieve from an initial distance L. The ∆’s are thus global Guard-Attacker (min-max) saddle points. The green ∇ on the L(s)2 curve is a local saddle point. It provides the 22 (a) Attacker BZB straight flight segment   
+
+> L2as a function of the initial turn length
+> L1.
+> (b) Flyby distance as a function of L1.
+
+Figure 11: BZB branches.          
+
+> (a) L= 2 .5. (b) L=√8. (c) L= 3.
+
+Figure 12: Optimal BZB trajectories. Attacker with shorter flyby distances than the green ∆, but any variation of L1
+
+at this point will degrade his result. In contrast, the orange ∇ is a maximum of the orange L(s)2 curve but is not a saddle point. It is located on the long L(l)2 curve as well, and the Attacker may move from it to the orange ∆ while continually increasing his game value. The same argument holds for the purple curve as well, and for every launch range above L = √8. The short BZB saddle point therefore disappears at L ≥ √8. Figure 12 shows the trajectories associated with the maxima marked in Fig. 11(b). The triangles in this figure mark the players’ locations at flyby time. Returning to our original goal, the above BZB trajectories are useful initial guesses for a numerical CNLP solution to the FBDP problem. To this end, we must supplement them with co-state guess trajectories. Co-states are the game value sensitivities to variations in state variables that lead to neighboring optimal trajectories. State variations under the restricted BZB optimality are a subspace of the variations allowed in the original problem (for example, moving sideways from the Attacker’s final arc is not allowed because he will miss the 23 Target). Co-states computed from BZB trajectories are thus only a projection of the FBDP co-states on this subspace. Nevertheless, we find the following procedure useful: Let K(t) = ∂x xxBZB (t) 
+
+> ∂x 0x0x0
+
+be the current state to initial state Jacobian, under the BZB constrained optimization 4. Similarly, let ∇μBZB ∇μBZB ∇μBZB (t) = ∂μ BZB (t) 
+
+> ∂x xx0
+
+be the gradient of the current flyby distance. In particular, ∇μBZB ∇μBZB ∇μBZB (tf ) is the gradient of the game value w.r.t. the initial state. Note that although μ(t) is not necessary for the BZB optimization itself, we do need it to approximate FBDP co-states. In analogy with the FBDP definition, we define it as the running minimal players separation (under the BZB constraints): 
+
+μBZB (t) = min  
+
+> t′∈[0 ,t ]
+
+|| rrra(t′) − rrrg (t′)|| (40) With these definitions, we now write the variation of the game value as 
+
+δμ BZB (tf ) ≡δx δx δx T · λkin λkin λkin (t) + δμ BZB · λμ(t)=δx δx δx T · λkin λkin λkin (t) + λμ(t) · δx 0δx 0δx 0T · ∇ μBZB ∇μBZB ∇μBZB (t)=δx 0δx 0δx 0T · ∇ μBZB ∇μBZB ∇μBZB (tf )(41) 
+
+λkin λkin λkin denotes the vector of kinematic co-states and λμ is the co-state of the auxiliary flyby distance variable μ. Replacing δx 0δx 0δx 0 with K−1(t)·δx δx δx and canceling 
+
+δx δx δx , we get 
+
+K(t)T · λkin λkin λkin (t) = ∇μBZB ∇μBZB ∇μBZB (tf ) − λμ(t) · ∇ μBZB ∇μBZB ∇μBZB (t) (42) For t ≤ tf b we use Eq. 31 to write 
+
+K(t)T · λkin λkin λkin (t) = ∇μBZB ∇μBZB ∇μBZB (tf ) − e t−tf b τ · ∇ μBZB ∇μBZB ∇μBZB (t) (43) which we solve (using singular value decomposition) for λkin λkin λkin (t) in a least square sense. For t > t f b , λμ(t) ≈ 1 and μBZB (t) = μBZB (tf ), leaving us with 
+
+λkin λkin λkin (t > t f b ) ≈ 0. This approximation ignores an additive term λkin null 
+
+λkin null λkin null (t) ∈
+
+N ull K(t)T  that is lost in the projection from the original to the BZB problem. Figure 13 presents a comparison between BZB guess trajectories (dotted curves) and the actual FBDP numerical solution that arrived from it (solid curves). We show the L = 2 .5 local saddle point from Sec. 3.3.3 (see Fig. 7(a)). The trajectories agree very well. Figure 14 shows a comparison between the guess and the actual co-states. Figures 14(a) and 14(b) compare the Guard’s position and velocity co-states. The guess co-states are a good approximation in this case. Figures 14(c) and 14(d) compare the Attacker’s position and ve-locity co-states. The approximation here is initially good but deteriorates at the end of the first arc and, more so, at the flyby time. This is because the  
+
+> 4In writing this, we actually allow a BZB problem with general initial headings. The generalization is straightforward and for the sake of brevity, we avoid it here.
+
+24 Figure 13: BZB guess trajectories comparison with FBDP solution. Attacker’s subspace of the Jacobian K(t) becomes singular there. Neverthe-less, both players’ guess co-states satisfy the transversality conditions in Eq. 27 (with ϕva = ϕvg = 0, which is the correct analogy) and are often good enough for CNLP solver convergence. Indeed, the solid curves in Fig. 13 resulted from a numerical solution that used the dashed curves as an initial guess. 
+
+# References 
+
+[1] Sivasubramanya N. Balakrishnan, Antonios Tsourdos, and Brian A. White, editors. Advances in missile guidance, control, and estimation . Automation and control engineering. CRC Press, Boca Raton, Fla., 2013. [2] Tamer Ba¸ sar and Geert Jan Olsder. Dynamic noncooperative game theory: Revised from the 2nd ed. published in 1995 by Academic Press, New York .Number 23 in Classics in applied mathematics. Society for Industrial and Applied Mathematics (SIAM, 3600 Market Street, Floor 6, Philadelphia, PA 19104), Philadelphia, Pa, 2nd ed edition, 1999. [3] Victor M. Becerra. Solving complex optimal control problems at no cost with PSOPT. In 2010 IEEE International Symposium on Computer-Aided Control System Design , pages 1391–1396, 2010. [4] Victor M Becerra. PSOPT Optimal Control Solver User Manual. Release 5, 2020. Available at https://github.com/PSOPT/psopt/blob/master/ doc/ .25 (a) Guard position co-states. (b) Guard velocity co-states.  
+
+> (c) Attacker position co-states. (d) Attacker velocity co-states.
+
+Figure 14: BZB co-states guess comparison with FBDP solution. [5] Joseph Z. Ben-Asher and Isaac Yaesh. Advances in missile guidance the-ory . Number 180 in Progress in astronautics and aeronautics. American Institute of Aeronautics and Astronautics, Reston, Va, 1998. [6] John T. Betts. Practical methods for optimal control and estimation using nonlinear programming . Number 19 in Advances in design and control. Society for Industrial and Applied Mathematics, Philadelphia, Pa, 2. ed edition, 2010. [7] Arthur Earl Bryson and Yu-Chi Ho. Applied optimal control: optimization, estimation, and control . Taylor & Francis Group, New York Oxon, 1975. [8] Ryan W. Carr, Richard G. Cobb, Meir Pachter, and Scott Pierce. Solution of a Pursuit–Evasion Game Using a Near-Optimal Strategy. Journal of Guidance, Control, and Dynamics , 41(4):841–850, 2018. [9] Shaul Gutman. Applied min-max approach to missile guidance and control .Number 209 in Progress in astronautics and aeronautics. American Inst. of Aeronautics and Astronautics, Reston, Va, 2005. 26 [10] Kazuhiro Horie and Bruce A. Conway. Optimal Fighter Pursuit-Evasion Maneuvers Found Via Two-Sided Optimization. Journal of Guidance, Con-trol, and Dynamics , 29(1):105–112, 2006. [11] Rufus Philip Isaacs. Differential games: a mathematical theory with appli-cations to warfare and pursuit, control and optimization . Dover Publica-tions, Mineola, NY, 1999. [12] Meir Pachter, Eloy Garcia, and David W. Casbeer. Differential Game of Guarding a Target. Journal of Guidance, Control, and Dynamics ,40(11):2991–2998, 2017. [13] Tuomas Raivio. Capture Set Computation of an Optimally Guided Missile. 
+
+Journal of Guidance, Control, and Dynamics , 24(6):1167–1175, 2001. [14] S. Tauqeer ul Islam Rizvi, Lin-shu He, and Da-jun Xu. Optimal trajectory and heat load analysis of different shape lifting reentry vehicles for medium range application. Defence Technology , 11(4):350–361, 2015. 27

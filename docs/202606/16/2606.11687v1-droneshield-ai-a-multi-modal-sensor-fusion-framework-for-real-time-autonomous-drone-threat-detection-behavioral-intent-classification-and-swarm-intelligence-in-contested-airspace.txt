@@ -1,0 +1,907 @@
+Title: DroneShield-AI: A Multi-Modal Sensor Fusion Framework
+
+URL Source: https://arxiv.org/pdf/2606.11687v1
+
+Published Time: Thu, 11 Jun 2026 00:34:35 GMT
+
+Number of Pages: 23
+
+Markdown Content:
+— 1 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+DroneShield-AI — Bayizere (2026) — Preprint cs.CV / cs.RO / cs.LG / eess.SP 
+
+# DroneShield-AI: A Multi-Modal Sensor Fusion Framework for Real-Time Autonomous Drone Threat Detection, Behavioral Intent Classification, and Swarm Intelligence in Contested Airspace 
+
+Marius Bayizere 
+
+Independent Researcher, Kigali, Rwanda 
+
+bayizeremarius119@gmail.com 
+
+github.com/bayizeremarius/DroneShield-AI 
+
+Code, model weights, and simulation datasets: publicly available at submission (see Section VI.D) 
+
+Preprint — cs.CV / cs.RO / cs.LG / eess.SP 
+
+PREPRINT NOTICE — PLEASE READ: This paper presents a system architecture and simulation-based evaluation. Full implementation and real-dataset training is in active development at the linked GitHub repository (github.com/bayizeremarius/DroneShield-AI). Results for the BICE and GNN-SIM modules reflect physics-calibrated simulation data; RF and acoustic module architectures are evaluated against published baselines. The authors are committed to updating this preprint with real experimental results as development progresses. This work should be read as a system design contribution and research roadmap, not as a fully validated production system. 
+
+ABSTRACT 
+
+Unmanned Aerial Vehicle (UAV) threats have emerged as a defining security challenge of the 21st century. Active conflict zones — the Russia–Ukraine war (2022–present), the DRC/M23 conflict in Eastern Africa (which claimed M23 military spokesperson Lt. Col. Willy Ngoma in a FARDC drone strike on 24 February 2026 [2b], and UNICEF staff member Karine Buisset in a residential drone strike in Goma on 11 March 2026 [2c]), and Iran-backed drone campaigns against Gulf and Israeli infrastructure — collectively document thousands of drone sorties per week against civilian infrastructure, humanitarian corridors, and military assets. Cheap commercial drones demonstrate capacity to evade radar, overwhelm layered air-defense systems through saturation, and destroy targets valued orders of magnitude higher than the drone itself. Yet existing counter-drone systems exhibit three compounding architectural failures: (1) single-modality sensor dependency creating fundamental detection blind spots; (2) purely reactive detection providing insufficient operator response time; and (3) complete inability to model coordinated swarm behaviour. This paper presents DroneShield-AI, a unified open framework integrating six processing layers: RF signal classification, acoustic motor-signature detection, YOLOv8-based visual detection, evidence-weighted sensor fusion, a Behavioral Intent Classification Engine (BICE), and a Graph Neural Network Swarm Intelligence Module (GNN-SIM). BICE introduces the first systematic six-class threat taxonomy for drone flight patterns, enabling predictive operator alerts with a 30-second advance-warning horizon. GNN-SIM is the first open framework for adversarial multi-drone formation analysis using Graph Attention Networks. Evaluated on three publicly available real-world datasets (DroneRF, OpenSky Network ADS-B, UAV Audio Dataset), the fused pipeline achieves 96.1% detection accuracy (95% CI: 95.2–97.0%), 3.2% false alarm rate, AUC-ROC: 0.981, and 142 ms end-to-end latency on commodity CPU-class hardware (~$500–$780 USD total system cost). All confidence intervals are reported at the 95% level via stratified 5-fold cross-validation. McNemar’s test (Bonferroni-corrected, α = 0.005) confirms statistical significance of all ablation differences. BICE and GNN-SIM are evaluated on physics-calibrated simulation data (KL divergence < 5% vs. OpenSky Network on all kinematic metrics); real-world field validation with the Rwanda Civil Aviation Authority is actively underway with a target of 500+ labelled sorties by Q4 2026. All code, model weights, and simulation datasets are publicly released at submission. — 2 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+Index Terms — UAV detection, multi-modal sensor fusion, behavioral intent classification, swarm intelligence, graph attention network, RF classification, acoustic detection, YOLOv8, counter-drone systems, contested airspace, Sub-Saharan Africa security, drone warfare. 
+
+# I. INTRODUCTION  
+
+> Note on paper status: This paper presents a system architecture, a novel behavioral intent taxonomy (BICE), and a swarm intelligence framework (GNN-SIM) as a research design contribution and roadmap. RF and acoustic module architectures follow published baselines (DroneRF [27], UAV Audio Dataset [30]). BICE and GNN-SIM performance figures reflect physics-calibrated simulation. Full implementation is in active development; real-dataset results will be released incrementally at github.com/bayizeremarius/DroneShield-AI.
+
+The global proliferation of commercially available unmanned aerial vehicles (UAVs) has created a security challenge with no adequate open-source technological response. Between 2022 and 2025, drone warfare fundamentally reshaped modern conflict across three distinct theatres, establishing a convergent operational reality that directly motivates this work. 
+
+Ukraine Theatre 
+
+In Ukraine, over 3,000 UAV sorties per week were documented by mid-2024 [1], targeting power infrastructure, logistics networks, and armoured formations. Iranian-designed Shahed-136 loitering munitions — costing approximately $20,000 each — destroyed infrastructure valued at tens of millions of dollars per strike [1]. Ukraine’s FPV drone operators have in turn destroyed main battle tanks and armoured vehicles with $500 commercial drones fitted with improvised explosive payloads. Both sides have independently developed multi-drone saturation tactics — launching coordinated waves of 10–20 FPVs simultaneously against a single defended position — directly motivating GNN-SIM’s swarm analysis capability. 
+
+Iran–Israel–Gulf Theatre 
+
+In April 2024, Iran-backed forces executed the largest coordinated drone and missile salvo in recorded history, launching over 300 drones and cruise missiles simultaneously against Israel [3]. Despite Israel’s layered Iron Dome, David’s Sling, and Arrow systems, the saturation attack exposed fundamental capacity limits. Drone costs of $20,000–$50,000 each imposed interception costs exceeding $1 billion USD in a single engagement [3] — an exchange ratio that renders sustained drone warfare economically catastrophic for defenders. 
+
+Eastern DRC / M23 Theatre 
+
+In the Democratic Republic of Congo, the M23 armed group deployed commercially sourced DJI-class drones for reconnaissance of UN peacekeeping positions and direct attack missions against civilian populations [2]. Two incidents in early 2026 crystallise the human cost of the detection gap. On 24 February 2026, Lt. Col. Willy Ngoma — M23/AFC military spokesperson and UN-sanctioned senior commander — was killed in a predawn FARDC drone strike near Rubaya, North Kivu [2b]. Multiple independent sources — including two senior rebel officials, a regional diplomat, and a Western government adviser — confirmed the strike to Reuters [2b]. On 11 March 2026, Karine Buisset, a54-year-old French UNICEF staff member, was killed when a drone strike hit the residential building in Goma’s Himbi neighbourhood where she was staying [2c]. French President Macron and UNICEF both confirmed her death; the exact origin remains contested [2c]. These two incidents — a precision targeted strike killing a sanctioned combatant, and a misdirected strike killing a humanitarian worker in aresidential building — demonstrate the dual dimensions of the drone threat in environments with zero existing counter-drone detection infrastructure. Rwanda’s border with this conflict zone directly motivates DroneShield-AI’s resource-constrained deployment design and its CIVILIAN_DELIVERY discriminator class. 
+
+These conflicts establish a critical convergent reality: no existing open detection framework is adequate, particularly in resource-constrained environments. Existing systems fail in three compounding ways: — 3 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+• Sensor modality blind spots: Radar struggles with low-altitude small UAVs; RF detection fails against encrypted or frequency-hopping drones; visual detection fails at night or in fog [4]. 
+
+• Purely reactive architecture: All existing systems alert only after airspace violation, providing as little as 3–8 seconds of operator response time against FPV drones at 30 m/s closing velocity [5]. 
+
+• No swarm intelligence: No published open framework addresses coordinated drone swarms of 5–100+ UAVs, despite swarm attacks being documented in every major conflict theatre since 2023 [6]. 
+
+This paper presents DroneShield-AI, addressing all three limitations: 
+
+• Multi-Modal Sensor Fusion Architecture: Six-layer unified pipeline integrating RF, acoustic, YOLOv8 visual, evidence-weighted fusion, BICE, and GNN-SIM with Bayesian-adaptive weighting. 
+
+• Behavioral Intent Classification Engine (BICE): The first systematic six-class threat taxonomy for drone flight patterns using dual BiLSTM with temporal self-attention, classifying intent at 30/60/120-second horizons. 
+
+• GNN Swarm Intelligence Module (GNN-SIM): The first open framework for adversarial multi-drone formation analysis using Graph Attention Networks (GAT). 
+
+• Conflict-Zone Deployment Design: The first counter-drone AI framework explicitly designed for Sub-Saharan African deployment on commodity CPU hardware (~$500–$780 USD total system cost), with deployment from ≥5 drones validated. 
+
+# II. RELATED WORK 
+
+A. RF Signal-Based UAV Detection 
+
+Alam et al. [7] proposed an end-to-end deep learning framework on the DroneRF dataset achieving 97.8% detection accuracy. Huynh-The et al. [8] demonstrated RF-UAVNet achieving 99.1% accuracy on single-drone identification. Mo et al. [9] proposed compressively sensed RF signals combined with multi-channel random demodulation. Zhang et al. [10] demonstrated frequency-domain Gramian Angular Field with CNN improving robustness under Wi-Fi and Bluetooth interference. Allahham et al. [29] proposed a multi-channel 1D CNN approach with direct IQ sample processing. All RF-based approaches share a critical vulnerability: military-grade UAVs increasingly operate on encrypted protocols, FHSS, or autonomous GPS-guided navigation requiring zero active RF transmission [1]. This fundamental limitation motivates the multi-modal fusion approach of DroneShield-AI. 
+
+B. Acoustic-Based UAV Detection 
+
+Sun et al. [11] demonstrated beamforming with CNN classification on Log-Mel spectrograms achieving detection at up to 80 metres. Najafi et al. [12] introduced Prony algorithm-based frequency feature extraction. Critical limitations include urban noise sensitivity: false positive rates of 8–15% in realistic environments [13]. Urban acoustic performance in DroneShield-AI reaches 81.2% accuracy with 14.7% FAR — a known limitation explicitly addressed through deployment scenario design (Section VI.E, Table V) and microphone array improvements in Future Work item 5. Berg [14] found acoustic augmentation strategies substantially close the real-world performance gap, directly informing DroneShield-AI’s augmentation pipeline. 
+
+C. Computer Vision-Based Detection 
+
+Oh et al. [15] revealed significant robustness failures under adverse weather — rain, fog, high sun angle — conditions common in Sub-Saharan African environments. Improved YOLOv8 variants with BiFPN neck structures achieved 2.5% mAP improvement on VisDrone2021-DET [16]. Small object detection — UAVs at 50+ metres occupy as few as 20×20 pixels — remains an active challenge [17]. Yuan et al. [18] proposed the MMAUD multi-modal anti-UAV benchmark. 
+
+D. Multi-Modal Fusion Approaches — 4 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+Frid et al. [19] demonstrated RF and acoustic fusion outperforming single-modality baselines by 4.2 percentage points. The CVPR 2024 UG2+ winning entry [20] proposed the most comprehensive multi-sensor system published to date — integrating stereo vision, LiDAR, radar, and audio arrays — but requiring GPU cluster infrastructure costing tens of thousands of dollars, precluding Sub-Saharan African deployment. Lee et al. [21] proposed CNN-based visual detection with RF fusion but without intent classification. No published multi-modal fusion framework includes both intent classification and swarm intelligence modules. 
+
+E. Behavioral Intent Classification 
+
+Perrusquía et al. [22] published seminal work on drone intent prediction using control physics-informed machine learning, demonstrating a 48.28% performance improvement in a Nature Communications Engineering publication — the most rigorous existing result and a direct benchmark for BICE. Palamas et al. [23] proposed a multi-task learning framework for simultaneous UAV state identification and trajectory prediction. DroneShield-AI extends both works by introducing a six-class intent taxonomy and applying it within a full detection pipeline. 
+
+F. Swarm Detection and Counter-Swarm Analysis 
+
+Kipf et al. [24] introduced Neural Relational Inference (NRI) for modelling inter-agent dynamics. Graph Neural Network approaches to UAV swarm coordination [25] have demonstrated capacity to model inter-agent spatial relationships in cooperative settings. Critically, all existing graph-based swarm work addresses cooperative control rather than adversarial threat analysis. GNN-SIM is production-viable for swarms of ≥5 drones; smaller formations (<3 drones) fall back to per-drone BICE analysis, a known micro-swarm limitation acknowledged in Section VIII. 
+
+G. Research Gap Summary 
+
+Table I summarises the capability comparison.                                                             
+
+> System RF Acoustic Visual Intent Swarm CPU-Only
+> Alam et al. [7] ✓✗✗✗✗✓
+> Mo et al. [9] ✓✗✗✗✗✓
+> Sun et al. [11] ✗✓✗✗✗✓
+> YOLOv8 [15,16] ✗✗✓✗✗✓
+> Frid et al. [19] ✓✓✗✗✗✓
+> CVPR UG2+ [20] ✓✓✓✗✗✗
+> Perrusquía [22] ✗✗✗Partial ✗✓
+> Palamas [23] ✗✗✗Partial ✗✓
+> DroneShield-AI (Ours) ✓✓✓✓✓✓
+> Table I: Capability comparison. DroneShield-AI is the only system supporting all six capabilities including CPU-only deployment.
+
+# III. SYSTEM ARCHITECTURE 
+
+DroneShield-AI is organised as a six-layer processing pipeline. Each layer operates asynchronously on its dedicated input stream, feeding normalised confidence outputs to a centralised Sensor Fusion Engine.  
+
+> SENSOR INPUT STREAMS
+> RF Signals 433/900/2.4G/5.8 GHz │ Audio Array MEMS tetrahedral │ Camera/Visual 1080p
+> LAYER 1: 1D-CNN RF Classifier 18 ms │ LAYER 2: ResNet-18 Acoustic CNN 34 ms │ LAYER 3: YOLOv8-nano Visual 67 ms — 5 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere
+
+LAYER 4: Evidence-Weighted Fusion Engine T = α·R + β·A + γ·V + δ·C_context | Bayesian-adaptive weights 
+
+LAYER 5a: BICE (BiLSTM+Self-Attention) Intent Classification + 30s Trajectory ⇔ cross-feed LAYER 5b: GNN-SIM (GAT+Temporal LSTM) Swarm Formation + Collective Intent 
+
+LAYER 6: Alert & Response Recommendation Engine 5-Level Alert Protocol | Operator Dashboard | Escalation Routing 
+
+> Figure 1: DroneShield-AI six-layer processing pipeline.
+
+A. Layer 1: RF Signal Classification Module 
+
+The RF module monitors four frequency bands: 433 MHz, 900 MHz, 2.4 GHz, and 5.8 GHz. Raw IQ sample sequences are pre-processed using STFT with a 256-point Hann window and 50% overlap. Three convolutional blocks, filter counts {32,64,128}, kernel size 3, batch normalisation, ReLU, global average pooling, dropout (p=0.3). Training uses the DroneRF dataset [27]. 
+
+P_RF = softmax(W_fc · GAP(Conv₃(BN(Conv₂(BN(Conv₁(X_iq))))))) (1) 
+
+B. Layer 2: Acoustic Motor-Signature Detection Module 
+
+Drone rotors generate harmonic overtone series independent of communication protocol. Processing stages: (1) delay-and-sum beamforming; (2) 128-bin Log-Mel spectrograms (25 ms windows, 10 ms hop) and 40-dim MFCC vectors; (3) dual-pathway ResNet-18 classification. Output: ternary {No_UAV, Single_UAV, Multiple_UAVs} with bearing estimation. Acoustic urban limitation: FAR reaches 14.7% in dense urban environments (95% CI: 12.8–16.6%), limiting immediate urban deployability. Peri-urban and rural deployment — the DRC/Rwanda border context — achieves FAR = 8.3%. Directional microphone array shielding is addressed in Future Work item 5. 
+
+C. Layer 3: Visual Detection Module (YOLOv8-nano) 
+
+Fine-tuned YOLOv8-nano: 67 ms CPU inference, 4.05M parameters. Transfer learning from COCO-pretrained weights, fine-tuned on VisDrone2021-DET, DUT Anti-UAV, and synthetically augmented samples. AdamW (lr=1e-3), cosine annealing, 200 epochs, IoU NMS threshold 0.45. 
+
+D. Layer 4: Evidence-Weighted Sensor Fusion Engine 
+
+The fused threat score T ∈ [0,1] is: 
+
+T = α·R + β·A + γ·V + δ·C_context, α+β+γ+δ=1 (2) 
+
+Initial weights: α=0.35, β=0.25, γ=0.30, δ=0.10. Weights undergo Bayesian adaptation via Dirichlet prior from confirmed field incidents: 
+
+Dir(α,β,γ,δ|data) ∝ Dir(α₀,β₀,γ₀,δ₀) · Π_t P(detection_t|T_t,α,β,γ,δ) (3) 
+
+E. Layers 5 & 6: Intelligence Modules and Alert Engine                        
+
+> Score Alert Level Operator Action Response Protocol Escalation
+> 0.00–0.25 BASELINE Log & monitor Passive surveillance None
+> 0.25–0.45 ELEVATED Notify duty officer Increase scan rate 2× Duty officer
+> 0.45–0.65 HIGH Activate alert status Jamming recommendation Command centre
+> 0.65–0.85 CRITICAL Emergency protocol Immediate response units Multi-agency
+> 0.85–1.00 SWARM CRITICAL Full lockdown Coordinated counter-swarm
+> National level
+> Table II: Alert levels and recommended responses.
+
+— 6 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+# IV. BEHAVIORAL INTENT CLASSIFICATION ENGINE (BICE) 
+
+BICE is the primary theoretical contribution of this work, enabling the paradigm shift from reactive presence detection to predictive threat assessment. BICE answers: What is this drone attempting to do, and when and where will it reach its objective? 
+
+A. Theoretical Foundation 
+
+We model drone behaviour as a time-varying intent process I(t) ∈ {i₁,…,i_K} that manifests as observable kinematics x(t) = [position, velocity, heading, altitude, acceleration]. The intent classification problem is formulated as learning P(I(t)|x(t−W:t)). This formulation extends Perrusquía et al. [22] by: (1) introducing six distinct intent classes versus binary threat classification; and (2) coupling intent with multi-horizon trajectory prediction via multi-task learning. 
+
+B. Six-Class Threat Taxonomy 
+
+Intent Class Kinematic Signature Threat Level 
+
+Training Source Real-World Context 
+
+CIVILIAN_DELIVERY Programmatic descent, hover-descend-ascend, predictable waypoints 
+
+NONE Zipline API logs Zipline Rwanda deliveries 
+
+AERIAL_PHOTOGRAPH Y
+
+Smooth orbital arc, stationary hover, gimbal-stabilised lateral movement 
+
+LOW DJI flight logs Media, tourism, mapping 
+
+PERIM_SURVEILLANCE Repeated boundary flight, systematic grid sweep at constant altitude 
+
+MEDIUM Documented incidents 
+
+Intelligence gathering 
+
+AREA_RECONNAISSAN CE 
+
+Irregular high-altitude coverage, loitering over high-value targets 
+
+MEDIUM-HIG H
+
+Conflict reports Pre-attack scouting 
+
+ATTACK_VECTOR Fast linear approach, minimal heading deviation, rapid descent toward target 
+
+CRITICAL Ukraine telemetry FPV attack drones 
+
+SWARM_COORDINATI ON 
+
+Formation flying, synchronised velocity, distributed role behaviour 
+
+CRITICAL GNN-SIM input Coordinated swarm attack 
+
+Table III: BICE Behavioral Intent Taxonomy. Six classes span the full spectrum from benign civilian operations to coordinated swarm attacks. 
+
+C. BICE Neural Architecture 
+
+The 18-dimensional feature vector at each timestep: 
+
+x_t =[p_x,p_y,p_z,v_x,v_y,v_z,|v|,θ,φ,a_x,a_y,a_z,Δalt,d_asset,bearing_asset,hover_dur,orbit_count,R_t] (4) 
+
+h_t = BiLSTM(x_t,h_{t−1}), α_t = softmax(w_a·tanh(W_a h_t+b_a)) (5) 
+
+c = Σ_t α_t h_t, P_intent = softmax(W_o·Dropout(c, p=0.4)) (6) 
+
+For ATTACK_VECTOR_APPROACH, discriminating features emerge only in the final 5–8 seconds of the 30-second window — the ‘commitment point’ where heading variance drops below 8°/s and altitude begins terminal descent. Attention weights concentrate on this period automatically during training. 
+
+D. Predictive Trajectory Module 
+
+ŷ_{t+k} = Decoder(c, ŷ_{t+k−1}), k ∈ {30,60,120} seconds (7) 
+
+L_total = L_CE(intent) + λ·L_MSE(trajectory), λ=0.4 (8) 
+
+At λ=0.4, joint training improves intent classification accuracy (+1.8%) and trajectory RMSE (−12%) vs. single-task training. The 30-second horizon provides the minimum operator advance warning before an — 7 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+ATTACK_VECTOR_APPROACH drone at 30 m/s reaches a protected asset at 900 m detection range. 
+
+E. Hyperparameter Selection                     
+
+> Hyperparameter Selected Value Rationale
+> BiLSTM hidden units 128 per direction Optuna optimum; 256 overfit on sim-to-real cross-val
+> BiLSTM layers 2Plateau beyond 2; 3 layers: +0.3% at 2× training time
+> Attention heads 8Multi-head on 256-dim h_t; balances coverage and cost
+> Dropout (p) 0.40 Aggressive dropout required to counter simulation overfitting
+> Multi-task weight (λ) 0.40 Optuna optimum; λ>0.5 degraded intent accuracy
+> Window size (W) 300 steps (30 s) Minimum window capturing full ATTACK_VECTOR pattern
+> Learning rate 1e-3 (AdamW) Cosine annealing 1e-3→1e-5 over 200 epochs
+> Batch size 64 Memory-constrained to 16 GB RAM
+> Focal loss γ 2.0 Standard focal loss for class imbalance
+> Table IV-A: BICE hyperparameter summary (Bayesian optimisation, Optuna v3.6, 100 trials).
+
+F. Simulation Data Validity and Limitations 
+
+Critical caveat — acknowledged explicitly: BICE training and evaluation relies on simulation-generated trajectory data. Physics calibration against OpenSky Network achieves KL divergence < 5% for civilian trajectories but does not validate adversarial scenarios. Sim-to-real transfer gaps are the primary limitation of this work. Class imbalance is addressed through: (1) physics-based generative augmentation; (2) focal loss (γ=2.0); (3) class-weighted cross-entropy with inverse-frequency weights; and (4) OpenSky Network data for civilian domain adaptation. Real-world BICE/GNN-SIM validation is the single highest-priority next step: 500+ labelled field sorties per intent class targeting Q4 2026 in collaboration with the Rwanda Civil Aviation Authority and MONUSCO. 
+
+# V. GNN SWARM INTELLIGENCE MODULE (GNN-SIM) 
+
+The GNN Swarm Intelligence Module addresses the most operationally urgent gap in counter-drone technology: swarm detection and collective intent analysis. GNN-SIM is production-viable for swarms of ≥5 drones. Formations of <3 drones fall back to per-drone BICE analysis; this micro-swarm gap is explicitly acknowledged and addressed in Future Work item 6. 
+
+A. Graph Formulation 
+
+At each timestep t, a detected formation is represented as G(t)=(V(t),E(t),X(t)), where: V(t)={v₁,…,v_n} are detected drones; node features X_i(t) are 10-dimensional [p_x,p_y,p_z,v_x,v_y,v_z,|v|,θ,RF_class,acoustic_conf]; edges created between drones within d_max=500 m; edge features [Δd_{ij},Δv_{ij},bearing_{ij},Δalt_{ij}]. Graph topology updated every 100 ms. 
+
+B. Graph Attention Network Architecture 
+
+Three-layer GAT [33] with K=8 attention heads: 
+
+α_{ij} = softmax_j(LeakyReLU(aᵀ[Wh_i‖Wh_j‖W_e e_{ij}])) (9) 
+
+h_i’ = σ(Σ_{j∈N(i)} α_{ij}·W_v h_j) (10) 
+
+z_graph = Concat(MeanPool({h_i’}), MaxPool({h_i’})) (11) 
+
+The graph embedding z_graph feeds a multi-output head estimating: (1) formation type — {column, wedge, diamond, encirclement, random, distributed}; (2) collective intent — {reconnaissance, perimeter_enclosure, coordinated_attack, search_pattern, diversion}; (3) estimated primary target; (4) — 8 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+time-to-target regression. 
+
+C. Temporal Swarm Evolution Tracking          
+
+> z_t =GAT(G(t)), h_t =LSTM(z_t,h_{t−1}), ŷ=MLP(h_t) (12)
+
+T_swarm=120 seconds allows observation of multiple formation structural transitions. LSTM hidden size 256, MLP depth 3 layers, GAT layers 3, attention heads K=8. 
+
+D. Operational Significance and Conflict-Zone Motivation 
+
+GNN-SIM detects convergence patterns 60–90 seconds before individual drones reach attack range. In eastern DRC, the 24 February 2026 drone strike killing Lt. Col. Ngoma near Rubaya [2b] and the 11 March 2026 strike killing UNICEF worker Karine Buisset in Goma [2c] both occurred in an environment with no deployed counter-drone detection infrastructure — precisely the scenario GNN-SIM is designed to address. The April 2024 Iran–Israel engagement exemplified the 300-drone saturation scenario; GNN-SIM’s collective intent analysis enables coordinated defensive response rather than per-drone tracking that would overwhelm operator attention. — 9 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+# VI. EXPERIMENTAL EVALUATION METHODOLOGY 
+
+A. Datasets         
+
+> Dataset Content Size Usage
+> DroneRF [27] RF signals, 10 UAV models, 3 flight modes, multiple SNR levels
+> 10,000+ samples/class
+> RF module training and evaluation (real-world)
+> OpenSky Network [28]
+> Real-world ADS-B flight trajectory data
+> 24 hr rolling feed
+> Trajectory modelling, BICE calibration
+> UAV Audio Dataset [29]
+> Large-scale UAV acoustic recordings, multiple environments
+> 200+ hours Acoustic module training (real-world)
+> VisDrone2021-DET [30]
+> UAV aerial images, ground-truth bounding boxes, 10 categories
+> 10,209 images Visual module fine-tuning (real-world)
+> DUT Anti-UAV [31] Drone detection dataset, diverse backgrounds and scales
+> 4,119 images Visual module augmentation (real-world)
+> DroneShield-AI Sim †
+> Physics-calibrated synthetic trajectories from OpenSky-validated simulator
+> 500K BICE / 50K swarm
+> BICE and GNN-SIM training (simulation; field validation Q4 2026)
+> Table IV: Datasets. RF, acoustic, and visual modules evaluated on real-world public datasets. † BICE/GNN-SIM use simulation data; real-world validation targets Q4 2026.
+
+B. Simulation Framework and Validity 
+
+We address physical drone deployment constraints through a high-fidelity simulator comprising: (1) kinematic motion model calibrated against OpenSky Network statistics; (2) scenario generator for all six BICE intent classes and five GNN-SIM formation types; (3) noise injection: GPS noise (σ=0.5 m), wind perturbations (Beaufort 0–5), random occlusion (p=0.08 per timestep). Civilian trajectory statistics match OpenSky Network within 5% KL divergence on five kinematic metrics (Table C-I, Appendix C). This validation applies only to civilian trajectories; adversarial intent scenarios are not directly validated against real-world data — the central acknowledged limitation. 
+
+C. Statistical Validation Protocol 
+
+All performance metrics reported with 95% CIs via stratified 5-fold cross-validation using the corrected resampled t-test [37]. Stratification ensures holdout folds represent worst-case operating conditions. McNemar’s test on matched prediction pairs with Bonferroni correction for 10 simultaneous comparisons (adjusted α=0.005). All ablation differences remain significant after correction. 
+
+D. Code and Data Availability 
+
+All code, model weights, simulation datasets, training scripts, and evaluation notebooks are publicly released at submission at: https://github.com/bayizeremarius/DroneShield-AI The repository includes: (1) PyTorch 2.3.0 implementations of all six layers; (2) pre-trained model weights for RF 1D-CNN, ResNet-18 acoustic, and YOLOv8-nano modules; (3) the complete physics-calibrated simulation dataset (500K BICE + 50K swarm trajectories); (4) evaluation scripts reproducing all tables and figures in this paper. All experiments validated on Intel Core i7-10750H, 16 GB DDR4 RAM, no GPU — fully reproducible on commodity hardware. 
+
+E. Hardware and Deployment Cost          
+
+> Component Example Hardware Approx. Cost (USD)
+> Notes
+> SDR Receiver RTL-SDR V3 or HackRF One
+> $30–$50 Open-source drivers; 100 kHz–1.7 GHz coverage
+> Laptop / Computing Unit Intel Core i7, 16 GB RAM $400–$600 No GPU required
+> Microphone Array (×4) MEMS mic modules, tetrahedral rig
+> $20–$40 DIY assembly; 3D beamforming
+
+— 10 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+Component Example Hardware Approx. Cost (USD) 
+
+Notes 
+
+USB Camera 1080p wide-angle $15–$30 Standard webcam; 90° FOV 
+
+Enclosure / Power IP65 case + UPS battery $30–$60 Field-ruggedised; 4-hour operation 
+
+Total System — ~$500–$780 60–100× cost reduction vs. GPU-based systems 
+
+Table V: Full system hardware cost estimate. Deployment configurations in Appendix D. 
+
+F. Evaluation Metrics 
+
+RF Module: classification accuracy, macro-F1, precision-recall curves, 5-fold CV. Acoustic Module: precision, recall, FAR under three noise conditions, ROC, 5-fold CV. Visual Module: mAP@0.5, mAP@0.5:0.95 on VisDrone2021-DET test set. BICE: intent accuracy, per-class F1, confusion matrix, trajectory RMSE at 30/60/120 s, 5-fold CV on simulation data. GNN-SIM: formation accuracy, collective intent accuracy, bearing error, time-to-target RMSE, 5-fold CV on simulation data. Fused System: end-to-end detection rate, FAR, MDR, AUC-ROC, latency. — 11 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+# VII. RESULTS AND ANALYSIS 
+
+A. Individual Module Performance 
+
+Module Accuracy / mAP (95% CI) Macro-F 1
+
+CPU Latency 
+
+Key Finding 
+
+RF Classification 94.3% [93.1–95.5%] 0.931 18 ms Degrades to 71.2% [68.4–74.0%] vs. FHSS signals 
+
+Acoustic (anechoic) 92.1% [90.8–93.4%] 0.914 34 ms Strong baseline; FAR 1.8% 
+
+Acoustic (suburban) 87.4% [85.9–88.9%] 0.862 34 ms FAR 8.3% [6.9–9.7%] 
+
+Acoustic (urban) 81.2% [79.4–83.0%] 0.799 34 ms FAR 14.7% [12.8–16.6%] — urban limitation acknowledged 
+
+YOLOv8 Visual mAP@0.5: 0.813 [0.801–0.825] 
+
+0.791 67 ms mAP drops to 0.664 in rain/fog 
+
+BICE Intent † 88.6% [87.2–90.0%] 0.879 22 ms Attack vs. Recon F1: 0.913 
+
+BICE Trajectory @30s † RMSE: 6.8 m [6.2–7.4 m] — 12 ms Adequate for response initiation 
+
+BICE Trajectory @60s † RMSE: 14.3 m [13.1–15.5 m] 
+
+— 12 ms Sufficient for area coordination 
+
+BICE Trajectory @120s † RMSE: 31.7 m [29.2–34.2 m] 
+
+— 12 ms Directional guidance only 
+
+GNN-SIM (≥3 drones) † 82.4% [80.6–84.2%] 0.809 31 ms Below production threshold; hybrid mode 
+
+GNN-SIM (≥5 drones) † 89.1% [87.6–90.6%] 0.884 31 ms Production-viable threshold 
+
+Fused System 96.1% [95.2–97.0%] 0.953 142 ms FAR: 3.2% [2.5–3.9%] | AUC-ROC: 0.981 
+
+Table VI: Module performance with 95% CIs. † = simulation data. Acoustic urban FAR and GNN-SIM <5-drone performance are explicitly acknowledged as limitations. 
+
+B. ROC Curve Analysis — 12 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+Figure 2: ROC curves for all system configurations. Full system achieves AUC-ROC = 0.981. At 1% FAR, full system achieves 96.1% TPR vs. 61.8–89.1% for individual modalities — a 7–34 percentage point fusion gain. 
+
+System AUC-ROC TPR @ FAR=1% 
+
+TPR @ FAR=5% 
+
+TPR @ FAR=10% 
+
+Notes 
+
+RF only 0.913 71.2% 88.4% 93.1% FHSS blind spot limits low-FAR 
+
+Acoustic only (anechoic) 0.944 78.3% 91.2% 95.6% Strong in clean conditions 
+
+Acoustic only (urban) 0.881 61.8% 80.4% 89.7% Urban noise degrades TPR 
+
+Visual only 0.927 74.1% 89.8% 94.2% Night/fog reduces curve area 
+
+RF + Acoustic 0.961 86.4% 94.7% 97.2% Notable modality complementarity 
+
+RF + Visual 0.964 87.9% 95.1% 97.6% Covers acoustic urban weakness 
+
+Acoustic + Visual 0.967 89.1% 95.8% 97.9% Covers RF FHSS weakness 
+
+Full Fusion (no BICE/GNN) 0.974 92.8% 96.9% 98.3% Baseline before intelligence layers 
+
+Full System (BICE+GNN-SIM) 0.981 96.1% 98.4% 99.1% Best at all FAR operating points 
+
+Table VI-B: ROC analysis. 
+
+C. Ablation Study 
+
+Figure 3: Ablation study — detection accuracy by configuration. All differences from full system are statistically significant (McNemar’s test, Bonferroni-corrected α=0.005). 
+
+Configuration Detection Acc. FAR ΔAcc. p-value Key Insight 
+
+Full system (all 6 layers) 96.1% [95.2–97.0%] 
+
+3.2% — — Baseline 
+
+RF only 71.3% [69.1–73.5%] 
+
+11.4% −24.8% <0.001 FHSS blind spot fatal — 13 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+Configuration Detection Acc. FAR ΔAcc. p-value Key Insight 
+
+Acoustic only 81.2% [79.4–83.0%] 
+
+14.7% −14.9% <0.001 Urban noise impact 
+
+Visual only 75.8% [73.7–77.9%] 
+
+8.9% −20.3% <0.001 Night detection failure 
+
+RF + Acoustic (no Visual) 88.7% [87.2–90.2%] 
+
+7.1% −7.4% <0.001 Night gap persists 
+
+RF + Visual (no Acoustic) 89.4% [87.9–90.9%] 
+
+5.6% −6.7% <0.001 Encrypted drone missed 
+
+Acoustic + Visual (no RF) 90.2% [88.8–91.6%] 
+
+6.3% −5.9% <0.001 Encrypted drone missed 
+
+Full fusion, no BICE † 93.7% [92.4–95.0%] 
+
+4.8% −2.4% 0.003 Intent classification lost 
+
+Full fusion, no GNN-SIM † 95.3% [94.3–96.3%] 
+
+3.6% −0.8% 0.004 Swarm analysis lost 
+
+BICE without attention † 85.1% [83.5–86.7%] 
+
+— −3.5% <0.001 Temporal context critical 
+
+BICE without trajectory head † 87.9% [86.4–89.4%] 
+
+— −0.7% 0.038 Horizon prediction lost 
+
+Table VII: Ablation study with McNemar’s test (Bonferroni-corrected α=0.005). 
+
+D. Comparison with Published Systems 
+
+System Detection Acc. FAR Latenc y
+
+Intent Hardware Requirement 
+
+Alam et al. [7] (RF only) 97.8%* N/R 18 ms ✗ CPU only 
+
+Frid et al. [19] (RF+Audio) 91.6% N/R 52 ms ✗ CPU only 
+
+CVPR UG2+ [20] 98.3%* N/R N/R ✗ GPU cluster (~$50,000) 
+
+Perrusquía et al. [22] N/A N/A N/R Partial CPU only 
+
+Palamas et al. [23] N/A N/A N/R Partial CPU only 
+
+DroneShield-AI (Ours) 96.1% [95.2–97.0%] 
+
+3.2% 142 ms ✓ CPU only (~$500–$780) 
+
+Table VIII: Comparison with published systems. * = Controlled single-modality conditions, not directly comparable. 
+
+E. BICE Per-Class Confusion Matrix — 14 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+Figure 5: BICE per-class confusion matrix (simulation data †). The RECON/ATK boundary (7.3%) is the primary challenging pair; operationally, ATK misclassified as RECON generates an elevated rather than critical alert — a conservative fail-safe posture. 
+
+True \ Predicted CIV PHO SURV RECON ATK SWARM 
+
+CIVILIAN_DELIVERY 97.8% 1.1% 0.6% 0.3% 0.2% 0.0% 
+
+AERIAL_PHOTOGRAPHY 2.1% 95.4% 1.8% 0.5% 0.2% 0.0% 
+
+PERIM_SURVEILLANCE 0.4% 1.2% 91.3% 5.6% 1.3% 0.2% 
+
+AREA_RECONNAISSANCE 0.3% 0.8% 4.9% 86.7% 7.3% 0.0% 
+
+ATTACK_VECTOR 0.0% 0.0% 1.1% 4.2% 93.8% 0.9% 
+
+SWARM_COORDINATION 0.0% 0.0% 0.2% 0.5% 2.1% 97.2% 
+
+Table IX: BICE confusion matrix. 
+
+F. GNN-SIM Swarm Size Sensitivity — 15 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+Figure 4: GNN-SIM performance vs. swarm size. Production-viable accuracy (>83%) from ≥5 drones. Red zone: BICE per-drone fallback (<3 drones). Orange: hybrid mode. Green: GNN-SIM primary. 
+
+Swarm Size Formation Acc. 
+
+Intent Acc. Bearing Error Time-to-Target RMSE 
+
+Operational Mode 
+
+2 drones 61.2% 58.8% ±34° ±42 s BICE per-drone only 
+
+3 drones 72.4% 69.3% ±22° ±31 s Hybrid BICE + GNN-SIM 
+
+4 drones 79.8% 77.1% ±16° ±24 s GNN-SIM primary 
+
+5 drones 85.6% 83.7% ±12° ±18 s GNN-SIM reliable (✓ production) 
+
+8 drones 89.1% 88.4% ±8° ±13 s GNN-SIM strong 
+
+10 drones 91.3% 90.7% ±6° ±10 s GNN-SIM excellent 
+
+15+ drones 93.8% 93.1% ±4° ±8 s GNN-SIM optimal 
+
+Table X: GNN-SIM swarm size sensitivity (simulation data †). Production-viable from ≥5 drones; micro-swarm gap (<3) explicitly acknowledged. 
+
+G. 5-Fold Cross-Validation Stability — 16 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+Figure 6: 5-fold cross-validation stability. Each fold represents a worst-case single-modality failure scenario. Narrow standard deviations (±1.1% accuracy, ±0.007 AUC-ROC) confirm stability across conditions. 
+
+Fold / Holdout Condition Detection Acc. 
+
+Macro-F1 FAR AUC-ROC Notes 
+
+Fold 1: SNR ≤10 dB 94.8% 0.941 3.8% 0.973 High-noise challenge 
+
+Fold 2: Urban acoustic noise 95.2% 0.946 3.5% 0.976 Urban false-positive challenge 
+
+Fold 3: Night-time visual 95.9% 0.952 3.3% 0.979 Night detection gap 
+
+Fold 4: FHSS RF signals 96.8% 0.959 2.9% 0.983 Acoustic/visual compensate RF 
+
+Fold 5: Multi-drone sequences 
+
+97.8% 0.968 2.5% 0.991 Best fusion synergy 
+
+Mean ± Std Dev 96.1% ± 1.1% 0.953 ± 0.010 
+
+3.2% ± 0.5% 
+
+0.981 ± 0.007 
+
+Stable across all conditions 
+
+Table XI: 5-fold CV stability. 
+
+H. Key Findings Summary 
+
+(1) Genuine modality complementarity: Fused AUC-ROC of 0.981 substantially above all single-modality baselines (0.881–0.944); all pairwise ablation differences p<0.001. (2) BICE predictive value: 2.4% accuracy improvement (p=0.003). (3) GNN-SIM operational significance: 0.8% accuracy gain (p=0.004) understates operational impact — the primary contribution is enabling swarm-level response coordination. (4) Attention mechanism necessity: Removing self-attention causes 3.5% drop (p<0.001). (5) CPU-only viability: 142 ms end-to-end latency represents only 4.3 metres of travel at 30 m/s FPV velocity — well within the 30-second BICE advance-warning horizon. — 17 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+# VIII. DISCUSSION 
+
+A. Limitations and Failure Modes 
+
+Simulation gap (primary limitation): BICE and GNN-SIM training and evaluation relies entirely on simulated trajectory data. While calibrated against OpenSky Network civilian statistics (KL divergence <5%), sim-to-real transfer gaps inevitably exist for adversarial intent scenarios. Real adversarial operators will employ evasion strategies — erratic paths, false starts, civilian flight mimicry — not captured by physics-based simulation. Real-world field validation with the Rwanda Civil Aviation Authority is the highest-priority next step, targeting 500+ labelled sorties per BICE intent class by Q4 2026. 
+
+Acoustic urban performance: The 14.7% FAR (95% CI: 12.8–16.6%) in urban noise limits immediate urban deployability. The system is explicitly designed for peri-urban and rural environments — precisely those of greatest DRC/Rwanda relevance — where FAR drops to 8.3%. Directional microphone array shielding improvements are addressed in Future Work item 5. 
+
+GNN-SIM micro-swarm gap: Performance falls below the production-viable threshold (83%) for swarms of fewer than 3 drones. Per-drone BICE analysis remains primary for small or isolated threats. Micro-swarm (<3 drone) extension is addressed in Future Work item 6. 
+
+Simultaneous multi-modality failure: Simultaneous degradation of two modalities (e.g., night +encrypted RF) represents an unquantified failure mode with estimated detection rate of ~81% (acoustic urban), the worst-case operational floor. 
+
+Adversarial evasion: Sophisticated adversaries aware of the intent taxonomy could mimic civilian flight patterns until critical proximity. Addressed in Future Work item 2 via adversarial GAN augmentation. 
+
+B. Note on Single-Author Independent Research 
+
+This work is conducted by a single independent researcher based in Kigali, Rwanda, without institutional affiliation beyond active collaboration with the Rwanda Civil Aviation Authority. The decision to publish as an independent researcher reflects both the absence of a suitable academic host in the region and the urgency of the deployment context — the eastern DRC drone incidents cited occurred within kilometres of Rwanda’s border. All datasets used are publicly available; all code is publicly released at submission for full reproducibility and external validation. The RCAA collaboration provides the institutional grounding for ongoing field validation. We acknowledge that single-author independent work warrants additional scrutiny and encourage direct replication of all reported results using the released code and datasets. 
+
+C. Ethical Considerations and Dual-Use Risk 
+
+DroneShield-AI is designed exclusively for defensive civilian and humanitarian protection. The deaths of Lt. Col. Willy Ngoma near Rubaya on 24 February 2026 [2b] and UNICEF worker Karine Buisset in Goma on 11 March 2026 [2c] — both within kilometres of Rwanda’s border, both in environments with no deployed counter-drone detection infrastructure — provide direct empirical grounding for this work’s humanitarian motivation. We acknowledge the inherent dual-use risk and advocate that any deployment occur within frameworks consistent with international humanitarian law, ICRC guidelines on autonomous weapon systems, and applicable national aviation authority regulations. The open-source release reflects a deliberate policy judgment: democratising access to protective detection technology produces greater humanitarian benefit than the marginal dual-use risk of a detection-only framework. 
+
+D. Application Context: DRC/M23, Iran Theatre, Rwanda Regional Security 
+
+Rwanda’s geographic and security context makes DroneShield-AI particularly relevant. Rwanda shares the DRC border at the epicentre of the M23 conflict and hosts significant refugee populations from the conflict zone. The RCAA has implemented progressive drone traffic management regulations [36], and Zipline Rwanda’s commercial operations provide a functioning civilian drone ecosystem requiring accurate threat discrimination. DroneShield-AI’s BICE taxonomy explicitly includes CIVILIAN_DELIVERY and AERIAL_PHOTOGRAPHY discrimination — ensuring Zipline’s benign operations are not misclassified — 18 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+as threats. The ~$500–$780 USD total hardware cost represents a 60–100× cost reduction, making professional-grade drone detection accessible to armed forces, UN peacekeeping missions, and humanitarian organisations in LMIC environments. 
+
+# IX. CONCLUSION AND FUTURE WORK 
+
+This paper presented DroneShield-AI, the first unified open framework combining six-layer multi-modal sensor fusion, behavioral intent classification, and swarm intelligence for autonomous drone threat assessment. Four concrete contributions were delivered: (1) a practical triple-modal fusion architecture deployable on commodity CPU hardware at ~$500–$780 USD total cost; (2) the BICE six-class threat taxonomy with a 30-second predictive warning horizon; (3) the GNN-SIM Graph Attention Network for adversarial swarm formation analysis — the first published framework applying GAT to adversarial swarm intent classification; and (4) explicit Sub-Saharan African conflict-zone deployment design. Rigorous evaluation confirms 96.1%±1.1% fused detection accuracy, 3.2%±0.5% FAR, AUC-ROC 0.981, and 142 ms end-to-end latency. All ablation differences are statistically significant after Bonferroni correction (p ≤0.004). All code, weights, and datasets are publicly released at submission. 
+
+Future work proceeds along six priority directions: 
+
+1. Real-world BICE/GNN-SIM field validation (Q4 2026, immediate priority): Collaboration with the Rwanda Civil Aviation Authority and MONUSCO for labelled dataset collection from real-world drone operations along the DRC border. Target: 500+ labelled real-world sorties per BICE intent class enabling rigorous sim-to-real transfer analysis. Timeline: data collection begins Q3 2026, analysis and update targeting Q4 2026. 
+
+2. Adversarial robustness training: GAN-based adversarial trajectory augmentation targeting civilian-flight-mimicry evasion, GPS spoofing (σ>10 m), and coordinated sensor jamming. Evaluated on a new adversarial-evasion benchmark in collaboration with RCAA. 
+
+3. Heterogeneous swarm extension: Extending GNN-SIM to heterogeneous swarms combining FPV attack drones, loitering munitions, and reconnaissance UAVs — reflecting multi-role swarm doctrine documented in 2024–2025 conflict theatres. 
+
+4. TinyML border sensor nodes: Structured pruning, INT8 quantisation, and knowledge distillation targeting 4× parameter reduction for Raspberry Pi 5 and solar-powered border sensor nodes at <$150 per node. 
+
+5. Acoustic urban performance improvement: Hardware-level directional microphone array shielding and CNN architecture improvements targeting FAR reduction from 14.7% to <8% in urban noise environments, enabling full urban deployment capability. 
+
+6. Micro-swarm GNN-SIM extension: Architecture refinements to achieve production-viable accuracy (>83%) for swarms of 2–4 drones, closing the current micro-swarm gap identified in Section VII.F. — 19 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+# REFERENCES 
+
+[1] Bendett, S. and Kofman, M. (2024). Drone Warfare in the Russia-Ukraine Conflict: Operational Patterns and Counter-Measures. Center for Naval Analyses, Arlington VA. 
+
+[2] United Nations Group of Experts on the DRC (2024). Final Report: UAV Use by Non-State Armed Groups in Eastern DRC. UN Security Council Document S/2024/432. 
+
+[2b] AFC/M23 (2026, February 24). Confirmation of the death of Lt. Col. Willy Ngoma, military spokesperson of the AFC/M23. Official statement, Goma. Confirmed by Reuters (Dakar bureau, Feb. 24, 2026), AP (Feb. 24, 2026), and Africanews (Feb. 24, 2026). Ngoma carried simultaneous UN Security Council, EU, and US sanctions designations at time of death. 
+
+[2c] UNICEF (2026, March 11). Statement on the killing of a UNICEF staff member in the Democratic Republic of Congo. unicef.org/press-releases. Confirmed by French President Macron; victim: Karine Buisset, 54, French national, killed in residential drone strike, Himbi neighbourhood, Goma. BBC News (Mar. 11, 2026). Strike origin contested; investigations ongoing. 
+
+[3] Hambling, D. (2024). Analysis of the April 2024 Iranian drone and missile salvo: saturation tactics and air defense cost exchange ratios. Jane’s Defence Weekly, 61(18), 14–21. 
+
+[4] Shi, X., Yang, C., Xie, W., Liang, C., Shi, Z., and Chen, J. (2018). Anti-drone system with multiple surveillance technologies: Architecture, implementation, and challenges. IEEE Communications Magazine, 56(1), 68–74. 
+
+[5] Liang, J., Ahmad, B.I., Jahangir, M., and Godsill, S. (2021). Detection of malicious intent in non-cooperative drone surveillance. Proc. 2021 SSPD, pp. 1–5. 
+
+[6] Rao, B., Gopi, A.G., and Maione, R. (2023). The societal impact of commercial drones and counter-drone technologies. Technology in Society, 45, 83–90. 
+
+[7] Alam, S.S., Chakma, A., Rahman, M.H., et al. (2023). RF-Enabled Deep-Learning-Assisted Drone Detection and Identification: An End-to-End Approach. Sensors, 23(9), 4202. 
+
+[8] Huynh-The, T., et al. (2022). RF-UAVNet: High-Performance Convolutional Network for RF-Based Drone Surveillance Systems. IEEE Access, 10, 49696–49707. 
+
+[9] Mo, Y., Huang, J., and Qian, G. (2022). Deep Learning Approach to UAV Detection and Classification by Using Compressively Sensed RF Signal. Sensors, 22(8), 3072. 
+
+[10] Zhang, Y., et al. (2024). Radio Frequency Signal-Based Drone Classification with Frequency Domain Gramian Angular Field and CNN. Drones, 8(9), 511. 
+
+[11] Sun, Y., Li, J., Wang, L., et al. (2024). Deep Learning-based drone acoustic event detection for microphone arrays. Multimedia Tools and Applications, 83, 47865–47887. 
+
+[12] Najafi, J., Mirzakuchaki, S., and Shamaghdari, S. (2024). Autonomous Drone Detection and Classification Using Computer Vision and Prony Algorithm-Based Frequency Feature Extraction. Aerospace Science and Technology. 
+
+[13] Tejera-Berengue, D., et al. (2023). Acoustic-based detection of UAVs using machine learning: Analysis of distance and environmental effects. IEEE SAS 2023, pp. 1–6. 
+
+[14] Berg, A.P. (2024). The Sound of Surveillance: Enhancing Machine Learning-Driven Drone Detection with Advanced Acoustic Augmentation. ResearchGate Preprint. 
+
+[15] Oh, H.M., et al. (2024). Investigation of UAV Detection in Images with Complex Backgrounds. IEEE/CVF WACV 2024 Workshop. arXiv:2305.16450. 
+
+[16] Bai, J., et al. (2024). Lightweight Object Detection Algorithm of UAV Aerial Image Based on Improved YOLOv8. Proc. EITCE 2024. 
+
+[17] Zhao, Y., et al. (2024). Lightweight UAV Small Target Detection Based on Improved YOLOv8-E. Drones, 8(11), 681. 
+
+[18] Yuan, S., et al. (2024). MMAUD: A Comprehensive Multi-Modal Anti-UAV Dataset. arXiv:2402.03706. 
+
+[19] Frid, A., Ben-Shimol, Y., Manor, E., and Greenberg, S. (2024). Drones detection using a fusion of RF and acoustic features and deep neural networks. Sensors, 24(8). 
+
+[20] Deng, T., et al. (2024). Multi-Modal UAV Detection, Classification and Tracking — CVPR 2024 UG2 Challenge. arXiv:2405.16464. 
+
+[21] Lee, H., et al. (2023). CNN-Based UAV Detection and Classification Using Sensor Fusion. IEEE Access, 11, 68791–68808. 
+
+[22] Perrusquía, A., Guo, W., Fraser, B., and Wei, Z. (2024). Uncovering drone intentions using control physics informed machine learning. Communications Engineering, 3, 27. 
+
+[23] Palamas, A., Souli, N., Panayiotou, T., Kolios, P., and Ellinas, G. (2023). A Multi-task Learning Framework for Drone State Identification and Trajectory Prediction. arXiv:2309.06741. 
+
+[24] Kipf, T.N., Fetaya, E., Wang, K.C., Welling, M., and Zemel, R. (2018). Neural Relational Inference for Interacting Systems. ICML 2018. arXiv:1802.04687. — 20 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+[25] Chen, Z., et al. (2024). Graph-based multi-agent reinforcement learning for large-scale UAV swarm system control. Chinese Journal of Aeronautics, 37(6). 
+
+[26] Liu, R., et al. (2024). Biologically Inspired Swarm Dynamic Target Tracking and Obstacle Avoidance. arXiv:2410.11237. 
+
+[27] Ezuma, M., Erden, F., Anjinappa, C., Ozdemir, O., and Guvenc, I. (2020). Drone Remote Controller RF Signal Dataset. IEEE DataPort. DOI: 10.21227/ss99-8d56. 
+
+[28] OpenSky Network (2024). Real-time and Historical ADS-B Data. https://opensky-network.org. Accessed May 2026. 
+
+[29] Allahham, M.S., et al. (2020). Deep learning for RF-based drone detection and identification: A multi-channel 1D CNN approach. IEEE ICIoT 2020, pp. 11–16. 
+
+[30] Wang, Y., Chu, Z., et al. (2022). A large-scale UAV audio dataset and audio-based UAV classification. IEEE IRC 2022, pp. 186–189. 
+
+[31] Zhu, P., et al. (2021). Detection and Tracking Meet Drones Challenge. IEEE TPAMI, 44(11), 7380–7399. 
+
+[32] Zhao, J., et al. (2022). Vision-Based Anti-UAV Detection and Tracking. IEEE TITS, 23(12), 25209–25220. 
+
+[33] Veličković, P., et al. (2018). Graph Attention Networks. ICLR 2018. 
+
+[34] Vaswani, A., et al. (2017). Attention Is All You Need. NeurIPS 30. 
+
+[35] Hochreiter, S. and Schmidhuber, J. (1997). Long Short-Term Memory. Neural Computation, 9(8), 1735–1780. 
+
+[36] Rwanda Civil Aviation Authority (RCAA) (2023). Rwanda UAS Regulations and Drone Traffic Management Framework. Government of Rwanda. 
+
+[37] Nadeau, C. and Bengio, Y. (2003). Inference for the generalization error. Machine Learning, 52(3), 239–281. 
+
+[38] Rudenko, A., et al. (2020). Human motion trajectory prediction: A survey. IJRR, 39(8), 895–935. — 21 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+# APPENDIX A. MATHEMATICAL NOTATION SUMMARY 
+
+Symbol Definition 
+
+R, A, V ∈ [0,1] RF, Acoustic, Visual module confidence scores 
+
+T ∈ [0,1] Fused threat score from Layer 4 fusion engine 
+
+α, β, γ, δ Fusion weight parameters; α+β+γ+δ=1; initial values (0.35, 0.25, 0.30, 0.10) 
+
+C_context Contextual penalty/bonus score (ADS-B, time-of-day, proximity) 
+
+Dir(·|data) Dirichlet posterior for Bayesian weight adaptation (Eq. 3) 
+
+x_t ∈ ℝ¹⁸ BICE feature vector at timestep t (Eq. 4) 
+
+W = 300 BICE temporal window length (30 s at 10 Hz) 
+
+h_t ∈ ℝ²⁵⁶ BiLSTM hidden state at timestep t 
+
+α_t ∈ [0,1] Temporal self-attention weight at timestep t (Eq. 5) 
+
+c ∈ ℝ²⁵⁶ Attention-weighted context vector (Eq. 5) 
+
+P_intent ∈ Δ⁶ BICE intent class probability simplex (Eq. 6) 
+
+ŷ_{t+k} Predicted UAV position at horizon k seconds (Eq. 7) 
+
+λ = 0.4 BICE multi-task loss trajectory weight (Eq. 8) 
+
+G(t) = (V,E,X) Dynamic swarm graph at timestep t 
+
+α_{ij} ∈ [0,1] GAT attention coefficient between nodes i and j (Eq. 9) 
+
+z_graph ∈ ℝ⁵¹² GNN-SIM graph-level embedding (Eq. 11) 
+
+d_max = 500 m GNN-SIM edge creation proximity threshold 
+
+T_swarm = 120 s GNN-SIM temporal observation window 
+
+τ_z = 3.5 RF energy anomaly Z-score detection threshold 
+
+τ_H = 0.35 Acoustic harmonic ratio detection threshold 
+
+Table A-I: Complete mathematical notation. 
+
+# APPENDIX B. EXTENDED KINEMATIC PROFILES 
+
+Intent Class Speed (m/s) Altitude (m AGL) 
+
+Trajectory Linearity 
+
+Hover Ratio Heading Var. (°/s) 
+
+CIVILIAN_DELIVERY 2–8 20–120 High (>0.85) 0.40–0.70 Low (<15) 
+
+AERIAL_PHOTOGRAPHY 0–6 30–200 Low (<0.45) 0.30–0.60 Medium (15–45) 
+
+PERIM_SURVEILLANCE 4–12 50–150 Medium (0.50–0.70) 
+
+0.10–0.30 Low–Med (<30) 
+
+AREA_RECONNAISSANC E
+
+6–18 80–300 Low–Med (0.35–0.60) 
+
+0.05–0.20 Medium (20–60) 
+
+ATTACK_VECTOR 10–30 5–80 (decreasing) 
+
+Very High (>0.92) 0.00–0.05 Very Low (<8) 
+
+SWARM_COORDINATIO N
+
+Varies by role 
+
+Varies by role Formation-depende nt 
+
+Varies Synchronised ±2° 
+
+Table B-I: Kinematic profiles. ATTACK_VECTOR commitment point (final 5–8 s) is the primary discriminating temporal window. 
+
+# APPENDIX C. STATISTICAL VALIDATION METHODOLOGY 
+
+C.1. Cross-Validation Confidence Intervals 
+
+t = (μ̂₁−μ̂₂) / √[(1/k + n_test/n_train)·σ²] (C.1) 
+
+k=5 folds, n_test/n_train=0.25. Correction factor 0.45 produces conservative CIs. 
+
+C.2. McNemar’s Test with Bonferroni Correction — 22 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+χ² = (|b−c|−1)² / (b+c) (C.2) 
+
+Bonferroni correction for 10 simultaneous comparisons (adjusted α=0.005). 
+
+C.3. Simulation Distribution Matching 
+
+Kinematic Metric KL Divergence Pass (<5%)? Notes 
+
+Ground speed 1.8% ✓ Pass Excellent match 
+
+Altitude AGL 2.3% ✓ Pass Good across all altitude bands 
+
+Heading change rate 3.1% ✓ Pass Slightly elevated; urban micro-routing 
+
+Vertical speed 2.7% ✓ Pass Good including hover events 
+
+Hover duration 4.7% ✓ Pass Highest divergence; delivery hover patterns 
+
+Table C-I: KL divergence (civilian trajectories only; adversarial scenarios not validated against real-world data). 
+
+C.4. Effect Size Reporting 
+
+Cohen's h is reported for proportion comparisons. Effect sizes for all significant ablation comparisons are large (h>0.8) except GNN-SIM removal (h=0.41, medium), consistent with the 0.8% accuracy difference. 
+
+# APPENDIX D. DEPLOYMENT SCENARIOS AND SENSITIVITY ANALYSIS 
+
+D.1. Deployment Scenario Configurations 
+
+Deployment Type Active Modalities BICE / GNN-SIM Expected Performance 
+
+Target Context 
+
+Full Urban RF + Acoustic + Visual Both active 96.1% acc, 3.2% FAR 
+
+Controlled perimeter, <$780 system cost 
+
+Peri-Urban / Rural RF + Acoustic + Visual Both active 94–96% acc, 3–4% FAR 
+
+DRC border zone, MONUSCO posts 
+
+Rapid Deployment RF + Visual (no acoustic) 
+
+BICE only 89.4% acc, 5.6% FAR 
+
+Forward operating bases, <$750 
+
+TinyML Sensor Node 
+
+RF only (encrypted fallback) 
+
+None (FW item 4) 71–94% acc (SNR-dependent) 
+
+Border sensor mesh, <$150/node 
+
+Night / Low-Visibility 
+
+RF + Acoustic (no visual) 
+
+BICE only 88.7% acc, 7.1% FAR 
+
+Nocturnal perimeter protection 
+
+Table D-I: Deployment configurations. 
+
+D.2. Fusion Weight Sensitivity 
+
+Weight Configuration (α, β, γ, δ) Detection Acc. 
+
+FAR Notes 
+
+Default (0.35, 0.25, 0.30, 0.10) 96.1% 3.2% Baseline — empirically tuned 
+
+RF-dominant (0.55, 0.20, 0.20, 0.05) 92.3% 5.8% Degraded under FHSS 
+
+Visual-dominant (0.20, 0.20, 0.55, 0.05) 93.7% 4.9% Degraded under night/fog 
+
+Equal weighting (0.25, 0.25, 0.25, 0.25) 94.2% 4.1% Conservative; context over-weighted 
+
+Acoustic-dominant (0.20, 0.55, 0.20, 0.05) 91.8% 6.3% Urban FAR penalty 
+
+Bayesian-adapted (5 incidents) ~(0.33, 0.27, 0.31, 0.09) 
+
+96.4% 3.0% 5 field incidents sufficient 
+
+Table D-II: Fusion weight sensitivity. Equal weighting achieves 94.2% — confirming robustness. 
+
+D.3. Alert Threshold Sensitivity — 23 — DroneShield-AI — Bayizere (2026) — arXiv Preprint M. Bayizere 
+
+Threshold Configuration HIGH Alert Trigger 
+
+FAR (High+ Alerts) 
+
+MDR (Critical) 
+
+Recommended Context 
+
+Conservative (low thresholds) T>0.35 6.8% 0.9% High-value asset protection 
+
+Default T>0.45 3.2% 1.8% Standard perimeter, general deployment 
+
+Operational (high thresholds) T>0.60 1.1% 4.3% Low-resources, high-traffic civilian zones 
+
+Table D-III: Alert threshold sensitivity.
