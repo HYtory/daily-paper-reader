@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-18",
+  "date": "2026-06-18",
+  "generated_at": "2026-06-18T21:24:08",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/18/2606.14693v1-learning-coordinated-preference-for-multi-objective-multi-agent-reinforcement-learning",
+      "section": "deep",
+      "title_en": "Learning Coordinated Preference for Multi-Objective Multi-Agent Reinforcement Learning",
+      "authors": "Pengxin Wang, Lihao Guo, Yi Xie, Bo Liu, Siyang Cao, Jingdi Chen",
+      "date": "2026-06-12",
+      "pdf": "https://arxiv.org/pdf/2606.14693v1",
+      "score": "8.0",
+      "evidence": "多智能体强化学习协调方法，适用于无人机集群",
+      "tldr": "合作多目标多智能体强化学习面临目标间和智能体间的冲突。本文提出PCMA方法，学习协调的智能体特定偏好以实现互补权衡。理论证明偏好多样性可引致团队提升，实验表明PCMA在多个环境及交通控制中提升性能和权衡协调。该方法为多目标多智能体决策提供了有效方案。",
+      "tags": "query:ui",
+      "abstract_en": "Cooperative multi-objective multi-agent reinforcement learning (MOMARL) models team decision making under multiple, potentially conflicting objectives. In this setting, conflicts arise not only across objectives but also across agents with different observations, roles, and contributions. We propose Preference Coordinated Multi-agent Policy Optimization (PCMA), which learns coordinated agent-specific preferences to enable complementary trade-offs among agents. Theoretically, we formulate cooperative MOMARL as a team-optimal game and show that, under suitable conditions, preference diversity can induce team improvement through a first-order improvement decomposition. Experiments on multiple cooperative MOMA environments and a practical traffic-control scenario show that PCMA improves both performance and trade-off coordination.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/18/2606.18308v1-trident-breaking-the-hybrid-safety-physics-coupling-for-provably-safe-multi-agent-reinforcement-learning",
+      "section": "quick",
+      "title_en": "TRIDENT: Breaking the Hybrid-Safety-Physics Coupling for Provably Safe Multi-Agent Reinforcement Learning",
+      "authors": "Zijie Meng, Ziwei Li, Yufei Liu, Zhiyu Li, Jiyuan Liu, Wenhua Nie, Bingcai Wei, Miao Zhang",
+      "date": "2026-06-16",
+      "pdf": "https://arxiv.org/pdf/2606.18308v1",
+      "score": "6.0",
+      "evidence": "多智能体RL安全协调框架，可应用于无人机群围捕",
+      "tldr": "多智能体强化学习面临混合离散-连续动作、训练时安全约束与物理驱动动力学的耦合问题，三者形成有偏循环，无法直接组合现成模块。本文提出TRIDENT框架，通过Richardson-Romberg梯度修正将Gumbel-Softmax偏差从O(τ)降至O(τ²)、Lyapunov约束顺序信任域保证每次迭代可行性、物理信息残差评论家分解价值而非奖励，三者协同打破耦合。理论证明向约束纳什均衡的O~(1/√K)收敛率和O(√K)累积违规界。在多无人机移动边缘计算、自动驾驶交叉口管理等任务中，相比MADDPG和MACPO分别减少95.5%和76.3%训练违规，同时比最强无约束基线提升13.5%奖励。",
+      "tags": "query:ui",
+      "abstract_en": "Safe coordination in networked cyber-physical systems forces learning algorithms to simultaneously handle hybrid discrete-continuous actions, hard training-time safety constraints, and physics-governed dynamics. We show that these three features form a directed cycle of biases that defeats any naive composition of off-the-shelf modules, and formalize this as a three-way coupling lemma. We then introduce TRIDENT, the first MARL framework whose three components are co-designed to cancel each leak: a Richardson-Romberg gradient correction reducing Gumbel-Softmax bias from O(tau) to O(tau^2), a Lyapunov-constrained sequential trust-region update enforcing per-iterate feasibility, and a physics-informed residual critic that decomposes value rather than reward. We prove an O~(1/sqrt(K)) convergence rate to a constrained Nash equilibrium and an O(sqrt(K)) cumulative-violation bound. On multi-UAV mobile-edge computing, autonomous intersection management, and a hybrid SMAC variant, TRIDENT cuts training-time violations by 95.5% over MADDPG and 76.3% over MACPO, while improving reward by 13.5% over the strongest unconstrained baseline.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
