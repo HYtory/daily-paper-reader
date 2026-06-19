@@ -1,0 +1,710 @@
+Title: Efficient Domain-Adaptive Policy Learning via Kernel Representation with Application to Quadrotor Control under Non-Stationary Disturbances
+
+URL Source: https://arxiv.org/pdf/2606.13842v1
+
+Published Time: Mon, 15 Jun 2026 00:13:43 GMT
+
+Number of Pages: 21
+
+Markdown Content:
+# Efficient Domain-Adaptive Policy Learning via Kernel Representation with Application to Quadrotor Control under Non-Stationary Disturbances 
+
+Hongyu Zhou 
+
+University of Michigan, Ann Arbor 
+
+zhouhy@umich.edu 
+
+Mingtian Tan 
+
+University of Michigan, Ann Arbor 
+
+teemty@umich.edu 
+
+Vasileios Tzoumas 
+
+University of Michigan, Ann Arbor 
+
+vtzoumas@umich.edu 
+
+Abstract: We present an algorithm for efficient domain-adaptive policy learn-ing via kernel representations. Learning domain-adaptive policies is challenging since it requires an environment representation that is both sufficiently expres-sive to model complex sim-to-real gaps during offline training, and computation-ally efficient enough to support rapid online adaptation during deployment. For instance, a quadrotor may encounter time-varying, non-stationary disturbances, such as sudden gusts of wind, payload shifts, or transitions between distinct flight regimes with and without ground effects. To address these challenges, we model unknown disturbances using a differentiable kernel approximation based on ran-dom Fourier features. During the offline training phase, we randomly sample kernel coefficients and bandwidth parameters to generate a rich diversity of distur-bance profiles. We then optimize the control policy via differentiable simulation with analytical gradients, a process that takes only 50 seconds of training time on an RTX 4090 GPU. During hardware deployment, the policy adapts to non-stationary environments in real time by updating both the kernel coefficients and bandwidth through online least-squares estimation. We evaluate our method on quadrotor trajectory tracking tasks across high-fidelity numerical simulations and hardware experiments using Crazyflie, subjected to various disturbances, includ-ing complex aerodynamic effects, wind, ground effects, and payload fluctuations. 
+
+Keywords: Kernel Representation, Domain Adaptation, Online Learning 
+
+## 1 Introduction 
+
+In the future, mobile robots will perform agile tasks such as aerial transportation, search and rescue, and inspection in cluttered environments. Such tasks require accurate and efficient tracking control of the robot’s motion. But achieving accuracy and efficiency is challenging since such tasks often require the robot to operate under uncertain conditions, particularly, under unknown disturbances that may be time-varying and non-stationary. For example, a quadrotor may encounter sudden gusts of wind, payload shifts that change the center of mass mid-flight, or transitions between distinct flight regimes such as moving in and out of ground effect during takeoff and landing. We are motivated by the future of autonomy where robots will autonomously perform such tasks despite these unknown, non-stationary disturbances. Achieving this requires an environment representation that is sufficiently expressive to model complex sim-to-real gaps during offline policy training, and computationally efficient enough to support rapid online adaptation during deployment. Existing methods do not satisfy both requirements simultaneously. Robust control [1, 2, 3, 4, 5] selects control inputs assuming a worst-case realization of disturbances, which can be conserva-  
+
+> arXiv:2606.13842v1 [cs.RO] 11 Jun 2026 (a) Unknown Payload. (b) Ground Effect. (c) Wind Disturbance.
+
+Figure 1: Efficient Domain-Adaptive Policy Learning via Kernel Representation for Quadrotor Control under Non-Stationary Disturbances. We leverage kernel representations for efficient domain-adaptive policy learning that achieves zero-shot sim-2-real transfer for quadrotor control under non-stationary disturbances: (a) unknown suspended payload that weighs 20% of drone mass and may swing, (b) on-and-off-switching ground effects, and (c) time-varying wind disturbances. tive. Classical adaptive control [6, 7, 8] often assumes parametric uncertainty additive to the known system dynamics, where unknown coefficients multiply a fixed set of known basis functions. The coefficients are updated online to compensate for the estimated disturbances. However, the capa-bility of disturbance compensation is limited by the expressiveness of the chosen basis functions. Learning-based control [9, 10, 11, 12] trains a neural-network policy conditioned on the output of an environment encoder to achieve domain adaptation. However, the encoder is fixed after offline training and cannot represent disturbances beyond the diversity of the training environments. On-line learning methods [13, 14, 15, 16] select control inputs based on past information alone and are agnostic to the form of the disturbance, but in practice, they are sensitive to the choice of tuning parameters [16]. We further discuss related work in Appendix A. To address these challenges, we provide an algorithm for efficient domain-adaptive policy learning via kernel representations (Figure 2). We model the unknown disturbance with a differentiable kernel approximation based on random Fourier features (RFF) [17, 18]. The approximation has two sets of parameters: the kernel coefficients and the bandwidth. Both parameters are learnable and the function approximation is differentiable, allowing efficient offline policy learning and online adaptation. Specifically, the kernel approximation based on RFF enables approximating functions in Reproducing Kernel Hilbert Space, providing a rich representation for modeling complex sim-to-real gaps. In addition, the basis functions can be adapted by adjusting the kernel bandwidth parameters, overcoming the limitations of a fixed set of basis functions. The proposed algorithm is composed of offline learning and online adaptation phases. In the offline phase, we randomly sample the kernel coefficients and the bandwidth to generate a rich diversity of disturbance profiles, and we optimize the policy via differentiable simulation with analytical gradients. The offline training takes only 50 seconds on an RTX 4090 GPU. In the online phase, the policy is deployed zero-shot, and the kernel coefficients and the bandwidth are updated jointly at every control step through online least-squares estimation. Updating both the kernel coefficients and the bandwidth allows the basis itself to adapt to the disturbance encountered at deployment, rather than only the coefficients projected onto a pre-committed basis. We validate our algorithm in both numerical simulations and hardware experiments. The simu-lations use a high-fidelity aerodynamic model together with additional disturbance types, includ-ing sinusoidal, switching (from sinusoidal to constant), and quadratic-phase sinusoidal. The hard-ware experiments use Crazyflie drones under various disturbances, including an unknown suspended payload that weighs 20% of the drone mass and may swing, on-and-off-switching ground effects, and time-varying wind. Across all settings, our method consistently outperforms state-of-the-art learning-based and model-based adaptive control baselines [12, 19], improving position tracking by up to 60 − 70% in simulation and up to 30% on hardware. 
+
+## 2 Problem Formulation 
+
+Consider the quadrotor dynamics as follows, 
+
+˙p = v, m ˙v = mg + f + h, ˙q = 12 q ⊗ [0 , ω]⊤ , (1) 2Domain -Adaptive Policy Learning via Kernel Representation 
+
+> Domain -Adaptive
+> Control Policy
+
+Offline Policy Training 
+
+> ~50 seconds on RTX 4090
+
+Real -World Deployment   
+
+> zero -shot transfer · 50 Hz control
+
+Online Kernel Params Adaptation 
+
+> at every control step
+
+Reward            
+
+> Learn ing Adaptive Policy
+> conditioned on kernel parameters (α, σ)
+> Copy Params
+> Domain -Adaptive
+> Control Policy
+> frozen
+> Quadrotor under Disturbances
+> payload
+> wind
+> aerodynamics
+> ground effect
+> State, Action updated (α, σ)
+> Differentiable Simulator
+> Randomized
+> Kernel Params
+> (α, σ)
+> State, Action
+> Gradient
+> Action
+> Gradient
+> State
+> Action
+> Online Learning of Kernel Params
+> least -squares update of (α, σ)
+> ασ
+> state -transition mismatch vs. nominal model
+> Policy
+> Observation
+> Simplified Dynamics
+> Kernel Disturbance Model
+> (random Fourier features)
+> ασ
+
+Figure 2: Efficient Domain-Adaptive Policy Learning via Kernel Representation. The frame-work is composed of offline and online phases. During the offline training phase, we randomly sample kernel coefficients and bandwidth parameters to generate a rich diversity of disturbance pro-files. We then optimize the control policy via differentiable simulation with analytical gradients, a process that takes only 50 seconds of training time on an RTX 4090 GPU. During hardware de-ployment, the policy adapts to non-stationary environments in real time by updating both the kernel coefficients and bandwidth parameters simultaneously through online least-squares estimation. where p ∈ R3 and v ∈ R3 are position and velocity in the inertial frame, q is the quaternion, ⊗
+
+is the quaternion multiplication operator, ω ∈ R3 is the body angular velocity, m is the quadrotor mass, J is the inertia matrix of the quadrotor, g is the gravity vector, f = R [0 0 T ]⊤ ∈ R3 is the total thrust from the four rotors, T is the thrust from the four rotors along the z−axis of the body frame, and h ∈ R3 is the unknown disturbance force. The control input is [T, ω⊤]⊤. We adopt this choice of control input since common low-level flight controllers, such as PX4 1 and Betaflight 2,accept [T, ω⊤]⊤ as a high-level control command. The quadrotor dynamics in eq. (1) can be compactly written as 
+
+xt+1 = f (xt) + g(xt)ut + h, (2) where x ≜ [p⊤, v⊤, q⊤]⊤ and u ≜ [T, ω⊤]⊤.
+
+Problem 1. Given a reference trajectory xref , the goal is to learn a control policy that adapts online using the estimated disturbance ˆh of the unknown disturbance h, where the disturbance h
+
+may be time-varying or non-stationary. 
+
+## 3 Algorithm 
+
+In this section, we introduce our algorithm. We first introduce kernel representation for function ap-proximation based on random Fourier feature (RFF) in Section 3.1, the policy optimization method with analytical gradients in Section 3.2, and online learning of kernel parameters in Section 3.3. Fi-nally, we present our algorithm in Section 3.4 that is composed of offline and online phases Figure 2: (i) offline phase utilizes the policy optimization method with analytical gradients for control policy training, and (ii) online learning of the disturbance function represented by RFF. 
+
+3.1 Function Approximation via Random Fourier Features 
+
+We overview the randomized approximation algorithm in [20] for approximating an h (·). The algorithm is based on RFF [17, 18] and their extension to vector-valued functions [21, 22]. By 
+
+> 1
+
+https://docs.px4.io/main/en/index.html 
+
+> 2
+
+https://betaflight.com/ 
+
+3being randomized, the algorithm is computationally efficient while retaining the expressiveness of the RKHS with high probability. RFF can be viewed as linearizations of neural networks [23, 24]. Neural networks, in principle, can perform better than kernel methods due to greater expressivity. However, using neural networks poses challenges in such online learning settings due to their data-hungry nature. Therefore, we utilize RFF to balance computational efficiency and expressiveness. Based on the assumptions of h : Rdz → Rdx lies in a subspace of a Reproducing Kernel Hilbert Space (RKHS) H [25] and the Operator-Valued Bochner’s Theorem [21], h can be written as h (·) = R 
+
+> Θ
+
+Φν (·, θ) α(θ)d ν(θ) [25] and there exists a finite-dimensional approximation of h (·) by h (·) ≈
+
+ˆh(·; α) ≜ 1
+
+> M
+
+PMi=1 Φν (·, θi) αi, where Φν (z, θ) = B(w)ϕ  w⊤z + b is the feature map, B :
+
+Rdz → Rdx×d1 , ϕ : R → [−1, 1] is a 1-Lipschitz function, d1 ≤ dx, θi ∼ ν are drawn i.i.d. from the base measure ν with θ = ( w, b ), w ∈ Rdz , and b ∈ R, αi ≜ α (θi) are parameters to be learned, and M is the number of sampling points that decides the approximation accuracy. The following shows the expressiveness of the finite-dimensional approximation of h (·), consider-ing αi ∈ D , where D ≜ {α | ∥ α∥≤ Bh}.
+
+Proposition 1 (Uniformly Approximation Error [20]) . Given the base measure ν and assume h ∈F2 (Bh), where F2 (Bh) ≜
+
+(
+
+h (·) = R 
+
+> Θ
+
+Φν (·, θ) α(θ)d ν(θ) α ∈ D 
+
+)
+
+. Let δ ∈ (0 , 1) . With probability at least 1 − δ, there exist {αi}Mi=1 ∈ D , i.e. , ∥αi∥≤ Bh, such that 
+
+h (·) − 1
+
+M
+
+> M
+
+X
+
+> i=1
+
+Φν (·, θi) αi
+
+> ∞
+
+≤ O 
+
+ 1
+
+√M
+
+
+
+. (3) Therefore, Proposition 1 indicates that the uniformly approximation error scales O
+
+ 1√M
+
+
+
+given the base measure ν.
+
+Example 1 (Random Fourier Features with Gaussian Kernel) . Consider Gaussian Kernel 
+
+K(x, y) = exp 
+
+
+
+− ∥x−y∥2
+
+> 2σ2
+
+
+
+with bandwidth σ. Each entry of Φν , i.e. , Φij , is cos  σw⊤ 
+
+> ij
+
+z + bij 
+
+,where the base measure ν is a Gaussian distribution N  0, σ 2I, wij is sampled from standard Gaussian distribution, and b is sampled from uniform distribution of [0 , 2π].
+
+Remark 1 (Importance of Kernel Bandwidth) . Per Proposition 1, the uniform approximation guar-antee of RFF holds with respect to a given base measure ν. In particular, when only the coefficients 
+
+α are updated, the resulting finite-dimensional RFF representation can only approximate functions that lie in the function space induced by the kernel associated with ν. For the Gaussian kernel, the base measure ν is determined by the bandwidth parameter σ. Consequently, the choice of σ directly affects the expressiveness of the corresponding function space. However, selecting an appropriate bandwidth a priori can be challenging in the presence of time-varying or non-stationary distur-bances, where the underlying disturbance characteristics may change over time. This observation motivates the online adaptation of both the kernel coefficients α and the kernel bandwidth σ.
+
+3.2 Policy Optimization with Analytical Gradients 
+
+Consider the quadrotor dynamics in eq. (1), the dynamcis is differentiable if the policy π : O → U 
+
+and the disturbance h is differentiable. If we further consider a differentiable reward function 
+
+r : X × U → R, then all components are fully differentiable and allow analytic gradient back-propagation through the simulation for policy optimization, i.e. , Back-Propagation Through Time (BPTT) [26]. Specifically, the objective of BPTT for policy optimization is to maximize the cumu-lative reward over an N -step rollout of the policy πψ parameterized by ψ, i.e. ,
+
+max R(ψ) = max 
+
+> ψ
+
+1
+
+N
+
+> N
+
+X
+
+> i=1
+
+r (xi, ui) = max 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+r (xi, π ψ (oi)) . (4) Then ψ can be updated through analytic gradient ∇ψ R with step size ηψ , i.e. ,
+
+ψk+1 = ψk − ηψ ∇ψk R. 
+
+4Algorithm 1: Policy Optimization (Offline). 
+
+Input: Number of random Fourier features M ; random Fourier feature parameters {θ}1,...,M ;domain set Dσ and Dα; gradient descent learning rate ηψ ; number of epoch K; rollout step N .
+
+Output: Learned policy πψ . 
+
+> 1:
+
+Formulate Φ (·, θi), where i ∈ { 1, . . . , M }; 
+
+> 2:
+
+for each epoch k = 1 , . . . , K do  
+
+> 3:
+
+Initialize x1; 
+
+> 4:
+
+Reset reward R(ψ) = 0 ; 
+
+> 5:
+
+Randomly sample σk from Dσ and αk from Dα; 
+
+> 6:
+
+for each rollout step t = 1 , . . . , N do  
+
+> 7:
+
+Apply control input ut = πψk (ot) with σk and αk; 
+
+> 8:
+
+Receive reward rt(xt, ut); 
+
+> 9:
+
+Cumulate R(ψ) ← R(ψ) + 1 
+
+> N
+
+rt; 
+
+> 10:
+
+Observe state xt+1 = f (xt) + g(xt)ut + 1
+
+> M
+
+PMi=1 Φ ( zt, θi) αi,k ; 
+
+> 11:
+
+end for  
+
+> 12:
+
+Obtain gradient ∇ψ R; 
+
+> 13:
+
+Update ψ by ψk+1 = ψk − ηψ ∇ψk R. 
+
+> 14:
+
+end for 3.3 Online Least-Squares Estimation 
+
+Based on Proposition 1, the approximation accuracy depends on the parameter of the base measure 
+
+ν, i.e. , σ, and the parameters α. Therefore, we aim to utilize an online least-square estimation algo-rithm to minimize approximation error. Given a data point (zt, h (zt)) observed at time t, we em-ploy an online least-squares algorithm that updates the parameters ˆσt and ˆαt ≜ α⊤
+
+> i,t
+
+, . . . , α⊤
+
+> M,t
+
+⊤
+
+to minimize the approximation error lt = ∥h (zt) − ˆh (zt) ∥2, where ˆh(·) ≜ 1
+
+> M
+
+PMi=1 Φ ( ·, θi) ˆ αi,t 
+
+and Φ ( ·, θi) is the random Fourier feature as in Section 3.1. Specifically, we can obtain the gradient 
+
+∇ˆσt ≜ ∇ˆσt lt, ∇ ˆαt ≜ ∇ ˆαt lt and update by ˆσ′ 
+
+> t+1
+
+= ˆ σt − η∇ˆσt , ˆα′ 
+
+> t+1
+
+= ˆ αt − η∇ ˆαt .
+
+The online least-squares estimation algorithm generalizes the seminal online gradient descent algo-rithms to the non-convex loss function. In the convex case, the online gradient descent algorithm enjoys provable performance guarantee [27]. Specifically, the algorithm achieves asymptotically the same cumulative estimation error as the optimal parameters of min PTt=1 lt.
+
+3.4 Algorithm 
+
+The proposed algorithm is composed of two phases: offline learning (Algorithm 1) and online adap-tation (Algorithm 2). First, based on the function approximation introduced in Section 3.1, we can parameterize the dy-namics as xt+1 = f (xt) + g(xt)ut + 1
+
+> M
+
+PMi=1 Φ ( zt, θi) αi,k , with unknown parameters σ and α.Those parameters provide dynamics information that the policy can leverage for online domain adap-tation. Therefore, in Algorithm 1, we train an adaptive policy π with parameters σ and α included in the observations. Since the RFF is differentiable, we leverage BPTT for policy optimization. In the online phase (Algorithm 2), we collect the data for online adaptation as we apply the pol-icy (lines 4-5). Then we use online least-square estimation to learn the parameters σ and α (lines 6-9). Those learned parameters are fed into the policy observation to enable domain adaptation. 
+
+## 4 Experiments 
+
+In this section, we present our experimental results. We first introduce our training precedure and algorithm parameters in Section 4.1, and benchmark algorithms in Section 4.2. We then present our simulation results in Section 4.3 and hardware restuls using Crazyflies in Section 4.4. 5Algorithm 2: Model-based Domain Adaptation (Online). 
+
+Input: Learned policy πψ ; number of random Fourier features M ; random Fourier feature parameters {θ}1,...,M ; domain set Dσ and Dα; gradient descent learning rate η.
+
+Output: At each time step t = 1 , . . . , T , control input ut. 
+
+> 1:
+
+Initialize x1, ˆσ1 ∈ D σ , ˆαi, 1 ∈ D α; 
+
+> 2:
+
+Formulate Φ (·, θi), where i ∈ { 1, . . . , M }; 
+
+> 3:
+
+for each time step t = 1 , . . . , T do  
+
+> 4:
+
+Apply control input ut = πψ (ot) with ˆσt and ˆαt; 
+
+> 5:
+
+Observe state xt+1 , and calculate disturbance via h(zt) = xt+1 − f (xt) − g(xt)ut; 
+
+> 6:
+
+Formulate estimation loss lt (ˆ σt, ˆαt) ≜ h (zt) − 1
+
+> M
+
+PMi=1 Φ ( zt, θi) ˆ αi,t 
+
+> 2
+
+; 
+
+> 7:
+
+Calculate gradient ∇ˆσt and ∇ ˆαt ; 
+
+> 8:
+
+Update ˆσ′ 
+
+> t+1
+
+= ˆ σt − η∇ˆσt and ˆα′ 
+
+> t+1
+
+= ˆ αt − η∇ ˆαt ; 
+
+> 9:
+
+Project ˆσ′ 
+
+> t+1
+
+onto Dσ and each ˆα′ 
+
+> i,t +1
+
+onto Dα; 
+
+> 10:
+
+end for 4.1 Policy Training and Algorithm Parameters 
+
+For the policy network, we use a 3-layer MLP with a hidden dimension of 512. The policy observa-tion ot has a size of 187 , including body-frame velocity R⊤vt, quaternion qt, thrust Tt−1, angular velocity command ωt−1, 10 relative future reference trajectory point ∆x over a time horizon 1.0s,and parameters αt and σt. The policy outputs the mass-normalized thrust Tt/m and angular velocity command ωt.For BPTT, we trian the policy to track a lemniscate trajectory with 500 environments and 300 epochs using JAX. Each episode has a maximum of 250 simulation steps with a time step of 0.02 s. We use an initial step size of 0.001 with a decay following a cosine function 3. For each episode, we sample parameters α from a Gaussian distribution N (0, 12 I) and σ from an uniform distribution [0 .001 , 1] .We use Gaussian Kernel and M = 25 random features, which leads to α ∈ R75 . For reward, we use as reward the negative tracking errors in position, quaternion, velocity, and control deviation from hovering command, with weights 2.5, 0.5, 0.1, and 0.01 for simulation, and weights 2.5, 0.5, 0.1,and 0.1 for hardware. The training takes 50 s on a RTX 4090 GPU. For the online update of α and σ, we use step size of η = 0 .1 for simulation and η = 0 .02 for hardware. We initialize α as zeros and σ = 0 .5. We use as features z the body-frame velocity 
+
+R⊤vt, quaternion qt, normalized thrust Tt−1/mg , angular velocity command ωt−1.Compared to simulation, we use higher penalty on control action and lower learning rate of online adaptation to avoid aggressive behaviors in hardware. 
+
+4.2 Benchmark Algorithms 
+
+We compare our methods with both model-free and model-based adaptive control algorithms: DATT (L1-E) [12], DATT (RMA) [12], MPC (L1-E) [12], and MPC (RFF) [19]. Specifically, both DATT (L1-E) and DATT (RMA) learn an adaptive control policy via PPO [28] conditioned on a vector-valued estimate of the disturbance. DATT (L1-E) utilizes a state predictor to estimate the disturbance as in L1 adaptive control [29] and DATT (RMA) based on Rapid Motor Adaptation (RMA) [9]. The RMA is a neural-network module trained by supervised learning that predicts disturbance using a history of state-action pairs. MPC (L1-E) and MPC (RFF) use model predictive control with quadrotor dynamics in eq. (1). MPC (L1-E) utilizes a state predictor to estimate the disturbance based on L1 adaptive control [29] and augments this estimation to the nominal quadrotor dynamics. MPC (RFF) parametrizes the disturbance using RFF and updates α only. A detailed implementation of the benchmark algorithms is provided in Appendix B. 
+
+> 3https://optax.readthedocs.io/en/latest/api/optimizer_schedules.html
+
+6We also compare our method with variants without the σ and/or α updates in the ablation study. 
+
+4.3 Numerical Simulations 
+
+We first conduct numerical simulations using a realistic simulator with a Blade Element Momentum (BEM) [30] model for aerodynamic effects and high-frequency simulation of low-level controller dynamics [31]. We simulate for 10 s. We test the algorithms under various disturbances, including: (i) aerodynamics effects only; (ii) aerodynamics effects plus sinusoidal disturbance 12 [sin 2πt  
+
+> 10
+
+, sin 2πt  
+
+> 10
+
+, sin 2πt  
+
+> 10
+
+]⊤;(iii) aerodynamics effects plus switching distrubance from sinusoidal disturbance  
+
+> 12
+
+[sin πt  
+
+> 10
+
+, sin πt  
+
+> 10
+
+, sin πt  
+
+> 10
+
+]⊤ (from t = 0 s to 5s) to constant disturbance [0 .5, 0.5, 0.5] ⊤
+
+(from t = 5 s to 10 s); (iv) aerodynamics effects plus quadratic-phase sinusoidal disturbance  
+
+> 12
+
+[sin πt 2 
+
+> 10
+
+, sin πt 2 
+
+> 10
+
+, sin πt 2 
+
+> 10
+
+]⊤.We use the RMSE in position as the performance metric. The results are given in Table 1 and Appendix C. In Table 1, our method consistently has the low-est tracking error across all tested scenarios. Specifically, our method improves up to 70% over DATT (L1-E), 70% over DATT (RMA), 60% over MPC (L1-E), and 30% over MPC (RFF). The performance is connected to the learning accuracy of RMA, L1-estimator, and RFF. In Appendix C, we show see that RMA results in the largest prediction error, as it highly depends on the training dataset, as pointed out in [12], and RFF has better performance than the L1-estimator. In addition, DATT variants require the values of disturbance lie in the range of [−2, 2] m/s 2 dur-ing training. This range cannot cover complicated disturbance functions such as switching and quadratic-phase sinusoidal, shown in Appendix C. While for RFF, this disturbance can still be rep-resented correctly within the training range of α ∼ N (0, 12 I) and σ ∈ [0 .001 , 1] , shown in Ap-pendix C, providing a better representation of learning a disturbance model. The last three columns in Table 1 present the results of the ablation study. Removing both the σ and 
+
+α updates causes the system to degrade massively ( e.g. , the tracking errors degrade from around 
+
+4 cm to around 40 cm ). Removing the σ update still results in 10% to 30% performance drop across all scenarios compared to the full pipeline with σ and α updates. 
+
+Table 1: Performance Comparison for the Numerical Simulations in Section 4.3. The table reports the average value of RMSE in position ( cm ). The blue numbers correspond to the better performance. Our method achieves better tracking performance than all benchmark algorithms.                                          
+
+> Disturbance DATT (L1-E) DATT (RMA) MPC (L1-E) MPC (RFF) Ours (w/o σ&αupdate) Ours (w/o σupdate) Ours Aerodynamic 10 .54 13 .98 7.23 3.49 37 .93 3.49 3.17
+> Aerodynamic + Sinusoidal 10 .50 14 .73 9.15 4.44 42 .86 5.37 4.10
+> Aerodynamic + Switching 10 .71 14 .22 12 .16 5.44 36 .52 5.66 4.11
+> Aerodynamic + Quadratic-Phase Sinusoidal 10 .02 12 .75 9.90 5.94 37 .22 5.58 4.00
+
+4.4 Crazyflies Experiments 
+
+We deploy our algorithm on Crazyflie drone (Figure 1). 4 We test the algorithms under various time-varying disturbances, including: (i) ground effect, where part of the trajectory is 7cm above a box and part of the trajectory is 
+
+72 cm above the ground, creating a switching between w/ and w/o ground effect; (ii) time-varying wind disturbance, where the wind speed varies from 1.5m/s to 2.5m/s ;(iii) 6g payload suspended to the bottom of the drone, which weighs 20% of the drone mass. 
+
+> 4
+
+https://www.bitcraze.io/products/old-products/crazyflie-2-1/ 
+
+7We use the RMSE in position as the performance metric. The results are given in Table 2 and Appendix D. In Table 2, our method consistently has the low-est tracking error across all tested scenarios. Specifically, our method improves up to 10% over DATT (L1-E), 25% over DATT (RMA), 34% over MPC (L1-E), and 20% over MPC (RFF). The last three columns in Table 2 present the results of the ablation study. Removing both the σ
+
+and α updates causes the system to degrade from 6 − 9 cm to over 10 − 15 cm ). Removing the σ
+
+update still results in 3% to 10% performance drop across all scenarios compared to the full pipeline with σ and α updates. Compared to the simulation results in Section 4.3, the performance of these variants is closer, since we use a smaller step size η = 0 .02 to avoid aggressive updates with noisy real-world data.                                     
+
+> Table 2: Performance Comparison for the Hardware Experiments in Section 4.4. The table reports the average value of RMSE in position ( cm ). The blue numbers correspond to the better performance. Our method achieves better tracking performance than all benchmark algorithms.
+> Disturbance DATT (L1-E) DATT (RMA) MPC (L1-E) MPC (RFF) Ours (w/o σ&αupdate) Ours (w/o σupdate) Ours Ground 7.12 8.64 9.72 8.25 14 .41 6.92 6.41
+> Wind 9.95 9.39 10 .99 9.91 10 .78 9.76 8.80
+> Payload 7.37 7.20 9.73 7.21 15 .20 6.95 6.68
+
+## 5 Limitations 
+
+The training distribution of α ∼ N (0, 12 I) and σ ∈ [0 .001 , 1] provides a rich representa-tion for learning disturbance, such as aerodynamics, payload, wind, and ground effects. Handling out-of-distribution values of α and σ encountered during online adaptation is not considered. An OOD-detection module based on learned α and σ values and rapid online policy re-training mecha-nism [30] can be incorporated into the pipeline. We demonstrate the capability of our method under non-stationary disturbance in practice, while formal stability guarantees are not considered in this paper. Though not observed in our experiments, the proposed approach may suffer from bursting behavior, as commonly encountered in adaptive control methods, during rapid distribution shifts or poorly conditioned online adaptation [32]. Incorporating an active learning mechanism to improve persistent excitation for disturbance learning may help mitigate such behavior. 
+
+## 6 Conclusion 
+
+We presented an algorithm for efficient domain-adaptive policy learning via kernel representations. We modeled the unknown disturbance with a differentiable kernel approximation based on random Fourier features, in which both the kernel coefficients and the bandwidth are learnable. In the offline phase, we randomly sampled the coefficients and bandwidth to generate a diverse family of distur-bance profiles and trained the control policy via differentiable simulation with analytical gradients, taking only 50 seconds on a single RTX 4090 GPU. In the online phase, we deployed the policy zero-shot and updated both the coefficients and the bandwidth jointly at every control step via online least-squares estimation, allowing the basis itself to adapt to the disturbance encountered at deploy-ment. We validated the algorithm in high-fidelity numerical simulations under aerodynamic effects, sinusoidal, switching, and quadratic-phase sinusoidal disturbances, and on Crazyflie hardware un-der suspended payload weighing 20% of the drone mass, on-and-off-switching ground effects, and time-varying wind. Across all settings, our method outperformed state-of-the-art learning-based and model-based adaptive control baselines, improving position tracking by up to 60 − 70% in simula-tion and up to 30% on hardware. Future work includes incorporating out-of-distribution detection and rapid online re-training to handle disturbances outside the training range of the kernel parame-ters, establishing formal stability guarantees under non-stationary disturbances, and exploring active learning mechanisms to ensure persistent excitation during online adaptation. 8References 
+
+[1] K. Zhou and J. C. Doyle. Essentials of robust control , volume 104. Prentice hall Upper Saddle River, NJ, 1998. [2] D. Q. Mayne, M. M. Seron, and S. Rakovi´ c. Robust model predictive control of constrained linear systems with bounded disturbances. Automatica , 41(2):219–224, 2005. [3] H. Zhou and V. Tzoumas. Safe control of partially-observed linear time-varying systems with minimal worst-case dynamic regret. In 2023 62nd IEEE Conference on Decision and Control (CDC) , pages 8781–8787. IEEE, 2023. [4] A. Martin, L. Furieri, F. Dörfler, J. Lygeros, and G. Ferrari-Trecate. On the guarantees of minimizing regret in receding horizon. IEEE Transactions on Automatic Control , 2024. [5] J. Liu and P. Seiler. Robust regret optimal control. International Journal of Robust and Non-linear Control , 34(7):4532–4553, 2024. [6] J.-J. E. Slotine. Applied nonlinear control. PRENTICE-HALL google schola , 2:1123–1131, 1991. [7] M. Krstic, P. V. Kokotovic, and I. Kanellakopoulos. Nonlinear and adaptive control design .John Wiley & Sons, Inc., 1995. [8] P. A. Ioannou and J. Sun. Robust adaptive control , volume 1. PTR Prentice-Hall Upper Saddle River, NJ, 1996. [9] A. Kumar, Z. Fu, D. Pathak, and J. Malik. Rma: Rapid motor adaptation for legged robots. 
+
+arXiv preprint arXiv:2107.04034 , 2021. [10] T. Xue, A. Razmjoo, S. Shetty, and S. Calinon. Robust contact-rich manipulation through implicit motor adaptation. The International Journal of Robotics Research , 45(1):41–59, 2026. [11] D. Zhang, A. Loquercio, J. Tang, T.-H. Wang, J. Malik, and M. W. Mueller. A learning-based quadcopter controller with extreme adaptation. IEEE Transactions on Robotics , 2025. [12] K. Huang, R. Rana, A. Spitzer, G. Shi, and B. Boots. Datt: Deep adaptive trajectory tracking for quadrotor control. arXiv preprint arXiv:2310.09053 , 2023. [13] E. Hazan and K. Singh. Introduction to online nonstochastic control. arXiv preprint arXiv:2211.09619 , 2022. [14] N. Agarwal, B. Bullins, E. Hazan, S. Kakade, and K. Singh. Online control with adversar-ial disturbances. In International Conference on Machine Learning (ICML) , pages 111–119, 2019. [15] P. Zhao, Y.-X. Wang, and Z.-H. Zhou. Non-stationary online learning with memory and non-stochastic control. In International Conference on Artificial Intelligence and Statistics (AIS-TATS) , pages 2101–2133. PMLR, 2022. [16] H. Zhou and V. Tzoumas. Safe non-stochastic control of linear dynamical systems. In 2023 62nd IEEE Conference on Decision and Control (CDC) , pages 5033–5038. IEEE, 2023. [17] A. Rahimi and B. Recht. Random features for large-scale kernel machines. Advances in neural information processing systems , 20, 2007. [18] A. Rahimi and B. Recht. Uniform approximation of functions with random bases. In 2008 46th annual allerton conference on communication, control, and computing , pages 555–561. IEEE, 2008. 9[19] H. Zhou and V. Tzoumas. Simultaneous system identification and model predictive control with no dynamic regret. IEEE Transactions on Robotics , 2025. [20] N. M. Boffi, S. Tu, and J.-J. E. Slotine. Nonparametric adaptive control and prediction: Theory and randomized algorithms. Journal of Machine Learning Research , 23(281):1–46, 2022. [21] R. Brault, M. Heinonen, and F. Buc. Random fourier features for operator-valued kernels. In 
+
+Asian Conference on Machine Learning , pages 110–125. PMLR, 2016. [22] H. Q. Minh. Operator-valued bochner theorem, fourier feature maps for operator-valued ker-nels, and vector-valued learning. arXiv preprint arXiv:1608.05639 , 2016. [23] B. Ghorbani, S. Mei, T. Misiakiewicz, and A. Montanari. Linearized two-layers neural net-works in high dimension. 2021. [24] A. Jacot, F. Gabriel, and C. Hongler. Neural tangent kernel: Convergence and generalization in neural networks. Advances in neural information processing systems , 31, 2018. [25] F. Bach. Breaking the curse of dimensionality with convex neural networks. Journal of Ma-chine Learning Research , 18(19):1–53, 2017. [26] L. Metz, C. D. Freeman, S. S. Schoenholz, and T. Kachman. Gradients are not all you need. 
+
+arXiv preprint arXiv:2111.05803 , 2021. [27] E. Hazan et al. Introduction to online convex optimization. Foundations and Trends in Opti-mization , 2(3-4):157–325, 2016. [28] J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347 , 2017. [29] Z. Wu, S. Cheng, P. Zhao, A. Gahlawat, K. A. Ackerman, A. Lakshmanan, C. Yang, J. Yu, and N. Hovakimyan. L1 quad: L1 adaptive augmentation of geometric control for agile quadrotors with performance guarantees. arXiv preprint arXiv:2302.07208 , 2023. [30] J. Pan, J. Xing, R. Reiter, Y. Zhai, E. Aljalbout, and D. Scaramuzza. Learning on the fly: Rapid policy adaptation via differentiable simulation. IEEE Robotics and Automation Letters , 2026. [31] J. Heeg, Y. Song, and D. Scaramuzza. Learning quadrotor control from visual features using differentiable simulation. In 2025 IEEE International Conference on Robotics and Automation (ICRA) , pages 4033–4039. IEEE, 2025. [32] B. D. Anderson. Adaptive systems, lack of persistency of excitation and bursting phenomena. 
+
+Automatica , 21(3):247–258, 1985. [33] E. Tal and S. Karaman. Accurate tracking of aggressive quadrotor trajectories using incre-mental nonlinear dynamic inversion and differential flatness. IEEE Transactions on Control Systems Technology , 29(3):1203–1218, 2020. [34] R. Tao, P. Zhao, I. Kolmanovsky, and N. Hovakimyan. Robust adaptive mpc using uncertainty compensation. In 2024 American Control Conference (ACC) , pages 1873–1878. IEEE, 2024. [35] E. Das and J. W. Burdick. Robust control barrier functions using uncertainty estimation with application to mobile robots. arXiv preprint arXiv:2401.01881 , 2024. [36] D. Hanover, P. Foehn, S. Sun, E. Kaufmann, and D. Scaramuzza. Performance, precision, and payloads: Adaptive nonlinear mpc for quadrotors. IEEE Robotics and Automation Letters , 7 (2):690–697, 2021. [37] N. M. Boffi, S. Tu, and J.-J. E. Slotine. Regret bounds for adaptive nonlinear control. In 
+
+Learning for Dynamics and Control , pages 471–483. PMLR, 2021. 10 [38] J. Jia, W. Zhang, K. Guo, J. Wang, X. Yu, Y. Shi, and L. Guo. Evolver: Online learning and prediction of disturbances for robot control. IEEE Transactions on Robotics , 2023. [39] C. Sánchez-Sánchez and D. Izzo. Real-time optimal control via deep neural networks: study on landing problems. Journal of Guidance, Control, and Dynamics , 41(5):1122–1135, 2018. [40] J. Tobin, R. Fong, A. Ray, J. Schneider, W. Zaremba, and P. Abbeel. Domain randomization for transferring deep neural networks from simulation to the real world. In 2017 IEEE/RSJ international conference on intelligent robots and systems (IROS) , pages 23–30. IEEE, 2017. [41] F. Ramos, R. Possas, and D. Fox. Bayessim: Adaptive domain randomization via proba-bilistic inference for robotics simulators. In Proceedings of Robotics: Science and Systems ,FreiburgimBreisgau, Germany, June 2019. doi:10.15607/RSS.2019.XV.029. [42] J. Lee, J. Hwangbo, L. Wellhausen, V. Koltun, and M. Hutter. Learning quadrupedal locomo-tion over challenging terrain. Science robotics , 5(47):eabc5986, 2020. [43] Z. Li, X. B. Peng, P. Abbeel, S. Levine, G. Berseth, and K. Sreenath. Reinforcement learning for versatile, dynamic, and robust bipedal locomotion control. The International Journal of Robotics Research , 44(5):840–888, 2025. [44] M. Mohri, A. Rostamizadeh, and A. Talwalkar. Foundations of machine learning . MIT press, 2018. [45] Y. S. Abu-Mostafa, M. Magdon-Ismail, and H.-T. Lin. Learning from data , volume 4. AML-Book New York, 2012. [46] A. Farahani, S. Voghoei, K. Rasheed, and H. R. Arabnia. A brief review of domain adaptation. 
+
+Advances in data science and information engineering: proceedings from ICDATA 2020 and IKE 2020 , pages 877–894, 2021. [47] S. Ben-David, J. Blitzer, K. Crammer, and F. Pereira. Analysis of representations for domain adaptation. Advances in neural information processing systems , 19, 2006. [48] P. Wu, A. Escontrela, D. Hafner, P. Abbeel, and K. Goldberg. Daydreamer: World models for physical robot learning. In Conference on robot learning , pages 2226–2240. PMLR, 2023. [49] F. Nan, H. Ma, Q. Guan, J. Hughes, M. Muehlebach, and M. Hutter. Efficient model-based reinforcement learning for robot control via online learning. arXiv preprint arXiv:2510.18518 ,2025. [50] H. Zhou, Y. Song, and V. Tzoumas. Safe non-stochastic control of control-affine systems: An online convex optimization approach. IEEE Robotics and Automation Letters , 2023. [51] H. Zhou, Z. Xu, and V. Tzoumas. Efficient online learning with memory via frank-wolfe optimization: Algorithms with bounded dynamic regret and applications to control. In 2023 62nd IEEE Conference on Decision and Control (CDC) , pages 8266–8273. IEEE, 2023. [52] A. Tsiamis, A. Karapetyan, Y. Li, E. C. Balta, and J. Lygeros. Predictive linear online track-ing for unknown targets. In Proceedings of the 41st International Conference on Machine Learning , pages 48657–48694, 2024. [53] H. Zhou, X. Zhang, and V. Tzoumas. Adaptive legged locomotion via online learning for model predictive control. arXiv preprint arXiv:2510.15626 , 2025. [54] C. Llanes, Z. Kakish, K. Williams, and S. Coogan. Crazysim: A software-in-the-loop simulator for the crazyflie nano quadrotor. In 2024 IEEE International Conference on Robotics and Automation (ICRA) , pages 12248–12254, 2024. doi:10.1109/ICRA57147.2024.10610906. 11 A Related Works 
+
+We discuss work on robust and adaptive control, learning-based control, and online learning for control. 
+
+Robust and adaptive control. Robust control algorithms select control inputs assuming a worst-case realization of disturbances [1, 2, 3, 4, 5], which can be conservative. Adaptive control methods often assume parametric uncertainty additive to the known system dynamics, e.g. , parametric un-certainty in the form of unknown coefficients multiplying known basis functions [6, 7, 8]. These coefficients are updated online and generate an adaptive control input to compensate for the esti-mated disturbances. However, a fixed set of basis functions can be difficult to generalize across different scenarios, where the disturbance may lie beyond the span of the given basis functions. [33, 29, 34, 35, 36] directly estimate the value of unknown disturbances. However, the methods therein, as well as the relevant methods in [37, 20, 38], focus on adaptive control to compensate for the estimated disturbances, instead of leveraging a model of the disturbances for learning control policy. 
+
+Learning-based control. [39, 40, 41, 42, 43, 9, 10, 11, 12] train a neural-network policy us-ing training data collected offline. [40, 41, 42, 43] train the policy with data collected from ran-dom environments such that the controller can exhibit robustness to unseen environments [44, 45]. [9, 10, 11, 12] train the policy conditioned on the output of an environment encoder to achieve do-main adaptation [46, 47]. Our approach falls into the category of domain adaptation. Compared to [9, 10, 11, 12], we use random Fourier features to generate a diverse disturbance profile for offline training and to approximate an unknown disturbance model online that provides environmental in-formation to the policy for online adaptation. Both the kernel coefficients and the kernel bandwidth are learnable, which enables representation of disturbances not tied to a priori chosen basis func-tions. By leveraging differentiable simulation, we train a policy that can be deployed zero-shot to the real world with only 50 seconds of training time on an RTX 4090 GPU. [48, 49, 30] directly learn the policy online on the hardware, but this can take from seconds to hours to finish the train-ing. In contrast, we learn the adaptive policy offline and achieve zero-shot transfer to hardware and real-time online adaptation. 
+
+Online learning for control. Online learning algorithms select control inputs based on past in-formation only since they assume no model that can be used to simulate the future evolution of the disturbances [13, 14, 15, 16, 50, 51]. These methods often quantify the performance of the algo-rithms through regret , i.e. , the suboptimality against an optimal clairvoyant controller that knows the unknown disturbances and dynamics, and they make no parametric assumption on how the dis-turbance evolves over time. However, in practice, they have been observed to be sensitive to the choice of the tuning parameters [16]. [19, 52, 53] overcome the sensitivity by learning a model for predictive control. However, similar to adaptive control with fixed basis functions, they lack adapt-ability to learning disturbances beyond the reach of the given basis functions. We online update the kernel bandwidth of the basis functions, enabling automatic basis function learning for different disturbances. 
+
+## B Benchmark Algorithm Implementation 
+
+B.1 DATT (L1-E) 
+
+DATT (L1-E) is implemented based on the official DATT repository in [12]. We use the DATT trajectory-tracking policy with wind-adaptive configuration and enable the online L1-estimation module during training in simulation. By default, the range of disturbance in each axis is 
+
+[−2, 2] m/s 2. The policy observation has a total dimension of 46 , consisting of the body-frame position R⊤ 
+
+> t
+
+pt, the body-frame velocity R⊤ 
+
+> t
+
+vt, the quaternion attitude qt, the estimation of distur-bance by L1-estimator, the current body-frame position error, and 10 future body-frame reference 12 position-error waypoints. Specifically, the body-frame position, the body-frame velocity, the esti-mation of disturbance, and the current position error each has dimension of 3, and the quaternion has dimension 4. The future reference sequence contributes a total dimension of 30 . The L1-estimator uses adaptation matrix parameter A = −0.01 , update time step 0.02 s, and low-pass filter coeffi-cient 0.99 . The disturbance estimate is updated online at every control step and fed into the policy observation. 
+
+B.2 DATT (RMA) 
+
+DATT (RMA) is also based on the official DATT repository [12]. It uses the same DATT (L1-E) training setup. The difference is that the estimation of disturbance by a RMA module. The RMA module is a neural-network that uses a history of state and action pairs with length of 50 
+
+steps. Each history element contains position, velocity, quaternion, and previous action information, resulting in a 14 -dimensional observation vector for each step. The network consists of three one-dimensional convolutional layers with 64 channels, followed by three fully connected layers with output dimensions of 32 , 32 , and 3, respectively. The final output is a 3-dimensional vector of the estimated disturbances. 
+
+B.3 MPC for Numerical Simulations 
+
+MPC (L1-E) is implemented using the sampling-based MPC controller from [12], together with the same online L1-estimator module used in DATT (L1-E). The sampling-based MPC state includes position, velocity, quaternion attitude, and additional control variables required by the rollout dy-namics. The controller optimizes over collective thrust and body-rate commands. The planning horizon is H = 50 steps, corresponding to 1.0 s with sampling time 0.02 s. At each control step, sampling-based MPC evaluates 8192 candidate control sequences. The temperature parameter is set to 0.1. The control perturbation standard deviation is set to [0 .25 , 1, 1, 1] for weight-normalized thrust and body-rate commands. Roll and pitch rates are clipped to [−6, 6] rad/s, and yaw rate is clipped to [−4, 4] rad/s. The rollout dynamics include first-order thrust and body-rate lag with a coefficient of 0.4. The quadratic cost includes position tracking, attitude tracking, velocity tracking, and control deviation from the hovering command. The corresponding weights are 2.5, 0.5, 0.1, and 
+
+0.01 .MPC (RFF) uses the sampl-based MPC implemented in [12] with the online Random Fourier Fea-ture residual learning module from [19]. The MPC parameters are kept the same as in MPC (L1-E). The RFF residual model uses an input vector with a total dimension of 11 , consisting of the quater-nion attitude, body-frame velocity, normalized collective thrust, and body-rate command. The model employs 25 random Fourier features. The random feature matrix is initialized from a Gaussian dis-tribution with standard deviation of σ = 0 .5, while the phase offsets are initialized uniformly over the interval [0 , 2π]. The coefficient α has shape 25 × 3 and is initialized to zero. Online adaptation of the coefficients α is performed at every control step using a learning rate of 0.1, while σ is fixed. The learned residual model is augmented to the nominal model for MPC rollout. 
+
+B.4 MPC for Hardware Experiments 
+
+We implement optimization-based MPC methods for the hardware experiments, based on [54]. The quadratic cost has weights of 20 , 10 , 2, and 1 for position tracking, attitude tracking, velocity track-ing, and control deviation from the hovering command. For MPC (L1-E), the L1-estimator is kept the same as in the sampling-based MPC. For MPC (RFF), the learning rate of α is 0.02 .
+
+## C Results of Numerical Simulations 
+
+We present results for the numerical simulations in Section 4.3. We present the α and σ values in Figure 3 and Figure 4. In Figs. 5 - 8, we present (i) tracking error m, with the inserted plot showing 13 RMSE ( m); (ii) norm of residual prediction error ( m/s 2), with the inserted plot showing the average error ( m/s 2); (iii) Ground-truth disturbances ( m/s 2). The plots of tracking errors show that our method achieves the best tracking performance across different disturbances. The prediction error results illustrate the learning accuracy of RMA, L1-estimator, and RFF. We can see that RMA results in the largest prediction error, as it highly depends on the training dataset as pointed out in [12]. RFF has better performance than the L1-estimator, providing a better representation of learning a disturbance model. We also observe the jitter in the prediction error of MPC (L1-E) and MPC (RFF). This is due to the stochasticity of control action determined by sampling-based MPC, which causes larger control action jitter. Since the aerodynamic effects depend on, e.g. , motor speeds, the control action jitter results in ground-truth disturbance jitter. The plots of the ground-truth disturbances show the complexity of the disturbances used in our simulations. Specifically, in the case of a switching disturbance, the disturbance exhibits a sudden jump at t = 5 s; and in the case of a quadratic-phase disturbance, the disturbance changes faster as time increases. In addition, the z−axis disturbance exceeds the disturbance range of [−2, 2] m/s 2
+
+used in DATT training. While for RFF, this disturbance can still be represented correctly within the training range of α ∼ N (0, 12 I) and σ ∈ [0 .001 , 1] , shown in Figure 3 and Figure 4. 0 1 2 3 4 5 6 7 8 900.2 0.4 0.6 0.8 1
+
+Figure 3: Evolution of σ Under Different Disturbance in Section 4.3. The value of σ lie within the range of [0 .001 , 1] used in training. 
+
+Figure 4: Evolution of α Under Different Disturbance in Section 4.3. All 75 elements of α are shown and each curve represents an averaged element of α. All elements of α lie within 3 times standard deviation of the Gaussian distribution N (0, 12 I) used in training. 14 0 1 2 3 4 5 6 7 8 900.05 0.1 0.15 0.2 0.25 0.3  
+
+> 00.1 0.100 0.135 0.064 0.031 0.031 0.028
+
+0 1 2 3 4 5 6 7 8 900.5 11.5 22.5 
+
+> 012
+> 0.439 1.635 0.453 0.119 0.079 0.070
+
+0 1 2 3 4 5 6 7 8 9-2 -1.5 -1 -0.5 00.5 Figure 5: Results of Aerodynamic Secnario in the Numerical Simulations in Section 4.3 . Top: Tracking error ( m), with the inserted plot showing RMSE ( m). Middle: Norm of residual predic-tion error ( m/s 2), with the inserted plot showing the average error ( m/s 2). Bottom: Ground-truth disturbances ( m/s 2). 15 0 1 2 3 4 5 6 7 8 900.05 0.1 0.15 0.2 0.25 0.3  
+
+> 00.1 0.100 0.142 0.087 0.040 0.049 0.035
+
+0 1 2 3 4 5 6 7 8 900.5 11.5 22.5 
+
+> 012
+> 0.601 1.604 0.618 0.150 0.120 0.101
+
+0 1 2 3 4 5 6 7 8 9-2 -1.5 -1 -0.5 00.5 1Figure 6: Results of Aerodynamic + Sinusoidal Secnario in the Numerical Simulations in Sec-tion 4.3 . Top: Tracking error ( m), with the inserted plot showing RMSE ( m). Middle: Norm of residual prediction error ( m/s 2), with the inserted plot showing the average error ( m/s 2). Bottom: Ground-truth disturbances ( m/s 2). 16 0 1 2 3 4 5 6 7 8 900.05 0.1 0.15 0.2 0.25 0.3  
+
+> 00.1 0.098 0.135 0.106 0.047 0.050 0.036
+
+0 1 2 3 4 5 6 7 8 900.5 11.5 22.5  
+
+> 010.662 1.277 0.670 0.181 0.156 0.129
+
+0 1 2 3 4 5 6 7 8 9-2 -1.5 -1 -0.5 00.5 1Figure 7: Results of Aerodynamic + Switching Secnario in the Numerical Simulations in Sec-tion 4.3 . Top: Tracking error ( m), with the inserted plot showing RMSE ( m). Middle: Norm of residual prediction error ( m/s 2), with the inserted plot showing the average error ( m/s 2). Bottom: Ground-truth disturbances ( m/s 2). 17 0 1 2 3 4 5 6 7 8 900.05 0.1 0.15 0.2 0.25 0.3  
+
+> 00.1 0.095 0.124 0.092 0.053 0.050 0.034
+
+0 1 2 3 4 5 6 7 8 900.5 11.5 22.5  
+
+> 010.721 1.473 0.700 0.296 0.302 0.299
+
+0 1 2 3 4 5 6 7 8 9-3 -2 -1 01Figure 8: Results of Aerodynamic + Quadratic-Phase Sinusoidal Secnario in the Numerical Simulations in Section 4.3 . Top: Tracking error ( m), with the inserted plot showing RMSE ( m). Middle: Norm of residual prediction error ( m/s 2), with the inserted plot showing the average er-ror ( m/s 2). Bottom: Ground-truth disturbances ( m/s 2). 18 D Results of Hardware Experiments 
+
+In this section, we provide sample trajectories of hardware experiments in Figure 9, Figure 11, and Figure 10. 0 5 10 15 20 -1 -0.5 00.5 1
+
+Ours (RMSE: 6.01 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+Ours (w/o update) (RMSE: 6.94 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+Ours (w/o and update) (RMSE: 16.98 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+DATT (L1-E) (RMSE: 7.18 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+DATT (RMA) (RMSE: 8.60 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+MPC (L1-E) (RMSE: 9.69 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+MPC (RFF) (RMSE: 8.14 cm) 
+
+Figure 9: Sample Trajectory of Hardware Experiment under Ground Effect in Section 4.4. 
+
+Each subplot shows the x−, y−, z− position and the reference trajectory (dashed) over a 20 s eval-uation window. Our method achieves the best tracking performance in RMSE. 19 0 5 10 15 20 -1 -0.5 00.5 1
+
+Ours (RMSE: 8.83 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+Ours (w/o update) (RMSE: 9.51 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+Ours (w/o and update) (RMSE: 10.59 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+DATT (L1-E) (RMSE: 9.83 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+DATT (RMA) (RMSE: 8.75 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+MPC (L1-E) (RMSE: 10.82 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+MPC (RFF) (RMSE: 10.35 cm) Figure 10: Sample Trajectory of Hardware Experiment under Wind Disturbance in Sec-tion 4.4. Each subplot shows the x−, y−, z− position and the reference trajectory (dashed) over a 
+
+20 s evaluation window. Our method achieves the best tracking performance in RMSE. 20 0 5 10 15 20 -1 -0.5 00.5 1
+
+Ours (RMSE: 6.51 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+Ours (w/o update) (RMSE: 6.87 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+Ours (w/o and update) (RMSE: 15.62 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+DATT (L1-E) (RMSE: 7.48 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+DATT (RMA) (RMSE: 7.25 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+MPC (L1-E) (RMSE: 9.59 cm)     
+
+> 0510 15 20 -1 -0.5 00.5 1
+
+MPC (RFF) (RMSE: 6.98 cm) Figure 11: Sample Trajectory of Hardware Experiment under Suspended Payload in Sec-tion 4.4. Each subplot shows the x−, y−, z− position and the reference trajectory (dashed) over a 
+
+20 s evaluation window. Our method achieves the best tracking performance in RMSE. 21

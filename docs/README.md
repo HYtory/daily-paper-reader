@@ -6,26 +6,33 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-18
-- 运行时间：2026-06-18 21:24:02 UTC
+- 最新运行日期：2026-06-19
+- 运行时间：2026-06-19 21:50:43 UTC
 - 运行状态：成功
-- 本次总论文数：2
-- 精读区：1
-- 速读区：1
+- 本次总论文数：4
+- 精读区：0
+- 速读区：4
 
 ### 今日简报（AI）
-今日精读一篇、速读一篇多智能体强化学习论文。最值得关注的是多目标多智能体中的协调偏好学习方法（8分），以及安全约束与物理动力解耦的TRIDENT框架（6分）。建议普通读者优先深入理解协调偏好学习，再结合安全方法探索实际应用。
-- 详情：[/202606/18/README](/202606/18/README)
+今日速读4篇论文，聚焦无人机抗干扰控制、多智能体通信验证与网络优化方向。其中《Efficient Domain-Adaptive Policy Learning》和《Formal Verification of Learned Multi-Agent Communication Policies》评分较高，分别解决非平稳环境下的自适应控制与通信策略的形式化验证问题。建议优先关注高效核表示方法在无人机控制中的应用，以及用决策树蒸馏提升多智能体系统的可解释性与安全性。
+- 详情：[/202606/19/README](/202606/19/README)
 
 ### 精读区论文标签
-1. [Learning Coordinated Preference for Multi-Objective Multi-Agent Reinforcement Learning](/202606/18/2606.14693v1-learning-coordinated-preference-for-multi-objective-multi-agent-reinforcement-learning)  
-   标签：评分：8.0/10、query:ui
-   evidence：多智能体强化学习协调方法，适用于无人机集群
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [TRIDENT: Breaking the Hybrid-Safety-Physics Coupling for Provably Safe Multi-Agent Reinforcement Learning](/202606/18/2606.18308v1-trident-breaking-the-hybrid-safety-physics-coupling-for-provably-safe-multi-agent-reinforcement-learning)  
+1. [Efficient Domain-Adaptive Policy Learning via Kernel Representation with Application to Quadrotor Control under Non-Stationary Disturbances](/202606/19/2606.13842v1-efficient-domain-adaptive-policy-learning-via-kernel-representation-with-application-to-quadrotor-control-under-non-stationary-disturbances)  
+   标签：评分：7.0/10、query:ui
+   evidence：面向追逃场景的四旋翼控制域自适应策略学习
+2. [Formal Verification of Learned Multi-Agent Communication Policies via Decision Tree Distillation](/202606/19/2606.19632v1-formal-verification-of-learned-multi-agent-communication-policies-via-decision-tree-distillation)  
+   标签：评分：7.0/10、query:ui
+   evidence：针对无人机群的多智能体强化学习及决策树验证
+3. [Wind-Resilient Trajectory Optimization for UAV-BS Networks: TD3 for Continuous Service Availability](/202606/19/2606.18556v1-wind-resilient-trajectory-optimization-for-uav-bs-networks-td3-for-continuous-service-availability)  
    标签：评分：6.0/10、query:ui
-   evidence：多智能体RL安全协调框架，可应用于无人机群围捕
+   evidence：基于深度强化学习的无人机轨迹优化以应对风扰
+4. [Hierarchical Control in Multi-Agent Games: LLM-based Planning and RL Execution](/202606/19/2606.20014v1-hierarchical-control-in-multi-agent-games-llm-based-planning-and-rl-execution)  
+   标签：评分：6.0/10、query:ui
+   evidence：多智能体分层LLM+RL架构，可应用于无人机群协调
 
 
 <div class="dpr-home-promo-card">

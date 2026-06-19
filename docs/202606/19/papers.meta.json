@@ -1,0 +1,69 @@
+{
+  "label": "2026-06-19",
+  "date": "2026-06-19",
+  "generated_at": "2026-06-19T21:50:52",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202606/19/2606.13842v1-efficient-domain-adaptive-policy-learning-via-kernel-representation-with-application-to-quadrotor-control-under-non-stationary-disturbances",
+      "section": "quick",
+      "title_en": "Efficient Domain-Adaptive Policy Learning via Kernel Representation with Application to Quadrotor Control under Non-Stationary Disturbances",
+      "authors": "Hongyu Zhou, Mingtian Tan, Vasileios Tzoumas",
+      "date": "2026-06-11",
+      "pdf": "https://arxiv.org/pdf/2606.13842v1",
+      "score": "7.0",
+      "evidence": "面向追逃场景的四旋翼控制域自适应策略学习",
+      "tldr": "针对四旋翼在非平稳干扰下域自适应策略学习面临的表示能力与计算效率矛盾，提出基于随机傅里叶特征的核表示方法。离线训练时随机采样核参数生成多样扰动，通过可微模拟和解析梯度50秒完成训练；在线部署时通过最小二乘实时更新核系数与带宽。在Crazyflie硬件实验中成功适应风扰、地面效应和负载变化，证实了方法的有效性。",
+      "tags": "query:ui",
+      "abstract_en": "We present an algorithm for efficient domain-adaptive policy learning via kernel representations. Learning domain-adaptive policies is challenging since it requires an environment representation that is both sufficiently expressive to model complex sim-to-real gaps during offline training, and computationally efficient enough to support rapid online adaptation during deployment. For instance, a quadrotor may encounter time-varying, non-stationary disturbances, such as sudden gusts of wind, payload shifts, or transitions between distinct flight regimes with and without ground effects. To address these challenges, we model unknown disturbances using a differentiable kernel approximation based on random Fourier features. During the offline training phase, we randomly sample kernel coefficients and bandwidth parameters to generate a rich diversity of disturbance profiles. We then optimize the control policy via differentiable simulation with analytical gradients, a process that takes only 50 seconds of training time on an RTX 4090 GPU. During hardware deployment, the policy adapts to non-stationary environments in real time by updating both the kernel coefficients and bandwidth through online least-squares estimation. We evaluate our method on quadrotor trajectory tracking tasks across high-fidelity numerical simulations and hardware experiments using Crazyflie, subjected to various disturbances, including complex aerodynamic effects, wind, ground effects, and payload fluctuations.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/19/2606.19632v1-formal-verification-of-learned-multi-agent-communication-policies-via-decision-tree-distillation",
+      "section": "quick",
+      "title_en": "Formal Verification of Learned Multi-Agent Communication Policies via Decision Tree Distillation",
+      "authors": "Ahmad Farooq, Kamran Iqbal",
+      "date": "2026-06-17",
+      "pdf": "https://arxiv.org/pdf/2606.19632v1",
+      "score": "7.0",
+      "evidence": "针对无人机群的多智能体强化学习及决策树验证",
+      "tldr": "多智能体强化学习通信策略缺乏形式化安全保证，本文提出端到端框架通过决策树蒸馏将神经策略转化为可解释模型，自动翻译为PRISM规范并组合验证PCTL属性。在5-7智能体无人机协调任务中验证18个时序逻辑属性，88.9%满足，五个安全阈值均通过（碰撞概率0.3% vs 1%阈值）。该框架提供从深度MARL到形式化安全验证的实用桥梁，蒸馏保真度达97.9%，离散消息实现3-4倍加速。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-agent reinforcement learning (MARL) enables agents to develop coordination strategies through emergent communication, but neural policies lack the formal safety guarantees required for safety-critical robotic deployment in drone swarms and autonomous vehicle fleets. We present the first end-to-end framework for safety verification of learned multi-agent communication policies through policy abstraction: neural policies are distilled into interpretable decision trees, then formally verified, with empirical validation confirming that verified safety properties transfer to original networks. Our four-stage pipeline consists of domain-specific feature extraction from agent observations, decision tree distillation achieving 97.9% +/- 1.2% fidelity to neural policies, automated translation to PRISM probabilistic model checker specifications with complete feature-to-state-variable correspondence, and compositional verification of Probabilistic Computation Tree Logic (PCTL) properties via pairwise decomposition with union-bound aggregation and empirical neighbor modeling. Evaluating Vector-Quantized Variational Information Bottleneck (VQ-VIB) policies for multi-drone coordination with 5-7 agents, we verify 18 temporal logic properties across safety, liveness, and cooperation, achieving 88.9% property satisfaction with all five safety thresholds satisfied (0.3% collision probability vs. 1% threshold). Monte Carlo validation of original neural policies confirms that verified safety properties transfer with <=0.6 percentage-point deviation (95% CI). Discrete VQ-VIB messages provide +11.6 to +13.6 percentage-point fidelity advantages over continuous methods, enabling 3-4x faster verification. Our framework provides empirically validated safety verification for distilled policy abstractions, serving as a practical bridge between deep MARL and formal safety workflows for multi-robot deployment.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/19/2606.18556v1-wind-resilient-trajectory-optimization-for-uav-bs-networks-td3-for-continuous-service-availability",
+      "section": "quick",
+      "title_en": "Wind-Resilient Trajectory Optimization for UAV-BS Networks: TD3 for Continuous Service Availability",
+      "authors": "Azim Akhtarshenas German Svistunov, Kuangyu Zheng, David Lopez-Perez",
+      "date": "2026-06-17",
+      "pdf": "https://arxiv.org/pdf/2606.18556v1",
+      "score": "6.0",
+      "evidence": "基于深度强化学习的无人机轨迹优化以应对风扰",
+      "tldr": "无人机基站易受风扰动导致位置漂移和通信质量下降。本文提出基于TD3的强化学习框架，将风建模为随机运动扰动，使智能体学习自适应控制策略，维持最优覆盖。仿真表明该方法有效补偿风致位移，在吞吐量稳定性和鲁棒性上优于PPO等方法，保障了紧急场景下的连续服务可用性。",
+      "tags": "query:ui",
+      "abstract_en": "Unmanned aerial vehicle (UAV)-mounted base stations are highly susceptible to wind disturbances such as gusts and turbulence, which induce positional drift and degrade communication link quality, particularly in emergency scenarios. To address this challenge, we propose a DRL-based framework for wind-resilient trajectory adjustment and positioning based on the Twin Delayed Deep Deterministic Policy Gradient (TD3) algorithm. The method models wind as a stochastic kinematic perturbation, avoiding complex aerodynamic modeling, thereby enabling the TD3 agent to learn adaptive control policies that maintain optimal coverage footprints. By prioritizing user-centric performance metrics under turbulent conditions, the proposed architecture ensures continuous service availability despite external disruptions. Simulation results demonstrate that the TD3-based approach effectively compensates for wind-induced displacements and outperforms benchmark methods, including Proximal Policy Optimization (PPO), in terms of throughput stability and robustness in windy environments.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/19/2606.20014v1-hierarchical-control-in-multi-agent-games-llm-based-planning-and-rl-execution",
+      "section": "quick",
+      "title_en": "Hierarchical Control in Multi-Agent Games: LLM-based Planning and RL Execution",
+      "authors": "Jannik Hösch, Alessandro Sestini, Florian Fuchs, Amir Baghi, Joakim Bergdahl, Konrad Tollmar, Jean-Philippe Barrette-LaPierre, Linus Gisslén",
+      "date": "2026-06-18",
+      "pdf": "https://arxiv.org/pdf/2606.20014v1",
+      "score": "6.0",
+      "evidence": "多智能体分层LLM+RL架构，可应用于无人机群协调",
+      "tldr": "多智能体强化学习面临稀疏奖励和大状态空间挑战，难以学习协调策略。提出层次化架构，利用预训练大语言模型作为中央策略控制器，选择专用RL技能策略，RL处理底层执行。在2v2环境测试，LLM+RL胜率46.4%，与手工行为树相当，显著优于端到端RL。用户研究显示60%认为LLM+RL最像人类行为，展现适应性和战术多样性，避免手动规则工程。",
+      "tags": "query:ui",
+      "abstract_en": "Reinforcement learning (RL) has achieved strong performance in sequential decision-making, yet scaling to complex multi-agent environments remains challenging due to sparse rewards, large state-action spaces, and the difficulty of learning coordinated strategies. We propose a hierarchical architecture where a pretrained large language model (LLM) acts as a centralized strategic controller that selects among specialized RL skill policies for a team of agents, while RL policies handle reactive low-level execution. We evaluate this hybrid system in a competitive 2v2 King of the Hill environment against behavior tree (BT) and \\emph{``Flat''} RL (end-to-end training without skill decomposition) baselines. The LLM+RL system achieves task performance statistically equivalent to hand-crafted BT (46.4\\% vs 51.5\\% win rate, $p=0.103$) while both significantly outperform Flat RL trained without skill decomposition. A user study ($n=15$) reveals that 60\\% of participants perceive LLM+RL agents as the most human-like ($p=0.027$), citing behavioral adaptability and tactical variability. These results demonstrate that pretrained LLM reasoning can effectively orchestrate pretrained RL skills, achieving competitive multi-agent coordination and superior perceived believability without manual rule engineering.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
