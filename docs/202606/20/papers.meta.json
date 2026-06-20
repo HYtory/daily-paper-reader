@@ -1,0 +1,69 @@
+{
+  "label": "2026-06-20",
+  "date": "2026-06-20",
+  "generated_at": "2026-06-20T20:28:57",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202606/20/2606.20232v1-mobile-target-search-with-imperfect-perception-a-partially-observable-stochastic-game-theoretical-approach",
+      "section": "deep",
+      "title_en": "Mobile Target Search with Imperfect Perception: A Partially Observable Stochastic Game Theoretical Approach",
+      "authors": "Hanzheng Zhang, Shu Liang, Shuyu Liu",
+      "date": "2026-06-18",
+      "pdf": "https://arxiv.org/pdf/2606.20232v1",
+      "score": "9.0",
+      "evidence": "部分可观察随机博弈用于移动目标搜索与逃避",
+      "tldr": "针对传感器限制、恶意干扰或通信噪声导致的不完美感知下的移动目标搜索问题，本文采用部分可观测随机博弈（POSG）框架建模搜索者与智能目标之间的对抗博弈。提出可检测性概念，并基于随机递归分析给出充分可检测性准则，确保搜索策略能最终检测到目标。进一步设计服务器辅助的分布式算法，利用聚合势博弈结构和KL散度缩减进行目标预测。数值模拟验证了算法的有效性和可检测性分析的合理性。",
+      "tags": "query:ui",
+      "abstract_en": "This paper investigates mobile target search under imperfect perceptions caused by sensor limitations, malicious jamming, or communication noise. Searchers and targets operate in a grid-shaped area with bounded mobility, leading to a dynamic interplay between search and evasion. To capture this adversarial interaction under imperfect perceptions, we adopt the partially observable stochastic game (POSG) approach, which generalizes partially observable Markov decision processes (POMDPs) by incorporating target intelligence. To handle false alarms and missed detections caused by perceptual uncertainties, we propose a novel detectability concept to determine whether a search strategy guarantees eventual detection, and provide sufficient detectability criteria based on stochastic recurrence analysis. We further develop a server-assisted distributed algorithm that utilizes the aggregative potential game structure for searchers and a KL-divergence-based reduction for target prediction. Numerical simulations validate the effectiveness of the proposed algorithm and support the detectability analysis.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/20/2606.17414v1-memory-efficient-meta-reinforcement-learning-for-adaptive-safety-critical-control-in-adversarial-spacecraft-proximity-operations",
+      "section": "quick",
+      "title_en": "Memory-Efficient Meta-Reinforcement Learning for Adaptive Safety-Critical Control in Adversarial Spacecraft Proximity Operations",
+      "authors": "Alejandro Posadas-Nava, Richard Linares, Minduli Wijayatunga",
+      "date": "2026-06-16",
+      "pdf": "https://arxiv.org/pdf/2606.17414v1",
+      "score": "7.0",
+      "evidence": "元强化学习用于对抗性追逃控制",
+      "tldr": "针对航天器近距离操作中的安全关键控制问题，提出基于输入约束控制屏障函数(ICCBF)与元强化学习的自适应方法。通过对比LSTM、GRU、Mamba三种循环网络架构和PPO、SAC两种训练算法，发现Mamba结合PPO在合作与对抗场景下均取得最优的任务完成率、安全性和燃料效率。该方法有效应对目标航天器的对抗行为，增强了多场景泛化能力。",
+      "tags": "query:ui",
+      "abstract_en": "Autonomous spacecraft rendezvous and proximity operations (RPO) require controllers that guarantee safety under thrust constraints while minimizing fuel expenditure. Input-constrained control barrier functions (ICCBFs) provide a control method for nonlinear systems with actuation constraints that construct a forward-invariant safe set. Previous work has shown that learning class-$\\mathcal{K}$ functions defining the ICCBF recursion via meta reinforcement learning (meta-RL) yields a robust, non-greedy approach to safety-critical control in RPO. This paper extends that framework further by investigating the performance of three recurrent network architectures (Long Short Term Memory (LSTM), Gated Recurrent Unit (GRU), Selective State Space Model (Mamba)) and two training algorithms (Proximal Policy Optimization (PPO) and Soft Actor Critic (SAC)) to identify the best setup for tuning ICCBF class-K functions via meta-RL. In addition to cooperative test cases, performance is evaluated in the presence of adversarial behavior where the target spacecraft behaves in a way that worsens the safety of the chaser spacecraft. Results indicate that state space models such as Mamba when used with PPO achieve superior task completion, safety, and fuel-savings compared to other architectures, across all cooperative and uncooperative scenarios tested.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/20/2606.19736v1-vfacamou-view-fused-adversarial-camouflage-for-environment-adaptive-physical-evasion",
+      "section": "quick",
+      "title_en": "VFACamou: View-Fused Adversarial Camouflage for Environment-Adaptive Physical Evasion",
+      "authors": "Shihui Yan, Hu Liu, Junyu Shi, Zihui Zhu, Ziqi Zhou, Yufei Song, Youming Geng, Minghui Li, Shengshan Hu",
+      "date": "2026-06-18",
+      "pdf": "https://arxiv.org/pdf/2606.19736v1",
+      "score": "7.0",
+      "evidence": "针对无人机侦察的规避，相关于追逃博弈",
+      "tldr": "针对无人机侦察下目标几何变化和光照变化的物理对抗伪装难题，现有方法存在2D扰动无法泛化或纹理不自然的问题。本文提出VFACamou端到端框架，通过UV体积渲染与扩散纹理生成器生成可穿戴对抗图案，并利用照明颜色一致性估计器实现环境自适应。多尺度动态训练策略提升了视角变化和形变的鲁棒性。实验证实该方法在多个检测器上达到强稳定物理攻击性能，同时保持高自然度，降低人类检测率。",
+      "tags": "query:ui",
+      "abstract_en": "Adversarial camouflage in the physical world remains highly challenging, particularly under UAV reconnaissance where targets undergo continuous geometric changes and extreme illumination variations. Existing methods either optimize 2D digital perturbations that fail to generalize to dynamic viewpoints or produce visually unnatural textures that cannot be deployed in real scenarios. Therefore, we propose an end-to-end framework for adversarial camouflage generation that automatically produces wearable adversarial patterns and maintains stable attack performance in real physical environments with changing viewpoints, poses, and lighting conditions. Our method integrates UV-volume rendering with a diffusion-based texture generator, enabling consistent appearance under varying scales, poses, and lighting conditions. To ensure environmental realism, we propose an illumination color consistency estimator that extracts dominant background attributes and guides a natural texture loss to align the generated UV texture with the surrounding environment. A multi-scale dynamic training strategy further enhances robustness against viewpoint shifts and body deformation. Extensive experiments across multiple mainstream detectors demonstrate that our method achieves strong and stable physical attack performance while maintaining high perceptual naturalness, reducing human detection rates without introducing unnatural artifacts.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/20/2606.18132v1-knowledge-reutilization-in-meta-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Knowledge Reutilization in Meta-Reinforcement Learning",
+      "authors": "Yuan Meng, Bo Wang, Juan de los Rios Ruiz, Xiangtong Yao, Zhenshan Bing, Fuchun Sun, Alois Knoll",
+      "date": "2026-06-16",
+      "pdf": "https://arxiv.org/pdf/2606.18132v1",
+      "score": "6.0",
+      "evidence": "元强化学习知识迁移用于异构智能体",
+      "tldr": "现有元强化学习将任务推断与具身控制耦合，导致任务语义模糊且难以跨智能体重用。提出元知识复用框架，在动力学简化智能体上通过贝叶斯非参数先验学习任务模式，并利用语义-量级接口和轻量时间适配器将冻结知识迁移至异构智能体。实验表明，多种运动智能体的最终步跟踪误差降低94.75%~99.79%，且仅需约23.8%的交互数据即可达到与基线相当的部署性能。该工作为实现高效跨具身知识复用和提升样本效率提供了有效途径。",
+      "tags": "query:ui",
+      "abstract_en": "Meta-reinforcement learning enables fast adaptation by extracting shared structure from related tasks, but existing end-to-end methods often couple task inference with embodiment-specific control. This coupling can obscure non-parametric task semantics, reduce sample efficiency, and limit cross-agent reuse. We propose a meta-knowledge reutilization framework that learns task-level knowledge on a dynamics-simplified agent and transfers it to heterogeneous agents. The framework uses a Bayesian non-parametric prior to organize latent task modes and a high-level policy to generate task-level magnitude guidance. To bridge reusable task knowledge with different embodiments, we introduce a semantic-magnitude interface and a lightweight temporal adaptor, which convert frozen meta-knowledge into temporally aligned subgoals for embodiment-specific low-level controllers. Experiments on multiple locomotion agents show that our framework reduces final-step tracking error by 94.75% -- 99.79% compared with recent state-of-the-art baselines and achieves comparable deployment performance with about 23.8% of their interaction data.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

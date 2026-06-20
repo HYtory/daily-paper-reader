@@ -6,33 +6,34 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-19
-- 运行时间：2026-06-19 21:50:43 UTC
+- 最新运行日期：2026-06-20
+- 运行时间：2026-06-20 20:28:49 UTC
 - 运行状态：成功
 - 本次总论文数：4
-- 精读区：0
-- 速读区：4
+- 精读区：1
+- 速读区：3
 
 ### 今日简报（AI）
-今日速读4篇论文，聚焦无人机抗干扰控制、多智能体通信验证与网络优化方向。其中《Efficient Domain-Adaptive Policy Learning》和《Formal Verification of Learned Multi-Agent Communication Policies》评分较高，分别解决非平稳环境下的自适应控制与通信策略的形式化验证问题。建议优先关注高效核表示方法在无人机控制中的应用，以及用决策树蒸馏提升多智能体系统的可解释性与安全性。
-- 详情：[/202606/19/README](/202606/19/README)
+今天精读了一篇高分论文《Mobile Target Search with Imperfect Perception》（9.0分），并速读了三篇元强化学习相关研究。  
+最值得关注的是部分可观测随机博弈在移动目标搜索中的应用，以及VFACamou提出的环境自适应物理对抗伪装方法。  
+建议优先精读高分论文掌握博弈理论框架，随后浏览元强化学习的知识复用与安全控制内容以形成系统认知。
+- 详情：[/202606/20/README](/202606/20/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Mobile Target Search with Imperfect Perception: A Partially Observable Stochastic Game Theoretical Approach](/202606/20/2606.20232v1-mobile-target-search-with-imperfect-perception-a-partially-observable-stochastic-game-theoretical-approach)  
+   标签：评分：9.0/10、query:ui
+   evidence：部分可观察随机博弈用于移动目标搜索与逃避
 
 ### 速读区论文标签
-1. [Efficient Domain-Adaptive Policy Learning via Kernel Representation with Application to Quadrotor Control under Non-Stationary Disturbances](/202606/19/2606.13842v1-efficient-domain-adaptive-policy-learning-via-kernel-representation-with-application-to-quadrotor-control-under-non-stationary-disturbances)  
+1. [Memory-Efficient Meta-Reinforcement Learning for Adaptive Safety-Critical Control in Adversarial Spacecraft Proximity Operations](/202606/20/2606.17414v1-memory-efficient-meta-reinforcement-learning-for-adaptive-safety-critical-control-in-adversarial-spacecraft-proximity-operations)  
    标签：评分：7.0/10、query:ui
-   evidence：面向追逃场景的四旋翼控制域自适应策略学习
-2. [Formal Verification of Learned Multi-Agent Communication Policies via Decision Tree Distillation](/202606/19/2606.19632v1-formal-verification-of-learned-multi-agent-communication-policies-via-decision-tree-distillation)  
+   evidence：元强化学习用于对抗性追逃控制
+2. [VFACamou: View-Fused Adversarial Camouflage for Environment-Adaptive Physical Evasion](/202606/20/2606.19736v1-vfacamou-view-fused-adversarial-camouflage-for-environment-adaptive-physical-evasion)  
    标签：评分：7.0/10、query:ui
-   evidence：针对无人机群的多智能体强化学习及决策树验证
-3. [Wind-Resilient Trajectory Optimization for UAV-BS Networks: TD3 for Continuous Service Availability](/202606/19/2606.18556v1-wind-resilient-trajectory-optimization-for-uav-bs-networks-td3-for-continuous-service-availability)  
+   evidence：针对无人机侦察的规避，相关于追逃博弈
+3. [Knowledge Reutilization in Meta-Reinforcement Learning](/202606/20/2606.18132v1-knowledge-reutilization-in-meta-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：基于深度强化学习的无人机轨迹优化以应对风扰
-4. [Hierarchical Control in Multi-Agent Games: LLM-based Planning and RL Execution](/202606/19/2606.20014v1-hierarchical-control-in-multi-agent-games-llm-based-planning-and-rl-execution)  
-   标签：评分：6.0/10、query:ui
-   evidence：多智能体分层LLM+RL架构，可应用于无人机群协调
+   evidence：元强化学习知识迁移用于异构智能体
 
 
 <div class="dpr-home-promo-card">

@@ -1,0 +1,257 @@
+Title: VFACamou: View-Fused Adversarial Camouflage for Environment-Adaptive Physical Evasion
+
+URL Source: https://arxiv.org/pdf/2606.19736v1
+
+Published Time: Fri, 19 Jun 2026 00:24:28 GMT
+
+Number of Pages: 7
+
+Markdown Content:
+# VFACamou: View-Fused Adversarial Camouflage for Environment-Adaptive Physical Evasion 
+
+Shihui Yan 1,2∗, Hu Liu 1∗, Junyu Shi 2, Zihui Zhu 2, Ziqi Zhou 3,Yufei Song 2, Youming Geng 5, Minghui Li 4, Shengshan Hu 21 State Key Laboratory of Intelligent Vehicle Safety Technology 
+
+2 School of Cyber Science and Engineering, Huazhong University of Science and Technology 
+
+3 School of Computer Science and Technology, Huazhong University of Science and Technology 
+
+4 School of Software Engineering, Huazhong University of Science and Technology 
+
+5 Hebei Energy College of Vocation And Technology 
+
+∗ These authors contributed equally to this work 
+
+{yanshihui,zhuzihui,string1,zhouziqi,yufei17,minghuili,hushengshan }@hust.edu.cn stevenliu_vip@hotmail.com , andylongming@163.com (a) AdvYolo (b) NaturalPatch (c) AdvTexture (d) AdvCamou (e) UV -Attack 
+
+(f) Ours ( Front1) (g) Ours ( Front2) (h) Ours ( Turn left) (j) Ours ( Turn right) (i) Ours ( Back) 
+
+Fig. 1: Visualization of different person detector attacks. We compare our method with AdvYOLO [1], NaturalPatch [2], AdvTexture [3], AdvCamou [4], and UV-Attack [5]. Our adversarial textures generated using the “trunk” prompt demonstrate consistently high attack success rates across various viewpoints and poses. 
+
+Abstract —Adversarial camouflage in the physical world re-mains highly challenging, particularly under UAV reconnaissance where targets undergo continuous geometric changes and extreme illumination variations. Existing methods either optimize 2D digital perturbations that fail to generalize to dynamic viewpoints or produce visually unnatural textures that cannot be deployed in real scenarios. Therefore, we propose VFACamou, an end-to-end framework for adversarial camouflage generation that automatically produces wearable adversarial patterns and main-tains stable attack performance in real physical environments with changing viewpoints, poses, and lighting conditions. Our method integrates UV-volume rendering with a diffusion-based texture generator, enabling consistent appearance under varying scales, poses, and lighting conditions. To ensure environmental realism, we propose an illumination–color consistency estimator that extracts dominant background attributes and guides anatural texture loss to align the generated UV texture with the surrounding environment. A multi-scale dynamic training strategy further enhances robustness against viewpoint shifts and body deformation. Extensive experiments across multiple mainstream detectors demonstrate that VFACamou achieves strong and stable physical attack performance while maintaining high perceptual naturalness, reducing human detection rates without introducing unnatural artifacts. 
+
+Index Terms —Physical adversarial camouflage, Person detec-tion 
+
+I. I NTRODUCTION 
+
+With the rapid development of deep learning, unmanned aerial vehicles equipped with intelligent vision systems play an increasingly important role in border patrol, area monitoring, and situational awareness [6]–[8]. Recent studies show that modern object detectors face various security risks [9]–[19] and are highly vulnerable to adversarial attacks, in which carefully crafted perturbations can mislead the detectors [20]– [25]. In military scenarios, generating effective adversarial camouflage to shield personnel from automatic detection holds significant importance [26], [27]. Existing adversarial attacks exhibit notable limitations in UAV reconnaissance scenarios, as most studies concentrate on 2D image settings while neglecting real-world complex-ities [28]. In particular, current methods lack robustness to geometric transformations arising from varying altitudes and viewpoints, which induce continuous changes in scale and per-spective and thus degrade attack effectiveness. Moreover, they are insufficient in handling dynamic environmental conditions, especially severe illumination variations. Changes in lighting intensity, color temperature, and direction—caused by factors such as time, weather, and terrain—significantly alter the 
+
+> arXiv:2606.19736v1 [cs.CV] 18 Jun 2026
+
+visual appearance of targets, making textures generated under constant-lighting assumptions difficult to maintain consistency in real-world applications [29]. Moreover, a prominent limitation of existing approaches lies in their limited naturalness. To maximize attack strength, many generated textures contain unnatural high-frequency artifacts or colors that are inconsistent with the surrounding environment [5]. Such adversarial camouflage patterns are easily observed by humans and are therefore difficult to be deployed effectively in real-world scenarios. To address these limitations, this work targets a central problem: generating adversarial camouflage that consistently deceives both deep neural networks and human observers in physical UAV reconnaissance environments. This problem presents two key challenges: 1 Robustness in dynamic ob-servation. The generated camouflage must maintain effective and stable adversarial attacks under continuous changes in scale and viewpoint caused by UAV motion. 2 Balancing adversarial effect and environmental fusion. On one hand, the texture must possess strong adversarial properties in the DNN feature space to deceive machine detectors. On the other hand, it needs to achieve high visual naturalness to evade human scrutiny and blend into the environment. To overcome these challenges, we propose VFACamou, a framework that integrates environmental adaptation with multi-view robustness. VFACamou first ensures visual con-sistency through an illumination and color estimation module, which extracts and aligns background lighting and dominant colors to achieve natural scene blending. It further handles scale and poses variations via a dynamic multi-scale training strategy, simulating diverse UAV observation conditions to maintain effectiveness across viewpoints. In addition, VFA-Camou introduces a camouflage-specialized loss function that optimizes color distribution matching in a dedicated color space, jointly trained with an adversarial detection loss to balance stealth and evasion performance. Experiments on multiple detectors confirm that VFACamou significantly re-duces detection rates while preserving environmental coher-ence, demonstrating a practical approach for physical-world adversarial camouflage. Our contributions are summarized as follows:  
+
+> •
+
+We design a brand-new end-to-end wearable adversarial camouflage generation method that automatically pro-duces adversarial textures for UAV physical observation environments.  
+
+> •
+
+We propose an IoU-guided detection-evasion loss and a color-pattern adaptation loss, which significantly reduce detection rates on multiple mainstream detectors while maintaining texture naturalness.  
+
+> •
+
+Our extensive experiments on eight object detectors demonstrate that VFACamou achieves robust physical attack performance while maintaining high perceptual naturalness, surpassing existing methods. II. R ELATED WORKS 
+
+A. Object Detectors for Pedestrian Detection 
+
+With the rapid deployment of deep learning–based object detectors in safety-critical applications such as surveillance and autonomous driving, pedestrian detection has become one of the most important and widely studied detection tasks. Modern pedestrian detectors are typically built upon general-purpose object detection frameworks, including two-stage detectors such as Faster R-CNN [7], one-stage detec-tors such as the YOLO series [30]. These detectors achieve strong performance by learning robust visual representations of human appearance across large-scale datasets. In parallel, researchers have increasingly investigated adversarial attacks against object detectors. However, the vulnerability of pedes-trian detectors to adversarial perturbations, especially in the physical world, remains an open and critical challenge. 
+
+B. Adversarial Attacks on Human Bodies 
+
+Recent studies have explored adversarial attacks [31]– [33] that specifically target human-related detection scenarios. While digital-domain attacks can directly manipulate input pixels, physical-world adversarial attacks must remain effec-tive under varying illumination, viewpoints, material proper-ties, and geometric transformations, making them substantially more challenging [1], [34], [35]. In pedestrian detection sce-narios, this challenge is further exacerbated by the highly dynamic and non-rigid nature of human targets. Most existing physical attacks are designed for rigid or weakly deformable objects [1] and therefore generalize poorly to humans, whose appearance varies significantly across poses, clothing, and viewpoints. Although recent studies explore 3D reconstruction, multi-view constraints, or texture-based attacks to improve robustness [4], [36], they typically rely on fixed-topology models and fail to adequately capture human dynamics and non-rigid deformations, resulting in limited adaptability under real-world conditions. III. M ETHODOLOGY 
+
+A. Problem Definition 
+
+The core objective of VFACamou is to design a wear-able garment pattern that, when captured by a visual sensor, can systematically deceive a pre-trained pedestrian detec-tor. Let Bpred = {b1, b 2, . . . , b n} denote the set of pre-dicted bounding boxes generated by the target detector for input image Iadv , where each bounding box bi contains coordinates (xi, y i, w i, h i) and class confidence ci. Bgt =
+
+{g1, g 2, . . . , g m} represents the set of ground truth human bounding boxes. 
+
+B. Motivation 
+
+Existing adversarial attacks against object detectors typi-cally achieve evasion by directly reducing the confidence of the “person” class. However, for humans as non-rigid targets, lowering classification confidence alone does not ensure effec-tive evasion: the detector may still output accurately localized bounding boxes, which reveal the presence of the target. Grayscale image 
+
+> Background dataset
+> light source
+> direction
+> Intensity
+> Color
+> Temperature
+> Contrast
+> conditioning
+
+zt  
+
+> “Green
+> camouflage,
+> high -contrast
+> splatter pattern ”
+> UV Volume
+> Volume
+> Generator
+> RGB
+> Grayscale
+> Consistent Illumination Sampling
+> woodland
+
+…     
+
+> Stochastic Multi -Scale Adversarial Optimization
+> render
+> 𝒎𝒊𝒏 𝒛 𝑻 𝑳 𝒃𝒂𝒍𝒂𝒏𝒄𝒆 =𝑳 𝒂𝒅𝒗 +𝑳 𝒏𝒂𝒕𝒖𝒓𝒂𝒍
+
+Person detector     
+
+> S∼P_scale = {s ₁, s ₂, ..., sₙ}
+> Diffusion Model
+
+DFig. 2: An overview of our proposed method. We argue that under UAV-based physical observation, effec-tive adversarial attacks on humans should disrupt the detector’s overall spatial perception of the target rather than merely weakening its classification confidence. Specifically, success-ful evasion satisfies at least one of the following conditions:  
+
+> •
+
+Target disappearance: the detector produces no high-confidence predictions near the true human region.  
+
+> •
+
+Target misidentification: predictions that overlap with the true human region are misclassified as non-“person” categories. Following this intuition, we design an IoU-guided detection-evasion loss that directly constrains the spatial overlap between predicted bounding boxes and ground-truth human boxes, thereby effectively disrupting the detector’s output structure. 
+
+C. Multi-Objective Hybrid Optimization Framework 
+
+We formulate adversarial texture generation as a multi-objective optimization problem. The overall loss is defined as: 
+
+Ltotal = Ldet + λnat Lnat (1) where Ldet is the maximum IoU Loss, Lnat is the natural-environment adaptation loss, λnat is a balancing coefficient controlling the trade-off between attack strength and natural-ness. In UAV surveillance, a target’s appearance can vary sig-nificantly due to changes in viewing angle, distance, and lighting. To maintain stable adversarial performance under these dynamic conditions, we construct a 3D environment augmentation pipeline that enhances robustness across three dimensions: viewpoint, scale, and illumination. 
+
+Viewpoint Randomization. To account for the variability in UAV trajectories and viewing directions, we randomly sample azimuth and elevation angles during training: θazim ∼U(−180 ◦, 180 ◦), θelev ∼ U(2 ◦, 18 ◦). This strategy forces the generator to learn viewpoint-invariant adversarial patterns, thereby maintaining attack effectiveness from diverse UAV po-sitions and mitigating overfitting common in fixed-viewpoint rendering. 
+
+Multi-Scale Human Rendering To account for scale vari-ations caused by changes in UAV altitude, we employ a discretized multi-scale sampling scheme: 
+
+s ∼ C ([0 .3, 0.35 , 0.4, 0.45]) , Hscaled = s · Horiginal . (2) This not only simulates the continuous size changes of a human in UAV imagery but also guides the generator to develop scale-aware texture patterns. 
+
+Illumination-Consistent Rendering. To enforce illumination realism, we integrate physically based rendering with an illumination estimation module. A pretrained estimator flight (·)
+
+infers global lighting parameters—such as ambient intensity, primary light direction, and color—from the background im-age. During rendering, the 3D human model M with adver-sarial texture T adv is placed under illumination Lestimated to produce an image consistent with the background lighting: 
+
+Ilit = Render consistent (M, T adv , L estimated ) (3) 
+
+Lestimated = flight (Ibackground ) (4) 
+
+1) Maximum IoU Loss: In the overall loss of the aforemen-tioned multi-objective optimization problem, the Maximum IoU-based loss function is defined as: 
+
+Ldet = max  
+
+> i∈[1 ,n ]
+
+[IoU ij · I(ci > τ conf ) · I(cls i = person )] (5) where τconf is the confidence threshold. I(cls i = person ) is a class indicator function. I(ci > τ conf ) ensures only predictions above the confidence threshold are considered. 
+
+2) Natural-Environment Adaptation Loss: While the gen-erated adversarial textures can mislead detectors, their high-frequency artifacts and unnatural colors make them easily identifiable in real environments. Therefore, we introduce a natural-environment adaptation loss. Color serves as the primary factor in visual camouflage. We encode common military color schemes—such as jungle green, desert yellow, and urban gray—into a reference color set Ckmilitary Kk=1 . The color adaptation loss is defined as: 
+
+Lcolor =
+
+> K
+
+X
+
+> k=1
+
+wk · min ∥Ctex − Ckmilitary ∥22 (6) where wk is a dynamically adjusted weight according to the target deployment environment. By minimizing the dis-tance between the generated texture and the reference color schemes, this loss enforces global tonal consistency with the surrounding background. The minimum-distance formulation allows different regions of the texture to align with different dominant colors, thereby capturing the natural color variations commonly observed in real-world environments. In addition, observations from military-pattern design show that effective camouflage typically exhibits moderate local contrast and multi-scale irregularity. So we introduce local variance as a measure of pattern complexity. The pattern-control loss is defined as: 
+
+Lpattern = Escale 
+
+Var local (T ) − σ2
+
+> target
+
+2 (7) where Var local (T ) computes the local variance of the texture T
+
+within sliding windows, σtarget 2 denotes the target variance level, and Escale represents the expectation over multiple image scales. Combining the color-adaptation and pattern-control objectives yields the final natural-environment adaptation loss: 
+
+Lnat = Lcolor + Lpattern (8) where Lcolor ensures texture colors align with military cam-ouflage palette. Lpattern controls local texture pattern variance within desired ranges. IV. E XPERIMENTS 
+
+A. Experimental Setup 
+
+Datasets and models. For a comprehensive evaluation, we use ZJU-Mocap [37] dataset. Specifically, we select the following models: Faster R-CNN [38], Mask R-CNN [39], RetinaNet [40], SSD [41], YOLOv3 [30], YOLOv8 [42], YOLOv9 [43], and FCOS [44]. 
+
+Evaluation metrics. We adopt Attack Success Rate (ASR) as the evaluation metric to measure attack effectiveness. ASR is defined as the proportion of instances in which the target person is not successfully detected by the detector. To provide a comprehensive evaluation, ASR is reported under multiple IoU thresholds ranging from 0.01 to 0.5, where IoU represents the overlap between detection bounding boxes and ground truth annotations. 
+
+Implementation details. The training process runs for 300 epochs with a batch size of 4, and all optimization and inference procedures are conducted on a single NVIDIA A100 GPU. Our adversarial textures are trained and evaluated under multi-pose conditions, where each sample contains diverse human poses and viewing angles to reflect realistic human motion scenarios. 
+
+B. Digital Attack Performance 
+
+We conduct digital experiments on diverse person detectors to evaluate the effectiveness and transferability of the proposed attack under multi-pose scenarios. Adversarial textures are optimized on Faster R-CNN and YOLOv8, and subsequently transferred to unseen models. Performance is measured by the Attack Success Rate (ASR) with an IoU threshold of 0.1 and a confidence threshold of 0.5. We compare against representative texture- and patch-based methods, including AdvCamou [4], UV-Attack [5], AdvTexture [3], and AdvYOLO [1]. For fair-ness, patch-based methods are tiled over the texture surface. As shown in Tab. I, the proposed method consistently outperforms all baselines in both white-box and cross-model transfer settings. When trained on Faster R-CNN, it achieves strong performance on the source model while maintaining high transferability across heterogeneous detectors. Similarly, training on YOLOv8 yields superior attack effectiveness, sur-passing competing approaches. Overall, the results demon-strate robust digital attack performance and strong cross-model transferability in multi-pose scenarios. 
+
+C. Comparison Study 
+
+To further assess the competitiveness of our method, we per-form a comparative study against existing adversarial person-detection attacks under consistent multi-pose training and testing settings, including AdvCamou [4], UV-Attack [5], AdvTexture [3], and AdvYOLO [1]. The experiments are conducted on Faster R-CNN and YOLOv8 as victim detec-tors. The ASR is evaluated under multiple IoU thresholds (0.01,0.1,0.3,0.5) with a confidence score of 0.5. As shown in Tab. II, our method achieves the highest ASR across all IoU thresholds on both detectors. On Faster R-CNN, our method demonstrates exceptional performance with ASR consistently above 93% across all IoU settings, significantly outperforming all baseline methods. On YOLOv8, our method also achieves better attack performance than other methods. Notably, our method shows relatively stable performance across different IoU thresholds, indicating that our generated adversarial textures achieve more robust and consistent attack performance. 
+
+D. Physical Attack Performance 
+
+We evaluate the real-world effectiveness of the proposed attack by conducting physical experiments under multi-pose, multi-view, and varying-distance outdoor conditions. The ad-versarial textures trained on Faster R-CNN are printed on a TABLE I: Attack performance of various methods against different object detectors.                                                                                        
+
+> Method Victim Models FRCNN YOLOv8 MRCNN Retina SSD YOLOv3 YOLOv9 FCOS AdvYolo 2.70 47.78 1.28 6.14 36.56 3.82 0.12 5.94 AdvTexture 12.08 39.42 8.18 41.52 37.30 12.06 12.20 19.20 AdvCamou 3.64 15.80 2.46 7.82 31.38 17.66 0.08 5.98 UV-Attack 43.28 36.96 52.42 45.94 48.66 11.86 5.08 62.18 Ours 93.02 66.10 95.60 89.72 78.40 40.32 56.34 95.60 AdvYolo 2.40 28.38 1.54 6.66 32.38 15.52 0.14 5.26 AdvTexture 3.14 26.58 1.08 7.82 24.78 5.20 0.22 5.58 AdvCamou 2.42 11.36 1.54 5.48 26.58 5.88 0.12 4.06 UV-Attack 52.00 58.36 72.02 62.14 60.86 35.88 21.90 70.06 Ours 53.74 66.86 78.72 57.96 57.14 24.56 13.64 68.46
+
+TABLE II: Comparison of different methods in terms of ASR (%) on Faster R-CNN and YOLOv8 ( τconf = 0 .5).                                                 
+
+> Method Faster R-CNN YOLOv8 IoU 0.01 IoU 0.1IoU 0.3IoU 0.5IoU 0.01 IoU 0.1IoU 0.3IoU 0.5
+> AdvYolo 2.70 2.70 3.50 2.72 29.38 28.38 29.38 30.42 AdvTexture 8.12 12.08 37.22 62.20 28.06 26.58 27.78 26.76 AdvCamou 3.64 3.64 3.50 3.68 11.74 11.36 12.04 12.08 UV-Attack 43.96 43.28 45.42 46.60 58.12 58.36 57.50 57.58 Ours 93.10 93.02 93.34 93.18 66.82 66.86 68.76 66.84
+
+TABLE III: Ablation study. The Impact of natural-environment adaptation loss on VFACamou. 
+
+Metric w/ Lnat w/o Lnat 
+
+Color Similarity (%) 75.32 64.22 
+
+TABLE IV: Ablation study. The Impact of multi-scale dy-namic training on VFACamou ( τIoU = 0 .1, τconf = 0 .5). 
+
+Metric w/ MDT w/o MDT ASR (%) 93.02 58.96 
+
+long-sleeve T-shirt and trousers, and a subject wearing the garments is recorded using an aerial drone. The collected video sequence contains continuous variations in posture, camera viewpoint, and subject-to-camera distance. Each sequence is then evaluated on multiple detectors, and a frame is regarded as successfully attacked when the person is not detected in that frame. ASR = 1 − Ndetected /N total , where Ndetected denotes the number of frames in which the person is detected, and 
+
+Ntotal denotes the total number of frames in the sequence. The ASR results on Faster R-CNN, RetinaNet, SSD, YOLOv3, and YOLOv8 under different confidence thresholds are shown in Fig. 3. These results demonstrate that the generated textures maintain strong adversarial capability in real-world environ-ments and remain effective under changes in pose, viewing angle and distance. 
+
+E. Ablation Study 
+
+In this section, we analyze the contribution of the key components in our framework. All ablation experiments are conducted on the Faster R-CNN detector under the same training and evaluation settings as the main experiments. 
+
+The effect of natural-environment adaptation loss. We first investigate the influence of incorporating the natural-environment adaptation loss during optimization. This loss FRCNN Retina SSD YOLOv3 YOLOv8     
+
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> ASR (%)
+> 97.2 98.9 96.9
+> 89.1
+> 84.9
+> 92.6 92.6 93.2
+> 86.5
+> 57.0
+> 84.3
+> 74.8
+> 89.2
+> 84.7
+> 40.1
+> 68.8
+> 24.1
+> 74.0
+> 80.6
+> 36.8
+> Conf 0.7
+> Conf 0.5
+> Conf 0.3
+> Conf 0.1
+
+Fig. 3: Physical attack success rates across different detectors and confidence thresholds. encourages adversarial textures to better align with real-world illumination and color distributions. We compute color simi-larity values composed of histogram intersection similarity and color distance similarity with and without Lnat , as shown in Tab. III, demonstrating that the textures maintain closer visual consistency with the surrounding environment. 
+
+The effect of multi-scale dynamic training. We further evaluate the role of the multi-scale dynamic training strategy, which simulates variations in observation distance and human scale during training. This strategy enables the adversarial textures to remain effective under diverse viewing conditions. The results in Tab. IV show that enabling multi-scale dy namic training significantly improves the attack success rate. V. C ONCLUSION 
+
+In this paper, we propose VFACamou, an end-to-end frame-work for generating wearable adversarial camouflage that remains effective under UAV reconnaissance conditions, in-cluding dynamic viewpoints, body deformation, and com-plex illumination. VFACamou combines UV-volume rendering with a diffusion-based texture generator to ensure geometry-consistent appearance across poses and scales, while an illumination–color consistency estimator facilitates adaptive texture adjustment for realistic environmental blending. To enhance robustness, a multi-scale dynamic training strategy is employed to simulate UAV-induced variations in distance, viewpoint, and articulation. Extensive digital and physical experiments demonstrate that VFACamou consistently outper-forms existing methods, achieving superior attack performance across multiple mainstream detectors. REFERENCES [1] S. Thys, W. Van Ranst, and T. Goedem´ e, “Fooling automated surveil-lance cameras: adversarial patches to attack person detection,” in Pro-ceedings of the IEEE/CVF conference on computer vision and pattern recognition workshops , 2019, pp. 0–0. [2] Y.-C.-T. Hu, B.-H. Kung, D. S. Tan, J.-C. Chen, K.-L. Hua, and W.-H. Cheng, “Naturalistic physical adversarial patch for object detectors,” in 
+
+Proceedings of the IEEE/CVF International Conference on Computer Vision , 2021, pp. 7848–7857. [3] Z. Hu, S. Huang, X. Zhu, F. Sun, B. Zhang, and X. Hu, “Adversarial tex-ture for fooling person detectors in the physical world,” in Proceedings of the IEEE/CVF conference on computer vision and pattern recognition ,2022, pp. 13 307–13 316. [4] Z. Hu, W. Chu, X. Zhu, H. Zhang, B. Zhang, and X. Hu, “Physically realizable natural-looking clothing textures evade person detectors via 3d modeling,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition , 2023, pp. 16 975–16 984. [5] Y. Li, K. Liang, and B. Xiao, “Uv-attack: Physical-world adversarial attacks for person detection via dynamic-nerf-based uv mapping,” arXiv preprint arXiv:2501.05783 , 2025. [6] G. Tang, J. Ni, Y. Zhao, Y. Gu, and W. Cao, “A survey of object detection for uavs based on deep learning,” Remote Sensing , vol. 16, no. 1, p. 149, 2024. [Online]. Available: https://www.mdpi.com/2072-4292/16/1/149 [7] S. Ren, K. He, R. Girshick, and J. Sun, “Faster r-cnn: Towards real-time object detection with region proposal networks,” in Advances in Neural Information Processing Systems (NeurIPS) , 2015, pp. 91–99. [Online]. Available: https://arxiv.org/abs/1506.01497 [8] D. Du, P. Zhu, L. Wen, X. Bian, H. Lin, Q. Hu, T. Peng, J. Zheng, X. Wang, and Y. Zhang, “The visdrone dataset for object detection and tracking from aerial images,” in Proceedings of the European Conference on Computer Vision (ECCV) , 2018, pp. 733–749. [Online]. Available: https://arxiv.org/abs/1804.07437 [9] Z. Zhou, M. Deng, Y. Song, H. Zhang, W. Wan, S. Hu, M. Li, L. Y. Zhang, and D. Yao, “Darkhash: A data-free backdoor attack against deep hashing,” IEEE Transactions on Information Forensics and Security ,2025. [10] S. Hu, Z. Zhou, Y. Zhang, L. Y. Zhang, Y. Zheng, Y. He, and H. Jin, “Badhash: Invisible backdoor attacks against deep hashing with clean label,” in Proceedings of the 30th ACM International Conference on Multimedia (ACM MM’22) , 2022, pp. 678–686. [11] W. Wan, Y. Ning, Z. Huang, C. Hong, S. Hu, Z. Zhou, Y. Zhang, T. Zhu, W. Zhou, and L. Y. Zhang, “Mars: A malignity-aware backdoor defense in federated learning,” in Proceedings of the 39th Annual Conference on Neural Information Processing Systems (NeurIPS’25) , 2025. [12] H. Zhang, S. Hu, Y. Wang, L. Y. Zhang, Z. Zhou, X. Wang, Y. Zhang, and C. Chen, “Detector collapse: Backdooring object detection to catastrophic overload or blindness,” in Proceedings of the Thirty-Third International Joint Conference on Artificial Intelligence (IJCAI’24) ,2024. [13] H. Zhang, Y. Wang, S. Yan, C. Zhu, Z. Zhou, L. Hou, S. Hu, M. Li, Y. Zhang, and L. Y. Zhang, “Test-time backdoor detection for object detection models,” in Proceedings of the Computer Vision and Pattern Recognition Conference (CVPR’25) , 2025, pp. 24 377–24 386. [14] X. Wang, H. Pan, H. Zhang, M. Li, S. Hu, Z. Zhou, L. Xue, P. Guo, Y. Wang, W. Wan et al. , “Trojanrobot: Backdoor attacks against robotic manipulation in the physical world,” arXiv e-prints , pp. arXiv–2411, 2024. [15] X. Wang, M. Li, W. Liu, H. Zhang, S. Hu, Y. Zhang, Z. Zhou, and H. Jin, “Unlearnable 3d point clouds: Class-wise transformation is all you need,” in Proceedings of the 38th Annual Conference on Neural Information Processing Systems (NeurIPS’24) , vol. 37, 2024, pp. 99 404–99 432. [16] M. Li, X. Wang, Z. Yu, S. Hu, Z. Zhou, L. Zhang, and L. Y. Zhang, “Detecting and corrupting convolution-based unlearnable exam-ples,” in Proceedings of the AAAI Conference on Artificial Intelligence (AAAI’25) , vol. 39, no. 17, 2025, pp. 18 403–18 411. [17] X. Wang, S. Hu, Y. Zhang, Z. Zhou, L. Y. Zhang, P. Xu, W. Wan, and H. Jin, “Eclipse: Expunging clean-label indiscriminate poisons via sparse diffusion purification,” in European Symposium on Research in Computer Security . Springer, 2024, pp. 146–166. [18] L. Yu, Y. Zhang, Z. Zhou, Y. Wu, W. Wan, M. Li, S. Hu, P. Xiaobing, and J. Wang, “Spa-vlm: Stealthy poisoning attacks on rag-based vlm,” 
+
+arXiv preprint arXiv:2505.23828 , 2025. [19] L. Xue, S. Hu, W. Lu, Y. Shen, D. Li, P. Guo, Z. Zhou, M. Li, Y. Zhang, and L. Y. Zhang, “Towards reliable forgetting: A survey on machine unlearning verification,” ACM Computing Surveys , 2026. [20] Z. Zhou, Y. Song, M. Li, S. Hu, X. Wang, L. Y. Zhang, D. Yao, and H. Jin, “Darksam: Fooling segment anything model to segment nothing,” in Proceedings of the 38th Annual Conference on Neural Information Processing Systems (NeurIPS’24) , 2024. [21] Z. Zhou, Y. Hu, Y. Song, Z. Li, S. Hu, L. Y. Zhang, D. Yao, L. Zheng, and H. Jin, “Vanish into thin air: Cross-prompt universal adversarial attacks for sam2,” in Proceedings of the 39th Annual Conference on Neural Information Processing Systems (NeurIPS’25) , 2025. [22] Y. Wang, h. Zhang, P. Hewen, Z. Zhou, X. Wang, P. Guo, l. Xue, S. Hu, M. Li, L. Y. Zhang, and Yao, “Advedm: Fine-grained adversarial attack against vlm-based embodied agents,” in Proceedings of the 39th Annual Conference on Neural Information Processing Systems (NeurIPS’25) ,2025. [23] Y. Song, Z. Zhou, M. Li, X. Wang, M. Deng, W. Wan, S. Hu, and L. Y. Zhang, “Pb-uap: Hybrid universal adversarial attack for image segmentation.” in Proceedings of the IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP’25) , 2025. [24] M. Li, J. Wang, H. Zhang, Z. Zhou, S. Hu, and X. Pei, “Transferable adversarial facial images for privacy protection,” in Proceedings of the 32nd ACM International Conference on Multimedia (ACM MM’24) ,2024, pp. 10 649–10 658. [25] Y. Song, Z. Zhou, Q. Lu, H. Zhang, Y. Hu, L. Xue, S. Hu, M. Li, and L. Y. Zhang, “Segtrans: Transferable adversarial examples for segmentation models,” IEEE Transactions on Multimedia , 2025. [26] Z. Zhou, S. Hu, M. Li, H. Zhang, Y. Zhang, and H. Jin, “Advclip: Downstream-agnostic adversarial examples in multimodal contrastive learning,” in Proceedings of the 32nd ACM International Conference on Multimedia (MM’23) , 2023, pp. 6311–6320. [27] Z. Zhou, M. Li, W. Liu, S. Hu, Y. Zhang, W. Wan, L. Xue, L. Y. Zhang, D. Yao, and H. Jin, “Securely fine-tuning pre-trained encoders against adversarial examples,” in Proceedings of the 2024 IEEE Symposium on Security and Privacy (SP’24) , 2024. [28] Y. Wang, Y. Chou, Z. Zhou, H. Zhang, W. Wan, S. Hu, and M. Li, “Breaking barriers in physical-world adversarial examples: Improving robustness and transferability via robust feature,” in Proceedings of the 39th Annual AAAI Conference on Artificial Intelligence (AAAI’25) , 2025. [29] H. Liu, S. Ruan, Y. Huang, S. Zhao, and X. Wei, “When light-ing deceives: Exposing vision-language models’ illumination vulner-ability through illumination transformation attack,” arXiv preprint arXiv:2503.06903 , 2025. [30] J. Redmon and A. Farhadi, “Yolov3: An incremental improvement,” 
+
+arXiv preprint arXiv:1804.02767 , 2018. [31] Y. Song, Z. Zhou, M. Deng, Y. Hu, S. Hu, M. Li, and L. Y. Zhang, “Erosion attack for adversarial training to enhance semantic segmenta-tion robustness,” in Proceedings of the IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP’26) , 2026. [32] S. Yan, Z. Zhou, Y. Song, Y. Hu, M. Li, and S. Hu, “Transferable physical-world adversarial patches against pedestrian detection models,” 
+
+arXiv preprint arXiv:2604.22552 , 2026. [33] Z. Zhu, Z. Zhou, Y. Wang, L. Xue, M. Li, and S. Hu, “Trans-ferable physical-world adversarial patches against object detection in autonomous driving,” arXiv preprint arXiv:2604.23105 , 2026. [34] Z. Zhou, S. Hu, R. Zhao, Q. Wang, L. Y. Zhang, J. Hou, and H. Jin, “Downstream-agnostic adversarial examples,” in Proceedings of the 2023 IEEE/CVF International Conference on Computer Vision (ICCV’23) , 2023, pp. 4345–4355. [35] Z. Zhou, B. Li, Y. Song, S. Hu, W. Wan, L. Y. Zhang, D. Yao, and H. Jin, “Numbod: A spatial-frequency fusion attack against object detectors,” in Proceedings of the 39th Annual AAAI Conference on Artificial Intelligence (AAAI’25) , 2025. [36] L. Li, Q. Lian, and Y. Chen, “Adv3d: Generating 3d adversarial examples for 3d object detection in driving scenarios with nerf,” 
+
+2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) , pp. 10 813–10 820, 2023. [Online]. Available: https://api.semanticscholar.org/CorpusID:261530011 [37] S. Peng, Y. Zhang, Y. Xu, Q. Wang, Q. Shuai, H. Bao, and X. Zhou, “Neural body: Implicit neural representations with structured latent codes for novel view synthesis of dynamic humans,” in CVPR , 2021. [38] R. Girshick, “Fast r-cnn,” in Proceedings of the IEEE international conference on computer vision , 2015, pp. 1440–1448. [39] K. He, G. Gkioxari, P. Doll´ ar, and R. Girshick, “Mask r-cnn,” 2018. [40] T.-Y. Lin, P. Goyal, R. Girshick, K. He, and P. Doll´ ar, “Focal loss for dense object detection,” 2018. [41] W. Liu, D. Anguelov, D. Erhan, C. Szegedy, S. Reed, C.-Y. Fu, and A. C. Berg, “Ssd: Single shot multibox detector,” in Computer Vision– ECCV 2016: 14th European Conference, Amsterdam, The Netherlands, October 11–14, 2016, Proceedings, Part I 14 . Springer, 2016, pp. 21–37. [42] G. Jocher, A. Chaurasia, and J. Qiu, “Ultralytics YOLO,” https://github. com/ultralytics/ultralytics, 2023. [43] C.-Y. Wang, I.-H. Yeh, and H.-Y. M. Liao, “Yolov9: Learning what you want to learn using programmable gradient information,” in European Conference on Computer Vision (ECCV) 2024, Lecture Notes in Com-puter Science , ser. Lecture Notes in Computer Science, A. Leonardis, E. Ricci, S. Roth, O. Russakovsky, T. Sattler, and G. Varol, Eds., vol. 15089. Springer, Cham, Switzerland, 2024, pp. 1–21. [44] Z. Tian, C. Shen, H. Chen, and T. He, “Fcos: Fully convolutional one-stage object detection,” 2019.
