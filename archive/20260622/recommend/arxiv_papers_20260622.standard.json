@@ -1,0 +1,141 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-22T21:32:05.886725+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.20045v1",
+      "source": "arxiv",
+      "title": "See-and-Reach: Precise Vision-Language Navigation for UAVs within the Field of View",
+      "abstract": "UAV Vision-Language Navigation (UAV-VLN) is typically formulated as a holistic search-and-reach problem, where long-range target discovery and final target approach are optimized and evaluated jointly. This formulation makes it difficult to assess a critical capability of aerial embodied agents, namely whether a UAV can accurately ground a visible target and translate vision-language evidence into precise 3D motion once the target enters its field of view. To address this limitation, we introduce UAV-VLN-FOV, a target-visible navigation task that isolates the see-and-reach stage and enables a more diagnostic evaluation of terminal reaching ability. We further propose 3DG-VLN, a vision-language waypoint prediction framework guided by dynamic 3D direction cues to enhance fine-grained visual grounding and spatial direction alignment for precise target reaching. Specifically, 3DG-VLN adaptively processes high-resolution front-view and downward-view observations to preserve fine-grained visual and geometric details for target grounding. It also updates the target-relative direction online during closed-loop navigation, allowing the agent to maintain spatial alignment with the target and reduce accumulated direction drift. To support this task, we construct a dedicated high-resolution benchmark which contains 2,717 trajectories with target-oriented high-level instructions, high-resolution front-view and downward-view egocentric observations, and continuous 3D waypoint annotations. Experiments show that 3DG-VLN outperforms competitive UAV-VLN baselines, achieving a 13.82\\% improvement in success rate. Real-world trials further demonstrate the potential of 3DG-VLN for practical see-and-reach navigation. The source code and benchmark are available at https://github.com/xuefanfu/3DG-VLN.",
+      "authors": [
+        "Fanfu Xue",
+        "En Yu",
+        "Yantian Shen",
+        "Zhikun Hu",
+        "Hongjun Wang",
+        "Yang Yang",
+        "Xindi Wang",
+        "Jiande Sun"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-18T10:21:42+00:00",
+      "link": "https://arxiv.org/pdf/2606.20045v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "UAV target approach navigation, interception relevant",
+      "llm_evidence_cn": "UAV目标接近导航，与拦截相关",
+      "llm_evidence": "UAV目标接近导航，与拦截相关",
+      "canonical_evidence": "UAV目标接近导航，与拦截相关",
+      "llm_tldr_en": "introduces UAV-VLN-FOV task isolating see-and-reach stage and proposes 3DG-VLN framework for precise target approach, directly applicable to interception",
+      "llm_tldr_cn": "本文针对无人机视觉语言导航中目标可见后的精确接近能力难以单独评估的问题，提出了UAV-VLN-FOV任务，将见-达阶段分离出来。并提出3DG-VLN框架，利用动态引导的视觉语言路径点预测，使无人机能根据视觉语言证据精确移动到目标位置。仿真实验表明，该方法在终端到达精度上显著超过现有基线。该工作可直接迁移到单无人机拦截任务中，用于目标接近阶段的高精度控制。",
+      "llm_tldr": "本文针对无人机视觉语言导航中目标可见后的精确接近能力难以单独评估的问题，提出了UAV-VLN-FOV任务，将见-达阶段分离出来。并提出3DG-VLN框架，利用动态引导的视觉语言路径点预测，使无人机能根据视觉语言证据精确移动到目标位置。仿真实验表明，该方法在终端到达精度上显著超过现有基线。该工作可直接迁移到单无人机拦截任务中，用于目标接近阶段的高精度控制。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.17630v1",
+      "source": "arxiv",
+      "title": "FLAP: FOV-Constrained Active Perception Planning for Prior-Map-Free 3D Navigation",
+      "abstract": "Safe and efficient trajectory planning in unknown, cluttered 3D environments constitutes a critical bottleneck for deploying Unmanned Aerial Vehicles (UAVs) in real-world applications. This challenge is further exacerbated by the limited field-of-view (FOV) and sensing range of onboard sensors. Many existing methods either make simplistic assumptions about unexplored space or rely on conservative heuristics such as speed limits or fixed perception patterns, reducing efficiency and generalizing poorly across different sensor types. In this work, we propose a novel planning framework that directly integrates active perception into trajectory optimization, thereby improving safety while preserving efficiency. The perception constraints are derived from the UAV's dynamic model and formulated in the sensor coordinate frame, which enables precise handling of FOV geometry. The velocity-triggered activation mechanism enables the planner to balance perception and motion efficiency. We introduce an active perception sub-trajectory segment with parametric start-time optimization, mitigating collision risks from late obstacle detection. Our formulation enables active perception during arbitrary 3D maneuvers, extending beyond prior methods designed mainly for horizontal motion. All constraints and penalties are incorporated into a differentiable optimization problem, so the planner requires only a simple front-end global path for guidance, rather than a computationally expensive perception-aware path generator. Extensive simulations and real-world experiments demonstrate robust performance across diverse unknown environments with varying sensor configurations.",
+      "authors": [
+        "Mengke Zhang",
+        "Sitong Li",
+        "Tiancheng Lai",
+        "Ruitian Pang",
+        "Mingxuan Zhang",
+        "Qingcheng Chen",
+        "Fei Gao",
+        "Chao Xu",
+        "Yanjun Cao"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-16T07:40:30+00:00",
+      "link": "https://arxiv.org/pdf/2606.17630v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Active perception planning for UAV 3D navigation, directly applicable to interception and encirclement",
+      "llm_evidence_cn": "无人机主动感知规划，直接适用于拦截和围捕",
+      "llm_evidence": "无人机主动感知规划，直接适用于拦截和围捕",
+      "canonical_evidence": "无人机主动感知规划，直接适用于拦截和围捕",
+      "llm_tldr_en": "Proposes FLAP, a planning framework integrating active perception into trajectory optimization for UAVs in unknown 3D environments with limited FOV, improving safety and efficiency.",
+      "llm_tldr_cn": "针对无人机在未知杂乱3D环境中因视场和感知范围限制导致的导航挑战，提出了FLAP框架，将主动感知直接集成到轨迹优化中，从而在保证安全性的同时提高效率。与传统方法相比，该方法不依赖保守启发式，能够泛化到不同传感器类型。该工作为无人机自主导航提供了有效方案，可应用于拦截和围捕任务中的路径规划。",
+      "llm_tldr": "针对无人机在未知杂乱3D环境中因视场和感知范围限制导致的导航挑战，提出了FLAP框架，将主动感知直接集成到轨迹优化中，从而在保证安全性的同时提高效率。与传统方法相比，该方法不依赖保守启发式，能够泛化到不同传感器类型。该工作为无人机自主导航提供了有效方案，可应用于拦截和围捕任务中的路径规划。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.18786v1",
+      "source": "arxiv",
+      "title": "R2D-RL: A RoboCup 2D Soccer Environment for Multi-Agent Reinforcement Learning",
+      "abstract": "Robot soccer is a challenging testbed for multi-agent reinforcement learning because it combines partial observability, cooperative and adversarial interaction, sparse rewards, and long-horizon tactical behavior. RoboCup 2D Soccer Simulation (RCSS2D) provides a mature robot-soccer platform, but its competition-oriented server-client architecture is difficult to use directly with modern Python-based MARL workflows. We introduce R2D-RL, a reinforcement learning environment that connects RCSS2D and HELIOS-based player clients to a Python MARL interface through shared-memory communication and cycle-level synchronization. R2D-RL supports full-field and scenario-based training with configurable opponents, Base discrete and Hybrid parameterized action spaces, action masks, expected possession value (EPV)-based reward shaping, and parallel execution. We provide front-goal scenarios and an 11-vs-11 full-field benchmark, together with baseline results.",
+      "authors": [
+        "Haobin Qin",
+        "Baofeng Zhang",
+        "Hidehisa Akiyama",
+        "Keisuke Fujii"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-17T07:57:06+00:00",
+      "link": "https://arxiv.org/pdf/2606.18786v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent RL environment for robot soccer, applicable to UAV swarm coordination research",
+      "llm_evidence_cn": "多智能体RL环境，适用于无人机群协调研究",
+      "llm_evidence": "多智能体RL环境，适用于无人机群协调研究",
+      "canonical_evidence": "多智能体RL环境，适用于无人机群协调研究",
+      "llm_tldr_en": "Introduces R2D-RL, a RoboCup 2D soccer environment connected to Python MARL interface via shared memory, supporting full-field and scenario-based training.",
+      "llm_tldr_cn": "针对机器人足球这一多智能体强化学习挑战测试床，现有平台难以与现代Python MARL工作流集成的问题，提出了R2D-RL环境，通过共享内存和周期级同步将RoboCup 2D仿真与HELIOS客户端连接，支持全场景训练。该环境可配置对手，提供离散和混合参数化动作空间。该工作为多智能体协同研究提供了易于使用的仿真平台，可启发无人机群围捕实验。",
+      "llm_tldr": "针对机器人足球这一多智能体强化学习挑战测试床，现有平台难以与现代Python MARL工作流集成的问题，提出了R2D-RL环境，通过共享内存和周期级同步将RoboCup 2D仿真与HELIOS客户端连接，支持全场景训练。该环境可配置对手，提供离散和混合参数化动作空间。该工作为多智能体协同研究提供了易于使用的仿真平台，可启发无人机群围捕实验。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
