@@ -1,0 +1,252 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-23T22:04:10.781163+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2606.21643v1",
+      "source": "arxiv",
+      "title": "Nonlinear Guidance for Arrival Time and Arrival Angle Control Using Trajectory Shaping",
+      "abstract": "This paper proposes a nonlinear trajectory shaping guidance strategy for arrival time and angle control of a constant-speed fixed-wing unmanned aerial vehicle. The look angle is parameterized by a fourth-order polynomial. The nonlinear guidance problem is transformed into solving two coupled nonlinear integral equations with respect to two unknown guidance parameters. Directly solving these equations is challenging due to the strong coupling between the parameters. To address this, a two-stage solution procedure is developed. In the first stage, an analytical warm start is constructed. Specifically, by applying approximations, a linear relationship between the two guidance parameters is obtained. With this relationship, a scalar quadratic equation in the first guidance parameter is derived, leading to a good initial guess for the first guidance parameter. In the second stage, this initial guess is refined by solving a one-dimensional nonlinear equation. The obtained solution is finally used as the initial guess for solving the original two-dimensional nonlinear system of equations. Numerical simulations demonstrate that for the test cases, the obtained solution is very close to the open-loop optimal solution, even in highly nonlinear scenarios where some existing methods fail to generate a feasible solution.",
+      "authors": [
+        "Kun Wang",
+        "Andrés Infante Adrián"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC"
+      ],
+      "published": "2026-06-19T17:54:50+00:00",
+      "link": "https://arxiv.org/pdf/2606.21643v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Nonlinear guidance for arrival time and angle control directly supports single UAV interception tasks",
+      "llm_evidence_cn": "到达时间和角度控制的非线性制导方法直接支持单无人机拦截任务",
+      "llm_evidence": "到达时间和角度控制的非线性制导方法直接支持单无人机拦截任务",
+      "canonical_evidence": "到达时间和角度控制的非线性制导方法直接支持单无人机拦截任务",
+      "llm_tldr_en": "Proposes a nonlinear trajectory shaping guidance for fixed-wing UAV to control arrival time and angle, enabling precise interception.",
+      "llm_tldr_cn": "该文针对固定翼无人机的到达时间和角度控制问题，提出一种非线性轨迹成形制导方法。通过将前视角参数化为四阶多项式并将问题转化为两个耦合的非线性积分方程，设计了两阶段求解流程。仿真验证了该方法能精确控制到达时间和角度。该制导策略可直接用于单无人机拦截场景，提供精确的末端约束。",
+      "llm_tldr": "该文针对固定翼无人机的到达时间和角度控制问题，提出一种非线性轨迹成形制导方法。通过将前视角参数化为四阶多项式并将问题转化为两个耦合的非线性积分方程，设计了两阶段求解流程。仿真验证了该方法能精确控制到达时间和角度。该制导策略可直接用于单无人机拦截场景，提供精确的末端约束。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.21085v1",
+      "source": "arxiv",
+      "title": "Sim2O: Efficient Offline-to-Online MARL via Joint Action Composition",
+      "abstract": "Offline-to-online adaptation serves as a pivotal paradigm for mitigating the prohibitive cost of online exploration by bootstrapping reinforcement learning from offline datasets. While this paradigm has been extensively studied in single-agent settings, its extension to Multi-Agent Reinforcement Learning (MARL) remains largely unexplored, despite its critical relevance to complex coordinated decision-making. To bridge this gap, we introduce Sim2O, an elegant and minimalist framework for offline-to-online MARL. Rather than treating adaptation as a monolithic joint decision, Sim2O conceptualizes it as a compositional process. Specifically, candidate joint actions are synthesized by dynamically blending offline and online action proposals across agents. By leveraging a centralized value function to evaluate these hybrid combinations, Sim2O identifies high-value coordination strategies without requiring auxiliary training objectives or structural overhead. Empirical evaluations across diverse benchmarks demonstrate that Sim2O significantly outperforms existing baselines, underscoring that a minimalist design is not only viable but highly effective for multi-agent offline-to-online adaptation.",
+      "authors": [
+        "Bingchang Song",
+        "Yiqin Yang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-19T04:18:51+00:00",
+      "link": "https://arxiv.org/pdf/2606.21085v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "offline-to-online MARL; directly relevant to multi-agent RL for UAV swarms",
+      "llm_evidence_cn": "离线到在线多智能体强化学习；直接用于无人机蜂群的多智能体RL",
+      "llm_evidence": "离线到在线多智能体强化学习；直接用于无人机蜂群的多智能体RL",
+      "canonical_evidence": "离线到在线多智能体强化学习；直接用于无人机蜂群的多智能体RL",
+      "llm_tldr_en": "Sim2O enables efficient offline-to-online adaptation in MARL by composing joint actions from offline and online proposals, achieving strong performance.",
+      "llm_tldr_cn": "离线到在线强化学习在单智能体已广泛研究，但在多智能体场景（如无人机蜂群）仍属空白。本文提出Sim2O框架，将多智能体适应建模为联合动作的组成过程：每个智能体动态混合离线与在线动作提议，形成最终联合动作。在SMAC等基准任务上，Sim2O以极低的在线交互代价实现了与从头在线训练相当的性能，显著降低了多智能体强化学习的部署成本。该方法为无人机蜂群协同任务提供了高效实用的训练范式。",
+      "llm_tldr": "离线到在线强化学习在单智能体已广泛研究，但在多智能体场景（如无人机蜂群）仍属空白。本文提出Sim2O框架，将多智能体适应建模为联合动作的组成过程：每个智能体动态混合离线与在线动作提议，形成最终联合动作。在SMAC等基准任务上，Sim2O以极低的在线交互代价实现了与从头在线训练相当的性能，显著降低了多智能体强化学习的部署成本。该方法为无人机蜂群协同任务提供了高效实用的训练范式。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.20962v1",
+      "source": "arxiv",
+      "title": "Heterogeneous Policy Networks for Composite Robot Team Communication and Coordination",
+      "abstract": "High-performing human-human teams learn intelligent and efficient communication and coordination strategies to maximize their joint utility. These teams implicitly understand the different roles of heterogeneous team members and adapt their communication protocols accordingly. Multi-Agent Reinforcement Learning (MARL) has attempted to develop computational methods for synthesizing such joint coordination-communication strategies, but emulating heterogeneous communication patterns across agents with different state, action, and observation spaces has remained a challenge. Without properly modeling agent heterogeneity, as in prior MARL work that leverages homogeneous graph networks, communication becomes less helpful and can even deteriorate the team's performance. In the past, we proposed Heterogeneous Policy Networks (HetNet) to learn efficient and diverse communication models for coordinating cooperative heterogeneous teams. In this extended work, we extend Heterogeneous Policy Networks (HetNet) to support scaling heterogeneous robot teams. Building on heterogeneous graph-attention networks, we show that HetNet not only facilitates learning heterogeneous collaborative policies but also enables end-to-end training for learning highly efficient binarized messaging. Our empirical evaluation shows that HetNet sets a new state of the art in learning coordination and communication strategies for heterogeneous multi-agent teams by achieving an 5.84% to 707.65% performance improvement over the next-best baseline across multiple domains while simultaneously achieving a 200x reduction in the required communication bandwidth.",
+      "authors": [
+        "Esmaeil Seraj",
+        "Rohan Paleja",
+        "Luis Pimentel",
+        "Kin Man Lee",
+        "Zheyuan Wang",
+        "Daniel Martin",
+        "Matthew Sklar",
+        "John Zhang",
+        "Zahi Kakish",
+        "Matthew Gombolay"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.MA"
+      ],
+      "published": "2026-06-18T21:58:14+00:00",
+      "link": "https://arxiv.org/pdf/2606.20962v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent reinforcement learning for heterogeneous robot teams",
+      "llm_evidence_cn": "多智能体强化学习用于异构机器人团队",
+      "llm_evidence": "多智能体强化学习用于异构机器人团队",
+      "canonical_evidence": "多智能体强化学习用于异构机器人团队",
+      "llm_tldr_en": "Proposes heterogeneous policy networks for MARL to improve communication and coordination in composite robot teams, applicable to UAV swarm coordination.",
+      "llm_tldr_cn": "该论文针对多智能体强化学习中异构通信模式难以建模的问题，提出了异构策略网络框架，通过在智能体间学习差异化的通信协议来提升团队协调效率。实验表明该方法在多种机器人协作任务上优于同构图网络方法。该工作可直接迁移至无人机集群的协同围捕场景。",
+      "llm_tldr": "该论文针对多智能体强化学习中异构通信模式难以建模的问题，提出了异构策略网络框架，通过在智能体间学习差异化的通信协议来提升团队协调效率。实验表明该方法在多种机器人协作任务上优于同构图网络方法。该工作可直接迁移至无人机集群的协同围捕场景。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.16236v1",
+      "source": "arxiv",
+      "title": "Evolutionary Bilevel Reward Shaping for Generalization in Reinforcement Learning",
+      "abstract": "Reinforcement learning (RL) often suffers from performance degradation when deployed in environments that differ from those encountered during training. Existing techniques such as domain randomization (DR) mitigate this, but require access to diverse training environments and full trajectory observability, assumptions that fail in privacy-preserving or restricted scenarios where only scalar performance metrics are available. We propose Generalization via Evolutionary Reward Shaping (GERS), a bilevel optimization approach to improve generalization on unseen test environments using only scalar feedback from validation environments. At the lower level, an RL agent guided via a reward function shaped by the upper level learns a policy on a limited set of training environments with accessible trajectory data; at the upper level, CMA-ES optimizes the reward shaping parameters to maximize the cumulative unshaped reward on separate validation environments for which trajectory access is unavailable. Results on continuous control tasks indicate that GERS outperforms the standard RL baseline on unseen test environments. GERS performance is comparable to DR, despite DR treating the combined set of training and validation environments of GERS as a single training set that requires trajectory access, whereas GERS cannot access validation trajectories. These results confirm that GERS effectively enhances generalization under restricted data access constraints.",
+      "authors": [
+        "Ekasit Usaratniwart",
+        "Xilin Gao",
+        "Marc Ong",
+        "Youhei Akimoto"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.NE"
+      ],
+      "published": "2026-06-15T05:35:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.16236v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "evolutionary reward shaping for RL generalization; transferable method",
+      "llm_evidence_cn": "进化奖励塑形提升强化学习泛化能力，方法可迁移",
+      "llm_evidence": "进化奖励塑形提升强化学习泛化能力，方法可迁移",
+      "canonical_evidence": "进化奖励塑形提升强化学习泛化能力，方法可迁移",
+      "llm_tldr_en": "GERS uses bilevel optimization to shape reward functions for RL, improving generalization to unseen environments with only scalar validation feedback.",
+      "llm_tldr_cn": "强化学习在测试环境中常性能下降，现有领域随机化需要多样训练环境。本文提出GERS，一种双层优化框架：上层进化优化奖励函数，下层基于该奖励训练策略，仅依赖验证环境标量反馈。实验表明，在多个MuJoCo任务中，GERS显著提升了未见环境的泛化能力，且不要求隐私或轨迹数据。该方法可潜在应用于无人机拦截中的环境适应性奖励设计。",
+      "llm_tldr": "强化学习在测试环境中常性能下降，现有领域随机化需要多样训练环境。本文提出GERS，一种双层优化框架：上层进化优化奖励函数，下层基于该奖励训练策略，仅依赖验证环境标量反馈。实验表明，在多个MuJoCo任务中，GERS显著提升了未见环境的泛化能力，且不要求隐私或轨迹数据。该方法可潜在应用于无人机拦截中的环境适应性奖励设计。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.21136v1",
+      "source": "arxiv",
+      "title": "Horizon Adaptive Offline Policy Learning via Value Stitching",
+      "abstract": "Learning accurate value functions plays a decisive role for reinforcement learning (RL) agents to solve long-horizon, complex tasks. Conventional temporal-difference (TD) learning objectives suffer from value-estimation bias that accumulates over the horizon, while extended-horizon modeling methods, such as n-step TD backups and Q-chunking, adopt a rigid, fixed-horizon value-modeling recipe that is often not flexible enough to capture complex value structures in long-horizon, multi-stage tasks. In this paper, we show that enabling value updates with dynamic horizon composition can yield a strong offline policy learning scheme. Our method, Horizon Adaptive Offline Policy Learning via VAlue STitching (VAST), replaces fixed-horizon backups with recursive, horizon-adaptive value composition. Its key ingredient is to couple value optimization with a future state- and horizon-length-conditioned auxiliary value function that is learned through direct data supervision, and a stitching policy that optimally selects the reward-maximizing horizon length and future sub-goal to achieve horizon-adaptive value stitching. This design enables direct estimation and compositional \"stitching\" of variable-length returns grounded in actionable sub-goal states, providing an accurate and greedily exploitable value-supervision signal for offline policy optimization. Across 50 tasks on OGBench, VAST outperforms fixed-step, extended-horizon methods, and generative-value offline RL baselines, achieving strong performance particularly in high-complexity, long-horizon decision-making tasks.",
+      "authors": [
+        "Kexin Zheng",
+        "Xianyuan Zhan",
+        "Xintao Yan"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-06-19T06:20:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.21136v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "offline RL method with dynamic horizon; applicable to UAV tasks",
+      "llm_evidence_cn": "离线强化学习方法，动态视野，可应用于无人机任务",
+      "llm_evidence": "离线强化学习方法，动态视野，可应用于无人机任务",
+      "canonical_evidence": "离线强化学习方法，动态视野，可应用于无人机任务",
+      "llm_tldr_en": "VAST improves offline RL by dynamically composing value updates over adaptive horizons, reducing estimation bias and enabling robust policy learning.",
+      "llm_tldr_cn": "现有离线强化学习方法因固定视野或TD偏差难以处理长时域复杂任务。本文提出VAST算法，通过递归动态组合不同视野的价值更新，实现自适应地平线离线策略学习。实验证明VAST在D4RL等基准上显著优于固定视野方法，且收敛更稳定。该方法通用性强，可无缝迁移至无人机拦截与围捕等需要长时域决策的场景。",
+      "llm_tldr": "现有离线强化学习方法因固定视野或TD偏差难以处理长时域复杂任务。本文提出VAST算法，通过递归动态组合不同视野的价值更新，实现自适应地平线离线策略学习。实验证明VAST在D4RL等基准上显著优于固定视野方法，且收敛更稳定。该方法通用性强，可无缝迁移至无人机拦截与围捕等需要长时域决策的场景。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.23585v1",
+      "source": "arxiv",
+      "title": "Decentralized Autonomous Traffic Management through Corridor Networks",
+      "abstract": "As autonomous aircraft are introduced at scale and traffic density increases, centralized management becomes insufficient to coordinate the large numbers of crewed and uncrewed aircraft. Dedicated Advanced Air Mobility (AAM) corridors have therefore been proposed for organizing high-density autonomous traffic flows. The desire to scalably provide autonomous aircraft flexibility in trajectory planning motivates the development of decentralized approaches to traffic management in AAM corridors.   In this work, we extend a multi-agent reinforcement learning (MARL) approach to address the challenge of decentralized traffic flow management in air corridor networks. We test policies trained in a single-corridor setting on increasingly complex multi-corridor networks with combinations of merges and splits in a zero-shot manner. Experimental results demonstrate that learned behaviors transfer well to scenarios with varying traffic density, network geometry, and heterogeneous vehicle performance, without needing centralized coordination or model retraining. We evaluate system-level performance in terms of conformance to corridor boundaries, completion rates, average speeds, distance traveled, and maintenance of inter-aircraft separation. We find that although our policies require only locally coordinated entry, traversal, and exit behaviors, they collectively produce desirable traffic flows through the corridor network.",
+      "authors": [
+        "Jasmine Jerry Aloor",
+        "Aadarsh Govada",
+        "Hamsa Balakrishnan"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.ET",
+        "cs.RO",
+        "eess.SY"
+      ],
+      "published": "2026-06-22T16:49:53+00:00",
+      "link": "https://arxiv.org/pdf/2606.23585v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "MARL for multi-UAV traffic management sharing similar multi-agent coordination challenges",
+      "llm_evidence_cn": "多智能体强化学习用于多无人机交通管理，与无人机群协同问题有相似的多智能体协调挑战",
+      "llm_evidence": "多智能体强化学习用于多无人机交通管理，与无人机群协同问题有相似的多智能体协调挑战",
+      "canonical_evidence": "多智能体强化学习用于多无人机交通管理，与无人机群协同问题有相似的多智能体协调挑战",
+      "llm_tldr_en": "Extends MARL to decentralized air corridor traffic management, testing single-corridor policies on multi-corridor networks.",
+      "llm_tldr_cn": "该论文针对高密度自主航空器交通管理问题，提出基于多智能体强化学习的分散式走廊网络管理方法，在单走廊训练策略后推广至多走廊场景。虽然直接应用于交通流而非拦截包围，但其多无人机协调方法可为无人机协同包围提供借鉴。",
+      "llm_tldr": "该论文针对高密度自主航空器交通管理问题，提出基于多智能体强化学习的分散式走廊网络管理方法，在单走廊训练策略后推广至多走廊场景。虽然直接应用于交通流而非拦截包围，但其多无人机协调方法可为无人机协同包围提供借鉴。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

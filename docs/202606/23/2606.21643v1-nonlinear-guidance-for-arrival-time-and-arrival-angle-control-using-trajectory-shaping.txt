@@ -1,0 +1,530 @@
+Title: Nonlinear Guidance for Arrival Time and Arrival Angle Control Using Trajectory Shaping
+
+URL Source: https://arxiv.org/pdf/2606.21643v1
+
+Published Time: Tue, 23 Jun 2026 01:26:17 GMT
+
+Number of Pages: 11
+
+Markdown Content:
+# Nonlinear Guidance for Arrival Time and Arrival Angle Control Using Trajectory Shaping 
+
+Kun Wang ∗ and Andrés Infante Adrián †
+
+Universidad Carlos III de Madrid, Leganés 28911, Spain 
+
+This paper proposes a nonlinear trajectory shaping guidance strategy for arrival time and angle control of a constant-speed fixed-wing unmanned aerial vehicle. The look angle is pa-rameterized by a fourth-order polynomial. The nonlinear guidance problem is transformed into solving two coupled nonlinear integral equations with respect to two unknown guidance parameters. Directly solving these equations is challenging due to the strong coupling between the parameters. To address this, a two-stage solution procedure is developed. In the first stage, an analytical warm start is constructed. Specifically, by applying approximations, a linear re-lationship between the two guidance parameters is obtained. With this relationship, a scalar quadratic equation in the first guidance parameter is derived, leading to a good initial guess for the first guidance parameter. In the second stage, this initial guess is refined by solving a one-dimensional nonlinear equation. The obtained solution is finally used as the initial guess for solving the original two-dimensional nonlinear system of equations. Numerical simulations demonstrate that for the test cases, the obtained solution is very close to the open-loop opti-mal solution, even in highly nonlinear scenarios where some existing methods fail to generate a feasible solution. 
+
+## I. Introduction 
+
+Guidance laws play a critical role in autonomous missions, as they directly determine the vehicle’s maneuvering commands to meet the mission objectives. In practice, in addition to guiding the vehicle to a desired location, vehicles are often required to satisfy additional complex constraints. For instance, in time-critical missions, the vehicle may be required to reach the destination at a specific time to synchronize with other vehicles [1, 2]. In some scenarios, the vehicle may also need to arrive at the destination with a specific direction to achieve superior performance [3]. Autonomous missions may also require simultaneous control of both arrival time and arrival angle, as this can satisfy more complex practical requirements [4]. However, these fully constrained requirements and the nonlinear kinematics make the design of guidance laws particularly challenging. As a result, significant research efforts have been devoted to the design of guidance laws for arrival-time-and-arrival-angle control in recent years. Based on whether the guidance law design requires linearization of the highly nonlinear kinematics, existing methods can be broadly categorized into linear and nonlinear guidance laws. Most early works were based on linearized kinematics [5–7]. For instance, Lee et al. [5] introduced a bias term for the arrival-time error in a minimum-jerk guidance law to precisely adjust the arrival time and arrival angle. Zhang et al. [7] proposed a guidance law composed of a constructed biased proportional navigation law with an arrival angle constraint and a feedback control term for the arrival-time error. In addition, linear optimal control was also employed to derive analytical optimal guidance laws [8]. For linear guidance laws, one essential concept is time-to-go estimation, which is needed to regulate the arrival time. However, the accuracy of such estimation is often compromised by the linearization, and the corresponding guidance law may fail to generate a feasible solution when the engagement geometry is highly nonlinear. To this end, more recent works have focused on nonlinear guidance law design [9–11]. These methods typically rely on sliding mode control [12], nonlinear optimal control [13], trajectory shaping [14], or virtual-target-based methods [4, 15, 16]. It is worth mentioning that solving the corresponding nonlinear optimal control problem may suffer from convergence issues [17]; therefore, machine learning has been combined with optimal control to generate the optimal guidance law in real time [18]. As for the trajectory shaping method, the idea is to parameterize the state or control trajectory using certain functions, such as polynomials, and then embed the boundary conditions. As a result, the guidance problem, without any linearization, is transformed into solving a set of nonlinear equations for the unknown shaping 
+
+> ∗Assistant Professor, Department of Aerospace Engineering.
+> †Ph.D. Student, Department of Aerospace Engineering.
+
+1
+
+> arXiv:2606.21643v1 [math.OC] 19 Jun 2026
+
+parameters. Consequently, there is no need for time-to-go estimation, and the resulting guidance law can be applied to highly nonlinear scenarios. Therefore, trajectory shaping has been applied to arrival time control [19, 20], arrival angle control [21], and simultaneous arrival time and angle control [14]. However, it was shown in [22] that solving the resulting nonlinear equations may be nontrivial. In light of the above discussion, we develop a nonlinear guidance law for simultaneous arrival time and angle control based on trajectory shaping. In this way, there is no need for time-to-go estimation, and the resulting guidance law can be applied to highly nonlinear scenarios. Compared with the existing work in [14], the main contribution of this paper is twofold. First, the scaling techniques in [9, 20] are applied, which simplifies the derivation of the guidance law. Second, a carefully designed two-stage solution procedure is developed to solve the resulting nonlinear equations, thereby improving convergence. The simulation results show that the proposed method can generate a solution that is very close to the open-loop optimal solution, even in highly nonlinear scenarios where some existing methods fail to generate a feasible solution. The rest of the paper is organized as follows. Section II formulates the nonlinear guidance problem. Section III presents the design of the trajectory shaping guidance law and the two-stage solution procedure. Section IV provides numerical simulations to validate the proposed method. Finally, Section V concludes the paper. 
+
+## II. Problem Formulation 
+
+Consider a two-dimensional engagement geometry where an unpowered fixed-wing UAV flies toward a stationary destination located at the origin. The UAV is modeled as a point mass moving at a constant speed 𝑉 . Without loss of generality, the speed is normalized as 𝑉 = 1 [20]. The engagement geometry is shown in Fig. 1. Let 𝑟 (𝑡 ) denote the rel-
+
+Fig. 1 Coordinate frame for the UAV and destination. 
+
+ative range, 𝜆 (𝑡 ) the line-of-sight (LOS) angle, 𝛾 (𝑡 ) the flight-path angle, and 𝜎 (𝑡 ) the look angle. These angles satisfy 
+
+𝛾 (𝑡 ) = 𝜆 (𝑡 ) + 𝜎 (𝑡 ). The directions of 𝜆 (𝑡 ), 𝜎 (𝑡 ), and 𝛾 (𝑡 ) are defined as positive when measured counterclockwise. With the normalized speed 𝑉 = 1, the polar-coordinate dynamics are written as 
+
+
+
+§𝑟 (𝑡 ) = − cos 𝜎 (𝑡 ),
+
+§𝜆 (𝑡 ) = −sin 𝜎 (𝑡 )/ 𝑟 (𝑡 ),
+
+§𝛾 (𝑡 ) = 𝑎 (𝑡 ),
+
+(1) where 𝑎 (𝑡 ) is the normalized normal acceleration command acting perpendicular to the UAV velocity vector. The state vector is therefore defined as [𝑟 (𝑡 ), 𝜆 (𝑡 ), 𝛾 (𝑡 )] 𝑇 , where 𝑟 (𝑡 ), 𝜆 (𝑡 ), and 𝛾 (𝑡 ) can be measured by a ranging sensor, a target seeker, and an inertial measurement unit, respectively. The initial condition at 𝑡 = 0 is given by 
+
+𝑟 (0) = 𝑟 0, 𝜆 (0) = 𝜆 0, 𝛾 (0) = 𝛾 0. (2) The objective is to guide the UAV to the destination at a prescribed arrival time 𝑡 𝑓 , while achieving a desired arrival angle with bounded terminal acceleration. The terminal conditions are therefore specified as 
+
+𝑟 (𝑡 𝑓 ) = 0, 𝛾 (𝑡 𝑓 ) = 𝛾 𝑓 , 𝜎 (𝑡 𝑓 ) = 0, (3) where 𝛾 𝑓 is the desired arrival angle. The condition 𝜎 (𝑡 𝑓 ) = 0 ensures that the UAV velocity direction is aligned with the LOS direction at arrival. This guarantees a bounded terminal acceleration. According to [22], any desired arrival 2time 𝑡 𝑓 can be normalized to 𝑡 𝑓 = 1. The terminal conditions in (3) are equivalently expressed as 
+
+𝑟 (1) = 0, 𝜆 (1) = 𝛾 𝑓 , 𝜎 (1) = 0. (4) Formally, the nonlinear guidance problem is to synthesize a control input 𝑎 (𝑡 ) that drives the UAV from (2) to (4). Due to the nonlinear dynamics, this fully constrained guidance problem is computationally challenging for real-time onboard implementation. In the next section, a guidance law based on look angle shaping is developed to address this problem. 
+
+Remark 1 In practice, the normal acceleration command is subject to saturation limits due to the structural and aerodynamic constraints of the UAV. Explicitly incorporating these saturation limits into the analytical guidance-law design would significantly complicate the derivation. Therefore, they are not considered in the theoretical development, but are enforced in the numerical simulations. 
+
+## III. Guidance Law Design 
+
+A. Parameterization of Look Angle Profile 
+
+The look angle profile is prescribed as the following fourth-order polynomial: 
+
+𝜎 (𝑡 ) = (𝑡 − 1)2 (
+
+𝜎 0 + 𝜅 1𝑡 + 𝜅 2𝑡 2)
+
+, (5) where 𝜎 0 = 𝜎 (0) is the initial look angle, and 𝜅 1, 𝜅 2 are the guidance parameters to be determined. This structure inherently guarantees 𝜎 (1) = 0 and §𝜎 (1) = 0. By applying L’Hôpital’s rule to (1) as 𝑟 → 0, it follows that §𝜆 (1) = 0.Hence, the terminal acceleration satisfies 
+
+𝑎 (1) = §𝛾 (1) = §𝜎 (1) + § 𝜆 (1) = 0,
+
+which is desirable for smooth arrival. The nonlinear guidance problem is thus reduced to determining (𝜅 1, 𝜅 2) such that the following nonlinear system of integral equations is satisfied: 
+
+F(𝜅 1, 𝜅 2) =
+
+
+
+𝑟 0 − ∫ 10 cos 𝜎 (𝑡 ; 𝜅 1, 𝜅 2) 𝑑𝑡 𝜆 0 − 𝛾 𝑓 − ∫ 10
+
+sin 𝜎 (𝑡 ; 𝜅 1, 𝜅 2)
+
+𝑟 (𝑡 ) 𝑑𝑡 
+
+
+
+= 0. (6) where 𝑟 (𝑡 ; 𝜅 1, 𝜅 2) = 𝑟 0 − ∫ 𝑡  
+
+> 0
+
+cos 𝜎 (𝑠 ; 𝜅 1, 𝜅 2) 𝑑𝑠. Once the guidance parameters are obtained, the guidance command can be readily obtained. However, solving (6) directly is nontrivial because the two parameters are strongly coupled through nonlinear integrals. To improve convergence and computational efficiency, a two-stage procedure is developed below. 
+
+B. Analytical Warm Start 
+
+We first construct an analytical warm start by using some approximations. It should be emphasized that these approximations are used only to construct an initial guess. The final guidance parameters are still obtained by solving the exact nonlinear system of equations in (6). Under the small-angle and near-linear range-depletion approximations 
+
+sin 𝜎 ≈ 𝜎, 𝑟 (𝑡 ) ≈ 𝑟 0 (1 − 𝑡 ), (7) the terminal LOS condition 𝜆 (1) = 𝛾 𝑓 yields 
+
+𝜆 0 − 𝛾 𝑓 = 1
+
+𝑟 0
+
+∫ 10
+
+(1 − 𝑡 )
+
+(
+
+𝜎 0 + 𝜅 1𝑡 + 𝜅 2𝑡 2)
+
+𝑑𝑡. (8) Evaluating the integral gives 
+
+𝜆 0 − 𝛾 𝑓 = 1
+
+𝑟 0
+
+( 12 𝜎 0 + 16 𝜅 1 + 112 𝜅 2
+
+)
+
+. (9) 3Therefore, the two parameters satisfy the linear relationship 
+
+𝜅 2 = Γ − 2𝜅 1, (10) where Γ = 12 𝑟 0 (𝜆 0 − 𝛾 𝑓 ) − 6𝜎 0.Substituting (10) into (5) gives the decoupled expression 
+
+𝜎 (𝑡 ) = 𝜎 0 𝑃 1 (𝑡 ) + Γ𝑃 2 (𝑡 ) + 𝜅 1 𝑃 3 (𝑡 ), (11) where 𝑃 1 (𝑡 ) = (𝑡 − 1)2, 𝑃 2 (𝑡 ) = 𝑡 2 (𝑡 − 1)2, and 𝑃 3 (𝑡 ) = (𝑡 − 1)2 (𝑡 − 2𝑡 2). Applying the second-order approximation 
+
+cos 𝜎 ≈ 1 − 12 𝜎 2 (12) to the range equation in (6) leads to the scalar quadratic equation 
+
+𝐴𝜅 21 + 𝐵𝜅 1 + 𝐶 = 0, (13) where 
+
+𝐴 =
+
+∫ 10
+
+𝑃 23 (𝑡 ) 𝑑𝑡 = 1630 , (14a) 
+
+𝐵 = 2𝜎 0
+
+∫ 10
+
+𝑃 1 (𝑡 )𝑃 3 (𝑡 ) 𝑑𝑡 + 2Γ
+
+∫ 10
+
+𝑃 2 (𝑡 )𝑃 3 (𝑡 ) 𝑑𝑡 = 𝜎 0
+
+35 + Γ
+
+1260 , (14b) 
+
+𝐶 = 𝜎 20
+
+∫ 10
+
+𝑃 21 (𝑡 ) 𝑑𝑡 + 2𝜎 0Γ
+
+∫ 10
+
+𝑃 1 (𝑡 )𝑃 2 (𝑡 ) 𝑑𝑡 + Γ2
+
+∫ 10
+
+𝑃 22 (𝑡 ) 𝑑𝑡 − 2(1 − 𝑟 0)
+
+= 𝜎 20
+
+5 + 2𝜎 0Γ
+
+105 + Γ2
+
+630 − 2(1 − 𝑟 0). (14c) Let Δ = 𝐵 2 − 4𝐴𝐶 denote the discriminant of (13). If Δ ≤ 0, the quadratic approximation does not provide two real roots. In this case, the vertex of the quadratic approximation, −𝐵 /( 2𝐴 ), is used as the initial estimate. If Δ > 0,two real candidates 
+
+𝜅 (1) 
+
+> 1
+
+= −𝐵 − √Δ
+
+2𝐴 and 𝜅 (2) 
+
+> 1
+
+= −𝐵 + √Δ
+
+2𝐴 
+
+are obtained, and the candidate with the smaller approximate control effort is selected. Specifically, using the approxi-mations in (7), the approximate normal acceleration used for selecting the initial guess is 
+
+𝑎 (𝑡 ) ≈ ˆ𝑎 (𝑡 ) = §𝜎 (𝑡 ) − 𝜎 (𝑡 )
+
+𝑟 0 (1 − 𝑡 ) . (15) Using (11), it can be written as 
+
+ˆ𝑎 (𝑡 ; 𝜅 1) = 𝜎 0 ˜𝑃 1 (𝑡 ) + Γ ˜𝑃 2 (𝑡 ) + 𝜅 1 ˜𝑃 3 (𝑡 ), (16) where 
+
+˜𝑃 1 (𝑡 ) = §𝑃 1 (𝑡 ) − 𝑃 1 (𝑡 )
+
+𝑟 0 (1 − 𝑡 ) , (17a) 
+
+˜𝑃 2 (𝑡 ) = §𝑃 2 (𝑡 ) − 𝑃 2 (𝑡 )
+
+𝑟 0 (1 − 𝑡 ) , (17b) 
+
+˜𝑃 3 (𝑡 ) = §𝑃 3 (𝑡 ) − 𝑃 3 (𝑡 )
+
+𝑟 0 (1 − 𝑡 ) . (17c) As 𝑃 1 (𝑡 ), 𝑃 2 (𝑡 ), and 𝑃 3 (𝑡 ) all contain the factor (𝑡 − 1)2, the apparent singularity at 𝑡 = 1 is canceled. The approximate control effort is then defined as 
+
+ˆ𝐽 (𝜅 1) =
+
+∫ 10
+
+ˆ𝑎 2 (𝑡 ; 𝜅 1) 𝑑𝑡. (18) 4Since ˆ𝑎 (𝑡 ; 𝜅 1) is a polynomial in 𝑡 and is affine with respect to 𝜅 1, the above integral can be evaluated analytically as 
+
+ˆ𝐽 (𝜅 1) = 𝑄 2 𝜅 21 + 𝑄 1 𝜅 1 + 𝑄 0, (19) where 
+
+𝑄 2 = 16 𝑟 20 + 𝑟 0 + 1210 𝑟 20
+
+, (20a) 
+
+𝑄 1 = − 𝜎 0 (𝑟 0 − 1)( 2𝑟 0 + 1)
+
+30 𝑟 20
+
+− Γ(2𝑟 20 + 𝑟 0 + 1)
+
+210 𝑟 20
+
+, (20b) 
+
+𝑄 0 = 𝜎 20 (2𝑟 0 + 1)2
+
+3𝑟 20
+
+− 𝜎 0Γ(𝑟 0 − 1)( 2𝑟 0 + 1)
+
+15 𝑟 20
+
++ Γ2 (2𝑟 20 + 𝑟 0 + 1)
+
+105 𝑟 20
+
+. (20c) The Taylor initial guess is finally selected as 
+
+𝜅 Taylor 1 =
+
+
+
+arg min       
+
+> 𝜅 1∈ { 𝜅 (1)
+> 1,𝜅 (2)
+> 1}
+
+ˆ𝐽 (𝜅 1), Δ > 0,
+
+−𝐵 /( 2𝐴 ), Δ ≤ 0.
+
+(21) Because the current results are based on the approximations, 𝜅 Taylor 1 is further refined by solving the first nonlinear equation in (6), i.e., 
+
+𝑟 0 −
+
+∫ 10
+
+cos (𝜎 (𝑡 ; 𝜅 1, Γ − 2𝜅 1)) 𝑑𝑡 = 0. (22) 
+
+C. Solving the Guidance Parameters 𝜅 1 and 𝜅 2
+
+The refined parameter vector 𝜿 0 = [𝜅 01, Γ − 2𝜅 01]𝑇 is then passed to the nonlinear solver as the initial guess for solving the exact nonlinear system of equations in (6). The procedure is summarized in Algorithm 1. 
+
+Algorithm 1 Procedure to Solve the Parameters 𝜅 1 and 𝜅 2
+
+Require: Initial condition in (2) and desired arrival angle 𝛾 𝑓 .
+
+Ensure: Exact guidance parameters 𝜅 1, 𝜅 2.
+
+Stage 1: Analytical Warm Start  
+
+> 1:
+
+Compute Γ in (10).  
+
+> 2:
+
+Evaluate 𝐴, 𝐵, 𝐶 from (14c) and compute Δ = 𝐵 2 − 4𝐴𝐶 . 
+
+> 3:
+
+if Δ > 0 then  
+
+> 4:
+
+Compute 𝜅 (1) 
+
+> 1
+
+and 𝜅 (2) 
+
+> 1
+
+. 
+
+> 5:
+
+Evaluate ˆ𝐽 (𝜅 1) for both candidates.  
+
+> 6:
+
+Select the candidate with the smaller ˆ𝐽 . 
+
+> 7:
+
+else  
+
+> 8:
+
+Set 𝜅 Taylor 1 ← − 𝐵 /( 2𝐴 ). 
+
+> 9:
+
+end if 
+
+Stage 2: Solving the Nonlinear System of Equations  
+
+> 10:
+
+Obtain 𝜅 01 by solving (22).  
+
+> 11:
+
+Recover 𝜅 02 using (10).  
+
+> 12:
+
+Solve (6) using [𝜅 01, 𝜅 02]𝑇 as the initial guess.  
+
+> 13:
+
+return 𝜅 1, 𝜅 2.
+
+## IV. Numerical Simulations 
+
+This section presents numerical simulations to validate the proposed guidance law. MATLAB fsolve is used to solve (22) and (6). Unless otherwise stated, the solver tolerances are set to 10 −6. The physical initial conditions and 5X(m)       
+
+> -5000 -4000 -3000 -2000 -1000 01000
+> Y (m)
+> -500 0500 1000 1500 2000 2500
+> Flight trajectory Initial position Destination Desired arrival angle Initial angle Final angle
+
+(a) Flight trajectory Time ( s)        
+
+> 0510 15 20 25 30 35
+> Value
+> -10 -5 0510
+> κ1
+> κ2
+> PN switch
+
+(b) Guidance parameters 𝜅 1 and 𝜅 2Acceleration ( g)            
+
+> -2 02
+> aamax PN switch
+> Time ( s)
+> 0510 15 20 25 30 35
+> Angle (deg)
+> -50 050 100
+> γσγfPN switch
+
+(c) Acceleration and angles Time ( s)        
+
+> 0510 15 20 25 30 35
+> Iterations
+> 0246810
+
+(d) Number of iterations 
+
+Fig. 2 Simulation results of the proposed method in closed-loop. 
+
+desired arrival time are normalized such that the arrival time is set to 𝑡 𝑓 = 1, and the resulting normalized solution is scaled back to the physical units. It is worth mentioning that in practice, the UAV is subject to various disturbances and uncertainties, such as wind gusts and sensor noise. Therefore, maintaining a constant-speed flight is challenging. Thanks to our previous work in [20], which shows that once the guidance law can be generated in real time, the guidance law can be implemented in a closed-loop manner with a sufficiently high update rate to deal with different disturbances and uncertainties. Therefore, in this paper, the robustness of the proposed method against disturbances and uncertainties is not explicitly analyzed. Instead, the focus is on demonstrating the computational efficiency and solution quality of the proposed method in closed-loop implementation and comparative studies. 
+
+A. Closed-Loop Implementation 
+
+The initial conditions are set to 𝑟 0 = 5000 m , 𝜆 0 = 0◦, and 𝛾 0 = 30 ◦. The desired arrival angle is 𝛾 𝑓 = −60 ◦, the desired arrival time is 𝑡 𝑓 = 35 s , and the UAV speed is 𝑉 = 200 m /s. The guidance update interval is Δ𝑡 = 0.01 s . The parameters 𝜅 1 and 𝜅 2 are recomputed based on state feedback at each guidance update. The analytical initialization is required only in the first guidance cycle; in subsequent cycles, the converged parameters from the previous cycle are used as the initial guess. The acceleration command is saturated by ±3𝑔 , and the guidance law switches to PN guidance with a gain of 3 when the relative range drops below 100 m. The simulation terminates once the range reaches 1 m .Figure 2 shows the closed-loop results. The UAV reaches the destination at the prescribed time and with the desired arrival angle while satisfying the acceleration constraint. The guidance parameters vary smoothly and approach zero in the terminal phase, which is consistent with the fact that the range, look angle, and remaining flight time all vanish at arrival. The nonlinear solver requires the largest number of iterations of ten only in the first guidance cycle; afterward, the previous-cycle solution provides an excellent initial guess, and the solver typically converges within one iteration or requires no additional iteration. This confirms the real-time computational efficiency of the proposed method. 6Table 1 Comparison of control effort for Case A 
+
+Method 𝐽 = ∫ 𝑡 𝑓  
+
+> 0
+
+𝑎 2 (𝑡 ) 𝑑𝑡 (m2 s−3)
+
+Proposed 5.558 × 10 3
+
+Hou’s law 5.589 × 10 3
+
+GPOPS-II 5.555 × 10 3
+
+B. Comparative Study 
+
+The proposed method is compared with three alternatives. The first is the trajectory-shaping method in [14]. The second is a geometry-based virtual-target guidance law proposed by Hou et al. in [4]. The third is an open-loop optimal control solver GPOPS-II from [23], which serves as a benchmark. Although GPOPS-II can generate high-quality solutions, it usually requires a good initial guess and is computationally expensive, making it not directly suitable for onboard guidance. Two cases will be considered to demonstrate the performance of the proposed method and the alternatives. 
+
+1. Case A 
+
+We consider an initial condition from [4], i.e., 𝑟 0 = 15000 m , 𝜆 0 = 90 ◦, 𝛾 0 = 0◦, 𝛾 𝑓 = −60 ◦, and 𝑡 𝑓 = 90 s . The UAV speed is 𝑉 = 250 m /s. The results are shown in Fig. 3. The method in [14] produces the same trajectory as the proposed method in this case because both approaches employ an equivalent fourth-order polynomial and enforce the same boundary conditions; therefore, only the proposed method is shown for clarity. All methods reach the destination with the desired arrival angle at the desired arrival time. However, the results from the proposed method are closer to those from GPOPS-II, as observed from the flight trajectory and guidance command profiles from Figs. 3a–3c. The control effort is evaluated as 𝐽 = ∫ 𝑡 𝑓  
+
+> 0
+
+𝑎 2 (𝑡 ) 𝑑𝑡 , and the results are given in Table 1. It is clear that the proposed method achieves a control effort nearly identical to the GPOPS-II benchmark, while the method in [4] yields a slightly higher control effort. 
+
+2. Case B 
+
+We next consider a highly nonlinear case with 𝑟 0 = 10000 m , 𝜆 0 = 0◦, 𝛾 0 = 120 ◦, 𝛾 𝑓 = 120 ◦, and 𝑡 𝑓 = 150 s .The UAV speed is 𝑉 = 200 m /s. Both the initial and final flight-path angles are larger than 90 ◦, and the desired arrival time is long, which leads to a turn-back-type trajectory and makes the problem particularly challenging. Among the considered methods, the proposed method and GPOPS-II successfully find solutions that satisfy all the constraints, as shown in Fig. 4. The method in [14] fails to obtain a feasible solution for this case, which highlights the importance of the proposed initialization strategy. Hou’s law is efficient in less challenging cases, but it becomes less reliable when the engagement scenario is highly nonlinear. From Fig. 4a, the proposed method yields a trajectory very close to that from GPOPS-II. In Fig. 4c, the analytical approximation ˆ𝑎 (𝑡 ) in (15) closely matches the actual acceleration 𝑎 (𝑡 ), validating the usefulness of the approximations in (7). Moreover, the actual acceleration command of the proposed method is also close to the open-loop optimal solution from GPOPS-II. In terms of control effort, the proposed method yields 𝐽 = 1.7876 × 10 4 m2 s−3, which is close to the GPOPS-II benchmark value 𝐽 = 1.7634 × 10 4 m2 s−3.
+
+C. Application to Formation Establishment 
+
+We further apply the proposed guidance law to a formation-establishment scenario, where three UAVs are required to arrive at their respective destinations simultaneously and form a prescribed triangular pattern. The desired destinations are located at the vertices of an equilateral triangle with a side length of 1000 m , centered at the origin. The desired terminal flight-path angles of all three UAVs are set to 𝛾 𝑓 = 0◦, so that the vehicles share the same final heading direction after the formation is established. The common desired arrival time is selected as 𝑡 𝑓 = 55 s . The initial positions and 7X (m)    
+
+> -15000 -10000 -5000 0
+> Y (m)
+> 01000 2000 3000 4000 5000 6000 7000
+> Proposed Hou’s law Open-loop optimal solution Initial position Destination
+
+(a) Flight trajectories Time (s)          
+
+> 010 20 30 40 50 60 70 80 90
+> Flight path angle (deg)
+> -60 -40 -20 020 40 60 80 100
+> Proposed Hou’s law Open-loop optimal solution
+
+(b) Flight path angles Time (s)          
+
+> 010 20 30 40 50 60 70 80 90
+> Acceleration (m /s2)
+> -12 -10 -8 -6 -4 -2 0
+> Proposed Hou’s law Open-loop optimal solution
+
+(c) Guidance commands 
+
+Fig. 3 Comparative study for Case A. 
+
+flight path angles of the three UAVs are given by 
+
+UAV 1 : (𝑥 0, 𝑦 0, 𝛾 0) = (− 8.5 km , 0.35 km , 2◦),
+
+UAV 2 : (𝑥 0, 𝑦 0, 𝛾 0) = (− 9.5 km , −0.70 km , 2.5◦),
+
+UAV 3 : (𝑥 0, 𝑦 0, 𝛾 0) = (− 10 .5 km , −1.10 km , 4◦).
+
+The flight speeds of UAV 1, UAV 2, and UAV 3 are set to 160 m /s, 175 m /s, and 190 m /s, respectively. The simulation results are shown in Fig. 5. The trajectory profiles show that the three UAVs reach the three pre-scribed vertices of the equilateral triangle at the same arrival time. The terminal direction arrows indicate that all vehicles arrive with the common desired flight path angle, thereby satisfying the formation-orientation requirement. In addition, the flight path angle profiles converge smoothly to 𝛾 𝑓 = 0◦. These results verify that the proposed guidance law can coordinate multiple UAVs in a formation-establishment task. Since the terminal accelerations are zero, the established formation can be maintained without any additional maneuver. 
+
+## V. Conclusions 
+
+This paper presented a nonlinear trajectory shaping guidance law for arrival-time-and-arrival-angle control of a constant-speed fixed-wing UAV. By parameterizing the look angle with a fourth-order polynomial, the terminal look 8X (m)        
+
+> -12000 -10000 -8000 -6000 -4000 -2000 02000
+> Y (m)
+> -6000 -4000 -2000 02000 4000 6000
+> Proposed Initial position Destination Desired arrival angle Open-loop optimal
+
+(a) Flight trajectories from the proposed method and GPOPS-II Time (s)     
+
+> 050 100 150
+> Angle (deg)
+> -150 -100 -50 050 100 150
+> γ(t)
+> σ(t)
+> γf
+
+(b) Angles from the proposed method Time (s)    
+
+> 050 100 150
+> Acceleration (m /s2)
+> -20 -10 010 20
+> a(t) from proposed ˆa(t) from proposed Open-loop optimal solution
+
+(c) Guidance from the proposed method and GPOPS-II Time (s)     
+
+> 050 100 150
+> Range (m)
+> 02000 4000 6000 8000 10000 12000
+> Proposed Open-loop optimal solution
+
+(d) Range from the proposed method and GPOPS-II 
+
+Fig. 4 Comparative study for Case B. 
+
+angle and look angle rate constraints are naturally satisfied. In this way, the highly nonlinear guidance problem is reduced to solving for two shaping parameters. A two-stage solution procedure is developed to compute the shaping parameters efficiently. The analytical warm start provides a reliable initial guess, and the subsequent nonlinear solve enforces the exact terminal conditions. Numerical simulations demonstrated that the proposed method achieves fast convergence in closed-loop implementation and produces feasible solutions very close to the open-loop optimal solution benchmark. In addition, the proposed method is applicable to highly nonlinear scenarios where some existing methods fail to find feasible solutions in the test case. 
+
+## References 
+
+[1] Shanmugavel, M., Tsourdos, A., White, B., and Żbikowski, R., “Co-operative path planning of multiple UAVs using Dubins paths with clothoid arcs,” Control Engineering Practice , Vol. 18, No. 9, 2010, pp. 1084–1092. https://doi.org/10.1016/j. conengprac.2009.02.010. [2] Chen, Z., Wang, K., and Shi, H., “Elongation of curvature-bounded path,” Automatica , Vol. 151, 2023, p. 110936. https: //doi.org/10.1016/j.automatica.2023.110936. [3] Shaferman, V., and Shima, T., “Linear quadratic guidance laws for imposing a terminal intercept angle,” Journal of Guidance, Control, and Dynamics , Vol. 31, No. 5, 2008, pp. 1400–1412. https://doi.org/10.2514/1.32836. [4] Hou, L., Luo, H., Shi, H., Shin, H.-S., and He, S., “An optimal geometrical guidance law for impact time and angle control,” 
+
+IEEE Transactions on Aerospace and Electronic Systems , Vol. 59, No. 6, 2023, pp. 9821–9830. https://doi.org/10.1109/TAES. 2023.3305974. [5] Lee, J.-I., Jeon, I.-S., and Tahk, M.-J., “Guidance law to control impact time and angle,” IEEE Transactions on Aerospace and Electronic Systems , Vol. 43, No. 1, 2007, pp. 301–310. https://doi.org/10.1109/TAES.2007.357135. [6] Kim, T.-H., Lee, C.-H., Jeon, I.-S., and Tahk, M.-J., “Augmented polynomial guidance with impact time and angle constraints,” 
+
+IEEE Transactions on Aerospace and Electronic Systems , Vol. 49, No. 4, 2013, pp. 2806–2817. https://doi.org/10.1109/TAES. 2013.6621856. 
+
+9X (m)            
+
+> -12000 -10000 -8000 -6000 -4000 -2000 02000
+> Y (m)
+> -1500 -1000 -500 0500 1000 1500
+> UAV 1 UAV 2 UAV 3 Desired destination Arrival angles
+
+(a) Flight trajectories Time (s)      
+
+> 010 20 30 40 50
+> Acceleration (g)
+> -2 -1 0123
+> UAV 1 UAV 2 UAV 3
+
+(b) Guidance command profiles Time (s)      
+
+> 010 20 30 40 50
+> Flight path angle (deg)
+> -30 -20 -10 010 20 30 40
+> UAV 1 UAV 2 UAV 3
+> γf
+
+(c) Flight path angle profiles 
+
+Fig. 5 Simulation results of the formation establishment for three UAVs. 
+
+[7] Zhang, Y., Ma, G., and Liu, A., “Guidance law with impact time and impact angle constraints,” Chinese Journal of Aeronautics ,Vol. 26, No. 4, 2013, pp. 960–966. https://doi.org/10.1016/j.cja.2013.04.037. [8] Chen, X., and Wang, J., “Optimal control based guidance law to control both impact time and impact angle,” Aerospace Science and Technology , Vol. 84, 2019, pp. 454–463. https://doi.org/10.1016/j.ast.2018.10.036. [9] Wang, K., Chen, Z., Wang, H., Li, J., and Shao, X., “Nonlinear optimal guidance for intercepting stationary targets with impact-time constraints,” Journal of Guidance, Control, and Dynamics , Vol. 45, No. 9, 2022, pp. 1614–1626. https://doi.org/10.2514/ 1.G006666. [10] Majumder, K., and Kumar, S. R., “Three-dimensional nonlinear impact time guidance considering field-of-view constraints,” 
+
+IEEE Control Systems Letters , Vol. 7, 2023, pp. 3848–3853. https://doi.org/10.1109/LCSYS.2023.3341447. [11] Singh, S., Kumar, S. R., and Mukherjee, D., “Terminal Time Constrained Guidance Against Stationary Target with Bounded Input and Rate,” IEEE Control Systems Letters , 2025. https://doi.org/10.1109/LCSYS.2025.3578569. [12] Kumar, S. R., and Ghose, D., “Sliding mode guidance for impact time and angle constraints,” Proceedings of the Institution of Mechanical Engineers, Part G: Journal of Aerospace Engineering , Vol. 232, No. 16, 2018, pp. 2961–2977. https://doi.org/ 10.1177/0954410017719304. [13] Wu, F., Chen, Z., Shao, X., and Wang, K., “Nonlinear optimal guidance with constraints on impact time and impact angle,” 
+
+Automatica , Vol. 181, 2025, p. 112500. https://doi.org/10.1016/j.automatica.2025.112500. 
+
+10 [14] Kang, S., Tekin, R., and Holzapfel, F., “Generalized impact time and angle control via look-angle shaping,” Journal of Guid-ance, Control, and Dynamics , Vol. 42, No. 3, 2019, pp. 695–702. https://doi.org/10.2514/1.G003765. [15] Hu, Q., Han, T., and Xin, M., “New impact time and angle guidance strategy via virtual target approach,” Journal of Guidance, Control, and Dynamics , Vol. 41, No. 8, 2018, pp. 1755–1765. https://doi.org/10.2514/1.G003436. [16] Zhang, Z., Ma, K., Zhang, G., and Yan, L., “Virtual target approach-based optimal guidance law with both impact time and terminal angle constraints,” Nonlinear Dynamics , Vol. 107, No. 4, 2022, pp. 3521–3541. https://doi.org/10.1007/s11071-021-07142-3. [17] Wang, K., Lu, F., Chen, Z., and Li, J., “A physics-informed indirect method for trajectory optimization,” IEEE Transactions on Aerospace and Electronic Systems , Vol. 60, No. 6, 2024, pp. 9179–9192. https://doi.org/10.1109/TAES.2024.3438687. [18] Wang, K., Lu, F., and Chen, Z., “Nonlinear Optimal Impact Angle Control Guidance With Acceleration Constraints,” IEEE Transactions on Aerospace and Electronic Systems , Vol. 61, No. 4, 2025, pp. 8907–8921. https://doi.org/10.1109/TAES.2025. 3551283. [19] Tekin, R., Erer, K. S., and Holzapfel, F., “Polynomial shaping of the look angle for impact-time control,” Journal of Guidance, Control, and Dynamics , Vol. 40, No. 10, 2017, pp. 2668–2673. https://doi.org/10.2514/1.G002751. [20] Wang, K., Wei, Z., and Wang, P., “Look-Angle-Shaped Impact Time Control Guidance with Field-of-View Constraints,” 
+
+Aerospace Science and Technology , 2026, p. 112131. https://doi.org/10.1016/j.ast.2026.112131. [21] Wang, K., “Trajectory Shaping Guidance for Field-of-View Constrained Impact Angle Control,” The CEAS Conference on Guidance, Navigation and Control, EuroGNC 2026 , Council of European Aerospace Societies (CEAS), 2026. https://doi.org/ 10.82124/CEAS-GNC-2026-027. [22] Wang, K., Ding, C., Wei, Z., Wang, P., and Chen, Z., “Guaranteeing Convergence in Trajectory Shaping Guidance for Impact Time Control,” Automatica , Vol. 191, 2026, p. 113107. https://doi.org/10.1016/j.automatica.2026.113107. [23] Patterson, M. A., and Rao, A. V., “GPOPS-II: A MATLAB software for solving multiple-phase optimal control problems using hp-adaptive Gaussian quadrature collocation methods and sparse nonlinear programming,” ACM Transactions on Math-ematical Software (TOMS) , Vol. 41, No. 1, 2014, pp. 1–37. https://doi.org/10.1145/2558904. 
+
+11
