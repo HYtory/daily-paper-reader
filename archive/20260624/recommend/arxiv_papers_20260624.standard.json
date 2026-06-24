@@ -1,0 +1,96 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-24T20:59:34.568929+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.24010v1",
+      "source": "arxiv",
+      "title": "Safe and Generalizable Hierarchical Multi-Agent RL via Constraint Manifold Control",
+      "abstract": "Multi-agent systems are widely used in safety-critical applications that require coordinated behavior under strict safety constraints. Existing approaches face a fundamental trade-off: learning-based methods achieve strong empirical performance but lack theoretical safety guarantees, while control-theoretic methods enforce safety but often lead to overly conservative and inefficient behaviors. We propose a hierarchical multi-agent reinforcement learning framework that enforces hard safety constraints under mild assumptions at low level via a constraint manifold, while enabling effective coordination through high-level policy learning. Our approach provides theoretical safety guarantees in the multi-agent setting and yields stationary learning dynamics, thereby enabling stable and efficient training. Empirically, our method achieves competitive performance while maintaining nearly perfect safety rates, and generalizes effectively to varying numbers of agents and obstacles.",
+      "authors": [
+        "Zihao Guo",
+        "Jianing Zhao",
+        "Ling Li",
+        "Hao Liang",
+        "Giuseppe Loianno",
+        "Yali Du"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-22T23:32:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.24010v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent RL framework for safe coordination",
+      "llm_evidence_cn": "多智能体强化学习安全协调框架",
+      "llm_evidence": "多智能体强化学习安全协调框架",
+      "canonical_evidence": "多智能体强化学习安全协调框架",
+      "llm_tldr_en": "Proposes hierarchical multi-agent RL with constraint manifold for safe coordination, applicable to multi-UAV tasks.",
+      "llm_tldr_cn": "针对多智能体系统中学习与安全控制的权衡问题，提出了一种分层多智能体强化学习框架。该框架通过约束流形在底层强制执行硬安全约束，同时高层策略学习实现有效协作。实验表明该方法在多个多智能体场景下兼具理论安全保证和高效性能，可迁移至多无人机围捕等复杂任务。",
+      "llm_tldr": "针对多智能体系统中学习与安全控制的权衡问题，提出了一种分层多智能体强化学习框架。该框架通过约束流形在底层强制执行硬安全约束，同时高层策略学习实现有效协作。实验表明该方法在多个多智能体场景下兼具理论安全保证和高效性能，可迁移至多无人机围捕等复杂任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.18556v2",
+      "source": "arxiv",
+      "title": "Wind-Resilient Trajectory Optimization for UAV-BS Networks: TD3 for Continuous Service Availability",
+      "abstract": "Unmanned aerial vehicle (UAV)-mounted base stations are highly susceptible to wind disturbances such as gusts and turbulence, which induce positional drift and degrade communication link quality, particularly in emergency scenarios. To address this challenge, we propose a DRL-based framework for wind-resilient trajectory adjustment and positioning based on the Twin Delayed Deep Deterministic Policy Gradient (TD3) algorithm. The method models wind as a stochastic kinematic perturbation, avoiding complex aerodynamic modeling, thereby enabling the TD3 agent to learn adaptive control policies that maintain optimal coverage footprints. By prioritizing user-centric performance metrics under turbulent conditions, the proposed architecture ensures continuous service availability despite external disruptions. Simulation results demonstrate that the TD3-based approach effectively compensates for wind-induced displacements and outperforms benchmark methods, including Proximal Policy Optimization (PPO), in terms of throughput stability and robustness in windy environments.",
+      "authors": [
+        "Azim Akhtarshenas",
+        "German Svistunov",
+        "Kuangyu Zheng",
+        "David Lopez-Perez"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "eess.SP"
+      ],
+      "published": "2026-06-17T00:12:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.18556v2",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "UAV trajectory optimization using TD3 deep RL, applicable to interception maneuvers",
+      "llm_evidence_cn": "使用TD3深度强化学习的无人机轨迹优化，可应用于拦截机动",
+      "llm_evidence": "使用TD3深度强化学习的无人机轨迹优化，可应用于拦截机动",
+      "canonical_evidence": "使用TD3深度强化学习的无人机轨迹优化，可应用于拦截机动",
+      "llm_tldr_en": "Proposes TD3-based DRL framework for wind-resilient UAV trajectory adjustment and positioning to maintain communication coverage, demonstrating adaptive control under wind disturbances.",
+      "llm_tldr_cn": "针对无人机基站受风扰影响导致位置漂移和通信质量下降的问题，提出基于TD3的深度强化学习框架，将风建模为随机运动学扰动，学习自适应轨迹调整策略以保持最优覆盖。实验表明该方法在湍流条件下能有效维持服务可用性，避免复杂气动建模，为无人机在恶劣环境下的自主控制提供了实用方案。",
+      "llm_tldr": "针对无人机基站受风扰影响导致位置漂移和通信质量下降的问题，提出基于TD3的深度强化学习框架，将风建模为随机运动学扰动，学习自适应轨迹调整策略以保持最优覆盖。实验表明该方法在湍流条件下能有效维持服务可用性，避免复杂气动建模，为无人机在恶劣环境下的自主控制提供了实用方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

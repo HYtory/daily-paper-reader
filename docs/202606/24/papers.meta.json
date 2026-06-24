@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-24",
+  "date": "2026-06-24",
+  "generated_at": "2026-06-24T21:00:50",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/24/2606.24010v1-safe-and-generalizable-hierarchical-multi-agent-rl-via-constraint-manifold-control",
+      "section": "quick",
+      "title_en": "Safe and Generalizable Hierarchical Multi-Agent RL via Constraint Manifold Control",
+      "authors": "Zihao Guo, Jianing Zhao, Ling Li, Hao Liang, Giuseppe Loianno, Yali Du",
+      "date": "2026-06-22",
+      "pdf": "https://arxiv.org/pdf/2606.24010v1",
+      "score": "7.0",
+      "evidence": "多智能体强化学习安全协调框架",
+      "tldr": "多智能体安全协调面临学习与控制效果的权衡。本文提出分层强化学习框架，低层通过约束流形在温和假设下强制执行硬安全约束，高层学习协调策略。方法提供理论安全保证和稳定学习动态，实验达到近完美安全率，并有效泛化至不同数量和类型的智能体及障碍物。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-agent systems are widely used in safety-critical applications that require coordinated behavior under strict safety constraints. Existing approaches face a fundamental trade-off: learning-based methods achieve strong empirical performance but lack theoretical safety guarantees, while control-theoretic methods enforce safety but often lead to overly conservative and inefficient behaviors. We propose a hierarchical multi-agent reinforcement learning framework that enforces hard safety constraints under mild assumptions at low level via a constraint manifold, while enabling effective coordination through high-level policy learning. Our approach provides theoretical safety guarantees in the multi-agent setting and yields stationary learning dynamics, thereby enabling stable and efficient training. Empirically, our method achieves competitive performance while maintaining nearly perfect safety rates, and generalizes effectively to varying numbers of agents and obstacles.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/24/2606.18556v2-wind-resilient-trajectory-optimization-for-uav-bs-networks-td3-for-continuous-service-availability",
+      "section": "quick",
+      "title_en": "Wind-Resilient Trajectory Optimization for UAV-BS Networks: TD3 for Continuous Service Availability",
+      "authors": "Azim Akhtarshenas, German Svistunov, Kuangyu Zheng, David Lopez-Perez",
+      "date": "2026-06-17",
+      "pdf": "https://arxiv.org/pdf/2606.18556v2",
+      "score": "6.0",
+      "evidence": "使用TD3深度强化学习的无人机轨迹优化，可应用于拦截机动",
+      "tldr": "无人机基站受风扰动导致位置漂移和通信质量下降。本文提出基于TD3的强化学习框架，将风建模为随机运动扰动，无需复杂气动模型。智能体学习自适应轨迹调整策略，维持最优覆盖。仿真表明该方法优于PPO，有效补偿风致位移，保障通信吞吐量稳定性与鲁棒性。",
+      "tags": "query:ui",
+      "abstract_en": "Unmanned aerial vehicle (UAV)-mounted base stations are highly susceptible to wind disturbances such as gusts and turbulence, which induce positional drift and degrade communication link quality, particularly in emergency scenarios. To address this challenge, we propose a DRL-based framework for wind-resilient trajectory adjustment and positioning based on the Twin Delayed Deep Deterministic Policy Gradient (TD3) algorithm. The method models wind as a stochastic kinematic perturbation, avoiding complex aerodynamic modeling, thereby enabling the TD3 agent to learn adaptive control policies that maintain optimal coverage footprints. By prioritizing user-centric performance metrics under turbulent conditions, the proposed architecture ensures continuous service availability despite external disruptions. Simulation results demonstrate that the TD3-based approach effectively compensates for wind-induced displacements and outperforms benchmark methods, including Proximal Policy Optimization (PPO), in terms of throughput stability and robustness in windy environments.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
