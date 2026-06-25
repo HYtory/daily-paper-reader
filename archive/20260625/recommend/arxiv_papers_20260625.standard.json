@@ -1,0 +1,207 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-25T21:40:38.999815+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2606.25122v1",
+      "source": "arxiv",
+      "title": "AeroCast: Probabilistic 3D Trajectory Prediction for Non-Cooperative Aerial Obstacles via Transformer-MDN Architecture",
+      "abstract": "Autonomous aerial vehicles operating in shared airspace must predict the future positions of non-cooperative obstacles to plan evasive maneuvers before a collision becomes unavoidable. Unlike cooperative systems that share intent, non-cooperative obstacles such as birds, uncontrolled drones, or debris exhibit multi-modal motion that deterministic predictors cannot adequately represent. Existing methods either rely on recurrent encoders that propagate temporal information sequentially, limiting their ability to capture long-range kinematic precursors of maneuver initiation, or produce point forecasts that provide no distributional information to downstream planners. This paper presents AeroCast, a probabilistic trajectory prediction framework that combines a Transformer encoder with a Mixture Density Network output head to predict per-timestep Gaussian mixture distributions over future three-dimensional displacements. A translation-invariant consecutive displacement encoding and a calibration-oriented training objective address the input design and mode-degeneracy challenges specific to mixture-based aerial trajectory prediction. On a hybrid real-and-synthetic quadrotor corpus spanning nine motion categories, AeroCast reduces Average Displacement Error and Final Displacement Error by approximately 50% relative to the baselines over a five-second horizon, and achieves the lowest negative log-likelihood and Continuous Ranked Probability Score among all compared methods. Ablation analysis identifies velocity input and model capacity as the primary contributors to prediction quality, and positional encoding as essential for long-horizon trajectory coherence. AeroCast inference completes in 0.1ms per sample, compatible with real-time onboard deployment at 100Hz.",
+      "authors": [
+        "Syed Izzat Ullah",
+        "Jose Baca"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-23T19:52:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.25122v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "probabilistic 3D trajectory prediction for non-cooperative aerial obstacles, directly supports pursuit-evasion planning",
+      "llm_evidence_cn": "针对非合作空中障碍物的概率三维轨迹预测，直接支持追逃规划",
+      "llm_evidence": "针对非合作空中障碍物的概率三维轨迹预测，直接支持追逃规划",
+      "canonical_evidence": "针对非合作空中障碍物的概率三维轨迹预测，直接支持追逃规划",
+      "llm_tldr_en": "Proposes AeroCast using Transformer-MDN for probabilistic 3D trajectory prediction of non-cooperative aerial obstacles such as drones; directly enables UAV pursuit-evasion and interception by providing distributional predictions to downstream planners.",
+      "llm_tldr_cn": "本文提出AeroCast，采用Transformer-混合密度网络架构，对非合作空中障碍物（如失控无人机）进行概率三维轨迹预测。现有方法无法捕捉多模态运动或提供分布信息，而AeroCast通过条件密度估计和Transformer的长程依赖捕获能力，准确预测未来轨迹的不确定性。该模型可直接服务于无人机追逃博弈中的规划器，为拦截和规避决策提供关键输入，显著提升对抗场景下的安全性。",
+      "llm_tldr": "本文提出AeroCast，采用Transformer-混合密度网络架构，对非合作空中障碍物（如失控无人机）进行概率三维轨迹预测。现有方法无法捕捉多模态运动或提供分布信息，而AeroCast通过条件密度估计和Transformer的长程依赖捕获能力，准确预测未来轨迹的不确定性。该模型可直接服务于无人机追逃博弈中的规划器，为拦截和规避决策提供关键输入，显著提升对抗场景下的安全性。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.23444v2",
+      "source": "arxiv",
+      "title": "SkyJEPA: Learning Long-Horizon World Models for Zero-Shot Sim-to-Real Control of Quadrotors",
+      "abstract": "Accurate dynamics models are critical for informed decision-making in robotic systems, particularly for agile aerial vehicles operating under uncertainty. Neural network dynamics models are attractive for capturing complex nonlinear effects, but existing predictive approaches struggle with long-horizon forecasting because their autoregressive rollout mechanism amplifies errors over time. Joint Embedding Predictive Architectures (JEPAs) offer a compelling alternative by modeling dynamics in latent space, yet prior JEPA-style methods for robot navigation have been studied primarily for kinematic-level planning, with limited investigation in high-frequency control. In this work, we introduce the JEPA-style model for real-time quadrotor control. The proposed approach combines a latent dynamics model with a novel physics-inspired prober that maps frozen latents to interpretable state, enabling physically grounded long-horizon prediction. Additionally, we combine the learned model with a sampling-based optimal control solution to take advantage of its predictive capabilities for real-time control on embedded hardware. Finally, to reduce the dependence on expensive and unsafe real-world data collection, we develop a structured pipeline for automated dataset generation. Extensive open-loop and outdoor closed-loop experiments demonstrate accurate prediction, robust zero-shot sim-to-real transfer, and strong generalization across diverse operating conditions.",
+      "authors": [
+        "Pratyaksh Rao",
+        "Wancong Zhang",
+        "Randall Balestriero",
+        "Yann LeCun",
+        "Giuseppe Loianno"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-06-22T15:00:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.23444v2",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "quadrotor world model for control, supports RL",
+      "llm_evidence_cn": "四旋翼无人机世界模型，可支撑RL决策",
+      "llm_evidence": "四旋翼无人机世界模型，可支撑RL决策",
+      "canonical_evidence": "四旋翼无人机世界模型，可支撑RL决策",
+      "llm_tldr_en": "SkyJEPA learns long-horizon world models for quadrotors using a Joint Embedding Predictive Architecture, enabling zero-shot sim-to-real control. The latent-space prediction avoids error accumulation, achieving accurate dynamics forecasting. This is directly useful for reinforcement learning in UAV interception tasks.",
+      "llm_tldr_cn": "现有四旋翼动力学模型在长时域预测中存在误差累积问题，导致仿真到现实迁移困难。本文提出SkyJEPA，利用联合嵌入预测架构在隐空间学习长期世界模型，避免了自回归误差传播。在真实四旋翼平台上实现了零样本仿真到现实控制。该方法为无人机拦截等强化学习任务提供了关键的世界模型支撑。",
+      "llm_tldr": "现有四旋翼动力学模型在长时域预测中存在误差累积问题，导致仿真到现实迁移困难。本文提出SkyJEPA，利用联合嵌入预测架构在隐空间学习长期世界模型，避免了自回归误差传播。在真实四旋翼平台上实现了零样本仿真到现实控制。该方法为无人机拦截等强化学习任务提供了关键的世界模型支撑。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.21525v1",
+      "source": "arxiv",
+      "title": "Backpropagating Through Simulation: Analytic Policy Gradients for Sample and Learning Efficient Differentiable Continuous Control",
+      "abstract": "Model-free reinforcement learning algorithms such as Proximal Policy Optimization (PPO) treat the environment as a black box, estimating policy gradients from sampled rewards; this process demands millions of interactions and relies on high-variance advantage estimates. When environment dynamics are differentiable, the return is an end-to-end differentiable function of the policy parameters, enabling exact gradient computation via backpropagation through simulation. We term this approach Analytic Policy Gradients (APG) and evaluate it against PPO on four continuous control tasks of increasing dynamical complexity: a one-dimensional point-mass target-reaching task, a 2D point-mass navigation task with obstacle avoidance, a 2D rigid-body T-block pushing task, and a 7-DOF Franka FR3 end-effector reaching task. Both algorithms share identical model architectures, observation normalization, and optimizer settings. To decouple sample efficiency from compute efficiency, we design a multi-axis evaluation protocol that records performance against environment steps and gradient steps. We report a segmented backpropagation scheme with MC and critic-based bootstrap modes that mitigates gradient degradation on long-horizon tasks, and present ablations over segment length and bootstrap strategy.",
+      "authors": [
+        "Yueci Deng"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-19T15:22:51+00:00",
+      "link": "https://arxiv.org/pdf/2606.21525v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "analytic policy gradients for differentiable continuous control, applicable to UAV pursuit tasks",
+      "llm_evidence_cn": "分析策略梯度用于可微连续控制，可应用于无人机追击任务",
+      "llm_evidence": "分析策略梯度用于可微连续控制，可应用于无人机追击任务",
+      "canonical_evidence": "分析策略梯度用于可微连续控制，可应用于无人机追击任务",
+      "llm_tldr_en": "Proposes Analytic Policy Gradients (APG) leveraging differentiable simulation for exact gradient computation, achieving sample efficiency improvement over PPO on continuous control tasks; transferable to UAV interception and encirclement policy learning.",
+      "llm_tldr_cn": "本文提出分析策略梯度（APG），通过可微模拟直接计算精确策略梯度，避免了模型自由RL的高方差估计。在从一维点到二维导航等多个连续控制任务上，APG比PPO显著提高了样本效率。该方法可直接迁移到无人机拦截与围捕场景中，加速策略学习并降低交互需求，是一种有效的强化学习优化工具。",
+      "llm_tldr": "本文提出分析策略梯度（APG），通过可微模拟直接计算精确策略梯度，避免了模型自由RL的高方差估计。在从一维点到二维导航等多个连续控制任务上，APG比PPO显著提高了样本效率。该方法可直接迁移到无人机拦截与围捕场景中，加速策略学习并降低交互需求，是一种有效的强化学习优化工具。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.25389v1",
+      "source": "arxiv",
+      "title": "Offline Multi-agent Continual Cooperation via Skill Partition and Reuse",
+      "abstract": "Extracting skills from multi-agent offline dataset improves learning efficiency via sharing task-invariant coordination skills among tasks. In settings where tasks occur sequentially and the space of skills grows exponentially, existing approaches that rely on heuristically designed and fixed-sized skill libraries struggle to resolve the problem of distributional shift and interference, facing catastrophic forgetting and plasticity loss. To address this problem and endow agents with the ability to continually discover and reuse coordination skills in open-environment, we propose COMAD, a principled framework for Continual Offline Multi-agent Skill Discovery via Skill Partition and Reuse. We first discover skills from mixed multi-agent behavior data with an auto-encoder to transform coordination knowledge into reusable coordination skills. Then we construct a skill-augmented policy learning objective with multi-head architectures, explicitly guiding the advantage function with reusable skills identified via a density-based reusability estimator. Theoretical analysis shows our method approximates the optimum of a continual skill discovery problem. Empirical results across diverse MARL benchmarks show that COMAD continually expands its skill library to mitigate interference, achieving superior forward and backward transfer for task streams compared to multiple baselines.",
+      "authors": [
+        "Yuchen Xiao",
+        "Lei Yuan",
+        "Ruiqi Xue",
+        "Tieyue Yin",
+        "Yang Yu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-24T04:40:21+00:00",
+      "link": "https://arxiv.org/pdf/2606.25389v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "offline MARL continual skill discovery and reuse",
+      "llm_evidence_cn": "离线多智能体持续技能发现与重用",
+      "llm_evidence": "离线多智能体持续技能发现与重用",
+      "canonical_evidence": "离线多智能体持续技能发现与重用",
+      "llm_tldr_en": "Proposes COMAD, a framework for continual offline multi-agent skill discovery via skill partition and reuse, mitigating catastrophic forgetting.",
+      "llm_tldr_cn": "该论文针对离线多智能体数据中技能发现和持续学习问题，提出COMAD框架。通过技能划分和重用机制，从混合行为数据中发现可复用技能，并在连续任务中避免灾难性遗忘。实验表明该方法提升了任务迁移效率和泛化能力。",
+      "llm_tldr": "该论文针对离线多智能体数据中技能发现和持续学习问题，提出COMAD框架。通过技能划分和重用机制，从混合行为数据中发现可复用技能，并在连续任务中避免灾难性遗忘。实验表明该方法提升了任务迁移效率和泛化能力。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25526v1",
+      "source": "arxiv",
+      "title": "Low Variance Trust Region Optimization with Independent Actors and Sequential Updates in Cooperative Multi-agent Reinforcement Learning",
+      "abstract": "Cooperative multi-agent reinforcement learning assumes each agent shares the same reward function and can be trained effectively using the Trust Region framework of single-agent. Instead of relying on other agents' actions, the independent actors setting considers each agent to act based only on its local information, thus having more flexible applications. However, in the sequential update framework, it is required to re-estimate the joint advantage function after each individual agent's policy step. Despite the practical success of importance sampling, the updated advantage function suffers from exponentially high variance problems, which likely result in unstable convergence. In this work, we first analyze the high variance advantage both empirically and theoretically. To overcome this limitation, we introduce a clipping objective to control the upper bounds of the advantage fluctuation in sequential updates. With the proposed objective, we provide a monotonic bound with sub-linear convergence to $ε$-Nash Equilibria. We further derive two new practical algorithms using our clipping objective. The experiment results on three popular multi-agent reinforcement learning benchmarks show that our proposed method outperforms the tested baselines in most environments. By carefully analyzing different training settings, our proposed method is highlighted with both stable convergence properties and the desired low advantage variance estimation. For reproducibility purposes, our source code is publicly available at https://github.com/giangbang/Low-Variance-Trust-Region-MARL.",
+      "authors": [
+        "Bang Giang Le",
+        "Viet Cuong Ta"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-06-24T08:05:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.25526v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "low-variance trust region optimization for cooperative MARL",
+      "llm_evidence_cn": "合作多智能体强化学习的低方差信任区域优化",
+      "llm_evidence": "合作多智能体强化学习的低方差信任区域优化",
+      "canonical_evidence": "合作多智能体强化学习的低方差信任区域优化",
+      "llm_tldr_en": "Proposes a low-variance trust region method for cooperative MARL with independent actors and sequential updates.",
+      "llm_tldr_cn": "该论文针对合作多智能体强化学习中顺序更新带来的高方差问题，提出低方差信任区域优化方法。每个智能体基于局部信息独立行动，并通过信任区域策略优化稳定训练。减少了重要性采样带来的方差，实现了更稳定的收敛。",
+      "llm_tldr": "该论文针对合作多智能体强化学习中顺序更新带来的高方差问题，提出低方差信任区域优化方法。每个智能体基于局部信息独立行动，并通过信任区域策略优化稳定训练。减少了重要性采样带来的方差，实现了更稳定的收敛。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
