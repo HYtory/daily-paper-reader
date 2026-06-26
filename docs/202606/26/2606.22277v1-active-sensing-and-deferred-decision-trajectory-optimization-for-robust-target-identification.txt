@@ -1,0 +1,590 @@
+Title: Active Sensing and Deferred-Decision Trajectory Optimization for Robust Target Identification
+
+URL Source: https://arxiv.org/pdf/2606.22277v1
+
+Published Time: Tue, 23 Jun 2026 01:55:03 GMT
+
+Number of Pages: 6
+
+Markdown Content:
+# Active Sensing and Deferred-Decision Trajectory Optimization for Robust Target Identification 
+
+Farbod Siahkali a, Graduate Student Member, IEEE, Mengxue Hou b, Member, IEEE, and Vijay Gupta a, Fellow, IEEE 
+
+Abstract — We study trajectory optimization in mobile sensing systems that must identify which member of a finite candidate set is the true target, while maintaining reachability to all potential candidate targets, under re-source constraints. Deferred-Decision Trajectory Optimiza-tion (DDTO) addresses this setting by computing trajec-tories that reach individual targets but remain coincident for as long as possible before separating toward differ-ent targets. We propose Active-Sensing DDTO (AS-DDTO), which extends DDTO by adding a trajectory-dependent information-acquisition term to the planning objective. The resulting planner maintains reachability to candidate tar-gets while biasing the coincident portion of the trajecto-ries toward regions that enable earlier target identification. The framework supports Bayesian updates and conformal candidate-set updates for distance-dependent sensing. We derive a mixed-integer conic reformulation and provide guarantees on recursive feasibility, belief concentration, and fixed-time coverage for the raw conformal candidate set. Numerical simulations show improved target identi-fication compared with standard DDTO under distance-dependent sensing uncertainty and limited sensing budget. 
+
+Index Terms — Active sensing, deferred-decision trajec-tory optimization, conformal prediction. 
+
+I. I NTRODUCTION 
+
+# AUTONOMOUS systems operating in uncertain environ-ments must often plan trajectories while the identity of the true target within a finite candidate set remains am-biguous until further discriminative information is gathered. For example, a drone detecting multiple heat signatures must determine which candidate corresponds to a survivor while ensuring timely reachability to all plausible candidates under a limited energy budget. Either premature commitment to an incorrect candidate or excessive deferral may lead to exhausting resources, such as fuel, before the drone reaches the survivor. While many methods exist for efficient trajectory plan-ning [1], [2], they typically assume that the goal or target 
+
+This work was supported in part by the U.S. Army Research Office under Grant 13001664. 
+
+> a
+
+Farbod Siahkali and Vijay Gupta are with the Department of Electrical and Computer Engineering, Purdue University, West Lafayette, IN 47906, USA (Emails: siahkali@purdue.edu ,
+
+gupta869@purdue.edu ). 
+
+> b
+
+Mengxue Hou is with the Department of Electrical Engineering, University of Notre Dame, Notre Dame, IN 46556, USA (Email: 
+
+mhou@nd.edu ). 
+
+is known. When the target identity is uncertain, standard trajectory optimization can lead to premature commitment to an incorrect candidate. Deferred-Decision Trajectory Opti-mization (DDTO) addresses this challenge by computing indi-vidual trajectories that reach each candidate such that the time duration for which these trajectories remain coincident before separating toward different candidates is maximized [3], [4]. However, existing DDTO formulations implicitly assume that the target identity is revealed independently of the trajectory executed by the system. For mobile sensors, measurement quality and the rate at which uncertainty can be reduced depend on the trajectory. A trajectory designed without this dependence in mind and optimized solely for deferral may fail to generate informative measurements quickly enough to resolve ambiguity about the target before branching is forced, e.g., by fuel constraints. Active sensing (AS) designs trajectories to maximize in-formation gain subject to dynamics and constraints [5]–[9]. However, these formulations typically assume a single target. As a result, they do not enforce reachability to multiple candidate targets. Related paradigms such as belief-space plan-ning or information-regularized MPC can couple estimation and control, but they generally lack DDTO’s explicit trunk-branch structure, in which candidate-specific trajectories are constrained to remain coincident for as long as possible before separating toward different candidate targets. This paper integrates active sensing with DDTO by mod-eling the dual role of the trajectory. A trajectory must si-multaneously (i) maintain reachability to multiple candidate targets under resource constraints, and (ii) acquire informative measurements that help identify the true target. Integrating these paradigms is challenging, as it requires combining the nonconvex deferral-maximization objectives of DDTO with information-based surrogates under sensing and resource bud-gets. We study both (i) parametric Gaussian sensing with Bayesian belief updates, and (ii) a distribution-free setting. For the latter, we leverage distribution-free conformal predic-tion (CP), which provides candidate sets with finite-sample marginal coverage at any fixed time without assumptions on the noise distribution [10]–[12]. To accommodate the trajectory-dependent nature of sensing, we employ sequential aggregation of conformal prediction [13], [14]. The main contributions of this paper are as follows. First, we propose AS-DDTO, which extends DDTO by adding a trajectory-dependent information-acquisition term while main-
+
+> arXiv:2606.22277v1 [eess.SY] 21 Jun 2026
+
+taining reachability to multiple candidate targets. Existing DDTO formulations are information-passive : they assume that the target identity is revealed through an exogenous process. In contrast, our framework treats the trajectory as an active sensing control, so that the coincident trajectory segment is biased toward regions that improve measurement informa-tiveness for earlier target resolution. We support Bayesian belief updates under a Gaussian sensing model and conformal candidate-set updates under a distribution-free sensing model. We derive mixed-integer conic reformulations that enable prac-tical solution of the resulting trajectory optimization problems. Finally, we establish theoretical guarantees including recursive feasibility, posterior concentration for the Bayesian model, and finite-sample coverage for the conformal prediction setting. 
+
+II. P ROBLEM FORMULATION 
+
+We consider a mobile sensor that aims to reach the true target, whose identity is a priori unknown within a finite candi-date set, while satisfying dynamics and a resource budget. Tar-get identity is inferred online from noisy, distance-dependent measurements. Let the sensor dynamics be xk+1 = f (xk, u k),where xk ∈ X ⊆ Rnx is the state and uk ∈ U ⊆ Rnu is the control input. The initial condition x0 is known, and the sensor operates over a finite horizon of length H. Every feasible trajectory must satisfy the constraint PH−1 
+
+> k=0
+
+c(xk, u k) ≤ cmax ,where c(xk, u k) ≥ 0 is the stage cost. Let J := {1, . . . , N } index the target candidates. Exactly one candidate is the true target, with an unknown index j⋆ ∈J . The j-th candidate has a fixed state zj and an associated terminal set Zj ⊂ X satisfying zj ∈ Z j . Reaching candidate 
+
+j is equivalent to reaching Zj . If this set is reached early, we assume that feasibility can be maintained thereafter, e.g., by a terminal invariant set. Thus, reaching candidate j is enforced by xH ∈ Zj . We assume that the position of the sensor (respectively, candidate j) is given by Ex k (respectively, Ez j )for a known matrix E of appropriate dimensions. The distance between the sensor and candidate j at time k is dk(j) := 
+
+∥Ex k − Ez j ∥2. We let Dmax > 0 denote a known upper bound on admissible sensing distances, so that dk(j) ≤ Dmax 
+
+for all feasible sensor states and candidates. Depending on the measurement model, the information state is either a Bayesian belief πk(j) := Pr( j⋆ = j | Fk)
+
+for j ∈ J , where Fk denotes the information available up to time k, or a candidate set. We assume a uniform prior 
+
+π0(j) = 1/N . At time k, the sensor queries Qk ⊆ J
+
+with |Q k| ≤ L and receives measurements {mjk}j∈Q k whose informativeness decreases with sensing distance dk(j). The Bayesian and distribution-free measurement models are given in Section III-A. DDTO maintains reachability to multiple candidate ter-minal sets by maximizing the time duration over which the candidate-specific trajectories remain coincident be-fore separating toward different terminal sets. Let Xj := 
+
+{xj
+
+> 0
+
+, x j
+
+> 1
+
+, . . . , x jH } denote the resulting state trajectory asso-ciated with candidate j, with corresponding control inputs 
+
+Uj := {uj
+
+> 0
+
+, . . . , u jH−1}. All trajectories share the initial con-dition xj 
+
+> 0
+
+= x0 and satisfy the terminal reachability condition 
+
+xjH ∈ Z j . Define the pseudo-norm ∥x∥♦ = 1 if x̸ = 0 and 0
+
+otherwise. The optimization problem solved in DDTO is:                                              
+
+> minimize
+> {Xj,Uj}j∈J
+> min
+> r∈J
+> X
+> j∈J
+> j̸=rHX
+> k=1
+> ∥xrk−xjk∥♦(1a) s.t. xjk+1 =f(xjk, u jk),∀j∈ J ,∀k= 0 , . . . , H −1,(1b)
+> xjk∈ X ,ujk∈ U ,∀j∈ J ,∀k= 0 , . . . , H −1,(1c)
+> xj
+> 0=x0,xjH∈ Z j,∀j∈ J ,(1d)
+> H−1X
+> k=0
+> c(xjk, u jk)≤cmax ,∀j∈ J .(1e)
+
+The inner minimization is evaluated by enumerating r ∈J and selecting the best solution [3], [4]. The objective is to design a trajectory that maintains reachability to all plausible candidate targets for as long as possible while collecting informative measurements that enable earlier target identification. To this end, we extend DDTO to settings in which target identity is inferred online from noisy, distance-dependent measurements by designing trajectories that defer commitment and promote early information acquisition. An information-augmented formulation and a tractable reformu-lation are presented in Sections III-B and III-C, respectively. 
+
+III. A CTIVE -S ENSING DDTO 
+
+We now formalize the measurement models and our ob-jective. The proposed formulation augments DDTO in two ways: (i) measurements whose informativeness varies with the distance between the sensor and a candidate are used to update either a Bayesian belief or a distribution-free candidate set; and (ii) a distance-based information surrogate is incorporated into the planning objective. 
+
+A. Measurement Models 
+
+At time k, the sensor queries Qk ⊆ J subject to |Q k| ≤ 
+
+L, and receives measurements whose signal-to-noise ratio degrades with distance. We discuss two cases: when the measurements are used to update a Bayesian posterior over candidates, and when they are used to maintain a distribution-free candidate set with coverage guarantees. We make the fol-lowing assumption, which is standard for multi-query sensing systems [10], [15] and allows the likelihood ratio to factor across the queried channels. 
+
+Assumption 3.1: At time k, conditioned on (xk, j ⋆), the measurements {mjk}j∈Q k are independent across the queried candidates. 
+
+Assumption 3.2: Conditioned on (j⋆, {xk}k≥0, {Q k}k≥0),the measurement collections {{ mjk}j∈Q k }k≥0 are independent across time.    
+
+> a) Parametric Gaussian model:
+
+We use a distance-dependent Gaussian model in which measurements become both weaker and noisier as the sensor moves farther from a candidate. Let γ(d) := exp( −ξd ) with ξ > 0, and define the distance-dependent variance σ2(d) := σ20 + 1−γ(d)2σ21 . For each queried j ∈ Q k,
+
+mjk | (xk, j ⋆) ∼
+
+(
+
+N b γ (dk(j)) , σ 2(dk(j)) , j = j⋆,
+
+N 0, σ 2(dk(j)) , j̸ = j⋆, (2) where b > 0. Thus only the queried true-target channel has nonzero mean. The Bayesian update is 
+
+˜πk+1 (j) := πk(j) Rk(j), π k+1 (j) = ˜πk+1 (j)
+
+P 
+
+> r∈J
+
+˜πk+1 (r) , (3) where the likelihood-ratio contribution is 
+
+Rk(j) := exp 
+
+ b γ (dk(j)) 
+
+σ2(dk(j)) mjk − b2 γ(dk(j)) 2
+
+2 σ2(dk(j)) 
+
+
+
+, j ∈ Q k,
+
+and Rk(j) = 1 if j / ∈ Q k. 
+
+> b) Conformal prediction (distribution-free):
+
+In settings where a parametric measurement model is unavailable, we use con-formal prediction to maintain a candidate set with finite-sample marginal coverage at each fixed time. Following the usual practice in conformal prediction [10], let a black-box predictor gθ : M → [0 , 1] map measurements to a “target-likeness” prediction, where M denotes the measurement space. Define the nonconformity score s(m) := 1 −gθ (m). Us-ing calibration data collected from the target at known ranges, we discretize [0 , D max ] into bins Bb = [ Db−1, D b) and, for each bin, store a multiset Eb of calibration nonconformity scores of size nb. The following exchangeability assumption is standard in conformal prediction literature [10], [12]. 
+
+Assumption 3.3: If j⋆ = j and dk(j) ∈ Bb, then s(mjk)
+
+is exchangeable with the elements of Eb (i.e., the joint distri-bution of  s(mjk), Eb
+
+ is invariant to any permutation of its elements). If j ∈ Q k and dk(j) ∈ Bb, we define the conformal p-value for the null hypothesis Hj : j⋆ = j as 
+
+pk(j) := 1 + P 
+
+> e∈E b
+
+1{s(mjk) ≤ e}
+
+nb + 1 . (4) To aggregate evidence across time for a candidate, we combine the sequential p-values using Fisher’s method. Define the Fisher statistic Tk(j) := −2 P  
+
+> t≤k:j∈Q t
+
+log pt(j) and define the associated combined p-value Pk(j) := 1 −Fχ22nk (j) (Tk(j)) 
+
+(with Pk(j) = 1 if nk(j) = 0 ), where nk(j) is the number of times j has been queried up to k. We then define the non-rejected candidate set at level α ∈ (0 , 1) as 
+
+Ck(α) := {j ∈ J | Pk(j) ≥ α}. (5) Here, α denotes the miscoverage level, i.e., the maximum probability of excluding the target from the set. In our context, 
+
+Ck(α) is the raw non-rejected candidate set. Here, “raw” means that the set is obtained directly from the current combined conformal p-values, without enforcing monotonicity across time. Its elements are the candidates whose null hypotheses 
+
+Hj are not rejected by time k. Theorem 4.7 gives fixed-time marginal coverage for this raw set at level 1 − α.
+
+B. Planning Objective and Online Replanning 
+
+We aim to bias the shared trajectory segment toward in-formative regions while pruning unlikely candidates. Given 
+
+τ ∈ (0 , 1] , define the retained set 
+
+J τk := 
+
+n
+
+j ∈ J πk(j) ≥ τN
+
+o
+
+. (6) Fix a convex, nondecreasing function ϕ : [0 , D max ] → R+, a discount factor ρ ∈ (0 , 1] , and a weight w ≥ 0. The offline 
+
+active-sensing DDTO (AS-DDTO) problem is                            
+
+> P(0) := minimize
+> {Xj,Uj}j∈J τ
+> 0
+> min
+> r∈J τ
+> 0
+> X
+> j̸=rHX
+> k=1
+> xjk−xrk♦
+> |{z }
+> Deferral objective
+> +w
+> HX
+> k=1
+> ρk−1X
+> j∈J τ
+> 0
+> π0(j)ϕ d(xrk, z j)|{z }
+> Active sensing surrogate
+> (7a) s.t. (1b) −(1e) (restricted to j∈ J τ
+> 0),(7b)
+
+where d(xrk, z j ) := ∥Ex rk − Ez j ∥2.The first term promotes deferral, while the second biases the shared segment toward likely candidates before branching. We use ϕ(d) = d or d2 as tractable convex proximity surrogates for distance-dependent informativeness. Distance-based infor-mativeness surrogates are standard in mobile sensing, where sensing quality degrades with sensor–target distance [16], detection probability and uncertainty reduction depend on distance [17], and finite-target monitoring uses limited sensing range with range-dependent SNR [18]. The weight w controls the tradeoff, with w = 0 recovering DDTO. In the offline variant, we execute the open-loop plan without replanning, while updating (i) the Bayesian belief via (3) in the Gaussian case or (ii) the conformal candidate set via (5) in the distribution-free case.  
+
+> Online replanning:
+
+After executing one control step at time 
+
+s, we update the information state and the retained set used for planning: (i) Gaussian: update the posterior πs via (3) and form 
+
+J τs via (6); (ii) CP: update the conformal set Cs(α) via (5). To ensure recursive feasibility under pruning, we maintain nested backup sets bJ τs := bJ τs−1 ∩ J τs and bCs(α) := bCs−1(α) ∩ C s(α).At time s, we first solve a shrinking-horizon problem P (s)
+
+over the raw retained set, meaning J τs in the Gaussian case and Cs(α) in the CP case, with x0 ← xs, horizon length 
+
+H ← H − s (re-indexing the summations), and remaining budget crem (s) := cmax − Ps−1 
+
+> t=0
+
+c(xt, u t) replacing cmax in (1e). If planning based on the raw set Cs(α) or J τs is infeasible or fails numerically, we re-solve over the corresponding nested backup set, bCs(α) or bJ τs . The nested set is non-expanding, so the truncated tail of the most recent feasible plan is feasible for the backup problem by Theorem 4.1. If the nested re-solve also fails numerically, the controller executes this tail directly as an implementation fallback. For online DDTO, if the candidate set (Gaussian: J τs ;CP: Cs(α)) is unchanged, we reuse the truncated tail of the previously computed optimal plan for the shrinking-horizon problem. AS-DDTO is re-solved because the information term depends on the current information state: in the Gaussian case, we set π0 ← πs, and in the CP case, we replace π0(j) by the normalized combined p-values. In the Gaussian case, we query the candidates with beliefs closest to 1/N , i.e. Qk ∈ argmin Q⊆J τk
+
+P 
+
+> j∈Q
+
+πk(j) − 1
+
+> N
+
+subject to |Q| = min {L, |J τk |} . In the CP case, we query candidates whose combined p-values are closest to the rejec-tion threshold Qk ∈ argmin Q⊆C k (α)
+
+P
+
+> j∈Q
+
+ Pk(j) − α, s.t. |Q| = min {L, |C k(α)|} , which prioritizes borderline candi-dates whose hypotheses are most uncertain. 
+
+C. Mixed-Integer Conic Reformulation 
+
+For affine dynamics and conic-representable constraints, (7) admits an MI(SO)CP reformulation. Nonconvexities arise from the pseudo-norm term and the inner minimization over the reference index. Following [4], we derive a tractable mixed-integer conic reformulation. Fix r ∈ J τ 
+
+> 0
+
+with ϕ(d) = d2.Introduce binary ζik ∈ { 0, 1} for i̸ = r and impose 
+
+∥xik − xrk∥2 ≤ M ζ ik, k = 1 , . . . , H, (8) with sufficiently large M > 0. Introduce δk,j ≥ 0 satisfying 
+
+∥Ex rk − Ez j ∥2 ≤ δk,j ≤ Dmax , k = 1 , . . . , H, ∀j ∈ J τ 
+
+> 0
+
+. (9) 
+
+For a fixed r, introducing {ζik} and {δk,j } yields a mixed-integer conic reformulation of (7): 
+
+minimize X
+
+> i̸=rH
+
+X
+
+> k=1
+
+ζik + w
+
+> H
+
+X
+
+> k=1
+
+ρk−1 X 
+
+> j∈J τ
+> 0
+
+π0(j) δ2 
+
+> k,j
+
+(10a) s.t. (1b)–(1e) , (8) , (9) ,ζik ∈ { 0, 1}, δ k,j ≥ 0. (10b) We solve (7) by enumerating r ∈ J τ 
+
+> 0
+
+, solving the problem above for each r, and selecting the solution with the smallest objective value. When ϕ(d) = d, replacing δ2 
+
+> k,j
+
+by δk,j yields an MISOCP with the same SOC constraints (9). 
+
+IV. A NALYSIS 
+
+A. Recursive Feasibility 
+
+A key requirement for the proposed online scheme to be useful is recursive feasibility: if a feasible plan exists at time 
+
+k − 1, then after executing one step and updating the retained candidate set, a feasible plan continues to exist at time k. We formalize this property for the shrinking-horizon version (7). 
+
+Theorem 4.1: In the online case, define the remaining bud-get crem (k) := cmax − Pk−1 
+
+> t=0
+
+c(xt, u t), where (xt, u t) is the executed closed-loop state and input up to time k − 1.Suppose that at time k − 1 there exists a feasible solution 
+
+{xit, u it}H−1 
+
+> t=k−1
+
+for all i ∈ J τk−1 satisfying constraints (1b)–(1d) and PH−1 
+
+> t=k−1
+
+c(xit, u it) ≤ crem (k − 1) . If J τk ⊆ J τk−1, then the truncated trajectories {xit, u it}H−1 
+
+> t=k
+
+are feasible at time k.
+
+Proof: Fix i ∈ J τk ⊆ J τk−1. The truncated trajectory inherits the dynamics, state/input, and terminal constraints (1b)–(1d). Since c(·, ·) ≥ 0, we have PH−1 
+
+> t=k
+
+c(xit, u it) =
+
+PH−1 
+
+> t=k−1
+
+c(xit, u it) − c(xik−1, u ik−1) ≤ crem (k). Dropping can-didates only relaxes the problem. The same tail-feasibility argument applies to any nested retained set, including bCk(α).
+
+B. Belief concentration and pruning (Gaussian model) 
+
+We study posterior concentration under the Gaussian model. Fix the target index j⋆ and a false hypothesis j̸ = j⋆. Define the distance-dependent signal-to-noise quantity 
+
+ψ(d) := b2 γ(d)2
+
+σ2(d) , d ∈ [0 , D max ]. (11) For a given Qk, define the per-step pairwise KL increment 
+
+∆k(j) := 12
+
+
+
+1{j⋆ ∈ Q k} ψ dk(j⋆) + 1{j ∈ Q k} ψ dk(j)
+
+.
+
+(12) 
+
+Let the accumulated pairwise information be Γk(j) := Pk−1 
+
+> t=0
+
+∆t(j). Under the Gaussian model, ∆k(j) equals the conditional KL divergence between the time-k measurement distributions under hypotheses j⋆ and j, given (xk, Qk).
+
+Lemma 4.2: The function ψ(d) is strictly decreasing in d.Consequently, for fixed Qk, the KL increment ∆k(j) in (12) is nonincreasing in each queried distance dk(·).
+
+Proof: Let t = e−2ξd so ψ(d) = b2 t/ (σ20 + σ21 − σ21 t).Then (dψ/dd ) = ( dψ/dt )( dt/dd ) < 0 since dψ/dt > 0 and 
+
+dt/dd < 0. The claim for ∆k(j) follows from (12). Lemma 4.2 shows that, for fixed Qk, reducing queried distances increases the KL increment through ψ(d). This supports using convex surrogates ϕ(d) = d or ϕ(d) = d2,which preserve conic representability and bias the planner toward informative regions, though they are not equivalent to maximizing mutual information. More model-specific choices, such as an affine rescaling of ψ(d)−1, can be handled via PWL epigraph approximation at the cost of a larger MIP [19]. Let mk denote the stacked measurement vector of the queried channels at time k, and define the log-likelihood ratio 
+
+Λk(j) := log  p(mk | xk, Qk, j ⋆)/p (mk | xk, Qk, j ). The next lemma characterizes the distribution of the per-step and cumulative log-likelihood ratios. 
+
+Lemma 4.3: Assume (2) and Assumptions 3.1–3.2. Fix j̸ =
+
+j⋆. Conditioned on (xk, Qk), Λk(j) is Gaussian with 
+
+Λk(j) | (xk, Qk) ∼ N  ∆k(j), 2∆ k(j). (13) Consequently, conditioned on {(xt, Qt)}k−1 
+
+> t=0
+
+,
+
+> k−1
+
+X
+
+> t=0
+
+Λt(j) ∼ N  Γk(j), 2Γ k(j). (14) 
+
+Proof: Conditioned on (xk, Qk), the stacked queried measurements are jointly Gaussian under both hypotheses j⋆
+
+and j, with covariance Σ and means μ⋆, μ j that differ only in the coordinates of j⋆ and j. For equal-covariance Gaussians, 
+
+Λk(j) = ( μ⋆ − μj )⊤Σ−1 mk − 12 (μ⋆ + μj ), so Λk(j) is Gaussian. Under the true hypothesis, its mean equals the KL divergence KL( N (μ⋆, Σ) ∥N (μj , Σ)) = 12 ∥μ⋆ − μj ∥2Σ−1 =∆k(j), and its variance equals ∥μ⋆ − μj ∥2Σ−1 = 2∆ k(j),yielding (13). Independence across time gives (14). Bayes’ rule yields the posterior odds log( πk(j⋆)/π k(j)) = log( π0(j⋆)/π 0(j)) + Pk−1 
+
+> t=0
+
+Λt(j). Theorem 4.4 converts the LLR concentration into an exponential identification bound. 
+
+Theorem 4.4: Under the same conditions as in Lemma 4.3 and a uniform prior, let ˆjk ∈ arg max i∈J πk(i). Then 
+
+Pr  ˆjk̸ = j⋆ | { xt, Qt}t<k 
+
+ ≤ X 
+
+> j̸=j⋆
+
+exp 
+
+
+
+− 14 Γk(j)
+
+
+
+. (15) 
+
+Proof: Under a uniform prior, {ˆjk̸ = j⋆} implies that there exists j̸ = j⋆ such that log( πk(j⋆)/π k(j)) ≤ 0. By Bayes’ rule, this implies Sk(j) := Pk−1 
+
+> t=0
+
+Λt(j) ≤ 0. Given 
+
+{(xt, Qt)}t<k , Lemma 4.3 gives Sk(j) ∼ N (Γ k(j), 2Γ k(j)) ,hence Pr  Sk(j) ≤ 0 | ·  ≤ Ee−Sk (j)/2 | ·  = e−Γk (j)/4. A union bound over j̸ = j⋆ yields (15). The bounds above are trajectory and policy dependent through Γk(j). Information-augmented DDTO biases the tra-jectory toward smaller distances to candidates, which can increase the per-step information increments through ψ(d)
+
+in (11). We also note that indirect evidence from querying false candidates is already captured through the second term in (12), and it further accelerates concentration in practice. 
+
+C. Coverage and pruning (Distribution-free model) 
+
+We provide the fixed-time coverage guarantee for the raw conformal set Ck(α).
+
+Lemma 4.5: Fix a candidate j ∈ J and a time k such that 
+
+j ∈ Q k and dk(j) ∈ Bb. Under Assumption 3.3, conditioned on (xk, Qk) and on the calibration multiset Eb, the conformal 
+
+p-value pk(j) in (4) is super-uniform: 
+
+Pr  pk(j) ≤ u xk, Qk, j ⋆ = j ≤ u, ∀u ∈ [0 , 1] .
+
+Proof: Let S := s(mjk) and Eb = {E1, . . . , E nb }. With 
+
+R := 1 + Pnb 
+
+> i=1
+
+1{S ≤ Ei}, we have pk(j) = R/ (nb + 1) .Under Assumption 3.3, {S, E 1, . . . , E nb } is exchangeable, so 
+
+R is uniform on {1, . . . , n b + 1 }. Hence, Pr  pk(j) ≤ u |
+
+xk, Qk, j ⋆ = j = Pr  R ≤ u(nb+1)  ≤ u.The next lemma shows that Fisher’s combination preserves validity when applied to independent super-uniform p-values. 
+
+Lemma 4.6: Let p1, . . . , p n be independent random vari-ables satisfying Pr( pi ≤ u) ≤ u for all u ∈ [0 , 1] . The com-bined p-value P := 1 − Fχ22n (T ) with T := −2 Pni=1 log pi
+
+is super-uniform Pr( P ≤ α) ≤ α, for all α ∈ [0 , 1] .
+
+Proof: Fix any t ≥ 0. Let U ∼ Unif[0 , 1] . Then 
+
+Pr( −2 log U ≥ t) = e−t/ 2, and −2 log U ∼ χ22. Hence, 
+
+−2 log pi is stochastically dominated by χ22. By independence, 
+
+T is stochastically dominated by χ22n. Now let q1−α denote the (1 − α)-quantile of χ22n. Then 
+
+Pr( P ≤ α) = Pr  1 − Fχ22n (T ) ≤ α = Pr( T ≥ q1−α).
+
+Hence, Pr( P ≤ α) ≤ Pr( χ22n ≥ q1−α) = α.The nested update bCs(α) preserves the set-inclusion structure needed for recursive feasibility by preventing the set from expanding to include previously rejected candidates. While this nested update may increase conservativeness, Theorem 4.7 guarantees that j⋆ remains in Ck(α) with high probability. 
+
+Theorem 4.7: Assume Assumptions 3.2 and 3.3. Fix any time k ≥ 0. Conditioned on the realized trajectory and query sets {(xt, Qt)}kt=0 (and on the calibration sets {E b}), the raw conformal set Ck(α) in (5) satisfies 
+
+Pr  j⋆ ∈ C k(α) {(xt, Qt)}kt=0 
+
+ ≥ 1 − α. 
+
+Proof: Let Kk(j⋆) := {t ≤ k : j⋆ ∈ Qt} with 
+
+|K k(j⋆)| = nk(j⋆). Conditioned on {(xt, Qt)}kt=0 , each 
+
+t ∈ Kk(j⋆) fixes a bin, and Lemma 4.5 implies pt(j⋆)
+
+is super-uniform. Assumption 3.2 implies these p-values are independent across t given the same information. Lemma 4.6 completes the proof. Theorem 4.7 applies to the raw conformal set Ck(α). The guarantee is not invalidated if the nested backup was used at earlier times; it is stated conditionally on the realized trajectory and query sets. However, the same 1 − α fixed-time coverage guarantee does not automatically apply to the nested backup X (m)     
+
+> -20 -10 010 20
+
+Y (m)     
+
+> -5 0510 15 20 25 30
+> Z (m)
+> -5
+> 0
+> 5
+> 10
+> 15
+> 20
+> 25
+> 30
+> 35
+> DDTO Trunk AS-DDTO Trunk Start Targets Candidate 0 Candidate 1 Candidate 2 Candidate 3
+> Fig. 1. Trajectories obtained by applying DDTO and AS-DDTO to the quadrotor system. DDTO maximizes the coincident trajectory duration; AS-DDTO can trade deferral duration for earlier informative motion.
+
+set bCk(α). Since bCk(α) is an intersection of current and past raw sets, it can exclude the true target if any earlier raw set excluded it. Thus, coverage is claimed for Ck(α), while bCk(α)
+
+is used only to preserve recursive feasibility. 
+
+V. E XPERIMENTS 
+
+We compare DDTO ( w = 0 ) and AS-DDTO ( w = 40 )in offline and shrinking-horizon online variants. Simulations use the affine quadrotor model and constraints of [3], with 
+
+nx = 6 , nu = 3 , and randomized candidate locations (x, y ) ∈
+
+[−30 , 30] 2, z = 0 . We use the parameter values N = 4 ,
+
+H = 20 , w = 40 , ρ = 0.9, Dmax = 100 , M = 800 ,and cmax = 3400 throughout. All instances were solved with MOSEK on an AMD EPYC 7543 processor. We report the results for convex distance surrogates ϕ(d) = d2 and 
+
+ϕ(d) = d, denoted as AS-DDTO( d2) and AS-DDTO( d). For the Gaussian model, we also evaluate AS-DDTO with the inverse-SNR surrogate ϕ(d) = ψ(0) /ψ (d) − 1, implemented via a piecewise-linear epigraph. For belief-based pruning (6), we use τ = 0.2 and maintain the nested sets. Rates are reported in percent; all other quantities are reported as mean 
+
+± standard deviation over 100 runs. 
+
+a) Gaussian sensing: We use the values ξ = 0 .05 , σ0 =0.5, σ1 = b = 1 .0, and L = 1 . Thus, close-range mea-surements are more informative, while distant measurements are noisier. Figure 1 shows that AS-DDTO trades deferral for earlier informative motion. The forced decision time tf is the first step at which trajectories diverge over the retained set. At 
+
+tf , the planner commits to the branch associated with the MAP candidate in the Gaussian case, and to the branch associated with arg max j Ptf (j) in the CP case, provided that candidate is in the retained set. Otherwise, we continue along the shared trunk and keep updating the belief/candidate set online. Table I reports offline and online performance through tf ,target interception rate (reaching the target by the horizon), identification rate defined as 1{arg max j πtf (j) = j⋆}, target posterior πtf (j⋆), and the minimum accumulated pairwise TABLE I RESULTS FOR THE GAUSSIAN SENSING MODEL OVER 100 RUNS .                                              
+
+> Method tfIntercept ID rate πtf(j⋆)Γmin
+> tf
+> Offline (single-solve) DDTO 14.75 ±0.64 35% 35% 0.29 ±0.11 0.15 ±0.15 AS-DDTO ( d2)14.62 ±1.52 37% 37% 0.31 ±0.11 0.24 ±0.23
+> AS-DDTO ( d)14.72 ±0.62 44% 44% 0.31 ±0.12 0.24 ±0.23
+> AS-DDTO (inv-SNR) 14.28 ±2.51 44% 44% 0.31 ±0.11 0.21 ±0.19 Online (replanning) DDTO 14.78 ±0.66 33% 33% 0.28 ±0.11 0.82 ±1.12 AS-DDTO ( d2)14.70 ±0.65 53% 58% 0.34 ±0.12 2.12 ±1.93 AS-DDTO ( d)14.18 ±0.87 48% 55% 0.33 ±0.16 3.29 ±3.65 AS-DDTO (inv-SNR) 7.85 ±4.35 45% 38% 0.27 ±0.08 3.98 ±5.66
+
+information Γmin  
+
+> tf
+
+:= min j̸ =j⋆
+
+Ptf −1 
+
+> t=0
+
+∆t(j). AS-DDTO im-proves online interception and ID over DDTO, with AS-DDTO( d2) having both the best online interception and on-line ID rate. Offline AS-DDTO also improves over DDTO, with AS-DDTO( d) and the inverse-SNR surrogate strongest in offline interception and ID. The inverse-SNR surrogate accumulates the most pairwise information but forces pre-mature branching, leaving insufficient horizon for the belief to concentrate before commitment. In raw retained-set cases, the nested backup was required rarely for the AS-DDTO variants, in 0.36 –0.56% of solve attempts. Branch-triggered nested replanning occurred only 0.97 times per run, which lends credence to the hypothesis that the gains are not driven by the raw-set planning fallback. In the Gaussian offline case, mean times for solving the problem were 8.22 s for DDTO, 
+
+17 .90 s for AS-DDTO( d2), and 16 .85 s for AS-DDTO( d). 
+
+b) Conformal prediction: We evaluate the distribution-free setting with α = 0 .1, L = 2 , and nested set bCt(α). Each 
+
+16 -dimensional measurement is processed by an MLP trained offline. We use the score function s(m) = 1 −gθ (m), discretize 
+
+[0 , D max ] into B = 8 bins and collect target-only calibration scores Eb per bin with nb = 6000 . At each step, p-values from (4) are combined by Fisher’s method. Table II reports 
+
+tf , interception, nested retained-set size, and target combined 
+
+p-value at tf . Offline mean solve times were 8.01 s for DDTO, 
+
+17 .44 s for AS-DDTO( d2), and 16 .41 s for AS-DDTO( d). Online AS-DDTO improves interception over DDTO (61% vs. 53%) and retains fewer candidates at tf . In the offline setting, AS-DDTO improves interception over DDTO, while the online setting provides the clearest gains, highlighting the benefit of coupling information-aware trajectory shaping with online replanning. A sensitivity check with w = 20 and ρ = 1 
+
+gave similar interception rates ( 62% and 60% , respectively), indicating that the improvement is not tied to the exact sensing weight or discount factor. A more conservative retained set with α = 0 .05 increased interception to 71% , while increasing the query budget to L = 3 gave 66% interception. 
+
+VI. C ONCLUSION 
+
+This paper integrates active sensing into DDTO by embed-ding distance-dependent sensing models and an information surrogate in the DDTO objective. The resulting framework retains the benefit of delayed commitment while biasing the system toward trajectories expected to collect more infor-mative measurements earlier, thereby improving early target identification. The approach supports Bayesian and conformal candidate-set updates, with guarantees on recursive feasibility, 
+
+TABLE II RESULTS FOR THE CONFORMAL PREDICTION MODEL OVER 100 RUNS .
+
+Method tf Intercept | bCtf | Ptf (j⋆)
+
+Offline (single-solve) DDTO 10.48 ±4.38 39% 1.52 ±0.93 0.40 ±0.32 
+
+AS-DDTO ( d2) 9.89 ±4.37 48% 1.46 ±0.89 0.40 ±0.32 
+
+AS-DDTO ( d) 9.74 ±4.32 50% 1.41 ±0.87 0.40 ±0.32 
+
+Online (replanning) DDTO 10.43 ±4.98 53% 1.24 ±0.74 0.37 ±0.33 AS-DDTO ( d2) 8.81 ±4.28 61% 1.06 ±0.24 0.39 ±0.32 
+
+AS-DDTO ( d) 8.40 ±4.00 58% 1.03 ±0.16 0.38 ±0.32 
+
+posterior concentration, and fixed-time conformal coverage for the raw set. Simulations show improved target identification and interception over DDTO. 
+
+REFERENCES 
+
+[1] J. A. Placed, J. Strader, H. Carrillo, N. Atanasov, V. Indelman, L. Car-lone, and J. A. Castellanos, “A survey on active simultaneous localization and mapping: State of the art and new frontiers,” IEEE Transactions on Robotics , 2023. [2] M. Zwick, M. Gerdts, and P. St¨ utz, “Sensor-model-based trajectory optimization for uavs to enhance detection performance: An optimal control approach and experimental results,” Sensors , vol. 23, 2023. [3] P. Elango, S. B. Sarsilmaz, and B. Acikmese, “Deferring decision in multi-target trajectory optimization,” in AIAA SciTech 2022 Forum , 2022. [4] P. Elango, S. B. Sarsilmaz, and B. Ac ¸ıkmes ¸e, “Deferred-decision trajec-tory optimization,” arXiv preprint arXiv:2502.06623 , 2025. [5] J. L. Ny and G. J. Pappas, “On trajectory optimization for active sensing in gaussian process models,” in IEEE Conference on Decision and Control , 2009. [6] M. Buisson-Fenet, F. Solowjow, and S. Trimpe, “Actively learning gaussian process dynamics,” in Conference on Learning for Dynamics and Control , 2020. [7] X. Liu and L. Mihaylova, “Active sensing for target tracking: A bayesian optimisation approach,” in Proceedings of the 27th International Con-ference on Information Fusion , 2024. [8] X. Liu, C. Lyu, S. A. Soleymani, W. Wang, and L. Mihaylova, “Joint sensor scheduling and target tracking with efficient bayesian optimisa-tion,” in 2023 Sensor Signal Processing for Defence Conference , 2023. [9] C. Kreucher, K. Kastella, and A. O. Hero Iii, “Sensor management using an active sensing approach,” Signal Processing , vol. 85, 2005. [10] A. N. Angelopoulos and S. Bates, “Conformal prediction: A gentle introduction,” Foundations and Trends in Machine Learning , vol. 16, 2023. [11] J. Sun, Y. Jiang, J. Qiu, P. Nobel, M. J. Kochenderfer, and M. Schwager, “Conformal prediction for uncertainty-aware planning with diffusion dynamics model,” Advances in Neural Information Processing Systems ,vol. 36, 2023. [12] Y. Romano, E. Patterson, and E. Candes, “Conformalized quantile re-gression,” Advances in Neural Information Processing Systems , vol. 32, 2019. [13] R. Kaur, K. Sridhar, S. Park, S. Jha, A. Roy, O. Sokolsky, and I. Lee, “Codit: Conformal out-of-distribution detection in time-series data,” 
+
+arXiv preprint arXiv:2207.11769 , 2022. [14] L. Lindemann, M. Cleaveland, G. Shim, and G. J. Pappas, “Safe planning in dynamic environments using conformal prediction,” IEEE Robotics and Automation Letters , vol. 8, no. 8, pp. 5116–5123, 2023. [15] P. Toccaceli and A. Gammerman, “Combination of conformal predictors for classification,” in Proc. Workshop on Conformal and Probabilistic Prediction and Applications , 2017, pp. 39–61. [16] J. Cortes, S. Martinez, T. Karatas, and F. Bullo, “Coverage control for mobile sensing networks,” IEEE Transactions on robotics and Automation , vol. 20, no. 2, pp. 243–255, 2004. [17] C. G. Cassandras, X. Lin, and X. Ding, “An optimal control approach to the multi-agent persistent monitoring problem,” IEEE Transactions on Automatic Control , vol. 58, no. 4, pp. 947–961, 2012. [18] S. C. Pinto, S. B. Andersson, J. M. Hendrickx, and C. G. Cassandras, “Optimal multi-agent persistent monitoring of the uncertain state of a finite set of targets,” in 2019 IEEE 58th Conference on Decision and Control (CDC) . IEEE, 2019, pp. 4280–4285. [19] J. P. Vielma, “Mixed integer linear programming formulation tech-niques,” Siam Review , vol. 57, no. 1, pp. 3–57, 2015.

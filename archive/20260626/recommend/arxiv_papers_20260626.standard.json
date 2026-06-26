@@ -1,0 +1,286 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-26T20:24:33.841581+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 7,
+    "quick_skim_target": 11,
+    "quick_selected": 7
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.22277v1",
+      "source": "arxiv",
+      "title": "Active Sensing and Deferred-Decision Trajectory Optimization for Robust Target Identification",
+      "abstract": "We study trajectory optimization in mobile sensing systems that must identify which member of a finite candidate set is the true target, while maintaining reachability to all potential candidate targets, under resource constraints. Deferred-Decision Trajectory Optimization (DDTO) addresses this setting by computing trajectories that reach individual targets but remain coincident for as long as possible before separating toward different targets. We propose Active-Sensing DDTO (AS-DDTO), which extends DDTO by adding a trajectory-dependent information-acquisition term to the planning objective. The resulting planner maintains reachability to candidate targets while biasing the coincident portion of the trajectories toward regions that enable earlier target identification. The framework supports Bayesian updates and conformal candidate-set updates for distance-dependent sensing. We derive a mixed-integer conic reformulation and provide guarantees on recursive feasibility, belief concentration, and fixed-time coverage for the raw conformal candidate set. Numerical simulations show improved target identification compared with standard DDTO under distance-dependent sensing uncertainty and limited sensing budget.",
+      "authors": [
+        "Farbod Siahkali",
+        "Mengxue Hou",
+        "Vijay Gupta"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-21T00:09:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.22277v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "trajectory optimization for target identification in mobile sensing, applicable to pursuit-evasion",
+      "llm_evidence_cn": "面向目标识别的轨迹优化，可应用于追逃博弈",
+      "llm_evidence": "面向目标识别的轨迹优化，可应用于追逃博弈",
+      "canonical_evidence": "面向目标识别的轨迹优化，可应用于追逃博弈",
+      "llm_tldr_en": "Proposes Active-Sensing DDTO for trajectory optimization in mobile sensing to robustly identify a target while maintaining reachability to multiple candidates, directly applicable to pursuit-evasion scenarios.",
+      "llm_tldr_cn": "该论文针对移动传感系统中需从有限候选目标中识别真实目标的问题，提出主动感知延迟决策轨迹优化（AS-DDTO）方法。通过结合信息获取项，在保持对所有候选目标可达性的同时，使轨迹偏向信息丰富区域。该方法可直接迁移至无人机目标拦截和围捕场景中的路径规划，为追逃博弈提供了一种有效的轨迹优化框架。",
+      "llm_tldr": "该论文针对移动传感系统中需从有限候选目标中识别真实目标的问题，提出主动感知延迟决策轨迹优化（AS-DDTO）方法。通过结合信息获取项，在保持对所有候选目标可达性的同时，使轨迹偏向信息丰富区域。该方法可直接迁移至无人机目标拦截和围捕场景中的路径规划，为追逃博弈提供了一种有效的轨迹优化框架。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.20127v1",
+      "source": "arxiv",
+      "title": "Contraction-based Neural Control for Cooperative Aerial Payload Transportation with Variable-length Cables",
+      "abstract": "This paper presents a novel neural nonlinear control framework for a multi-drone slung payload system with variable-length cables and a rigid-body payload. The equations of motion are formulated into a decoupled structure, where the payload and cable length dynamics are governed by independent control channels, facilitating modularized controller design on reduced-order subsystems. A neural control contraction metric (CCM) controller and a neural feedback controller are jointly trained to enforce contraction conditions for the payload subsystem. Separately, a cable length control law is derived that exploits the variable-length degree of freedom for obstacle avoidance. Numerical simulations demonstrate trajectory tracking of a rigid-body payload and gate traversal capabilities of the overall system under the proposed control framework.",
+      "authors": [
+        "Yi Lok Lo",
+        "Longhao Qian",
+        "Hugh H. T. Liu"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-06-18T11:52:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.20127v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "cooperative multi-drone control for payload transportation, relevant to multi-UAV coordination",
+      "llm_evidence_cn": "面向载荷运输的多无人机协同控制，与多机协同相关",
+      "llm_evidence": "面向载荷运输的多无人机协同控制，与多机协同相关",
+      "canonical_evidence": "面向载荷运输的多无人机协同控制，与多机协同相关",
+      "llm_tldr_en": "Proposes a neural nonlinear control framework for multi-drone slung payload systems with variable-length cables, enabling cooperative aerial transportation and obstacle avoidance.",
+      "llm_tldr_cn": "该论文提出了一个神经非线性控制框架，用于多无人机吊挂载荷系统（可变长度缆绳）。通过解耦结构和收缩性条件学习，实现载荷子系统的稳定控制，并独立设计缆绳长度控制律进行避障。数值仿真展示了多机协同运输能力，对多无人机协同围捕任务中的编队控制具有启示作用。",
+      "llm_tldr": "该论文提出了一个神经非线性控制框架，用于多无人机吊挂载荷系统（可变长度缆绳）。通过解耦结构和收缩性条件学习，实现载荷子系统的稳定控制，并独立设计缆绳长度控制律进行避障。数值仿真展示了多机协同运输能力，对多无人机协同围捕任务中的编队控制具有启示作用。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.25073v1",
+      "source": "arxiv",
+      "title": "GCT-MARL: Graph-Based Contrastive Transfer for Sample-Efficient Cooperative Multi-Agent Reinforcement Learning",
+      "abstract": "In cooperative multi-agent reinforcement learning (MARL), from a deployment perspective, it is challenging and expensive to train agents from scratch for each new environment or task. In this work, we propose GCT-MARL, a transfer learning framework that builds on the multi-view graph contrastive backbone of MAIL and augments it with a per-view, adaptively weighted alignment loss and a two-phase training protocol specifically designed for transfer across populations of varying sizes and compositions. We empirically demonstrate that the proposed framework markedly accelerates convergence on the target task relative to from-scratch training, in both homogeneous (within-faction, varying N) and heterogeneous (cross-faction and mixed unit-type) transfer scenarios. Furthermore, we show that the framework naturally supports continual learning by sequentially chaining the two-phase transfer protocol across a series of related tasks. Overall, this work provides a unified approach to mitigating key limitations in current MARL transfer methods with new insights at both methodological and empirical levels.",
+      "authors": [
+        "Animesh Animesh",
+        "Satheesh K Perepu",
+        "Kaushik Dey"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-06-23T18:31:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.25073v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Multi-agent RL transfer learning method applicable to UAV swarm",
+      "llm_evidence_cn": "多智能体强化学习迁移方法，可应用于无人机蜂群",
+      "llm_evidence": "多智能体强化学习迁移方法，可应用于无人机蜂群",
+      "canonical_evidence": "多智能体强化学习迁移方法，可应用于无人机蜂群",
+      "llm_tldr_en": "Proposes GCT-MARL, a graph-based contrastive transfer framework for cooperative MARL, accelerating convergence in new environments, applicable to UAV swarm coordination.",
+      "llm_tldr_cn": "针对多智能体强化学习在新环境中从零训练成本高的问题，提出GCT-MARL框架，基于多视图图对比学习主干和自适应加权对齐损失，实现跨群体规模和组成的迁移学习。实验表明该方法在目标任务上显著加速收敛，适用于无人机蜂群的协作围捕等场景，为多无人机强化学习提供了高效的迁移方案。",
+      "llm_tldr": "针对多智能体强化学习在新环境中从零训练成本高的问题，提出GCT-MARL框架，基于多视图图对比学习主干和自适应加权对齐损失，实现跨群体规模和组成的迁移学习。实验表明该方法在目标任务上显著加速收敛，适用于无人机蜂群的协作围捕等场景，为多无人机强化学习提供了高效的迁移方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.20880v1",
+      "source": "arxiv",
+      "title": "Adversarial observations in probabilistic State-Space Models for robust Reinforcement Learning",
+      "abstract": "Decision-making under partial or adversarial observability requires accurate inference of the environment's latent state and its associated uncertainty. This work analyses adversarial attacks on linear probabilistic state-space models, commonly integrated within reinforcement learning architectures, where the attacker alters observations under likelihood constraints that ensure the perturbations remains consistent. We analyze how such adversarial yet realistic observation shifts influence the latent state and influence policy decisions. This perspective provides a principled pathway toward building more robust reinforcement learning systems, with direct relevance to safety-critical domains such as robotics, where reliable operation under sensor noise, partial failures, and adversarial conditions is essential.",
+      "authors": [
+        "M. Santos-Pascual",
+        "D. Ríos Insua"
+      ],
+      "primary_category": "stat.ML",
+      "categories": [
+        "stat.ML",
+        "cs.LG",
+        "stat.ME"
+      ],
+      "published": "2026-06-18T19:15:06+00:00",
+      "link": "https://arxiv.org/pdf/2606.20880v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "adversarial robustness for RL in state-space models, relevant to safe UAV operations",
+      "llm_evidence_cn": "针对状态空间模型的对抗鲁棒性强化学习，适用于安全无人机操作",
+      "llm_evidence": "针对状态空间模型的对抗鲁棒性强化学习，适用于安全无人机操作",
+      "canonical_evidence": "针对状态空间模型的对抗鲁棒性强化学习，适用于安全无人机操作",
+      "llm_tldr_en": "Analyzes adversarial attacks on linear probabilistic state-space models in RL, showing how observation perturbations affect latent states and policies, providing pathways for robust RL in safety-critical domains like UAVs.",
+      "llm_tldr_cn": "该论文分析了线性概率状态空间模型中对抗观测攻击对强化学习策略的影响。攻击者在似然约束下修改观测，研究其对隐状态和决策的影响。工作为构建鲁棒强化学习系统提供了理论路径，直接关联无人机拦截等安全关键场景中的鲁棒性需求。",
+      "llm_tldr": "该论文分析了线性概率状态空间模型中对抗观测攻击对强化学习策略的影响。攻击者在似然约束下修改观测，研究其对隐状态和决策的影响。工作为构建鲁棒强化学习系统提供了理论路径，直接关联无人机拦截等安全关键场景中的鲁棒性需求。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.24601v1",
+      "source": "arxiv",
+      "title": "ASALT: Adaptive State Alignment for Lateral Transfer in Multi-agent Reinforcement Learning",
+      "abstract": "Multi-agent reinforcement learning (MARL) addresses the problem of training multiple agents that pursue collaborative, competitive, or mixed objectives. Prior work has investigated transfer learning between source and target domains in MARL; however, the majority of existing approaches impose the constraint that the dimensionalities of the observation space and the global state space must be identical across domains. In this paper, we introduce a method that explicitly accommodates mismatched state-space dimensionalities between source and target domains. The proposed approach, ASALT, incorporates both observation-level and state-level adapters that map the target-domain observations and global states into a shared embedding space, thereby enabling more effective transfer of knowledge across both actors and critics. These adapters can generate embeddings that support efficient strategy transfer across heterogeneous domains. Experimental results on multiple configurations in standard benchmark environments demonstrate that ASALT surpasses existing baselines in terms of sample efficiency and global return in cooperative settings, but its effectiveness depends on the degree of mismatch between source and target domains. Furthermore, our findings indicate that ASALT mitigates negative transfer, which frequently constitutes a major obstacle when transferring policies between domains with differing observation and action spaces.",
+      "authors": [
+        "Anurag Akula",
+        "Satheesh K. Perepu",
+        "Abhishek Sarkar",
+        "Kaushik Dey"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-23T14:03:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.24601v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "MARL transfer learning for mismatched state spaces, applicable to multi-agent UAV swarm",
+      "llm_evidence_cn": "多智能体强化学习迁移，可应用于无人机蜂群",
+      "llm_evidence": "多智能体强化学习迁移，可应用于无人机蜂群",
+      "canonical_evidence": "多智能体强化学习迁移，可应用于无人机蜂群",
+      "llm_tldr_en": "ASALT introduces adapters to enable transfer learning in MARL when source and target domains have different state dimensionalities, addressing a key limitation for heterogeneous multi-agent systems.",
+      "llm_tldr_cn": "现有MARL迁移学习方法通常要求源域和目标域的观测空间维度相同，限制了其应用范围。本文提出ASALT方法，通过观测级和状态级适配器将目标域映射到共享嵌入空间，实现维度不匹配情况下的有效迁移。在多个基准任务上的实验表明，ASALT显著提升了迁移性能和样本效率。该工作为无人机蜂群等异构多智能体系统的协同学习提供了关键支持。",
+      "llm_tldr": "现有MARL迁移学习方法通常要求源域和目标域的观测空间维度相同，限制了其应用范围。本文提出ASALT方法，通过观测级和状态级适配器将目标域映射到共享嵌入空间，实现维度不匹配情况下的有效迁移。在多个基准任务上的实验表明，ASALT显著提升了迁移性能和样本效率。该工作为无人机蜂群等异构多智能体系统的协同学习提供了关键支持。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.25978v1",
+      "source": "arxiv",
+      "title": "Multi-Agent Goal Recognition with Team- and Goal-Conditioned Reinforcement Learning and Factorized Branch-and-Bound",
+      "abstract": "Multi-agent goal recognition asks an observer to jointly infer which agents act together and what each team is trying to achieve, so the hypothesis space grows combinatorially with the number of team partitions and goals per team. Real applications such as drone surveillance and collaborative robotics expose only the agents' trajectory, which forces the observer to rank team-goal hypotheses from behavior alone. Multi-Agent Goal Recognition with Branch-and-Bound (MAGR-BB) addresses this setting with a shared team- and goal-conditioned policy used as the scoring model inside a factorized branch-and-bound search. On a controlled multi-agent Blocksworld benchmark, MAGR-BB returns the same top-ranked hypothesis as exhaustive search throughout the trajectory while cutting hypothesis materialization by orders of magnitude and reducing cumulative recognition runtime substantially.",
+      "authors": [
+        "Thiago Thomas",
+        "Gabriel de Oliveira Ramos",
+        "Felipe Meneguzzi"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-24T15:50:39+00:00",
+      "link": "https://arxiv.org/pdf/2606.25978v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent RL with team-goal conditioning for drone surveillance, transferable to UAV swarm coordination",
+      "llm_evidence_cn": "多智能体强化学习结合团队目标条件用于无人机监视，可迁移至无人机集群协同",
+      "llm_evidence": "多智能体强化学习结合团队目标条件用于无人机监视，可迁移至无人机集群协同",
+      "canonical_evidence": "多智能体强化学习结合团队目标条件用于无人机监视，可迁移至无人机集群协同",
+      "llm_tldr_en": "MAGR-BB uses team- and goal-conditioned RL for multi-agent goal recognition from trajectories, enabling efficient inference of team objectives for drone surveillance and collaborative robotics.",
+      "llm_tldr_cn": "多智能体目标识别任务中，从观测轨迹推断团队目标面临组合爆炸。本文提出MAGR-BB方法，采用共享的团队与目标条件强化学习策略作为评分模型，结合因子化分支定界搜索。在Blocksworld基准上，该方法高效返回正确团队目标假设，为无人机集群协同任务中的目标识别提供了可迁移的框架。",
+      "llm_tldr": "多智能体目标识别任务中，从观测轨迹推断团队目标面临组合爆炸。本文提出MAGR-BB方法，采用共享的团队与目标条件强化学习策略作为评分模型，结合因子化分支定界搜索。在Blocksworld基准上，该方法高效返回正确团队目标假设，为无人机集群协同任务中的目标识别提供了可迁移的框架。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.26397v1",
+      "source": "arxiv",
+      "title": "Deterministic Pareto-Optimal Policy Synthesis for Multi-Objective Reinforcement Learning",
+      "abstract": "Real-world decision-making often requires balancing multiple conflicting objectives, a challenge that standard Reinforcement Learning (RL) frequently addresses by aggregating rewards into a single scalar signal. While effective for simple tasks, this approach often fails to capture the full spectrum of optimal trade-offs, known as the Pareto frontier. In this paper, we introduce a novel preference-conditioned Bellman operator, motivated from the Chebyshev scalarization, designed to compute deterministic Pareto-optimal policies for Multi-Objective Markov Decision Processes (MOMDPs). We prove that this operator satisfies an enveloping property, where the estimated value functions upper-bound the true Pareto frontier, and demonstrate that it monotonically converges to a coverage set of this frontier. Furthermore, we also show how to extract deterministic policies from these converged Q-estimates. This ensures the agent can recover a policy for any given preference, capturing the entire Pareto-optimal frontier while guaranteeing each synthesized policy remains approximately Pareto-optimal. Experimental results validate that our algorithm successfully recovers complex trade-offs, providing a solution for deterministic Pareto-optimal policy synthesis.",
+      "authors": [
+        "Aniruddha Joshi",
+        "Niklas Lauffer",
+        "Sanjit Seshia"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T21:28:49+00:00",
+      "link": "https://arxiv.org/pdf/2606.26397v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-objective reinforcement learning method applicable to UAV missions with conflicting objectives",
+      "llm_evidence_cn": "多目标强化学习方法，可应用于无人机任务中的多目标优化",
+      "llm_evidence": "多目标强化学习方法，可应用于无人机任务中的多目标优化",
+      "canonical_evidence": "多目标强化学习方法，可应用于无人机任务中的多目标优化",
+      "llm_tldr_en": "Introduces a preference-conditioned Bellman operator for deterministic Pareto-optimal policies in multi-objective MDPs, enabling trade-off optimization relevant to UAV interception.",
+      "llm_tldr_cn": "该论文提出了一种基于偏好条件贝尔曼算子的确定性帕累托最优策略合成方法，用于多目标马尔可夫决策过程。该方法通过学习帕累托前沿，能够处理无人机拦截与围捕任务中常见的多目标权衡问题（如速度与安全性）。实验验证了算子对真实前沿的上界性质，为多目标强化学习提供了新工具。",
+      "llm_tldr": "该论文提出了一种基于偏好条件贝尔曼算子的确定性帕累托最优策略合成方法，用于多目标马尔可夫决策过程。该方法通过学习帕累托前沿，能够处理无人机拦截与围捕任务中常见的多目标权衡问题（如速度与安全性）。实验验证了算子对真实前沿的上界性质，为多目标强化学习提供了新工具。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

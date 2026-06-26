@@ -6,37 +6,44 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-25
-- 运行时间：2026-06-25 21:45:13 UTC
+- 最新运行日期：2026-06-26
+- 运行时间：2026-06-26 20:28:23 UTC
 - 运行状态：成功
-- 本次总论文数：5
-- 精读区：1
-- 速读区：4
+- 本次总论文数：7
+- 精读区：0
+- 速读区：7
 
 ### 今日简报（AI）
-今日研究聚焦空中智能体预测与控制，精读Transformer-MDN非合作障碍轨迹预测获9.0高分，速读覆盖四旋翼零样本世界模型与多智能体持续协作及低方差优化。  
-最值得关注的是AeroCast的概率性三维轨迹预测方法，以及SkyJEPA在四旋翼零样本迁移中的世界模型学习。  
-建议优先精读AeroCast理解非合作目标的预测架构，再结合SkyJEPA探索仿真到现实的控制策略。
-- 详情：[/202606/25/README](/202606/25/README)
+今日速读7篇论文，聚焦主动感知决策、图对比迁移多智能体强化学习及绳缆无人机协同控制三大方向。  
+最值得关注的是主动感知与延迟决策轨迹优化（7.0分）和GCT-MARL（7.0分），前者提升目标识别鲁棒性，后者实现样本高效的多智能体协作。  
+建议关注感知-决策闭环框架在不确定环境中的优势，以及图对比迁移学习在复杂任务中的扩展潜力。
+- 详情：[/202606/26/README](/202606/26/README)
 
 ### 精读区论文标签
-1. [AeroCast: Probabilistic 3D Trajectory Prediction for Non-Cooperative Aerial Obstacles via Transformer-MDN Architecture](/202606/25/2606.25122v1-aerocast-probabilistic-3d-trajectory-prediction-for-non-cooperative-aerial-obstacles-via-transformer-mdn-architecture)  
-   标签：评分：9.0/10、query:ui
-   evidence：针对非合作空中障碍物的概率三维轨迹预测，直接支持追逃规划
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [SkyJEPA: Learning Long-Horizon World Models for Zero-Shot Sim-to-Real Control of Quadrotors](/202606/25/2606.23444v2-skyjepa-learning-long-horizon-world-models-for-zero-shot-sim-to-real-control-of-quadrotors)  
+1. [Active Sensing and Deferred-Decision Trajectory Optimization for Robust Target Identification](/202606/26/2606.22277v1-active-sensing-and-deferred-decision-trajectory-optimization-for-robust-target-identification)  
    标签：评分：7.0/10、query:ui
-   evidence：四旋翼无人机世界模型，可支撑RL决策
-2. [Offline Multi-agent Continual Cooperation via Skill Partition and Reuse](/202606/25/2606.25389v1-offline-multi-agent-continual-cooperation-via-skill-partition-and-reuse)  
+   evidence：面向目标识别的轨迹优化，可应用于追逃博弈
+2. [GCT-MARL: Graph-Based Contrastive Transfer for Sample-Efficient Cooperative Multi-Agent Reinforcement Learning](/202606/26/2606.25073v1-gct-marl-graph-based-contrastive-transfer-for-sample-efficient-cooperative-multi-agent-reinforcement-learning)  
    标签：评分：7.0/10、query:ui
-   evidence：离线多智能体持续技能发现与重用
-3. [Low Variance Trust Region Optimization with Independent Actors and Sequential Updates in Cooperative Multi-agent Reinforcement Learning](/202606/25/2606.25526v1-low-variance-trust-region-optimization-with-independent-actors-and-sequential-updates-in-cooperative-multi-agent-reinforcement-learning)  
-   标签：评分：7.0/10、query:ui
-   evidence：合作多智能体强化学习的低方差信任区域优化
-4. [Backpropagating Through Simulation: Analytic Policy Gradients for Sample and Learning Efficient Differentiable Continuous Control](/202606/25/2606.21525v1-backpropagating-through-simulation-analytic-policy-gradients-for-sample-and-learning-efficient-differentiable-continuous-control)  
+   evidence：多智能体强化学习迁移方法，可应用于无人机蜂群
+3. [Contraction-based Neural Control for Cooperative Aerial Payload Transportation with Variable-length Cables](/202606/26/2606.20127v1-contraction-based-neural-control-for-cooperative-aerial-payload-transportation-with-variable-length-cables)  
    标签：评分：6.0/10、query:ui
-   evidence：分析策略梯度用于可微连续控制，可应用于无人机追击任务
+   evidence：面向载荷运输的多无人机协同控制，与多机协同相关
+4. [Adversarial observations in probabilistic State-Space Models for robust Reinforcement Learning](/202606/26/2606.20880v1-adversarial-observations-in-probabilistic-state-space-models-for-robust-reinforcement-learning)  
+   标签：评分：6.0/10、query:ui
+   evidence：针对状态空间模型的对抗鲁棒性强化学习，适用于安全无人机操作
+5. [ASALT: Adaptive State Alignment for Lateral Transfer in Multi-agent Reinforcement Learning](/202606/26/2606.24601v1-asalt-adaptive-state-alignment-for-lateral-transfer-in-multi-agent-reinforcement-learning)  
+   标签：评分：6.0/10、query:ui
+   evidence：多智能体强化学习迁移，可应用于无人机蜂群
+6. [Multi-Agent Goal Recognition with Team- and Goal-Conditioned Reinforcement Learning and Factorized Branch-and-Bound](/202606/26/2606.25978v1-multi-agent-goal-recognition-with-team--and-goal-conditioned-reinforcement-learning-and-factorized-branch-and-bound)  
+   标签：评分：6.0/10、query:ui
+   evidence：多智能体强化学习结合团队目标条件用于无人机监视，可迁移至无人机集群协同
+7. [Deterministic Pareto-Optimal Policy Synthesis for Multi-Objective Reinforcement Learning](/202606/26/2606.26397v1-deterministic-pareto-optimal-policy-synthesis-for-multi-objective-reinforcement-learning)  
+   标签：评分：6.0/10、query:ui
+   evidence：多目标强化学习方法，可应用于无人机任务中的多目标优化
 
 
 <div class="dpr-home-promo-card">
