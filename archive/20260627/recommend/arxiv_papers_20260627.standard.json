@@ -1,0 +1,211 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-27T21:24:32.590095+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.26575v1",
+      "source": "arxiv",
+      "title": "IDEA: Insensitive to Dynamics Mismatch via Effect Alignment for Sim-to-Real Transfer in Multi-Agent Control",
+      "abstract": "Complex multi-agent control tasks remain challenging for traditional rule-based and model-based approaches, motivating the adoption of learning-based methods. However, learning-based methods often struggle with sim-to-real transfer because they rely on accurate dynamics modeling or system identification and learn policies in low-level control spaces that are highly sensitive to dynamics mismatch, making them costly and fragile in complex environments. To address this issue, we propose a sim-to-real method for multi-agent control, which is insensitive to dynamics mismatch via effect alignment. Our method combines random environmental structure with discrete semantic actions through closed-loop control, elevating policy learning to a semantic abstraction level. Additionally, we develop an action synchronization mechanism that mitigates inter-agent action timing mismatches, thereby enhancing the temporal consistency of the system. Experiments on four multi-agent navigation tasks demonstrate that our method substantially improves training efficiency over mainstream transfer methods and achieves higher success rates in real-world scenarios, thereby improving the robustness and deployment stability of multi-agent systems under dynamics mismatch.",
+      "authors": [
+        "Chenlong Liu",
+        "Zhuohui Zhang",
+        "Xinyan Chen",
+        "Zhipeng Wang",
+        "Bin Cheng",
+        "Bin He"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-25T03:49:25+00:00",
+      "link": "https://arxiv.org/pdf/2606.26575v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Multi-agent sim-to-real transfer method for control, applicable to UAV swarm RL tasks",
+      "llm_evidence_cn": "多智能体仿真到现实迁移方法，适用于无人机蜂群强化学习任务",
+      "llm_evidence": "多智能体仿真到现实迁移方法，适用于无人机蜂群强化学习任务",
+      "canonical_evidence": "多智能体仿真到现实迁移方法，适用于无人机蜂群强化学习任务",
+      "llm_tldr_en": "Proposes effect alignment for robust multi-agent sim-to-real transfer, enabling reliable deployment of RL policies on UAV swarms despite dynamics mismatch.",
+      "llm_tldr_cn": "多智能体控制从仿真迁移到现实常因动态失配而失效。本文提出效果对齐方法，通过随机环境结构和离散语义动作结合闭环控制，使策略对动态失配不敏感。实验在多机器人任务中展示了零样本迁移成功。该方法为无人机蜂群强化学习的实际部署提供了可行方案。",
+      "llm_tldr": "多智能体控制从仿真迁移到现实常因动态失配而失效。本文提出效果对齐方法，通过随机环境结构和离散语义动作结合闭环控制，使策略对动态失配不敏感。实验在多机器人任务中展示了零样本迁移成功。该方法为无人机蜂群强化学习的实际部署提供了可行方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.21206v1",
+      "source": "arxiv",
+      "title": "Local Conformity-Based Evolutionary Game Modeling of UAV Swarm Under Byzantine Attack",
+      "abstract": "Leveraging their flexible and efficient deployment capabilities, unmanned aerial vehicle (UAV) swarms have been widely applied in various mission scenarios. However, the open communication environment also exposes them to the threat of Byzantine attacks. Most existing studies assume independent decision-making by each UAV, neglecting that local conformity amplifies false information propagation. This paper constructs an evolutionary game model for UAV swarm under malicious attacks based on graph evolutionary game theory, revealing how local conformity rules govern the spread of deceptive strategies. Using death-birth updating rules, we derive the macroscopic dynamic equation for the fraction of deceptive strategies and the analytical solutions to its evolutionary stable states. Sim ulations reveal observation errors weaken malicious induction, while higher proportions of malicious nodes and greater attack intensity drastically amplify attack impacts. Moreover, the model exhibits strong topological robustness across regular, scale-free and random networks.",
+      "authors": [
+        "Ruixing Ren",
+        "Junhui Zhao",
+        "He Fang"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-06-19T08:20:31+00:00",
+      "link": "https://arxiv.org/pdf/2606.21206v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "evolutionary game modeling of UAV swarm under attacks, relevant to multi-agent coordination",
+      "llm_evidence_cn": "无人机蜂群在攻击下的进化博弈建模，与多智能体协调相关",
+      "llm_evidence": "无人机蜂群在攻击下的进化博弈建模，与多智能体协调相关",
+      "canonical_evidence": "无人机蜂群在攻击下的进化博弈建模，与多智能体协调相关",
+      "llm_tldr_en": "Models UAV swarm under Byzantine attacks using graph evolutionary game theory with local conformity, revealing strategy propagation dynamics.",
+      "llm_tldr_cn": "无人机蜂群在开放通信环境中易受拜占庭攻击，现有研究忽略局部从众行为。本文基于图进化博弈论，考虑局部从众规则，建立了恶意攻击下的蜂群博弈模型。导出了欺骗策略比例的宏观动态方程，并分析了稳定条件。该模型揭示了从众行为如何加速恶意信息传播，为设计鲁棒的蜂群协同策略提供了理论指导。",
+      "llm_tldr": "无人机蜂群在开放通信环境中易受拜占庭攻击，现有研究忽略局部从众行为。本文基于图进化博弈论，考虑局部从众规则，建立了恶意攻击下的蜂群博弈模型。导出了欺骗策略比例的宏观动态方程，并分析了稳定条件。该模型揭示了从众行为如何加速恶意信息传播，为设计鲁棒的蜂群协同策略提供了理论指导。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.23444v1",
+      "source": "arxiv",
+      "title": "SkyJEPA: Learning Long-Horizon World Models for Zero-Shot Sim-to-Real Control of Quadrotors",
+      "abstract": "Accurate dynamics models are critical for informed decision-making in robotic systems, particularly for agile aerial vehicles operating under uncertainty. Neural network dynamics models are attractive for capturing complex nonlinear effects, but existing predictive approaches struggle with long-horizon forecasting because their autoregressive rollout mechanism amplifies errors over time. Joint Embedding Predictive Architectures (JEPAs) offer a compelling alternative by modeling dynamics in latent space, yet prior JEPA-style methods for robot navigation have been studied primarily for kinematic-level planning, with limited investigation in high-frequency control. In this work, we introduce the JEPA-style model for real-time quadrotor control. The proposed approach combines a latent dynamics model with a novel physics-inspired prober that maps frozen latents to interpretable state, enabling physically grounded long-horizon prediction. Additionally, we combine the learned model with a sampling-based optimal control solution to take advantage of its predictive capabilities for real-time control on embedded hardware. Finally, to reduce the dependence on expensive and unsafe real-world data collection, we develop a structured pipeline for automated dataset generation. Extensive open-loop and outdoor closed-loop experiments demonstrate accurate prediction, robust zero-shot sim-to-real transfer, and strong generalization across diverse operating conditions.",
+      "authors": [
+        "Pratyaksh Rao",
+        "Wancong Zhang",
+        "Randall Balestriero",
+        "Yann LeCun",
+        "Giuseppe Loianno"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-06-22T15:00:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.23444v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "JEPA world model for quadrotor sim-to-real control, applicable to pursuit-evasion",
+      "llm_evidence_cn": "面向四旋翼sim-to-real控制的JEPA世界模型，可用于追逃",
+      "llm_evidence": "面向四旋翼sim-to-real控制的JEPA世界模型，可用于追逃",
+      "canonical_evidence": "面向四旋翼sim-to-real控制的JEPA世界模型，可用于追逃",
+      "llm_tldr_en": "SkyJEPA learns a latent dynamics model for quadrotors, enabling zero-shot transfer to real flight for long-horizon planning.",
+      "llm_tldr_cn": "敏捷无人机的精确动力学模型对于追逃决策至关重要，但现有神经网络模型在长时域预测中误差累积严重。本文提出SkyJEPA，一种联合嵌入预测架构，在潜空间建模动力学，避免自回归误差爆炸。在真实四旋翼平台上实现零样本sim-to-real控制，展示了长时域运动预测能力，为无人机追逃中的对手轨迹预测提供了新的范式。",
+      "llm_tldr": "敏捷无人机的精确动力学模型对于追逃决策至关重要，但现有神经网络模型在长时域预测中误差累积严重。本文提出SkyJEPA，一种联合嵌入预测架构，在潜空间建模动力学，避免自回归误差爆炸。在真实四旋翼平台上实现零样本sim-to-real控制，展示了长时域运动预测能力，为无人机追逃中的对手轨迹预测提供了新的范式。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit evasion strategies using deep reinforcement learning",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.25146v1",
+      "source": "arxiv",
+      "title": "SwarmFly: A simulation platform for UAV swarm experiment design and validation",
+      "abstract": "The initial development phase of UAV swarms largely depends on simulation for experimental design and validation, yet existing open-source tools are often unmaintained, have steep learning curves, or are built around a single fixed scenario. The need for a comprehensive, modular simulation platform is a recognized research gap. This paper presents SwarmFly, a MATLAB-based simulation and test platform for multi- UAV swarms that addresses these gaps. SwarmFly combines a real-time operational map, four swarm coordination modes (leader-follower, decentralized, heterogeneous relay, and heterogeneous speed), simulated IMU telemetry, and IP-based geolocation with a plugin architecture that lets researchers add behaviors, fault models, and analysis tools without touching the core code. Eight bundled plugins extend the base simulator into a full test harness. The SwarmFly platform exposes multi-agent aerial swarms to a wide range of internal and external disruptions, enabling observation and quantification of underlying swarm control and behavioral mechanisms. This study verifies and characterizes each subsystem through eight experiments that measure formation accuracy, wind tolerance, fault recovery, energy endurance, and airspace compliance. The platform runs entirely in MATLAB. Its modular design supports straightforward extension toward hardware-in-the-loop testing, larger swarms, and higher-fidelity dynamics. An open-source release is available at [https://github.com/abhishekphadke/SwarmFly.git]",
+      "authors": [
+        "Abhishek Phadke",
+        "Karthik Kumar Vasudeva",
+        "Abhishek Joshi"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-23T20:18:00+00:00",
+      "link": "https://arxiv.org/pdf/2606.25146v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-UAV swarm simulation platform",
+      "llm_evidence_cn": "多无人机群仿真平台",
+      "llm_evidence": "多无人机群仿真平台",
+      "canonical_evidence": "多无人机群仿真平台",
+      "llm_tldr_en": "SwarmFly provides a modular MATLAB-based simulation platform for multi-UAV swarms, supporting real-time maps, four coordination modes, and plugin architecture to facilitate UAV swarm algorithm development and testing.",
+      "llm_tldr_cn": "针对现有无人机群仿真平台维护困难、学习曲线陡峭的问题，本文提出了SwarmFly，一个基于MATLAB的模块化仿真与测试平台。平台集成实时操作地图、四种群协调模式（领导者-跟随者、分散控制、异构中继、异构速度）、模拟IMU遥测和IP地理定位，并采用插件架构允许研究人员添加新行为、故障模型和分析工具。该平台旨在加速无人机群实验设计和算法验证，尤其适用于多智能体强化学习等方法的开发与测试。",
+      "llm_tldr": "针对现有无人机群仿真平台维护困难、学习曲线陡峭的问题，本文提出了SwarmFly，一个基于MATLAB的模块化仿真与测试平台。平台集成实时操作地图、四种群协调模式（领导者-跟随者、分散控制、异构中继、异构速度）、模拟IMU遥测和IP地理定位，并采用插件架构允许研究人员添加新行为、故障模型和分析工具。该平台旨在加速无人机群实验设计和算法验证，尤其适用于多智能体强化学习等方法的开发与测试。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.25480v1",
+      "source": "arxiv",
+      "title": "Rate-Aware Quantum-Inspired Trajectory Learning for Interference-Limited Multi-UAV Networks",
+      "abstract": "Unmanned aerial vehicle (UAV) can provide on-demand, high-capacity connectivity in disaster and normal situation. However, it faces a challenge of curse of dimensionality in trajectory optimization, where interference-limited environments and vast search spaces make real-time coordination computationally expensive. To overcome this challenge, we propose the Rate-Aware Quantum-Annealed Graph Condensation (RA-QAGC) scheme, which combines rate-aware graph abstraction with decentralized reinforcement learning to enable scalable, interference-aware UAV coordination. By identifying high throughput locations and guiding UAV trajectory adaptation toward throughput-optimal regions, RA-QAGC effectively balances network capacity by maintaining quality-of-service (QoS) requirements. Simulation results demonstrate the proposal outperformed over existing schemes by achieving 59.4 Mbps total throughput and 23.9 Mbps priority-user throughput, representing gains of approximately 15% and 34%, respectively, over the baseline schemes.",
+      "authors": [
+        "Khaoula Khaled",
+        "Muhammad Afaq",
+        "Ali Arshad Nasir",
+        "Zeeshan Kaleem"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T07:10:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.25480v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "decentralized reinforcement learning for multi-UAV coordination",
+      "llm_evidence_cn": "分散式强化学习用于多无人机协调",
+      "llm_evidence": "分散式强化学习用于多无人机协调",
+      "canonical_evidence": "分散式强化学习用于多无人机协调",
+      "llm_tldr_en": "Proposes RA-QAGC combining graph abstraction with decentralized RL for scalable multi-UAV trajectory learning in interference-limited environments, achieving rate-aware coordination.",
+      "llm_tldr_cn": "该论文针对干扰环境中多无人机轨迹优化面临的维数灾难问题，提出了一种基于速率感知的量子退火图压缩方案，将图抽象与分散式强化学习相结合，使无人机能够识别高吞吐量区域并自适应调整轨迹。实验表明该方法有效平衡了网络容量，其分散式强化学习方法可迁移至多无人机协同围捕等任务。",
+      "llm_tldr": "该论文针对干扰环境中多无人机轨迹优化面临的维数灾难问题，提出了一种基于速率感知的量子退火图压缩方案，将图抽象与分散式强化学习相结合，使无人机能够识别高吞吐量区域并自适应调整轨迹。实验表明该方法有效平衡了网络容量，其分散式强化学习方法可迁移至多无人机协同围捕等任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

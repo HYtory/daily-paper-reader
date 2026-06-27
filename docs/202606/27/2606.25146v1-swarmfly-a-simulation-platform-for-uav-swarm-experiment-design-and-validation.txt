@@ -1,0 +1,669 @@
+Title: SwarmFly: A simulation platform for UAV swarm experiment design and validation
+
+URL Source: https://arxiv.org/pdf/2606.25146v1
+
+Published Time: Thu, 25 Jun 2026 00:12:49 GMT
+
+Number of Pages: 36
+
+Markdown Content:
+# SwarmFly: A simulation platform for UAV swarm experiment design and validation 
+
+# Abhishek Phadke ∗1, Karthik Kumar Vasudeva †2, and Abhishek Joshi ‡31School of Engineering and Computing, Christopher Newport University 
+
+> 2
+
+# Department of Mathematics and Statistics, Texas Tech University 
+
+> 3
+
+# Department of Computer Science, Texas A&M University-Corpus Christi 
+
+# 1 Abstract 
+
+The initial development phase of UAV swarms largely depends on simulation for experimental design and validation, yet existing open-source tools are often unmaintained, have steep learning curves, or are built around a single fixed scenario. The need for a comprehensive, modular simulation platform is a recognized research gap. This paper presents SwarmFly, a MATLAB-based simulation and test platform for multi-UAV swarms that addresses these gaps. SwarmFly combines a real-time operational map, four swarm coordination modes (leader-follower, decentralized, heterogeneous relay, and heterogeneous speed), simulated IMU telemetry, and IP-based geolocation with a plugin architecture that lets researchers add behaviors, fault models, and analysis tools without touching the core code. Eight bundled plugins extend the base simulator into a full test harness. The SwarmFly platform exposes multi-agent aerial swarms to a wide range of internal and external disruptions, enabling observation and quantification of underlying swarm control and behavioral mechanisms. This study verifies and characterizes each subsystem through eight experiments that measure formation accuracy, wind tolerance, fault recovery, energy endurance, and airspace compliance. The platform runs entirely in MATLAB. Its modular design supports straightforward extension toward hardware-in-the-loop testing, larger swarms, and higher-fidelity dynamics. An open-source release is available at [https://github.com/abhishekphadke/SwarmFly.git] 
+
+Keywords: UAV, swarm, simulation, experiment-framework 
+
+# 2 Introduction 
+
+The domain of UAV swarms and their applications in agriculture [ 1], defense [ 2], emergency communications [3 ], search and rescue [ 4], entertainment [ 5], and other areas is increasing at a fast pace [ 6 ]. UAV swarms are subject to a broad range of failures that can lead to crashes and damage to life and property, and subsequent mission failure [7]. It is vital to research UAV swarm resiliency features, applications, and improvements. However, the tools available to conduct this research have not kept pace with the problems they must address. Researchers studying swarm resiliency need to subject a coordinating group of agents to faults, 
+
+> ∗Email: abhishek.phadke@cnu.edu
+> †Email: karthik.vasudeva@ttu.edu
+> ‡Email: ajoshi5@islander.tamucc.edu
+
+1
+
+> arXiv:2606.25146v1 [cs.RO] 23 Jun 2026
+
+environmental disturbances, energy constraints, and airspace restrictions, and then measure how the swarm responds. In practice, this means either extending a simulator never designed for such experiments or, more commonly, building a special environment from scratch for each study. Both paths are costly: the first fights the assumptions of the original tool, and the second sacrifices the consistency and comparability that accumulate when multiple studies share a common platform. Existing open-source swarm simulators compound the problem. Several are no longer maintained [ 8 ], others demand substantial programming investment before a first experiment can run, and most are built around a single coordination scheme or scenario rather than a reconfigurable test harness. The result is a recognized gap: there is no lightweight, extensible, and actively maintained platform that lets a researcher inject a fault, vary the wind, switch coordination modes, and quantify the outcome without rewriting the simulator each time. This paper addresses that gap with SwarmFly, a MATLAB-based simulation and test platform for multi-UAV swarms. SwarmFly pairs a real-time operational core with a plugin architecture that lets researchers add behaviors, fault models, and analysis tools without modifying the underlying code. The contributions of this work are fourfold: (i) a modular, handle-class simulation core that runs in real time and is deployable as a MATLAB toolbox or in the browser; (ii) four swarm coordination modes spanning leader-follower, decentralized, and heterogeneous configurations; (iii) a suite of eight plugins that extend the base simulator into a test harness covering fault injection, performance metrics, energy modeling, collision avoidance, geofencing, 3D visualization, and automated scenario regression; and (iv) a set of eight experiments that exercise each subsystem and characterize swarm behavior across formation, wind, fault, energy, and airspace-compliance conditions. UAV swarm simulation platforms are integral to the experimental design and validation process. Novel algorithms, payloads, and even physical robotic platforms require extensive testing in simulation before deployment in the real world [ 9 ]. This keeps development and hardware costs in check while reducing the risk of accidents and damage. Simulation platforms also enable rapid prototyping, automated testing, and the enforcement of a variety of conditions and faults. For example, faults such as motor freeze, GPS denial, and battery failures can cause aerial platforms to crash. It is much more viable to test these conditions in simulation multiple times before hardware tests are conducted. As robotic platforms function in simulated space, they generate vital operational log data that can be used for various purposes. The primary function is to demonstrate proof of work for the platform being tested. Additionally, these logs can be used to create platform policies and, in some cases, to train ML models. For example, experiments conducted in vehicle movement, navigation, and communication in simulation platforms collected images and sensor outputs that were used to train models for better performance of those vehicles in the real world [ 10 , 11 , 12 , 13 ]. Experiments on novel implementations in UAV swarms are often conducted in standalone deployments, where researchers specifically code environments, UAV agents, obstacles, communication policies, and other components, and then present results. However, it is difficult to maintain consistency in such experiments across different environments, dependency versions, and parameters. Cross-platform, regularly updated, open source simulators can help address these challenges. Platforms such as CoppeliaSim [ 14 ] and Webots [ 15 ] [ 16 ] are good candidates to test novel implementations in robotics. However, they often have a learning curve, which can take time away from researchers. SwarmFly is released under the [MIT] license with current version tagged at v2.0.0 and several upgrades currently in beta. It requires MATLAB R2025b and no additional toolboxes. The eight experiments in Section 6 ship as runnable scripts in the repository, each seeded as described so that the reported values reproduce on the same MATLAB release. 
+
+# 3 Background 
+
+The simulation tool presented in this study aims to address a critical gap in UAV swarm education [ 17 ], testing, and experimental validation. The study presents SwarmFly , a MATLAB-based simulation and test 2platform for multi-UAV swarms. Figure 1 shows the main screen for the platform. 
+
+Figure 1: SwarmFly Main screen (v2.x) During development, a base review and assessment of open-source swarm simulator platforms was conducted to compare and contrast the current work with existing tools [ 18 ]. Table 1 outlines existing tools along with their direct links to the code repository as of May 31, 2026 . Although Swarmlab [ 19 ] has not been updated in the past 6 years, it is included in the background study because several of its features have inspired SwarmFly’s functionality. In addition to outlining the development of SwarmFly, this study provides researchers with additional tools, enabling them to make informed decisions about the best tools for their UAV swarm simulation requirements. 3Table 1: List of current open source UAV Swarm simulation tools 
+
+Code link & study reference when available Tool name Simulator Purpose Program Stack 
+
+[19] & Link SwarmLab A single and multi-drone UAV simulator with wind, obstacle, and path-planning effects MATLAB Link skysync Swarm orchestration tool for turning real-time drone telemetry into coordinated multi-UAV missions Flask, Python, MATLAB [20] & Link UavNetSim Model UAV communication Networks Python Link uav-swarm-sim UAV swarm simulator to demonstrate decentralized ad-hoc networks in autonomous multi-copters Python, C++ Link Sky Weave UAV swarm real-time networking, distributed autonomy, and telemetry visualization C++, Next .js [21] [22] [23] & Link Mavswarm Simulating heterogeneous quadrotor swarms with support for quadrotor control, trajectory optimization and receding horizon planning (RHP) C++ Link Swarm sync sim Synchronized (lock-stepped) simulation platform for simulating various kinds of robots, including quadrotors, uncrewed ground vehicles (UGV), fixed-wing UAVs C++ and C 
+
+# 4 Simulator framework 
+
+The simulator was built around two requirements: the simulation core must run fast enough for real-time visualization at 10–30 Hz, and the system must be modular, allowing users to add new behaviors, fault models, and analysis tools without modifying the core framework. The design resolves this through a handle-class architecture with a plugin system that hooks into the simulation loop at instance points. 
+
+# 4.1 Simulator architecture 
+
+SwarmFly is implemented as a single MATLAB handle class ( SwarmFly.m ) with all simulation state, GUI construction, and rendering logic in one file. A handle class was chosen over a value class for a practical reason: every callback, timer function, and plugin receives a reference to the same object, so writes to 
+
+app.UAVPositions in a plugin’s onStep function are immediately visible to the rendering code that runs a few lines later in the same tick. There is no copying, no message passing, and no synchronization overhead. The application launches a uifigure window whose size adapts to the host screen resolution. The GUI is organized around a uitabgroup with four core tabs (Map & Control, Telemetry, Settings, and Modules), plus any additional tabs created by enabled plugins. All layouts use uigridlayout containers, which automatically resize when the user drags the window edges. 44.2 Simulation loop 
+
+A timer object in fixed-rate mode drives the simulation. At each tick, the simStep() method executes the following sequence: 1. Advance simulation time: t ← t + ∆ t, where ∆ t = 1 /f update .2. Compute the wind disturbance vector from speed and direction inputs using (7). 3. Run the active swarm mode’s physics function. This is where the core flight dynamics happen: waypoint tracking, formation control, or decentralized swarming, depending on the selected mode. Each function updates app.UAVPositions and app.UAVHeadings in place. 4. Apply altitude convergence. A proportional controller (8) pulls each UAV toward the cruise altitude. This runs after the mode-specific physics, so that altitude corrections do not interfere with the horizontal dynamics. 5. Record telemetry. Position and simulated IMU readings (accelerometer, gyroscope, magnetometer) are appended to a rolling buffer of 500 samples per UAV. The IMU values are derived from position finite differences plus Gaussian noise, following the sensor models in (24)–(29). 6. Execute plugin step functions. The loop iterates over every entry in the plugin registry and calls 
+
+onStep(app) for each enabled plugin that declared hasStep = true . Because plugins receive the app 
+
+handle, they can read and write any simulation state. A try-catch block wraps each call so that a crashing plugin does not halt the simulation. 7. Update map graphics. Persistent graphics handles (patches, lines, text objects) have their XData , YData ,
+
+Visible , and Color properties updated to reflect the current UAV positions. No graphics objects are created or destroyed during this step. 8. Update telemetry plots, but only when the Telemetry tab is the active tab. This conditional check avoids spending render time on six axes. 9. Call drawnow limitrate to flush the graphics pipeline. The limitrate flag throttles actual screen redraws to roughly 20 FPS regardless of the timer frequency, which prevents the GUI from becoming unresponsive at high update rates. The ordering of steps 3 through 6 is load-bearing. The physics engine writes positions first. Plugins then modify those positions (fault injection adds drift, collision avoidance pushes UAVs apart). The renderer at step 7 sees the final, post-plugin state. This means multiple plugins compose their effects naturally: a GPS drift fault and a collision avoidance correction both write to the same position array, and the map shows the combined result. 
+
+# 4.3 Rendering strategy 
+
+Early versions of the simulator used a create-and-destroy pattern: every frame deleted all graphical objects via 
+
+findobj and recreated them. This approach caused visible flickering and consumed most of the per-tick time budget. The current design creates all persistent graphics objects once during initialization ( initMapGraphics ,
+
+initTelemetryGraphics ) and updates only their data properties each tick. For the map, this means 4 patch objects (UAV triangles), 4 text objects (labels), 4 line objects (trails), 6 line objects (pairwise connections), 6 text objects (distance labels), 1 line object (relay link), and 1 plot object (base station). In the telemetry tab, 24 line objects represent 4 UAVs across 6 subplots, with up to 3 field components each. These handles are 5stored in cell arrays on the app object and indexed by UAV number. The rendering cost per tick reduces to property assignment ( handle.XData = newValues ), which MATLAB handles efficiently without triggering full object reconstruction. Combined with drawnow limitrate , the result is smooth animation even with all plugins active. 
+
+# 4.4 Swarm coordination modes 
+
+SwarmFly has four coordination modes, each implemented as a separate method that simStep dispatches via a switch statement. 1. Leader-Follower One UAV (selectable via the GUI) acts as the leader. If waypoints have been placed, the leader flies toward the next waypoint using bearing and speed calculations [ 24 ] from (3) and (13) . When no waypoints are active, the leader follows a circular orbit trajectory (19) with a 40 m radius. The remaining three UAVs maintain a diamond formation by tracking target positions computed as the leader’s position plus scaled offsets (10) – (11) . Follower velocity is determined by a proportional controller (9) with a gain of Kp = 2 .0 and speed limited to 1 .5 × Vc. When the position error exceeds the maximum swarm distance, the error vector is clamped according to (12) to prevent followers from overshooting during recovery. 2. Decentralized All four UAVs operate independently using a Reynolds-inspired Boids model [ 25 ]. Each UAV’s velocity is the sum of three components (18) : a stochastic wander term (17) that produces smooth, individualized trajectories through per-UAV phase offsets; a separation force (16) that repels UAVs from neighbors closer than 10 m; and a cohesion force (15) that pulls each UAV toward the swarm centroid (14) with a gain of Kc = 0 .3. Together, these three forces produce emergent flocking behavior in which the swarm remains loosely grouped without any explicit leader or formation geometry. 3. Heterogeneous Relay UAVs 1–3 operate in leader-follower mode. UAV-4 is designated as a communication relay and positions itself at 40% of the distance between the base station (origin) and the centroid of the active UAVs (20) .The relay’s speed is capped at 3 m/s, which keeps it relatively stationary compared to the maneuvering swarm. Wind effects on the relay are halved to simulate a hovering platform with lower drag exposure. 4. Heterogeneous Speed UAV-1 operates as a fast scout at twice the cruise speed (21) . UAVs 2–4 follow at 0.6 times the cruise speed in a V-formation behind the scout. The V-formation geometry is defined by angular offsets (22) relative to the scout’s heading, with a 25 m separation radius (23) . The speed asymmetry tests whether a slower payload group can keep formation contact with a scout that pulls ahead during long traversals. Prior work on heterogeneous swarms has shown a clear change in performance on vital metrics, such as area coverage, when agents with different speeds are part of a swarm [26]. 
+
+# 4.5 Telemetry and sensor simulation 
+
+Each UAV generates 13 telemetry channels per tick: three position components ( x, y, z), three accelerometer axes, three gyroscope axes, three magnetometer axes, and a timestamp. The accelerometer model (24) uses first-order finite differencing of position to approximate acceleration, with additive Gaussian noise (σa = 0 .3 m/s 2). The vertical channel includes a gravitational bias (25) . The gyroscope model produces noise-dominated output on the roll and pitch axes, with a heading-correlated signal on yaw (27) . The 6magnetometer model (28) outputs a constant Earth-field approximation with per-axis noise. These are not high-fidelity sensor models. Their purpose is to produce telemetry data with realistic noise characteristics and plausible magnitudes, sufficient for testing data processing pipelines, plotting infrastructure, and fault detection algorithms. Researchers who need higher fidelity can replace the sensor model functions or inject real recorded data through the plugin interface. Telemetry data is stored in a struct array ( app.TelHistory ), one element per UAV, with each field as a row vector that grows each tick and is trimmed to the most recent 500 samples. The rolling buffer prevents memory from growing unboundedly during long simulation runs. Figure 2 shows an example of the standard telemetry dashboard. 
+
+Figure 2: A view of the telemetry panel for 4 UAV agents on a standard run 
+
+# 4.6 GPS integration 
+
+On startup, SwarmFly attempts to geolocate the host machine by querying the ip-api.com REST API via MATLAB’s webread function. If the query succeeds, the returned latitude and longitude are stored as the base station origin and displayed in the map title. The simulation operates in a local East-North-Up (ENU) coordinate frame centered at this origin, with all positions expressed in meters. If the API call fails (no internet connection, a blocked endpoint), the application defaults to coordinates near Newport News, Virginia (37.0 °N, 76.0 °W) and operates in local-frame mode. GPS can be reacquired at any time via a button on the control panel. 
+
+# 4.7 Plugin architecture 
+
+The plugin system is the primary mechanism for extending SwarmFly without modifying the core application. Plugins are ordinary MATLAB function files that follow the naming convention ( swf *.m ) and return a struct that describes their capabilities and provides callback function handles. 1. Plugin Discovery 7At startup, the discoverPlugins() method scans the plugins/ subfolder for files matching swf *.m .Each file is called as a function, and the returned struct is validated for required fields ( id , name )and augmented with defaults for optional fields ( description , version , hasTab , hasStep , callback handles). The struct is appended to a registry array, and the corresponding PluginEnabled.(id) flag is set to false . If a file throws an error when called, the error is logged, and the file is skipped. 2. Plugin Lifecycle Enabling a plugin triggers three actions in sequence. First, onLoad(app) is called, where the plugin typically initializes its state using app.setState(id, key, value) . Second, if the plugin declared 
+
+hasTab = true , a new uitab is created in the tab group and passed to the plugin’s buildTab(app, tab) callback, where the plugin constructs its own GUI with whatever controls and plots it needs. Third, the plugin’s onStep handle is now eligible for execution during the simulation loop. Disabling a plugin reverses these steps: onUnload(app) is called for cleanup, the tab is deleted, and the state namespace is cleared. 3. State Management Each plugin gets an isolated namespace within app.PluginStates , a nested struct keyed by plugin ID. The API has two methods: setState(id, key, value) and getState(id, key) . This keeps plugin data separated from both the core simulation state and other plugins. The namespace is automatically created on enable and destroyed on disable. One constraint that bit us early: plugin IDs must be valid MATLAB struct field names, which means no leading digits and no spaces. A plugin with the ID 
+
+3d view caused MATLAB to reject the field name entirely. Renaming it to view3d fixed the problem. 4. Plugin-to-GUI Communication Plugins that need to update their GUI elements from within onStep face a practical problem: the tab handle and its children are created in buildTab , but onStep runs in the timer callback context. The solution is tagging UI elements with unique strings during construction ( ’Tag’, ’my unique tag’ )and locating them at runtime with findobj(app.Fig, ’Tag’, ’my unique tag’) . This is wrapped in try-catch because the figure may be closing when the timer fires. 
+
+# 5 Simulator features and use cases 
+
+The base simulator provides the features outlined in the section above. The plugin capability allows users to load conditional modules for additional testing and framework validation. SwarmFly ships with eight plugins that collectively turn the base simulation into a test platform. This section describes each plugin’s purpose, implementation approach, and the scenarios in which it is most useful. All plugins follow the architecture described in Section 4.7 and can be turned on or off independently at runtime. 
+
+# 5.1 Fault injection 
+
+The fault injection plugin lets researchers intentionally inject faults during a running simulation. The user selects a fault type, picks a target UAV (or all four), sets a duration and intensity, and clicks inject. The plugin stores an active-faults list in its state namespace and processes it every tick in onStep .Figure 3 shows the settings screen for the plugin. 8Figure 3: Fault injection plugin settings The plugin implements eight fault types, each targeting a different aspect of the UAV state: 
+
+• GPS drift adds a sinusoidal position bias that grows with elapsed time (30) . The drift starts small and becomes increasingly obvious, which helps test whether a formation controller notices gradual sensor degradation. 
+
+• GPS denied replaces position updates with a random walk (31) , simulating a UAV that has lost satellite lock and is flying on dead reckoning with accumulating error. 
+
+• Motor failure forces altitude decay (32) at a rate proportional to the intensity parameter. The UAV loses altitude while maintaining horizontal motion, simulating partial thrust loss. 
+
+• Comm blackout injects large random position perturbations, simulating a UAV that can no longer receive formation correction commands and drifts unpredictably. 
+
+• Sensor noise spike corrupts the accelerometer telemetry with extreme noise (35) , useful for testing how IMU-dependent algorithms handle outlier readings. 
+
+• Frozen actuator locks the heading and makes the UAV drift in a straight line (33) , regardless of controller commands. 
+
+• Wind gust applies a sudden random-direction impulse (34) , simulating turbulence or wake effects [ 27 ]. 
+
+• Battery critical forces a controlled descent (32) at a higher rate than motor failure, simulating an emergency landing triggered by low charge. Each fault has an adjustable intensity multiplier ( I ∈ [0 .1, 3.0]) that scales the severity. Faults expire automatically after their specified duration, and the plugin’s GUI displays a live table showing each active fault’s type, target, remaining time, and intensity. Multiple faults can be active simultaneously across different UAVs, enabling compound failure testing. A typical experiment looks like this: inject a GPS denial on UAV-3 during a leader-follower waypoint mission and observe whether the remaining UAVs compensate, whether the formation degrades gracefully, and how long the swarm takes to recover after the fault clears. 
+
+# 5.2 Performance metrics 
+
+The metrics plugin computes six KPIs every tick and plots them on dedicated axes in its tab. These are the numbers you would report in a paper to characterize swarm behavior quantitatively. Swarm spread 
+
+(36) is the maximum pairwise distance between any two UAVs. It captures how far the swarm stretches in its worst case. Mean inter-UAV distance (37) averages all six pairwise distances, giving a smoother measure of overall dispersion. Centroid drift (38) tracks how far the swarm’s center of mass has moved 9from the base station, which matters for relay coverage analysis. Formation error (39) measures how well followers maintain their assigned offsets from the leader, expressed as the mean positional deviation from ideal positions. Altitude deviation (40) captures the average absolute difference between actual and commanded altitude across all UAVs. Link quality (41) reports the percentage of UAV pairs that are within communication range. These metrics are buffered to 1,000 samples and plotted as rolling time series. They update only when the metrics tab is visible, using the same conditional rendering approach as the core telemetry plots. Combined with the fault injection plugin, this creates a quantitative test workflow: inject a fault, observe the metric response in real time, and use the time-series data to compute recovery times, maximum excursions, and steady-state error values. Figure 4 shows a view of the metrics dashboard when the plugin is enabled. Figure 5 shows changes in swarm status and performance after a fault is injected. 
+
+Figure 4: Performance metrics dashboard 
+
+# 5.3 Battery and energy model 
+
+Real mission planning cannot ignore energy. The battery plugin simulates a 4S LiPo battery for each UAV using a first-order current-draw model (42) that accounts for hover load ( Ihover = 18 A), forward-flight load (Kv = 2 .0 A ·s/m), altitude penalty ( Kh = 0 .05 A/m above 20 m), and wind resistance ( Kw = 0 .5 A ·s/m). Total capacity is 5,000 mAh per UAV. Battery drain follows (43) , and voltage sag is modeled as a linear function of remaining capacity (44) , ranging from 16.8 V at full charge to 12.0 V at depletion. The plugin’s GUI shows a per-UAV status table with remaining mAh, percentage, voltage, current draw, and estimated remaining flight time (45) . A historical plot tracks battery percentage over time for all four UAVs. Warnings are logged at 20% and 10% remaining capacity. The model does not currently force a landing at depletion, but the Battery Critical fault type in the fault injection plugin can simulate that behavior. In practice, the energy model answers questions like: can a 10-minute waypoint mission with 8 m/s winds complete with 20% reserve across all UAVs? This provides an early-stage endurance feasibility check. The battery plugin GUI is 10 Figure 5: Changes in swarm status post fault injection shown in Figure 6. 
+
+# 5.4 Collision avoidance 
+
+The collision avoidance plugin adds a safety layer that runs after the physics engine and before rendering. Every tick, it computes pairwise distances for all UAV combinations and applies a repulsive force (47) when any pair falls below the safe distance (default 5 m). The force is proportional to the penetration depth and acts along the separation vector (46) , pushing both UAVs apart symmetrically (48) . The plugin tracks two counters: near-misses (distance below safe threshold) and collisions (distance below 40% of the safe threshold). Its GUI shows these counts, a slider to adjust the safe distance from 1–20 m, and a rolling plot of the minimum pairwise distance over time with a threshold line. The collision system gets a harder workout when combined with fault injection. Injecting a frozen actuator fault into one UAV in a tight formation and observing whether the separation forces prevent impact provides a concrete, measurable safety test. 
+
+# 5.5 Automated test scenarios 
+
+The scenario runner plugin defines six test profiles as struct arrays and executes them sequentially with automated setup, timing, and pass/fail evaluation. Each scenario specifies a swarm mode, waypoint sequence, wind conditions, duration, and maximum allowable swarm distance. When a scenario starts, the plugin calls the core app’s onReset , configures the mode and parameters, loads waypoints, and starts the simulation. During execution, it tracks the maximum observed swarm spread. When the timer expires, it stops the simulation and evaluates whether the spread stayed below twice the configured max distance. The six built-in scenarios cover the main operating conditions: calm and windy formation hold, waypoint navigation through a square pattern, decentralized cohesion under crosswind, relay endurance during an extended traverse, and 11 Figure 6: Battery status plugin GUI a fast-scout sprint testing speed-differential coordination. Running all six in sequence with the “Run All” button produces a results table with pass/fail verdicts, which gives a repeatable regression-style test suite. Adding new scenarios requires only appending to the struct array in the plugin’s onLoad function. No GUI changes are needed because the dropdown populates itself from the scenario names. Figure 7 shows the automated scenario tester plugin with 6 scenarios tested and their results. 12 Figure 7: Automated scenario testing plugin 
+
+# 5.6 3D Visualization 
+
+The 2D map is efficient for monitoring position and connectivity, but it hides the altitude dimension. The 3D view plugin creates a uiaxes with perspective projection and draws each UAV as a colored triangle marker at its full ( x, y, z ) position. Dotted altitude stems drop from each marker to a transparent ground-plane mesh at z = 0, giving an immediate sense of how high each UAV is flying. Gray shadow markers on the ground indicate the plan view projection. Connection lines between UAVs are drawn in 3D and color-coded: blue for healthy links, red for pairs that exceed the maximum distance. Each label shows the UAV number and current altitude. The 3D axes support MATLAB’s built-in rotate and zoom interactions, allowing the user to view the swarm from multiple angles. The plugin updates only when its tab is visible, since 3D rendering is more intensive than 2D property updates. Figure 8 shows a view of the 3d visualization plugin screen. 13 Figure 8: 3D viewer plugin 
+
+# 5.7 Geofencing and no-fly zones 
+
+The geofencing plugin adds spatial constraints to the simulation. It supports two zone types: circular (defined by a center and a radius) and rectangular (defined by a corner and dimensions). Zones appear on the main map as red dashed shaded regions. The plugin ships with two demo zones, and new zones can be placed interactively by clicking on the map. A perimeter fence defines the maximum operating radius from the base station, displayed as a dashed blue circle on the map. Figure 9 shows the Geofence plugin console with 2 default zones and one custom zone added. Figure 10 shows the zones rendered on the main map. 14 Figure 9: Geofence plugin view 15 Figure 10: No-fly zones and perimeter fence rendered on the main map. The default radius is 200 m. Enforcement is physics-based. When a UAV enters a no-fly zone, a repulsive force (50) pushes it outward along the radial direction from the zone center. A soft boundary region (51) extends 8 m beyond each zone edge, applying a gentler force that steers UAVs away before they actually penetrate the zone. The perimeter fence applies a similar inward force (53) when UAVs exceed the maximum radius, with a gentle pre-warning zone at 90% of the radius. The plugin’s tab provides sliders for the perimeter radius and repulsion strength, enforcement toggles for zones and the perimeter independently, buttons to 16 add and clear zones, a violation counter, and a table listing all defined zones with their geometry. For restricted-airspace scenarios, the test is straightforward: place a circular no-fly zone around a tower, run the swarm through a waypoint sequence that passes nearby, and check whether the formation deforms to avoid the zone and how quickly it recovers its shape afterward. 
+
+# 5.8 Map visual polish 
+
+The map polish plugin adds four overlay elements to the main map that reposition themselves each tick to stay anchored in the view corners as the axes pan and zoom: A compass rose in the top-left corner shows a red north indicator with N/S/E/W labels. A scale bar in the bottom-left corner displays a line with endcaps and a round-number distance label that auto-selects from the set {5, 10 , 20 , 25 , 50 , 100 , 200 , 500 } m using (57) .A semi-transparent legend box in the top-right corner shows each UAV’s color, number, and current role. A “BASE” label marks the base station origin. Figure 11 shows these additions on the simulation map. 
+
+Figure 11: Map polish overlay showing compass, scale bar, legend, and base-station marker. 17 5.9 Extensibility 
+
+The plugin interface is intentionally minimal. A new plugin is a single function file that returns a struct with two required fields ( id , name ) and up to four optional callbacks ( onLoad , buildTab , onStep , onUnload ). A template file ( swf plugin template.m ) ships with the platform and includes commented documentation of every available app property and method. Adding a new swarm coordination mode requires changes to the core file but is localized to four points: the dropdown item list, the mode callback, a new step function, and the dispatch statement in simStep . Adding more UAVs requires expanding the position, heading, color, and name arrays and adjusting the graphics initialization loops. The platform does not currently support hardware-in-the-loop (HIL) communication or ROS/MAVLink bridges, but the plugin architecture provides a clear attachment point. A plugin with hasStep = true could read from a serial port or TCP socket in its onStep callback and write received positions to app.UAVPositions , effectively replacing the simulated dynamics with live telemetry while keeping the visualization, metrics, and fault injection layers intact. This is a described attachment point, not an implemented or tested feature in the current release. Table 2 summarizes how the plugins combine for common research and testing workflows. Table 2: Common use cases and the plugin combinations that support them.                
+
+> Use Case Plugins Required Workflow
+> Formation resilience testing Fault Injection + Metrics Inject faults during flight; measure for-mation error and recovery time Mission endurance analysis Battery + Metrics Run a full waypoint mission; check re-maining energy at completion Safety verification Collision Avoidance + Fault Injection Inject actuator faults in tight forma-tions; count near-misses Airspace compliance Geofencing + Metrics Define restricted zones; measure viola-tions and formation deformation Regression testing Scenario Runner + Metrics Run all scenarios after code changes; compare pass/fail results Algorithm benchmarking Custom plugin + Metrics Replace step functions via plugin; com-pare KPIs against baseline modes Publication figures Map Polish + 3D View Enable visual overlays; capture screen-shots with compass, legend, scale bar
+
+# 6 Experiments and results 
+
+Several experiments were conducted on the SwarmFly platform to verify each major subsystem and characterize swarm behavior across operating conditions. Each experiment checks that a subsystem behaves consistently with its governing equations; this is verification and behavioral characterization rather than validation against external flight data, which we identify as future work. All experiments used the default 4-UAV configuration at a 10 Hz update rate. Unless stated otherwise, cruise altitude was 30 m, cruise speed was 5 m/s, maximum swarm distance was 50 m, and communication range was 200 m. Each experiment was repeated for n = 10 independent trials, with trial t of experiment 
+
+E seeded by rng (1000 E + t), so every reported value is reproducible. All runs used MATLAB R2025b on Windows 11; fixed seeds make each run reproducible on the same MATLAB release and operating system. Two properties of the platform shape how the results are reported. First, the coordination modes and the proportional controllers are deterministic. The simulated IMU output (24) –(29) carries Gaussian noise, but those channels are telemetry outputs that do not feed back into the position dynamics, and every reported 18 metric is computed from positions. Second, randomness reaches the metrics only through fault models that inject a random process: GPS denial (31), comm blackout, and wind gusts (34). Deterministic experiments were executed with the same seeding protocol, but because the reported metrics are identical to numerical precision, Tables 4–6 and 9–11 report one representative run. Experiments 4 and 5 carry a stochastic fault component and are reported as mean ± standard deviation over the 10 trials (Tables 7 and 8). Table 3: Experiment scenarios with objective and setup descriptions 
+
+# Experiment Objective Setup Results 
+
+1 Formation Hold Baseline Establish baseline formation perfor-mance in Leader-Follower mode un-der calm conditions (zero wind). The leader followed a circular orbit (19) at 40 m radius with no waypoints. All four UAVs started in the default diamond formation. The simulation ran for 120 s. Table 4 2 Wind Resilience Measure formation behavior under in-creasing wind speed. leader-follower mode with the same orbit pattern as Experiment 1. Wind direction was fixed at 45 °. Wind speed was varied from 0 to 15 m/s in 3 m/s increments. Each condition ran for 60 s; metrics were recorded from t = 10 s. Table 5 3 Swarm Mode Comparison Compare the four swarm coordina-tion modes on an identical waypoint mission. A square waypoint pattern was loaded: (60, 60), (60, −60), ( −60, −60), ( −60, 60), (0, 0). Wind was set to 3 m/s at 180 °.Each mode ran for 90 s. For modes with-out an explicit leader (Decentralized), waypoints guided UAV-1 only, while oth-ers swarmed freely. For Hetero-Speed, the fast scout followed waypoints, and slow followers trailed behind. Table 6 4 Fault Injection and Recovery Quantify the im-pact of individual fault types on for-mation performance and measure recov-ery time after fault clearance. leader-follower mode with circular orbit, no wind. Each fault type was injected on UAV-3 at t = 30 s for 20 s (clearing at 
+
+t = 50 s), with intensity I = 1 .0. For-mation error was recorded continuously. Recovery time is defined as the time after fault clearance for the formation error to return within 1.5 × the pre-fault baseline, an absolute band of 2.97 m for the 1.98 m leader-follower baseline used here. The post-fault steady state re-enters this band in every case (Table 7). Table 7 
+
+Continued on next page 
+
+19 # Experiment Objective Setup Results 
+
+5 Compound Fault Stress Test Test swarm re-silience when multi-ple faults are active simultaneously on different UAVs. Leader-Follower mode, circular orbit, no wind. At t = 20 s: GPS denied on UAV-2 (I = 1 .0, 30 s). At t = 25 s: motor failure on UAV-4 ( I = 1 .0, 25 s). At t = 30 s: frozen actuator on UAV-3 ( I = 0 .8, 20 s). The leader (UAV-1) was left fault-free. Collision avoidance plugin was enabled with dsafe = 5 m. Table 8 6 Battery En-durance Profiling Profile energy con-sumption across dif-ferent cruise speeds and wind condi-tions. Leader-Follower mode flying a straight heading toward a distant waypoint, so each UAV stayed in forward cruise for the full run rather than arriving and loitering. Battery plugin enabled. Each trial ran until the first UAV reached 20% remain-ing capacity or 600 s elapsed, whichever came first. Table 9 7 Geofence Compli-ance Test formation be-havior when the flight path is com-manded into defined no-fly zones. Leader-Follower mode with waypoints routed through the default demo zones: a circular zone at (80, 60) with r = 25 m and a rectangular zone at ( −100, −80) with dimensions 40 × 50 m. The waypoint sequence (0, 0) → (80, 60) → (−100, 
+
+−80) → (0, 0) targets the centers of both zones, a worst case for the repulsion. Ge-ofence plugin enabled with repulsion strength Kr = 5 and perimeter radius 200 m. Duration: 120 s. Table 10 8 Automated Sce-nario Regression Suite Run the full built-in scenario suite and report pass/fail re-sults as a regression check on the plat-form. All six built-in scenarios from the Sce-nario Runner plugin were executed se-quentially using the “Run All” function. Pass condition: maximum swarm spread during the run stayed below 2 × Dmax .Each scenario automatically configures its own mode, waypoints, wind, duration, and Dmax .Table 11 
+
+# 6.1 Experimental results 
+
+The proportional follower controller (9) held a steady formation after an initial 3–4 s transient. Table 4 reports the steady-state metrics, measured from t = 10 s onward to exclude the transient. 20 Table 4: Experiment 1 - Formation hold baseline metrics (Leader-Follower, no wind, 120 s; single representative run). 
+
+Metric Value 
+
+Formation error (39) 1.98 m Swarm spread (36) 40.0 m Mean inter-UAV distance (37) 26.2 m Altitude deviation (40) 0.00 m Link quality (41) 100% Centroid drift (38) 21.7 m The follower controller held a formation error of 1.98 m, roughly half a UAV body length. Swarm spread settled at 40.0 m, the width of the scaled diamond, and link quality stayed at 100% because the spread sat well within the 200 m communication range. Altitude deviation was zero: the followers start at cruise altitude, and both the altitude controller (8) and the position controller hold them there with nothing to perturb the vertical axis. Centroid drift of 21.7 m reflects the leader’s orbit radius rather than any tracking deficiency. Table 5 shows formation error and swarm spread at each wind speed. Table 5: Experiment 2 - Formation error and swarm spread vs. wind speed (single representative run per condition). 
+
+Wind (m/s) Form. Error (m) Spread (m) Link Quality (%) 
+
+0 1.98 40.0 100 3 1.99 40.0 100 6 2.02 40.0 100 9 2.07 40.0 100 12 2.15 40.0 100 15 2.26 40.0 100 The implementation reproduces the analytically predicted common-mode cancellation under uniform wind. Over the full 0–15 m/s sweep, formation error rose only from 1.98 m to 2.26 m and swarm spread held at 40.0 m. The reason is structural: the wind disturbance (7) enters as a common bias on every UAV, and the follower controller (9) tracks position relative to the leader, so the shared displacement cancels in the formation geometry. The small residual growth comes from the interaction between the leader’s capped velocity and the followers’ proportional lag. This is the behavior expected of a relative-position controller under a uniform disturbance, and it reflects a modeling choice we should state directly: SwarmFly currently treats wind as a spatially uniform field. Spatially varying wind, gusts, or per-UAV turbulence would break the common-mode cancellation, and the wind-gust fault in Experiment 4 exercises that case directly. Absolute position still responds to wind through centroid drift; only the relative formation is preserved. Table 6 presents the average KPIs across each full run. 21 Table 6: Experiment 3 - Mode comparison on a square waypoint mission (90 s, 3 m/s wind; single representative run per mode). 
+
+Metric Leader-Fol. Decentral. Relay Speed 
+
+Form. error (m) 1.81 28.98 14.43 76.11 Spread (m) 39.94 31.75 60.93 82.53 Mean dist. (m) 26.29 20.42 38.72 45.45 Link quality (%) 100 100 100 100 Alt. dev. (m) 0.00 0.00 1.79 0.00 Centroid drift (m) 62.06 137.06 53.53 54.12 Formation error here is measured against the diamond reference (39) , so it is a fair comparator only for the modes that try to hold that geometry. Leader-Follower tracked it most tightly at 1.81 m. Hetero-Relay reached 14.43 m because UAV-4 leaves the diamond to sit at 40% of the active centroid (20) , which by construction registers as deviation. Decentralized (28.98 m) and Hetero-Speed (76.11 m) do not target the diamond at all: the former holds a Reynolds flock and the latter a V-formation behind a fast scout, so their large formation-error values reflect a different geometry rather than poor control. The spread and mean-distance columns are the more meaningful cross-mode comparison. Decentralized produced the most compact group (31.75 m spread) because cohesion (15) pulls members inward, while Hetero-Speed produced the widest (82.53 m) as the scout at 2 Vc (21) opened distance from the slow followers. Link quality stayed at 100% in every mode, since even the widest spread remained within communication range. Table 7 shows peak and mean formation error during each fault and the recovery time. Table 7: Experiment 4 - Fault impact on formation error (UAV-3, I = 1 .0, 20 s; n = 10 trials). Mean ± SD shown for the three stochastic faults; the remaining faults are deterministic. 
+
+Fault Type Peak Error (m) Mean Error (m) Recovery (s) 
+
+GPS Drift (30) 4.20 2.36 < 0.1GPS Denied (31) 2.06 ± 0.02 1.99 ± 0.01 < 0.1Motor Failure (32) 1.99 1.99 < 0.1Comm Blackout 2.28 ± 0.06 1.98 ± 0.02 < 0.1Frozen Actuator (33) 1.98 1.66 < 0.1Wind Gust (34) 4.62 ± 1.04 2.47 ± 0.26 < 0.1Battery Critical (32) 2.02 2.02 < 0.1The main result is that the proportional tracking controller rejects a single follower fault strongly. Peak formation error stayed between 1.98 and 4.62 m across all seven fault types, and the formation returned to baseline within one control step of fault clearance, so recovery time is effectively zero at the 10 Hz resolution. The mechanism is direct: the follower velocity command (9) is recomputed every tick from the current tracking error, so a displacement injected on UAV-3 is corrected on the next tick before it can accumulate. Faults that apply a bounded per-tick offset, motor failure, frozen actuator, and battery critical, are held near the 1.98 m baseline because the controller counteracts them continuously. The two largest excursions come from the faults that inject sustained randomness: wind gusts (4.62 m peak) deliver a fresh random-direction impulse each tick, and GPS drift (4.20 m) grows a sinusoidal bias over the fault window. The standard deviations follow the determinism structure: the deterministic faults show none, while the wind gust shows the largest dispersion ( ±1.04 m peak) because each trial draws a different gust sequence. This experiment characterizes the controller’s robustness rather than its breaking point. Because the fault 22 target is a tracked follower, the closed loop suppresses the disturbance by design. Probing the platform’s failure envelope, rather than its rejection behavior, would require faults that the controller cannot directly counteract, for example raising the intensity toward its maximum of I = 3 .0, faulting the leader whose motion the followers cannot override, or injecting a fault into the control law itself. The plugin interface supports all three, and we note them as directions for stress testing in Section 7. Table 8 compares metrics across three phases of the run. Table 8: Experiment 5 - Compound fault stress test across three phases ( n = 10 trials). The active phase includes the stochastic GPS-denial fault; other entries are deterministic. 
+
+Metric Pre-fault All active Post-recovery 
+
+(t = 0–20 s) (t = 30–45 s) (t = 60–90 s) Formation error (m) 2.10 1.74 ± 0.01 1.98 Swarm spread (m) 39.74 40 .29 ± 0.02 40.0 Link quality (%) 100 100 100 Alt. deviation (m) 0.00 0.089 0.00 Near-misses 0 0 0Collisions 0 0 0Three simultaneous follower faults did not destabilize the formation. Formation error during the active window was 1.74 m, within the range seen in the single-fault experiment, and swarm spread held near 40 m. The same per-tick correction that suppresses an individual follower fault also handles several at once, since each follower is regulated independently against the fault-free leader. Altitude deviation rose to a small 0.089 m while UAV-4’s motor-failure fault pulled it below cruise altitude, then returned to zero after clearance. The collision-avoidance plugin recorded no near-misses and no collisions: the faults perturbed individual followers without driving any pair within the 5 m safe distance, so the separation force (48) was never triggered. This is a limitation of the test rather than a property to celebrate. Demonstrating the collision layer under load needs a scenario that actually forces UAVs together, which the harsher fault settings noted in Experiment 4 would provide. Table 9 reports endurance, mean current, and distance covered across speed and wind settings. Table 9: Experiment 6 - Battery endurance profiling, first UAV to reach 20% (single representative run per condition). 
+
+Speed Wind Time to 20% Avg Current Distance (m/s) (m/s) (s) (A) Covered (m) 
+
+3 0 587.5 24.5 1,762 5 0 505.1 28.5 2,526 8 0 417.4 34.5 3,339 5 5 351.1 41.0 3,511 5 10 269.1 53.5 4,036 8 8 264.2 54.5 4,227 The energy model is deterministic, and the endurance numbers follow the current-draw model (42) cleanly. In calm air, raising cruise speed from 3 to 8 m/s cut endurance from 587 s to 417 s through the speed-dependent term ( Kv = 2 .0 A ·s/m). Wind shortened it further and by a larger margin in this configuration: at 5 m/s cruise, a 10 m/s headwind drove mean current from 28.5 A to 53.5 A and cut endurance from 505 s to 269 s, 23 because the wind term ( Kw = 0 .5 A/(m/s)) loads every UAV continuously. The distance-covered column reflects sustained cruise toward the far waypoint and grows with speed as expected. For mission planning with 5,000 mAh packs, a reasonable budget is roughly 6–10 minutes of flight at moderate speed in light wind to retain a 20% reserve, derating sharply as wind rises. Table 10 summarizes the geofence interaction results. Table 10: Experiment 7 - Geofence compliance during waypoint navigation (single representative run per condition). 
+
+Metric Value 
+
+Total zone penetrations (UAV-ticks inside a zone) 2037 Max penetration depth (m) 20.8 Mean penetration depth when inside (m) 11.4 Perimeter fence violations 0Formation error during zone avoidance (m) 0.40 Formation error outside zones (m) 1.91 Time to re-form after zone passage (s) < 0.1This experiment exposes a limit of the simple repulsion model rather than a clean avoidance. When a waypoint is placed at a zone center, the waypoint-tracking command pulls the leader inward while the boundary repulsion (50) pushes outward, and at Kr = 5 the tracking command wins: UAVs penetrated to a maximum depth of 20.8 m inside the 25 m circular zone, with a mean depth of 11.4 m while inside. The repulsion slows and bounds the incursion but does not hold the boundary against a command that targets the interior. Hard enforcement would require the repulsion gain to exceed the tracking gain near the boundary, or a planner that re-routes waypoints around zones rather than through them. The perimeter fence recorded zero violations, since every waypoint lay within the 200 m radius. Formation error inside the zones (0.40 m) was lower than outside (1.91 m) because the radial repulsion acts coherently on the clustered followers, compressing them toward the diamond rather than dispersing them. The formation re-formed within one control step of clearing each zone, consistent with the controller response seen throughout. For users, the guidance is concrete: treat the built-in repulsion as a soft deterrent, and pair it with waypoint planning when hard exclusion is required. Table 11 shows the outcome for each scenario. Table 11: Experiment 8 - Automated scenario regression results (single representative run per condition). 
+
+Scenario Duration Dmax Max Spread Result 
+
+Formation Hold – Calm 30 s 50 m 40.0 m PASS Formation Hold – Wind (8 m/s) 30 s 50 m 40.0 m PASS Waypoint Nav – Square 60 s 50 m 40.0 m PASS Decentralized Cohesion 45 s 80 m 40.1 m PASS Relay Endurance 60 s 60 m 185.1 m FAIL Fast Scout Sprint 45 s 100 m 89.6 m PASS Five of the six scenarios passed, and the suite flagged one failure, which is the outcome a regression tool exists to produce. Relay Endurance failed with a maximum spread of 185.1 m against its 120 m threshold. The cause is the relay geometry: during the extended traverse, UAV-4 holds at 40% of the active centroid (20) and falls progressively behind the advancing leader group, stretching the maximum pairwise distance past twice Dmax . The Formation Hold scenarios held at 40.0 m in both calm and 8 m/s wind, consistent with 24 the wind-invariance result of Experiment 2. Fast Scout Sprint reached 89.6 m, within its generous 200 m threshold. In a development workflow these values form the reference baseline: after a controller change, re-running the suite and comparing against this table catches regressions, and the Relay Endurance failure is itself an actionable finding, namely that the relay’s centroid-fraction rule needs a distance cap to keep the swarm inside its operating envelope on long legs. Table 12 summarizes the findings across all eight experiments. Table 12: Summary of key experimental findings. 
+
+Finding Evidence 
+
+The formation controller tracks within about 2 m in calm conditions Exp. 1: baseline error 1.98 m Implementation reproduces the predicted common-mode wind cancellation Exp. 2: error rises only from 1.98 m to 2.26 m over 0–15 m/s; spread constant Leader-Follower tracks the diamond reference most tightly Exp. 3: 1.81 m vs. 14.4 m (relay) and higher for the non-diamond modes The tracking controller suppresses single and compound follower faults Exp. 4–5: peak error ≤ 4.6 m, recovery within one control step Wind gusts are the most disruptive of the mod-eled faults Exp. 4: 4 .62 ± 1.04 m peak No collisions or near-misses arose under com-pound follower faults Exp. 5: 0 events across three simultaneous faults 5,000 mAh battery supports 4.4–9.8 min flight across speed and wind Exp. 6: 587 s at 3 m/s calm to 264 s at 8 m/s with 8 m/s wind Linear geofence repulsion is overpowered by waypoints commanded into a zone Exp. 7: 20.8 m max penetration depth at Kr = 5 The regression suite flags a scenario that ex-ceeds its spread envelope Exp. 8: Relay Endurance at 185 m vs. a 120 m threshold The subsystems behave correctly in isolation and compose without conflict when combined. Two results point to concrete next steps rather than finished capabilities: the fault and collision layers reject follower-level disturbances so effectively that exercising the platform’s failure envelope calls for harsher fault settings, and the geofence repulsion needs to be paired with waypoint planning for hard exclusion. Both are reachable through the existing plugin interface, and both are recorded in the future-work discussion. 
+
+# 7 Future work 
+
+SwarmFly, in its current form, is a 4-UAV simulation with simplified dynamics and first-order sensor models. Several extensions are planned that would move the platform closer to real-world applicability. Several changes, such as adding obstacles and integrating the platform with CoppeliaSim [14], are planned. 
+
+• Closing the gap between simulation and physical hardware is increasingly necessary for UAV performance experiments [ 28 ]. The onStep callback already has write access to app.UAVPositions , so a plugin that reads MAVLink packets from a serial port or UDP socket and writes the parsed coordinates into the position array would replace the simulated dynamics with live telemetry. The visualization, metrics, collision avoidance, and geofencing layers would continue to work without modification. A ROS 2 bridge plugin would follow the same pattern, subscribing to /uav k/pose topics and mapping them to the internal state arrays. 25 • The current implementation hardcodes N = 4 in several places: the initial position array, the color table, the graphics initialization loops, and the pairwise connection line count (  42
+
+ = 6 handles). Generalizing to N UAVs requires making these data-driven. The simulation engine itself is written with for k = 1:app.NumUAVs loops so that the physics would scale with minimal changes. The real challenge is rendering performance. Pairwise connection lines grow as O(N 2), and at N = 20, that means 190 line objects are updated every tick. Switching to a spatial hash or k-d tree for neighbor queries, and only drawing connections for the nearest k neighbors rather than all pairs, would keep the renderer tractable for swarms of 50 or more. 
+
+• The current flight model uses pure kinematic integration (1) with no inertia, drag, or actuator dy-namics. UAVs change velocity instantaneously, which is unrealistic for fixed-wing platforms and only approximately valid for multirotors. A second-order model with mass, drag coefficient, and thrust limits would produce more believable trajectories, especially during fault-injection scenarios, where motor failure should result in asymmetric force and yaw coupling rather than simple altitude decay. The plugin architecture could support this: a dynamics plugin with hasStep = true could intercept the velocity commands from the swarm mode, filter them through a transfer function, and write the resulting positions back. The core modes would not need to change. 
+
+• SwarmFly currently models communication as a binary range check: two UAVs are either in range or not. Real radio links degrade gradually with distance, suffer from multipath fading, and drop packets at rates that depend on bandwidth, interference, and antenna orientation. A communication plugin could model signal-to-noise ratio as a function of distance, compute packet delivery probability per link, and introduce latency or message loss into the formation control loop. This would make the Hetero-Relay mode considerably more interesting, since the relay’s position would directly affect link quality between the field UAVs and the base station rather than just staying within a distance threshold. 
+
+• The geofencing plugin works only in 2D. It defines circular and rectangular zones on the ground plane and applies repulsive forces in the horizontal direction. Extending this to 3D with volumetric obstacles (buildings, terrain elevation, restricted airspace layers) would require a different collision geometry. Axis-aligned bounding boxes (AABBs) are a reasonable first step. Each obstacle is a rectangular prism defined by min/max corners, and the repulsion logic generalizes from the 2D rectangle case with an additional z-axis check. Terrain could be loaded as a gridded elevation model and rendered as a surface mesh on the 3D view tab. The altitude convergence controller (8) would need a terrain-following mode in which the reference altitude is above ground level rather than absolute. 
+
+• The current swarm modes use hand-tuned proportional controllers and fixed behavioral rules. Replacing those with a learned policy is the obvious next question. The training loop would run outside SwarmFly (in Python, using the MATLAB Engine API for Python to call simStep and read state). At the same time, the learned policy would be exported as a MATLAB function and loaded as a plugin that overrides the built-in step functions. The metrics plugin already computes the reward signal candidates: formation error, link quality, and altitude deviation are all continuous, differentiable, and updated every tick. 
+
+• The current architecture assumes a single swarm of N UAVs operating from one base station. Many real applications involve multiple swarms [ 29 ] [ 30 ]. For example, two 4-UAV teams performing search-and-rescue in adjacent sectors, or a surveillance swarm handing off coverage to a relay swarm at shift change. Supporting this would require a second hierarchy level: a swarm manager object that holds multiple SwarmFly instances (or a single instance with swarm-group indices), inter-swarm communication rules, and a task allocation layer. The plugin system could handle inter-swarm communication, but the core would need refactoring to support UAV group membership and per-group mode selection. 26 • The IMU simulation uses additive white Gaussian noise on top of finite-difference acceleration estimates. Real IMU noise is colored (autocorrelated), exhibits bias drift, and includes temperature-dependent offsets. Incorporating advanced noise models, or replaying recorded IMU data from actual flight logs, would make the telemetry output more realistic for researchers developing onboard state estimators or anomaly detectors. Similarly, the battery model’s linear voltage sag is a rough approximation; models with internal resistance and temperature dependence would better represent the nonlinear discharge curve of real LiPo cells, especially at high current draw and low state of charge. 
+
+• SwarmFly was built as a researcher’s tool. A human-factors study comparing different visualization modes (2D map only vs. 2D + 3D vs. augmented with audio alerts) for situational awareness during fault scenarios would generate additional insights and also inform interface improvements. Adding configurable audio warnings for geofence violations, collision proximity, and battery thresholds is a small implementation effort that could measurably affect operator response times. 
+
+# 8 AI use declaration 
+
+AI-supported writing tools were used for grammar, phrasing, and tone refinement. The authors reviewed and verified all technical claims, citations, simulation results, and final wording. 
+
+# References 
+
+[1] C. Qu, J. Boubin, D. Gafurov, J. Zhou, N. Aloysius, H. Nguyen, and P. Calyam, “Uav swarms in smart agriculture: Experiences and opportunities,” in 2022 IEEE 18th International Conference on e-Science (e-Science) , pp. 148–158, IEEE, 2022. [2] W. Ran, S. Nantogma, S. Zhang, and Y. Xu, “Bio-inspired uav swarm operation approach towards decentralized aerial electronic defense,” Applied Soft Computing , vol. 177, p. 113136, 2025. [3] S. Huang, H. Yao, T. Mai, D. Wu, Z. Xiong, and M. Guizani, “Cooperative intelligence-based uav swarm for establishing emergency communication,” in ICC 2024-IEEE International Conference on Communications , pp. 3919–3924, IEEE, 2024. [4] L. Ruetten, P. A. Regis, D. Feil-Seifer, and S. Sengupta, “Area-optimized uav swarm network for search and rescue operations,” in 2020 10th annual computing and communication workshop and conference (CCWC) , pp. 0613–0618, IEEE, 2020. [5] Y. Alqudsi, “Enhancing drone light shows performances: Optimal allocation and trajectories for swarm drone formations,” arXiv preprint arXiv:2603.24401 , 2026. [6] A. Phadke and F. A. Medrano, “Examining application-specific resiliency implementations in uav swarm scenarios,” Intelligence & Robotics , vol. 3, no. 3, pp. 453–478, 2023. [7] B. Xu, G. Bai, Y. Zhang, Y. Fang, and J. Tao, “Failure analysis of unmanned autonomous swarm considering cascading effects,” Journal of Systems Engineering and Electronics , vol. 33, no. 3, pp. 759–770, 2022. [8] C. A. Dimmig, G. Silano, K. McGuire, C. Gabellieri, W. H¨ onig, J. Moore, and M. Kobilarov, “Survey of simulators for aerial robots: An overview and in-depth systematic comparisons [survey],” IEEE Robotics & Automation Magazine , vol. 32, no. 2, pp. 153–166, 2024. 27 [9] A. Phadke, F. A. Medrano, C. N. Sekharan, and T. Chu, “Designing uav swarm experiments: A simulator selection and experiment design process,” Sensors , vol. 23, no. 17, p. 7359, 2023. [10] H. Ju, R. Juan, R. Gomez, K. Nakamura, and G. Li, “Transferring policy of deep reinforcement learning from simulation to reality for robotics,” Nature Machine Intelligence , vol. 4, no. 12, pp. 1077–1087, 2022. [11] H. Yu, C. De Wagter, and G. C. E. de Croon, “Depth transfer: Learning to see like a simulator for real-world drone navigation,” IEEE Robotics and Automation Letters , 2025. [12] B. Osinski, A. Jakubowski, P. Ziecina, P. Milos, C. Galias, S. Homoceanu, and H. Michalewski, “Simulation-based reinforcement learning for real-world autonomous driving,” in 2020 IEEE International Conference on Robotics and Automation (ICRA) , pp. 6411–6418, IEEE, 2020. [13] W. Cai, J. Peng, Y. Yang, Y. Zhang, M. Wei, H. Wang, Y. Chen, T. Wang, and J. Pang, “Navdp: Learning sim-to-real navigation diffusion policy with privileged information guidance,” arXiv preprint arXiv:2505.08712 , 2025. [14] E. Rohmer, S. P. Singh, and M. Freese, “V-rep: A versatile and scalable robot simulation framework,” in 
+
+2013 IEEE/RSJ international conference on intelligent robots and systems , pp. 1321–1326, IEEE, 2013. [15] O. Michel, “Webots: Symbiosis between virtual and real mobile robots,” in International Conference on Virtual Worlds , pp. 254–263, Springer, 1998. [16] O. Michel, “Cyberbotics ltd. webots ™: professional mobile robot simulation,” International Journal of Advanced Robotic Systems , vol. 1, no. 1, p. 5, 2004. [17] A. Phadke and B. Kropinski, “Drones in education: A comparative analysis of learning-focused platforms,” 
+
+Preprints.org , 2025. [18] Z. Chen, J. Yan, B. Ma, K. Shi, Q. Yu, and W. Yuan, “A survey on open-source simulation platforms for multi-copter uav swarms,” Robotics , vol. 12, no. 2, 2023. [19] E. Soria, F. Schiano, and D. Floreano, “Swarmlab: a matlab drone swarm simulator,” in 2020 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) , pp. 8005–8011, 2020. [20] Z. Zhou, Z. Dai, L. Huang, C. Yang, Y. Xiang, J. Tang, and K.-k. Wong, “Uavnetsim-v1: A python-based simulation platform for uav communication networks,” in 14-th IEEE/CIC International Conference on Communications in China , (Shanghai, China), August 2025. [21] M. Fernando and L. Liu, “Formation control and navigation of a quadrotor swarm,” in 2019 International Conference on Unmanned Aircraft Systems (ICUAS) , pp. 284–291, IEEE, 2019. [22] M. Fernando, “Online flocking control of uavs with mean-field approximation,” in 2021 IEEE International Conference on Robotics and Automation (ICRA) , pp. 8977–8983, 2021. [23] T. Lee, M. Leok, and N. H. McClamroch, “Geometric tracking control of a quadrotor uav on se (3),” in 
+
+49th IEEE conference on decision and control (CDC) , pp. 5420–5425, IEEE, 2010. [24] S. Doodeman, Z. Tang, M. Jacinto, R. Cunha, and C. Silvestre, “Leader-follower formation tracking control of quadrotor uavs using bearing measurements,” in 2025 IEEE Conference on Control Technology and Applications (CCTA) , p. 970–975, IEEE, Aug. 2025. [25] J. Lu, J. Zhao, and J. Niu, “Boids-based integration algorithm for formation control and obstacle avoidance in unmanned aerial vehicles,” Machines , vol. 13, no. 4, 2025. 28 [26] A. Joshi, A. Phadke, T. Chu, and F. A. Medrano, “A classification of heterogeneity in uncrewed vehicle swarms and the effects of its inclusion on overall swarm resilience,” arXiv preprint arXiv:2603.28831 ,2026. [27] A. Phadke, F. A. Medrano, T. Chu, C. N. Sekharan, and M. J. Starek, “Modeling wind and obstacle disturbances for effective performance observations and analysis of resilience in uav swarms,” Aerospace ,vol. 11, no. 3, 2024. [28] A. Phadke, F. A. Medrano, C. N. Sekharan, and T. Chu, “An analysis of trends in uav swarm implementations in current research: simulation versus hardware,” Drone Systems and Applications ,vol. 12, pp. 1–10, 2024. [29] G. G. Yen and W. F. Leong, “Dynamic multiple swarms in multiobjective particle swarm optimization,” 
+
+IEEE Transactions on Systems, Man, and Cybernetics - Part A: Systems and Humans , vol. 39, no. 4, pp. 890–911, 2009. [30] W. Gan, H. Xu, Y. Bai, X. Zhou, W. Wu, and X. Du, “Large-scale multi-uav task allocation via a centrality-driven load-aware adaptive consensus bundle algorithm for biomimetic swarm coordination,” 
+
+Biomimetics , vol. 11, no. 1, 2026. 
+
+# A APPENDIX 
+
+This appendix presents the complete set of mathematical equations used in the SwarmFly simulation platform. Equations are grouped by functional category and numbered sequentially for cross-referencing throughout the study. Bold symbols denote vectors; scalar quantities are italicized. The subscript k indexes individual UAVs ( k = 1 , . . . , N ; N = 4), and ∆ t denotes the simulation time step. 29 A.1 Notation 
+
+Table 13: Symbol definitions 
+
+Symbol Unit Description pk m Position [ xk, y k, z k]⊤ of UAV k
+
+vk m/s Velocity of UAV kψk rad Heading angle of UAV k
+
+w m/s Wind disturbance vector 
+
+Vw m/s Wind speed magnitude 
+
+θw deg Wind direction (meteorological) 
+
+Vc m/s Cruise speed 
+
+zc m Cruise altitude 
+
+Dmax m Max allowable swarm distance 
+
+Rcomm m Communication range ∆t s Simulation time step 
+
+N (0 , σ ) — Gaussian noise with mean 0, std. dev. σI — Fault intensity multiplier 
+
+K(·) — Proportional gain (controller subscript) 
+
+# A.2 Kinematics 
+
+All UAV motion in SwarmFly follows a discrete-time kinematic model. Positions are propagated each tick using forward Euler integration (1) , which is adequate at the 10–30 Hz update rates used here. Each UAV’s heading is extracted from its velocity vector via (2) , and waypoint bearing is computed similarly using (3) .Inter-UAV distances, which drive formation control, connection-line rendering, and collision checks, are evaluated in the horizontal plane (4) for most purposes and in full 3D (5) for the altitude-aware plugins. When any computed velocity exceeds the mode’s speed limit, it is normalized and rescaled (6) to enforce physical plausibility. These six relationships form the kinematic substrate that every swarm mode and plugin builds on. Position propagation via forward Euler integration: 
+
+pk(t + ∆ t) = pk(t) + vk(t) · ∆t (1) Heading angle derived from the velocity vector: 
+
+ψk = atan2( vk,y , v k,x ) (2) Bearing to a target waypoint pwp :
+
+ψwp = atan2( pwp ,y − pk,y , p wp ,x − pk,x ) (3) Euclidean distance between UAVs i and j (2D, horizontal plane): 
+
+dij = pxy i − pxy j 2 (4) 30 Euclidean distance in 3D: 
+
+d3D  
+
+> ij
+
+= ∥pi − pj ∥2 (5) Velocity normalization (speed clamping to maximum vmax ): 
+
+vk = vk
+
+∥vk∥ · vmax , if ∥vk∥ > v max (6) Wind disturbance vector decomposition: 
+
+w = Vw
+
+
+
+cos θw
+
+sin θw
+
+0
+
+ (7) 
+
+# A.3 Control Laws 
+
+Proportional altitude controller (gain Kz = 0 .3): 
+
+zk(t + ∆ t) = zk(t) + Kz (zc − zk(t)) ∆ t (8) Proportional follower velocity controller (gain Kp = 2 .0): 
+
+vfollower = Kp · (pdesired − pfollower ) (9) Desired follower position from leader and formation offset: 
+
+pdesired ,k = pleader + ∆k (10) Formation offset scaling (reference distance Dref = 50 m): 
+
+∆k = ∆k, base · Dmax 
+
+Dref 
+
+(11) Distance-constrained position error: 
+
+econstrained  
+
+> k
+
+=
+
+
+
+ek if ∥ek∥ ≤ Dmax 
+
+ek
+
+∥ek∥ · Dmax if ∥ek∥ > D max 
+
+(12) Waypoint approach speed: 
+
+vapproach = min( Vc, d target ) (13) 
+
+# A.4 Swarm Coordination Behaviors 
+
+Swarm centroid: 
+
+c = 1
+
+N
+
+> N
+
+X
+
+> k=1
+
+pk (14) Reynolds cohesion rule (gain Kc = 0 .3): 
+
+Fcoh ,k = Kc (c − pk) (15) 31 Reynolds separation rule (gain Ks = 5, activation radius rs = 10 m): 
+
+Fsep ,k =
+
+> N
+
+X 
+
+> j=1
+> j̸=k
+
+Ks · (pk − pj )max 
+
+
+
+∥pk − pj ∥2 , 1
+
+ , if dkj < r s (16) Stochastic wander velocity (phase offsets ϕk, ϕ′ 
+
+> k
+
+unique per UAV, ω1 = ω2 = 0 .5 rad/s)): 
+
+vwander ,k = Vc
+
+cos( ω1t + ϕk)sin( ω2t + ϕ′
+
+> k
+
+)0
+
+ (17) Composite decentralized velocity: 
+
+vk = vwander ,k + Fsep ,k + Fcoh ,k (18) 
+
+# A.5 Mode-Specific Equations 
+
+A.5.1 Leader Orbit Trajectory 
+
+When no waypoints are active, the leader follows a circular orbit: 
+
+vorbit = r
+
+
+
+− sin( ωt ) · rω 
+
+cos( ωt ) · rω 
+
+0
+
+ (19) where r = 40 m is the orbit radius and ω = 0 .3 rad/s. 
+
+A.5.2 Hetero-Relay Mode 
+
+Relay UAV target position (midpoint fraction α = 0 .4): 
+
+ptarget relay = α · cactive (20) where cactive is the centroid of non-relay UAVs. 
+
+A.5.3 Hetero-Speed Mode 
+
+Speed differentiation: 
+
+vfast = 2 .0 · Vc, vslow = 0 .6 · Vc (21) V-formation angular offset for slow follower k (k ∈ { 1, 2, 3}): 
+
+θk = π + ( k − 2) · 0.6 (22) V-formation position offset ( R = 25 m separation): 
+
+∆V 
+
+> k
+
+= R
+
+
+
+cos( ψleader + θk)sin( ψleader + θk)0
+
+ (23) 32 A.6 Sensor Simulation Models 
+
+Accelerometer (finite-difference approximation with additive noise, σa = 0 .3): 
+
+ax,k = vk(t) − vk(t − ∆t)∆t + N (0 , σ a) (24) Vertical accelerometer (gravitational reference, σg = 0 .1): 
+
+az,k = g + N (0 , σ g ), g = 9 .81 m/s 2 (25) Gyroscope yaw rate (scaled heading derivative, σω = 1 .0): ∆xk = xk(t) − xk(t − ∆t), ∆yk = yk(t) − yk(t − ∆t) (26) 
+
+ωz,k = 0 .1 · 180 
+
+π · atan2(∆ yk, ∆xk) + N (0 , σ ω ) (27) Magnetometer model (Earth field components with noise, σm = 1 .0): 
+
+mk =
+
+
+
+25 5
+
+−40 
+
+ + N (0, σ mI3) [μT] (28) Gaussian noise generation: 
+
+N (0 , σ ) = σ · ξ, ξ ∼ N (0 , 1) (29) 
+
+# A.7 Fault Injection Models 
+
+GPS drift (sinusoidal bias growing with elapsed time τ ): ∆pdrift = 0 .3 I τ 
+
+sin( τ / 2) cos( τ / 2) 
+
+
+
+∆t (30) GPS denied (Brownian random walk, σgps = 0 .5): ∆pdenied = I · σgps · N (0, I2) · ∆t (31) Motor failure / battery critical (altitude decay with rate constant Kmotor ): ∆zfail = −I · Kmotor · ∆t (32) where Kmotor = 0 .8 m/s for motor failure and Kmotor = 1 .5 m/s for battery critical. Frozen actuator (constant-heading drift): ∆pfrozen = 2 I
+
+cos ψk
+
+sin ψk
+
+
+
+∆t (33) Sudden wind gust (random-direction impulse, Vg = 15 m/s): 
+
+g = I · Vg
+
+cos θrand 
+
+sin θrand 
+
+0
+
+ , θrand ∼ U (0 , 360 ◦) (34) Sensor noise spike (accelerometer corruption, Aspike = 20 m/s 2): 
+
+ax,k ← ax,k + N (0 , 1) · Aspike · I (35) 33 A.8 Performance Metrics 
+
+Swarm spread (maximum pairwise distance): 
+
+S = max  
+
+> 1≤i<j ≤N
+
+dij (36) Mean inter-UAV distance: ¯D = 1
+
+ N
+
+> 2
+
+ X
+
+> 1≤i<j ≤N
+
+dij (37) Centroid drift from base station: 
+
+Dc = ∥cxy ∥2 (38) Formation error (mean positional deviation from ideal offsets, with ∆ l = 0
+
+for leader ℓ): 
+
+Ef = 1
+
+N − 1
+
+> N
+
+X 
+
+> k=1
+> k̸=ℓ
+
+∥pk − (pℓ + ∆k)∥2 (39) where ℓ is the leader index. Mean altitude deviation: 
+
+Ealt = 1
+
+N
+
+> N
+
+X
+
+> k=1
+
+|zk − zc| (40) Communication link quality: 
+
+Q = 100 · |{ (i, j ) : dij < R comm }| 
+
+ N
+
+> 2
+
+ [%] (41) 
+
+# A.9 Energy Model 
+
+Total current draw per UAV (4S LiPo model): 
+
+Ik = Ihover + Kv ∥vk∥ + Kh max(0 , z k − 20) + KwVw (42) where Ihover = 18 A, Kv = 2 .0 A ·s/m, Kh = 0 .05 A/m, Kw = 0 .5 A ·s/m. Battery capacity depletion (mAh): 
+
+Ck(t + ∆ t) = Ck(t) − Ik · ∆t
+
+3.6 [mAh] (43) Voltage sag (linear approximation): 
+
+Vk = Vdead + ( Vfull − Vdead ) Ck
+
+C0
+
+(44) where Vfull = 16 .8 V, Vdead = 12 .0 V, and C0 = 5000 mAh. Estimated remaining flight time: 
+
+Test ,k = Ck
+
+Ik
+
+· 0.06 [min] (45) 34 A.10 Collision Avoidance 
+
+Separation unit vector between UAVs i and j (for pi̸ = pj ): ˆsij = pi − pj
+
+∥pi − pj ∥ (46) Emergency repulsion force magnitude ( dsafe = 5 m, Kcol = 3): 
+
+Fij = Kcol · (dsafe − dij ) , if dij < d safe (47) Position correction (applied symmetrically): 
+
+pi ← pi + ˆ sij · Fij · ∆t, pj ← pj − ˆsij · Fij · ∆t (48) 
+
+# A.11 Geofencing 
+
+Distance to circular no-fly zone center ( cx, c y ) with radius r:
+
+dzone =
+
+q
+
+(xk − cx)2 + ( yk − cy )2 (49) Zone boundary repulsion force (repulsion strength Kr ): 
+
+Fzone = Kr · r − dzone 
+
+r , if dzone < r (50) Soft boundary pre-warning force (buffer distance δ = 8 m, damping α = 0 .3): 
+
+Fsoft = Kr · α · r + δ − dzone 
+
+δ , if r < d zone < r + δ (51) Perimeter fence distance from base: 
+
+dbase = ∥pxy k ∥2 (52) Perimeter return force (perimeter radius Rp): 
+
+Fperim = 2 Kr · dbase − Rp
+
+Rp
+
+, if dbase > R p (53) 
+
+# A.12 Rendering Geometry 
+
+UAV triangle vertices (marker size s = 5 m): 
+
+vtri = s
+
+cos ψk cos( ψk + 2 .5) cos( ψk − 2.5) sin ψk sin( ψk + 2 .5) sin( ψk − 2.5) 
+
+
+
++ pxy k (54) Relay diamond vertices: 
+
+vdia = s
+
+cos ψk cos( ψk + π 
+
+> 2
+
+) cos( ψk + π) cos( ψk − π 
+
+> 2
+
+)sin ψk sin( ψk + π 
+
+> 2
+
+) sin( ψk + π) sin( ψk − π 
+
+> 2
+
+)
+
+
+
++ pxy k (55) Connection line opacity (transparency based on range fraction): 
+
+αij = max 
+
+
+
+0.15 , 1 − dij 
+
+Rcomm 
+
+
+
+(56) 35 Scale bar value selection from candidate set S = {5, 10 , 20 , 25 , 50 , 100 , 200 , 500 }:
+
+Lscale = argmin 
+
+> s∈S
+
+|s − 0.2 · ∆xview | (57) Dynamic axis margin: 
+
+m = max(50 , 1.5 · Dmax ) (58) 36

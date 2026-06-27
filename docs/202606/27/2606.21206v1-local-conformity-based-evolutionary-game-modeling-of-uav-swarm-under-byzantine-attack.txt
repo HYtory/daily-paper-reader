@@ -1,0 +1,729 @@
+Title: Local Conformity-Based Evolutionary Game Modeling of UAV Swarm Under Byzantine Attack
+
+URL Source: https://arxiv.org/pdf/2606.21206v1
+
+Published Time: Tue, 23 Jun 2026 00:45:16 GMT
+
+Number of Pages: 6
+
+Markdown Content:
+# Local Conformity-Based Evolutionary Game Modeling of UAV Swarm Under Byzantine Attack 
+
+Ruixing Ren ∗, Junhui Zhao ∗, and He Fang †∗School of Electronic and Information Engineering, Beijing Jiaotong University, Beijing 100044, China. 
+
+†College of Computer and Cyber Security, Fujian Normal University, Fuzhou 350117, China. Emails: renruixing0604@163.com, junhuizhao@hotmail.com, fanghe@fjnu.edu.cn 
+
+Abstract —Leveraging their flexible and efficient deployment capabilities, unmanned aerial vehicle (UAV) swarms have been widely applied in various mission scenarios. However, the open communication environment also exposes them to the threat of Byzantine attacks. Most existing studies assume independent decision-making by each UAV, neglecting that local conformity amplifies false information propagation. This paper constructs an evolutionary game model for UAV swarm under malicious attacks based on graph evolutionary game theory, revealing how local conformity rules govern the spread of deceptive strategies. Using death-birth updating rules, we derive the macroscopic dynamic equation for the fraction of deceptive strategies and the analytical solutions to its evolutionary stable states. Sim-ulations reveal observation errors weaken malicious induction, while higher proportions of malicious nodes and greater attack intensity drastically amplify attack impacts. Moreover, the model exhibits strong topological robustness across regular, scale-free and random networks. 
+
+Index Terms —UAV swarm; Byzantine attacks; graph evolu-tionary game; local conformity 
+
+I. I NTRODUCTION 
+
+With distributed architecture, high mobility and powerful coordination, unmanned aerial vehicle (UAV) swarm exhibits great potential in missions including cooperative reconnais sance and target tracking [1]. However, open communication renders swarms highly susceptible to Byzantine attacks from malicious nodes [2]: by injecting false data, adversaries mis-lead legitimate UAVs away from their true states and impair mission efficiency [3], [4]. Most conventional security mechanisms assume indepen-dent decision-making of each UAV and overlook local in-teractions induced by communication topologies in practical swarms. For instance, interactions among swarm UAVs in [5] only involve leader election and authentication information forwarding, without persistent tightly coupled collaborative decision-making. In [6], UAV decisions rely on global op-timization objectives and prediction models; communication topologies serve information exchange, yet security decisions barely depend on real-time local neighbor games or consen-sus. Though clustering and communication link modeling are adopted in [7], security decisions are derived via centralized or block coordinate descent optimization. Each UAV acts independently within the given optimization framework, with no emphasis on dynamic coupling of local interactions. 
+
+Corresponding author: Junhui Zhao. 
+
+In practical swarm control, local conformity rules (the ten-dency to align states with neighbors) are commonly embedded in algorithms to boost coordination efficiency [8], [9], and widely adopted for formation maintenance and consensus achievement [10], [11]. Nevertheless, malicious nodes may exploit this rule: after malicious UAVs transmit false reports, legitimate UAVs may follow suit and broadcast erroneous information under consensus effects, triggering information cascade propagation [12]. Few existing works analyze this process from an evolutionary dynamics perspective [13]. Evolutionary game theory provides a natural framework to characterize individuals’ strategy updating driven by neigh-bors’ payoffs, and has been applied to analyze strategy dif-fusion and consensus formation over networks [14], [15]. Built on this theory, this work constructs an evolutionary game model incorporating local conformity behaviors for UAV swarm with malicious attackers, and investigates the influences of such behavior on Byzantine attacks. The main contributions are summarized as follows:  
+
+> •
+
+We integrate local conformity rules with Byzantine attacks to establish an evolutionary game framework for interactions between legitimate UAVs and malicious nodes, uncovering the propagation mechanism of decep-tive strategies within swarms.  
+
+> •
+
+Based on death-birth updating rules, we derive linear differential equations governing the temporal evolution of the fraction of deceptive strategies among legitimate UAVs, and obtain analytical expressions for evolutionary stable states (ESS).  
+
+> •
+
+Monte Carlo simulations indicate observation error, mali-cious node fraction and attack intensity dominate steady-state false alarm rates, and the model sustains strong stability across diverse network topologies. The remainder of this paper is organized as follows. Section II presents the system model and graph evolutionary game formulation. Section III derives the evolutionary dynamics equations and corresponding ESS for UAV swarms. Section IV validates the theoretical model via simulations. Section V concludes this work. II. G RAPH EVOLUTIONARY GAME FORMULATION 
+
+Consider a swarm network V consisting of N UAVs. Each UAV measures the binary system state θt ∈ { 0, 1} at each discrete time step t and reports measurements to the ground 
+
+> arXiv:2606.21206v1 [eess.SY] 19 Jun 2026
+
+station, where {θt} follows an independent and identically distributed process. Sensor noise, positioning bias and electro-magnetic interference induce observation errors for each UAV, with the error probability denoted as ε.The measurement of UAV i ∈ V at time t is uti, satisfying 
+
+P(uti̸ = θt) = ε. After measurement, each UAV transmits a report rti to the ground station. Malicious UAVs execute attack strategies, while legitimate UAVs follow local conformity rules whose strategies evolve dynamically under Byzantine attacks launched by malicious UAVs. The ground station aggregates all reports for data fusion to infer the true system state. Evolutionary game theory characterizes incremental strategy updates via local interactions, matching the neighbor-aware distributed decision scheme of UAV swarms. Accordingly, this work adopts graph evolutionary game theory to model interactions between legitimate UAVs and their neighbors, including malicious nodes. 
+
+Strategy Space. Legitimate UAVs have two available strate-gies. The normal strategy Sn reports raw measurements di-rectly, namely rti = uti. The deceptive strategy Sm sends in-verted readings such that rti = ¯ uti. This deceptive strategy does not stem from active malice of legitimate UAVs; instead, it represents erroneous decisions induced by neighboring agents, particularly malicious UAVs, under local conformity rules. Malicious UAVs adopt attack strategy Sa and deliberately flip their reported measurements with probability Pa. Let 
+
+pm denote the fraction of legitimate UAVs that employ the deceptive strategy, and β represent the ratio of malicious UAV count to legitimate UAV count. 
+
+Mission Payoff. When UAVs interact with their neighbors, they receive mission payoffs based on whether their reports align with those of adjacent agents. Consider a focal UAV adopting the normal strategy Sn: it gains payoff uns if its report matches neighbors’ reports from the previous time step, and und otherwise. If the focal UAV selects the deceptive strategy Sm, it obtains ums for consistent neighbor reports and umd for inconsistent ones. To fulfill collaborative mission demands, legitimate UAVs are inherently designed to favor alignment with neighbors for consensus achievement, which yields the inequalities uns > ums and und > u md . Fur-thermore, consistent reporting generates higher payoffs than mismatched reports, such that uns > u nd and ums > u md .
+
+Utility Function. Within the framework of evolutionary game theory, the utility function quantifies each player’s payoff level. Strategies yielding higher utilities enjoy evolutionary advantages and are more likely to be adopted across the population. The utility function is defined as follows: 
+
+π = (1 − α)B + α · U (1) where B denotes the baseline fitness reflecting the inherent attributes of each player. A player that is less susceptible to the influence of other agents possesses a relatively large baseline fitness B. Considering network homogeneity, this work assumes identical baseline fitness for all UAVs, namely 
+
+B = 1. The parameter α stands for the weak selection coefficient, which quantifies the consensus tendency of UAVs and generally takes a very small value. U measures the total payoffs acquired from interactions with neighboring UAVs. UAVs cannot acquire full knowledge of their neighbors’ strategy profiles and only observe neighbors’ reported mea-surements. Therefore, each UAV evaluates its neighbors’ utili-ties based on its own sensor readings: neighbors whose reports match its local measurements are regarded as adopting the honest strategy Sn, while those with mismatched reports are deemed to employ the deceptive strategy Sm. This setting complies with the limited information constraint of distributed sensing systems. 
+
+Strategy Updating Rule. During long-term iterative evo-lution, legitimate UAVs continuously adjust their decision-making strategies under the influence of neighboring nodes. Combined with the inherent characteristics of UAV swarm scenarios, this paper adopts the death-birth updating rule to characterize the strategy evolution of each node, which is detailed as follows:  
+
+> •
+
+death step: In each iteration, a legitimate UAV is ran-domly selected to abandon its current behavioral strategy temporarily;  
+
+> •
+
+birth step: The selected UAV imitates the strategy of a neighboring node and updates its own decision with a probability proportional to the neighbor’s fitness. 
+
+ESS. It denotes a stable equilibrium reached by the system in the evolutionary process. Once the system converges to an ESS, the system can automatically counteract perturbations and revert to its steady state even if a small fraction of nodes produce behavioral mutations. In this work, the system arrives at an ESS when the fraction ptm of legitimate UAVs adopting deceptive strategies remains constant over time, which satisfies the evolutionary dynamics equation below: 
+
+ˆptm ptm=pESS 
+
+> m
+
+= 0 (2) where ˆptm represents the time derivative of ptm.III. E VOLUTIONARY DYNAMICS AND STABLE STATES OF 
+
+UAV S WARM 
+
+Built upon the above model setup, this section analyzes how legitimate UAVs gradually adopt erroneous deceptive strategies under the misguidance of malicious UAVs, and derives the corresponding final stable states. 
+
+A. State Transition Probability 
+
+Suppose among the k neighbors connected to a focal UAV, km neighbors adopt strategy Sm and alter their output readings, while the remaining kn = k − km neighbors employ strategy Sn. Given the observation error probability ε, let kSn
+
+denote the number of neighbors whose reported measurements coincide with the true system state, and kSm = k − kSn denote the count of neighbors with reports inconsistent with the true system state. We thus obtain 
+
+kSm = (1 − ε)km + εk n, (3) 
+
+kSn = (1 − ε)kn + εk m. (4) In practical, UAVs cannot judge whether their observations contain measurement errors. Accordingly, we split the utility function into two cases for analysis: adopting strategy Sn or 
+
+Sm under error-free observations and erroneous observations. When the focal UAV obtains error-free measurements and selects the deceptive strategy Sm, we have rti = ¯ uti̸ = θt,and the corresponding utility function is written as 
+
+π(A) 
+
+> m
+
+= 1 − α + α kSmums + ( k − kSm)umd 
+
+ . (5) If the focal UAV adopts the normal strategy Sn, namely rti =
+
+uti̸ = θt, its utility function reads 
+
+π(A) 
+
+> n
+
+= 1 − α + α kSn uns + ( k − kSn )und 
+
+ . (6) Similarly, when the focal UAV suffers from observation errors, the corresponding utility functions are given by 
+
+π(B) 
+
+> m
+
+= 1 − α + α kSn ums + ( k − kSn )umd 
+
+ , (7) 
+
+π(B) 
+
+> n
+
+= 1 − α + α kSmuns + ( k − kSm)und 
+
+ . (8) Following the birth-death updating rule, we define Pn→m as the probability that a UAV switches from the normal strategy to the deceptive strategy. The numerator equals the sum of utilities of neighbors judged to adopt strategies conflicting with the true system state, while the denominator, denoted as Ω, is the total utility of all neighboring nodes. When the focal UAV has no observation error, this probability can be expressed as 
+
+P (A) 
+
+> n→m
+
+= km(1 − ε)π(A) 
+
+> m
+
++ knεπ (B)
+
+> n
+
+Ω , (9) 
+
+Ω = 
+
+h
+
+kn(1 − ε)π(A) 
+
+> n
+
++ kmεπ (B)
+
+> m
+
+i
+
++
+
+h
+
+km(1 − ε)π(A) 
+
+> m
+
++ knεπ (B)
+
+> n
+
+i
+
+.
+
+(10) When the focal UAV suffers observation errors, the probability takes the form 
+
+P (B) 
+
+> n→m
+
+= kn(1 − ε)π(A) 
+
+> n
+
++ kmεπ (B)
+
+> m
+
+Ω . (11) Combining Eqs. (9) and (11), we can derive the probability expression for any legitimate UAV in the network switching from the normal strategy to the deceptive strategy as follows: 
+
+Pn→m = (1 − ε)P (A) 
+
+> n→m
+
++ εP (B) 
+
+> n→m
+
+(12) To further analyze Eq. (12), we substitute Eqs. (5)-(8) into Eqs. (9)-(11), then plug the resulting expressions into Eq. (12). After algebraic simplification, we obtain: 
+
+Pn→m = ¯ε2kmπ(A) 
+
+> n
+
++ ε2kmπ(B) 
+
+> m
+
++ ε¯εk nπ(B) 
+
+> n
+
++ ε¯εk nπ(A)
+
+> m
+
+¯εk nπ(A) 
+
+> n
+
++ εk nπ(B) 
+
+> n
+
++ ¯ εk mπ(A) 
+
+> m
+
++ εk mπ(B)
+
+> m
+
+,
+
+(13) where ¯ε = 1 − ε. Notice that Equations (5)-(8) all contain a common term 1 − α, followed by terms related to payoffs, which are denoted as Ψ(X) 
+
+> i
+
+. Furthermore, these expressions can be uniformly rewritten as 
+
+π(X) 
+
+> i
+
+= (1 − α) + α · Ψ(X) 
+
+> i
+
+, (14) Substituting this unified expression into Eq. (13), we obtain the numerator as 
+
+= ¯ ε2km
+
+h
+
+(1 − α) + αΨ(A)
+
+> n
+
+i
+
++ ε2km
+
+h
+
+(1 − α) + αΨ(B)
+
+> m
+
+i
+
++ ε¯εk n
+
+h
+
+(1 − α) + αΨ(B)
+
+> n
+
+i
+
++ ε¯εk n
+
+h
+
+(1 − α) + αΨ(A)
+
+> m
+
+i
+
+.
+
+(15) Meanwhile, we separate the terms containing 1−α from those with α:
+
+= (1 − α)  ¯ε2km + ε2km + ε¯εk n + ε¯εk n
+
+
+
++ α
+
+
+
+¯ε2kmΨ(A) 
+
+> n
+
++ ε2kmΨ(B) 
+
+> m
+
++ ε¯εk nΨ(B) 
+
+> n
+
++ ε¯εk nΨ(A)
+
+> m
+
+
+
+.
+
+(16) After combining like terms, we arrive at 
+
+= (1 − α)  ¯ε2km + ε2km + 2 ε¯εk n
+
+ + α · Φ1, (17) where, 
+
+Φ1 = ¯ ε2kmΨ(A) 
+
+> n
+
++ ε2kmΨ(B) 
+
+> m
+
++ ε¯εk nΨ(B) 
+
+> n
+
++ ε¯εk nΨ(A) 
+
+> m
+
+, (18) is a combined term associated with payoff parameters. Sim-ilarly, we apply the same operations to the denominator and finally obtain 
+
+= (1 − α) (¯ εk n + εk n + ¯ εk m + εk m) + α · Φ2, (19) 
+
+Φ2 = ¯ εk nΨ(A) 
+
+> n
+
++ εk nΨ(B) 
+
+> n
+
++ ¯ εk mΨ(A) 
+
+> m
+
++ εk mΨ(B) 
+
+> m
+
+. (20) After combination, Eq. (13) can be rearranged as 
+
+Pn→m = (1 − α)  ¯ε2km + ε2km + 2 ε¯εk n
+
+ + αΦ1
+
+(1 − α) (¯ εk n + εk n + ¯ εk m + εk m) + αΦ2
+
+, (21) For the denominator, we have ¯εk n + εk n + ¯ εk m + εk m =(¯ ε + ε)( kn + km) = 1 · k = k. We therefore conclude that 
+
+Pn→m = (1 − α)  ¯ε2km + ε2km + 2 ε¯εk n
+
+ + αΦ1
+
+(1 − α)k + αΦ2
+
+. (22) Since α is an infinitesimal quantity, the following approximate expansion holds: 
+
+1 + μα 
+
+1 + να = 1 + ( μ − ν)α + O(α2). (23) Divide both the numerator and denominator of Equation (22) by (1 − α)k to rewrite the denominator in the form 1 + να :
+
+Pn→m = 
+
+> ¯ε2km+ε2km+2 ε¯εk n
+> k
+
++ α 
+
+> (1 −α)k
+
+Φ1
+
+1 + αΦ2
+
+> (1 −α)k
+
+. (24) Since α is sufficiently small, we have 11−α ≈ 1 + O(α). As a result, the numerator can be simplified to 
+
+(¯ ε2 + ε2)km + 2 ε¯εk n
+
+k| {z }
+
+> A
+
++ Φ1
+
+k|{z} 
+
+> μ
+
+·α + O(α2). (25) The denominator can be written as 
+
+1 + αΦ2
+
+(1 − α)k ≈ 1 + Φ2
+
+k|{z} 
+
+> ν
+
+·α + O(α2). (26) We thus obtain 
+
+Pn→m = A + μα + O(α2)1 + να + O(α2) = A(1 + μA α)1 + να + O(α2)= A
+
+
+
+1 + 
+
+ Φ1
+
+Ak − Φ2
+
+k
+
+
+
+α
+
+
+
++ O(α2)= A + α
+
+ Φ1
+
+k − A · Φ2
+
+k
+
+
+
++ O(α2)= (¯ ε2 + ε2)km + 2 ε¯εk n
+
+k
+
++ α
+
+ Φ1
+
+k − (¯ ε2 + ε2)km + 2 ε¯εk n
+
+k · Φ2
+
+k
+
+| {z }
+
+> ϖ
+
++O(α2).
+
+(27) Given kn = k − km and ¯ε = 1 − ε, substitute them into the first term of the above formula and simplify to get 
+
+Pn→m = 2 ε(1 − ε) + (1 − 2ε)2km
+
+k + α · ϖ + O(α2). (28) 
+
+B. Population Evolution Equation 
+
+Recall the definitions presented above. Under the assump-tion of a large-scale network, let pm denote the proportion of legitimate UAVs adopting the deceptive strategy, and Pa
+
+denote the proportion of malicious neighbors implementing the attack strategy. For any legitimate UAV, suppose there are ko ordinary neighbors among its k neighbors; then the number of malicious neighbors is kb = βk o. Accordingly, the expected total number of neighbors adopting the deceptive strategy (or the attack strategy, both of which manifest as reporting reversed values) is given by: 
+
+E[km] = E[ko,m ] + E[kb,m ] = kopm + kbPa = ko(pm + βP a).
+
+(29) The expected total number of neighbors satisfies E[k] =
+
+ko(1 + β). Therefore, 
+
+E
+
+ km
+
+k
+
+
+
+= pm + βP a
+
+1 + β . (30) Based on the death-birth updating rule, the change rate of the proportion pm of the deceptive strategy satisfies the following relation [14]: 
+
+ˆpm = E [Pn→m] − pm. (31) Substitute Eq. (28) into (31) and take the expectation over the neighbor distribution to yield 
+
+ˆpm = E
+
+
+
+2ε(1 − ε) + (1 − 2ε)2 km
+
+k + α · ϖ(km)
+
+
+
+− pm + O(α2).
+
+(32) Substituting Eq. (30) into the above expression, we obtain 
+
+ˆpm = 2 ε(1 − ε) + (1 − 2ε)2 pm + βP a
+
+1 + β − pm
+
++ αE[ϖ(km)] + O(α2).
+
+(33) Since the weak selection coefficient α ≪ 1, and E[ϖ(km)] 
+
+is a bounded constant determined by the model parameters, the term αE[ϖ(km)] constitutes a higher-order infinitesimal. In the limit of α → 0, this term tends to zero, and the dominant contribution to the system evolution comes from the zero-order term. In the subsequent analysis, this paper adopts the zero-order approximation, that is, neglects the term containing α
+
+and retains only the O(1) component. Consequently, we obtain the zero-order evolution equation as follows: 
+
+ˆpm ≈ 2ε(1 − ε) + (1 − 2ε)2 pm + βP a
+
+1 + β − pm
+
+= −pm
+
+
+
+1 − (1 − 2ε)2
+
+1 + β
+
+
+
++ 2 ε(1 − ε) + (1 − 2ε)2βP a
+
+1 + β .
+
+(34) This is a linear ordinary differential equation with respect to 
+
+pm, which can be rewritten in the standard form of linear ordinary differential equations: 
+
+ˆpm = Ap m + B, (35) 
+
+A = −1 + (1 − 2ε)2
+
+1 + β , (36) 
+
+B = 2 ε(1 − ε) + (1 − 2ε)2βP a
+
+1 + β (37) The equilibrium point pESS  
+
+> m
+
+is solved from ˙pm = 0 as pESS  
+
+> m
+
+=
+
+−B/A , whose expanded form is shown below: 
+
+pESS  
+
+> m
+
+= 2ε(1 − ε)(1 + β) + (1 − 2ε)2βP a
+
+(1 + β) − (1 − 2ε)2 . (38) Define the error variable ϱ = pm − pESS  
+
+> m
+
+. Substituting it into the equation yields 
+
+dϱ dt = ˆ pm = Ap m + B = A(ϱ + pESS  
+
+> m
+
+) + B
+
+= Aϱ + A(−B/A ) + B = Aϱ (t)
+
+(39) The solution to this equation is ϱ = ϱ(0) eAt . Hence, the stability of the equilibrium point is entirely determined by the sign of coefficient A. In practical UAV swarm scenarios, the detection error generally satisfies 0 < ε ≤ 0.5, and the proportion of malicious UAVs satisfies β > 0. Under such conditions, we always have A < 0. The exponential term 
+
+eAt decays exponentially over time such that ϱ(t) → 0. The error gradually diminishes and eventually converges back to the equilibrium point, meaning the system is stable. Therefore, the equilibrium pESS  
+
+> m
+
+under the zero-order approximation is asymptotically stable. IV. S IMULATION EXPERIMENTS AND ANALYSIS 
+
+In this section, the Monte Carlo simulation method is adopted to systematically verify the evolutionary dynamics equations, evolutionarily stable states and parameter influ-ences. The number of Monte Carlo trials is set to 10. Regular networks are mainly utilized for simulations, where each UAV possesses the same number of neighbor nodes with a fixed degree k = 10 . In addition, to verify the robustness of the proposed model against network topologies, BA scale-free networks and ER random networks are adopted in partial 0 50 100 150 200                
+
+> Time step
+> 0.0
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> 0.7
+> 0.8
+> pm(t)
+> = 0.1, = 0.5 (Simulation)
+> = 0.1, = 0.5 (Theoretical)
+> = 0.2, = 0.5 (Simulation)
+> = 0.2, = 0.5 (Theoretical)
+> = 0.1, = 1.0 (Simulation)
+> = 0.1, = 1.0 (Theoretical) Fig. 1. Evolution under different parameters (regular network), Pa= 1 .0
+
+experiments. The number of UAVs in all three types of networks is N = 500 . The average degree of the BA network is approximately 6, and the connection probability of the ER network is set to p = k/N = 0 .02 to maintain an average degree of about 10. The payoff matrix parameters are set as 
+
+uns = 0 .8, und = 0 .6, ums = 0 .6, and umd = 0 .4. The initial proportion of deceptive strategies is initialized to 0. The evolution time is fixed to 200 to reach a steady state. In Fig. 1, the regular network is adopted as the fixed network topology to compare the evolutionary processes under three groups of parameter settings. For the set ε = 0 .1, β = 0 .5,the proportion rises rapidly starting from zero and eventually converges to a steady value. When the observation error is increased to ε = 0 .2 with all other parameters unchanged, the steady-state value drops below 0.6. This phenomenon indicates that as the observation error increases, UAVs hold lower confidence in their own observations, and their decision-making behaviors become closer to random choices, which to some extent weakens the directional induction effect of malicious nodes. When the proportion of malicious nodes is raised to β = 1 .0, the steady-state value rises above 0.7. This demonstrates that an increase in the number of malicious nodes can significantly amplify the attack effect. In Fig. 2, the parameters are fixed as ε = 0.1, β =0.5, P a = 1 .0, and the evolutionary processes under three dis-tinct network topologies are compared. The three evolutionary curves almost completely overlap, and all match well with the theoretical prediction values represented by the black dashed line. This result verifies the robustness of the proposed model. Specifically, the network topology exerts little influence on the macroscopic evolutionary trend of the deceptive strategy, which proves that the theoretical model put forward in this paper is applicable to various practical network scenarios. The results shown in Figs. 3 and 4 reveal that the obser-vation error ε and the proportion of malicious nodes β are two key factors affecting the evolutionarily stable state of the system, yet they exert opposite effects. The equilibrium 0 50 100 150 200                          
+
+> Time step
+> 0.0
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> 0.7
+> pm(t)
+> Regular Network (Simulation)
+> Theoretical
+> BA Network (Simulation)
+> ER Network (Simulation)
+> Fig. 2. Different network topologies evolution, ε= 0 .1, β = 0 .5, P a= 1 .00.1 0.2 0.3 0.4 0.5
+> Observation error
+> 0.50
+> 0.55
+> 0.60
+> 0.65
+> 0.70
+> 0.75
+> 0.80
+> 0.85
+> Steady state  pESS m
+> Theory =0.1
+> Theory =0.5
+> Theory =1.0
+> Theory =2.0
+> Simulation =0.1
+> Simulation =0.5
+> Simulation =1.0
+> Simulation =2.0
+> Fig. 3. Observation error εvs pESS munder different β,Pa= 1
+
+proportion pESS  
+
+> m
+
+decreases monotonically as ε grows. The underlying reason is that when the observation error is small, legitimate UAVs can perceive the true system state relatively accurately. In this case, the deceptive strategies induced by malicious nodes can spread effectively, keeping the steady-state proportion of deceptive strategies at a high level. As the observation error increases, the directional induction effect of malicious nodes is diluted, as analyzed in Fig. 1. In contrast, 
+
+pESS  
+
+> m
+
+rises with the growth of the malicious node proportion 
+
+β. This implies that a higher proportion of malicious nodes in the network raises the probability for legitimate UAVs to have more malicious neighbors around them, making them more vulnerable to deception and inclined to adopt erroneous strategies. When ε = 0 .5, the steady-state values of all curves converge to 0.5. This is because the observation results become completely random, and UAVs are unable to extract any valid information from their observations. Fig. 5 plots the evolutionary curves of pm(t) under different values of Pa. The steady-state value reaches its maximum when Pa = 1 .0, followed by the case of Pa = 0 .7, while the 0.1 0.2 0.3 0.4 0.5 
+
+0.25 
+
+0.50 
+
+0.75 
+
+1.00 
+
+1.25 
+
+1.50 
+
+1.75 
+
+2.00 0.50 
+
+0.55 
+
+0.60 
+
+0.65 
+
+0.70 
+
+0.75 
+
+0.80 
+
+0.85 
+
+> pESS m
+
+Fig. 4. Theoretical ESS Heatmap 0 25 50 75 100 125 150 175 200    
+
+> Time step
+> 0.0
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> 0.7
+> pm(t)
+> Pa=0.3
+> Theory Pa=0.3
+> Pa=0.7
+> Theory Pa=0.7
+> Pa=1.0
+> Theory Pa=1.0
+
+Fig. 5. Impact of Attack Probability Pa, ε = 0 .1, β = 0 .5.
+
+steady-state value is the lowest at a smaller Pa. This further illustrates that a stronger attack intensity of malicious nodes produces a more prominent interference effect on the decision-making of legitimate UAVs, inducing more normal UAVs to adopt deceptive strategies. V. C ONCLUSION 
+
+Aiming at UAV swarm under Byzantine attack, this paper took local conformity behaviors into consideration and es-tablished an evolutionary model based on graph evolutionary game theory. With the death-birth updating rule, we derived the macroscopic dynamic equation of the proportion of deceptive strategies as well as the analytical expression of the ESS. Through theoretical analysis and simulation verification, it was concluded that the conformity effect acts as an amplifier for Byzantine attacks. Malicious nodes not only disseminated false information on their own, but also induced legitimate UAV nodes to follow suit, thereby magnifying their destructive power within the swarm. This characteristic is not reflected in traditional Byzantine models. This study provides a theoretical reference for designing security strategies against Byzantine attacks in UAV swarm. REFERENCES [1] R. Ren, J. Zhao and Q. Zhang, ”UAV-Assisted Collaborative Sensing Task Offloading and Resource Allocation in IoV,” IEEE Transactions on Vehicular Technology, vol. 75, no. 4, pp. 6806-6815, Apr. 2026. [2] J. Zhao, F. Huang, L. Liao and Q. Zhang, ”Blockchain-Based Trust Management Model for Vehicular Ad Hoc Networks,” IEEE Internet of Things Journal, vol. 11, no. 5, pp. 8118-8132, Mar. 2024. [3] X. Wang, Z. Zhao, et al. ”A survey on security of UAV swarm networks: attacks and countermeasures,” ACM Computing Surveys, vol. 57, no. 3, pp. 1-37, Nov. 2024. [4] R. Ren, J. Zhao and Q. Zhang, ”Integrated sensing and communication for low-altitude security,” Physical Communication, vol. 76, pp. 103117, Apr. 2026. [5] S. Hu, Z. Zhou, P. Wang and Y. Zhang, ”A Hierarchical Cooperative Au-thentication Protocol for Attack-Resilient UAV Swarms With Ultra-Low Overhead,” IEEE Transactions on Information Forensics and Security, vol. 20, pp. 12652-12664, Nov. 2025. [6] Q. Wu, Y. Zhang, Z. Yang and M. R. Shikh-Bahaei, ”Deep Learning for Secure UAV Swarm Communication Under Malicious Attacks,” IEEE Transactions on Wireless Communications, vol. 23, no. 10, pp. 14879-14894, Oct. 2024. [7] Y. Wu, X. Guan, W. Yang and Q. Wu, ”UAV Swarm Communication Under Malicious Jamming: Joint Trajectory and Clustering Design,” IEEE Wireless Communications Letters, vol. 10, no. 10, pp. 2264-2268, Oct. 2021. [8] C. Zhu, B. Jiang, et al., ”Privacy-Preserving Average Consensus for Swarm Systems Subject to DoS Attacks,” IEEE Internet of Things Journal, vol. 12, no. 24, pp. 53659-53669, 15 Dec. 2025. [9] X. Gong, et al., ”Resilient Human-in-the-Loop Formation-Tracking of Multi-UAV Systems Against Byzantine Attacks,” IEEE Transactions on Automation Science and Engineering, vol. 22, pp. 3797-3809, 2025. [10] J. Zhao, R. Ren, Y. Nie and D. Wang, ”Decision Intelligence Em-powering Resource Management for 6G-V2X Communications,” IEEE Internet of Things Magazine, vol. 8, no. 6, pp. 88-96, Nov. 2025. [11] J. Zhao, et al., ”A UAV-Aided Vehicular Integrated Platooning Network for Heterogeneous Resource Management,” IEEE Transactions on Green Communications and Networking, vol. 7, no. 1, pp. 512-521, Mar. 2023. [12] R. Huang, B. Li, et al. ”Dual-feature-driven nonlinear evolution of social misinformation,” International Journal of Swarm Intelligence Research, vol. 16, no.1, Feb. 2025. [13] C. Wu, H. Deng, et al. ”Enhancing resilience of unmanned autonomous swarms through game theory-based cooperative reconfiguration”, Reli-ability Engineering & System Safety, vol. 260, pp. 110951, Aug. 2025. [14] Ohtsuki H, Nowak M A. The replicator equation on graphs. Journal of Theoretical Biology, 2006, 243(1): 86–97. [15] Y. Lin, ”Analysis of public opinion security based on bounded rational behaviors in social network,” Ph.D. dissertation, Tsinghua University, Beijing, China, 2025.

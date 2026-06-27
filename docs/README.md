@@ -6,44 +6,40 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-26
-- 运行时间：2026-06-26 20:28:23 UTC
+- 最新运行日期：2026-06-27
+- 运行时间：2026-06-27 21:27:06 UTC
 - 运行状态：成功
-- 本次总论文数：7
+- 本次总论文数：5
 - 精读区：0
-- 速读区：7
+- 速读区：5
 
 ### 今日简报（AI）
-今日速读7篇论文，聚焦主动感知决策、图对比迁移多智能体强化学习及绳缆无人机协同控制三大方向。  
-最值得关注的是主动感知与延迟决策轨迹优化（7.0分）和GCT-MARL（7.0分），前者提升目标识别鲁棒性，后者实现样本高效的多智能体协作。  
-建议关注感知-决策闭环框架在不确定环境中的优势，以及图对比迁移学习在复杂任务中的扩展潜力。
-- 详情：[/202606/26/README](/202606/26/README)
+今日精选3篇速读论文，聚焦多智能体与无人机系统的仿真到现实迁移及安全控制。
+
+方向推荐：7分论文《IDEA》提出多智能体Sim-to-Real迁移的抗动力学失配方法值得关注；6分《SkyJEPA》展示了四旋翼零样本迁移的长时序世界模型。
+
+建议优先阅读《IDEA》的效应对齐技术，并留意《SkyJEPA》在长时序控制上的潜力，后续可尝试复现或对比实验。
+- 详情：[/202606/27/README](/202606/27/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Active Sensing and Deferred-Decision Trajectory Optimization for Robust Target Identification](/202606/26/2606.22277v1-active-sensing-and-deferred-decision-trajectory-optimization-for-robust-target-identification)  
+1. [IDEA: Insensitive to Dynamics Mismatch via Effect Alignment for Sim-to-Real Transfer in Multi-Agent Control](/202606/27/2606.26575v1-idea-insensitive-to-dynamics-mismatch-via-effect-alignment-for-sim-to-real-transfer-in-multi-agent-control)  
    标签：评分：7.0/10、query:ui
-   evidence：面向目标识别的轨迹优化，可应用于追逃博弈
-2. [GCT-MARL: Graph-Based Contrastive Transfer for Sample-Efficient Cooperative Multi-Agent Reinforcement Learning](/202606/26/2606.25073v1-gct-marl-graph-based-contrastive-transfer-for-sample-efficient-cooperative-multi-agent-reinforcement-learning)  
-   标签：评分：7.0/10、query:ui
-   evidence：多智能体强化学习迁移方法，可应用于无人机蜂群
-3. [Contraction-based Neural Control for Cooperative Aerial Payload Transportation with Variable-length Cables](/202606/26/2606.20127v1-contraction-based-neural-control-for-cooperative-aerial-payload-transportation-with-variable-length-cables)  
+   evidence：多智能体仿真到现实迁移方法，适用于无人机蜂群强化学习任务
+2. [Local Conformity-Based Evolutionary Game Modeling of UAV Swarm Under Byzantine Attack](/202606/27/2606.21206v1-local-conformity-based-evolutionary-game-modeling-of-uav-swarm-under-byzantine-attack)  
    标签：评分：6.0/10、query:ui
-   evidence：面向载荷运输的多无人机协同控制，与多机协同相关
-4. [Adversarial observations in probabilistic State-Space Models for robust Reinforcement Learning](/202606/26/2606.20880v1-adversarial-observations-in-probabilistic-state-space-models-for-robust-reinforcement-learning)  
+   evidence：无人机蜂群在攻击下的进化博弈建模，与多智能体协调相关
+3. [SkyJEPA: Learning Long-Horizon World Models for Zero-Shot Sim-to-Real Control of Quadrotors](/202606/27/2606.23444v1-skyjepa-learning-long-horizon-world-models-for-zero-shot-sim-to-real-control-of-quadrotors)  
    标签：评分：6.0/10、query:ui
-   evidence：针对状态空间模型的对抗鲁棒性强化学习，适用于安全无人机操作
-5. [ASALT: Adaptive State Alignment for Lateral Transfer in Multi-agent Reinforcement Learning](/202606/26/2606.24601v1-asalt-adaptive-state-alignment-for-lateral-transfer-in-multi-agent-reinforcement-learning)  
+   evidence：面向四旋翼sim-to-real控制的JEPA世界模型，可用于追逃
+4. [SwarmFly: A simulation platform for UAV swarm experiment design and validation](/202606/27/2606.25146v1-swarmfly-a-simulation-platform-for-uav-swarm-experiment-design-and-validation)  
    标签：评分：6.0/10、query:ui
-   evidence：多智能体强化学习迁移，可应用于无人机蜂群
-6. [Multi-Agent Goal Recognition with Team- and Goal-Conditioned Reinforcement Learning and Factorized Branch-and-Bound](/202606/26/2606.25978v1-multi-agent-goal-recognition-with-team--and-goal-conditioned-reinforcement-learning-and-factorized-branch-and-bound)  
+   evidence：多无人机群仿真平台
+5. [Rate-Aware Quantum-Inspired Trajectory Learning for Interference-Limited Multi-UAV Networks](/202606/27/2606.25480v1-rate-aware-quantum-inspired-trajectory-learning-for-interference-limited-multi-uav-networks)  
    标签：评分：6.0/10、query:ui
-   evidence：多智能体强化学习结合团队目标条件用于无人机监视，可迁移至无人机集群协同
-7. [Deterministic Pareto-Optimal Policy Synthesis for Multi-Objective Reinforcement Learning](/202606/26/2606.26397v1-deterministic-pareto-optimal-policy-synthesis-for-multi-objective-reinforcement-learning)  
-   标签：评分：6.0/10、query:ui
-   evidence：多目标强化学习方法，可应用于无人机任务中的多目标优化
+   evidence：分散式强化学习用于多无人机协调
 
 
 <div class="dpr-home-promo-card">
