@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-28",
+  "date": "2026-06-28",
+  "generated_at": "2026-06-28T21:02:02",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/28/2606.22579v1-stationary-robust-mean-field-games-under-model-mismatches",
+      "section": "quick",
+      "title_en": "Stationary Robust Mean-Field Games under Model Mismatches",
+      "authors": "Yue Wang",
+      "date": "2026-06-21",
+      "pdf": "https://arxiv.org/pdf/2606.22579v1",
+      "score": "7.0",
+      "evidence": "鲁棒平均场多智能体强化学习框架适用于无人机群协调",
+      "tldr": "针对多智能体强化学习中训练与真实环境模型不匹配导致的性能下降问题，本文提出将分布鲁棒性融入无限时域平稳平均场博弈框架。通过建立具有压缩Bellman算子的鲁棒动态规划原理并证明均衡存在性，开发了首个带收敛保证的算法。进一步将平均场解与有限种群鲁棒博弈关联，在收缩动力学下导出显式非渐近误差界。实验验证了不同不确定性模型中鲁棒性的定量与定性影响。",
+      "tags": "query:ui",
+      "abstract_en": "Deploying multi-agent reinforcement learning (MARL) in the real world is often limited by model mismatches between the training simulators and the true environment, which could be further amplified through strategic interactions and result in severe performance degradation upon deployment. Distributional robustness offers a principled response by optimizing policies against worst-case transition models drawn from an uncertainty set, but standard robust MARL frameworks become increasingly intractable as the number of agents grows. This paper develops an infinite-horizon, stationary mean-field game framework that incorporates distributional model uncertainty directly into the population-coupled dynamics. We establish a robust dynamic programming principle with a contractive Bellman operator and prove the existence of a stationary robust mean-field equilibrium via a fixed-point argument. We further develop the first concrete algorithm with convergence guarantees. We then connect the mean-field solution to a finite-population robust game whose ambiguity sets depend on the empirical distribution, showing that the mean-field equilibrium policy induces approximate equilibrium behavior as the population size increases. Under a contractive robust-dynamics regime, we further obtain explicit non-asymptotic error bounds. Numerical experiments further illustrate the qualitative and quantitative impact of robustness under multiple uncertainty models, validating our theoretical findings.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/28/2606.22756v1-hercules-an-open-source-simulation-framework-for-heterogeneous-multi-robot-slam-collaborative-perception-and-exploration",
+      "section": "quick",
+      "title_en": "HERCULES: An Open-Source Simulation Framework for Heterogeneous Multi-Robot SLAM, Collaborative Perception, and Exploration",
+      "authors": "Sandilya Sai Garimella, Daniel Chase Butterfield, Sean Wilson, Lu Gan",
+      "date": "2026-06-22",
+      "pdf": "https://arxiv.org/pdf/2606.22756v1",
+      "score": "6.0",
+      "evidence": "开源异构多机器人仿真框架，包含无人机",
+      "tldr": "异构多机器人系统在复杂动态环境中的自主协同面临仿真平台支持不足的挑战。本文提出基于UE5的开源框架HERCULES，统一了UAV-UGV控制接口与共享导航栈，新增物理红外相机和动态场景模块，支持离线数据集生成与在线闭环规划。在千米级多传感器SLAM、协同感知和探索实验中验证了其有效性和保真度。该框架为异构多机器人自主技术研究提供了可复现的高保真仿真环境。",
+      "tags": "query:ui",
+      "abstract_en": "We present HERCULES, an open-source simulator and data-collection pipeline for heterogeneous multi-robot autonomy. Built upon the Unreal Engine 5 (UE5)-based simulators AirSim and Cosys-AirSim, HERCULES resolves key architectural limitations of prior frameworks to enable concurrent unmanned aerial and ground vehicle (UAV-UGV) operation in large-scale, photorealistic, dynamic environments. It introduces a new waypoint-tracking UGV controller that mirrors existing UAV control interfaces, and provides a shared navigation stack for mapping, traversability analysis, planning, and control across heterogeneous platforms. Expanding inherited sensor suites, it adds physics-based long-wave infrared (LWIR) cameras and configurable night-vision modes for degraded visual environments. HERCULES provides lightweight APIs, ROS 2 wrappers, and rigorous time synchronization across sensors and platforms, and brings state-of-the-art game-engine capabilities into robotics simulation, integrating intelligent agents such as pedestrians, traffic, and wildlife with high-fidelity dynamic phenomena, including fire, flooding, and crop disease spread. HERCULES runs in two modes: passively, replaying offline-designed trajectories to generate reproducible multi-modal datasets, and actively, running an online planner in closed loop from live observations. Our experiments in heterogeneous multi-robot SLAM, collaborative perception, and exploration, using both HERCULES-generated data and active closed-loop execution, demonstrate its utility for advancing heterogeneous multi-robot autonomy. We publicly release our source code, experiment code, documentation, and datasets, including a heterogeneous multi-robot SLAM benchmark collected with two UAVs and two UGVs across kilometer-scale desert, forest, and city environments, at https://lunarlab-gatech.github.io/HERCULES-website.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

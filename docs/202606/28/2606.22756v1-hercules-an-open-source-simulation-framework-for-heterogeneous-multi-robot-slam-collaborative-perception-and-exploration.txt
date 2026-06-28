@@ -1,0 +1,647 @@
+Title: HERCULES: An Open-Source Simulation Framework for Heterogeneous Multi-Robot SLAM, Collaborative Perception, and Exploration
+
+URL Source: https://arxiv.org/pdf/2606.22756v1
+
+Published Time: Tue, 23 Jun 2026 03:02:27 GMT
+
+Number of Pages: 19
+
+Markdown Content:
+# HERCULES: An Open-Source Simulation Framework for Heterogeneous Multi-Robot SLAM, Collaborative Perception, and Exploration 
+
+> Journal Title XX(X):1–19 ©The Author(s) 2025 Reprints and permission: sagepub.co.uk/journalsPermissions.nav DOI: 10.1177/ToBeAssigned www.sagepub.com/
+
+SAGE 
+
+Sandilya Sai Garimella 1, Daniel Chase Butterfield 1, Sean Wilson 1,2 and Lu Gan 1
+
+Abstract 
+
+We present HERCULES, an open-source simulator and data-collection pipeline for heterogeneous multi-robot autonomy. Built upon the Unreal Engine 5 (UE5)-based simulators AirSim and Cosys-AirSim, HERCULES resolves key architectural limitations of prior frameworks to enable concurrent unmanned aerial and ground vehicle (UAV-UGV) operation in large-scale, photorealistic, dynamic environments. On top of this capability, HERCULES introduces a new waypoint-tracking UGV controller that mirrors existing UAV control interfaces, and provides a shared navigation stack for mapping, traversability analysis, planning, and control across heterogeneous platforms. Expanding upon inherited multi-modal sensor suites, the simulator introduces physics-based long-wave infrared (LWIR) cameras and configurable night-vision modes for degraded visual environments. To support multi-robot autonomy research, HERCULES provides lightweight APIs, ROS 2 wrappers, and rigorous time synchronization across multi-modal sensors and heterogeneous platforms. HERCULES further brings state-of-the-art game-engine capabilities into robotics simulation by integrating intelligent agents, such as pedestrians, traffic, and wildlife, together with high-fidelity dynamic environmental phenomena, including fire, flooding, and crop disease spread, offering a comprehensive, photorealistic testbed for autonomous robot deployment. HERCULES can be run in two modes to support a variety of multi-robot research: passively , replaying offline-designed robot trajectories to generate reproducible multi-modal datasets, and 
+
+actively , running an online planner in closed loop from live observations. Our extensive experiments in heterogeneous multi-robot SLAM, collaborative perception, and exploration, using both HERCULES-generated data and active closed-loop execution, demonstrate its capability and utility as a versatile testbed for advancing heterogeneous multi-robot autonomy. We publicly release our simulation source code, experiment code, documentation, and datasets, including a heterogeneous multi-robot SLAM benchmark collected with two UAVs and two UGVs across kilometer-scale desert, forest, and city environments, at https://lunarlab-gatech.github.io/HERCULES-website .
+
+Keywords 
+
+Heterogeneous multi-robot systems, UAV–UGV coordination, photorealistic simulation, multi-robot SLAM, collaborative perception, multi-robot exploration, sim-to-real transfer 
+
+1. Introduction 
+
+Multi-robot systems are increasingly deployed in disas-ter response, environmental monitoring, and infrastructure inspection (Queralta et al. 2020; Tiwari and Chong 2019; Li et al. 2025). In these missions, heterogeneous teams of UAVs and UGVs are particularly compelling due to their complementary sensing capabilities, endurance, and mobil-ity: UAVs provide rapid coverage and elevated viewpoints, while UGVs offer detailed close-range sensing and persistent ground access while being less constrained by size, weight, and power (SWaP) (Munasinghe et al. 2024). However, rigorous progress on heterogeneous collaborative simul-taneous localization and mapping (SLAM), scene under-standing, and exploration remains difficult without simu-lation platforms that (i) support concurrent aerial-ground operations at kilometer scale, (ii) expose realistic, dynamic environments where coordination matters (e.g., occlusions, moving agents, and evolving hazards), and (iii) provide instrumentation to evaluate algorithms under bandwidth, line-of-sight, and GPS-denied conditions. Existing hetero-geneous multi-robot datasets (e.g., CoPED (Zhou et al. 2024), AirMuseum (Dubois et al. 2020), GRACO (Zhu et al. 2023)), while valuable, are fixed recordings and therefore cannot support closed-loop coordination or controlled re-collection under new conditions; widely used simulators (e.g., Gazebo (Open Robotics 2026), AirSim (Shah et al. 2018), Isaac Sim (NVIDIA 2022)), in turn, lack an out-of-the-box, research-ready stack for heterogeneous robot coordination and exploration in large-scale outdoor settings. We present HERCULES (HE terogeneous multi-Robot simulator for Co ordination, scene Understanding, Large-scale Exploration and SLAM): an open-source simulator 
+
+and data-collection pipeline built on Unreal Engine 5  
+
+> 1Georgia Institute of Technology, USA
+> 2Georgia Tech Research Institute, USA
+> Corresponding author:
+> Lu Gan, Georgia Institute of Technology, Atlanta, GA, USA. Email: lgan@gatech.edu
+> Prepared using sagej.cls [Version: 2017/01/17 v1.20]
+> arXiv:2606.22756v1 [cs.RO] 22 Jun 2026
+
+2 Journal Title XX(X)  
+
+> Figure 1. Environment diversity in HERCULES at two operational scales. (Left column) Ground-level detail. (Right column) High-level overview. (Top row) Desert. (Middle row) Forest. (Bottom row) City. Dynamic agents (AnimalAI wildlife, MetaHuman pedestrians, VehicleAI traffic) can be toggled based on experimental requirements.
+
+(UE5) (Epic Games 2026b) by extending AirSim (Shah et al. 2018) and Cosys-AirSim (Jansen et al. 2023). The simulator supports concurrent heterogeneous UAV–UGV operation and can be driven in two modes: passively, replaying designed trajectories, or actively, with an online planner in closed loop. In either mode, the data-collection tool records the resulting runs as synchronized, standard-format datasets. HERCULES extends these foundations by resolving afundamental SimMode architecture conflict in AirSim that prevents concurrent UAV–UGV operation, enabling heterogeneous multi-robot autonomy in photorealistic, kilometer-scale environments (see Figure 1); a shared high-level waypoint-control interface across aerial and ground platforms; online and offline planning using OctoMap (Hornung et al. 2013) and elevation maps; and multi-modal sensing, including long-wave infrared (LWIR) and night-vision goggle (NVG) cameras, under diverse weather conditions and in the presence of dynamic agents such as vehicles, animals, and humans. With HERCULES, UAV–UGV teams can fuse complementary observations, map unknown environments, and systematically test arange of coordination algorithms, from centralized to decentralized, before field deployment. Additionally, HERCULES bridges the gap between what robotics researchers need and what state-of-the-art game engines offer. Rather than using UE5 assets only as passive scenery, HERCULES wraps MetaHuman pedestrians, Vehi-cleAI traffic, AnimalAI wildlife, and environment processes (e.g., fire spread, urban flooding, crop-disease propagation) with parameterized, robotics-ready APIs that expose their configuration (e.g., spawn regions, paths, rates of spread) to the simulation pipeline. These interfaces lower the game-engine barrier for robotics researchers while preserving the visual realism and controllability needed for perception and planning experiments. We validate the capabilities and practical utility of HER-CULES through experiments in heterogeneous collaborative SLAM (ROMAN (Peterson et al. 2025)) and cooperative 3D object detection (DAIR-V2X-style late fusion with Point-Pillars (Lang et al. 2019; Yu et al. 2022)), together with a closed-loop multi-robot exploration demonstration in which a heterogeneous UAV–UGV team plans online. The col-laborative SLAM benchmark spans all three environments, desert, forest, and city, which respectively stress sparse landmarks, perceptual aliasing, and dynamic agents. The collaborative SLAM and cooperative perception suites both rely on the synchronized multi-robot dataset collection and heterogeneous UAV–UGV operation uniquely enabled by HERCULES. To the best of our knowledge, HERCULES is the first open-source simulator that provides out-of-the-box support for heterogeneous multi-robot SLAM, collaborative perception, and closed-loop coordination within a single framework. To summarize, the main contributions of our HERCULES framework include: • A heterogeneous-robot simulator. We re-architect the AirSim/Cosys-AirSim SimMode layer to run UAVs and UGVs concurrently in a single session under a shared world state and unified simulation clock, by resolving a physics-engine conflict that previously restricted each session to one vehicle type. • A navigation stack. We provide a unified navigation stack for mapping, planning, and control across heterogeneous platforms by introducing a waypoint-tracking UGV controller, a kinodynamic planner, and a ground-truth mapping (including OctoMap, elevation, and slope layers) and traversability analysis pipeline. • A synchronized data-collection tool. We implement a global simulation clock with deterministic pause, step, and resume control that governs all sensor cap-ture and pose logging, enabling time synchronization across multi-modal sensors and heterogeneous robots. We also provide tools for exporting data to KITTI-style and ROS 2 formats, with trajectory design pat-terns for controlled, repeatable data collection. • A collaborative SLAM benchmark. We release a UAV–UGV collaborative SLAM benchmark dataset collected with two UAVs and two UGVs across desert, forest, and urban scenes, and evaluate it using multiple state-of-the-art SLAM methods. • An open release with three demonstrations. We publicly release the simulator, datasets, and runnable experiment code, and validate the platform on three heterogeneous tasks: the collaborative SLAM benchmark above, a cooperative 3D detection study showing sim-to-real transfer to DAIR-V2X, and a closed-loop multi-robot exploration demonstration. 
+
+2. Related Work 
+
+We review representative open-source robotics simulators, highlighting their impact on robotics research as well as the gaps that motivate our work. Table 1 provides an at-a-glance comparison of their key capabilities and summarizes the additional functionality offered by HERCULES.  
+
+> Prepared using sagej.cls
+
+Garimella et al. 3
+
+Table 1. Platform facts, heterogeneity, environment realism, evaluation/dataset tools, and experiment design support. ✓ = native; 
+
+△ = with effort/partial; × = absent.                                                                             
+
+> Simulator Engine
+> (Renderer/Physics) Scope Concurrent UAV+UGV operation Env. realism Evaluation/ Dataset collection tools Out-of-box experiment design and verification tools Outdoor km-scale envs Dynamic agents Dynamic phenomena HERCULES (ours) UE5/PhysX Heterogeneous ✓✓✓✓✓✓
+> AirSim (UE4/5) UE/PhysX Aerial/Car ×△××××
+> Cosys-AirSim UE5/PhysX Aerial/Car/UGV ×△△△△△
+> Isaac Sim (Omniverse) Omniverse/Flex Multi-domain △△△△×△
+> CARLA (driving) UE/PhysX Ground (AV) ×✓✓△×✓
+> FastSim (Unity; aerial) Unity/Flexible Aerial ×△××△✓
+> ARGoS (swarms) Custom Aerial/Ground ×××××△
+> Gazebo / Ignition ODE/DART+ Multi-domain △△△×××
+> Webots ODE Multi-domain △×△××✓
+
+2.1. Classical Robotics Simulators 
+
+Gazebo/Ignition (Open Robotics 2026) and Webots (Michel 2004) are long-standing robotics simulators widely used for control, navigation, and manipulation, with broad support for robot models, sensors, and ROS integration. ARGoS (Pin-ciroli et al. 2012) targets large swarm experiments with efficient CPU-based physics, and numerous Gazebo-based forks and distributions adapt the core engine to specific domains such as aerial SITL. However, these tools are not optimized for perception-driven research in photorealistic, kilometer-scale worlds with rich dynamics: constructing such environments is cumbersome, and the resulting scenes typically lack the visual realism and variability demanded by modern vision and mapping pipelines. While multi-robot deployments are supported, there is no out-of-the-box stack for tightly coupled UAV-UGV coordination, shared autonomy across robot types, and evaluation under evolving, visually complex outdoor conditions. Gazebo-based packages such as RotorS (Furrer et al. 2016) and Hector (Kohlbrecher et al. 2013) specialize in aerial robotics, providing IMU, GPS, and camera models for navigation and control research, and are often used with PX4 (Meier et al. 2015) or ArduPilot (ArduPilot Dev Team 2026) SITL. These frameworks excel at single-drone flight dynamics but remain confined to aerial domains with simple, static scenes. They inherit Gazebo’s limitations in rendering realism and computational scalability, and offer no built-in support for heterogeneous teams, terrain-aware planning, or joint UAV-UGV experiments. 
+
+2.2. Photorealistic High-Fidelity Simulators 
+
+These photorealistic simulators achieve far higher visual fidelity than the classical robotics simulators above. AirSim, built on Unreal Engine 4, supports photorealistic physics-based simulation for drones and cars. Its UE5 port, Cosys-AirSim (Jansen et al. 2023), improves sensor types and their realism but largely retains AirSim’s single-vehicle structure and provides no coordinated multi-robot autonomy or tools for synchronized multi-robot dataset collection. Beyond Cosys-AirSim, several AirSim forks target specific domains such as wildfire monitoring and multi-robot image covering experiments (Xue and Shi 2023; Xu et al. 2025), but they mostly extend environments, sensors, and networking, rather than providing a unified heterogeneous navigation stack. CARLA (Dosovitskiy et al. 2017) provides rich urban driving scenarios but remains vehicle-centric. NVIDIA Isaac Sim (NVIDIA 2022), part of the Omniverse platform, delivers advanced multi-robot simulation and high-quality rendering tailored for reinforcement-learning workflows. Its strong coupling with the NVIDIA GPU ecosystem enables high performance and realism, albeit with reduced cross-platform flexibility. FastSim (Cui et al. 2024), based on Unity, offers modular low-level control for multi-drone research but is limited to homogeneous aerial swarms. Together, these platforms emphasize either realism or scale, but none offer a unified, open, and extensible stack for heterogeneous ground-aerial coordination in large outdoor worlds. In contrast, HERCULES combines the visual realism of UE5 with open, scalable multi-robot autonomy and integrated planning tools. 
+
+2.3. Task-Focused Perception and Navigation Simulators 
+
+Frameworks such as BenchBot/BEAR (Hall et al. 2022), Habitat (Puig et al. 2023), and iGibson (Li et al. 2022) focus on active perception in structured indoor domains, offering standardized benchmarks for semantic mapping and navigation. In aerial robotics, FlightGoggles (Guerra et al. 2019) and Flightmare (Song et al. 2021) enable high-speed vision-based flight and learning by decoupling rendering and physics. These systems excel at perception benchmarking but remain limited to single-agent or homogeneous setups in static scenes. They cannot model dynamic, kilometer-scale, photorealistic outdoor environments or support the coordinated planning and control required for heterogeneous UAV–UGV research. HERCULES addresses these gaps by enabling realistic, large-scale simulation for multi-robot SLAM, exploration, and cooperative perception. 
+
+3. The HERCULES Simulator 
+
+This section describes the functionality HERCULES pro-vides; our experiments (Sec. 7) then evaluate representa-tive capabilities. HERCULES is a simulator paired with a data-collection tool, and its functionality falls into three groups: (i) a robot navigation stack , including mapping, traversability analysis, planning, and control (Sec. 4), used regardless of how the simulator is driven; (ii) data-collection capabilities for passive use, generating reproducible datasets (Sec. 5.1); and (iii) closed-loop operation for active use, in which an online planner is stepped from live observations (Sec. 6). Underlying all three is the concurrent heterogeneous simulation core (Sec. 3.1). Figure 2 gives an overview of the simulator and its capabilities. 
+
+3.1. Concurrent Heterogeneous Operation 
+
+HERCULES currently supports multirotor UAVs (quadro-tors), UGVs (Husky-style differential-drive), and SUV car platforms. Enabling true heterogeneous multi-robot opera-tion requires solving a fundamental architectural conflict in  
+
+> Prepared using sagej.cls
+
+4 Journal Title XX(X) HERCULES Core Capabilities Interfaces          
+
+> Native API (Python / C++ )
+> SUV Car
+> Heterogeneous Robot Operation
+> UAV: Quadrotor UGV: Husky
+> Multi- Modal Sensors
+> RGB- D camera LiDAR FLIR camera Night Vision camera
+> Realistic Worlds
+> Australian Outback Forest City Georegistered Environment
+> Dynamic Agents and Environmental Phenomena
+> Animal Behavior Agents
+> Human- Centric Interactive Agents
+> Autonomous Road Traffic Agents Wildfire Spread Dynamics
+> Flood Inundation Modeling
+> Crop Disease Transmission Dynamics
+> Experiment Design & Annotation Tools
+> Multi- Robot Trajectory Designer Wildfire Spread Design Tool Multimodal GT Labeler (Image + LiDAR) UE5 Graphical Automation Workflows
+
+Heterogeneous Multi- Robot Experiments 
+
+> Collaborative SLAM Collaborative Perception Coordination
+
+Dataset Collection Workflows   
+
+> Timing Synchronization Export
+> Export datasets (rosbag2, KITTI, raw) Control sim time (deterministic, fixed- step) Synchronize multi- robot streams (strict or perturbed)
+> SUV Car
+
+Figure 2. An overview of HERCULES, a UE5-based simulator and experimentation stack for heterogeneous UAV–UGV autonomy. HERCULES provides photorealistic large-scale worlds and synchronized sensing with ready-to-run interfaces, benchmarks, and dataset export for collaborative SLAM, cooperative perception, and exploration. The Heterogeneous Multi-Robot Workflows panel marks the capabilities quantitatively evaluated in this paper (Sec. 7); the Dynamic Agents and Environmental Phenomena modules are demonstrated as functional extensibility and are not included in the quantitative experiments. 
+
+AirSim and Cosys-AirSim. These platforms use a SimMode 
+
+abstraction that binds each simulation session to a single vehicle type: multirotor mode uses a simplified fast-physics engine for rapid aerodynamic integration, while car mode uses PhysX for wheel-surface contact dynamics. Because SimMode is set globally at startup and configures the physics pipeline, spawn logic, and API dispatch for all vehicles, it is not possible to run UAVs and UGVs concurrently without deep modifications to the simulation core. We resolved this by re-architecting the SimMode layer to support concur-rent heterogeneous vehicle types within a single simulation session, routing each platform to its appropriate physics backend while maintaining a shared world state and a unified simulation clock. On top of this unified execution layer, we implement a waypoint-level command interface that abstracts platform-specific control so that high-level planners can issue commands to UAVs and UGVs through the same API. We additionally develop a new autonomous UGV controller (Sec. 4.3) that mirrors the existing UAV waypoint-tracking interface, enabling symmetric treatment of aerial and ground platforms. We also enabled multi-robot sensor logging with globally synchronized timestamps for dataset generation (Sec. 5.1). Realizing concurrent heterogeneous operation also requires fixing low-level sensor behavior that had assumed a single vehicle type; for example, ensuring that each robot’s LiDAR completes a full revolution on the shared, synchronized physics tick rather than being interrupted when multiple heterogeneous vehicles are stepped together. Physical and dynamic properties (e.g., mass, drag, wheel friction, thrust coefficients) remain configurable through UE5 Blueprints and AirSim configuration files, as in Cosys-AirSim. 
+
+3.2. Interfaces 
+
+HERCULES provides two complementary interfaces: aROS 2 interface for integration with existing autonomy stacks, and a lightweight Python/C++ API for prototyping and machine learning. The ROS 2 interface publishes all simulated sensor and ground-truth streams and accepts commands through standard ROS 2 message types, so it integrates directly with mainstream robotics autonomy stacks. Its multi-threaded publishers stream the sensor and ground-truth topics concurrently, which is necessary to keep pace with high-rate data from multiple robots in real time. Standard ROS 2 tooling such as RViz2 can therefore be used directly for visualization and debugging. The Python/C++ API, inherited from Cosys-AirSim, exposes all 
+
+Prepared using sagej.cls Garimella et al. 5 
+
+> Figure 3. Long-wave infrared (LWIR) rendering in the desert environment. (Top left) RGB image under low illumination showing limited visibility. (Top right) Corresponding LWIR output where warm-bodied animals (kangaroos) appear as high-temperature regions with clear contrast against the background. (Bottom left) RGB image containing an active fire source. (Bottom right) LWIR response to the same configuration, exhibiting high-temperature saturation and a sharply defined thermal plume while preserving detail and contrast in cooler surroundings.
+
+sensor streams, ground-truth poses, environment metadata, and robot control commands, supporting fast prototyping and machine-learning workflows. Both interfaces share the same simulation clock and support deterministic pause, step, and resume control. Runs are therefore exactly repeatable, and the two interfaces can be used concurrently (for example, RViz2 visualization alongside Python control). 
+
+3.3. Sensing and Environments 
+
+3.3.1. Multi-Modal Sensors. HERCULES inherits exist-ing Cosys-AirSim sensor suite, including RGB/depth/stereo cameras, LiDAR, IMU, GPS, barometer, magnetometer, pulse-echo, and UWB. On top of this, we add two derived imaging modalities for adverse sensing conditions, i.e., a long-wave infrared (LWIR) view and a night-vision goggle (NVG) view, computed from the simulator’s existing RGB, depth, and ground-truth segmentation outputs. When cap-tured through the data-collection tool (Sec. 5.1), all streams share a common time base, and per-sensor delays can be injected to emulate latency. Ground-truth instance segmenta-tion also provides unique per-object labels across multi-robot platforms for consistent data association. The LWIR camera synthesizes thermal imagery by integrating a Planck-law spectral radiance model over the 8–14 μm band using material emissivity and temperature profiles (Modest and Mazumder 2021). Ground-truth instance segmentation labels are paired with per-class material and nominal-temperature priors so that distinct object categories (e.g., animals, vehicles, terrain) exhibit physically interpretable thermal contrast (see Figure 3). Optional pseudocolor rendering (e.g., Inferno) enhances visual interpretability while preserving the underlying radiometric values. For low-light conditions, a night-vision goggle (NVG) mode approximates image-intensifier behavior using an empirical photometric transfer function that integrates adaptive gain, gamma correction, sensor noise, and a phosphor-style green colormap, following  
+
+> Figure 4. Night-vision goggle (NVG) rendering in the desert environment. (Top left) RGB image under near-zero ambient illumination where the scene is essentially dark. (Top right) Corresponding NVG image revealing terrain and vegetation structure. (Bottom left) RGB image with an active fire source. (Bottom right) NVG response to the same configuration, showing realistic saturation, blooming, and brightness clipping around the fire while still preserving detail in the surrounding low-light regions.
+
+established approaches to night-vision-goggle appearance simulation (Kooi and Toet 2005) (see Figure 4). This model is tuned for realistic appearance in our environments rather than an exact hardware replication. Both LWIR and NVG views are generated by lightweight processing modules layered on the existing camera outputs, so they can be enabled or re-parameterized at runtime without modifying the underlying rendering pipeline. 
+
+3.3.2. Realistic Worlds. Built on UE5, HERCULES can import any compatible environments available in the UE5 Fab marketplace (Epic Games 2026a). Figure 1 shows three representative large-scale photorealistic 3D environments we use as testbeds: desert, forest, and city, with the desert modeled after the Australian Outback. Each environment presents distinct perception challenges: sparse landmarks and long-range visibility (desert), perceptual aliasing from repetitive geometry and similar semantics (forest), and structured geometry with strong occlusions and dynamic obstacles (city). All scenes use physically based materials, realistic lighting, and configurable time-of-day via UE5’s sky and atmosphere system, and HERCULES uses UE5’s Lumen global illumination (Epic Games 2022) and Nanite geometry (Epic Games 2021) for real-time photorealistic rendering. HERCULES is implemented as a UE5 plugin that can be dropped into any Unreal project, allowing users to import or author new scenes with minimal effort. HERCULES also supports geo-registered environments for sim-to-real transfer. Geo-registration itself is provided by the Cesium for Unreal plugin (Cesium GS, Inc. 2026), which streams real-world terrain, satellite imagery, and building models as tiled datasets aligned to true latitude-longitude coordinates. Our contribution here is practical: we resolved a build issue that prevented the Cesium plugin from working in our Linux-based UE5 setup, and we provide documented, step-by-step setup scripts so that users can easily import large-scale geo-registered environments and obtain correctly geo-referenced sensor and ground-truth data reproducibly.  
+
+> Prepared using sagej.cls
+
+6 Journal Title XX(X) 3.3.3. Dynamic Agents and Environmental Phenomena. 
+
+Within these worlds, HERCULES simulates dynamic agents and evolving natural phenomena to enable realistic multi-robot interaction studies such as disaster response and environmental monitoring. On the dynamic agents side, we implement custom UE5 Blueprints for three categories of interactive agents: Animal Behavior Agents (e.g., kangaroos, deer), Human-Centric Interactive Agents (MetaHuman pedestrians), and Autonomous Road Traffic Agents (VehicleAI traffic), each with configurable paths and Unreal Engine AI logic (Epic Games 2024), rather than relying solely on off-the-shelf marketplace assets. On the environmental phenomena side, three classes of dynamic processes are implemented as independent, parameterized modules that update the UE5 world state at runtime: Wildfire Spread Dynamics, Flood Inundation Modeling, and Crop Disease Transmission Dynamics (see Figure 5 for examples). Each process can be seeded pseudo-randomly for reproducibility and configured by the user (e.g., rate of spread or affected area). Robots perceive these changes through their sensors and can respond via the planning stack, supporting research in adaptive planning and situational awareness. Multiple phenomena can coexist within a single simulation, as all modules share the same underlying UE5/Cosys-AirSim world state. 
+
+4. Navigation Stack 
+
+The navigation stack provides mapping, traversability analysis, planning, and control capabilities that underpin all HERCULES use cases, whether the simulator is operated passively for dataset collection (Sec. 5) or actively in closed loop (Sec. 6). AirSim and Cosys-AirSim provide a low-level waypoint-tracking controller for UAVs, but offer no UGV controller, no terrain-aware map representation, and no trajectory planning that accounts for ground-surface hazards such as slopes, overhangs, or negative obstacles. We add these components to support heterogeneous robot navigation. The navigation stack consists of three components: (i) an environment map generation pipeline that converts UE5 geometry into OctoMaps and elevation maps for terrain-aware planning (Sec. 4.1); (ii) a kinodynamic trajectory planner that produces dynamically feasible paths for both UAVs and UGVs while respecting obstacle clearance and terrain constraints (Sec. 4.2); and (iii) a pure-pursuit UGV controller that tracks planned paths using proportional steering and speed control, mirroring the existing UAV waypoint interface (Sec. 4.3). In the experiments reported here, we use this stack to plan trajectories offline on precomputed ground-truth maps and replay them deterministically for dataset collection; the same stack also runs online for closed-loop operation (Sec. 6). 
+
+4.1. Environment Map Generation and Processing 
+
+To support reliable motion planning in large-scale envi-ronments and provide ground-truth 3D structure for occu-pancy prediction and mapping research, we generate ground-truth maps of simulated environments through an offline preprocessing pipeline. For the highly detailed, kilometer-scale environments used in our experiments, we subdivide Time Wildfire Spreading Crop Disease Spreading Georegistered Env. and Flooding  
+
+> Figure 5. Dynamic environmental phenomena implemented in HERCULES. (Top) Wildfire spread with progressive smoke propagation. (Middle) Flood inundation on a geo-registered model of the Georgia Tech campus. (Bottom) Crop disease transmission across agricultural terrain.
+
+the environment model into manageable 100m × 100m tiles to ensure memory efficiency and scalability; this tiling keeps peak memory bounded so the full pipeline can run on low-RAM machines without exhausting memory. Each tile’s UE5 3D geometry (e.g., mesh or point cloud) is converted into an occupancy voxel grid via binvox (Min 2026). Each voxelized tile is then converted into an octree representation using the OctoMap conversion utili-ties ( binvox2bt unique offsets ), producing a .bt 
+
+octree where each leaf node stores log-odds of occupancy. During conversion, spurious voxels and small isolated clus-ters below a threshold are filtered, with optional dilation and smoothing applied to improve map consistency. On top of this, we derive a 2.5D elevation map by retaining the lowest traversable surface within each grid cell. In practice, for each (x, y ) cell in the horizontal plane, we identify the ground height, i.e., the lowest occupied voxel column that can support the UGV, and record that as the cell’s elevation. Any occupied voxel above that ground height, such as walls, rocks, or overhangs, is marked separately so that the cell can be considered blocked for the UGV if the obstacle is tall. We then compute a slope for each cell by comparing the elevation with neighboring cells. The slope map ∇h(x, y ) allows the system to classify terrain: regions where the incline exceeds a threshold, e.g., a slope corresponding to the UGV’s tipping or wheel slip limit, are labeled non-traversable. This elevation-based occupancy grid, effectively a digital terrain model with an  
+
+> Prepared using sagej.cls
+
+Garimella et al. 7Ground-Truth Map Generation Pipeline   
+
+> Detailed and km- Scale UE5 Environments Ground-Truth OctoMaps Ground-Truth Elevation Maps at specified Altitude
+> Figure 6. Ground-truth map generation pipeline. Detailed UE5 environments (left) are converted into ground-truth OctoMaps (center), followed by elevation maps at user-specified altitudes (right). This unified mapping pipeline can be run offline for full-environment preprocessing or online in a local robot-centric region for real-time planning.
+
+obstacle overlay, is used in conjunction with the full 3D OctoMap to plan safe ground paths for UGVs and inform UAVs of terrain relief. Used together, the OctoMap and elevation map enable terrain-aware global planning that accounts for volumetric obstacles that are crucial for UAV flight, tall obstacles that may occlude the UAV’s view or impede the UGV, and ground-surface hazards that are critical for UGV mobility. Figure 6 illustrates the generated map representations, including an OctoMap slice and the corresponding elevation map. Ground-truth maps can be used for trajectory generation during data collection, as perception inputs for closed-loop operation, and as ground truth labels for occupancy mapping evaluation. 
+
+4.2. Kinodynamic Trajectory Planning 
+
+HERCULES includes a randomized kinodynamic RRT (KRRT) planner, adapted from (LaValle and Kuffner Jr 2001), that produces time-parameterized, dynamically feasible trajectories for both UAVs and UGVs. The planner supports task-aware sampling by optionally biasing samples toward goals, frontiers, or previously visited landmarks, as well as clearance-aware expansion by penalizing proximity to obstacles using a signed distance field derived from the OctoMap. For SLAM-oriented dataset collection, users can mark checkpoints in previously mapped regions, and a revisit distribution then steers robots back through those checkpoints to induce intra- and inter-robot loop closures. The full mathematical formulation, including dynamics models, sampling distributions, and steering objectives, is provided in Appendix C. 
+
+4.3. UGV Low-Level Controller 
+
+We implement a geometric pure-pursuit path tracker for the UGV with proportional steering and speed control. The controller selects a forward lookahead target on the reference path and computes heading error and speed commands with saturation limits, consistent with the unicycle dynamics used in planning. The same controller is used for both the Husky-style UGV and the simulated SUV, with only geometric parameters (i.e., wheelbase, steering limits) adjusted. The full formulation is provided in Appendix D. 
+
+5. Data-Collection Workflows 
+
+Used passively , HERCULES is a synthetic data generator: users design multi-robot trajectories, execute the heteroge-neous team, and export synchronized multi-modal datasets for offline SLAM and perception research. This section describes the synchronized logging and export machinery (Sec. 5.1), the trajectory design patterns that enable mean-ingful, controllable, and repeatable data collection (Sec. 5.2), and the experiment-design tooling built on top. 
+
+5.1. Synchronized Logging and Export 
+
+A valuable capability for collaborative SLAM and coop-erative perception research is access to time-synchronized data streams across multi-modal sensors on each robot and, when needed, across multiple robots. Although collabora-tive SLAM systems can often operate asynchronously, pre-cise cross-robot synchronization is important for controlled benchmarking, tightly coupled multi-robot fusion, and coop-erative perception in dynamic scenes. AirSim and Cosys-AirSim trigger each sensor independently and do not guaran-tee synchronized data streams across heterogeneous sensors and platforms. HERCULES provides a data-collection tool that drives the simulator through deterministic pause-step-resume cycles and gates all sensor capture and pose logging on a single global clock, ensuring that every robot’s data streams share a common time base. Achieving this requires fixing sensor behavior under stepped execution, most notably ensuring that each LiDAR scan completes a full revolution across robots under pause/resume rather than being cut off. This enables deterministic and repeatable multi-robot dataset collection with consistent inter-sensor timing. 
+
+5.1.1. Synchronization modes. Timing can be configured either in a strictly synchronized mode, where all sensors are triggered at exact global-clock ticks, or with controlled per-turbations to emulate realistic clock drift and communication delay for robustness testing. 
+
+5.1.2. Export. Exporters write multi-modal sensor data together with metadata YAML files. Any experiment can be recorded as a ROS or ROS 2 bag with synchronized ‘/clock’, or as a raw file set. HERCULES supports generic PNG, TXT, NPY, and CSV exports, as well as converters to KITTI-style dataset formats commonly used by SLAM and 3D object detection pipelines. Datasets for the collaborative SLAM benchmark (Sec. 7.1) and cooperative-perception experiments (Sec. 7.2) are generated directly through this dataset layer, providing a repeatable path from simulation runs to standardized evaluation. 
+
+5.2. Trajectory Design Patterns 
+
+To collect meaningful datasets for multi-robot research, we design two complementary trajectory-generation modes that represent different collaborative robot applications. For environmental exploration and monitoring, robots tend to  
+
+> Prepared using sagej.cls
+
+8 Journal Title XX(X) UAV trajectory (red line, dotted if planned)  UGV trajectory (teal line, dotted if planned)  UGV sensing frustum UAV sensing frustum    
+
+> (a) Complementary Coverage Mode. UAVs and UGVs disperse to maximize complementary coverage and information gain while reducing sensing redundancy.
+> (b) Leader-Follower Mode. UAVs maintain controlled overlap with UGV sensing footprints along a shared route to support joint perception.
+> Figure 7. Operational modes for heterogeneous UAV–UGV teams in HERCULES. (a) Complementary Coverage disperses agents to improve coverage and reduce uncertainty. (b) Leader-Follower enforces spatiotemporal overlap for cooperative perception. Legend applies to both panels.
+
+spread out to maximize information gain, whereas shared fields of view are critical for collaborative object detection, tracking, and scene understanding. This subsection describes the two motion patterns we use to design trajectories for our UAV–UGV teams. These trajectories are executed to generate the datasets used in Sec. 7.1 and Sec. 7.2. As shown in Figure 7, we define two UAV–UGV trajectory patterns: 
+
+5.2.1. Complementary Coverage Mode. The UGV and UAV follow trajectories with minimal field-of-view overlap, spreading out to observe different parts of the scene. This pattern maximizes spatial coverage and viewpoint diversity, and is used in our collaborative SLAM experiments (Sec. 7.1) to ensure that inter-robot loop closures arise from shared landmarks rather than direct co-observation. Imposing shared landmarks is achieved by specifying revisited checkpoints, as described in Sec. 4.2. 
+
+5.2.2. Leader-Follower Mode. The UGV follows aground-level route while the UAV maintains overhead coverage along the same path, ensuring spatiotemporal 
+
+overlap between the two platforms’ sensor fields of view. We use this pattern in our cooperative perception experiments (Sec. 7.2) to generate paired UAV–UGV frames for 3D object detection. Trajectories for both patterns are designed offline and replayed deterministically to collect synchronized multi-modal datasets. Decoupling trajectory design from data collection makes runs exactly repeatable across experiments. 
+
+5.3. Experiment Design Tools 
+
+HERCULES provides tools to configure environments, design robot motions, and generate ground-truth annotations to support customized experimental needs. A Multi-Robot Trajectory Designer enables users to specify team paths and waypoint sequences for coordinated motion. A Wildfire Spread Design Tool allows users to define spatial regions of interest that drive dynamic environmental phenomena. A Multimodal Ground-Truth Labeler exports aligned raw sensor data with instance/semantic segmentation for RGB images, 2D/3D bounding boxes for objects, and instance/semantic annotations for LiDAR point clouds. In addition, UE5 Graphical Automation Workflows (Blueprint automations) support batch generation of scenarios with different parameter settings. Together, these utilities make it straightforward to construct reproducible experiments and systematically vary environmental conditions. Users retain full access to low-level scenario setup when needed, while avoiding the tedious, game-development-heavy setup steps that would otherwise be required. 
+
+6. Closed-Loop Operation 
+
+Used actively , HERCULES is a closed-loop evaluation plat-form: an online planner receives synchronized observations at each step, updates a local map, issues control commands through the navigation stack (Sec. 4), and advances the sim-ulation under the real-time clock. The same heterogeneous core, mapping, planning, and control used for dataset collec-tion are reused here; the only difference is that trajectories are generated online from live observations rather than designed offline. Concretely, closed-loop operation couples a global step that selects the next goal viewpoint (e.g., a frontier or an information-rich location) with the local planner in Sec. 4, which generates a dynamically feasible trajectory to reach it; the cycle repeats as new observations arrive. We exercise this mode with our kinodynamic planner in frontier-biased exploration and demonstrate it on a heterogeneous UAV– UGV team in Sec. 7.3. User-defined planners can be plugged in to replace the default global planner, supporting research on planning and multi-robot coordination. 
+
+7. Experiments 
+
+We validate HERCULES through three experiments that demonstrate the platform’s core capabilities: heterogeneous multi-robot SLAM across diverse environments (Sec. 7.1), cooperative 3D object detection with sim-to-real transfer (Sec. 7.2), and a closed-loop exploration demonstration with heterogeneous teams (Sec. 7.3). The first two experiments rely on the synchronized multi-robot dataset collection pipeline and deterministic-replay trajectories; the third  
+
+> Prepared using sagej.cls
+
+Garimella et al. 9        
+
+> (a) City Sequence. (b) Desert-Perimeter Sequence. (c) Desert-Center Sequence. (d) Forest Sequence.
+> Figure 8. Representative views from each sequence in the collaborative SLAM experiment, with (Top) UAV aerial views and (Bottom) UGV ground views. Each sequence poses different challenges for multi-agent localization as we rely on HERCULES’s capabilities for photorealistic lighting and vegetation.
+
+exercises the same heterogeneous substrate under online planning to demonstrate closed-loop coordination capability. 
+
+7.1. Collaborative SLAM 
+
+To evaluate HERCULES as a testbed for large-scale heterogeneous multi-robot localization and mapping, we collect a collaborative SLAM benchmark dataset in HERCULES spanning a wide range of operational condi-tions. We evaluate our benchmark dataset on single-robot odometry/SLAM using OpenVINS (Geneva et al. 2020), ORB-SLAM3 (Campos et al. 2021), and LIO-SAM (Shan et al. 2020), and on multi-robot collaborative SLAM using ROMAN (Peterson et al. 2025) integrated with Kimera-RPGO (Tian et al. 2022) back-end. Our goal is to demonstrate that HERCULES can elicit and surface the realistic failure modes that collaborative SLAM faces at kilometer scale, perceptual aliasing, repetitive semantics, and severe aerial–ground viewpoint baseline, rather than to provide a broad multi-method comparison. We show that these baselines perform well on short, feature-rich sequences with strong inter-robot viewpoint overlap, the regime in which they are typically benchmarked, but degrade on the kilometer-scale sequences with sparse or repetitive structure and large aerial–ground viewpoint baselines that HERCULES generates, demonstrating its value as a testbed for advancing heterogeneous multi-robot SLAM. 
+
+7.1.1. Dataset Collection. We collect data in three representative large-scale environments, city, desert, and forest, each containing diverse visual textures, vegetation density, and illumination conditions (see Figure 8). Overall, four data sequences are collected to pose distinct sensing challenges: • City : UGVs and UAVs navigate street blocks in the city environment. The large scale of the environment complicates vision-based SLAM despite its rich visual details and abundance of objects. • Desert-Perimeter : Robots traverse the perimeter of a grove of trees and weathered objects in the desert environment. This sequence is challenging due to sparse foliage, large scale, and dynamic birds. • Desert-Center : Similar to Desert-Perimeter , but robots traverse a straight road inside the grove. Overlapping vegetation and increased shadows make object segmentation and tracking difficult. • Forest : In the forest environment, UGVs traverse dense vegetation while UAVs fly through the trees. Visually repetitive structures and limited semantic diversity pose challenges to loop-closure detection. For each sequence, data are collected from two UGVs and two UAVs, including synchronized stereo images, depth images, and LiDAR point clouds at 20 Hz, as well as IMU measurements at 500 Hz. Executed trajectories are designed using the Complementary Coverage mode and include both intra-robot and inter-robot loop closures, with lengths ranging from 359 to 945 meters. Each trajectory begins with a static period followed by calibration motions to support proper initialization when needed. Dynamic objects are disabled except for birds during data collection. 
+
+7.1.2. Implementation. For single-robot odome-try/SLAM, we run OpenVINS, ORB-SLAM3, and LIO-SAM on all four robots individually to cover different sensor modalities in our dataset. OpenVINS uses stereo images and IMU data as input; ORB-SLAM3 is run in the RGB-D setting, both with and without loop-closure detection; LIO-SAM uses LiDAR and IMU measurements and is run with loop-closure detection. For multi-robot SLAM, we run ROMAN with LIO-SAM odometry and Kimera-RPGO as the back-end. ROMAN is run distributively between robot pairs for all combinations (i.e., UGV–UGV, UAV–UAV, UGV–UAV). We use the official open-source implementation of each baseline throughout the experiments. Where feasible, parameters are shared across sequences and robot platforms, and default settings are preferred. In some cases, sequence- and robot-specific parameters are tuned for performance, such as the maximum depth range for ROMAN and the number of tracked features in OpenVINS. For reproducibility, all collected datasets, environment configurations, sensor calibrations, and motion trajectories are publicly released with HERCULES.  
+
+> Prepared using sagej.cls
+
+10 Journal Title XX(X)                                                                                        
+
+> Table 2. RMS ATE (m) for single-robot odometry/SLAM baselines across four sequences. We report per-robot errors for UGV1/UGV2 and UAV1/UAV2. When two values are shown, they indicate results without loop closures / with loop closures.
+> Baseline Sequence UGVs ATE [m] UAVs ATE [m] UGV1 UGV2 UAV1 UAV2
+> OpenVINS (Geneva et al. 2020) City 4.90 6.80 15.40 10.21 Desert-Perimeter 3.92 4.53 17.70 14.05 Desert-Center 9.76 7.66 27.55 10.72 Forest 0.98 1.36 1.49 2.50 ORB-SLAM3 (Campos et al. 2021) City 1.27 / 1.03 0.68 / 1.66 0.70 / 0.91 8.64 / 7.15 Desert-Perimeter 3.53 / 5.40 10.88 / 10.56 4.16 / 4.34 23.14 / 24.13 Desert-Center 1.06 / 1.82 1.72 / 1.19 4.10 / 6.71 4.12 / 37.85 Forest 0.52 / 0.46 0.67 / 0.56 0.41 / 0.59 0.60 / 23.96 LIO-SAM (Shan et al. 2020) City 1.33 1.44 0.18 0.06 Desert-Perimeter 0.23 0.29 0.06 0.10 Desert-Center 0.07 0.10 0.10 0.12 Forest 0.43 0.53 0.04 0.07
+> Table 3. RMS ATE (m) for multi-robot SLAM on four sequences using ROMAN integrated with Kimera-RPGO.
+> Baseline Sequence Robot pairs ATE [m] UGV1–UGV2 UGV1–UAV1 UGV1–UAV2 UGV2–UAV1 UGV2–UAV2 UAV1–UAV2
+> ROMAN (Peterson et al. 2025) City 1.53 84.49 74.20 1.58 57.27 0.41 Desert-Perimeter 1.01 3.08 1.29 119.03 2.02 1.42 Desert-Center 4.06 0.88 0.90 106.52 106.05 1.16 Forest 1.08 43.88 1.43 26.48 0.93 49.17
+
+7.1.3. Results. Single-robot SLAM. We compute the root-mean-square absolute trajectory error (RMS ATE) for the single-robot odometry/SLAM methods using evo (Grupp 2017) and report the results in Table 2. Each method succeeds on all robots for at least one sequence, with success defined as an RMS ATE less than or equal to 2.5 meters. However, OpenVINS struggles in the city and desert environments due to the limited visual features within close range. This is especially apparent for the UAVs, where the RMS ATE for both drones exceeds 10 m. ORB-SLAM3 exhibits a related failure mode: its loop closure module frequently accepts spurious matches due to perceptual aliasing in the repetitive desert and forest environments. As a result, enabling loop closures can sometimes cause the RMS ATE to increase catastrophically. For example, the RMS ATE for UAV 2 jumps from 4.12 m to 37.85 m on the Desert-Center sequence and from 0.60 m to 23.96 m on the Forest sequence. LIO-SAM succeeds and achieves the best performance on all sequences by leveraging LiDAR measurements, which provide accurate geometric information and are robust to visual aliasing. Therefore, we use the LIO-SAM as the odometry front-end for ROMAN in our multi-robot SLAM experiments. 
+
+Multi-robot SLAM. We align the ROMAN-estimated trajectories of each robot pair with the corresponding GT trajectories using SE(3) Umeyama alignment (Umeyama 1991), and report the RMS ATE in Table 3. With an RMS ATE of less than 5 m as the success criterion for multi-robot SLAM, ROMAN successfully aligns trajectories for homogeneous robot pairs in all but one sequence: UAV1–UAV2 in Forest. Additionally, ROMAN achieves at least one successful alignment for every robot pair across all four sequences, despite being designed primarily for homogeneous multi-robot map alignment. In those cases, even as the heterogeneous robots view the same scene from drastically different angles, ROMAN is able to find object-based view-invariant loop closures to properly align any heterogeneous configuration. Example objects detected by ROMAN can be seen in Figure 9, and various examples of successfully aligned trajectories are shown in Figure 10. Our results also show that ROMAN experiences failures in some sequences, occurring more frequently in the City and Forest sequences and for heterogeneous robot pairs. ROMAN leverages FastSAM (Zhao et al. 2023) for open-set segmentation, which is prone to generating inconsistent or over-segmented objects (Peterson et al. 2025); especially under significant lighting variation and object occlusions. Additionally, as ROMAN uses semantic information for robust data association, it may struggle in environments with repetitive semantics. These issues tend to be exacerbated for heterogeneous robot pairs due to large viewpoint differences, scale changes, and partial overlap in observed objects, as well as in environments with repetitive visual structures, such as forests. A failure case in the Forest sequence is shown in the bottom-right of Figure 10. In contrast, the desert environment, with its spatially-separated and semantically-distinct objects, leads to more successful alignments. 
+
+7.1.4. Discussion. These findings demonstrate that HER-CULES can accurately reproduce heterogeneous multi-robot SLAM conditions at a kilometer scale while maintaining pre-cise ground-truth benchmarking for quantitative evaluation. This experiment highlights that the photorealistic rendering and physically accurate sensor simulation in HERCULES allow researchers to create a variety of challenging envi-ronmental conditions, including perceptual aliasing, poor features, and realistic lighting. HERCULES supports even  
+
+> Prepared using sagej.cls
+
+Garimella et al. 11 
+
+Figure 9. Object maps constructed by ROMAN and the corresponding robot trajectory overlaid onto the environment point cloud. The environments are as follows: (Left) City, (Middle) Desert, and (Right) Forest. Object point colors are included for visual clarity. We provide views of the high-level environment structure (Top) and low-level objects (Bottom). UGV1 UGV2 UAV1 UAV2 GT Est. 
+
+Figure 10. Ground truth (GT) versus estimated (Est.) trajectories of various sequences in Table 3 overlaid on the HERCULES simulation environment. The sequences are as follows: (Top left) City UGV1-UGV2, (Top right) Desert-Perimeter UGV2-UAV2, (Bottom left) Desert-Center UGV1-UAV1, and (Bottom right) Forest UAV1-UAV2. 
+
+more configurations beyond those included in this exper-iment; including day/night cycles, dynamic environmen-tal phenomena (e.g., fires, floods), and additional dynamic agents (e.g., cars, pedestrians). Thus, HERCULES enables researchers to investigate future challenges in heterogeneous multi-robot SLAM within a convenient simulation environ-ment, largely reducing the need for time-consuming and labor-intensive real-world data collection. The successes  
+
+> Prepared using sagej.cls
+
+12 Journal Title XX(X)    
+
+> Figure 11. Representative sample from the HERCULES cooperative vehicle–infrastructure dataset. (Left) Third-person view showing the heterogeneous robot team: a UAV provides overhead infrastructure-view sensing while a UGV navigates at street level among dynamic traffic and pedestrians. (Right) Synchronized sensor data from both platforms. Top row: infrastructure/UAV RGB image (left) and vehicle/UGV RGB image (right) with 2D annotations. Bottom row: corresponding LiDAR point clouds with 3D bounding boxes from infrastructure view (left) and vehicle view (right). The paired viewpoints provide complementary visibility and geometry, enabling stronger 3D object detection.
+> Table 4. Sim-to-sim baseline: cooperative 3D Car detection trained and evaluated on HERCULES synthetic data (IoU
+
+= 0 .50 ). KITTI-style AP11/AP40 are reported across distance bins and overall (unweighted mean over bins). 
+
+Fusion KITTI AP 3D KITTI AP BEV 
+
+0–30 m 30–50 m 50–100 m Overall 0–30 m 30–50 m 50–100 m Overall AP11 AP40 AP11 AP40 AP11 AP40 AP11 AP40 AP11 AP40 AP11 AP40 AP11 AP40 AP11 AP40 
+
+UGV-only 72.34 72.17 52.31 54.58 17.19 13.99 47.28 46.92 72.47 72.29 61.10 57.90 17.69 16.54 50.42 48.91 UAV-only 54.39 52.38 62.79 59.26 62.98 69.08 60.06 60.24 54.41 54.84 63.00 59.46 71.86 69.25 63.09 61.18 Late Fusion 71.24 73.32 69.65 73.67 62.57 63.81 67.82 70.27 71.29 73.39 70.09 74.25 62.76 66.35 68.05 71.33 
+
+on simpler sequences and failures on more challenging sequences also validate the simulator’s ability to evaluate SLAM pipelines and identify critical failure modes before real-world deployment. 
+
+7.2. Collaborative Perception: 3D Object Detection 
+
+We demonstrate HERCULES’s utility for heterogeneous multi-robot collaborative perception through a 3D object detection task. Analogous to vehicle-infrastructure cooper-ation (VIC) in autonomous driving, this experiment fuses UGV and UAV sensor data to improve overall detection per-formance. Additionally, we validate the sim-to-real fidelity of HERCULES by using our synthetic data to augment the real-world DAIR-V2X benchmark dataset (Yu et al. 2022), demonstrating its effectiveness in advancing real-world com-puter vision models. To mimic the VIC setting, we construct a heterogeneous team with one UGV on the sidewalk and one UAV overhead in the City world, where the UGV takes the vehicle role and the UAV takes the infrastructure role. Their trajectories follow the Leader–Follower motion pattern, with the UAV maintaining overhead coverage along the UGV path. Sensor types, rates, and extrinsics mirror the DAIR-V2X configurations to ensure compatibility with its protocols and metrics. In total, we generate 6,000 time-synchronized UGV–UAV frame pairs containing RGB images, LiDAR point clouds, sensor poses, and ground-truth 3D bounding boxes (see Figure 11). As the data interface matches DAIR-V2X’s VIC-Sync conventions (paired frames with sub-10 ms skew and cooperative annotations), models trained on our data can be directly resumed on DAIR-V2X data. 
+
+7.2.1. Experimental Setup and Training Protocol. We adopt the DAIR-V2X late-fusion PointPillars (Lang et al. 2019) backbone as the baseline to evaluate two key capabilities of our simulator: (i) the efficacy of multi-robot sensor fusion over single-robot perception using HERCULES synthetic data, and (ii) the sim-to-real transferability of features learned via HERCULES pre-training when fine-tuned on real-world data. To assess these capabilities, we conduct a sim-to-sim experiment where PointPillars is trained and evaluated on the HERCULES synthetic dataset, and a sim-to-real experiment, where PointPillars is trained using both synthetic and real-world data and evaluated on real-world data. We focus on the Car class in both experiments, while HERCULES supports annotation generation for all object categories. Specifically, for the sim-to-sim experiment, we train PointPillars from scratch on the HERCULES synthetic dataset, select the best checkpoint on the synthetic validation set, and evaluate it on a held-out synthetic test set. For the sim-to-real experiment, we compare models trained using the following strategies: • From-Scratch: trained on DAIR-V2X real data only. • FT-Unfrozen: pretrained on HERCULES synthetic data, then finetuned on DAIR-V2X training data with all layers unfrozen. • FT-Frozen: pretrained on HERCULES, then fine-tuned on DAIR-V2X with the backbone frozen for the first five epochs before unfreezing.  
+
+> Prepared using sagej.cls
+
+Garimella et al. 13 
+
+Table 5. Sim-to-real transfer: late-fusion Car detection on the DAIR-V2X test set (KITTI-style AP40, IoU = 0 .70 ). All models are trained using the same total epoch budget; the reported epoch is the best validation checkpoint. The best results are shown in bold; ∆ is relative to From-Scratch.                       
+
+> Method BEV AP40 ∆BEV 3D AP40 ∆3D Epoch
+> From-Scratch 50.21 —42.62 —19 FT-Unfrozen 54.24 +4 .03 46.67 +4 .05 19
+> FT-Frozen 54.23 +4.02 46.73 +4.11 20
+
+Table 6. Sim-to-real transfer: the pretraining finding evaluated under two evaluation protocols (Car 3D AP, IoU = 0 .70 ). KITTI-style uses 40-point interpolation (AP40); DAIR-V2X uses continuous AP. Both protocols confirm that synthetic pretraining improves performance, with FT-Frozen yielding the largest gain.                  
+
+> Method KITTI (AP40) DAIR-V2X (AP) 3D AP ∆3D AP ∆
+> From-Scratch 42.62 —43.36 —FT-Unfrozen 46.67 +4 .05 45.76 +2 .40
+> FT-Frozen 46.73 +4.11 45.87 +2.52
+
+All three models are trained for the same total epoch budget using identical loss functions, augmentations, and learning-rate schedules. Following standard practice in 3D detection, we select the best-performing checkpoint on the validation set for each method and report final results on the held-out test set. We evaluate at both the standard IoU = 0 .50 and the strict IoU = 0 .70 threshold, using KITTI-style AP40 as the primary metric, and report average precision for both 3D and bird’s-eye-view (BEV) detection. 
+
+7.2.2. Results. Sim-to-sim baseline. Table 4 reports cooperative detection trained and evaluated on HERCULES synthetic data at IoU = 0 .50 . Late fusion outperforms both single-robot configurations overall, but the more informative pattern is across distance: the UGV is strongest at close range and falls off sharply past 50 m, while the elevated UAV viewpoint is weakest up close and strongest at long range. The two platforms are thus complementary rather than redundant, and late fusion inherits the stronger of the two at every range, yielding the most balanced performance across all distance bins. Distance-binned results at IoU = 0 .70 and 
+
+0.25 are reported in Appendix B (Tables 11 and 12). 
+
+Sim-to-real transfer. Table 5 reports our main sim-to-real result. Pretraining on HERCULES synthetic data improves real-world DAIR-V2X detection by +4 .11 Car 3D AP40 over training from scratch at the strict IoU = 0 .70 threshold, with the same gain reflected in BEV. The two finetuning strategies, freezing the pretrained backbone during warm-up versus unfreezing throughout, reach effectively identical accuracy, indicating that the synthetic features transfer regardless of the unfreezing schedule. Table 6 reproduces this result under a second evaluation protocol (KITTI-style AP40 and DAIR-V2X continuous AP), confirming the improvement is not an artifact of the AP computation. Full results across all three fusion configurations and both IoU thresholds are reported in Appendix A (Tables 9 and 10). Table 7 shows that the pretraining gain holds under cooperative fusion: late fusion improves over both single-agent detectors, and the improvement over training from scratch appears in all three configurations rather than in a single agent. The benefit of synthetic pretraining therefore 
+
+Table 7. Sim-to-real transfer: late-fusion Car detection results of FT-Frozen compared with single-agent detection (Car 3D AP40 at IoU = 0.70). ∆ is reported relative to From-Scratch trained on real data only, showing consistent improvements across all configurations with HERCULES pretraining.         
+
+> Configuration 3D AP40 ∆
+> Vehicle-only 20.63 +1 .98
+> Infrastructure-only 28.33 +0 .06
+> Late Fusion 46.73 +2.11
+
+Figure 12. Qualitative cooperative 3D Car detection late-fusion results on the DAIR-V2X test set. (Top left) Ground-truth annotations in 3D and BEV. (Top right) Late-fusion detections combining vehicle and infrastructure views. (Bottom left) Vehicle-only detections. (Bottom right) Infrastructure-only detections. Late fusion recovers objects missed by individual agents, particularly in occluded and long-range regions. 
+
+carries through to the fused system. Figure 12 shows this qualitatively, with late fusion recovering objects that either agent alone misses in occluded and long-range regions. 
+
+7.2.3. Discussion. The gain comes from stronger features, not from how the model is trained or fused. Freezing the backbone for a warm-up versus unfreezing it from the start changes the final score by only 0.06 AP, so pretraining helps regardless of the unfreezing schedule. The same gain appears when we run the stock DAIR-V2X late-fusion pipeline unmodified, which puts the benefit in the per-agent detectors rather than the fusion step. The practical payoff is for late fusion specifically: early fusion can score higher on VIC-Sync but costs too much bandwidth to deploy, while simulation pretraining recovers much of that accuracy without any extra transmission between agents. 
+
+7.2.4. Reproducibility details. We release the HER-CULES scenario, sensor configs (rates/FOVs), calibration files, and data-export scripts that produce the 6,000-pair pretraining set; training uses the same loss functions, aug-mentations, and schedules as the original PointPillars VIC baselines, and we retain DAIR-V2X’s evaluation protocol and ranges. 
+
+7.3. Closed-Loop Exploration 
+
+The above two experiments replay fixed trajectories to keep the datasets repeatable. Here, we instead let a UAV–UGV  
+
+> Prepared using sagej.cls
+
+14 Journal Title XX(X)    
+
+> (a) Complementary Coverage: the UGV and UAV diverge into separate regions.
+> (b) Leader–Follower: the UAV tracks the UGV, maintaining sensing overlap.
+> Figure 13. Representative single-run UAV (red) and UGV (green) trajectories in the desert environment under the two coordination modes. The divergence in (a) versus the overlap in (b) is the qualitative mechanism behind the inter-agent overlap
+
+η reported in Table 8.   
+
+> Figure 14. Ground-truth coverage
+
+C(t) versus mission time for the heterogeneous UAV–UGV team in the desert environment, over n = 8 seeds per mode (median, with shaded interquartile range). Complementary Coverage attains consistently higher coverage at equal mission time than Leader–Follower, with non-overlapping IQR bands throughout the run. 
+
+team plan and re-plan online from its own observations, showing that HERCULES enables closed-loop simulation. 
+
+7.3.1. Setup. One UAV and one UGV operate in the desert environment with no pre-planned trajectory. Each robot tracks what it has seen by projecting its depth camera into the world using ground-truth poses (returns past a 
+
+12 m cutoff are dropped) and adding the observed surface to a shared 0.5 m voxel grid. Every 3 s, each robot picks a new short-horizon goal as the nearest unobserved cell within a local search radius and drives toward it: the UAV via moveToPositionAsync and the UGV via the proportional controller described in Sec. 4.3. We test the two coordination patterns in Sec. 5.2. In Complementary Coverage , each robot’s goal score is penalized for being close to the other, so the team spreads out. In Leader– Follower , the UGV explores and the UAV is pinned to a fixed offset directly above it. This is intentionally a simple scheme: the goal is to show the closed-loop pipeline works end to end, not to propose a new exploration method. The shared clock and synchronized sensor pipeline are the same as in Sec. 5.1.  
+
+> Table 8. Closed-loop multi-robot exploration in the desert environment (
+
+n = 8 seeds; median, with IQR for coverage). 
+
+C(60 s) is final ground-truth coverage; η is the time-averaged inter-agent sensing-footprint overlap (ground discs of radius 
+
+12 m); RTF is the achieved real-time factor.          
+
+> Mode C(60 s)ηRTF
+> Complementary Coverage 0.283 0.060 0.31
+> Leader–Follower 0.199 0.484 0.32
+
+7.3.2. Metrics. We report (i) the fraction of the ground-truth surface within the operating region that has been observed as a function of mission time, 
+
+C(t) = |M obs (t)|/|M gt |; (ii) the inter-agent sensing-footprint overlap η(t) averaged over the run, which should be low for Complementary Coverage and high for Leader– Follower; and (iii) the achieved real-time factor (RTF) of the closed-loop pipeline, which characterizes whether online planning and sensor streaming keep up with simulation time on the heterogeneous team. 
+
+7.3.3. Results. Figure 14 shows coverage over time for both modes across n = 8 seeds. Complementary Coverage reaches a median final coverage of 0.283 
+
+(IQR [0 .262 , 0.302] ) versus 0.199 (IQR [0 .192 , 0.204] ) for Leader–Follower at t = 60 s, a relative gain of 42% , with non-overlapping interquartile bands throughout the run, confirming that dispersing the agents explores more of the map at equal mission time. The trajectory examples in Figure 13 show the underlying behavior: the agents separate under Complementary Coverage and overlap under Leader– Follower. Table 8 reports the corresponding inter-agent sensing-footprint overlap η and real-time factor: η is low for Complementary Coverage ( 0.060 ) and high for Leader– Follower ( 0.484 ), as designed, and both modes sustain RTF 
+
+≥ 0.30 , confirming that HERCULES runs the heterogeneous team closed-loop at usable speed. 
+
+7.3.4. Discussion. The goal of this experiment is to demonstrate closed-loop operation in HERCULES, rather than to evaluate a specific exploration method. The greedy nearest-frontier scheme is intentionally simple and is distinct from the kinodynamic planner in Appendix C. The same heterogeneous core, mapping, planning, and control components used to generate the offline datasets in Sec. 7.1 and 7.2 also run online, showing that HERCULES supports active-coordination research in addition to dataset collection. 
+
+8. Conclusion 
+
+We presented HERCULES, an open-source UE5-based sim-ulator and data-collection tool for heterogeneous multi-robot autonomy that extends Cosys-AirSim with concurrent UAV– UGV operation, a shared navigation stack, derived thermal and low-light imaging, and photorealistic environments with dynamic agents and environmental phenomena. Three sets of experiments demonstrated HERCULES’s broad utility in multi-robot research. First, we benchmarked state-of-the-art multi-robot SLAM methods on diverse HERCULES sequences, demonstrating its ability to generate photoreal-istic, large-scale environments with varied sensing condi-tions for SLAM evaluation. The performance degradation of ROMAN on heterogeneous robot pairs underscores the need  
+
+> Prepared using sagej.cls
+
+Garimella et al. 15 
+
+for more robust multi-robot SLAM methods, a challenge that HERCULES is designed to support as a foundational devel-opment tool. Second, the collaborative 3D detection experi-ment demonstrated the efficacy of HERCULES as a synthetic data generator for collaborative perception research, while the sim-to-real experiment further validated the high fidelity of HERCULES synthetic data. Finally, HERCULES can also be used as a closed-loop simulation for multi-robot planning, active perception, and exploration, as demonstrated in the last experiment. Together, these capabilities make advanced multi-robot research more accessible, reproducible, and scal-able for the broader research community. 
+
+References 
+
+ArduPilot Dev Team (2026) Using SITL with Gazebo. Online. URL https://ardupilot.org/dev/docs/sitl-with-gazebo.html . Accessed: 2026-01-27. Campos C, Elvira R, Rodr´ ıguez JJG, M Montiel JM and D Tard´ os J (2021) ORB-SLAM3: An accurate open-source library for visual, visual–inertial, and multimap SLAM. IEEE Transactions on Robotics 37(6): 1874–1890. Cesium GS, Inc (2026) Cesium for Unreal. Online. URL https: //cesium.com/platform/cesium-for-unreal/ .Accessed: 2026-01-22. Cui C, Zhou X, Wang M, Gao F and Xu C (2024) FastSim: A modular and plug-and-play simulator for aerial robots. IEEE Robotics and Automation Letters .Dosovitskiy A, Ros G, Codevilla F, Lopez A and Koltun V (2017) CARLA: An open urban driving simulator. In: Proceedings of the Conference on Robot Learning . pp. 1–16. Dubois R, Eudes A and Fr´ emont V (2020) AirMuseum: a heterogeneous multi-robot dataset for stereo-visual and inertial simultaneous localization and mapping. In: Proceedings of the IEEE International Conference on Multisensor Fusion and Integration for Intelligent Systems . pp. 166–172. Epic Games (2021) Nanite virtualized geometry in Unreal Engine. Online. URL https://dev.epicgames.com/docume ntation/en-us/unreal-engine/nanite-virtu alized-geometry-in-unreal-engine . Accessed: 2026-01-27. Epic Games (2022) Lumen global illumination and reflections in Unreal Engine. Online. URL 
+
+https://dev.epicgames.com/documentation/ en-us/unreal-engine/lumen-global-illumin ation-and-reflections-in-unreal-engine .Accessed: 2026-01-27. Epic Games (2024) Artificial intelligence in Unreal Engine 5: Behavior trees, blackboards and AI controllers. Online. URL 
+
+https://dev.epicgames.com/documentation/ en-us/unreal-engine/behavior-tree-in-unr eal-engine---user-guide . Accessed: 2026-01-27. Epic Games (2026a) Fab. https://www.fab.com/ .Accessed: 2026-06-15. Epic Games (2026b) Unreal Engine 5 documentation. Online. URL https://www.unrealengine.com . Accessed: 2026-01-22. Furrer F, Burri M, Achtelik M and Siegwart R (2016) RotorS: A modular Gazebo MAV simulator framework. In: Robot Operating System (ROS): The Complete Reference (Volume 1) .Springer International Publishing, pp. 595–625. Geneva P, Eckenhoff K, Lee W, Yang Y and Huang G (2020) OpenVINS: A research platform for visual-inertial estimation. In: Proceedings of the IEEE International Conference on Robotics and Automation . pp. 4666–4672. Grupp M (2017) evo: Python package for the evaluation of odometry and SLAM. Online. URL 
+
+https://github.com/MichaelGrupp/evo .Guerra W, Tal E, Murali V, Ryou G and Karaman S (2019) FlightGoggles: Photorealistic Sensor Simulation for Perception-driven Robotics using Photogrammetry and Virtual Reality. In: Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems . pp. 6941–6948. Hall D, Talbot B, Bista SR, Zhang H, Smith R, Dayoub F and S¨ underhauf N (2022) BenchBot environments for active robotics (BEAR): Simulated data for active scene understanding research. International Journal of Robotics Research 41(3): 259–269. Hornung A, Wurm KM, Bennewitz M, Stachniss C and Burgard W (2013) OctoMap: An efficient probabilistic 3D mapping framework based on octrees. Autonomous Robots 34(3): 189–206. Jansen W, Verreycken E, Schenck A, Blanquart JE, Verhulst C, Huebel N and Steckel J (2023) Cosys-AirSim: A real-time simulation framework expanded for complex industrial applications. In: Proceedings of the Annual Modeling and Simulation Conference . pp. 37–48. Kohlbrecher S, Meyer J, Graber T, Petersen K, Klingauf U and Von Stryk O (2013) Hector open source modules for autonomous mapping and navigation with rescue robots. In: 
+
+Proceedings of the Annual RoboCup International Symposium . pp. 624–631. Kooi FL and Toet A (2005) What’s crucial in night vision goggle simulation? In: Enhanced and Synthetic Vision 2005 , volume 5802. SPIE, pp. 37–46. DOI:10.1117/12.601432. Lang AH, Vora S, Caesar H, Zhou L, Yang J and Beijbom O (2019) PointPillars: Fast encoders for object detection from point clouds. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition . pp. 12697–12705. LaValle SM and Kuffner Jr JJ (2001) Randomized kinodynamic planning. International Journal of Robotics Research 20(5): 378–400. Li C, Xia F, Mart´ ın-Mart´ ın R, Lingelbach M, Srivastava S, Shen B, Vainio KE, Gokmen C, Dharan G, Jain T, Kurenkov A, Liu K, Gweon H, Wu J, Fei-Fei L and Savarese S (2022) iGibson 2.0: Object-centric simulation for robot learning of everyday household tasks. In: Proceedings of the Conference on Robot Learning , volume 164. pp. 455–465. Li D, Shi H, Cai B, Bai X, Chen L, Han G and Mi C (2025) A review of technical advances and applications of intelligent inspection robots in structural health monitoring. SmartBot 
+
+1(3). Meier L, Honegger D and Pollefeys M (2015) PX4: A node-based multithreaded open source robotics framework for deeply embedded platforms. In: Proceedings of the IEEE International Conference on Robotics and Automation . pp. 6235–6240. Michel O (2004) Cyberbotics ltd. webots™: professional mobile robot simulation. International Journal of Advanced Robotic Systems 1(1): 5.  
+
+> Prepared using sagej.cls
+
+16 Journal Title XX(X) 
+
+Min P (2026) binvox: 3d mesh voxelizer. Online. URL 
+
+https://www.patrickmin.com/binvox/ . Accessed: 2026-01-22. Modest MF and Mazumder S (2021) Radiative heat transfer .Academic press. Munasinghe I, Perera A and Deo RC (2024) A comprehensive review of UAV-UGV collaboration: Advancements and challenges. Journal of Sensor and Actuator Networks 13(6): 81. NVIDIA (2022) NVIDIA Isaac Sim. URL 
+
+https://developer.nvidia.com/isaac-sim .Accessed: 2026-01-27. Open Robotics (2026) Gazebo. Online. URL 
+
+https://gazebosim.org/ . Accessed: 2026-01-22. Peterson MB, Jia YX, Tian Y, Thomas A and How JP (2025) ROMAN: Open-Set Object Map Alignment for Robust View-Invariant Global Localization. In: Proceedings of the Robotics: Science and Systems Conference .Pinciroli C, Trianni V, O’Grady R, Pini G, Brutschy A, Brambilla M, Mathews N, Ferrante E, Di Caro G, Ducatelle F et al. (2012) Argos: a modular, parallel, multi-engine simulator for multi-robot systems. Swarm intelligence 6: 271–295. Puig X, Undersander E, Szot A, Cote MD, Yang TY, Partsey R, Desai R, Clegg AW, Hlavac M, Min SY, Vondruˇ s V, Gervet T, Berges VP, Turner JM, Maksymets O, Kira Z, Kalakrishnan M, Malik J, Chaplot DS, Jain U, Batra D, Rai A and Mottaghi R (2023) Habitat 3.0: A co-habitat for humans, avatars and robots. arXiv Preprint Poster at the Twelfth International Conference on Learning Representations. Queralta JP, Taipalmaa J, Pullinen BC, Sarker VK, Gia TN, Tenhunen H, Gabbouj M, Raitoharju J and Westerlund T (2020) Collaborative multi-robot search and rescue: Planning, coordination, perception, and active vision. IEEE Access 8: 191617–191643. Shah S, Dey D, Lovett C and Kapoor A (2018) AirSim: High-fidelity visual and physical simulation for autonomous vehicles. In: Proceedings of the International Conference on Field and Service Robotics . pp. 621–635. Shan T, Englot B, Meyers D, Wang W, Ratti C and Rus D (2020) LIO-SAM: Tightly-coupled lidar inertial odometry via smoothing and mapping. In: Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems .pp. 5135–5142. Song Y, Naji S, Kaufmann E, Loquercio A and Scaramuzza D (2021) Flightmare: A flexible quadrotor simulator. In: 
+
+Proceedings of the Conference on Robot Learning . pp. 1147–1157. Tian Y, Chang Y, Arias FH, Nieto-Granda C, How JP and Carlone L (2022) Kimera-Multi: Robust, distributed, dense metric-semantic SLAM for multi-robot systems. IEEE Transactions on Robotics 38(4). Tiwari K and Chong NY (2019) Multi-robot exploration for environmental monitoring: the resource constrained perspective . Academic Press. Umeyama S (1991) Least-squares estimation of transformation parameters between two point patterns. IEEE Transactions on Pattern Analysis and Machine Intelligence 13(04): 376–380. Xu Z, Garimella SS and Tzoumas V (2025) Communication- and computation-efficient distributed submodular optimization in robot mesh networks. IEEE Transactions on Robotics .Xue H and Shi Z (2023) Research on simulation experiment of UAV crossing fire circle based on AirSim. In: Proceedings of the International Conference on Computer Simulation and Modeling, Information Security . pp. 203–209. Yu H, Luo Y, Shu M, Huo Y, Yang Z, Shi Y, Guo Z, Li H, Hu X, Yuan J and Nie Z (2022) DAIR-V2X: A large-scale dataset for vehicle-infrastructure cooperative 3D object detection. In: 
+
+Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition . pp. 21361–21370. Zhao X, Ding W, An Y, Du Y, Yu T, Li M, Tang M and Wang J (2023) Fast segment anything. arXiv Preprint (2306.12156). Zhou Y, Quang L, Nieto-Granda C and Loianno G (2024) CoPeD-advancing multi-robot collaborative perception: A comprehensive dataset in real-world environments. IEEE Robotics and Automation Letters 9(7): 6416–6423. Zhu Y, Kong Y, Jie Y, Xu S and Cheng H (2023) GRACO: A multimodal dataset for ground and aerial cooperative localization and mapping. IEEE Robotics and Automation Letters 8(2): 966–973.  
+
+> Prepared using sagej.cls
+
+Garimella et al. 17 
+
+A. Supplementary Sim-to-Real Detection Results 
+
+Tables 9 and 10 extend the main-text sim-to-real results (Tables 5–7) by reporting all three training strategies across all three fusion configurations at IoU=0.70 and IoU=0.50, respectively. 
+
+Table 9. Sim-to-real transfer: Car detection on the DAIR-V2X test set at IoU=0.70 (strict). All three training strategies and fusion configurations are shown. KITTI-style AP11/AP40 and DAIR-V2X continuous AP are reported for both AP 3D and AP BEV . ∆
+
+columns show change in AP40 (KITTI) or AP (DAIR-V2X) relative to from-scratch within each fusion type. Bold marks the best result per fusion type. 
+
+Fusion Method KITTI AP 3D KITTI AP BEV DAIR-V2X AP 3D DAIR-V2X AP BEV Ep. AP11 AP40 ∆ AP11 AP40 ∆ AP ∆ AP ∆
+
+Vehicle-only From-Scratch 24.56 18.65 — 26.90 24.54 — 18.75 — 23.90 — 19 FT-Unfrozen 24.79 20.64 +1.99 26.91 24.58 +0 .04 19.11 +0 .36 24.27 +0 .37 19 
+
+FT-Frozen 24.71 20.63 +1 .98 26.95 24.63 +0.09 19.13 +0.38 24.30 +0.40 20 Infra-only From-Scratch 26.26 28.27 — 35.87 32.10 — 26.70 — 31.21 — 19 
+
+FT-Unfrozen 26.28 28.35 +0.08 35.91 32.13 +0.03 26.85 +0 .15 31.31 +0.10 19 FT-Frozen 26.30 28.33 +0 .06 35.84 32.08 −0.02 26.86 +0.16 31.14 −0.07 20 Late Fusion From-Scratch 43.13 44.62 — 53.86 54.21 — 45.36 — 54.87 — 19 FT-Unfrozen 43.21 46.67 +2 .05 53.86 54.24 +0 .03 45.76 +0 .40 55.33 +0.46 19 
+
+FT-Frozen 43.26 46.73 +2.11 53.87 54.23 +0 .02 45.87 +0.51 55.13 +0 .26 20 
+
+Table 10. Sim-to-real transfer: Car detection on the DAIR-V2X test set at IoU=0.50 (loose). All three training strategies and fusion configurations are shown. KITTI-style AP11/AP40 and DAIR-V2X continuous AP are reported for both AP 3D and AP BEV . ∆
+
+columns show change in AP40 (KITTI) or AP (DAIR-V2X) relative to from-scratch within each fusion type. Bold marks the best result per fusion type. 
+
+Fusion Method KITTI AP 3D KITTI AP BEV DAIR-V2X AP 3D DAIR-V2X AP BEV Ep. AP11 AP40 ∆ AP11 AP40 ∆ AP ∆ AP ∆
+
+Vehicle-only From-Scratch 26.93 24.61 — 27.14 24.84 — 24.34 — 25.38 — 19 FT-Unfrozen 26.96 24.62 +0 .01 27.14 27.19 +2.35 24.70 +0 .36 25.80 +0.42 19 
+
+FT-Frozen 26.97 24.66 +0.05 27.17 27.19 +2 .35 24.74 +0.40 25.76 +0 .38 20 Infra-only From-Scratch 36.05 32.25 — 36.32 32.47 — 31.84 — 32.78 — 19 FT-Unfrozen 36.04 32.23 −0.02 36.32 32.47 0.00 31.87 +0.03 32.83 +0 .05 19 FT-Frozen 36.03 32.21 −0.04 36.32 32.47 0.00 31.85 +0 .01 32.92 +0.14 20 Late Fusion From-Scratch 54.05 56.72 — 54.44 57.30 — 55.93 — 57.85 — 19 FT-Unfrozen 54.01 56.75 +0 .03 54.43 57.30 0.00 56.33 +0.40 58.35 +0.50 19 
+
+FT-Frozen 54.03 56.75 +0.03 54.44 57.31 +0.01 56.30 +0 .37 58.33 +0 .48 20 
+
+B. Supplementary Sim-to-Sim Detection Results 
+
+Tables 11 and 12 complement Table 4 by providing distance-binned results for the sim-to-sim cooperative Car detection baseline at IoU=0.70 and IoU=0.25, respectively. 
+
+Table 11. Sim-to-sim baseline: cooperative Car detection at IoU=0.70, distance-binned. AP (AP11/AP40) for AP 3D and AP BEV .
+
+Fusion 
+
+AP 3D (IoU=0.70) AP BEV (IoU=0.70) 0–30 m 30–50 m 50–100 m 0–30 m 30–50 m 50–100 m AP11 AP40 AP11 AP40 AP11 AP40 AP11 AP40 AP11 AP40 AP11 AP40 
+
+Veh.-only 50.58 52.21 20.66 20.33 9.09 4.45 62.98 64.20 40.47 41.28 16.04 12.73 Inf.-only 44.52 46.05 41.85 42.79 60.42 57.33 45.27 49.37 51.58 49.75 62.03 60.99 Late Fusion 57.02 54.05 45.61 42.21 51.50 49.63 62.16 65.46 57.25 56.12 53.16 57.71  
+
+> Prepared using sagej.cls
+
+18 Journal Title XX(X)   
+
+> Table 12. Sim-to-sim baseline: cooperative Car detection at IoU=0.25, distance-binned. AP (AP11/AP40) for
+
+AP 3D and AP BEV .
+
+Fusion 
+
+AP 3D (IoU=0.25) AP BEV (IoU=0.25) 0–30 m 30–50 m 50–100 m 0–30 m 30–50 m 50–100 m AP11 AP40 AP11 AP40 AP11 AP40 AP11 AP40 AP11 AP40 AP11 AP40 
+
+Veh.-only 72.56 72.38 62.14 61.05 17.88 19.02 72.56 74.80 62.18 61.08 17.88 19.07 Inf.-only 54.53 54.99 63.31 62.15 72.00 69.33 54.53 54.99 63.31 62.15 72.00 69.33 Late Fusion 71.41 73.53 78.82 77.22 62.87 66.52 71.41 73.53 78.82 77.22 62.87 66.52 
+
+C. Kinodynamic RRT Planner Formulation 
+
+This appendix provides the full mathematical formulation of the kinodynamic RRT (KRRT) planner summarized in Sec. 4.2. 
+
+Dynamics used for propagation 
+
+UGV (unicycle): 
+
+˙xg (t) = 
+
+
+
+vg (t) cos θg (t)
+
+vg (t) sin θg (t)
+
+ωg (t)
+
+ , xg = [ xg , y g , θ g ]⊤, (1) 
+
+|vg (t)| ≤ vmax  
+
+> g
+
+, |ωg (t)| ≤ ωmax  
+
+> g
+
+. (2) 
+
+UAV (planar double-integrator at altitude hUAV ): 
+
+¨pa(t) = ua(t), ∥ua∥ ≤ amax  
+
+> a
+
+, ∥ ˙pa∥ ≤ vmax  
+
+> a
+
+, (3) 
+
+pa = [ xa, y a]⊤ (4) With time step ∆t, we use the discrete-time update xk+1 = F (xk, uk) to numerically integrate the continuous-time dynamics. 
+
+Task-aware sampling 
+
+At each iteration, a target xrand is drawn from a mixture distribution: 
+
+xrand ∼
+
+
+
+GoalDistribution w.p. pgoal ,
+
+FrontierDistribution (ok) w.p. pfront ,
+
+Uniform (Xfree ) w.p. 1 − pgoal − pfront ,
+
+(5) where ok is the occupancy map at step k, and frontier samples lie near known/unknown boundaries (optionally weighted by a local information score). For SLAM-oriented dataset collection, a fraction of the sampling mass is assigned to a revisit distribution concentrated on previously observed landmarks or keyframe poses, so that KRRT periodically steers robots back through already-mapped regions. This induces both intra-robot loop closures and inter-robot trajectory overlap. 
+
+Nearest neighbor and steering metric 
+
+Let V be current tree vertices. We select 
+
+xnear = arg min  
+
+> x∈V
+
+ρ(x, x rand ), (6) with 
+
+ρ(x1, x 2) = wp ∥p1 − p2∥2 + wθ d∠(θ1, θ 2)+ wv ∥v1 − v2∥2
+
+(7) where p is planar position, θ is heading (UGV only), v is speed (when modeled), d∠ is wrapped angular distance, and 
+
+wp, w θ , w v ≥ 0 are platform-specific weights.  
+
+> Prepared using sagej.cls
+
+Garimella et al. 19 
+
+Steering objective with safety and information 
+
+From xnear , candidate controls u and durations τ are scored by 
+
+J(u, τ ) = α[−ρ(˜ x, x rand )] + β bI(˜ x | ok) + γ ϕ  D(˜ x), (8) where ˜x = Φ( xnear , u, τ ) is the forward-integrated state; α, β, γ ≥ 0 weight target-proximity, information, and safety; bI
+
+counts unknown cells expected within the sensing footprint (fast information surrogate via ray-casting); D(·) is obstacle clearance obtained from an Euclidean signed distance field (SDF) derived from OctoMap/elevation; and 
+
+ϕ(d) = min {d − rsafe , 0} (9) penalizes proximity to obstacles for safety radius rsafe . The optimal control is 
+
+(u⋆, τ ⋆) ∈ arg max   
+
+> u∈U , τ ∈T
+
+J(u, τ ) (10) s.t. D Φ( xnear , u, t ) ≥ rsafe , ∀t ∈ [0 , τ ]. (11) 
+
+Adaptive step and mode-aware bias 
+
+Steps are shortened in clutter and lengthened in open spaces via 
+
+τ = min {τmax , κ D (xnear )}. (12) Mode logic biases (5) and (8): in Complementary Coverage we set pfront > 0 and β > 0 to encourage frontier sampling, while in Leader–Follower we set pgoal ≫ 0 toward UGV waypoints and augment J with a visibility/overlap bonus. 
+
+Information surrogate 
+
+bI ˜x | ok
+
+ = X 
+
+> j∈N (˜ x,ρ sens )
+
+1{ojk =−1}, (13) i.e., the count of unknown cells within sensor radius at ˜x.
+
+D. UGV Pure-Pursuit Controller Formulation 
+
+This appendix provides the full mathematical formulation of the UGV pure-pursuit controller summarized in Sec. 4.3. Let γ(s) be the reference path parameterized by arc-length s. At time t, let s⋆(t) be the index of the closest point to the UGV position pg (t) = [ xg (t), y g (t)] ⊤. The forward lookahead target is selected with a distance threshold Lla > 0:
+
+sla (t) = min 
+
+n
+
+s ≥ s⋆(t) : γ(s) − pg (t) ≥ Lla 
+
+o
+
+,
+
+pla (t) = γ sla (t), (14) with forward-only index stepping to avoid oscillation. The heading error toward the target is 
+
+eψ (t) = wrap (−π,π ]
+
+
+
+atan2  (pla −pg )y ,
+
+(pla −pg )x
+
+ − ψg (t)
+
+ (15) where ψg (t) is the UGV yaw. Steering (yaw-rate) and speed commands are 
+
+ωg (t) = sat [−ωmax   
+
+> g, ω max
+> g]
+
+ Kp, steer eψ (t), (16) 
+
+Kp, steer ≈ 1.0
+
+vg (t) = sat [0 , v max  
+
+> g]
+
+
+
+vdes (t) + Kp, spd 
+
+ vdes (t) − ∥ ˙pg (t)∥
+
+, (17) 
+
+Kp, spd ≈ 0.5
+
+where vdes (t) is the desired cruise speed for the current path segment. The proportional gains Kp, steer and Kp, spd regulate heading and speed responses: higher values yield faster convergence but may increase oscillation on low-friction surfaces. The chosen nominal values provide stable tracking across terrain types and can be tuned based on maximum curvature and velocity bounds. Commands are issued at a fixed rate fctrl until end-of-path or timeout, after which a braking command is applied. This controller is consistent with the unicycle dynamics used in planning: the planner ensures curvature and velocity feasibility, while the tracker provides geometric convergence without requiring state-feedback linearization. 
+
+Implementation notes. The steering cap is δmax ≈ 0.5 rad, and the lookahead distance Lla is proportional to speed (smaller at low speed for accuracy, larger at high speed for stability). Saturations in (16)–(17) prevent excessive control actions on low-friction terrain. The same controller is used for both the Husky-style UGV and the simulated SUV, with only geometric parameters (wheelbase, steering limits) adjusted.

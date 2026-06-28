@@ -1,0 +1,94 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-28T20:59:52.381231+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.22579v1",
+      "source": "arxiv",
+      "title": "Stationary Robust Mean-Field Games under Model Mismatches",
+      "abstract": "Deploying multi-agent reinforcement learning (MARL) in the real world is often limited by model mismatches between the training simulators and the true environment, which could be further amplified through strategic interactions and result in severe performance degradation upon deployment. Distributional robustness offers a principled response by optimizing policies against worst-case transition models drawn from an uncertainty set, but standard robust MARL frameworks become increasingly intractable as the number of agents grows. This paper develops an infinite-horizon, stationary mean-field game framework that incorporates distributional model uncertainty directly into the population-coupled dynamics. We establish a robust dynamic programming principle with a contractive Bellman operator and prove the existence of a stationary robust mean-field equilibrium via a fixed-point argument. We further develop the first concrete algorithm with convergence guarantees. We then connect the mean-field solution to a finite-population robust game whose ambiguity sets depend on the empirical distribution, showing that the mean-field equilibrium policy induces approximate equilibrium behavior as the population size increases. Under a contractive robust-dynamics regime, we further obtain explicit non-asymptotic error bounds. Numerical experiments further illustrate the qualitative and quantitative impact of robustness under multiple uncertainty models, validating our theoretical findings.",
+      "authors": [
+        "Yue Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.GT"
+      ],
+      "published": "2026-06-21T16:29:25+00:00",
+      "link": "https://arxiv.org/pdf/2606.22579v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Robust mean-field MARL framework applicable to UAV swarm coordination",
+      "llm_evidence_cn": "鲁棒平均场多智能体强化学习框架适用于无人机群协调",
+      "llm_evidence": "鲁棒平均场多智能体强化学习框架适用于无人机群协调",
+      "canonical_evidence": "鲁棒平均场多智能体强化学习框架适用于无人机群协调",
+      "llm_tldr_en": "Develops a stationary mean-field game framework for distributional robust MARL, enhancing scalability and robustness to model mismatches.",
+      "llm_tldr_cn": "该论文针对多智能体强化学习中模型失配导致的性能下降问题，提出了一个基于平均场博弈的分布鲁棒框架，将模型不确定性融入种群耦合动力学中，建立了鲁棒动态规划原理。在理论上保证了可扩展性和鲁棒性，为大规模无人机群的鲁棒协调提供了理论支撑，可用于多无人机围捕等任务中的策略优化。",
+      "llm_tldr": "该论文针对多智能体强化学习中模型失配导致的性能下降问题，提出了一个基于平均场博弈的分布鲁棒框架，将模型不确定性融入种群耦合动力学中，建立了鲁棒动态规划原理。在理论上保证了可扩展性和鲁棒性，为大规模无人机群的鲁棒协调提供了理论支撑，可用于多无人机围捕等任务中的策略优化。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.22756v1",
+      "source": "arxiv",
+      "title": "HERCULES: An Open-Source Simulation Framework for Heterogeneous Multi-Robot SLAM, Collaborative Perception, and Exploration",
+      "abstract": "We present HERCULES, an open-source simulator and data-collection pipeline for heterogeneous multi-robot autonomy. Built upon the Unreal Engine 5 (UE5)-based simulators AirSim and Cosys-AirSim, HERCULES resolves key architectural limitations of prior frameworks to enable concurrent unmanned aerial and ground vehicle (UAV-UGV) operation in large-scale, photorealistic, dynamic environments. It introduces a new waypoint-tracking UGV controller that mirrors existing UAV control interfaces, and provides a shared navigation stack for mapping, traversability analysis, planning, and control across heterogeneous platforms. Expanding inherited sensor suites, it adds physics-based long-wave infrared (LWIR) cameras and configurable night-vision modes for degraded visual environments. HERCULES provides lightweight APIs, ROS 2 wrappers, and rigorous time synchronization across sensors and platforms, and brings state-of-the-art game-engine capabilities into robotics simulation, integrating intelligent agents such as pedestrians, traffic, and wildlife with high-fidelity dynamic phenomena, including fire, flooding, and crop disease spread. HERCULES runs in two modes: passively, replaying offline-designed trajectories to generate reproducible multi-modal datasets, and actively, running an online planner in closed loop from live observations. Our experiments in heterogeneous multi-robot SLAM, collaborative perception, and exploration, using both HERCULES-generated data and active closed-loop execution, demonstrate its utility for advancing heterogeneous multi-robot autonomy. We publicly release our source code, experiment code, documentation, and datasets, including a heterogeneous multi-robot SLAM benchmark collected with two UAVs and two UGVs across kilometer-scale desert, forest, and city environments, at https://lunarlab-gatech.github.io/HERCULES-website.",
+      "authors": [
+        "Sandilya Sai Garimella",
+        "Daniel Chase Butterfield",
+        "Sean Wilson",
+        "Lu Gan"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV",
+        "cs.MA",
+        "eess.SY"
+      ],
+      "published": "2026-06-22T01:51:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.22756v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Open-source simulation framework for heterogeneous multi-robot systems including UAVs",
+      "llm_evidence_cn": "开源异构多机器人仿真框架，包含无人机",
+      "llm_evidence": "开源异构多机器人仿真框架，包含无人机",
+      "canonical_evidence": "开源异构多机器人仿真框架，包含无人机",
+      "llm_tldr_en": "Presents HERCULES, an open-source simulator for heterogeneous multi-robot SLAM and exploration, enabling concurrent UAV-UGV operations.",
+      "llm_tldr_cn": "该论文介绍了HERCULES，一个基于UE5的开源异构多机器人仿真和数据采集流水线，支持无人机与无人车同时运行，提供共享导航栈和传感器套件。解决了现有框架的架构限制，为多无人机围捕、侦察等任务提供了高保真物理仿真环境，便于算法开发和验证，是多无人机协同任务的重要使能工具。",
+      "llm_tldr": "该论文介绍了HERCULES，一个基于UE5的开源异构多机器人仿真和数据采集流水线，支持无人机与无人车同时运行，提供共享导航栈和传感器套件。解决了现有框架的架构限制，为多无人机围捕、侦察等任务提供了高保真物理仿真环境，便于算法开发和验证，是多无人机协同任务的重要使能工具。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
