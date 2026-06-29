@@ -1,0 +1,129 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-29T20:46:15.880888+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.27609v1",
+      "source": "arxiv",
+      "title": "Training Observable Control Policies to Expose Agent State Through Actions",
+      "abstract": "Physical or operational constraints often impose communications limitations on autonomous agents. Such limitations complicate monitoring or multiagent coordination. Even when strong communications are absent, some information may still be available. The remainder of the relevant agent state may be reconstructed via estimation. The actions taken by an agent are a potential source of information -- as the agent interacts with the environment, these actions may be observed even in the absence of explicit communication. We investigate using actions to estimate the state of an agent, using reinforcement learning to develop policies which make the estimation problem more tractable. Policy observability is encouraged through the training reward and is analyzed using simulation of the trained agent. In an aircraft tracking problem a policy with enhanced observability is found that has minimal impact on nominal task performance.",
+      "authors": [
+        "Andres Enriquez Fernandez",
+        "John J. Bird"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "eess.SY"
+      ],
+      "published": "2026-06-25T23:50:14+00:00",
+      "link": "https://arxiv.org/pdf/2606.27609v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Uses reinforcement learning to train policies that expose agent state through actions, enabling multi-agent coordination without communication",
+      "llm_evidence_cn": "利用强化学习训练策略，通过动作暴露智能体状态，实现无通信的多智能体协调",
+      "llm_evidence": "利用强化学习训练策略，通过动作暴露智能体状态，实现无通信的多智能体协调",
+      "canonical_evidence": "利用强化学习训练策略，通过动作暴露智能体状态，实现无通信的多智能体协调",
+      "llm_tldr_en": "This paper proposes training RL policies that make agent state observable through actions, improving multi-agent coordination under communication constraints, with direct applicability to UAV swarm operations.",
+      "llm_tldr_cn": "在多智能体系统中，通信限制常阻碍状态监测与协调。本文利用强化学习训练策略，使智能体的动作能够透露其内部状态，从而在无显式通信下实现状态估计。通过奖励设计鼓励策略可观测性，实验表明该方法有效提高协调性能。该工作可直接应用于无人机群协同任务，如围捕中的状态感知。",
+      "llm_tldr": "在多智能体系统中，通信限制常阻碍状态监测与协调。本文利用强化学习训练策略，使智能体的动作能够透露其内部状态，从而在无显式通信下实现状态估计。通过奖励设计鼓励策略可观测性，实验表明该方法有效提高协调性能。该工作可直接应用于无人机群协同任务，如围捕中的状态感知。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.22579v1",
+      "source": "arxiv",
+      "title": "Stationary Robust Mean-Field Games under Model Mismatches",
+      "abstract": "Deploying multi-agent reinforcement learning (MARL) in the real world is often limited by model mismatches between the training simulators and the true environment, which could be further amplified through strategic interactions and result in severe performance degradation upon deployment. Distributional robustness offers a principled response by optimizing policies against worst-case transition models drawn from an uncertainty set, but standard robust MARL frameworks become increasingly intractable as the number of agents grows. This paper develops an infinite-horizon, stationary mean-field game framework that incorporates distributional model uncertainty directly into the population-coupled dynamics. We establish a robust dynamic programming principle with a contractive Bellman operator and prove the existence of a stationary robust mean-field equilibrium via a fixed-point argument. We further develop the first concrete algorithm with convergence guarantees. We then connect the mean-field solution to a finite-population robust game whose ambiguity sets depend on the empirical distribution, showing that the mean-field equilibrium policy induces approximate equilibrium behavior as the population size increases. Under a contractive robust-dynamics regime, we further obtain explicit non-asymptotic error bounds. Numerical experiments further illustrate the qualitative and quantitative impact of robustness under multiple uncertainty models, validating our theoretical findings.",
+      "authors": [
+        "Yue Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.GT"
+      ],
+      "published": "2026-06-21T16:29:25+00:00",
+      "link": "https://arxiv.org/pdf/2606.22579v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "robust mean-field MARL for large-scale systems, applicable to UAV swarm",
+      "llm_evidence_cn": "鲁棒平均场多智能体强化学习，适用于无人机集群",
+      "llm_evidence": "鲁棒平均场多智能体强化学习，适用于无人机集群",
+      "canonical_evidence": "鲁棒平均场多智能体强化学习，适用于无人机集群",
+      "llm_tldr_en": "Develops robust mean-field game framework for MARL under model mismatches, directly relevant to multi-agent RL for UAV swarm.",
+      "llm_tldr_cn": "该论文针对多智能体强化学习在模型失配下的性能退化问题，提出一种平稳鲁棒平均场博弈框架，将分布鲁棒性融入群体耦合动力学中。该方法在理论上建立了鲁棒动态规划原理，非常适合大规模无人机集群在干扰环境下的协同决策，为多无人机围捕中的抗干扰策略学习提供直接支持。实验表明该框架能有效缓解模型不匹配带来的性能下降。",
+      "llm_tldr": "该论文针对多智能体强化学习在模型失配下的性能退化问题，提出一种平稳鲁棒平均场博弈框架，将分布鲁棒性融入群体耦合动力学中。该方法在理论上建立了鲁棒动态规划原理，非常适合大规模无人机集群在干扰环境下的协同决策，为多无人机围捕中的抗干扰策略学习提供直接支持。实验表明该框架能有效缓解模型不匹配带来的性能下降。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.27348v1",
+      "source": "arxiv",
+      "title": "Bridging Performance and Generalization in Reinforcement Learning for Agile Flight",
+      "abstract": "Autonomous drone racing is a fundamentally challenging regime for autonomous aerial robots, requiring time-optimal control while operating under persistent actuation saturation. While reinforcement learning (RL) has achieved human-level performance in this domain, current methods fail to generalize; policies trained on specific environments often crash immediately in unseen configurations. This failure reflects the intrinsic difficulty of zero-shot generalization in agile flight, arising from high-dimensional task variation and the tight coupling between safety and performance at high speeds. Existing approaches that improve generalization impose a substantial cost on flight speed: control policies must significantly degrade performance to achieve even modest levels of generalization. In this work, we propose a framework for zero-shot generalization in agile flight for RL-based drone racing. By combining task-aware switching based on learning progress with a physically informed procedural track generator, the framework produces a fast and robust generalist policy without test-time adaptation. Our method achieves strong zero-shot performance across a wide range of unseen racetracks in the real world, demonstrating a 7.4x improvement in generalization over the state-of-the-art approaches, while maintaining competitive racing speeds. We validate our method's results in both simulation and real-world settings, including a challenging vision-based, end-to-end control setting that operates without explicit state estimation, where all prior approaches fail to generalize.",
+      "authors": [
+        "Jonathan Green",
+        "Jiaxu Xing",
+        "Nico Messikommer",
+        "Angel Romero",
+        "Davide Scaramuzza"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-25T17:54:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.27348v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "RL for agile flight in drone racing, addresses performance and generalization, method transferable to autonomous drone interception tasks",
+      "llm_evidence_cn": "针对无人机竞速的强化学习，关注性能与泛化，方法可迁移至自主无人机拦截任务",
+      "llm_evidence": "针对无人机竞速的强化学习，关注性能与泛化，方法可迁移至自主无人机拦截任务",
+      "canonical_evidence": "针对无人机竞速的强化学习，关注性能与泛化，方法可迁移至自主无人机拦截任务",
+      "llm_tldr_en": "This paper tackles the generalization failure of RL policies in agile flight, proposing methods to bridge performance and generalization, which are relevant to autonomous drone interception using deep RL.",
+      "llm_tldr_cn": "该论文指出当前强化学习在敏捷飞行（如无人机竞速）中虽达到人类水平，但策略泛化能力差，在新环境中容易失效。作者分析了高维任务变化与安全-性能耦合带来的挑战，并提出在保持飞行速度的同时提升泛化能力的方法。这项工作对自主无人机拦截中强化学习的实际部署具有方法借鉴意义。",
+      "llm_tldr": "该论文指出当前强化学习在敏捷飞行（如无人机竞速）中虽达到人类水平，但策略泛化能力差，在新环境中容易失效。作者分析了高维任务变化与安全-性能耦合带来的挑战，并提出在保持飞行速度的同时提升泛化能力的方法。这项工作对自主无人机拦截中强化学习的实际部署具有方法借鉴意义。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "autonomous drone interception using deep reinforcement learning",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

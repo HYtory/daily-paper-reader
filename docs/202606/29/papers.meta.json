@@ -1,0 +1,54 @@
+{
+  "label": "2026-06-29",
+  "date": "2026-06-29",
+  "generated_at": "2026-06-29T20:48:31",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202606/29/2606.27609v1-training-observable-control-policies-to-expose-agent-state-through-actions",
+      "section": "quick",
+      "title_en": "Training Observable Control Policies to Expose Agent State Through Actions",
+      "authors": "Andres Enriquez Fernandez, John J. Bird",
+      "date": "2026-06-25",
+      "pdf": "https://arxiv.org/pdf/2606.27609v1",
+      "score": "7.0",
+      "evidence": "利用强化学习训练策略，通过动作暴露智能体状态，实现无通信的多智能体协调",
+      "tldr": "自主智能体因物理或操作约束常缺乏显式通信，其动作可作为估计内部状态的信息源。本文提出通过强化学习方法训练可观测控制策略，在奖励函数中加入可观测性项，鼓励智能体采取更利于状态估计的动作。在飞机跟踪仿真任务中，该方法在几乎不损害任务性能的前提下显著提升了策略的可观测性，为通信受限下的智能体监控提供了有效方案。",
+      "tags": "query:ui",
+      "abstract_en": "Physical or operational constraints often impose communications limitations on autonomous agents. Such limitations complicate monitoring or multiagent coordination. Even when strong communications are absent, some information may still be available. The remainder of the relevant agent state may be reconstructed via estimation. The actions taken by an agent are a potential source of information -- as the agent interacts with the environment, these actions may be observed even in the absence of explicit communication. We investigate using actions to estimate the state of an agent, using reinforcement learning to develop policies which make the estimation problem more tractable. Policy observability is encouraged through the training reward and is analyzed using simulation of the trained agent. In an aircraft tracking problem a policy with enhanced observability is found that has minimal impact on nominal task performance.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/29/2606.22579v1-stationary-robust-mean-field-games-under-model-mismatches",
+      "section": "quick",
+      "title_en": "Stationary Robust Mean-Field Games under Model Mismatches",
+      "authors": "Yue Wang",
+      "date": "2026-06-21",
+      "pdf": "https://arxiv.org/pdf/2606.22579v1",
+      "score": "6.0",
+      "evidence": "鲁棒平均场多智能体强化学习，适用于无人机集群",
+      "tldr": "多智能体强化学习在真实部署中常因训练模拟器与环境的模型失配导致性能严重下降。本文提出无限时域平稳均值场博弈框架，将分布鲁棒性融入种群耦合动力学，通过压缩Bellman算子建立鲁棒动态规划原理，并用不动点理论证明鲁棒均衡的存在性。进一步开发首个收敛算法，证明均值场解可近似为有限种群鲁棒均衡，且在压缩动力学下获得显式非渐近误差界。数值实验验证了理论结果。",
+      "tags": "query:ui",
+      "abstract_en": "Deploying multi-agent reinforcement learning (MARL) in the real world is often limited by model mismatches between the training simulators and the true environment, which could be further amplified through strategic interactions and result in severe performance degradation upon deployment. Distributional robustness offers a principled response by optimizing policies against worst-case transition models drawn from an uncertainty set, but standard robust MARL frameworks become increasingly intractable as the number of agents grows. This paper develops an infinite-horizon, stationary mean-field game framework that incorporates distributional model uncertainty directly into the population-coupled dynamics. We establish a robust dynamic programming principle with a contractive Bellman operator and prove the existence of a stationary robust mean-field equilibrium via a fixed-point argument. We further develop the first concrete algorithm with convergence guarantees. We then connect the mean-field solution to a finite-population robust game whose ambiguity sets depend on the empirical distribution, showing that the mean-field equilibrium policy induces approximate equilibrium behavior as the population size increases. Under a contractive robust-dynamics regime, we further obtain explicit non-asymptotic error bounds. Numerical experiments further illustrate the qualitative and quantitative impact of robustness under multiple uncertainty models, validating our theoretical findings.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/29/2606.27348v1-bridging-performance-and-generalization-in-reinforcement-learning-for-agile-flight",
+      "section": "quick",
+      "title_en": "Bridging Performance and Generalization in Reinforcement Learning for Agile Flight",
+      "authors": "Jonathan Green, Jiaxu Xing, Nico Messikommer, Angel Romero, Davide Scaramuzza",
+      "date": "2026-06-25",
+      "pdf": "https://arxiv.org/pdf/2606.27348v1",
+      "score": "6.0",
+      "evidence": "针对无人机竞速的强化学习，关注性能与泛化，方法可迁移至自主无人机拦截任务",
+      "tldr": "自主无人机竞速中，RL策略虽能达人类水平但泛化差，现有方法提升泛化会严重牺牲速度。本文提出结合任务感知切换与物理启发的程序化赛道生成框架，无需测试时适应即可获得快速鲁棒的通用策略。在真实世界多种未见赛道上实现7.4倍泛化提升，同时保持有竞争力的竞速速度。该方法适用于无显式状态估计的端到端控制，而此前所有方法均失败。",
+      "tags": "query:ui",
+      "abstract_en": "Autonomous drone racing is a fundamentally challenging regime for autonomous aerial robots, requiring time-optimal control while operating under persistent actuation saturation. While reinforcement learning (RL) has achieved human-level performance in this domain, current methods fail to generalize; policies trained on specific environments often crash immediately in unseen configurations. This failure reflects the intrinsic difficulty of zero-shot generalization in agile flight, arising from high-dimensional task variation and the tight coupling between safety and performance at high speeds. Existing approaches that improve generalization impose a substantial cost on flight speed: control policies must significantly degrade performance to achieve even modest levels of generalization. In this work, we propose a framework for zero-shot generalization in agile flight for RL-based drone racing. By combining task-aware switching based on learning progress with a physically informed procedural track generator, the framework produces a fast and robust generalist policy without test-time adaptation. Our method achieves strong zero-shot performance across a wide range of unseen racetracks in the real world, demonstrating a 7.4x improvement in generalization over the state-of-the-art approaches, while maintaining competitive racing speeds. We validate our method's results in both simulation and real-world settings, including a challenging vision-based, end-to-end control setting that operates without explicit state estimation, where all prior approaches fail to generalize.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
