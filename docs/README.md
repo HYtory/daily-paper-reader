@@ -6,30 +6,27 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-29
-- 运行时间：2026-06-29 20:48:24 UTC
+- 最新运行日期：2026-06-30
+- 运行时间：2026-06-30 21:57:37 UTC
 - 运行状态：成功
-- 本次总论文数：3
+- 本次总论文数：2
 - 精读区：0
-- 速读区：3
+- 速读区：2
 
 ### 今日简报（AI）
-今日速读3篇论文，涵盖可控策略暴露智能体状态、稳健平均场博弈及敏捷飞行强化学习泛化。最值得关注的是评分7.0的《Training Observable Control Policies...》揭示通过动作暴露智能体状态的方法，以及《Bridging Performance...》中敏捷飞行性能与泛化平衡的突破。建议优先精读最高分论文，深入理解可控策略如何提升透明性与安全性。
-- 详情：[/202606/29/README](/202606/29/README)
+今日速读了两篇多智能体强化学习论文，聚焦层次化通信与链式策略优化方向。最值得关注的是《HiComm》（7.0分）的层次化通信架构和《ACPO》（6.0分）的链式策略优化方法。建议普通读者先理解层次化通信在复杂任务中的优势，再对比链式策略的收敛特性，择需深入学习。
+- 详情：[/202606/30/README](/202606/30/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Training Observable Control Policies to Expose Agent State Through Actions](/202606/29/2606.27609v1-training-observable-control-policies-to-expose-agent-state-through-actions)  
+1. [HiComm: Hierarchical Communication for Multi-agent Reinforcement Learning](/202606/30/2606.29126v1-hicomm-hierarchical-communication-for-multi-agent-reinforcement-learning)  
    标签：评分：7.0/10、query:ui
-   evidence：利用强化学习训练策略，通过动作暴露智能体状态，实现无通信的多智能体协调
-2. [Stationary Robust Mean-Field Games under Model Mismatches](/202606/29/2606.22579v1-stationary-robust-mean-field-games-under-model-mismatches)  
+   evidence：用于合作多智能体强化学习的层级通信模块，实现可扩展的多无人机协调
+2. [ACPO: Agent-Chained Policy Optimization for Multi-Agent Reinforcement Learning](/202606/30/2606.30072v1-acpo-agent-chained-policy-optimization-for-multi-agent-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：鲁棒平均场多智能体强化学习，适用于无人机集群
-3. [Bridging Performance and Generalization in Reinforcement Learning for Agile Flight](/202606/29/2606.27348v1-bridging-performance-and-generalization-in-reinforcement-learning-for-agile-flight)  
-   标签：评分：6.0/10、query:ui
-   evidence：针对无人机竞速的强化学习，关注性能与泛化，方法可迁移至自主无人机拦截任务
+   evidence：用于多智能体强化学习的代理链策略优化
 
 
 <div class="dpr-home-promo-card">

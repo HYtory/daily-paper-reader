@@ -1,0 +1,97 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-30T21:55:44.442093+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.29126v1",
+      "source": "arxiv",
+      "title": "HiComm: Hierarchical Communication for Multi-agent Reinforcement Learning",
+      "abstract": "Cooperative multi-agent reinforcement learning (MARL) often relies on communication to mitigate partial observability, yet most existing protocols treat messages as flat dense vectors detached from the structure of the observations they summarize. This design overlooks an important source of inductive bias in many cooperative environments, where observations naturally follow a hierarchy such as groups and entities. We propose \\textsc{HiComm}, a plug-in communication module that grounds messages in the sender's hierarchical observation. \\textsc{HiComm} is receiver-driven: the receiver issues a query, and the hierarchy is resolved through a three-stage decoding process that first selects a group, then a sender, and then an entity within that group, returning the corresponding feature slice as the message. This converts communication from unstructured vector transmission into structured information retrieval over the sender's observation hierarchy. We instantiate this mechanism with Straight-Through Gumbel-Softmax for differentiable discrete selection and a lightweight shared projection design that attaches to standard MARL pipelines. Experiments across cooperative MARL tasks with different observation structures and coordination demands show that \\textsc{HiComm} matches or outperforms representative learned communication baselines while reducing communication volume by up to $23\\times$ per receiver per episode.",
+      "authors": [
+        "Runze Zhao",
+        "Dongruo Zhou",
+        "Sumit Kumar Jha",
+        "Nathaniel D. Bastian",
+        "Ankit Shah"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-28T00:29:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.29126v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "hierarchical communication module for cooperative MARL enabling scalable multi-UAV coordination",
+      "llm_evidence_cn": "用于合作多智能体强化学习的层级通信模块，实现可扩展的多无人机协调",
+      "llm_evidence": "用于合作多智能体强化学习的层级通信模块，实现可扩展的多无人机协调",
+      "canonical_evidence": "用于合作多智能体强化学习的层级通信模块，实现可扩展的多无人机协调",
+      "llm_tldr_en": "Proposes HiComm, a plug-in communication module for MARL that grounds messages in hierarchical observation structures, enabling efficient and scalable communication for multi-UAV coordination.",
+      "llm_tldr_cn": "针对现有MARL通信中消息扁平化忽视观测层次结构的问题，提出HiComm，一种接收器驱动的层级通信模块。通过三阶段解码选择组、发送者和实体，有效利用观察中的层次结构，提升多无人机编队等合作任务的通信效率。实验表明在多种MARL环境中显著提升性能。",
+      "llm_tldr": "针对现有MARL通信中消息扁平化忽视观测层次结构的问题，提出HiComm，一种接收器驱动的层级通信模块。通过三阶段解码选择组、发送者和实体，有效利用观察中的层次结构，提升多无人机编队等合作任务的通信效率。实验表明在多种MARL环境中显著提升性能。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.30072v1",
+      "source": "arxiv",
+      "title": "ACPO: Agent-Chained Policy Optimization for Multi-Agent Reinforcement Learning",
+      "abstract": "Cooperative tasks in Multi-Agent Reinforcement Learning (MARL) require agents to collectively maximize a shared return. Under the Centralized Training with Decentralized Execution (CTDE) paradigm, policy gradients have remained difficult to compute directly. Prior methods largely follow two approaches: independent factorized updates with centralized critics, which lack general joint-improvement guarantees without value decomposition assumptions, or alternating best-response updates, which can converge to suboptimal Nash Equilibria. In this paper, we show the joint policy gradient admits an exact decentralized decomposition of per-agent terms, each formed from per-agent score functions and decentralized critics. Based on this decomposition, we develop Agent-Chained Policy Optimization (ACPO), where actors are trained independently, with their updates together constituting a single step on the joint policy gradient. Central to this result is a serialized view of the simultaneous joint decision in which agents commit actions one at a time, each conditioning on a belief over preceding actions. The belief acts as the coordination mechanism which ties the independent per-agent updates into a joint gradient step. We evaluate ACPO on Multi-Robot Warehouse, SMACv2, and MA-MuJoCo, where it outperforms strong baselines, with the gap widening as the number of agents grows.",
+      "authors": [
+        "Daiki E. Matsunaga",
+        "Junho Na",
+        "Tri Wahyu Guntara",
+        "Scott Sanner",
+        "Pascal Poupart",
+        "Jongmin Lee",
+        "Kee-Eung Kim"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-29T10:04:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.30072v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Agent-Chained Policy Optimization for MARL",
+      "llm_evidence_cn": "用于多智能体强化学习的代理链策略优化",
+      "llm_evidence": "用于多智能体强化学习的代理链策略优化",
+      "canonical_evidence": "用于多智能体强化学习的代理链策略优化",
+      "llm_tldr_en": "Proposes ACPO, a MARL algorithm that decomposes joint policy gradient into per-agent terms using score functions and decentralized critics.",
+      "llm_tldr_cn": "针对多智能体协作任务中策略梯度难以直接计算的问题，提出ACPO算法，实现了联合策略梯度的精确分散分解，保证了联合改进，实验表明在多个协作任务上优于基线，适用于多无人机协同决策。",
+      "llm_tldr": "针对多智能体协作任务中策略梯度难以直接计算的问题，提出ACPO算法，实现了联合策略梯度的精确分散分解，保证了联合改进，实验表明在多个协作任务上优于基线，适用于多无人机协同决策。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
