@@ -6,27 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-30
-- 运行时间：2026-06-30 21:57:37 UTC
+- 最新运行日期：2026-07-01
+- 运行时间：2026-07-01 21:02:00 UTC
 - 运行状态：成功
 - 本次总论文数：2
 - 精读区：0
 - 速读区：2
 
 ### 今日简报（AI）
-今日速读了两篇多智能体强化学习论文，聚焦层次化通信与链式策略优化方向。最值得关注的是《HiComm》（7.0分）的层次化通信架构和《ACPO》（6.0分）的链式策略优化方法。建议普通读者先理解层次化通信在复杂任务中的优势，再对比链式策略的收敛特性，择需深入学习。
-- 详情：[/202606/30/README](/202606/30/README)
+今天速读了两篇强化学习论文，分别聚焦双流框架下的状态感知探索与安全策略组合。
+最值得关注的是安全在线学习中的光滑策略组合方法，以及双流强化学习的探索机制。
+建议先深入阅读安全策略论文，对复杂环境中的稳健部署更有参考价值。
+- 详情：[/202607/01/README](/202607/01/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [HiComm: Hierarchical Communication for Multi-agent Reinforcement Learning](/202606/30/2606.29126v1-hicomm-hierarchical-communication-for-multi-agent-reinforcement-learning)  
-   标签：评分：7.0/10、query:ui
-   evidence：用于合作多智能体强化学习的层级通信模块，实现可扩展的多无人机协调
-2. [ACPO: Agent-Chained Policy Optimization for Multi-Agent Reinforcement Learning](/202606/30/2606.30072v1-acpo-agent-chained-policy-optimization-for-multi-agent-reinforcement-learning)  
+1. [Dual-Flow Reinforcement Learning with State-Aware Exploration](/202607/01/2606.29820v1-dual-flow-reinforcement-learning-with-state-aware-exploration)  
    标签：评分：6.0/10、query:ui
-   evidence：用于多智能体强化学习的代理链策略优化
+   evidence：双流强化学习改善连续控制中的探索和价值估计，适用于无人机拦截策略学习
+2. [Safe Online Learning via Smooth Safety-Structured Policy Composition](/202607/01/2606.31320v1-safe-online-learning-via-smooth-safety-structured-policy-composition)  
+   标签：评分：6.0/10、query:ui
+   evidence：安全在线强化学习方法，确保安全与性能之间平滑过渡，直接适用于约束下的无人机拦截
 
 
 <div class="dpr-home-promo-card">

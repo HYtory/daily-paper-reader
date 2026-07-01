@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-01",
+  "date": "2026-07-01",
+  "generated_at": "2026-07-01T21:02:06",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/01/2606.29820v1-dual-flow-reinforcement-learning-with-state-aware-exploration",
+      "section": "quick",
+      "title_en": "Dual-Flow Reinforcement Learning with State-Aware Exploration",
+      "authors": "Qijun Li, Zheng Fu, Qi Song, Yifei He, Weitao Zhou, Kun Jiang, Diange Yang",
+      "date": "2026-06-29",
+      "pdf": "https://arxiv.org/pdf/2606.29820v1",
+      "score": "6.0",
+      "evidence": "双流强化学习改善连续控制中的探索和价值估计，适用于无人机拦截策略学习",
+      "tldr": "复杂连续控制任务中多模态最优动作常伴随不确定的回报分布，导致现有单峰高斯价值估计偏差大且多模态策略易模式塌缩。本文提出Dual-Flow RL框架，利用条件流匹配联合建模连续回报分布与多模态策略分布，并设计熵-协方差探索调节器实现状态感知探索。在DeepMind Control Suite和Humanoid-Bench上，该方法在所有任务中均达到最优性能，显著超越先前基于扩散和流的方法。",
+      "tags": "query:ui",
+      "abstract_en": "In complex continuous-control reinforcement learning tasks, multimodal optimal actions often coincide with uncertain, multimodal return distributions, making reliable value estimation and multimodal exploration challenging. Existing value estimation methods using unimodal Gaussians restrict expressiveness and yield biased estimates. Recent generative policies can represent multimodal actions but often collapse to a few modes and under-explore high-value areas of the action space. Motivated by these challenges, we propose Dual-Flow RL, a unified actor-critic framework that jointly models a continuous return distribution and a multimodal policy distribution using conditional flow matching (CFM). This design supports reliable value estimation and sustained multimodal exploration. To further enhance exploration, we introduce an Entropy-Covariance Exploration Regulator (ECER) that enables state-aware exploration regulation leveraging policy entropy and action-uncertainty covariance. Experiments on DeepMind Control Suite and Humanoid-Bench show that Dual-Flow RL achieves state-of-the-art performance on most tasks, significantly outperforming prior diffusion-based and flow-based methods.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/01/2606.31320v1-safe-online-learning-via-smooth-safety-structured-policy-composition",
+      "section": "quick",
+      "title_en": "Safe Online Learning via Smooth Safety-Structured Policy Composition",
+      "authors": "Hongpeng Cao, Liqun Zhao, Yuliang Gu, Naira Hovakimyan, Lui Sha, Marco Caccamo",
+      "date": "2026-06-30",
+      "pdf": "https://arxiv.org/pdf/2606.31320v1",
+      "score": "6.0",
+      "evidence": "安全在线强化学习方法，确保安全与性能之间平滑过渡，直接适用于约束下的无人机拦截",
+      "tldr": "现有安全在线强化学习方法要么通过动作干预严格保障安全但引起学习不连续，要么使用软约束保持平滑但安全保证有限。本文提出AutoSafe架构，将结构化安全监控与干预嵌入动作生成过程，实现性能驱动与安全保持行为之间的平滑、风险依赖转换。在连续控制基准和物理倒立摆系统上，该方法在保证安全的同时维持了学习连续性和平滑性。贡献在于提供了一种无需牺牲学习平滑性的强安全保证方案，适用于实际系统。",
+      "tags": "query:ui",
+      "abstract_en": "Safe online reinforcement learning requires policies to respect safety constraints while maintaining smooth optimization dynamics. Existing approaches typically rely on either strict safety enforcement via action interventions, which introduce discontinuities in system interaction and learning, or soft safety constraint formulations, which preserve smooth learning but provide limited safety assurance. We propose AutoSafe, a safety-aware policy architecture that integrates structured safety monitoring and intervention directly into the action generation process. This design enables smooth, risk-dependent transitions between performance-driven and safety-preserving behaviors, resulting in continuous online interaction and learning dynamics. Empirical results across a suite of continuous-control benchmarks demonstrate strong safety enforcement without sacrificing learning smoothness. We further validate AutoSafe on a physical cart-pole system, highlighting its practical effectiveness for safe online learning in the real world.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

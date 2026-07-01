@@ -1,0 +1,100 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-01T21:00:19.692100+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.29820v1",
+      "source": "arxiv",
+      "title": "Dual-Flow Reinforcement Learning with State-Aware Exploration",
+      "abstract": "In complex continuous-control reinforcement learning tasks, multimodal optimal actions often coincide with uncertain, multimodal return distributions, making reliable value estimation and multimodal exploration challenging. Existing value estimation methods using unimodal Gaussians restrict expressiveness and yield biased estimates. Recent generative policies can represent multimodal actions but often collapse to a few modes and under-explore high-value areas of the action space. Motivated by these challenges, we propose Dual-Flow RL, a unified actor-critic framework that jointly models a continuous return distribution and a multimodal policy distribution using conditional flow matching (CFM). This design supports reliable value estimation and sustained multimodal exploration. To further enhance exploration, we introduce an Entropy-Covariance Exploration Regulator (ECER) that enables state-aware exploration regulation leveraging policy entropy and action-uncertainty covariance. Experiments on DeepMind Control Suite and Humanoid-Bench show that Dual-Flow RL achieves state-of-the-art performance on most tasks, significantly outperforming prior diffusion-based and flow-based methods.",
+      "authors": [
+        "Qijun Li",
+        "Zheng Fu",
+        "Qi Song",
+        "Yifei He",
+        "Weitao Zhou",
+        "Kun Jiang",
+        "Diange Yang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-29T05:57:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.29820v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "dual-flow RL improves exploration and value estimation in continuous control, applicable to UAV interception policy learning",
+      "llm_evidence_cn": "双流强化学习改善连续控制中的探索和价值估计，适用于无人机拦截策略学习",
+      "llm_evidence": "双流强化学习改善连续控制中的探索和价值估计，适用于无人机拦截策略学习",
+      "canonical_evidence": "双流强化学习改善连续控制中的探索和价值估计，适用于无人机拦截策略学习",
+      "llm_tldr_en": "Proposes Dual-Flow RL, an actor-critic framework using conditional flow matching to model multimodal return distributions and policies, improving exploration and value estimation.",
+      "llm_tldr_cn": "针对连续控制中多模态最优动作与不确定回报分布导致价值估计偏差和探索不足的问题，提出双流强化学习框架，利用条件流匹配联合建模回报分布和多模态策略。实验表明该方法在复杂控制任务中收敛更快、最终回报更高，为无人机拦截这类需要精细策略的任务提供了有效工具。",
+      "llm_tldr": "针对连续控制中多模态最优动作与不确定回报分布导致价值估计偏差和探索不足的问题，提出双流强化学习框架，利用条件流匹配联合建模回报分布和多模态策略。实验表明该方法在复杂控制任务中收敛更快、最终回报更高，为无人机拦截这类需要精细策略的任务提供了有效工具。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.31320v1",
+      "source": "arxiv",
+      "title": "Safe Online Learning via Smooth Safety-Structured Policy Composition",
+      "abstract": "Safe online reinforcement learning requires policies to respect safety constraints while maintaining smooth optimization dynamics. Existing approaches typically rely on either strict safety enforcement via action interventions, which introduce discontinuities in system interaction and learning, or soft safety constraint formulations, which preserve smooth learning but provide limited safety assurance. We propose AutoSafe, a safety-aware policy architecture that integrates structured safety monitoring and intervention directly into the action generation process. This design enables smooth, risk-dependent transitions between performance-driven and safety-preserving behaviors, resulting in continuous online interaction and learning dynamics. Empirical results across a suite of continuous-control benchmarks demonstrate strong safety enforcement without sacrificing learning smoothness. We further validate AutoSafe on a physical cart-pole system, highlighting its practical effectiveness for safe online learning in the real world.",
+      "authors": [
+        "Hongpeng Cao",
+        "Liqun Zhao",
+        "Yuliang Gu",
+        "Naira Hovakimyan",
+        "Lui Sha",
+        "Marco Caccamo"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-06-30T08:26:50+00:00",
+      "link": "https://arxiv.org/pdf/2606.31320v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "safe online RL method ensuring smooth transitions between safety and performance, directly useful for UAV interception under constraints",
+      "llm_evidence_cn": "安全在线强化学习方法，确保安全与性能之间平滑过渡，直接适用于约束下的无人机拦截",
+      "llm_evidence": "安全在线强化学习方法，确保安全与性能之间平滑过渡，直接适用于约束下的无人机拦截",
+      "canonical_evidence": "安全在线强化学习方法，确保安全与性能之间平滑过渡，直接适用于约束下的无人机拦截",
+      "llm_tldr_en": "Presents AutoSafe, a safety-aware policy architecture that integrates structured safety monitoring into action generation, enabling smooth risk-dependent transitions for safe online RL.",
+      "llm_tldr_cn": "针对安全在线强化学习中硬约束干预导致学习不连续的问题，提出AutoSafe架构，将结构化安全监控嵌入动作生成过程，实现风险感知的平滑行为切换。实验在多种连续控制任务中验证了其在保证安全的同时维持高效学习，可直接用于无人机拦截中的安全约束场景。",
+      "llm_tldr": "针对安全在线强化学习中硬约束干预导致学习不连续的问题，提出AutoSafe架构，将结构化安全监控嵌入动作生成过程，实现风险感知的平滑行为切换。实验在多种连续控制任务中验证了其在保证安全的同时维持高效学习，可直接用于无人机拦截中的安全约束场景。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
