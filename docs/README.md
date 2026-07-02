@@ -6,29 +6,28 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-01
-- 运行时间：2026-07-01 21:02:00 UTC
+- 最新运行日期：2026-07-02
+- 运行时间：2026-07-02 21:33:18 UTC
 - 运行状态：成功
 - 本次总论文数：2
-- 精读区：0
-- 速读区：2
+- 精读区：1
+- 速读区：1
 
 ### 今日简报（AI）
-今天速读了两篇强化学习论文，分别聚焦双流框架下的状态感知探索与安全策略组合。
-最值得关注的是安全在线学习中的光滑策略组合方法，以及双流强化学习的探索机制。
-建议先深入阅读安全策略论文，对复杂环境中的稳健部署更有参考价值。
-- 详情：[/202607/01/README](/202607/01/README)
+今天精读了一篇多智能体分层通信论文《HiComm》，并速读了一篇多目标多机器人协调采样方法。
+最值得关注的是分层通信机制在提升多智能体协作效率上的潜力，以及采样式协调在复杂任务中的实用价值。
+建议进一步对比两者在可扩展性上的优势，并尝试将采样协调应用于真实多机器人场景。
+- 详情：[/202607/02/README](/202607/02/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [HiComm: Hierarchical Communication for Multi-agent Reinforcement Learning](/202607/02/2606.29126v2-hicomm-hierarchical-communication-for-multi-agent-reinforcement-learning)  
+   标签：评分：8.0/10、query:ui
+   evidence：多智能体强化学习通信模块，适用于无人机群
 
 ### 速读区论文标签
-1. [Dual-Flow Reinforcement Learning with State-Aware Exploration](/202607/01/2606.29820v1-dual-flow-reinforcement-learning-with-state-aware-exploration)  
-   标签：评分：6.0/10、query:ui
-   evidence：双流强化学习改善连续控制中的探索和价值估计，适用于无人机拦截策略学习
-2. [Safe Online Learning via Smooth Safety-Structured Policy Composition](/202607/01/2606.31320v1-safe-online-learning-via-smooth-safety-structured-policy-composition)  
-   标签：评分：6.0/10、query:ui
-   evidence：安全在线强化学习方法，确保安全与性能之间平滑过渡，直接适用于约束下的无人机拦截
+1. [Sampling-Based Coordination-Informed Multi-Objective Multi-Robot Reinforcement Learning](/202607/02/2606.30893v1-sampling-based-coordination-informed-multi-objective-multi-robot-reinforcement-learning)  
+   标签：评分：7.0/10、query:ui
+   evidence：多机器人强化学习协调，与多无人机围捕相关
 
 
 <div class="dpr-home-promo-card">

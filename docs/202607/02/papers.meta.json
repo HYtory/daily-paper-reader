@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-02",
+  "date": "2026-07-02",
+  "generated_at": "2026-07-02T21:33:26",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/02/2606.29126v2-hicomm-hierarchical-communication-for-multi-agent-reinforcement-learning",
+      "section": "deep",
+      "title_en": "HiComm: Hierarchical Communication for Multi-agent Reinforcement Learning",
+      "authors": "Runze Zhao, Dongruo Zhou, Sumit Kumar Jha, Nathaniel D. Bastian, Ankit Shah",
+      "date": "2026-06-28",
+      "pdf": "https://arxiv.org/pdf/2606.29126v2",
+      "score": "8.0",
+      "evidence": "多智能体强化学习通信模块，适用于无人机群",
+      "tldr": "多智能体强化学习中现有通信协议将消息视为与观察结构无关的扁平向量，忽略了合作环境中观察天然具有的层次性（如组与实体）。本文提出HiComm，一种接收者驱动的插件式通信模块，通过三阶段解码（选组→选发送者→选实体）从发送者的层级观察中检索对应特征片作为消息，将通信转化为结构化信息检索。采用Straight-Through Gumbel-Softmax实现可微离散选择，轻量共享投影可嵌入标准MARL框架。实验表明HiComm在多种合作任务中匹配或超越基线，且每接收者每轮通信量减少最多23倍。",
+      "tags": "query:ui",
+      "abstract_en": "Cooperative multi-agent reinforcement learning (MARL) often relies on communication to mitigate partial observability, yet most existing protocols treat messages as flat dense vectors detached from the structure of the observations they summarize. This design overlooks an important source of inductive bias in many cooperative environments, where observations naturally follow a hierarchy such as groups and entities. We propose \\textsc{HiComm}, a plug-in communication module that grounds messages in the sender's hierarchical observation. \\textsc{HiComm} is receiver-driven: the receiver issues a query, and the hierarchy is resolved through a three-stage decoding process that first selects a group, then a sender, and then an entity within that group, returning the corresponding feature slice as the message. This converts communication from unstructured vector transmission into structured information retrieval over the sender's observation hierarchy. We instantiate this mechanism with Straight-Through Gumbel-Softmax for differentiable discrete selection and a lightweight shared projection design that attaches to standard MARL pipelines. Experiments across cooperative MARL tasks with different observation structures and coordination demands show that \\textsc{HiComm} matches or outperforms representative learned communication baselines while reducing communication volume by up to $23\\times$ per receiver per episode.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/02/2606.30893v1-sampling-based-coordination-informed-multi-objective-multi-robot-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Sampling-Based Coordination-Informed Multi-Objective Multi-Robot Reinforcement Learning",
+      "authors": "Antonio Marino, Esteban Restrepo, Soon-jo Chung, Paolo Robuffo Giordano, Claudio Pacchierotti",
+      "date": "2026-06-29",
+      "pdf": "https://arxiv.org/pdf/2606.30893v1",
+      "score": "7.0",
+      "evidence": "多机器人强化学习协调，与多无人机围捕相关",
+      "tldr": "多机器人系统需在分布式约束下优化多个竞争目标并保持协调，现有方法依赖固定或集中协调导致适应性差。本文提出协调感知多目标强化学习框架CIMORL，集成分布式权重预测与特权专家训练，确保帕累托最优解。基于采样的变体CIMORL-TS和CIMORL-MPPI利用训练时的特权全局信息，实现完全分散部署。实验在合作与对抗场景中取得21.2%的超体积改进，通过Crazyflie无人机验证了资源分配与多对多对抗任务中的鲁棒性。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-robot systems must simultaneously optimize competing objectives while maintaining coordinated behavior. Existing multi-agent reinforcement learning approaches often rely on fixed or centralized coordination, which limits adaptability and violates distributed constraints. This work introduces the Coordination-Informed Multi-Objective Reinforcement Learning (CIMORL) framework, integrating a distributed weight prediction mechanism, a privileged expert training strategy, and theoretical guarantees for Pareto-optimal solutions. We present the base CIMORL method alongside two sampling-based variants, CIMORL-TS (Tree Search) and CIMORL-MPPI (MPPI), which leverage privileged global information during training to enable fully decentralized deployment. Experimental validation in cooperative and adversarial scenarios demonstrates a $21.2\\%$ hypervolume improvement and superior policy stability compared to state-of-the-art baselines. Real-world experiments with Crazyflie drones further validate the framework's robustness in resource allocation and multi-attacker multi-defend scenarios under partial observability.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
