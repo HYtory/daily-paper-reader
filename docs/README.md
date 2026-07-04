@@ -6,28 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-02
-- 运行时间：2026-07-02 21:33:18 UTC
+- 最新运行日期：2026-07-04
+- 运行时间：2026-07-04 20:27:52 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：3
 - 精读区：1
-- 速读区：1
+- 速读区：2
 
 ### 今日简报（AI）
-今天精读了一篇多智能体分层通信论文《HiComm》，并速读了一篇多目标多机器人协调采样方法。
-最值得关注的是分层通信机制在提升多智能体协作效率上的潜力，以及采样式协调在复杂任务中的实用价值。
-建议进一步对比两者在可扩展性上的优势，并尝试将采样协调应用于真实多机器人场景。
-- 详情：[/202607/02/README](/202607/02/README)
+今日精读高分论文《Learning Agile Intruder Interception using Differentiable Quadrotor Dynamics》，速读2篇涉及无人机位姿估计与平均场强化学习。最值得深入阅读的是精读文章，其可微分四旋翼动力学方法为敏捷拦截提供新思路。建议优先精读该论文，学习其结合强化学习与动力学建模的创新。
+- 详情：[/202607/04/README](/202607/04/README)
 
 ### 精读区论文标签
-1. [HiComm: Hierarchical Communication for Multi-agent Reinforcement Learning](/202607/02/2606.29126v2-hicomm-hierarchical-communication-for-multi-agent-reinforcement-learning)  
-   标签：评分：8.0/10、query:ui
-   evidence：多智能体强化学习通信模块，适用于无人机群
+1. [Learning Agile Intruder Interception using Differentiable Quadrotor Dynamics](/202607/04/2607.02472v1-learning-agile-intruder-interception-using-differentiable-quadrotor-dynamics)  
+   标签：评分：9.0/10、query:ui
+   evidence：使用学习策略的四旋翼敏捷入侵者拦截
 
 ### 速读区论文标签
-1. [Sampling-Based Coordination-Informed Multi-Objective Multi-Robot Reinforcement Learning](/202607/02/2606.30893v1-sampling-based-coordination-informed-multi-objective-multi-robot-reinforcement-learning)  
-   标签：评分：7.0/10、query:ui
-   evidence：多机器人强化学习协调，与多无人机围捕相关
+1. [MF-UAVPose6D: A Model-Free Monocular 6-DoF Pose Estimation Framework for Fixed-Wing UAVs](/202607/04/2606.29697v1-mf-uavpose6d-a-model-free-monocular-6-dof-pose-estimation-framework-for-fixed-wing-uavs)  
+   标签：评分：6.0/10、query:ui
+   evidence：面向反UAV操作的无模型单目6D姿态估计，支持目标跟踪
+2. [Mean Field Reinforcement Learning](/202607/04/2607.01525v1-mean-field-reinforcement-learning)  
+   标签：评分：6.0/10、query:ui
+   evidence：均值场强化学习针对大规模种群控制，可应用于多无人机集群
 
 
 <div class="dpr-home-promo-card">

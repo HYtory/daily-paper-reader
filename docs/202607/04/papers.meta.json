@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-04",
+  "date": "2026-07-04",
+  "generated_at": "2026-07-04T20:27:57",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/04/2607.02472v1-learning-agile-intruder-interception-using-differentiable-quadrotor-dynamics",
+      "section": "deep",
+      "title_en": "Learning Agile Intruder Interception using Differentiable Quadrotor Dynamics",
+      "authors": "Michael Anoruo, Xiaoyu Tian, Abhishek Rathod, Timothy Naudet, Thomas Canchola, Eric Sturzinger, Kshitij Goel, Wennie Tabib",
+      "date": "2026-07-02",
+      "pdf": "https://arxiv.org/pdf/2607.02472v1",
+      "score": "9.0",
+      "evidence": "使用学习策略的四旋翼敏捷入侵者拦截",
+      "tldr": "针对被动单目相机无法获取相对位置或距离的现实问题，提出一种基于可微四旋翼动力学的分析策略梯度方法，仅利用3D方向单位向量和拦截器状态学习敏捷拦截策略。在10m/s高速下实现有效拦截，相比简化点质量动力学基线平均提升30%，为视觉感知无人机拦截提供了实用方案。",
+      "tags": "query:ui",
+      "abstract_en": "This paper presents a methodology for learning a control policy to intercept an intruder using the 3D direction unit vector to the intruder and the interceptor state. Prior deep reinforcement learning approaches assume either relative position or distance to the intruder is available, but this information is not readily accessible in real-world applications that employ passive, monocular camera sensors. Instead, we propose a solution that leverages an analytical policy gradient method using differentiable quadrotor dynamics to learn agile interception at speeds up to 10 m/s. The proposed approach outperforms baseline methods that utilize simplified point mass dynamics by an average of 30%.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/04/2606.29697v1-mf-uavpose6d-a-model-free-monocular-6-dof-pose-estimation-framework-for-fixed-wing-uavs",
+      "section": "quick",
+      "title_en": "MF-UAVPose6D: A Model-Free Monocular 6-DoF Pose Estimation Framework for Fixed-Wing UAVs",
+      "authors": "Juanqin Liu, Leonardo Plotegher, Eloy Roura, Shaoming He",
+      "date": "2026-06-29",
+      "pdf": "https://arxiv.org/pdf/2606.29697v1",
+      "score": "6.0",
+      "evidence": "面向反UAV操作的无模型单目6D姿态估计，支持目标跟踪",
+      "tldr": "针对非合作固定翼无人机缺乏CAD模型和关键点先验导致现有方法难以应用的问题，提出MF-UAVPose6D无模型框架。该方法仅需单张RGB图像，通过热图引导中心定位、视角感知模块建模射线先验、动态拓扑采样强化结构线索，并采用分离平移旋转解码。在构建的FW-UAV6DPose数据集上实现了精确且鲁棒的6DoF位姿估计，无需CAD模型，在远距离旋转和深度恢复上表现优异。该工作为无模型无人机位姿估计提供了新思路和基准数据集。",
+      "tags": "query:ui",
+      "abstract_en": "For uncrewed aerial vehicles (UAVs), estimating six-degree-of-freedom (6-DoF) poses is essential for airspace situational awareness, target tracking, and counter-UAV operations. However, non-cooperative targets usually lack computer-aided design (CAD) models and keypoint priors, making existing model-based or keypoint-matching methods difficult to apply reliably. To address these challenges, this paper proposes MF-UAVPose6D, a model-free monocular 6-DoF pose estimation framework for fixed-wing UAVs. During inference, the method takes only a single red-green-blue (RGB) image and camera intrinsics as input. It first obtains a stable target anchor through heatmap-guided center localization, introduces a Perspective-Aware Module (PAM) to model observation-ray priors, exploits Dynamic Topological Sampling (DTS) to complement weak structural cues from the wings, fuselage, and tail, and adopts a decoupled translation-rotation pose decoding mechanism to estimate the 6-DoF pose. In addition, we construct the FW-UAV6DPose synthetic dataset, which covers fixed-wing UAV observations across diverse distances, viewpoints, and poses. Experimental results show that MF-UAVPose6D achieves accurate and efficient monocular 6-DoF pose estimation without requiring CAD models, and demonstrates strong robustness in long-range rotation estimation, depth recovery, and joint pose evaluation.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/04/2607.01525v1-mean-field-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Mean Field Reinforcement Learning",
+      "authors": "René Carmona, Mathieu Laurière",
+      "date": "2026-07-01",
+      "pdf": "https://arxiv.org/pdf/2607.01525v1",
+      "score": "6.0",
+      "evidence": "均值场强化学习针对大规模种群控制，可应用于多无人机集群",
+      "tldr": "针对大规模多智能体强化学习面临的维数灾难问题，该文通过平均场控制视角将多智能体系统转化为代表性智能体学习问题。发展了概率、数学和控制框架，推导了动态规划原理与混沌传播极限，并理论分析了表格Q学习和策略梯度方法。数值实现涵盖表格方案与深度确定性策略梯度。为桥接平均场控制理论与强化学习提供了数学基础与可处理方法。",
+      "tags": "query:ui",
+      "abstract_en": "This monograph provides an introduction to mean field reinforcement learning through the lens of Markov decision processes arising from large-population stochastic control with mean field interactions and common noise. Starting from the connection between multi-agent reinforcement learning and mean field control, it develops the probabilistic, mathematical, and control-theoretic framework needed to formulate representative-agent learning problems, analyze their relationship with finite-population systems, and study both general and linear-quadratic models. The presentation includes dynamic programming principles, propagation-of-chaos limits, and theoretical analyses of tabular Q-learning and policy-gradient methods. It also discusses numerical implementations, including tabular schemes and deep reinforcement learning methods such as deep deterministic policy gradient. The goal is to give readers a coherent bridge between mean field control theory and reinforcement learning methodology, emphasizing the mathematical structure of the problems and the design of tractable learning approaches for large stochastic populations.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
