@@ -6,29 +6,30 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-04
-- 运行时间：2026-07-04 20:27:52 UTC
+- 最新运行日期：2026-07-05
+- 运行时间：2026-07-05 21:22:10 UTC
 - 运行状态：成功
-- 本次总论文数：3
+- 本次总论文数：2
 - 精读区：1
-- 速读区：2
+- 速读区：1
 
 ### 今日简报（AI）
-今日精读高分论文《Learning Agile Intruder Interception using Differentiable Quadrotor Dynamics》，速读2篇涉及无人机位姿估计与平均场强化学习。最值得深入阅读的是精读文章，其可微分四旋翼动力学方法为敏捷拦截提供新思路。建议优先精读该论文，学习其结合强化学习与动力学建模的创新。
-- 详情：[/202607/04/README](/202607/04/README)
+今日精读高分论文《Distributed Containment of a Compromised Agent through Repulsive Cages》（8.0分），速读《Lightweight Safe Reinforcement Learning for End-to-End UAV Navigation》（6.0分）。
+
+最值得关注的方向是分布式安全控制中的排斥笼机制，用于隔离被入侵智能体。
+
+建议优先精读高分论文，了解新型防御框架，后续可对比速读论文的安全强化学习方法。
+- 详情：[/202607/05/README](/202607/05/README)
 
 ### 精读区论文标签
-1. [Learning Agile Intruder Interception using Differentiable Quadrotor Dynamics](/202607/04/2607.02472v1-learning-agile-intruder-interception-using-differentiable-quadrotor-dynamics)  
-   标签：评分：9.0/10、query:ui
-   evidence：使用学习策略的四旋翼敏捷入侵者拦截
+1. [Distributed Containment of a Compromised Agent through Repulsive Cages](/202607/05/2607.01230v1-distributed-containment-of-a-compromised-agent-through-repulsive-cages)  
+   标签：评分：8.0/10、query:ui
+   evidence：利用排斥笼分布式围堵被攻陷智能体
 
 ### 速读区论文标签
-1. [MF-UAVPose6D: A Model-Free Monocular 6-DoF Pose Estimation Framework for Fixed-Wing UAVs](/202607/04/2606.29697v1-mf-uavpose6d-a-model-free-monocular-6-dof-pose-estimation-framework-for-fixed-wing-uavs)  
+1. [Lightweight Safe Reinforcement Learning for End-to-End UAV Navigation](/202607/05/2607.01794v1-lightweight-safe-reinforcement-learning-for-end-to-end-uav-navigation)  
    标签：评分：6.0/10、query:ui
-   evidence：面向反UAV操作的无模型单目6D姿态估计，支持目标跟踪
-2. [Mean Field Reinforcement Learning](/202607/04/2607.01525v1-mean-field-reinforcement-learning)  
-   标签：评分：6.0/10、query:ui
-   evidence：均值场强化学习针对大规模种群控制，可应用于多无人机集群
+   evidence：安全强化学习用于无人机导航，方法可迁移至拦截任务
 
 
 <div class="dpr-home-promo-card">

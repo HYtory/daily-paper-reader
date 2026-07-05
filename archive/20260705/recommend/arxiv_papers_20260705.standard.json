@@ -1,0 +1,95 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-05T21:20:10.168760+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.01230v1",
+      "source": "arxiv",
+      "title": "Distributed Containment of a Compromised Agent through Repulsive Cages",
+      "abstract": "UAV swarms and cyber-physical multi-agent systems are increasingly deployed in safety-critical missions that require coordinated motion, distributed decision making, and autonomy. A major security risk arises when a legitimate agent is hijacked and driven by adversarial high-level commands. Rather than focusing on detection and isolation of malicious agents, we exploit a structural property common in autonomous platforms: low-level collision-avoidance modules are typically implemented as independent safety layers and may remain active even under high-level compromise. Building on this property, we propose a distributed containment framework that uses the compromised agent's uncompromised avoidance response as an indirect actuation channel. Defender agents select their geometric configuration to shape the repulsive field experienced by the target, with the goal of keeping it inside a prescribed admissible region and, when required, steering it toward a desired destination. The interaction is modeled as an online Stackelberg game in which defenders act as leaders and the adversary reacts by choosing the target command. Using support-function and normal-cone arguments, we derive an exact geometric characterization of robust one-step containment and introduce the notion of a repulsive cage. These results define a centralized Stackelberg oracle and motivate a fully distributed online approximation based on local communication and dynamic field estimation. We prove sublinear dynamic-regret bounds with respect to the centralized benchmark, quantifying the effect of network-induced estimation errors and temporal variability of the stage-wise optimum. Simulations validate the approach and corroborate the theory.",
+      "authors": [
+        "Luigi Petruzziello",
+        "Camilla Fioravanti",
+        "Gabriele Oliva"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-07-01T17:59:24+00:00",
+      "link": "https://arxiv.org/pdf/2607.01230v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "distributed containment of compromised agent using repulsive cages",
+      "llm_evidence_cn": "利用排斥笼分布式围堵被攻陷智能体",
+      "llm_evidence": "利用排斥笼分布式围堵被攻陷智能体",
+      "canonical_evidence": "利用排斥笼分布式围堵被攻陷智能体",
+      "llm_tldr_en": "Distributed containment of a compromised agent using repulsive cages, directly relevant to multi-UAV encirclement.",
+      "llm_tldr_cn": "本文针对无人机蜂群中某一智能体被劫持的安全风险，提出一种分布式围堵框架。该方法利用被劫持智能体自身未受损的避碰模块作为间接控制通道，通过防御者构建排斥笼实现围堵。这与多无人机协同围捕敌方无人机的任务高度相似，属于直接相关方法。",
+      "llm_tldr": "本文针对无人机蜂群中某一智能体被劫持的安全风险，提出一种分布式围堵框架。该方法利用被劫持智能体自身未受损的避碰模块作为间接控制通道，通过防御者构建排斥笼实现围堵。这与多无人机协同围捕敌方无人机的任务高度相似，属于直接相关方法。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.01794v1",
+      "source": "arxiv",
+      "title": "Lightweight Safe Reinforcement Learning for End-to-End UAV Navigation",
+      "abstract": "With the rapid development of autonomous aerial systems, Unmanned Aerial Vehicles (UAVs) are increasingly deployed in applications such as inspection, environmental monitoring, and rescue, creating growing demand for reliable autonomous navigation. However, autonomous UAV navigation in dense environments remains challenging under sparse perception and dynamic constraints. Most reinforcement learning (RL) methods lack explicit safety mechanisms, leading to unsafe exploration, unstable training, and risky behaviors, especially during high-speed flight. Even in safe RL approaches, safety is often enforced by projecting policy outputs onto a safe action set, which may introduce instability. Meanwhile, many learning-based methods rely on dense inputs or large networks, increasing computational burden and limiting lightweight onboard deployment. Facing the above challenges, we propose a safety-constrained perception-control integrated framework for UAV navigation. A lightweight network encodes sparse observations into collision-risk-aware features using asymmetric and depthwise separable convolutions. We formulate the task as a constrained Markov decision process within a hierarchical control architecture and solve it using a Lagrangian-based safe PPO algorithm. Curriculum learning further improves training stability. Experiments with varying obstacle densities and flight speeds demonstrate higher success rates, improved safety, and better efficiency than existing reinforcement learning baselines.",
+      "authors": [
+        "Shenghui Zhang",
+        "YuXuan Gao",
+        "Songwei Zhao",
+        "Jifeng Hu",
+        "Zijing Zhang",
+        "Hechang Chen"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-07-02T07:12:24+00:00",
+      "link": "https://arxiv.org/pdf/2607.01794v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "safe RL for UAV navigation, method transferable to interception",
+      "llm_evidence_cn": "安全强化学习用于无人机导航，方法可迁移至拦截任务",
+      "llm_evidence": "安全强化学习用于无人机导航，方法可迁移至拦截任务",
+      "canonical_evidence": "安全强化学习用于无人机导航，方法可迁移至拦截任务",
+      "llm_tldr_en": "Lightweight safe RL for end-to-end UAV navigation, methodologically bridges to interception by providing safety guarantees.",
+      "llm_tldr_cn": "本文针对无人机在密集环境中的自主导航问题，提出一种轻量级安全强化学习方法。该方法通过显式安全约束避免危险探索，保障高速飞行安全。虽然直接任务为非拦截导航，但其安全机制可迁移至无人机拦截和围捕场景，作为方法桥梁。",
+      "llm_tldr": "本文针对无人机在密集环境中的自主导航问题，提出一种轻量级安全强化学习方法。该方法通过显式安全约束避免危险探索，保障高速飞行安全。虽然直接任务为非拦截导航，但其安全机制可迁移至无人机拦截和围捕场景，作为方法桥梁。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "autonomous drone interception using deep reinforcement learning",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

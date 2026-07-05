@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-05",
+  "date": "2026-07-05",
+  "generated_at": "2026-07-05T21:22:17",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/05/2607.01230v1-distributed-containment-of-a-compromised-agent-through-repulsive-cages",
+      "section": "deep",
+      "title_en": "Distributed Containment of a Compromised Agent through Repulsive Cages",
+      "authors": "Luigi Petruzziello, Camilla Fioravanti, Gabriele Oliva",
+      "date": "2026-07-01",
+      "pdf": "https://arxiv.org/pdf/2607.01230v1",
+      "score": "8.0",
+      "evidence": "利用排斥笼分布式围堵被攻陷智能体",
+      "tldr": "针对无人机集群等安全关键系统中合法智能体被劫持的安全风险，提出分布式围堵框架。利用低级碰撞避免模块在被劫持下仍活跃的特性，通过防御者配置几何形状形成“排斥笼”间接操控目标运动。将交互建模为在线Stackelberg博弈，给出单步围堵的精确几何特征，并设计分布式近似算法。理论证明次线性动态遗憾界，仿真验证有效性。",
+      "tags": "query:ui",
+      "abstract_en": "UAV swarms and cyber-physical multi-agent systems are increasingly deployed in safety-critical missions that require coordinated motion, distributed decision making, and autonomy. A major security risk arises when a legitimate agent is hijacked and driven by adversarial high-level commands. Rather than focusing on detection and isolation of malicious agents, we exploit a structural property common in autonomous platforms: low-level collision-avoidance modules are typically implemented as independent safety layers and may remain active even under high-level compromise. Building on this property, we propose a distributed containment framework that uses the compromised agent's uncompromised avoidance response as an indirect actuation channel. Defender agents select their geometric configuration to shape the repulsive field experienced by the target, with the goal of keeping it inside a prescribed admissible region and, when required, steering it toward a desired destination. The interaction is modeled as an online Stackelberg game in which defenders act as leaders and the adversary reacts by choosing the target command. Using support-function and normal-cone arguments, we derive an exact geometric characterization of robust one-step containment and introduce the notion of a repulsive cage. These results define a centralized Stackelberg oracle and motivate a fully distributed online approximation based on local communication and dynamic field estimation. We prove sublinear dynamic-regret bounds with respect to the centralized benchmark, quantifying the effect of network-induced estimation errors and temporal variability of the stage-wise optimum. Simulations validate the approach and corroborate the theory.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/05/2607.01794v1-lightweight-safe-reinforcement-learning-for-end-to-end-uav-navigation",
+      "section": "quick",
+      "title_en": "Lightweight Safe Reinforcement Learning for End-to-End UAV Navigation",
+      "authors": "Shenghui Zhang, YuXuan Gao, Songwei Zhao, Jifeng Hu, Zijing Zhang, Hechang Chen",
+      "date": "2026-07-02",
+      "pdf": "https://arxiv.org/pdf/2607.01794v1",
+      "score": "6.0",
+      "evidence": "安全强化学习用于无人机导航，方法可迁移至拦截任务",
+      "tldr": "无人机在密集环境中导航面临安全挑战，现有强化学习方法缺乏显式安全机制。本文提出安全约束感知-控制集成框架，使用轻量网络编码稀疏观测为碰撞风险特征，通过基于拉格朗日的安全PPO算法和课程学习实现稳定训练。实验表明，在不同障碍物密度和飞行速度下，该方法相比基线获得更高成功率、更优安全性和效率。该工作为机载端到端导航提供了轻量级安全深度强化学习方案。",
+      "tags": "query:ui",
+      "abstract_en": "With the rapid development of autonomous aerial systems, Unmanned Aerial Vehicles (UAVs) are increasingly deployed in applications such as inspection, environmental monitoring, and rescue, creating growing demand for reliable autonomous navigation. However, autonomous UAV navigation in dense environments remains challenging under sparse perception and dynamic constraints. Most reinforcement learning (RL) methods lack explicit safety mechanisms, leading to unsafe exploration, unstable training, and risky behaviors, especially during high-speed flight. Even in safe RL approaches, safety is often enforced by projecting policy outputs onto a safe action set, which may introduce instability. Meanwhile, many learning-based methods rely on dense inputs or large networks, increasing computational burden and limiting lightweight onboard deployment. Facing the above challenges, we propose a safety-constrained perception-control integrated framework for UAV navigation. A lightweight network encodes sparse observations into collision-risk-aware features using asymmetric and depthwise separable convolutions. We formulate the task as a constrained Markov decision process within a hierarchical control architecture and solve it using a Lagrangian-based safe PPO algorithm. Curriculum learning further improves training stability. Experiments with varying obstacle densities and flight speeds demonstrate higher success rates, improved safety, and better efficiency than existing reinforcement learning baselines.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
