@@ -1,0 +1,97 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-06T21:46:09.197011+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.31197v1",
+      "source": "arxiv",
+      "title": "Diffusion-based 4D Trajectory Prediction and Distributed Control for UAV Swarms",
+      "abstract": "Accurate 4D trajectory prediction and closed-loop tracking are essential for Unmanned Aerial Vehicle (UAV) swarms to achieve safe and efficient operations in complex low-altitude environments such as urban airspaces, industrial sites, and indoor facilities. However, this task remains challenging due to intrinsic nonlinearity of UAV swarm dynamics and strict real-time constraints of swarm formation control. To address these challenges, we propose a unified framework that couples coarse-to-fine trajectory forecasting with uncertainty-aware Distributed Nonlinear Model Predictive Control (DNMPC). Our approach features two key innovations: 1) a dimension-decoupled trajectory prediction module that reduces computational complexity by forecasting axis-wise motion, and 2) a diffusion-based residual dynamics refinement module that captures temporally correlated dynamic uncertainties. These refined predictions are then integrated into a DNMPC loop to ensure formation stability. We also introduce a synchronized multi-scenario 4D UAV swarm dataset spanning six representative airspace scenarios. The dataset contains over \\textbf{7,900} frames of synchronized three-UAV trajectories with frame-level annotations of speed intention and target sector. Extensive experiments demonstrate that our approach outperforms state-of-the-art baselines, reducing trajectory tracking error by up to \\textbf{10-15\\%} and achieving sub-\\textbf{0.07\\,m} average tracking error in complex urban and industrial environments, while maintaining real-time inference speeds of 34 FPS (sub-30 ms latency) suitable for agile flight.",
+      "authors": [
+        "Tianshun Li",
+        "Hongliang Lu",
+        "Haoang Li",
+        "Xinhu Zheng"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-30T06:26:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.31197v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "UAV swarm trajectory prediction and distributed control for formation",
+      "llm_evidence_cn": "无人机群轨迹预测与分布式编队控制",
+      "llm_evidence": "无人机群轨迹预测与分布式编队控制",
+      "canonical_evidence": "无人机群轨迹预测与分布式编队控制",
+      "llm_tldr_en": "Proposes diffusion-based 4D trajectory prediction with distributed NMPC for UAV swarms, enabling safe formation in complex environments.",
+      "llm_tldr_cn": "该论文针对复杂低空环境下无人机群安全高效编队飞行问题，提出一种融合扩散模型轨迹预测和分布式非线性模型预测控制的统一框架。其维度解耦预测模块降低了计算复杂度，不确定性感知的DNMPC实现了闭环跟踪。实验验证了该方法在轨迹预测精度和编队控制稳定性方面的优势。该工作为无人机群协同围捕等任务提供了基础控制和预测方案。",
+      "llm_tldr": "该论文针对复杂低空环境下无人机群安全高效编队飞行问题，提出一种融合扩散模型轨迹预测和分布式非线性模型预测控制的统一框架。其维度解耦预测模块降低了计算复杂度，不确定性感知的DNMPC实现了闭环跟踪。实验验证了该方法在轨迹预测精度和编队控制稳定性方面的优势。该工作为无人机群协同围捕等任务提供了基础控制和预测方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.31073v1",
+      "source": "arxiv",
+      "title": "MultiUAV-Plat: An LLM-Oriented Platform, Benchmark and Framework for Multi-UAV Collaborative Task Planning",
+      "abstract": "Large language models (LLMs) provide a promising interface for high-level robotic task planning, but their use in multi-UAV collaboration remains difficult to evaluate systematically. Existing UAV simulators mainly emphasize dynamics, perception, or low-level control, while existing LLM-agent benchmarks rarely capture aerial-robotics constraints such as partial observability, spatial coverage, UAV assignment, and multi-vehicle coordination. To bridge this gap, we present MultiUAV-Plat, a lightweight, easy-to-use, LLM-agent-oriented simulation platform for multi-UAV collaborative task planning. The platform exposes concise RESTful APIs, agent-facing observations, role-based information access, hidden validation logic, and optional 2D/3D visualization, allowing agents to solve missions through realistic tool interaction rather than privileged simulator access. Built on this platform, the MultiUAV-Plat Benchmark contains 75 mission sessions, 1500 natural-language tasks, and 9396 validation checks across target assignment, area search, and area assignment and patrol scenarios. We further propose Agent4Drone, a task-specific LLM agent framework that structures multi-UAV behavior into memory, observation, task understanding, planning, execution, and verification. In a full paired benchmark comparison, Agent4Drone achieves a 57.9% task pass rate, a 74.6% average task check pass rate, and a 72.0% global check pass rate, substantially outperforming a ReAct baseline at 30.6%, 47.9%, and 43.1%, respectively. Agent4Drone also reduces the total failed task rate from 32.4% to 12.9%. These results demonstrate that MultiUAV-Plat and MultiUAV-Plat Benchmark provide a reproducible foundation for studying LLM-driven multi-UAV autonomy under realistic information and execution constraints.",
+      "authors": [
+        "Sheng Zhang",
+        "Qinglin Li",
+        "Yuechao Zang",
+        "Xueqin Huang",
+        "Yijia Fu",
+        "Cheng Zhu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA",
+        "cs.RO"
+      ],
+      "published": "2026-06-30T03:02:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.31073v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-UAV collaborative task planning platform for LLM agents, indirectly supports multi-UAV encirclement scenarios",
+      "llm_evidence_cn": "多无人机协作任务规划平台，可为多无人机围捕提供仿真环境",
+      "llm_evidence": "多无人机协作任务规划平台，可为多无人机围捕提供仿真环境",
+      "canonical_evidence": "多无人机协作任务规划平台，可为多无人机围捕提供仿真环境",
+      "llm_tldr_en": "MultiUAV-Plat provides a lightweight simulation platform for multi-UAV collaborative task planning with LLM agents, enabling evaluation of coordination strategies relevant to multi-UAV encirclement.",
+      "llm_tldr_cn": "该论文提出了MultiUAV-Plat，一个面向大语言模型的多无人机协同任务规划轻量级仿真平台。它解决了现有仿真器对空中机器人约束考虑不足的问题，支持部分可观测、空间覆盖和角色分配等特性。该平台为多无人机围捕策略的测试和验证提供了基础工具，但未直接涉及强化学习方法。",
+      "llm_tldr": "该论文提出了MultiUAV-Plat，一个面向大语言模型的多无人机协同任务规划轻量级仿真平台。它解决了现有仿真器对空中机器人约束考虑不足的问题，支持部分可观测、空间覆盖和角色分配等特性。该平台为多无人机围捕策略的测试和验证提供了基础工具，但未直接涉及强化学习方法。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

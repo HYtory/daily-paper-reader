@@ -6,30 +6,27 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-05
-- 运行时间：2026-07-05 21:22:10 UTC
+- 最新运行日期：2026-07-06
+- 运行时间：2026-07-06 21:47:10 UTC
 - 运行状态：成功
 - 本次总论文数：2
-- 精读区：1
-- 速读区：1
+- 精读区：0
+- 速读区：2
 
 ### 今日简报（AI）
-今日精读高分论文《Distributed Containment of a Compromised Agent through Repulsive Cages》（8.0分），速读《Lightweight Safe Reinforcement Learning for End-to-End UAV Navigation》（6.0分）。
-
-最值得关注的方向是分布式安全控制中的排斥笼机制，用于隔离被入侵智能体。
-
-建议优先精读高分论文，了解新型防御框架，后续可对比速读论文的安全强化学习方法。
-- 详情：[/202607/05/README](/202607/05/README)
+今日速读2篇论文，聚焦无人机集群轨迹预测与LLM驱动的多机协作规划。最值得关注的是扩散模型用于4D轨迹预测与分布式控制（7.0分），以及LLM平台在多无人机任务规划中的基准与框架（6.0分）。建议优先精读高分的轨迹预测工作，并留意LLM在无人机领域的应用潜力。
+- 详情：[/202607/06/README](/202607/06/README)
 
 ### 精读区论文标签
-1. [Distributed Containment of a Compromised Agent through Repulsive Cages](/202607/05/2607.01230v1-distributed-containment-of-a-compromised-agent-through-repulsive-cages)  
-   标签：评分：8.0/10、query:ui
-   evidence：利用排斥笼分布式围堵被攻陷智能体
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Lightweight Safe Reinforcement Learning for End-to-End UAV Navigation](/202607/05/2607.01794v1-lightweight-safe-reinforcement-learning-for-end-to-end-uav-navigation)  
+1. [Diffusion-based 4D Trajectory Prediction and Distributed Control for UAV Swarms](/202607/06/2606.31197v1-diffusion-based-4d-trajectory-prediction-and-distributed-control-for-uav-swarms)  
+   标签：评分：7.0/10、query:ui
+   evidence：无人机群轨迹预测与分布式编队控制
+2. [MultiUAV-Plat: An LLM-Oriented Platform, Benchmark and Framework for Multi-UAV Collaborative Task Planning](/202607/06/2606.31073v1-multiuav-plat-an-llm-oriented-platform-benchmark-and-framework-for-multi-uav-collaborative-task-planning)  
    标签：评分：6.0/10、query:ui
-   evidence：安全强化学习用于无人机导航，方法可迁移至拦截任务
+   evidence：多无人机协作任务规划平台，可为多无人机围捕提供仿真环境
 
 
 <div class="dpr-home-promo-card">
