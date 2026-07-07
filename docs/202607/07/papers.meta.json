@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-07",
+  "date": "2026-07-07",
+  "generated_at": "2026-07-07T20:43:45",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/07/2607.03512v1-high-precision-formation-control-for-heterogeneous-multi-robot-systems-via-hierarchical-hybrid-physics-informed-deep-reinforcement-learning",
+      "section": "quick",
+      "title_en": "High-Precision Formation Control for Heterogeneous Multi-Robot Systems via Hierarchical Hybrid Physics-Informed Deep Reinforcement Learning",
+      "authors": "Yanzhou Li, Guangli Chen, Xiao-Meng Li, Wenjian Zhong, Yongkang Lu, Shenghuang He",
+      "date": "2026-07-03",
+      "pdf": "https://arxiv.org/pdf/2607.03512v1",
+      "score": "7.0",
+      "evidence": "分层深度强化学习实现多机器人编队控制，可应用于围捕",
+      "tldr": "针对经典控制方法依赖精确模型且抗干扰能力弱、端到端强化学习样本效率低和收敛性差的问题，提出分层混合物理信息深度强化学习框架。上层基于SAC算法设计领导者自主导航策略，下层融合前馈、PD和自适应残差控制器实现高精度编队控制。实验显示上下层策略成功率均达100%，消融实验验证了方法的有效性和可靠性。该框架为异构多机器人系统的高精度高响应编队控制提供了新途径。",
+      "tags": "query:ui",
+      "abstract_en": "Existing classical control methods commonly require precise models and struggle to cope with model uncertainties and external disturbances, while end-to-end reinforcement learning (RL) approaches suffer from low sample efficiency and poor convergence. To overcome these challenges, this paper proposes a hierarchical hybrid physics-informed deep reinforcement learning (HHy-PIDRL) framework, aiming to realize high-precision, highly responsive formation control for heterogeneous multi-robot systems (HMRSs). The proposed framework contains two layers. Specifically, first, the upper layer designs an autonomous navigation policy network for Ackermann-steering leader based on the Soft Actor-Critic (SAC) deep reinforcement learning (DRL) algorithm. Second, the lower module integrates a high-fidelity physical feed-forward controller, a classical proportional-derivative (PD) controller, and an adaptive DRL residual controller to propose an effective hybrid model and DRL (HM-DRL)-based formation control policy network. Third, a unique hierarchical reward function is designed for training Omnidirectional followers, which effectively guides agents toward a refined, stable control policy. Experimental results demonstrate that, the success rate of both the upper-layer autonomous navigation policy network and the HM-DRL based formation control policy networks reach 100%. Meanwhile, ablation experiments are conducted to verify the validity and credibility of the proposed method.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/07/2607.03132v1-anticipatory-reinforcement-learning-for-trajectory-tracking",
+      "section": "quick",
+      "title_en": "Anticipatory Reinforcement Learning for Trajectory Tracking",
+      "authors": "Georg Schäfer, Jakob Rehrl, Stefan Huber, Simon Hirlaender",
+      "date": "2026-07-03",
+      "pdf": "https://arxiv.org/pdf/2607.03132v1",
+      "score": "6.0",
+      "evidence": "预测性强化学习用于轨迹跟踪，可应用于无人机拦截",
+      "tldr": "针对工业控制中深度强化学习因纯反应式控制导致的延迟和超调问题，提出一种增强状态空间的预测性公式，加入目标速度和未来参考视界。在1-DoF直升机测试台上用PPO算法评估，模拟误差降低9倍，但迁移至物理硬件存在差距。发现简单配置（单一较远视界）在真实环境中即可达到与复杂模型相当的性能，表明高粒度预测数据并非物理迁移的必要条件。",
+      "tags": "query:ui",
+      "abstract_en": "Deep reinforcement learning (DRL) in industrial control often suffers from lag and overshoot due to purely reactive control based on the current tracking error. To achieve anticipatory control without high computational overhead, we introduce a predictive formulation that augments the DRL state space with target velocities and future reference horizons. Evaluating eight configurations using proximal policy optimization (PPO) on a 1-degree-of-freedom (1-DoF) helicopter testbed, simulation results showed a 9-fold error reduction, lowering the mean absolute deviation from 2.73° to 0.31°. However, zero-shot transfer to physical hardware revealed a sim-to-real gap. Interestingly, a simpler configuration using a single, further look-ahead horizon matched the real-world top performance of the most complex model (1.11°). Overall, evaluating various combinations of prediction horizons and target velocities demonstrated that highly granular predictive data is not necessarily required for physical transfer.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/07/2607.04825v1-dynamic-airspace-management-for-uavs-in-evolving-urban-environments-collaborative-coordination-and-human-safety",
+      "section": "quick",
+      "title_en": "Dynamic Airspace Management for UAVs in Evolving Urban Environments: Collaborative Coordination and Human Safety",
+      "authors": "Lin Sun, Yuhang Wang, Fan Meng Hong, Haopeng Chen, Yan Jiao, Yongming Xu",
+      "date": "2026-07-06",
+      "pdf": "https://arxiv.org/pdf/2607.04825v1",
+      "score": "6.0",
+      "evidence": "使用MAPPO的多无人机空域管理",
+      "tldr": "城市低空经济中无人机安全运行面临挑战，需兼顾避撞和人类恐惧。提出Pharos协同空管系统，介于分布式与集中式之间，使用MAPPO算法协调多机安全并行。相比基准Ipopt，人类恐惧降低52.72%，空间利用率提升70.82%（vs Ipopt）和2.03%（vs A-star）。首次在空管中考虑人类恐惧，基于真实城市数据开发3D仿真系统。",
+      "tags": "query:ui",
+      "abstract_en": "The low-altitude economy is an emerging industry with significant development potential, in which the safety of unmanned aerial vehicle (UAV) operations is a critical challenge. Particularly within complex urban topographies and human-populated environments, UAV airspace management must prioritize collision avoidance and human safety. We propose Pharos, a collaborative multi-UAV airspace management system. Pharos lies between the distributed local perception paradigm and the centralized fine-grained control paradigm. Pharos coordinates the safe parallel execution of UAVs in shared airspace while innovatively accounting for the impact of human fear. Pharos is implemented using the MAPPO algorithm due to its faster convergence and higher rewards than other typical MARL algorithms (HAPPO and HATRPO). To evaluate Pharos, we developed a 3D simulation system using real urban data. Visualization results demonstrate its effective airspace coordination capability. Regarding performance verification, Pharos reduced human fear by 52.72% compared to the benchmark Ipopt. Moreover, we designed spatial entropy as a system evaluation metric to quantify space utilization, which improved performance by 70.82% and 2.03% compared to the benchmarks Ipopt and A-star, respectively. The source code is available at an anonymized repository: https://github.com/pharos-anonymized/source-code.git.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
