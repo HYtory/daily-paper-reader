@@ -1,0 +1,208 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-08T21:24:19.330259+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2607.05939v1",
+      "source": "arxiv",
+      "title": "Intercepting an Agile Target with Net-Carrying Drones using Competitive Multi-Agent Reinforcement Learning",
+      "abstract": "This article presents a solution to intercept an agile drone by a team of agile drone carrying catching nets. We formulate the problem as a competitive Multi-Agent Reinforcement Learning (MARL) task. To address the problem of nonstationarity and catastrophic forgetting of agents overfitting to the current opponent strategy, we train the pursuers and the evader using Multi-Agent Proximal Policy Optimization (MAPPO) with Prioritized Fictitious Self Play (PFSP). We train the agents in a high-fidelity simulator using low-level control commands, collective thrust and body rates (CTBR), to achieve agile flights for both the pursuers and the evader. We compare the performance of the trained policies in terms of catch rate, time to catch and crash rates, against heuristic baselines and show that our solution outperforms them. Ablation studies show that PFSP lead to more robust policies that can adapt to different opponent strategies, and that a low-level control commands are crucial for learning performing strategies in the pursuit-evasion task. Finally, a qualitative analysis of the learned behaviours highlights the emergence of cooperative tactics among the pursuers.",
+      "authors": [
+        "Timothée Gavin",
+        "Murat Bronz"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-07T07:41:09+00:00",
+      "link": "https://arxiv.org/pdf/2607.05939v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "multi-agent RL for drone interception with net-carrying drones",
+      "llm_evidence_cn": "多智能体强化学习用于无人机拦截",
+      "llm_evidence": "多智能体强化学习用于无人机拦截",
+      "canonical_evidence": "多智能体强化学习用于无人机拦截",
+      "llm_tldr_en": "Proposes a competitive MARL approach with MAPPO and PFSP for a team of net-carrying drones to intercept an agile target drone, achieving high catch rates in simulation.",
+      "llm_tldr_cn": "本文针对敏捷无人机的拦截问题，提出了一种竞争多智能体强化学习方法。采用多智能体近端策略优化（MAPPO）结合优先虚构自我对弈（PFSP）训练追捕者和逃避者，使用低层控制指令实现敏捷飞行。在高保真仿真中评估了策略的拦截率，证明了方法的有效性，为无人机协同拦截任务提供了实用方案。",
+      "llm_tldr": "本文针对敏捷无人机的拦截问题，提出了一种竞争多智能体强化学习方法。采用多智能体近端策略优化（MAPPO）结合优先虚构自我对弈（PFSP）训练追捕者和逃避者，使用低层控制指令实现敏捷飞行。在高保真仿真中评估了策略的拦截率，证明了方法的有效性，为无人机协同拦截任务提供了实用方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.05957v1",
+      "source": "arxiv",
+      "title": "Delay-Aware Active Triangulation with Uncertainty-Driven Multi-Agent Reinforcement Learning for Counter-UAS",
+      "abstract": "Multi-agent active visual triangulation enables precise 3D localization of aerial targets by coordinating mobile observers with controllable cameras. However, existing methods assume instantaneous state feedback, ignoring cumulative latency from detection, communication, and decision propagation. We present a delay-aware, uncertainty-driven multi-agent reinforcement learning framework for target localization in Counter-UAS applications. Our contributions are: (1) a Dec-POMDP formulation with Age-of-Information (AoI) augmented observations enabling delay-aware coordination -- AoI improves triangulation validity by 10.6 percentage points; (2) a controlled comparison showing that perception-consistent rewards outperform privileged clean-state rewards (0.547 m vs.0.633 m RMSE, 27% fewer track losses) -- both policies are trained through identical observation noise but differ in what they are optimized for, producing a stability-robustness tradeoff; and (3) multi-source analytical covariance propagation incorporating pixel, pose, gimbal, and intrinsics uncertainties -- restricting to angular noise alone causes 2.8-fold RMSE degradation. Experiments with MAPPO in 4096 parallel environments achieve 0.547 +- 0.217 m RMSE with 78.1% triangulation validity, while MLP policies achieve near-zero validity (0.7%), confirming recurrent memory as essential for delay compensation.",
+      "authors": [
+        "Seungwook Lee",
+        "David Hyunchul Shim"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.MA"
+      ],
+      "published": "2026-07-07T07:58:13+00:00",
+      "link": "https://arxiv.org/pdf/2607.05957v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multi-agent RL for counter-UAS target localization",
+      "llm_evidence_cn": "用于反无人机目标定位的多智能体强化学习",
+      "llm_evidence": "用于反无人机目标定位的多智能体强化学习",
+      "canonical_evidence": "用于反无人机目标定位的多智能体强化学习",
+      "llm_tldr_en": "Proposes a delay-aware, uncertainty-driven multi-agent RL framework for active visual triangulation of aerial targets in Counter-UAS, using Dec-POMDP with Age-of-Information and perception-consistent rewards.",
+      "llm_tldr_cn": "现有反无人机主动视觉三角测量方法忽略检测与通信延迟，导致定位精度下降。本文提出基于延迟感知多智能体强化学习框架，引入信息年龄（AoI）增强观测，并设计感知一致性奖励。实验表明，AoI将三角测量有效性提升10.6个百分点。该工作为无人机拦截中的实时三维定位提供了可行方案。",
+      "llm_tldr": "现有反无人机主动视觉三角测量方法忽略检测与通信延迟，导致定位精度下降。本文提出基于延迟感知多智能体强化学习框架，引入信息年龄（AoI）增强观测，并设计感知一致性奖励。实验表明，AoI将三角测量有效性提升10.6个百分点。该工作为无人机拦截中的实时三维定位提供了可行方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "autonomous drone interception using deep reinforcement learning",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.03473v1",
+      "source": "arxiv",
+      "title": "MUTE: Return-Preserving Communication Unlearning for Efficient Multi-Agent Coordination",
+      "abstract": "Inter-agent communication is critical for coordinating Multi-Agent Reinforcement Learning (MARL) agents under partial observability to perform effectively in cooperative games; however, real-world bandwidth constraints demand sparse interactions. Prior approaches primarily address this trade-off by optimizing information-theoretic surrogates. We argue that these statistical proxies are fundamentally misaligned with the true objective: a message can be highly informative yet irrelevant to the joint return of the task. In this work, we propose Message Unlearning for Targeted Efficiency (MUTE), a framework that views communication reduction as a value-guided machine unlearning problem. MUTE rigorously quantifies the Counterfactual Message Value using an attention-based estimator, and systematically unlearns the transmission of low-value messages from a policy trained without any communication constraints. This is achieved through a dual-objective mechanism that enforces communication sparsity while preserving the return of the original joint policy. We derive a theoretical upper bound on the performance gap induced by this sparsification, guaranteeing controlled return degradation. We also empirically evaluate MUTE on various complex multi-agent environments, achieving 80% to 90% bandwidth reduction while maintaining performance comparable to state-of-the-art baselines.",
+      "authors": [
+        "Rui Zuo",
+        "Qinwei Huang",
+        "Mingyang Li",
+        "Zhenhang Zhang",
+        "Simon Khan",
+        "Qinru Qiu"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-07-03T16:34:19+00:00",
+      "link": "https://arxiv.org/pdf/2607.03473v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent RL for communication efficiency",
+      "llm_evidence_cn": "多智能体强化学习用于通信效率",
+      "llm_evidence": "多智能体强化学习用于通信效率",
+      "canonical_evidence": "多智能体强化学习用于通信效率",
+      "llm_tldr_en": "Proposes MUTE, a framework that treats communication reduction as value-guided unlearning for efficient multi-agent coordination, achieving sparse communication while preserving joint return.",
+      "llm_tldr_cn": "针对多智能体强化学习中带宽有限导致通信稀疏的问题，提出MUTE框架，将通信减少视为价值引导的机器遗忘问题，通过反事实消息量化仅保留对联合回报有效的消息，在保持任务性能的同时大幅降低通信开销。实验验证了该方法在多个合作游戏中的有效性。",
+      "llm_tldr": "针对多智能体强化学习中带宽有限导致通信稀疏的问题，提出MUTE框架，将通信减少视为价值引导的机器遗忘问题，通过反事实消息量化仅保留对联合回报有效的消息，在保持任务性能的同时大幅降低通信开销。实验验证了该方法在多个合作游戏中的有效性。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.31073v1",
+      "source": "arxiv",
+      "title": "MultiUAV-Plat: An LLM-Oriented Platform, Benchmark and Framework for Multi-UAV Collaborative Task Planning",
+      "abstract": "Large language models (LLMs) provide a promising interface for high-level robotic task planning, but their use in multi-UAV collaboration remains difficult to evaluate systematically. Existing UAV simulators mainly emphasize dynamics, perception, or low-level control, while existing LLM-agent benchmarks rarely capture aerial-robotics constraints such as partial observability, spatial coverage, UAV assignment, and multi-vehicle coordination. To bridge this gap, we present MultiUAV-Plat, a lightweight, easy-to-use, LLM-agent-oriented simulation platform for multi-UAV collaborative task planning. The platform exposes concise RESTful APIs, agent-facing observations, role-based information access, hidden validation logic, and optional 2D/3D visualization, allowing agents to solve missions through realistic tool interaction rather than privileged simulator access. Built on this platform, the MultiUAV-Plat Benchmark contains 75 mission sessions, 1500 natural-language tasks, and 9396 validation checks across target assignment, area search, and area assignment and patrol scenarios. We further propose Agent4Drone, a task-specific LLM agent framework that structures multi-UAV behavior into memory, observation, task understanding, planning, execution, and verification. In a full paired benchmark comparison, Agent4Drone achieves a 57.9% task pass rate, a 74.6% average task check pass rate, and a 72.0% global check pass rate, substantially outperforming a ReAct baseline at 30.6%, 47.9%, and 43.1%, respectively. Agent4Drone also reduces the total failed task rate from 32.4% to 12.9%. These results demonstrate that MultiUAV-Plat and MultiUAV-Plat Benchmark provide a reproducible foundation for studying LLM-driven multi-UAV autonomy under realistic information and execution constraints.",
+      "authors": [
+        "Sheng Zhang",
+        "Qinglin Li",
+        "Yuechao Zang",
+        "Xueqin Huang",
+        "Yijia Fu",
+        "Cheng Zhu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA",
+        "cs.RO"
+      ],
+      "published": "2026-06-30T03:02:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.31073v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-UAV collaborative platform for task planning, applicable to encirclement",
+      "llm_evidence_cn": "多无人机协同任务规划平台，可支持围捕任务",
+      "llm_evidence": "多无人机协同任务规划平台，可支持围捕任务",
+      "canonical_evidence": "多无人机协同任务规划平台，可支持围捕任务",
+      "llm_tldr_en": "MultiUAV-Plat provides a simulation platform and benchmark for multi-UAV collaborative task planning using LLMs, which can be adapted for encirclement scenarios.",
+      "llm_tldr_cn": "针对多无人机协同任务规划评估困难的问题，本文提出MultiUAV-Plat平台，提供轻量级仿真环境和RESTful API，支持部分可观测性、空间覆盖和多机协调等约束。该平台可服务于多无人机围捕任务的规划与评估，为后续强化学习方法的集成提供基础。",
+      "llm_tldr": "针对多无人机协同任务规划评估困难的问题，本文提出MultiUAV-Plat平台，提供轻量级仿真环境和RESTful API，支持部分可观测性、空间覆盖和多机协调等约束。该平台可服务于多无人机围捕任务的规划与评估，为后续强化学习方法的集成提供基础。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.01008v1",
+      "source": "arxiv",
+      "title": "Image-Domain Tilt Constrained Distributed Fusion for Maneuvering UAV Tracking with Multi-Camera Electro-Optical Observations",
+      "abstract": "Short-horizon prediction is essential for electro-optical UAV tracking, especially when the target is small, maneuvering, or intermittently observed. Image center, line-of-sight, and range measurements provide direct constraints on target position, but their constraints on acceleration are weak. As a result, prediction can lag during aggressive maneuvers.   This paper proposes an image-domain tilt constrained distributed fusion method for maneuvering UAV tracking. The method uses the apparent roll and pitch of a rotorcraft target in the image as low-level maneuver cues. A weak-prior auto-labeling pipeline first generates oriented bounding box and image-domain tilt labels from synchronized video, gimbal IMU, and UAV IMU data. A YOLO-OBB detector is then trained to provide online target position and tilt measurements. The front-end Python implementation is publicly available at github.com/ShineMinxing/PythonYOLO.   In the fusion stage, the UAV state is modeled by position, velocity, and acceleration. Image-domain roll and pitch are introduced as acceleration-related pseudo-observations. For distributed tracking, one mobile gimbal camera and two fixed ground cameras are fused asynchronously. Camera attitude error states are augmented into the filter to absorb extrinsic drift and cross-camera systematic inconsistency. A Mahalanobis gate with time-since-last-valid covariance widening is used to reject false detections and handle dropouts.   In simulation, adding roll/pitch observations reduces the prediction RMSE from 1.991 m to 0.821 m and decreases the cumulative prediction error by 60.75\\%. In real distributed experiments, a self-consistency evaluation shows an 18.10\\% reduction in cumulative prediction error. The results show that image-domain tilt can provide useful acceleration constraints for robust short-horizon UAV prediction.",
+      "authors": [
+        "Minxing Sun",
+        "Yao Mao"
+      ],
+      "primary_category": "eess.IV",
+      "categories": [
+        "eess.IV",
+        "cs.RO",
+        "eess.SP"
+      ],
+      "published": "2026-07-01T14:45:43+00:00",
+      "link": "https://arxiv.org/pdf/2607.01008v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "UAV tracking method applicable to interception scenarios",
+      "llm_evidence_cn": "无人机跟踪方法可用于单无人机拦截",
+      "llm_evidence": "无人机跟踪方法可用于单无人机拦截",
+      "canonical_evidence": "无人机跟踪方法可用于单无人机拦截",
+      "llm_tldr_en": "This paper proposes an image-domain tilt constrained distributed fusion method for maneuvering UAV tracking, which can support single-UAV interception by enabling robust short-horizon prediction.",
+      "llm_tldr_cn": "针对机动无人机跟踪中短时预测滞后的问题，本文提出一种图像域倾斜约束分布式融合方法。利用旋翼目标在图像中的滚转和俯仰作为机动线索，结合弱先验自动标注管道生成定向边界框，实现对高机动目标的鲁棒预测。该方法可直接服务于单无人机拦截任务中的目标跟踪环节，提高拦截成功率。",
+      "llm_tldr": "针对机动无人机跟踪中短时预测滞后的问题，本文提出一种图像域倾斜约束分布式融合方法。利用旋翼目标在图像中的滚转和俯仰作为机动线索，结合弱先验自动标注管道生成定向边界框，实现对高机动目标的鲁棒预测。该方法可直接服务于单无人机拦截任务中的目标跟踪环节，提高拦截成功率。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
