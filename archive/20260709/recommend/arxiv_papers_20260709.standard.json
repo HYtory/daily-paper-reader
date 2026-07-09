@@ -1,0 +1,54 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-09T20:38:02.409185+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2607.03554v1",
+      "source": "arxiv",
+      "title": "Interception-Driven Inverse Reachability for Engagement Zone Construction",
+      "abstract": "In contested environments, autonomous vehicles may need to plan around adversarial pursuers whose launch locations are unknown. This paper presents an interception-driven inverse-reachability framework for inferring a feasible pursuer launch region directly from observed interception events for a single pursuer. Each interception induces a geometric constraint on the unknown launch location, and intersecting these constraints yields a bounded set guaranteed to contain the true origin under maximum-capability assumptions. Mapping this inferred set through the pursuer reachable region produces deterministic engagement zones with an explicit worst-case safety interpretation. A probabilistic extension models uncertainty in the pursuer launch location and yields graded engagement-risk fields for risk-aware planning. To accelerate localization, we introduce an information-driven planner for sacrificial agents that selects trajectories to maximize expected contraction of the feasible launch region. Monte Carlo simulations show that the proposed framework rapidly reduces launch-location uncertainty and enables substantially shorter safe trajectories after only a small number of sacrificial deployments.",
+      "authors": [
+        "Grant Stagg",
+        "Cameron K. Peterson",
+        "Alexander Von Moll",
+        "Isaac Weintraub"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-07-03T18:35:39+00:00",
+      "link": "https://arxiv.org/pdf/2607.03554v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Interception-driven inverse reachability for single UAV engagement zones",
+      "llm_evidence_cn": "基于拦截驱动的逆向可达性构建单无人机交战区域",
+      "llm_evidence": "基于拦截驱动的逆向可达性构建单无人机交战区域",
+      "canonical_evidence": "基于拦截驱动的逆向可达性构建单无人机交战区域",
+      "llm_tldr_en": "Presents an interception-driven inverse-reachability framework to infer pursuer launch locations from observed interceptions, constructing deterministic engagement zones for single UAV defense.",
+      "llm_tldr_cn": "针对对抗环境中未知发射位置的追击者，提出基于拦截事件的逆向可达性框架，从单次拦截推断可行发射区域并生成确定性的交战区域。方法利用最大能力假设保证最坏情况安全性，并扩展到概率模型处理不确定性。为无人机拦截提供了几何约束的理论基础。",
+      "llm_tldr": "针对对抗环境中未知发射位置的追击者，提出基于拦截事件的逆向可达性框架，从单次拦截推断可行发射区域并生成确定性的交战区域。方法利用最大能力假设保证最坏情况安全性，并扩展到概率模型处理不确定性。为无人机拦截提供了几何约束的理论基础。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

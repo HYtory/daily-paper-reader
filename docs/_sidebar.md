@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-09 <!--dpr-date:20260709-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/09/2607.03554v1-interception-driven-inverse-reachability-for-engagement-zone-construction" data-sidebar-item="{&quot;title&quot;: &quot;Interception-Driven Inverse Reachability for Engagement Zone Construction&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.03554v1-interception-driven-inverse-reachability-for-engagement-zone-construction&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;基于拦截驱动的逆向可达性构建单无人机交战区域&quot;}">Interception-Driven Inverse Reachability for Engagement Zone Construction</a>
   * 2026-07-08 <!--dpr-date:20260708-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/08/2607.05939v1-intercepting-an-agile-target-with-net-carrying-drones-using-competitive-multi-agent-reinforcement-learning" data-sidebar-item="{&quot;title&quot;: &quot;Intercepting an Agile Target with Net-Carrying Drones using Competitive Multi-Agent Reinforcement Learning&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.05939v1-intercepting-an-agile-target-with-net-carrying-drones-using-competitive-multi-agent-reinforcement-learning&quot;, &quot;score&quot;: &quot;10.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;多智能体强化学习用于无人机拦截&quot;}">Intercepting an Agile Target with Net-Carrying Drones using Competitive Multi-Agent Reinforcement Learning</a>

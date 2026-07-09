@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-09",
+  "date": "2026-07-09",
+  "generated_at": "2026-07-09T20:39:53",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/09/2607.03554v1-interception-driven-inverse-reachability-for-engagement-zone-construction",
+      "section": "deep",
+      "title_en": "Interception-Driven Inverse Reachability for Engagement Zone Construction",
+      "authors": "Grant Stagg, Cameron K. Peterson, Alexander Von Moll, Isaac Weintraub",
+      "date": "2026-07-03",
+      "pdf": "https://arxiv.org/pdf/2607.03554v1",
+      "score": "9.0",
+      "evidence": "基于拦截驱动的逆向可达性构建单无人机交战区域",
+      "tldr": "针对对抗环境中追击者发射位置未知的问题，提出拦截驱动逆可达性框架。每次拦截事件对未知发射点施加几何约束，求交得包含真实位置的有界集，再映射至追击者可达区域构建确定性交战区域，提供最坏情况安全解释。概率扩展模型发射位置不确定性，生成分级交战风险场。引入信息驱动规划器引导牺牲性智能体选择轨迹，最大化期望收缩发射区域。蒙特卡洛模拟表明该框架快速降低位置不确定性，少量牺牲部署后安全轨迹显著缩短。",
+      "tags": "query:ui",
+      "abstract_en": "In contested environments, autonomous vehicles may need to plan around adversarial pursuers whose launch locations are unknown. This paper presents an interception-driven inverse-reachability framework for inferring a feasible pursuer launch region directly from observed interception events for a single pursuer. Each interception induces a geometric constraint on the unknown launch location, and intersecting these constraints yields a bounded set guaranteed to contain the true origin under maximum-capability assumptions. Mapping this inferred set through the pursuer reachable region produces deterministic engagement zones with an explicit worst-case safety interpretation. A probabilistic extension models uncertainty in the pursuer launch location and yields graded engagement-risk fields for risk-aware planning. To accelerate localization, we introduce an information-driven planner for sacrificial agents that selects trajectories to maximize expected contraction of the feasible launch region. Monte Carlo simulations show that the proposed framework rapidly reduces launch-location uncertainty and enables substantially shorter safe trajectories after only a small number of sacrificial deployments.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
