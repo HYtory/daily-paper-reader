@@ -1,0 +1,55 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-10T21:38:51.731987+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.08193v1",
+      "source": "arxiv",
+      "title": "Open-ended Multi-agent Autocurricula via Visual Inspection of Policies with Multi-modal LLMs",
+      "abstract": "Open-ended curricula in Reinforcement Learning (RL) aim to train generally-capable agents by identifying tasks that facilitate learning increasingly complex skills. A major challenge when designing such curricula is assessing task difficulty relative to the agent's current learning progress. While previous work has explored using scalar task scores or textual summaries of the agent's behavior, here we study a different approach: directly inspecting policy behavior via recorded episode videos. We introduce a simple yet effective instantiation of this approach which leverages a Video Language Model (VLM) to both process these videos and provide curriculum recommendations, which we call Visual Inspection of Policies (VIP). Since videos can naturally contain any number of controllable agents, we empirically study VIP on the StarCraft Multi-Agent Challenge (SMAC). We show that even with a lightweight and openly accessible VLM (VideoLLaMa2-7B), VIP can use policy videos to generate more effective curricula than both its text-only ablation and methods that rely on scalar task scores.",
+      "authors": [
+        "Lorenzo Pantè",
+        "Andrea Fanti",
+        "Roberto Capobianco"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-07-09T07:48:36+00:00",
+      "link": "https://arxiv.org/pdf/2607.08193v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent RL with autocurricula for skill acquisition",
+      "llm_evidence_cn": "多智能体强化学习与自动课程用于技能获取",
+      "llm_evidence": "多智能体强化学习与自动课程用于技能获取",
+      "canonical_evidence": "多智能体强化学习与自动课程用于技能获取",
+      "llm_tldr_en": "Proposes VIP framework using video language models to autonomously design curricula for multi-agent RL, enabling agents to learn complex skills without human intervention.",
+      "llm_tldr_cn": "针对多智能体强化学习课程设计困难的问题，提出VIP框架，利用视频语言模型直接观察策略行为并推荐课程任务。在多种多智能体环境中验证了该方法能有效提升策略的通用能力和学习效率，为无人机集群等复杂多智能体系统的自主训练提供了新途径。",
+      "llm_tldr": "针对多智能体强化学习课程设计困难的问题，提出VIP框架，利用视频语言模型直接观察策略行为并推荐课程任务。在多种多智能体环境中验证了该方法能有效提升策略的通用能力和学习效率，为无人机集群等复杂多智能体系统的自主训练提供了新途径。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-10 <!--dpr-date:20260710-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/10/2607.08193v1-open-ended-multi-agent-autocurricula-via-visual-inspection-of-policies-with-multi-modal-llms" data-sidebar-item="{&quot;title&quot;: &quot;Open-ended Multi-agent Autocurricula via Visual Inspection of Policies with Multi-modal LLMs&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.08193v1-open-ended-multi-agent-autocurricula-via-visual-inspection-of-policies-with-multi-modal-llms&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;多智能体强化学习与自动课程用于技能获取&quot;}">Open-ended Multi-agent Autocurricula via Visual Inspection of Policies with Multi-modal LLMs</a>
   * 2026-07-09 <!--dpr-date:20260709-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/09/2607.03554v1-interception-driven-inverse-reachability-for-engagement-zone-construction" data-sidebar-item="{&quot;title&quot;: &quot;Interception-Driven Inverse Reachability for Engagement Zone Construction&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.03554v1-interception-driven-inverse-reachability-for-engagement-zone-construction&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;基于拦截驱动的逆向可达性构建单无人机交战区域&quot;}">Interception-Driven Inverse Reachability for Engagement Zone Construction</a>

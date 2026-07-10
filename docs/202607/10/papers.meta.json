@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-10",
+  "date": "2026-07-10",
+  "generated_at": "2026-07-10T21:39:52",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/10/2607.08193v1-open-ended-multi-agent-autocurricula-via-visual-inspection-of-policies-with-multi-modal-llms",
+      "section": "quick",
+      "title_en": "Open-ended Multi-agent Autocurricula via Visual Inspection of Policies with Multi-modal LLMs",
+      "authors": "Lorenzo Pantè, Andrea Fanti, Roberto Capobianco",
+      "date": "2026-07-09",
+      "pdf": "https://arxiv.org/pdf/2607.08193v1",
+      "score": "7.0",
+      "evidence": "多智能体强化学习与自动课程用于技能获取",
+      "tldr": "开放式课程设计是强化学习中培养通用智能体的关键，但评估任务相对难度的传统方法依赖标量分数或文本摘要，不够直观。本文提出视觉检查策略（VIP）方法，通过视频语言模型直接分析策略运行视频，从而生成更有效的课程建议。在StarCraft Multi-Agent Challenge上，即使使用轻量级VideoLLaMa2-7B，VIP也显著优于文本消融和基于标量分数的方法。这一工作展示了视觉信息在自动课程学习中的巨大潜力。",
+      "tags": "query:ui",
+      "abstract_en": "Open-ended curricula in Reinforcement Learning (RL) aim to train generally-capable agents by identifying tasks that facilitate learning increasingly complex skills. A major challenge when designing such curricula is assessing task difficulty relative to the agent's current learning progress. While previous work has explored using scalar task scores or textual summaries of the agent's behavior, here we study a different approach: directly inspecting policy behavior via recorded episode videos. We introduce a simple yet effective instantiation of this approach which leverages a Video Language Model (VLM) to both process these videos and provide curriculum recommendations, which we call Visual Inspection of Policies (VIP). Since videos can naturally contain any number of controllable agents, we empirically study VIP on the StarCraft Multi-Agent Challenge (SMAC). We show that even with a lightweight and openly accessible VLM (VideoLLaMa2-7B), VIP can use policy videos to generate more effective curricula than both its text-only ablation and methods that rely on scalar task scores.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
