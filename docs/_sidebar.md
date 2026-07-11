@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-11 <!--dpr-date:20260711-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/11/2607.04255v1-towards-effcient-low-altitude-sensing-a-dual-heterogeneous-graph-learning-method-for-uav-task-allocation" data-sidebar-item="{&quot;title&quot;: &quot;Towards Effcient Low Altitude Sensing: A Dual Heterogeneous Graph Learning Method for UAV Task Allocation&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.04255v1-towards-effcient-low-altitude-sensing-a-dual-heterogeneous-graph-learning-method-for-uav-task-allocation&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;使用双异构图学习的多无人机任务分配&quot;}">Towards Effcient Low Altitude Sensing: A Dual Heterogeneous Graph Learning Method for UAV Task Allocation</a>
   * 2026-07-10 <!--dpr-date:20260710-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/10/2607.08193v1-open-ended-multi-agent-autocurricula-via-visual-inspection-of-policies-with-multi-modal-llms" data-sidebar-item="{&quot;title&quot;: &quot;Open-ended Multi-agent Autocurricula via Visual Inspection of Policies with Multi-modal LLMs&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.08193v1-open-ended-multi-agent-autocurricula-via-visual-inspection-of-policies-with-multi-modal-llms&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;多智能体强化学习与自动课程用于技能获取&quot;}">Open-ended Multi-agent Autocurricula via Visual Inspection of Policies with Multi-modal LLMs</a>

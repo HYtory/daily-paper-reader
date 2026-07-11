@@ -6,26 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-10
-- 运行时间：2026-07-10 21:39:45 UTC
+- 最新运行日期：2026-07-11
+- 运行时间：2026-07-11 21:13:31 UTC
 - 运行状态：成功
 - 本次总论文数：1
 - 精读区：0
 - 速读区：1
 
 ### 今日简报（AI）
-今日速读1篇论文：利用多模态大语言模型实现多智能体通过视觉策略检查自动生成课程。  
-最值得关注：多智能体自动课程完全基于视觉策略检查，无需人工设计。  
-建议读者关注多模态LLM如何驱动智能体自主进化与协作。
-- 详情：[/202607/10/README](/202607/10/README)
+今日速读一篇基于双异构图学习的无人机任务分配论文，聚焦低空感知效率提升。  
+该文提出的双异构图方法在资源受限场景下能优化分配路径，评分6.0/10，适合对集群调度感兴趣的读者。  
+如需深入，可结合图神经网络的变体设计实验，关注真实环境下的任务冲突与动态调整。
+- 详情：[/202607/11/README](/202607/11/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Open-ended Multi-agent Autocurricula via Visual Inspection of Policies with Multi-modal LLMs](/202607/10/2607.08193v1-open-ended-multi-agent-autocurricula-via-visual-inspection-of-policies-with-multi-modal-llms)  
-   标签：评分：7.0/10、query:ui
-   evidence：多智能体强化学习与自动课程用于技能获取
+1. [Towards Effcient Low Altitude Sensing: A Dual Heterogeneous Graph Learning Method for UAV Task Allocation](/202607/11/2607.04255v1-towards-effcient-low-altitude-sensing-a-dual-heterogeneous-graph-learning-method-for-uav-task-allocation)  
+   标签：评分：6.0/10、query:ui
+   evidence：使用双异构图学习的多无人机任务分配
 
 
 <div class="dpr-home-promo-card">

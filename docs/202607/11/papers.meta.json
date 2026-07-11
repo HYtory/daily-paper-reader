@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-11",
+  "date": "2026-07-11",
+  "generated_at": "2026-07-11T21:13:38",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/11/2607.04255v1-towards-effcient-low-altitude-sensing-a-dual-heterogeneous-graph-learning-method-for-uav-task-allocation",
+      "section": "quick",
+      "title_en": "Towards Effcient Low Altitude Sensing: A Dual Heterogeneous Graph Learning Method for UAV Task Allocation",
+      "authors": "Guangyu Lei, Tianhao Liang, Bingyan Xie, Tingting Zhang",
+      "date": "2026-07-05",
+      "pdf": "https://arxiv.org/pdf/2607.04255v1",
+      "score": "6.0",
+      "evidence": "使用双异构图学习的多无人机任务分配",
+      "tldr": "传统无人机任务分配方法将任务和无人机视为孤立实体，难以捕获任务依赖和通信关系。本文提出双异构图学习方法，构建有向任务图和无向通信图，将分配问题建模为结构匹配，利用图注意力网络提取特征，并通过交叉注意力与PPO优化匹配。仿真结果表明该方法提高了任务完成率并缩短了完成时间，结合大语言模型实现了自然语言驱动的自主任务规划。",
+      "tags": "query:ui",
+      "abstract_en": "With the development of low altitude intelligent systems, multiple unmanned aerial vehicles (UAVs) can collaboratively execute more complex tasks. Conventional task allocation methods usually regard tasks and UAVs as isolated entities, making it difficult to capture task dependencies and UAV communication relationships. To address this issue, this paper proposes a dual heterogeneous graph learning based UAV task allocation method. A directed task graph is constructed to represent task dependencies and encode task resource requirements, while an undirected UAV communication graph is built to model communication relationships and encode UAV resource states. The task allocation problem is formulated as a structural matching problem between the task graph and the UAV communication graph. A graph attention network based feature extraction method is introduced to learn structural representations from both graphs through message passing. A cross attention mechanism is further integrated with proximal policy optimization to optimize the matching between task nodes and UAV nodes for task allocation. Simulation results demonstrate that the proposed method achieves a higher task completion rate and shorter task completion time than benchmark methods under different evaluation settings. Furthermore, a UAV sensing and computing application is developed on the AirSim simulation platform. A large language model is employed to convert natural language task requirements into a structured task graph for autonomous UAV task execution, demonstrating the potential of the proposed framework for natural language driven UAV mission planning and execution.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
