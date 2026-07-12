@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-12",
+  "date": "2026-07-12",
+  "generated_at": "2026-07-12T21:02:56",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/12/2607.04153v1-mask-based-predictive-representations-for-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Mask-based Predictive Representations for Reinforcement Learning",
+      "authors": "Kai Zhao",
+      "date": "2026-07-05",
+      "pdf": "https://arxiv.org/pdf/2607.04153v1",
+      "score": "6.0",
+      "evidence": "基于掩码预测的RL表示学习，可提升无人机强化学习样本效率",
+      "tldr": "视觉强化学习处理高维图像时样本效率低，现有方法依赖重建式自监督任务。本文提出基于掩码预测的非重建式自监督辅助任务，利用Transformer在隐空间重构被掩码的输入序列，学习有效状态表示。在多个连续和离散控制基准上，该方法显著提升样本效率，性能超越当前最优的样本高效强化学习方法。该工作为非重建式自监督学习在强化学习中的应用提供了新思路。",
+      "tags": "query:ui",
+      "abstract_en": "Vision-based deep reinforcement learning involves dealing with high-dimensional inputs of image information. It is crucial to abstract effective states from high-dimensional image inputs and limited samples for sample-efficient reinforcement learning. To address this challenge, inspired by fields such as natural language processing and computer vision, we propose a self-supervised task based on mask prediction as an auxiliary task for reinforcement learning. This non-reconstruction method uses the sequence information collected by the agent from the environment and the context information in the sequence to predict the masked information, thereby strengthening the agent's understanding of the task and learning effective representations. Combined with transformers, we find that the model reconstructs the masked input sequence in the latent space. By feeding the compressed representations learned by this method into reinforcement learning models, we observe an improvement in the sample efficiency of reinforcement learning. Moreover, the model outperforms state-of-the-art sample-efficient reinforcement learning methods on multiple continuous and discrete control benchmarks.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/12/2607.07235v1-orcaid-oblique-rule-based-continuous-action-interpretation-for-deep-rl-policies",
+      "section": "quick",
+      "title_en": "ORCAID: Oblique Rule-Based Continuous-Action Interpretation for Deep RL Policies",
+      "authors": "Ignacio D. Lopez-Miguel, Ezio Bartocci, Thomas Eiter, Martin Tappler",
+      "date": "2026-07-08",
+      "pdf": "https://arxiv.org/pdf/2607.07235v1",
+      "score": "6.0",
+      "evidence": "从连续动作RL策略中提取可解释规则，适用于无人机策略分析",
+      "tldr": "深度强化学习在连续动作空间中的可解释性差。提出ORCAID方法，通过斜决策树三阶段分割搜索（随机初始化、局部优化、后向消除）提取规则策略。实验表明提取的规则策略性能强且参数少，甚至能提升原始深度RL策略性能。该方法为可解释RL提供了新途径。",
+      "tags": "query:ui",
+      "abstract_en": "Explainability remains a key issue in reinforcement learning (RL). Distilling an interpretable policy from an agent trained in a complex environment is particularly challenging when the action space is continuous. We introduce ORCAID, a novel method for extracting interpretable rule-based policies from RL agents operating in mixed continuous-discrete environments with continuous action spaces. Our main contribution is an efficient oblique decision tree training algorithm that partitions the state space by hyperplanes and fits local linear models. The key idea lies in a three-stage split search: efficient random initialization, local refinement, and backward elimination. Finally, adjacent leaves are merged to yield a concise set of interpretable rules describing a given deep RL policy. We evaluate ORCAID across multiple RL environments, demonstrating that the extracted rule-based policies maintain strong performance with a low number of parameters and can even be used to improve the performance of the original deep RL policy.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/12/2607.07252v1-safe-reinforcement-learning-using-ideas-from-model-predictive-control",
+      "section": "quick",
+      "title_en": "Safe Reinforcement Learning using Ideas from Model Predictive Control",
+      "authors": "Georg Schäfer, Jakob Rehrl, Stefan Huber, Simon Hirlaender",
+      "date": "2026-07-08",
+      "pdf": "https://arxiv.org/pdf/2607.07252v1",
+      "score": "6.0",
+      "evidence": "结合深度强化学习与模型预测控制的安全强化学习框架，可应用于无人机控制",
+      "tldr": "强化学习在复杂系统中面临安全挑战，探索阶段可能违反机械约束。本文提出将深度强化学习与模型预测控制结合，利用MPC离线计算所有安全状态-动作对，通过安全滤波器将RL实时的动作投影到可行集内。在一自由度非线性实验台上验证，该方法实现安全探索和策略收敛。",
+      "tags": "query:ui",
+      "abstract_en": "Reinforcement learning (RL) enables the synthesis of control policies directly from data, making it highly appealing for complex cyber-physical systems (CPSs) and robotics. A persistent challenge, however, is ensuring strict, hard safety constraints during the active learning phase. In real-world physical systems, violating mechanical limits can cause irreversible damage, necessitating that exploration remains strictly within safe operational regions. We propose a generalized framework that combines the adaptive, high-performance nature of deep reinforcement learning (DRL) with the formal safety guarantees of model predictive control (MPC). Using a mathematical model of the system dynamics, offline MPC computations define a feasible state-action space, representing all safe combinations of system states and control inputs that guarantee constraint satisfaction. During training and deployment, the RL agent's instantaneous actions are projected onto this globally verified feasible set via a safety filter. We systematically evaluate our generalized approach on a non-linear 1-DoF laboratory testbed, demonstrating successful exploration and stable policy convergence on physical hardware.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
