@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-13",
+  "date": "2026-07-13",
+  "generated_at": "2026-07-13T20:55:52",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/13/2607.09060v1-dec-marvel-decentralized-multi-agent-exploration-without-communication-under-budget-constraints",
+      "section": "deep",
+      "title_en": "Dec-MARVEL: Decentralized Multi-Agent Exploration without Communication under Budget Constraints",
+      "authors": "Janghyun Cho, Jimmy Chiun, Guillaume Sartoretti, Changjoo Nam",
+      "date": "2026-07-10",
+      "pdf": "https://arxiv.org/pdf/2607.09060v1",
+      "score": "8.0",
+      "evidence": "去中心化多无人机探索，通过观测协调，类似于围捕",
+      "tldr": "多无人机探索常受通信不可靠、视场受限和有限预算制约，需预留返程油量。提出Dec-MARVEL，一种无需通信的去中心化框架：每个机器人通过视野内队友轨迹作为协调信号，图注意力网络融合局部前沿、队友运动和预算特征，选择可返回的航点-航向动作。训练采用阶段条件评论家和混合预算课程。在900次测试中，涵盖3种团队规模和3种预算，相比基线取得最高探索率与最低感知重叠；最紧预算下2/4/8机器人成功率分别达53%/94%/100%。物理实验验证了仿真到真实部署的成功。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-UAV exploration is often constrained by unreliable communication, limited field-of-view sensing (e.g., lightweight onboard camera), and finite travel budgets that require each robot to reserve enough budget to return to its base. We present Dec-MARVEL, a decentralized budget-aware exploration framework for communication-free teams with directional sensing. Rather than exchanging maps, goals, or messages, each robot coordinates through its incidental observations: any teammate trajectory within its field of view serves as a coordination signal. A graph-attention actor fuses local frontier geometry, teammate motion, and budget features to select return-feasible waypoint-heading actions. The actor is trained with phase-conditioned critics, a training-only task-oriented privileged critic, and a mixture-based budget curriculum. Across 900 held-out trials spanning three team sizes (2, 4, 8 robots) and three travel budgets (720, 800, 1024 meters) against four baselines, Dec-MARVEL achieves the highest or tied-highest exploration rate and lowest sensing overlap across all nine team-size budget configurations. Under our tightest 720m budget, it reaches 53%, 94%, and 100% success for 2, 4, and 8 robots, versus 37%, 83%, and 99% for the strongest baseline. Physical-robot experiments demonstrate successful sim-to-real transfer and real-world deployment of Dec-MARVEL.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/13/2607.04352v1-last-meter-precision-navigation-for-uavs-a-diffusion-refined-aerial-visual-servoing-approach",
+      "section": "quick",
+      "title_en": "Last-Meter Precision Navigation for UAVs: A Diffusion-Refined Aerial Visual Servoing Approach",
+      "authors": "Yaxuan Li, Jiarui Zeng, Shaofei Huang, Zhedong Zheng",
+      "date": "2026-07-05",
+      "pdf": "https://arxiv.org/pdf/2607.04352v1",
+      "score": "6.0",
+      "evidence": "无人机精确导航至目标，可用于拦截任务",
+      "tldr": "无人机最后十米精度导航面临尺度模糊、旋转不连续和细粒度推理挑战。提出DreamNav粗到细视觉伺服框架：粗估计阶段用三角函数参数化正弦余弦联合建模旋转，缓解角度周期性问题；精化阶段通过预训练世界模型模拟候选动作的未来视觉，选择最小视觉差异的轨迹。在包含72场景480万图像对的PairUAV基准上，DreamNav在精度和泛化性上超越强基线，并实现零样本迁移至未见过场景。",
+      "tags": "query:ui",
+      "abstract_en": "In this work, we study the last-meter precision navigation for UAVs, e.g., autonomously reaching a target within the final 10 meters using monocular vision. This task is challenging due to scale ambiguity, rotation discontinuities, and the need for fine-grained spatial reasoning. Existing methods often fail under large viewpoint changes or lack generalization to unseen environments. To this end, we propose DreamNav, a coarse-to-fine diffusion-refined aerial visual servoing framework. In the first coarse-estimation stage, a robust regression policy employs a trigonometric parameterization to predict rotation by jointly modeling sine and cosine components, effectively mitigating optimization instabilities caused by angular periodicity. Given this coarse estimate, the second diffusion-refined stage utilizes a pre-trained world model to simulate future visual observations for candidate actions, selecting the trajectory that minimizes visual discrepancy with the target through a process of visual imagination. To support rigorous evaluation, we contribute PairUAV, a large-scale benchmark comprising 4.8 million image pairs across 72 scenes, curated from the University-1652 dataset. Extensive experiments show DreamNav outperforms strong visual servoing and foundation model baselines in accuracy and generalization, with zero-shot transfer to unseen scenes.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

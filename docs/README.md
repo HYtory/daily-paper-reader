@@ -6,34 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-12
-- 运行时间：2026-07-12 21:02:48 UTC
+- 最新运行日期：2026-07-13
+- 运行时间：2026-07-13 20:55:47 UTC
 - 运行状态：成功
-- 本次总论文数：3
-- 精读区：0
-- 速读区：3
+- 本次总论文数：2
+- 精读区：1
+- 速读区：1
 
 ### 今日简报（AI）
-今日速读3篇6分强化学习论文，聚焦表示学习与安全控制两大方向。
-
-最值得关注《Mask-based Predictive Representations》的预测表示方法，以及《Safe RL using Ideas from MPC》的安全强化学习思路。
-
-建议进一步了解这两种方法在实际任务中的适用性，为后续精读或实验选方向。
-- 详情：[/202607/12/README](/202607/12/README)
+今日重点研读多智能体无通信探索难题，速读无人机视觉伺服导航。最高分论文《Dec-MARVEL》提出预算约束下无通信分散式探索方案，值得深入。建议后续关注多智能体系统在通信受限场景中的协作方法。
+- 详情：[/202607/13/README](/202607/13/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Dec-MARVEL: Decentralized Multi-Agent Exploration without Communication under Budget Constraints](/202607/13/2607.09060v1-dec-marvel-decentralized-multi-agent-exploration-without-communication-under-budget-constraints)  
+   标签：评分：8.0/10、query:ui
+   evidence：去中心化多无人机探索，通过观测协调，类似于围捕
 
 ### 速读区论文标签
-1. [Mask-based Predictive Representations for Reinforcement Learning](/202607/12/2607.04153v1-mask-based-predictive-representations-for-reinforcement-learning)  
+1. [Last-Meter Precision Navigation for UAVs: A Diffusion-Refined Aerial Visual Servoing Approach](/202607/13/2607.04352v1-last-meter-precision-navigation-for-uavs-a-diffusion-refined-aerial-visual-servoing-approach)  
    标签：评分：6.0/10、query:ui
-   evidence：基于掩码预测的RL表示学习，可提升无人机强化学习样本效率
-2. [ORCAID: Oblique Rule-Based Continuous-Action Interpretation for Deep RL Policies](/202607/12/2607.07235v1-orcaid-oblique-rule-based-continuous-action-interpretation-for-deep-rl-policies)  
-   标签：评分：6.0/10、query:ui
-   evidence：从连续动作RL策略中提取可解释规则，适用于无人机策略分析
-3. [Safe Reinforcement Learning using Ideas from Model Predictive Control](/202607/12/2607.07252v1-safe-reinforcement-learning-using-ideas-from-model-predictive-control)  
-   标签：评分：6.0/10、query:ui
-   evidence：结合深度强化学习与模型预测控制的安全强化学习框架，可应用于无人机控制
+   evidence：无人机精确导航至目标，可用于拦截任务
 
 
 <div class="dpr-home-promo-card">
