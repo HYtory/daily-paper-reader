@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-14",
+  "date": "2026-07-14",
+  "generated_at": "2026-07-14T21:35:32",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/14/2607.10933v1-rigidity-based-multi-uav-trajectory-optimization-for-rapid-cooperative-emergency-target-localization",
+      "section": "quick",
+      "title_en": "Rigidity-Based Multi-UAV Trajectory Optimization for Rapid Cooperative Emergency Target Localization",
+      "authors": "Halim Lee, Jiwon Seo",
+      "date": "2026-07-12",
+      "pdf": "https://arxiv.org/pdf/2607.10933v1",
+      "score": "6.0",
+      "evidence": "多无人机协作目标定位，类似协同围捕",
+      "tldr": "应急定位中，移动设备因信号差或基础设施限制导致定位不准，无人机协作定位是有效替代。现有基于Fisher信息矩阵的轨迹优化在初期测量少时性能差，本文提出基于刚性的方法，通过最大化UAV-目标感知图的刚性矩阵最小非零奇异值来优化几何条件，并引入剪枝矩阵简化计算。实验表明，相比FIM方法搜索时间减少32.9%，更快满足FCC水平定位要求，且对定位误差、非视距路径损耗等具有鲁棒性。该方法计算与通信成本低，在高扰动下性能退化比PPO基线更稳定。",
+      "tags": "query:ui",
+      "abstract_en": "Reducing the response time for accurate emergency-caller localization is critical in vehicular and public-safety networks. Although mobile devices commonly use GNSS, Wi-Fi, or cellular positioning, their accuracy and availability can degrade because of poor signal reception, limited infrastructure, and regulatory constraints. UAV-based localization offers a promising alternative by using airborne sensors to cooperatively estimate the target position. However, existing Fisher information matrix (FIM)-based trajectory optimization methods depend on the current target estimate and can perform poorly in the early mission stage, when measurements are limited and uncertainty is high. We propose a rigidity-based UAV trajectory optimization method that maximizes the smallest nonzero singular value of the rigidity matrix associated with the UAV-target sensing graph, improving geometric conditioning and reducing position ambiguity. We also introduce a pruning-based matrix reduction strategy for efficient real-time implementation. Simulations show that the proposed method reduces search time by 32.9% compared with FIM-based methods and satisfies the FCC horizontal emergency-localization requirement sooner. Further results demonstrate scalability, robustness to UAV positioning errors and NLOS path loss, low sensitivity to heading parameters, practical computation and communication costs, and more stable degradation than PPO-based baselines under severe sensing and navigation perturbations.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/14/2607.10986v1-capture-shield-or-neutralize-engagement-aware-pursuit-evasion",
+      "section": "quick",
+      "title_en": "Capture, Shield, or Neutralize: Engagement-Aware Pursuit-Evasion",
+      "authors": "Ananya Acharya, Trenton Goyette, Masoud Ataei, Adrian Stoica, Vikas Dhiman, Mohammad Javad Khojasteh",
+      "date": "2026-07-13",
+      "pdf": "https://arxiv.org/pdf/2607.10986v1",
+      "score": "6.0",
+      "evidence": "考虑交战意图的追逃分层控制方法",
+      "tldr": "在多智能体追逃问题中，传统方法依赖反应式队形，缺乏前瞻性和安全性保证。该文提出层次化控制架构，将策略规划与安全解耦，追逃建模为零和再视界博弈，通过迭代minimax MPC求解，并利用横向速度惩罚预测逃避者轨迹。离散时间CBF作为内环安全滤波器保障无碰撞。模拟显示仅调整权重即可在攻击性追逃、周界防御和区域拒止间灵活切换。该统一框架适应多种交战规则，无需修改控制逻辑。",
+      "tags": "query:ui",
+      "abstract_en": "This paper introduces a hierarchical control architecture for multi-agent adversarial environments, decoupling strategic task planning from rigorous safety assurance. The system formulates pursuit-evasion as a zero-sum receding-horizon game, solved via an iterative minimax \\acl{mpc} scheme. This allows pursuers to anticipate and block evader trajectories using transverse velocity penalties rather than relying on reactive heuristic formations. To guarantee collision-free operation without compromising the convexity of the \\acl{mpc}, a discrete-time \\acl{cbf} operates as an inner-loop safety filter. Through simulated experiments, we demonstrate the framework's adaptability. By simply altering the weights of the shared zero-sum payoff and \\acl{cbf} constraints, the swarm can fluidly switch from aggressive pursuit-evasion tactics to strict perimeter defense and area denial, demonstrating robust performance across varying rules of engagement without structural changes to the control logic. The source code is available: https://github.com/ananya-ac/pursuit-evasion-mpc-cbf.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

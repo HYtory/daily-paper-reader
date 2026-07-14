@@ -1,0 +1,93 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-14T21:34:12.303565+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.10933v1",
+      "source": "arxiv",
+      "title": "Rigidity-Based Multi-UAV Trajectory Optimization for Rapid Cooperative Emergency Target Localization",
+      "abstract": "Reducing the response time for accurate emergency-caller localization is critical in vehicular and public-safety networks. Although mobile devices commonly use GNSS, Wi-Fi, or cellular positioning, their accuracy and availability can degrade because of poor signal reception, limited infrastructure, and regulatory constraints. UAV-based localization offers a promising alternative by using airborne sensors to cooperatively estimate the target position. However, existing Fisher information matrix (FIM)-based trajectory optimization methods depend on the current target estimate and can perform poorly in the early mission stage, when measurements are limited and uncertainty is high. We propose a rigidity-based UAV trajectory optimization method that maximizes the smallest nonzero singular value of the rigidity matrix associated with the UAV-target sensing graph, improving geometric conditioning and reducing position ambiguity. We also introduce a pruning-based matrix reduction strategy for efficient real-time implementation. Simulations show that the proposed method reduces search time by 32.9% compared with FIM-based methods and satisfies the FCC horizontal emergency-localization requirement sooner. Further results demonstrate scalability, robustness to UAV positioning errors and NLOS path loss, low sensitivity to heading parameters, practical computation and communication costs, and more stable degradation than PPO-based baselines under severe sensing and navigation perturbations.",
+      "authors": [
+        "Halim Lee",
+        "Jiwon Seo"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-07-12T21:46:28+00:00",
+      "link": "https://arxiv.org/pdf/2607.10933v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-UAV cooperative target localization, akin to cooperative encirclement",
+      "llm_evidence_cn": "多无人机协作目标定位，类似协同围捕",
+      "llm_evidence": "多无人机协作目标定位，类似协同围捕",
+      "canonical_evidence": "多无人机协作目标定位，类似协同围捕",
+      "llm_tldr_en": "Proposes rigidity-based trajectory optimization for rapid cooperative target localization with multiple UAVs, outperforming FIM-based methods in early uncertainty.",
+      "llm_tldr_cn": "针对应急目标定位中响应时间要求高且初始不确定性大的问题，提出基于刚性的多无人机轨迹优化方法。该方法不依赖当前目标估计，利用刚性图理论规划轨迹，以降低早期阶段的定位不确定性。实验表明该方法优于传统的基于Fisher信息矩阵的优化方法。为无人机围捕中的快速目标定位提供了有效手段。",
+      "llm_tldr": "针对应急目标定位中响应时间要求高且初始不确定性大的问题，提出基于刚性的多无人机轨迹优化方法。该方法不依赖当前目标估计，利用刚性图理论规划轨迹，以降低早期阶段的定位不确定性。实验表明该方法优于传统的基于Fisher信息矩阵的优化方法。为无人机围捕中的快速目标定位提供了有效手段。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.10986v1",
+      "source": "arxiv",
+      "title": "Capture, Shield, or Neutralize: Engagement-Aware Pursuit-Evasion",
+      "abstract": "This paper introduces a hierarchical control architecture for multi-agent adversarial environments, decoupling strategic task planning from rigorous safety assurance. The system formulates pursuit-evasion as a zero-sum receding-horizon game, solved via an iterative minimax \\acl{mpc} scheme. This allows pursuers to anticipate and block evader trajectories using transverse velocity penalties rather than relying on reactive heuristic formations. To guarantee collision-free operation without compromising the convexity of the \\acl{mpc}, a discrete-time \\acl{cbf} operates as an inner-loop safety filter. Through simulated experiments, we demonstrate the framework's adaptability. By simply altering the weights of the shared zero-sum payoff and \\acl{cbf} constraints, the swarm can fluidly switch from aggressive pursuit-evasion tactics to strict perimeter defense and area denial, demonstrating robust performance across varying rules of engagement without structural changes to the control logic. The source code is available: https://github.com/ananya-ac/pursuit-evasion-mpc-cbf.",
+      "authors": [
+        "Ananya Acharya",
+        "Trenton Goyette",
+        "Masoud Ataei",
+        "Adrian Stoica",
+        "Vikas Dhiman",
+        "Mohammad Javad Khojasteh"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-07-13T01:18:46+00:00",
+      "link": "https://arxiv.org/pdf/2607.10986v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "engagement-aware pursuit-evasion with hierarchical control",
+      "llm_evidence_cn": "考虑交战意图的追逃分层控制方法",
+      "llm_evidence": "考虑交战意图的追逃分层控制方法",
+      "canonical_evidence": "考虑交战意图的追逃分层控制方法",
+      "llm_tldr_en": "Introduces a hierarchical control architecture for multi-agent pursuit-evasion using receding-horizon game and CBF safety filter, adaptable to interception tasks.",
+      "llm_tldr_cn": "本文提出一种层次化控制架构用于多智能体对抗环境中的追逃问题。通过将追逃问题建模为零和滚动时域博弈并采用迭代极小极大模型预测控制，使追捕者能够预测并阻断逃避者轨迹。同时利用离散时间控制障碍函数作为内环安全滤波器保证无碰撞运行。仿真实验展示了框架的适应性，通过调整权重可适应不同任务需求。",
+      "llm_tldr": "本文提出一种层次化控制架构用于多智能体对抗环境中的追逃问题。通过将追逃问题建模为零和滚动时域博弈并采用迭代极小极大模型预测控制，使追捕者能够预测并阻断逃避者轨迹。同时利用离散时间控制障碍函数作为内环安全滤波器保证无碰撞运行。仿真实验展示了框架的适应性，通过调整权重可适应不同任务需求。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
