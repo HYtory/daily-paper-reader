@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-15",
+  "date": "2026-07-15",
+  "generated_at": "2026-07-15T20:43:23",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/15/2607.12861v1-unveiling-complex-collective-behaviors-from-simple-rewards",
+      "section": "quick",
+      "title_en": "Unveiling Complex Collective Behaviors from Simple Rewards",
+      "authors": "Yize Mi, Jianan Li, Liang Li, Shiyu Zhao",
+      "date": "2026-07-14",
+      "pdf": "https://arxiv.org/pdf/2607.12861v1",
+      "score": "7.0",
+      "evidence": "多智能体强化学习解释性用于涌现群体行为",
+      "tldr": "多智能体强化学习（MARL）中，神经策略的黑箱特性限制了机器人集群应用，且简单奖励即可涌现复杂集体行为。本文提出两阶段EEC解释框架及Agent Response Map（ARM）工具，揭示机器人隐式学习环境几何场并利用其作为协调目标。在合作形状组装任务中，ARM发现机器人自动探索未占用区域；在竞争捕食-逃避任务中，ARM识别出捕食者Voronoi边界为猎物会合点。该工作提升了MARL策略的可解释性，为集群行为分析提供新视角。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-agent Reinforcement Learning (MARL) holds great potential for robot swarms, but the black-box nature of neural policies complicates strategic analysis, limiting multi-robot applications. Furthermore, complex swarm behaviors can surprisingly emerge from simple rewards without explicit aggregation incentives. Unveiling the mechanisms behind this emergence is critical, but the disconnection between simple rewards and collective behaviors exacerbates interpretability challenges. This paper aims to reveal the hidden mechanisms in this process. We propose a two-stage EEC (\\LinkIII) explanatory framework. This includes a novel analytical tool called the Agent Response Map (ARM), which reveals agents' decision-making patterns across space and identifies regions of aggregation and avoidance. ARM reveals that the robots implicitly learn the geometric fields of the environment and utilize these structures as desired targets for coordinated movement. We validate this finding across two distinct tasks: a cooperative multi-robot shape assembly and a competitive predator-prey pursuit-evasion. 1) In the cooperative task, ARM identifies the unoccupied target interior as the desired destination for robot navigation. As the center becomes occupied, this target region automatically shifts toward the boundary, demonstrating the robots' capacity to autonomously explore unoccupied areas. 2) In the competitive task, ARM surprisingly identifies the boundary of the predators' Voronoi diagram as the convergence destination for prey agents. Together, these two tasks demonstrate the capability of ARM to discover the hidden geometric structures underlying MARL policies in robot swarms.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/15/2607.12275v1-flatness-preserving-residual-learning-for-real-time-tight-quadrotor-formation-flight",
+      "section": "quick",
+      "title_en": "Flatness-Preserving Residual Learning for Real-Time Tight Quadrotor Formation Flight",
+      "authors": "Pei-An Hsieh, Fengjun Yang, Nikolai Matni, M. Ani Hsieh",
+      "date": "2026-07-14",
+      "pdf": "https://arxiv.org/pdf/2607.12275v1",
+      "score": "6.0",
+      "evidence": "残差学习用于紧编队四旋翼飞行",
+      "tldr": "四旋翼紧密编队飞行受气动干扰严重影响，可能导致碰撞。本文提出物理信息残差学习框架，在捕获复杂气动相互作用的同时保持多四旋翼系统微分平坦性，进而设计高效反馈线性化控制器，通过前馈补偿消除干扰。硬件实验显示跟踪误差降低31%，计算量比非线性模型预测控制低一个数量级，仅需30秒训练数据和5ms循环周期。首次实现计算受限平台上的高保真气动补偿与稳定紧密编队。",
+      "tags": "query:ui",
+      "abstract_en": "Quadrotors flying in tight formations are severely affected by turbulent aerodynamic interactions, such as downwash, that can cause catastrophic collisions if left unmodeled. To compensate for these effects, we propose a physics-informed residual dynamics learning framework that captures complex aerodynamic interactions while ensuring the joint multi-quadrotor system remains differentially flat. We leverage this preserved flatness to design a computationally efficient feedback linearization controller that is easily tunable with linear control techniques and cancels aerodynamic disturbances via feedforward compensation. Hardware experiments demonstrate our framework reduces average tracking errors by 31% compared to nominal baselines. Crucially, our lightweight approach matches the tracking performance of state-of-the-art nonlinear model predictive control (NMPC) while requiring an order of magnitude less computation. We are the first to show that stable, tight formation flight can be achieved with under 30 seconds of training data and a 5ms loop rate, unlocking high-fidelity aerodynamic compensation for compute-constrained flight stacks.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/15/2607.12784v1-directional-constraints-for-efficient-exploration-in-safe-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Directional Constraints for Efficient Exploration in Safe Reinforcement Learning",
+      "authors": "Paolo Magliano, Puze Liu, Jan Peters, Davide Tateo, Raffaello Camoriano",
+      "date": "2026-07-14",
+      "pdf": "https://arxiv.org/pdf/2607.12784v1",
+      "score": "6.0",
+      "evidence": "带方向约束的安全RL方法，可应用于无人机任务",
+      "tldr": "安全强化学习需要在复杂环境中避免危险行为，但现有方法在约束下学习缓慢且任务性能次优。本文提出ATACOM方向约束（ATACOM-DC），在ATACOM安全层基础上区分动作是接近还是远离约束边界，仅在必要时激活约束。在多种仿真机器人控制任务中，该方法显著降低了违规成本并保持了任务性能，为安全RL提供了更高效的探索策略。",
+      "tags": "query:ui",
+      "abstract_en": "Reinforcement Learning has revolutionized the landscape of robotic research, allowing robust learning of complex robotic skills in simulation. However, real-world deployment in open-ended environments requires strong safety guarantees to prevent dangerous or harmful behaviors. Safe Reinforcement Learning methods address this requirement by enforcing safety constraints. Nevertheless, learning under constraints often reduces learning speed and could lead to suboptimal task performance, as the agent must solve a more complex constrained optimization problem compared to unconstrained settings. To tackle this issue, in this work, we propose an extension of the ATACOM framework, a state-of-the-art reliable safety layer that can be integrated with existing Reinforcement Learning algorithms to enforce constraints derived from prior knowledge of the system or learned directly from data. Our proposed method, named ATACOM Directional Constraints (ATACOM-DC), significantly improves the safety-performance trade-off by introducing directional constraints that distinguish between actions approaching and moving away from constraint boundaries, activating constraint enforcement only when necessary. We evaluate our method across a range of challenging robotic control tasks in simulation, analyzing both constraint-violation costs and achieved task performance. Code and additional material at https://atacom-dc.robot-learning.net.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

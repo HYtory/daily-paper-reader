@@ -6,27 +6,30 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-14
-- 运行时间：2026-07-14 21:35:26 UTC
+- 最新运行日期：2026-07-15
+- 运行时间：2026-07-15 20:43:16 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：3
 - 精读区：0
-- 速读区：2
+- 速读区：3
 
 ### 今日简报（AI）
-今日速读两篇论文，均聚焦无人机领域。最值得关注的是刚性约束下的多无人机轨迹优化用于快速协同目标定位，以及追逃博弈中的交战感知策略。下一步可深入探索刚性约束在无人机协作中的应用，以及攻防权衡在追逃中的实际效果。
-- 详情：[/202607/14/README](/202607/14/README)
+今日速读三篇论文，聚焦群体行为涌现、四旋翼编队控制及安全强化学习。最值得关注的是《Unveiling Complex Collective Behaviors from Simple Rewards》（7.0分），揭示从简单奖励出发现复杂集体行为；同时《Directional Constraints for Efficient Exploration in Safe Reinforcement Learning》（6.0分）为安全探索提供了新思路。建议普通读者可进一步了解群体智能与强化学习安全约束的实际应用场景。
+- 详情：[/202607/15/README](/202607/15/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Rigidity-Based Multi-UAV Trajectory Optimization for Rapid Cooperative Emergency Target Localization](/202607/14/2607.10933v1-rigidity-based-multi-uav-trajectory-optimization-for-rapid-cooperative-emergency-target-localization)  
+1. [Unveiling Complex Collective Behaviors from Simple Rewards](/202607/15/2607.12861v1-unveiling-complex-collective-behaviors-from-simple-rewards)  
+   标签：评分：7.0/10、query:ui
+   evidence：多智能体强化学习解释性用于涌现群体行为
+2. [Flatness-Preserving Residual Learning for Real-Time Tight Quadrotor Formation Flight](/202607/15/2607.12275v1-flatness-preserving-residual-learning-for-real-time-tight-quadrotor-formation-flight)  
    标签：评分：6.0/10、query:ui
-   evidence：多无人机协作目标定位，类似协同围捕
-2. [Capture, Shield, or Neutralize: Engagement-Aware Pursuit-Evasion](/202607/14/2607.10986v1-capture-shield-or-neutralize-engagement-aware-pursuit-evasion)  
+   evidence：残差学习用于紧编队四旋翼飞行
+3. [Directional Constraints for Efficient Exploration in Safe Reinforcement Learning](/202607/15/2607.12784v1-directional-constraints-for-efficient-exploration-in-safe-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：考虑交战意图的追逃分层控制方法
+   evidence：带方向约束的安全RL方法，可应用于无人机任务
 
 
 <div class="dpr-home-promo-card">

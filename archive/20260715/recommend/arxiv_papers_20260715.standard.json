@@ -1,0 +1,136 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-15T20:41:59.154614+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.12861v1",
+      "source": "arxiv",
+      "title": "Unveiling Complex Collective Behaviors from Simple Rewards",
+      "abstract": "Multi-agent Reinforcement Learning (MARL) holds great potential for robot swarms, but the black-box nature of neural policies complicates strategic analysis, limiting multi-robot applications. Furthermore, complex swarm behaviors can surprisingly emerge from simple rewards without explicit aggregation incentives. Unveiling the mechanisms behind this emergence is critical, but the disconnection between simple rewards and collective behaviors exacerbates interpretability challenges. This paper aims to reveal the hidden mechanisms in this process. We propose a two-stage EEC (\\LinkIII) explanatory framework. This includes a novel analytical tool called the Agent Response Map (ARM), which reveals agents' decision-making patterns across space and identifies regions of aggregation and avoidance. ARM reveals that the robots implicitly learn the geometric fields of the environment and utilize these structures as desired targets for coordinated movement. We validate this finding across two distinct tasks: a cooperative multi-robot shape assembly and a competitive predator-prey pursuit-evasion. 1) In the cooperative task, ARM identifies the unoccupied target interior as the desired destination for robot navigation. As the center becomes occupied, this target region automatically shifts toward the boundary, demonstrating the robots' capacity to autonomously explore unoccupied areas. 2) In the competitive task, ARM surprisingly identifies the boundary of the predators' Voronoi diagram as the convergence destination for prey agents. Together, these two tasks demonstrate the capability of ARM to discover the hidden geometric structures underlying MARL policies in robot swarms.",
+      "authors": [
+        "Yize Mi",
+        "Jianan Li",
+        "Liang Li",
+        "Shiyu Zhao"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "eess.SY"
+      ],
+      "published": "2026-07-14T15:11:26+00:00",
+      "link": "https://arxiv.org/pdf/2607.12861v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "MARL interpretability for emergent swarm behaviors",
+      "llm_evidence_cn": "多智能体强化学习解释性用于涌现群体行为",
+      "llm_evidence": "多智能体强化学习解释性用于涌现群体行为",
+      "canonical_evidence": "多智能体强化学习解释性用于涌现群体行为",
+      "llm_tldr_en": "Proposes an explanatory framework for multi-agent RL that reveals how collective behaviors emerge from simple rewards, using Agent Response Map to analyze decision patterns in robot swarms.",
+      "llm_tldr_cn": "问题：多智能体强化学习（MARL）中神经策略黑箱特性限制了在机器人集群中的应用，且简单奖励如何产生复杂群体行为机制不明。方法：提出两阶段EEC解释框架，包含“智能体响应图”（ARM）分析空间决策模式。结果：成功揭示简单奖励下涌现的集体行为机制。意义：为理解UAV蜂群等集群系统的策略学习提供了分析工具。",
+      "llm_tldr": "问题：多智能体强化学习（MARL）中神经策略黑箱特性限制了在机器人集群中的应用，且简单奖励如何产生复杂群体行为机制不明。方法：提出两阶段EEC解释框架，包含“智能体响应图”（ARM）分析空间决策模式。结果：成功揭示简单奖励下涌现的集体行为机制。意义：为理解UAV蜂群等集群系统的策略学习提供了分析工具。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.12275v1",
+      "source": "arxiv",
+      "title": "Flatness-Preserving Residual Learning for Real-Time Tight Quadrotor Formation Flight",
+      "abstract": "Quadrotors flying in tight formations are severely affected by turbulent aerodynamic interactions, such as downwash, that can cause catastrophic collisions if left unmodeled. To compensate for these effects, we propose a physics-informed residual dynamics learning framework that captures complex aerodynamic interactions while ensuring the joint multi-quadrotor system remains differentially flat. We leverage this preserved flatness to design a computationally efficient feedback linearization controller that is easily tunable with linear control techniques and cancels aerodynamic disturbances via feedforward compensation. Hardware experiments demonstrate our framework reduces average tracking errors by 31% compared to nominal baselines. Crucially, our lightweight approach matches the tracking performance of state-of-the-art nonlinear model predictive control (NMPC) while requiring an order of magnitude less computation. We are the first to show that stable, tight formation flight can be achieved with under 30 seconds of training data and a 5ms loop rate, unlocking high-fidelity aerodynamic compensation for compute-constrained flight stacks.",
+      "authors": [
+        "Pei-An Hsieh",
+        "Fengjun Yang",
+        "Nikolai Matni",
+        "M. Ani Hsieh"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "eess.SY"
+      ],
+      "published": "2026-07-14T02:25:04+00:00",
+      "link": "https://arxiv.org/pdf/2607.12275v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Residual learning for tight quadrotor formation flight",
+      "llm_evidence_cn": "残差学习用于紧编队四旋翼飞行",
+      "llm_evidence": "残差学习用于紧编队四旋翼飞行",
+      "canonical_evidence": "残差学习用于紧编队四旋翼飞行",
+      "llm_tldr_en": "Proposes a physics-informed residual learning framework for multi-quadrotor formation flight that preserves differential flatness, enabling efficient linear feedback control with aerodynamic disturbance compensation; reduces tracking error by 31%.",
+      "llm_tldr_cn": "问题：四旋翼紧编队飞行受气动干扰影响，易导致碰撞。方法：提出物理信息残差学习框架，保持系统微分平坦性，实现高效反馈线性化控制并前馈补偿气动干扰。结果：硬件实验表明跟踪误差降低31%。意义：为多无人机围捕中的紧密编队提供了鲁棒且高效的控制方法。",
+      "llm_tldr": "问题：四旋翼紧编队飞行受气动干扰影响，易导致碰撞。方法：提出物理信息残差学习框架，保持系统微分平坦性，实现高效反馈线性化控制并前馈补偿气动干扰。结果：硬件实验表明跟踪误差降低31%。意义：为多无人机围捕中的紧密编队提供了鲁棒且高效的控制方法。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.12784v1",
+      "source": "arxiv",
+      "title": "Directional Constraints for Efficient Exploration in Safe Reinforcement Learning",
+      "abstract": "Reinforcement Learning has revolutionized the landscape of robotic research, allowing robust learning of complex robotic skills in simulation. However, real-world deployment in open-ended environments requires strong safety guarantees to prevent dangerous or harmful behaviors. Safe Reinforcement Learning methods address this requirement by enforcing safety constraints. Nevertheless, learning under constraints often reduces learning speed and could lead to suboptimal task performance, as the agent must solve a more complex constrained optimization problem compared to unconstrained settings. To tackle this issue, in this work, we propose an extension of the ATACOM framework, a state-of-the-art reliable safety layer that can be integrated with existing Reinforcement Learning algorithms to enforce constraints derived from prior knowledge of the system or learned directly from data. Our proposed method, named ATACOM Directional Constraints (ATACOM-DC), significantly improves the safety-performance trade-off by introducing directional constraints that distinguish between actions approaching and moving away from constraint boundaries, activating constraint enforcement only when necessary. We evaluate our method across a range of challenging robotic control tasks in simulation, analyzing both constraint-violation costs and achieved task performance. Code and additional material at https://atacom-dc.robot-learning.net.",
+      "authors": [
+        "Paolo Magliano",
+        "Puze Liu",
+        "Jan Peters",
+        "Davide Tateo",
+        "Raffaello Camoriano"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-07-14T13:59:20+00:00",
+      "link": "https://arxiv.org/pdf/2607.12784v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "safe RL method with directional constraints applicable to UAV tasks",
+      "llm_evidence_cn": "带方向约束的安全RL方法，可应用于无人机任务",
+      "llm_evidence": "带方向约束的安全RL方法，可应用于无人机任务",
+      "canonical_evidence": "带方向约束的安全RL方法，可应用于无人机任务",
+      "llm_tldr_en": "Proposes directional constraints for safe reinforcement learning to improve exploration efficiency, a method transferable to UAV interception and encirclement problems.",
+      "llm_tldr_cn": "当前安全强化学习在约束下学习速度慢且可能性能次优。本文提出ATACOM框架的扩展，通过引入方向约束来引导探索，在不牺牲安全性的前提下提高学习效率。实验表明该方法在多个连续控制任务中收敛更快且任务性能更好，为解决无人机拦截等安全关键任务提供了可迁移的RL工具。",
+      "llm_tldr": "当前安全强化学习在约束下学习速度慢且可能性能次优。本文提出ATACOM框架的扩展，通过引入方向约束来引导探索，在不牺牲安全性的前提下提高学习效率。实验表明该方法在多个连续控制任务中收敛更快且任务性能更好，为解决无人机拦截等安全关键任务提供了可迁移的RL工具。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
