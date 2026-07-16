@@ -6,30 +6,27 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-15
-- 运行时间：2026-07-15 20:43:16 UTC
+- 最新运行日期：2026-07-16
+- 运行时间：2026-07-16 21:27:03 UTC
 - 运行状态：成功
-- 本次总论文数：3
+- 本次总论文数：2
 - 精读区：0
-- 速读区：3
+- 速读区：2
 
 ### 今日简报（AI）
-今日速读三篇论文，聚焦群体行为涌现、四旋翼编队控制及安全强化学习。最值得关注的是《Unveiling Complex Collective Behaviors from Simple Rewards》（7.0分），揭示从简单奖励出发现复杂集体行为；同时《Directional Constraints for Efficient Exploration in Safe Reinforcement Learning》（6.0分）为安全探索提供了新思路。建议普通读者可进一步了解群体智能与强化学习安全约束的实际应用场景。
-- 详情：[/202607/15/README](/202607/15/README)
+今日速读2篇强化学习论文。值得关注的方向包括：基于模型预测控制的安全强化学习，以及知识-梯度引导的参数化动作空间强化学习。建议后续关注这两类方法在实际控制任务中的结合与落地。
+- 详情：[/202607/16/README](/202607/16/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Unveiling Complex Collective Behaviors from Simple Rewards](/202607/15/2607.12861v1-unveiling-complex-collective-behaviors-from-simple-rewards)  
+1. [Safe Reinforcement Learning using Ideas from Model Predictive Control](/202607/16/2607.07252v1-safe-reinforcement-learning-using-ideas-from-model-predictive-control)  
    标签：评分：7.0/10、query:ui
-   evidence：多智能体强化学习解释性用于涌现群体行为
-2. [Flatness-Preserving Residual Learning for Real-Time Tight Quadrotor Formation Flight](/202607/15/2607.12275v1-flatness-preserving-residual-learning-for-real-time-tight-quadrotor-formation-flight)  
-   标签：评分：6.0/10、query:ui
-   evidence：残差学习用于紧编队四旋翼飞行
-3. [Directional Constraints for Efficient Exploration in Safe Reinforcement Learning](/202607/15/2607.12784v1-directional-constraints-for-efficient-exploration-in-safe-reinforcement-learning)  
-   标签：评分：6.0/10、query:ui
-   evidence：带方向约束的安全RL方法，可应用于无人机任务
+   evidence：结合MPC的安全强化学习框架，可应用于自主无人机拦截
+2. [Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes](/202607/16/2607.12924v1-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes)  
+   标签：评分：7.0/10、query:ui
+   evidence：参数化动作空间的强化学习算法，可迁移至无人机拦截围捕
 
 
 <div class="dpr-home-promo-card">

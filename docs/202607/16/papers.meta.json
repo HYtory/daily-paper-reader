@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-16",
+  "date": "2026-07-16",
+  "generated_at": "2026-07-16T21:27:08",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/16/2607.07252v1-safe-reinforcement-learning-using-ideas-from-model-predictive-control",
+      "section": "quick",
+      "title_en": "Safe Reinforcement Learning using Ideas from Model Predictive Control",
+      "authors": "Georg Schäfer, Jakob Rehrl, Stefan Huber, Simon Hirlaender",
+      "date": "2026-07-08",
+      "pdf": "https://arxiv.org/pdf/2607.07252v1",
+      "score": "7.0",
+      "evidence": "结合MPC的安全强化学习框架，可应用于自主无人机拦截",
+      "tldr": "强化学习在物理系统中需保证探索安全，但硬约束难以满足。本文提出融合深度强化学习与模型预测控制的框架，离线计算可行状态-动作空间，通过安全滤波器在线投射动作。在一自由度非线性平台上验证，实现了安全探索与策略收敛。该方法为复杂系统提供严格安全保证。",
+      "tags": "query:ui",
+      "abstract_en": "Reinforcement learning (RL) enables the synthesis of control policies directly from data, making it highly appealing for complex cyber-physical systems (CPSs) and robotics. A persistent challenge, however, is ensuring strict, hard safety constraints during the active learning phase. In real-world physical systems, violating mechanical limits can cause irreversible damage, necessitating that exploration remains strictly within safe operational regions. We propose a generalized framework that combines the adaptive, high-performance nature of deep reinforcement learning (DRL) with the formal safety guarantees of model predictive control (MPC). Using a mathematical model of the system dynamics, offline MPC computations define a feasible state-action space, representing all safe combinations of system states and control inputs that guarantee constraint satisfaction. During training and deployment, the RL agent's instantaneous actions are projected onto this globally verified feasible set via a safety filter. We systematically evaluate our generalized approach on a non-linear 1-DoF laboratory testbed, demonstrating successful exploration and stable policy convergence on physical hardware.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/16/2607.12924v1-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes",
+      "section": "quick",
+      "title_en": "Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes",
+      "authors": "Jonas Ehrhardt, René Heesch, Oliver Niggemann",
+      "date": "2026-07-14",
+      "pdf": "https://arxiv.org/pdf/2607.12924v1",
+      "score": "7.0",
+      "evidence": "参数化动作空间的强化学习算法，可迁移至无人机拦截围捕",
+      "tldr": "参数化动作MDP中，动作包含符号和数值参数，现有强化学习方法使用一次性参数估计，样本效率低。本文提出KGRL，利用Datalog知识库推导适用动作和可行参数，剪枝决策空间，并用梯度精化循环优化参数。在基准任务上，KGRL在样本效率和回合回报上均超越SOTA基线，同时提供局部可解释性。该方法有效融合符号知识与梯度优化，提升参数化动作空间的强化学习性能。",
+      "tags": "query:ui",
+      "abstract_en": "In this paper, we study Reinforcement Learning in Parametrized Action Markov Decision Processes (PAMDP), where each decision consists of a symbolic action and numerical parameters. In such settings Reinforcement Learning algorithms typically determine parameters with one-shot estimators, which makes their training sample inefficient. Though in most PAMDP environments explicit but incomplete knowledge (e.g., rules, safety constraints, or expert heuristics) is available, it is rarely directly used to increase the sample-efficiency of training Reinforcement Learning agents. We step into this gap and propose our novel Neuro-Symbolic Knowledge- and Gradient-Guided Reinforcement Learning (KGRL) algorithm. KGRL uses domain knowledge in a Datalog knowledge base to derive the set of applicable actions and feasible parameters for a given state. This allows it to prune non-applicable actions from the decision-space and constrain the parameter spaces of the remaining actions. We then use a gradient-based parameter refinement loop to estimate the optimal parameters during training and deployment of the agent. By recording activated rules along the trajectory, KGRL additionally provides local procedural explanations on the pruning of actions and constraining of parameters. Overall, KGRL guides the agent's exploration and deployment toward feasible and constraint-aware decisions, while increasing sample efficiency during training. KGRL outperforms state-of-the-art RL baselines for PAMDPs in both, sample efficiency and episodic return.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
