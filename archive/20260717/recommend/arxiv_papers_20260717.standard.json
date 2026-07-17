@@ -1,0 +1,246 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-17T20:45:35.480457+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2607.12801v1",
+      "source": "arxiv",
+      "title": "Autonomous Tracking and Terminal Guidance of Moving Targets for Fixed-Wing UAVs",
+      "abstract": "This study introduces a unified control framework for fixed-wing unmanned aerial vehicles (UAVs) fitted with a pan-tilt (PT) camera, intended to perform an end-to-end mission spanning from initial target detection to accurate terminal engagement. The proposed system employs a three-phase strategy: a vision-based target acquisition phase, an NMPC-based tracking phase, and a terminal guidance phase. During tracking, the framework uses an Unscented Kalman Filter (UKF) to fuse YOLO-based visual detections with inertial measurements, enabling robust target state estimation under unknown dynamics. To ensure reliable visual contact, we introduce a constraint-aware Nonlinear Model Predictive Control (NMPC) strategy that incorporates Control Barrier Functions (CBFs) to explicitly prevent UAV self-occlusion -- a common limitation in fixed-wing tracking. Upon satisfying terminal engagement conditions, the system seamlessly transitions control to a quaternion-based Biased Proportional Navigation Guidance (BPNG) law, enforcing precise impact angle constraints. High-fidelity simulations demonstrate that the framework achieves stable, robust tracking and accurate terminal interception while strictly respecting the vehicle's dynamic limits and camera field-of-view constraints.",
+      "authors": [
+        "Wei-Hao Liou",
+        "Teng-Hu Cheng"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "eess.SY"
+      ],
+      "published": "2026-07-14T14:16:05+00:00",
+      "link": "https://arxiv.org/pdf/2607.12801v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "autonomous tracking and terminal guidance of moving targets for fixed-wing UAVs",
+      "llm_evidence_cn": "固定翼无人机对移动目标的自主跟踪与终段制导",
+      "llm_evidence": "固定翼无人机对移动目标的自主跟踪与终段制导",
+      "canonical_evidence": "固定翼无人机对移动目标的自主跟踪与终段制导",
+      "llm_tldr_en": "Introduces a unified control framework for fixed-wing UAVs integrating vision-based target acquisition, NMPC tracking with UKF state estimation, and terminal guidance for moving target interception.",
+      "llm_tldr_cn": "本文针对固定翼无人机从目标检测到精确接战的端到端任务，提出了一个统一控制框架，包含基于视觉的目标捕获、基于UKF融合的鲁棒目标状态估计、约束感知的NMPC跟踪以及终段制导。仿真验证了该方法在未知动态下实现精准拦截的可行性，为单无人机拦截提供了有效方案。",
+      "llm_tldr": "本文针对固定翼无人机从目标检测到精确接战的端到端任务，提出了一个统一控制框架，包含基于视觉的目标捕获、基于UKF融合的鲁棒目标状态估计、约束感知的NMPC跟踪以及终段制导。仿真验证了该方法在未知动态下实现精准拦截的可行性，为单无人机拦截提供了有效方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.14781v1",
+      "source": "arxiv",
+      "title": "Curvature-Constrained and Constant-Speed Distributed Simultaneous Arrival Control for Multi-Robot Systems",
+      "abstract": "The simultaneous arrival of multiple mobile robots at a target point is crucial for cooperation tasks such as cooperative encirclement, disaster relief, and environmental monitoring. Although the simultaneous arrival problem itself is already complex, the problem becomes more challenging when there are constraints on the robot trajectory curvatures and the speeds are required to be constant (possibly different for different robots), and the control law for robots needs to be distributed. These constraints are typical for a multi-robot system consisting of, e.g., fixed-wing UAVs. To address this challenge, this paper proposes a distributed switching control method based on the maximum consensus protocol. By exploiting the geometric properties of Dubins paths along with optimization principles, a virtual time variable is introduced, and a hybrid control law that combines optimal control with saturated proportional control is designed. Under the proposed control law, each robot is driven to approach the maximum virtual time among its neighbors, thereby achieving simultaneous arrival under some mild conditions. Furthermore, we prove that in certain cases the proposed method attains a theoretically optimal arrival time. The approach is scalable and real-time, with low communication overhead. Its effectiveness and robustness are validated through extensive simulations and experiments.",
+      "authors": [
+        "Zhouru Xiao",
+        "Yang Lu",
+        "Weijia Yao",
+        "Min Liu",
+        "Yaonan Wang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-16T09:59:16+00:00",
+      "link": "https://arxiv.org/pdf/2607.14781v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "directly addresses cooperative encirclement for multi-robot systems including fixed-wing UAVs",
+      "llm_evidence_cn": "直接解决多无人机协同围捕问题",
+      "llm_evidence": "直接解决多无人机协同围捕问题",
+      "canonical_evidence": "直接解决多无人机协同围捕问题",
+      "llm_tldr_en": "This paper proposes a distributed switching control method based on maximum consensus protocol for simultaneous arrival of multi-robot systems with curvature and constant speed constraints, explicitly targeting cooperative encirclement. Applicable to fixed-wing UAV encirclement tasks.",
+      "llm_tldr_cn": "多机器人协同围捕要求同时到达目标点，但固定翼无人机等系统存在曲率约束和速度恒定限制，传统集中式控制难以适用。本文提出基于最大一致性协议的分布式切换控制方法，利用一致性协调各机器人到达时间。仿真验证了该方法在曲率约束和恒速条件下实现同时到达的有效性，为大规模多无人机围捕提供了分布式控制方案。",
+      "llm_tldr": "多机器人协同围捕要求同时到达目标点，但固定翼无人机等系统存在曲率约束和速度恒定限制，传统集中式控制难以适用。本文提出基于最大一致性协议的分布式切换控制方法，利用一致性协调各机器人到达时间。仿真验证了该方法在曲率约束和恒速条件下实现同时到达的有效性，为大规模多无人机围捕提供了分布式控制方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.09060v2",
+      "source": "arxiv",
+      "title": "Dec-MARVEL: Decentralized Multi-Agent Exploration without Communication under Budget Constraints",
+      "abstract": "Multi-UAV exploration is often constrained by unreliable communication, limited field-of-view sensing (e.g., lightweight onboard camera), and finite travel budgets that require each robot to reserve enough budget to return to its base. We present Dec-MARVEL, a decentralized budget-aware exploration framework for communication-free teams with directional sensing. Rather than exchanging maps, goals, or messages, each robot coordinates through its incidental observations: any teammate trajectory within its field of view serves as a coordination signal. A graph-attention actor fuses local frontier geometry, teammate motion, and budget features to select return-feasible waypoint-heading actions. The actor is trained with phase-conditioned critics, a training-only task-oriented privileged critic, and a mixture-based budget curriculum. Across 900 held-out trials spanning three team sizes (2, 4, 8 robots) and three travel budgets (720, 800, 1024 meters) against four baselines, Dec-MARVEL achieves the highest or tied-highest exploration rate and lowest sensing overlap across all nine team-size budget configurations. Under our tightest 720m budget, it reaches 53%, 94%, and 100% success for 2, 4, and 8 robots, versus 37%, 83%, and 99% for the strongest baseline. Physical-robot experiments demonstrate successful sim-to-real transfer and real-world deployment of Dec-MARVEL.",
+      "authors": [
+        "Janghyun Cho",
+        "Jimmy Chiun",
+        "Guillaume Sartoretti",
+        "Changjoo Nam"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-10T03:06:08+00:00",
+      "link": "https://arxiv.org/pdf/2607.09060v2",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "decentralized multi-agent RL for UAV exploration, method transferable to swarm encirclement",
+      "llm_evidence_cn": "去中心化多智能体强化学习用于无人机探索，方法可迁移至蜂群围捕",
+      "llm_evidence": "去中心化多智能体强化学习用于无人机探索，方法可迁移至蜂群围捕",
+      "canonical_evidence": "去中心化多智能体强化学习用于无人机探索，方法可迁移至蜂群围捕",
+      "llm_tldr_en": "Dec-MARVEL proposes a decentralized budget-aware exploration framework using graph-attention actor trained with RL, enabling multi-UAV coordination without communication, directly applicable to UAV swarm tasks like encirclement.",
+      "llm_tldr_cn": "针对多无人机在不可靠通信和有限预算下的探索问题，本文提出Dec-MARVEL，一种无需通信的去中心化探索框架。每架无人机通过视野内的队友轨迹进行隐式协调，利用图注意力网络融合局部前沿几何和队友运动特征，选择可行的航点-航向动作。该方法使用强化学习训练，可适配围捕等蜂群任务。实验表明其在无通信场景下能高效完成探索，展示了多智能体协调的潜力。",
+      "llm_tldr": "针对多无人机在不可靠通信和有限预算下的探索问题，本文提出Dec-MARVEL，一种无需通信的去中心化探索框架。每架无人机通过视野内的队友轨迹进行隐式协调，利用图注意力网络融合局部前沿几何和队友运动特征，选择可行的航点-航向动作。该方法使用强化学习训练，可适配围捕等蜂群任务。实验表明其在无通信场景下能高效完成探索，展示了多智能体协调的潜力。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.12924v1",
+      "source": "arxiv",
+      "title": "Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes",
+      "abstract": "In this paper, we study Reinforcement Learning in Parametrized Action Markov Decision Processes (PAMDP), where each decision consists of a symbolic action and numerical parameters. In such settings Reinforcement Learning algorithms typically determine parameters with one-shot estimators, which makes their training sample inefficient. Though in most PAMDP environments explicit but incomplete knowledge (e.g., rules, safety constraints, or expert heuristics) is available, it is rarely directly used to increase the sample-efficiency of training Reinforcement Learning agents. We step into this gap and propose our novel Neuro-Symbolic Knowledge- and Gradient-Guided Reinforcement Learning (KGRL) algorithm. KGRL uses domain knowledge in a Datalog knowledge base to derive the set of applicable actions and feasible parameters for a given state. This allows it to prune non-applicable actions from the decision-space and constrain the parameter spaces of the remaining actions. We then use a gradient-based parameter refinement loop to estimate the optimal parameters during training and deployment of the agent. By recording activated rules along the trajectory, KGRL additionally provides local procedural explanations on the pruning of actions and constraining of parameters. Overall, KGRL guides the agent's exploration and deployment toward feasible and constraint-aware decisions, while increasing sample efficiency during training. KGRL outperforms state-of-the-art RL baselines for PAMDPs in both, sample efficiency and episodic return.",
+      "authors": [
+        "Jonas Ehrhardt",
+        "René Heesch",
+        "Oliver Niggemann"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-14T15:57:25+00:00",
+      "link": "https://arxiv.org/pdf/2607.12924v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "reinforcement learning algorithm for parameterized actions, applicable to UAV control",
+      "llm_evidence_cn": "面向参数化动作的强化学习算法，可应用于无人机控制",
+      "llm_evidence": "面向参数化动作的强化学习算法，可应用于无人机控制",
+      "canonical_evidence": "面向参数化动作的强化学习算法，可应用于无人机控制",
+      "llm_tldr_en": "Proposes KGRL, a neuro-symbolic RL algorithm that integrates domain knowledge with gradient guidance to improve sample efficiency in Parametrized Action MDPs.",
+      "llm_tldr_cn": "本文针对参数化动作MDP中强化学习样本效率低的问题，提出了神经符号知识与梯度引导的强化学习（KGRL）算法，利用领域知识（规则、约束、启发式）指导参数选择，同时结合梯度信息优化。在多个参数化动作环境中，KGRL显著提升了样本效率和性能，为需要连续参数控制的无人机任务提供了通用算法工具。",
+      "llm_tldr": "本文针对参数化动作MDP中强化学习样本效率低的问题，提出了神经符号知识与梯度引导的强化学习（KGRL）算法，利用领域知识（规则、约束、启发式）指导参数选择，同时结合梯度信息优化。在多个参数化动作环境中，KGRL显著提升了样本效率和性能，为需要连续参数控制的无人机任务提供了通用算法工具。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.12924v2",
+      "source": "arxiv",
+      "title": "Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes",
+      "abstract": "In this paper, we study Reinforcement Learning in Parametrized Action Markov Decision Processes (PAMDP), where each decision consists of a symbolic action and numerical parameters. In such settings Reinforcement Learning algorithms typically determine parameters with one-shot estimators, which makes their training sample inefficient. Though in most PAMDP environments explicit but incomplete knowledge (e.g., rules, safety constraints, or expert heuristics) is available, it is rarely directly used to increase the sample-efficiency of training Reinforcement Learning agents. We step into this gap and propose our novel Neuro-Symbolic Knowledge- and Gradient-Guided Reinforcement Learning (KGRL) algorithm. KGRL uses domain knowledge in a Datalog knowledge base to derive the set of applicable actions and feasible parameters for a given state. This allows it to prune non-applicable actions from the decision-space and constrain the parameter spaces of the remaining actions. We then use a gradient-based parameter refinement loop to estimate the optimal parameters during training and deployment of the agent. By recording activated rules along the trajectory, KGRL additionally provides local procedural explanations on the pruning of actions and constraining of parameters. Overall, KGRL guides the agent's exploration and deployment toward feasible and constraint-aware decisions, while increasing sample efficiency during training. KGRL outperforms state-of-the-art RL baselines for PAMDPs in both, sample efficiency and episodic return.",
+      "authors": [
+        "Jonas Ehrhardt",
+        "René Heesch",
+        "Oliver Niggemann"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-14T15:57:25+00:00",
+      "link": "https://arxiv.org/pdf/2607.12924v2",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "reinforcement learning algorithm for parameterized actions, applicable to UAV control",
+      "llm_evidence_cn": "面向参数化动作的强化学习算法，可应用于无人机控制",
+      "llm_evidence": "面向参数化动作的强化学习算法，可应用于无人机控制",
+      "canonical_evidence": "面向参数化动作的强化学习算法，可应用于无人机控制",
+      "llm_tldr_en": "Proposes KGRL, a neuro-symbolic RL algorithm that integrates domain knowledge with gradient guidance to improve sample efficiency in Parametrized Action MDPs.",
+      "llm_tldr_cn": "本文针对参数化动作MDP中强化学习样本效率低的问题，提出了神经符号知识与梯度引导的强化学习（KGRL）算法，利用领域知识（规则、约束、启发式）指导参数选择，同时结合梯度信息优化。在多个参数化动作环境中，KGRL显著提升了样本效率和性能，为需要连续参数控制的无人机任务提供了通用算法工具。",
+      "llm_tldr": "本文针对参数化动作MDP中强化学习样本效率低的问题，提出了神经符号知识与梯度引导的强化学习（KGRL）算法，利用领域知识（规则、约束、启发式）指导参数选择，同时结合梯度信息优化。在多个参数化动作环境中，KGRL显著提升了样本效率和性能，为需要连续参数控制的无人机任务提供了通用算法工具。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.14488v1",
+      "source": "arxiv",
+      "title": "Safe Execution of RL Policies Via Acceleration-Based CBF-QP Constraint Enforcement for Real-World Robotic Deployments",
+      "abstract": "Reinforcement Learning (RL) has demonstrated remarkable capabilities for solving complex robotic control problems, but its lack of safety guarantees severely limits deployment on hardware. In particular, as legged robots and manipulators often operate near safety-critical boundaries, out-of-distribution states can lead to failure upon deployment. To address this, we introduce Acc-CBF-QP, an acceleration-based Quadratic Program (QP) safety filter using Control Barrier Functions (CBFs) that constrains any RL policy onto a safe set at runtime without modifying training. The method applies to unconstrained and Safe-RL policies, and enforces joint position, velocity, torque, and collision constraints within a unified optimization framework. A key contribution is the formulation of RL+QP tasks that regulate deviation from the RL command when constraints would otherwise be violated. We introduce a TorqueTask, minimizing torque deviation, and a Forward Dynamics Task, minimizing induced acceleration deviation, thus providing principled control over safety-performance trade-offs. Experiments on a 7-DoF Kinova Gen3 manipulator and a 19-DoF Unitree H1 humanoid, both in simulation and on hardware, highlight substantial reductions in constraint violations. On the real H1 hardware, a Safe-RL policy alone yielded 10.04 violations/s, which were reduced by 92% to 0.80 violations/s when augmented with Acc-CBF-QP. On the Kinova Gen3, Acc-CBF-QP fully eliminated violations. Nominal task performance of the RL objective is preserved in violation-free regimes. Under aggressive velocity commands on H1, Acc-CBF-QP improves execution by preventing constraint-induced shutdowns, yielding longer survival times. The full pipeline is open-source.",
+      "authors": [
+        "Bastien Muraccioli",
+        "Alice Cariou",
+        "Pierre-Alexandre Leziart",
+        "Mathieu Celerier",
+        "Arnaud Demont",
+        "Gentiane Venture",
+        "Mehdi Benallegue"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-16T02:00:11+00:00",
+      "link": "https://arxiv.org/pdf/2607.14488v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Safe RL method applicable to UAV interception tasks",
+      "llm_evidence_cn": "安全强化学习方法可应用于无人机拦截任务",
+      "llm_evidence": "安全强化学习方法可应用于无人机拦截任务",
+      "canonical_evidence": "安全强化学习方法可应用于无人机拦截任务",
+      "llm_tldr_en": "Acceleration-based QP safety filter for RL policies, enhancing safety in UAV interception.",
+      "llm_tldr_cn": "该论文针对强化学习策略在机器人部署中缺乏安全保障的问题，提出了一种基于加速度的二次规划安全过滤器Acc-CBF-QP。该方法通过控制屏障函数在运行时将任意RL策略约束到安全集内，无需修改训练。可确保无人机拦截过程中满足位置、速度、力矩和碰撞约束，为基于RL的自主拦截提供关键安全保证。",
+      "llm_tldr": "该论文针对强化学习策略在机器人部署中缺乏安全保障的问题，提出了一种基于加速度的二次规划安全过滤器Acc-CBF-QP。该方法通过控制屏障函数在运行时将任意RL策略约束到安全集内，无需修改训练。可确保无人机拦截过程中满足位置、速度、力矩和碰撞约束，为基于RL的自主拦截提供关键安全保证。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
