@@ -6,40 +6,35 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-17
-- 运行时间：2026-07-17 20:47:59 UTC
+- 最新运行日期：2026-07-18
+- 运行时间：2026-07-18 21:20:16 UTC
 - 运行状态：成功
-- 本次总论文数：6
-- 精读区：2
+- 本次总论文数：4
+- 精读区：0
 - 速读区：4
 
 ### 今日简报（AI）
-今日推荐6篇论文，精读2篇聚焦固定翼无人机自主跟踪与多机器人同步到达控制，速读涉及无通信多智能体探索及参数化动作强化学习。  
-最值得关注的是9分论文《固定翼无人机移动目标自主跟踪与终端制导》和8分论文《曲率约束恒速多机器人分布式同时到达控制》，分别展示了目标追击与协同控制的创新方法。  
-建议深入阅读这两篇精读论文，把握无人机追踪和集群协同的前沿进展，为相关应用提供理论参考。
-- 详情：[/202607/17/README](/202607/17/README)
+今天共筛选4篇论文，精读0篇，速读4篇，重点关注无人机安全过滤与强化学习效率优化。  
+最值得看的是GNSS降级下的无人机安全策略和参数化动作空间的强化学习方法。  
+建议优先阅读《Runtime Safety Filtering》和《Shortcut Trajectory Planning》，了解安全性与效率的平衡思路。
+- 详情：[/202607/18/README](/202607/18/README)
 
 ### 精读区论文标签
-1. [Autonomous Tracking and Terminal Guidance of Moving Targets for Fixed-Wing UAVs](/202607/17/2607.12801v1-autonomous-tracking-and-terminal-guidance-of-moving-targets-for-fixed-wing-uavs)  
-   标签：评分：9.0/10、query:ui
-   evidence：固定翼无人机对移动目标的自主跟踪与终段制导
-2. [Curvature-Constrained and Constant-Speed Distributed Simultaneous Arrival Control for Multi-Robot Systems](/202607/17/2607.14781v1-curvature-constrained-and-constant-speed-distributed-simultaneous-arrival-control-for-multi-robot-systems)  
-   标签：评分：8.0/10、query:ui
-   evidence：直接解决多无人机协同围捕问题
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Dec-MARVEL: Decentralized Multi-Agent Exploration without Communication under Budget Constraints](/202607/17/2607.09060v2-dec-marvel-decentralized-multi-agent-exploration-without-communication-under-budget-constraints)  
+1. [Runtime Safety Filtering for Learned Small UAS Separation Policies under GNSS Degradation](/202607/18/2607.10014v1-runtime-safety-filtering-for-learned-small-uas-separation-policies-under-gnss-degradation)  
+   标签：评分：7.0/10、query:ui
+   evidence：针对学习型多无人机分离策略的运行时安全过滤，与协同围捕安全相关
+2. [Shortcut Trajectory Planning for Efficient Offline Reinforcement Learning](/202607/18/2607.09336v1-shortcut-trajectory-planning-for-efficient-offline-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：去中心化多智能体强化学习用于无人机探索，方法可迁移至蜂群围捕
-2. [Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes](/202607/17/2607.12924v1-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes)  
+   evidence：离线强化学习轨迹规划方法，可迁移至无人机拦截路径规划
+3. [Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes](/202607/18/2607.12924v1-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes)  
    标签：评分：6.0/10、query:ui
-   evidence：面向参数化动作的强化学习算法，可应用于无人机控制
-3. [Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes](/202607/17/2607.12924v2-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes)  
+   evidence：针对参数化动作的强化学习方法，可迁移至无人机拦截任务
+4. [Discriminative Barrier Functions for Safe Adversarial Imitation Learning from Observation](/202607/18/2607.13938v1-discriminative-barrier-functions-for-safe-adversarial-imitation-learning-from-observation)  
    标签：评分：6.0/10、query:ui
-   evidence：面向参数化动作的强化学习算法，可应用于无人机控制
-4. [Safe Execution of RL Policies Via Acceleration-Based CBF-QP Constraint Enforcement for Real-World Robotic Deployments](/202607/17/2607.14488v1-safe-execution-of-rl-policies-via-acceleration-based-cbf-qp-constraint-enforcement-for-real-world-robotic-deployments)  
-   标签：评分：6.0/10、query:ui
-   evidence：安全强化学习方法可应用于无人机拦截任务
+   evidence：结合障碍函数的安全模仿学习方法，可迁移至无人机拦截中的安全控制
 
 
 <div class="dpr-home-promo-card">

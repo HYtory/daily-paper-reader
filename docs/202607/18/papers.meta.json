@@ -1,0 +1,69 @@
+{
+  "label": "2026-07-18",
+  "date": "2026-07-18",
+  "generated_at": "2026-07-18T21:20:22",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202607/18/2607.10014v1-runtime-safety-filtering-for-learned-small-uas-separation-policies-under-gnss-degradation",
+      "section": "quick",
+      "title_en": "Runtime Safety Filtering for Learned Small UAS Separation Policies under GNSS Degradation",
+      "authors": "Alex Zongo, Peng Wei",
+      "date": "2026-07-10",
+      "pdf": "https://arxiv.org/pdf/2607.10014v1",
+      "score": "7.0",
+      "evidence": "针对学习型多无人机分离策略的运行时安全过滤，与协同围捕安全相关",
+      "tldr": "针对小型无人机系统在GNSS退化环境下部署学习型分离策略的安全性问题，本文比较了两种运行时过滤架构：过滤动作或过滤观测。实验表明，动作过滤几乎不提升安全性，而观测过滤将近距碰撞减少90%，且对屏障函数的权衡保持鲁棒。结果表明，对已习得安全行为的策略，保留其决策权优于用手工约束覆盖其动作。",
+      "tags": "query:ui",
+      "abstract_en": "Learning-based separation assurance for small Unmanned Aircraft Systems (sUAS) achieves near-zero collision rates in simulation, but assumes accurate position and velocity information from Global Navigation Satellite Systems (GNSS). This assumption fails in urban environments, where multipath propagation, signal blockage, and intentional interference degrade navigation integrity. This raises a fundamental architectural question for deploying learned separation policies under GNSS degradation: should runtime safety mechanisms filter the policy's actions or its observations? This work evaluates both approaches for multi-agent sUAS separation under adversarial GNSS degradation. Both architectures first estimate a worst-case traffic state consistent with bounded observation uncertainty, then diverge: action filtering constrains policy outputs via discrete-time control barrier functions evaluated at the worst-case state, while observation filtering presents the worst-case state directly to the policy as corrected input. Experimental results show that action filtering provides negligible safety improvement, while observation filtering reduces near mid-air collisions by 90% and remains robust to the barrier function's tradeoff between separation distance and closing rate. These results suggest that, for policies with learned safety behaviors, preserving the policy's decision authority outperforms overriding its actions with hand-designed constraints.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/18/2607.09336v1-shortcut-trajectory-planning-for-efficient-offline-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Shortcut Trajectory Planning for Efficient Offline Reinforcement Learning",
+      "authors": "Guanquan Wang, Yoshimasa Tsuruoka",
+      "date": "2026-07-10",
+      "pdf": "https://arxiv.org/pdf/2607.09336v1",
+      "score": "6.0",
+      "evidence": "离线强化学习轨迹规划方法，可迁移至无人机拦截路径规划",
+      "tldr": "离线强化学习中，扩散轨迹规划器推理成本高，一致性规划器依赖两阶段蒸馏导致训练成本高且不稳定。本文提出STP框架，通过单阶段训练条件shortcut轨迹模型，支持一步或几步推理，并结合可行性感知批评者选择候选计划。在D4RL基准的运动、导航、操作、灵巧控制任务上性能强劲。该方法简化了训练流程，实现了高效快速的生成规划。",
+      "tags": "query:ui",
+      "abstract_en": "Diffusion-based trajectory planners have shown strong performance in offline reinforcement learning, but their iterative denoising process often incurs high inference cost. Consistency-based planners reduce the number of sampling steps, yet they typically rely on a two-stage teacher--student distillation pipeline that increases training cost and may introduce instability. We propose Shortcut Trajectory Planning (STP), an offline model-based reinforcement learning framework that incorporates shortcut models as efficient trajectory generators. STP trains a conditional shortcut trajectory model in a single stage, supports adjustable one-step and few-step inference through step-size conditioning, and selects candidate plans using a critic augmented with feasibility-aware correction. Across standard D4RL benchmarks, including locomotion, navigation, manipulation, and dexterous control tasks, STP achieves strong performance while simplifying the training pipeline for fast generative planning.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/18/2607.12924v1-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes",
+      "section": "quick",
+      "title_en": "Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes",
+      "authors": "Jonas Ehrhardt, René Heesch, Oliver Niggemann",
+      "date": "2026-07-14",
+      "pdf": "https://arxiv.org/pdf/2607.12924v1",
+      "score": "6.0",
+      "evidence": "针对参数化动作的强化学习方法，可迁移至无人机拦截任务",
+      "tldr": "参数化动作马尔可夫决策过程（PAMDP）中，强化学习算法常用单步估计确定参数，导致样本效率低。本文提出知识-梯度引导的强化学习（KGRL），利用Datalog知识库中的领域知识推导可行动作和参数范围，剪枝无效动作并约束参数空间，再通过梯度迭代优化参数。KGRL提供局部过程解释，提升样本效率和回报，在多个PAMDP基准上超越现有方法。",
+      "tags": "query:ui",
+      "abstract_en": "In this paper, we study Reinforcement Learning in Parametrized Action Markov Decision Processes (PAMDP), where each decision consists of a symbolic action and numerical parameters. In such settings Reinforcement Learning algorithms typically determine parameters with one-shot estimators, which makes their training sample inefficient. Though in most PAMDP environments explicit but incomplete knowledge (e.g., rules, safety constraints, or expert heuristics) is available, it is rarely directly used to increase the sample-efficiency of training Reinforcement Learning agents. We step into this gap and propose our novel Neuro-Symbolic Knowledge- and Gradient-Guided Reinforcement Learning (KGRL) algorithm. KGRL uses domain knowledge in a Datalog knowledge base to derive the set of applicable actions and feasible parameters for a given state. This allows it to prune non-applicable actions from the decision-space and constrain the parameter spaces of the remaining actions. We then use a gradient-based parameter refinement loop to estimate the optimal parameters during training and deployment of the agent. By recording activated rules along the trajectory, KGRL additionally provides local procedural explanations on the pruning of actions and constraining of parameters. Overall, KGRL guides the agent's exploration and deployment toward feasible and constraint-aware decisions, while increasing sample efficiency during training. KGRL outperforms state-of-the-art RL baselines for PAMDPs in both, sample efficiency and episodic return.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/18/2607.13938v1-discriminative-barrier-functions-for-safe-adversarial-imitation-learning-from-observation",
+      "section": "quick",
+      "title_en": "Discriminative Barrier Functions for Safe Adversarial Imitation Learning from Observation",
+      "authors": "Anubhav Vishwakarma, Bhaumik Mehta, Caleb Hsu, Byron Boots, Karen Leung, Tyler Han",
+      "date": "2026-07-15",
+      "pdf": "https://arxiv.org/pdf/2607.13938v1",
+      "score": "6.0",
+      "evidence": "结合障碍函数的安全模仿学习方法，可迁移至无人机拦截中的安全控制",
+      "tldr": "反向强化学习在探索时缺乏安全保障，而控制障碍函数虽能保证安全但需人工设计。本文提出将奖励函数限制为控制障碍函数，从无标签专家观测中学习安全策略，实现安全在线更新。恢复的障碍函数对未见危险状态鲁棒，在仿真和真实避障任务中显著提升安全性。该方法无需专家安全标签，弥合了模仿学习与安全控制之间的鸿沟。",
+      "tags": "query:ui",
+      "abstract_en": "Inverse Reinforcement Learning (IRL) algorithms are powerful tools for learning from and generalizing expert demonstrations, but they often rely on unconstrained exploration, rendering them unsafe for real-world deployment. Meanwhile, Control Barrier Functions (CBFs) can guarantee the safety of control systems, but the analytical design of CBFs can be time-consuming and esoteric. In this work, we address these limitations jointly by constraining reward function candidacy during IRL to the space of CBFs, yielding a formulation that exhibits safe online control with continuous experiential improvement. Crucially, this framework enables the data-driven recovery of barrier functions directly from unlabeled expert observations. We demonstrate that the recovered barrier function is robust to unsafe states entirely absent from the expert data. Furthermore, we benchmark our method against standard IRL baselines in a simulated navigation environment, demonstrating improved safety performance. Finally, we investigate the trade-offs of planning-based versus policy-based IRL methods across both simulation and a real world obstacle avoidance task.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
