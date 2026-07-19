@@ -1,0 +1,69 @@
+{
+  "label": "2026-07-19",
+  "date": "2026-07-19",
+  "generated_at": "2026-07-19T21:05:55",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202607/19/2607.10630v1-world-models-as-adversaries-multi-agent-self-play-fine-tuning-for-robust-motion-planning",
+      "section": "quick",
+      "title_en": "World Models as Adversaries: Multi-Agent Self-Play Fine-Tuning for Robust Motion Planning",
+      "authors": "Tong Nie, Yuewen Mei, Junlin He, Yihong Tang, Jian Sun, Wei Ma",
+      "date": "2026-07-12",
+      "pdf": "https://arxiv.org/pdf/2607.10630v1",
+      "score": "7.0",
+      "evidence": "多智能体自我对弈鲁棒运动规划，可迁移至多无人机追击-逃避",
+      "tldr": "密集交通中的鲁棒运动规划需应对安全关键场景，但自然数据中罕见。本文提出对抗世界模型（AWM），将鲁棒规划学习建模为约束极小极大博弈，并设计解耦求解器：内层将预测世界模型转换为角色条件对抗者，通过反事实信用分配学习稀疏攻击；外层让自车规划器利用尾部风险加权和参考锚定信任区域优化遗憾感知鲁棒策略。在nuPlan和InterPlan上，该方法生成可迁移对抗交互，在名义和长尾场景中均取得竞争性闭环性能。理论分析验证了解耦求解器和优化组件。",
+      "tags": "query:ui",
+      "abstract_en": "Robust motion planning in dense traffic requires autonomous vehicles to interact in rare and safety-critical scenarios that are underrepresented in naturalistic driving data. Although adversarial training offers a feasible solution, existing methods often rely on external scenario generators, heuristic perturbations, or simulator-heavy rollouts, which makes them difficult to integrate with modern autoregressive planners. Here, we cast adversarially robust planner learning as a constrained min-max game and propose Adversarial World Modeling (AWM), a theoretically grounded multi-agent self-play fine-tuning framework. Since solving the exact game is intractable, AWM introduces a principled decoupled solver. In the inner minimization, the planner's predictive world model is converted into a role-conditioned adversary that learns sparse, scene-adaptive attack coalitions via counterfactual credit assignment. In the outer maximization, the ego planner optimizes a regret-aware robust best response against the frozen AWM, utilizing tail-risk weighting and reference-anchored trust regions to improve hard-case recovery while preserving nominal driving behavior. Experiments on the nuPlan and InterPlan benchmarks demonstrate that our method generates transferable adversarial interactions and yields a robust planner that achieves competitive closed-loop performance in both nominal and highly interactive long-tail scenarios. Theoretical analysis justifies the decoupled solver and the main optimization components.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/19/2607.12784v1-directional-constraints-for-efficient-exploration-in-safe-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Directional Constraints for Efficient Exploration in Safe Reinforcement Learning",
+      "authors": "Paolo Magliano, Puze Liu, Jan Peters, Davide Tateo, Raffaello Camoriano",
+      "date": "2026-07-14",
+      "pdf": "https://arxiv.org/pdf/2607.12784v1",
+      "score": "7.0",
+      "evidence": "面向安全强化学习的高效探索方向约束方法",
+      "tldr": "强化学习在机器人应用中需要严格安全约束，但现有方法因优化复杂导致学习慢、性能差。本文提出ATACOM方向约束（ATACOM-DC），通过区分接近与远离约束边界的动作，仅在必要时激活安全层。在多个模拟机器人控制任务中，该方法显著降低了违规成本并保持高任务性能，改善了安全-性能权衡。贡献在于可无缝集成现有算法，提升安全强化学习效率。",
+      "tags": "query:ui",
+      "abstract_en": "Reinforcement Learning has revolutionized the landscape of robotic research, allowing robust learning of complex robotic skills in simulation. However, real-world deployment in open-ended environments requires strong safety guarantees to prevent dangerous or harmful behaviors. Safe Reinforcement Learning methods address this requirement by enforcing safety constraints. Nevertheless, learning under constraints often reduces learning speed and could lead to suboptimal task performance, as the agent must solve a more complex constrained optimization problem compared to unconstrained settings. To tackle this issue, in this work, we propose an extension of the ATACOM framework, a state-of-the-art reliable safety layer that can be integrated with existing Reinforcement Learning algorithms to enforce constraints derived from prior knowledge of the system or learned directly from data. Our proposed method, named ATACOM Directional Constraints (ATACOM-DC), significantly improves the safety-performance trade-off by introducing directional constraints that distinguish between actions approaching and moving away from constraint boundaries, activating constraint enforcement only when necessary. We evaluate our method across a range of challenging robotic control tasks in simulation, analyzing both constraint-violation costs and achieved task performance. Code and additional material at https://atacom-dc.robot-learning.net.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/19/2607.12924v2-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes",
+      "section": "quick",
+      "title_en": "Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes",
+      "authors": "Jonas Ehrhardt, René Heesch, Oliver Niggemann",
+      "date": "2026-07-14",
+      "pdf": "https://arxiv.org/pdf/2607.12924v2",
+      "score": "6.0",
+      "evidence": "参数化动作强化学习方法，可迁移至无人机控制",
+      "tldr": "针对参数化动作马尔可夫决策过程（PAMDP）中强化学习样本效率低的问题，现有方法多采用一次性参数估计，而忽视可用的领域知识。本文提出KGRL算法，利用Datalog知识库推导适用动作与可行参数，修剪决策空间并约束参数，再结合梯度参数细化循环优化参数。在PAMDP基准任务上，KGRL相比现有RL基线显著提升了样本效率和回合回报。该方法将符号知识与梯度优化结合，为约束感知的强化学习提供了高效且可解释的解决方案。",
+      "tags": "query:ui",
+      "abstract_en": "In this paper, we study Reinforcement Learning in Parametrized Action Markov Decision Processes (PAMDP), where each decision consists of a symbolic action and numerical parameters. In such settings Reinforcement Learning algorithms typically determine parameters with one-shot estimators, which makes their training sample inefficient. Though in most PAMDP environments explicit but incomplete knowledge (e.g., rules, safety constraints, or expert heuristics) is available, it is rarely directly used to increase the sample-efficiency of training Reinforcement Learning agents. We step into this gap and propose our novel Neuro-Symbolic Knowledge- and Gradient-Guided Reinforcement Learning (KGRL) algorithm. KGRL uses domain knowledge in a Datalog knowledge base to derive the set of applicable actions and feasible parameters for a given state. This allows it to prune non-applicable actions from the decision-space and constrain the parameter spaces of the remaining actions. We then use a gradient-based parameter refinement loop to estimate the optimal parameters during training and deployment of the agent. By recording activated rules along the trajectory, KGRL additionally provides local procedural explanations on the pruning of actions and constraining of parameters. Overall, KGRL guides the agent's exploration and deployment toward feasible and constraint-aware decisions, while increasing sample efficiency during training. KGRL outperforms state-of-the-art RL baselines for PAMDPs in both, sample efficiency and episodic return.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/19/2607.13880v1-task-oriented-sensing-and-covert-transmissions-for-collaborative-multi-auv-systems",
+      "section": "quick",
+      "title_en": "Task-Oriented Sensing and Covert Transmissions for Collaborative Multi-AUV Systems",
+      "authors": "Xueyao Zhang, Chenyang Yan, Bo Yang, Xuelin Cao, Zhiwen Yu, Bin Guo, George C. Alexandropoulos, Merouane Debbah, Chau Yuen",
+      "date": "2026-07-15",
+      "pdf": "https://arxiv.org/pdf/2607.13880v1",
+      "score": "6.0",
+      "evidence": "协作多AUV系统中的多智能体强化学习",
+      "tldr": "水下多AUV协同任务中，被动感知导致局部信息有限，主动声纳和频繁通信易暴露。为此提出SVR-MARL框架，利用信息实际价值表征任务效用，在隐蔽物理通信约束下学习分布式协同策略。在协同定位跟踪案例中，该框架提升任务效率并减少不必要通信与暴露风险。成果为实际通信受限的隐蔽协同任务提供了高效且安全的解决方案。",
+      "tags": "query:ui",
+      "abstract_en": "In underwater covert cooperative missions, autonomous underwater vehicles (AUVs) often cannot rely on active sonar to continuously obtain complete information, since active sensing and frequent communications increase the risk of exposure. As a result, AUVs primarily rely on passive observation, an approach that yields incomplete local perception and limited task efficiency. Although underwater acoustic communications can mitigate this limitation through information sharing, they are simultaneously constrained by long delays, severe interference, low reliability, and the risk of covert exposure. Existing communications-oriented multi-agent reinforcement learning (MARL) studies often model communication as an ideal information flow, whereas traditional communication optimization primarily focuses on link-level performance. However, both are insufficient to characterize the actual contribution of perceptual information to cooperative tasks under realistic conditions of covert physical communications. This paper proposes a Sensed Information Value Realization Multi-Agent Reinforcement Learning (SVR-MARL) framework that leverages practical information to characterize the utility of information for cooperative tasks and learns distributed cooperative policies under realistic communication and covert constraints. Through a case study of covert multi-AUV cooperative localization and tracking, the potential of the proposed framework to improve collaborative task efficiency while reducing unnecessary communication and exposure risks is demonstrated.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
