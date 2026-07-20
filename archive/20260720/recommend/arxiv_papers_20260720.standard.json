@@ -1,0 +1,99 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-20T21:34:50.911326+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.10553v1",
+      "source": "arxiv",
+      "title": "SLIDER: Sparse History-Guided Aerial Robot Target Search using Sliding Local Maps",
+      "abstract": "Efficient exploration and target search in large-scale unknown environments remain challenging for aerial robots due to the demands of broad spatial coverage, fine-grained perception, and real-time decision-making. This paper presents SLIDER, a lightweight and memory-efficient framework that avoids reliance on globally dense maps by combining a local sliding map with sparse global history information. A novel observation quality evaluation method is proposed, leveraging historical poses and sensor models to assess point cloud data in real-time, enabling efficient frontier detection. To support scalable and responsive planning, an incremental viewpoint clustering strategy dynamically adapts to local updates, significantly reducing the number of candidate targets and decreasing computational load. A sparse global topological map is incrementally maintained to assist global planning and cost evaluation. Extensive simulations and real-world experiments demonstrate that the proposed system outperforms state-of-the-art methods in memory usage, decision latency, and search efficiency.",
+      "authors": [
+        "Xiaolei Hou",
+        "Zheng Pan",
+        "Hua Lan",
+        "Zhenghao Zou",
+        "Yinhong Chen",
+        "Chenxi Zhu",
+        "Yang Lyu",
+        "Jinwen Hu",
+        "Chunhui Zhao"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-12T03:55:51+00:00",
+      "link": "https://arxiv.org/pdf/2607.10553v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Aerial robot target search framework, relevant to UAV interception as pre-engagement phase",
+      "llm_evidence_cn": "空中机器人目标搜索框架，与无人机拦截的前期搜索阶段相关",
+      "llm_evidence": "空中机器人目标搜索框架，与无人机拦截的前期搜索阶段相关",
+      "canonical_evidence": "空中机器人目标搜索框架，与无人机拦截的前期搜索阶段相关",
+      "llm_tldr_en": "Presents SLIDER, a lightweight target search framework using local sliding maps and sparse global history for efficient exploration, applicable to UAV interception tasks requiring target localization.",
+      "llm_tldr_cn": "该论文提出SLIDER框架，利用局部滑动地图和稀疏全局历史实现高效目标搜索，无需全局稠密地图。该方法可集成到无人机拦截流程中，用于快速发现目标。实验表明其在覆盖率和实时性上优于传统方法。",
+      "llm_tldr": "该论文提出SLIDER框架，利用局部滑动地图和稀疏全局历史实现高效目标搜索，无需全局稠密地图。该方法可集成到无人机拦截流程中，用于快速发现目标。实验表明其在覆盖率和实时性上优于传统方法。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.13789v1",
+      "source": "arxiv",
+      "title": "Dynamical Vehicle Orienteering Problem for Multi-Rotor Unmanned Aerial Vehicles",
+      "abstract": "This paper introduces the Dynamical Vehicle Orienteering Problem (DVOP), a generalization of the Orienteering Problem (OP). The OP maximizes the reward collected from spatial targets under a limited travel budget; the DVOP extends it by accounting for both external and vehicle-actuated forces. We study the DVOP in the context of multi-rotor Unmanned Aerial Vehicle (UAV) flight planning, using a three-dimensional Point-Mass Model (PMM) constrained by maximum velocity and acceleration magnitudes and subject to gravitational acceleration, with the travel budget expressed as a maximum flight time. Because the DVOP couples reward maximization with time-optimal trajectory planning, it cannot be formulated as a simple graph problem and solved exactly without relaxing or under-actuating the vehicle dynamics. We therefore propose two solution approaches: a Branch-and-Bound (BnB) procedure that combines Non-Linear Programming (NLP) and Mixed-Integer Linear Programming (MILP) to provide high-quality solutions, and a Large Neighborhood Search (LNS) metaheuristic that supplies an initial reward bound and scales to instances intractable for the BnB. The BnB relies on a novel MILP formulation of travel costs based on minimum-time trajectory primitives through target triplets, yielding a tight reward upper bound, while the LNS uses limited thrust decomposition to compute fast, high-quality PMM trajectories. Experiments on benchmark instances show improvements of up to 37 % over state-of-the-art solutions for the Kinematic Orienteering Problem, and a real-world deployment on a multi-rotor UAV verifies the proposed PMM solution trajectories.",
+      "authors": [
+        "František Nekovář",
+        "Matej Novosad",
+        "Martin Saska",
+        "Robert Pěnička"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "math.OC"
+      ],
+      "published": "2026-07-15T12:48:18+00:00",
+      "link": "https://arxiv.org/pdf/2607.13789v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "UAV trajectory optimization with reward maximization, applicable to pursuit-evasion scenarios",
+      "llm_evidence_cn": "UAV轨迹优化与奖励最大化，可用于追逃场景",
+      "llm_evidence": "UAV轨迹优化与奖励最大化，可用于追逃场景",
+      "canonical_evidence": "UAV轨迹优化与奖励最大化，可用于追逃场景",
+      "llm_tldr_en": "Proposes Dynamical Vehicle Orienteering Problem for multi-rotor UAVs, coupling reward maximization with time-optimal trajectory planning under dynamic constraints, offering a framework usable in pursuit-evasion and encirclement.",
+      "llm_tldr_cn": "该论文提出了动态车辆定向问题（DVOP），针对多旋翼无人机在动力学约束下最大化奖励与时间最优轨迹规划耦合的任务。该框架可应用于追逃博弈和围捕场景，为多无人机协同拦截提供了路径优化基础。实验验证了模型的有效性，展示了在复杂环境中的规划能力。",
+      "llm_tldr": "该论文提出了动态车辆定向问题（DVOP），针对多旋翼无人机在动力学约束下最大化奖励与时间最优轨迹规划耦合的任务。该框架可应用于追逃博弈和围捕场景，为多无人机协同拦截提供了路径优化基础。实验验证了模型的有效性，展示了在复杂环境中的规划能力。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

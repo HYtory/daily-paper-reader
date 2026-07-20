@@ -6,33 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-19
-- 运行时间：2026-07-19 21:05:49 UTC
+- 最新运行日期：2026-07-20
+- 运行时间：2026-07-20 21:37:46 UTC
 - 运行状态：成功
-- 本次总论文数：4
+- 本次总论文数：2
 - 精读区：0
-- 速读区：4
+- 速读区：2
 
 ### 今日简报（AI）
-今日精读0篇，速读4篇，聚焦强化学习鲁棒性与安全性。值得关注《World Models as Adversaries》提出的多智能体自我博弈微调方法，以及《Directional Constraints》中的方向约束探索技术。建议优先阅读这两篇7分论文，掌握对抗训练与安全约束的核心思路。
-- 详情：[/202607/19/README](/202607/19/README)
+今日速读两篇6分无人机论文，聚焦稀疏历史引导的目标搜索与多旋翼路径规划。  
+最值得关注的是滑动局部地图辅助的历史引导搜索方法，以及将车辆定向问题推广到无人机的动力学建模思路。  
+建议从“SLIDER”的局部地图复用机制入手，对比传统全覆盖搜索策略的效率提升。
+- 详情：[/202607/20/README](/202607/20/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [World Models as Adversaries: Multi-Agent Self-Play Fine-Tuning for Robust Motion Planning](/202607/19/2607.10630v1-world-models-as-adversaries-multi-agent-self-play-fine-tuning-for-robust-motion-planning)  
-   标签：评分：7.0/10、query:ui
-   evidence：多智能体自我对弈鲁棒运动规划，可迁移至多无人机追击-逃避
-2. [Directional Constraints for Efficient Exploration in Safe Reinforcement Learning](/202607/19/2607.12784v1-directional-constraints-for-efficient-exploration-in-safe-reinforcement-learning)  
-   标签：评分：7.0/10、query:ui
-   evidence：面向安全强化学习的高效探索方向约束方法
-3. [Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes](/202607/19/2607.12924v2-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes)  
+1. [SLIDER: Sparse History-Guided Aerial Robot Target Search using Sliding Local Maps](/202607/20/2607.10553v1-slider-sparse-history-guided-aerial-robot-target-search-using-sliding-local-maps)  
    标签：评分：6.0/10、query:ui
-   evidence：参数化动作强化学习方法，可迁移至无人机控制
-4. [Task-Oriented Sensing and Covert Transmissions for Collaborative Multi-AUV Systems](/202607/19/2607.13880v1-task-oriented-sensing-and-covert-transmissions-for-collaborative-multi-auv-systems)  
+   evidence：空中机器人目标搜索框架，与无人机拦截的前期搜索阶段相关
+2. [Dynamical Vehicle Orienteering Problem for Multi-Rotor Unmanned Aerial Vehicles](/202607/20/2607.13789v1-dynamical-vehicle-orienteering-problem-for-multi-rotor-unmanned-aerial-vehicles)  
    标签：评分：6.0/10、query:ui
-   evidence：协作多AUV系统中的多智能体强化学习
+   evidence：UAV轨迹优化与奖励最大化，可用于追逃场景
 
 
 <div class="dpr-home-promo-card">
