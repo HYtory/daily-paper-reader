@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-21",
+  "date": "2026-07-21",
+  "generated_at": "2026-07-21T20:30:57",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/21/2607.12924v2-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes",
+      "section": "quick",
+      "title_en": "Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes",
+      "authors": "Jonas Ehrhardt, René Heesch, Oliver Niggemann",
+      "date": "2026-07-14",
+      "pdf": "https://arxiv.org/pdf/2607.12924v2",
+      "score": "6.0",
+      "evidence": "用于参数化动作空间的强化学习算法，可应用于无人机拦截中的连续控制",
+      "tldr": "在参数化动作MDP中，现有强化学习算法因一次性参数估计导致样本效率低下。本文提出知识-梯度引导的强化学习（KGRL），利用Datalog知识库剪枝不可行动作并约束参数空间，再通过梯度精化循环优化参数。实验表明KGRL在样本效率和回合回报上均超越基线。该方法融合神经符号推理与强化学习，提升了可解释性和数据效率。",
+      "tags": "query:ui",
+      "abstract_en": "In this paper, we study Reinforcement Learning in Parametrized Action Markov Decision Processes (PAMDP), where each decision consists of a symbolic action and numerical parameters. In such settings Reinforcement Learning algorithms typically determine parameters with one-shot estimators, which makes their training sample inefficient. Though in most PAMDP environments explicit but incomplete knowledge (e.g., rules, safety constraints, or expert heuristics) is available, it is rarely directly used to increase the sample-efficiency of training Reinforcement Learning agents. We step into this gap and propose our novel Neuro-Symbolic Knowledge- and Gradient-Guided Reinforcement Learning (KGRL) algorithm. KGRL uses domain knowledge in a Datalog knowledge base to derive the set of applicable actions and feasible parameters for a given state. This allows it to prune non-applicable actions from the decision-space and constrain the parameter spaces of the remaining actions. We then use a gradient-based parameter refinement loop to estimate the optimal parameters during training and deployment of the agent. By recording activated rules along the trajectory, KGRL additionally provides local procedural explanations on the pruning of actions and constraining of parameters. Overall, KGRL guides the agent's exploration and deployment toward feasible and constraint-aware decisions, while increasing sample efficiency during training. KGRL outperforms state-of-the-art RL baselines for PAMDPs in both, sample efficiency and episodic return.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/21/2607.13553v1-flow-aware-optimal-navigation-in-unsteady-flows-through-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Flow-aware Optimal Navigation in Unsteady Flows through Reinforcement Learning",
+      "authors": "Andrea Maria Braghin, Nicolò Botteghi, Matteo Tomasetto, Andrea Manzoni, Gabriele Cazzulani",
+      "date": "2026-07-15",
+      "pdf": "https://arxiv.org/pdf/2607.13553v1",
+      "score": "6.0",
+      "evidence": "基于强化学习的不稳定流场导航，可用于无人机拦截场景",
+      "tldr": "非平稳流体中机器人导航面临部分可观测性挑战。本文采用TD3强化学习，在混沌双涡流中训练智能体到达任意目标，并评估五种生物启发观测策略。结果表明，感知并记忆流速的智能体性能最佳：速度感知优化能效，涡度感知提升目标接近度。显式全局参数反而降低性能，说明隐式流表示可训练更鲁棒策略，为仿生导航从模拟到真实环境提供见解。",
+      "tags": "query:ui",
+      "abstract_en": "Autonomous robotic navigation in nonstationary time-varying fluid flows remains a fundamental challenge due to partial observability and the unpredictability of realistic environments. While classical optimal control frameworks employed in robotics require unrealistic a-priori global flow knowledge, biological systems are able to navigate successfully by exploiting localized sensory cues. In this work we present a reinforcement learning approach using the TD3 algorithm to train autonomous agents to reach arbitrary targets within a parametric, chaotic double-gyre flow. To investigate optimal sensory mechanisms, we evaluate five bio-inspired observation strategies based on relative position, local velocity or local vorticity measures, and short-term memory variants. Additionally, we analyze the impact of providing agents with explicit global flow parameters. Numerical results demonstrate that an agent that is able to sense and remember a set number of flow velocity measures achieves the highest performance. The experiments reveal a trade-off in sensor utility: velocity-aware agents optimize energy efficiency, whereas vorticity sensors provide superior structural mapping and achieve better target proximity. Incorporating explicit global flow parameters is shown to decrease navigation performance. This behavior suggests that reinforcement learning-based autonomous systems develop more robust and general policies when restricted to implicit flow representations. The presented results offer insights for improving the transition of bio-inspired robotic navigation from simulation to real-world environments.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/21/2607.17922v1-prime-plasticity-recovery-in-multi-agent-environments-for-uav-assisted-emergency-communication-networks",
+      "section": "quick",
+      "title_en": "PRIME: Plasticity Recovery in Multi-Agent Environments for UAV-Assisted Emergency Communication Networks",
+      "authors": "Wen Qiu, Zhiqiang He, Wei Zhao, Hiroshi Masui",
+      "date": "2026-07-20",
+      "pdf": "https://arxiv.org/pdf/2607.17922v1",
+      "score": "6.0",
+      "evidence": "面向无人机网络的多智能体强化学习可塑性恢复",
+      "tldr": "多智能体强化学习中，持续非平稳性导致神经元休眠，共享策略学习能力下降，简单重置不安全。PRIME基于双向沉默神经元框架，聚合团队激活与梯度统计，只重置同时激活休眠和梯度沉默的神经元。在无人机应急通信任务中，PRIME提升回报24.9%，休眠比例降至10-20%。首次解决多智能体塑性恢复问题，提供理论保证。",
+      "tags": "query:ui",
+      "abstract_en": "Most reinforcement learning controllers for these networks assume stationary conditions, and the few that handle change react to the external environment while leaving the network's internal state unexamined. We show that sustained non-stationarity damages this internal state directly: as objectives shift, neurons progressively fall dormant and the shared policy loses the capacity to learn. The obvious remedy, resetting dormant neurons, is unsafe under shared-parameter multi-agent training: many neurons that appear inactive are still receiving strong training gradients, and whether a neuron appears dormant depends on which agent's observations it processes. PRIME (Plasticity Recovery In Multi-agent Environments) therefore verifies both directions before intervening. Extending the bidirectional Silent Neuron framework to cooperative multi-agent reinforcement learning, it aggregates activation and gradient statistics over the full team batch, reads the backward signal from the gradient the training loss has already deposited , not from a hand-crafted proxy, and reinitializes only neurons that are simultaneously activation-dormant and gradient-silent. Useful representations are preserved while learning capacity is restored. On a phase-switching UAV emergency communication simulator, PRIME improves interquartile mean return by 24.9\\% over MAPPO and holds dormant neuron fractions at 10--20\\% versus 40--45\\%; ablations attribute the gains to the gradient signal and team-level aggregation rather than to the specific reset operator. A dynamic regret bound shows that the perturbation cost scales with the small silent-subspace dimension rather than the full parameter count.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

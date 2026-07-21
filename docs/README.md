@@ -6,29 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-20
-- 运行时间：2026-07-20 21:37:46 UTC
+- 最新运行日期：2026-07-21
+- 运行时间：2026-07-21 20:30:50 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：3
 - 精读区：0
-- 速读区：2
+- 速读区：3
 
 ### 今日简报（AI）
-今日速读两篇6分无人机论文，聚焦稀疏历史引导的目标搜索与多旋翼路径规划。  
-最值得关注的是滑动局部地图辅助的历史引导搜索方法，以及将车辆定向问题推广到无人机的动力学建模思路。  
-建议从“SLIDER”的局部地图复用机制入手，对比传统全覆盖搜索策略的效率提升。
-- 详情：[/202607/20/README](/202607/20/README)
+今日速读三篇强化学习应用论文，聚焦参数化动作、非稳态流导航与无人机应急通信。  
+最值得关注的是知识-梯度引导RL在参数化动作MDP中的结合以及多智能体可塑性恢复方法。  
+建议普通读者重点关注强化学习在复杂环境（如动态流场、应急通信）中的实用化方向。
+- 详情：[/202607/21/README](/202607/21/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [SLIDER: Sparse History-Guided Aerial Robot Target Search using Sliding Local Maps](/202607/20/2607.10553v1-slider-sparse-history-guided-aerial-robot-target-search-using-sliding-local-maps)  
+1. [Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes](/202607/21/2607.12924v2-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes)  
    标签：评分：6.0/10、query:ui
-   evidence：空中机器人目标搜索框架，与无人机拦截的前期搜索阶段相关
-2. [Dynamical Vehicle Orienteering Problem for Multi-Rotor Unmanned Aerial Vehicles](/202607/20/2607.13789v1-dynamical-vehicle-orienteering-problem-for-multi-rotor-unmanned-aerial-vehicles)  
+   evidence：用于参数化动作空间的强化学习算法，可应用于无人机拦截中的连续控制
+2. [Flow-aware Optimal Navigation in Unsteady Flows through Reinforcement Learning](/202607/21/2607.13553v1-flow-aware-optimal-navigation-in-unsteady-flows-through-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：UAV轨迹优化与奖励最大化，可用于追逃场景
+   evidence：基于强化学习的不稳定流场导航，可用于无人机拦截场景
+3. [PRIME: Plasticity Recovery in Multi-Agent Environments for UAV-Assisted Emergency Communication Networks](/202607/21/2607.17922v1-prime-plasticity-recovery-in-multi-agent-environments-for-uav-assisted-emergency-communication-networks)  
+   标签：评分：6.0/10、query:ui
+   evidence：面向无人机网络的多智能体强化学习可塑性恢复
 
 
 <div class="dpr-home-promo-card">
