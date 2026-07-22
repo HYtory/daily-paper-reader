@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-22",
+  "date": "2026-07-22",
+  "generated_at": "2026-07-22T21:32:39",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/22/2607.18597v1-a-self-evolving-default-action-for-cooperative-tasks-with-continuous-action-space",
+      "section": "quick",
+      "title_en": "A Self-Evolving Default Action for Cooperative Tasks with Continuous Action Space",
+      "authors": "Shuangyao Huang",
+      "date": "2026-07-21",
+      "pdf": "https://arxiv.org/pdf/2607.18597v1",
+      "score": "7.0",
+      "evidence": "适用于无人机群的多智能体强化学习框架",
+      "tldr": "多智能体连续动作空间的信用分配是难题。现有方法通过蒙特卡洛采样近似反事实基线，但引入偏差且不保证收敛。本文提出SAFE框架，利用智能体经验缓冲区中的自演化默认动作构建反事实基线，自然扩展到连续空间且无偏。在车辆协作任务中，SAFE始终优于现有模型，验证了其有效性。",
+      "tags": "query:ui",
+      "abstract_en": "Counterfactual credit assignment has proven effective in multi-agent reinforcement learning (MARL) for discrete action spaces, yet its extension to continuous-action cooperative tasks remains challenging. Existing methods that approximate the counterfactual baseline via Monte Carlo sampling often introduce bias into policy gradients and fail to guarantee convergence to local optima, as the sampled actions may not have been sufficiently trained. To address these limitations, we propose SAFE, a novel MARL framework that employs a counterfactual baseline conditioned on a self-evolving default action sampled from each agent's experience buffer. This design naturally extends to continuous action spaces without relying on additional simulations, reward models, or environment-specific prior knowledge. The baseline accurately quantifies each agent's contribution, and introduces no bias into the deterministic policy gradient, ensuring convergence to local optima. Extensive experiments on cooperative vehicular tasks demonstrate that SAFE consistently outperforms state-of-the-art models.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/22/2607.15004v1-cosfly-vla-a-spatially-aware-vision-language-action-model-for-uav-tracking",
+      "section": "quick",
+      "title_en": "CosFly-VLA: A Spatially Aware Vision-Language-Action Model for UAV Tracking",
+      "authors": "Ruilong Ren, Songsheng Cheng, Yunpeng Zhou, Hanxuan Chen, Xiangyue Wang, Tianle Zeng, Shuai Yuan, Binbo Li, Hanzhong Guo, Ji Pei, Da Zhang, Kangli Wang",
+      "date": "2026-07-16",
+      "pdf": "https://arxiv.org/pdf/2607.15004v1",
+      "score": "6.0",
+      "evidence": "处理无人机动态目标跟踪，与追逃博弈相关",
+      "tldr": "无人机在复杂城市环境中跟踪动态目标时，遮挡会导致视线丢失和跟踪失败。本文提出空间感知VLA模型CosFly-VLA，通过联合目标定位、可见性估计和连续动作生成，并采用空间预训练、课程微调、思维链训练和强化学习等策略提升遮挡鲁棒性。相比OpenVLA，开放环位移误差降低34%以上，闭环成功率提升最高29.8%。",
+      "tags": "query:ui",
+      "abstract_en": "Dynamic target tracking is essential for Unmanned Aerial Vehicles (UAVs) operating in complex urban environments, where both the target and the camera viewpoint change continuously. Existing Vision-Language-Action (VLA) policies can track visible targets effectively, but their performance often degrades when buildings, vegetation, or roadside objects block the line of sight. During sustained occlusion, a policy may lose the target state, execute actions toward an incorrect region, and amplify this error through subsequent observations until re-acquisition becomes impossible. To this end, we present CosFly-VLA, a spatially aware VLA model that jointly grounds the target, estimates its visibility, and generates continuous flight actions through a structured prediction interface. To train this policy, we use a large-scale recipe over diverse data sources. Spatially Grounded Continued Pretraining (CPT) on a 500k mixed pool injects UAV-view depth, distance, and 3-D spatial reasoning. A three-stage Curriculum-based Supervised Fine-Tuning (SFT) process then specializes the tracker through multi-head warm-up followed by two-stage curriculum learning over natural and hard / long-occlusion data. Chain-of-Thought (CoT) training subsequently teaches recovery-oriented reasoning traces before structured answers. Finally, a closed-loop Reinforcement Learning (RL) stage optimizes tracking behavior with a multi-component reward covering stand-off tracking, grounding quality, collision avoidance, and task success. Relative to OpenVLA, CosFly-VLA-0.8B reduces open-loop Average Displacement Error (ADE) by 34.1% on seen-test and 35.3% on unseen-test. Closed-loop optimization improves Success Rate (SR) by 29.8% and 2.5%, respectively. These results demonstrate progress from visible-frame imitation toward spatially grounded action-closed-loop control, evaluated under a shared oracle state history.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/22/2607.19117v1-comparative-study-of-multi-agent-actor-critic-algorithms-in-parameterized-action-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Comparative Study of Multi-Agent Actor-Critic Algorithms in Parameterized Action Reinforcement Learning",
+      "authors": "Ubayd Ali Bapoo, Clement N Nyirenda",
+      "date": "2026-07-21",
+      "pdf": "https://arxiv.org/pdf/2607.19117v1",
+      "score": "6.0",
+      "evidence": "多智能体演员-评论家算法在参数化动作强化学习中的比较，可用于无人机群",
+      "tldr": "参数化动作强化学习需同时处理离散动作选择与连续参数化。本文提出共享经验多智能体框架，将单智能体算法GAC、SAC、TQC扩展为多智能体版本MAGAC、MASAC、MATQC，各智能体独立网络但共享回放缓冲区。在Platform-v0和Goal-v0基准上评估，多智能体框架有效提升GAC性能，但对MASAC和MATQC提升较小。智能体数量超过五后性能增益有限而计算成本显著增加，揭示了性能与效率的权衡。",
+      "tags": "query:ui",
+      "abstract_en": "Parameterized action reinforcement learning has shown strong performance in environments requiring both discrete action selection and continuous parameterization. Prior work established the effectiveness of single-agent actor-critic algorithms - Greedy Actor-Critic (GAC), Soft Actor-Critic (SAC), and Truncated Quantile Critics (TQC) - on benchmark parameterized action tasks, but their extension to multi-agent settings remains largely unexplored. This paper presents a comparative study of shared-experience multi-agent extensions of these algorithms: Multi-Agent Greedy Actor-Critic (MAGAC), Multi-Agent Soft Actor-Critic (MASAC), and Multi-Agent Truncated Quantile Critics (MATQC). Rather than following the centralized training, decentralized execution (CTDE) paradigm, the proposed framework uses multiple independent actor-critic agents that share a replay buffer while maintaining separate policy and value networks. We evaluate the algorithms on the Platform-v0 and Goal-v0 benchmarks against their single-agent counterparts, using three-, five-, and ten-agent configurations to assess scalability. Performance is measured by average evaluation return and training time across ten independent runs, with one-way ANOVA and Tukey HSD post-hoc tests used to assess statistical significance. Results show that the multi-agent framework consistently improves Greedy Actor-Critic performance, while MASAC and MATQC show comparatively modest gains over their single-agent versions. Increasing the number of agents beyond five yields limited additional performance while substantially raising computational cost, particularly for MAGAC. These results highlight a trade-off between learning performance and computational efficiency, offering insight into the scalability of shared-experience multi-agent actor-critic methods for parameterized action reinforcement learning.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

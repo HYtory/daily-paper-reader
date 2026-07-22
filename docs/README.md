@@ -6,32 +6,30 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-21
-- 运行时间：2026-07-21 20:30:50 UTC
+- 最新运行日期：2026-07-22
+- 运行时间：2026-07-22 21:32:32 UTC
 - 运行状态：成功
 - 本次总论文数：3
 - 精读区：0
 - 速读区：3
 
 ### 今日简报（AI）
-今日速读三篇强化学习应用论文，聚焦参数化动作、非稳态流导航与无人机应急通信。  
-最值得关注的是知识-梯度引导RL在参数化动作MDP中的结合以及多智能体可塑性恢复方法。  
-建议普通读者重点关注强化学习在复杂环境（如动态流场、应急通信）中的实用化方向。
-- 详情：[/202607/21/README](/202607/21/README)
+今日收录3篇速读论文，聚焦连续动作协同任务、无人机视觉-语言-动作模型及参数化动作强化学习。重点阅读《A Self-Evolving Default Action for Cooperative Tasks》和《CosFly-VLA》中关于空间感知与自演化默认动作的创新思路。下一步可深入探索连续动作空间下的协作机制如何迁移至实际无人机控制场景。
+- 详情：[/202607/22/README](/202607/22/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes](/202607/21/2607.12924v2-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes)  
+1. [A Self-Evolving Default Action for Cooperative Tasks with Continuous Action Space](/202607/22/2607.18597v1-a-self-evolving-default-action-for-cooperative-tasks-with-continuous-action-space)  
+   标签：评分：7.0/10、query:ui
+   evidence：适用于无人机群的多智能体强化学习框架
+2. [CosFly-VLA: A Spatially Aware Vision-Language-Action Model for UAV Tracking](/202607/22/2607.15004v1-cosfly-vla-a-spatially-aware-vision-language-action-model-for-uav-tracking)  
    标签：评分：6.0/10、query:ui
-   evidence：用于参数化动作空间的强化学习算法，可应用于无人机拦截中的连续控制
-2. [Flow-aware Optimal Navigation in Unsteady Flows through Reinforcement Learning](/202607/21/2607.13553v1-flow-aware-optimal-navigation-in-unsteady-flows-through-reinforcement-learning)  
+   evidence：处理无人机动态目标跟踪，与追逃博弈相关
+3. [Comparative Study of Multi-Agent Actor-Critic Algorithms in Parameterized Action Reinforcement Learning](/202607/22/2607.19117v1-comparative-study-of-multi-agent-actor-critic-algorithms-in-parameterized-action-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：基于强化学习的不稳定流场导航，可用于无人机拦截场景
-3. [PRIME: Plasticity Recovery in Multi-Agent Environments for UAV-Assisted Emergency Communication Networks](/202607/21/2607.17922v1-prime-plasticity-recovery-in-multi-agent-environments-for-uav-assisted-emergency-communication-networks)  
-   标签：评分：6.0/10、query:ui
-   evidence：面向无人机网络的多智能体强化学习可塑性恢复
+   evidence：多智能体演员-评论家算法在参数化动作强化学习中的比较，可用于无人机群
 
 
 <div class="dpr-home-promo-card">
