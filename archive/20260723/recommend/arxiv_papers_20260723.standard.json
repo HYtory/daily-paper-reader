@@ -1,0 +1,94 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-23T21:34:11.578568+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.19555v1",
+      "source": "arxiv",
+      "title": "CHMAS: A Coupled Hierarchical Framework for Multi-Agent Reinforcement Learning",
+      "abstract": "Multi-agent reinforcement learning (MARL) systems face fundamental   challenges in balancing global coordination with local execution   across different temporal scales. This paper introduces the Coupled   Hierarchical Multi-Agent System (CHMAS), a novel framework that   decomposes multi-agent decision-making into centralized strategic   planning and distributed tactical execution with bidirectional   information flow. The strategic layer integrates all agents' states   with an exclusive global environmental state to generate guidance   actions every $T$ timesteps, while tactical agents execute   distributed policies augmented by strategic guidance and local   neighborhood observations. Unlike existing hierarchical approaches   with unidirectional control, CHMAS establishes a feedback mechanism   where accumulated tactical rewards influence strategic objectives   through a coupling coefficient $λ$, ensuring strategic plans   remain grounded in tactical feasibility. To address the   non-stationarity inherent in hierarchical learning, we propose an   asynchronous update protocol where strategic parameters update every   $N_f$ tactical episodes, allowing tactical policies to converge to   quasi-stationary points between strategic changes. We present both a   general bi-level formulation capturing full system dynamics and a   tractable additive approximation enabling rigorous analysis.   Theoretical analysis proves that this asynchronous scheme achieves   $\\mathcal{O}(\\log K/\\sqrt{K})$ convergence for the strategic layer   after $K$ strategic updates under standard assumptions. Experimental   validation in a multi-agent foraging domain demonstrates successful   learning of spatially partitioned exploration strategies, with both   layers converging stably despite hierarchical coupling.",
+      "authors": [
+        "Dongming Wang",
+        "Jie Xu",
+        "Yanyu Zhang",
+        "Wei Ren"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-07-21T20:22:40+00:00",
+      "link": "https://arxiv.org/pdf/2607.19555v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Multi-agent RL framework for coordinated decision-making, applicable to UAV swarm tasks",
+      "llm_evidence_cn": "多智能体强化学习框架，适用于无人机群协调任务",
+      "llm_evidence": "多智能体强化学习框架，适用于无人机群协调任务",
+      "canonical_evidence": "多智能体强化学习框架，适用于无人机群协调任务",
+      "llm_tldr_en": "Proposes a coupled hierarchical multi-agent RL framework decomposing decisions into strategic planning and tactical execution, enabling coordination for swarm tasks.",
+      "llm_tldr_cn": "该论文针对多智能体强化学习中全局协调与局部执行的时间尺度矛盾，提出了耦合分层多智能体系统（CHMAS）。通过将决策分解为集中式战略规划和分布式战术执行，并引入双向信息流，有效提升了多智能体系统的协调效率。在无人机群编队与围捕等场景中具有重要应用潜力。",
+      "llm_tldr": "该论文针对多智能体强化学习中全局协调与局部执行的时间尺度矛盾，提出了耦合分层多智能体系统（CHMAS）。通过将决策分解为集中式战略规划和分布式战术执行，并引入双向信息流，有效提升了多智能体系统的协调效率。在无人机群编队与围捕等场景中具有重要应用潜力。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.18554v1",
+      "source": "arxiv",
+      "title": "Scalable Policy Optimization for Networked Multi-Agent Reinforcement Learning with Continuous State-Action Spaces",
+      "abstract": "We develop the Continuous Distributed Coupled Policy Gradient (CDCPG) algorithm for cooperative reinforcement learning in networked Markov decision processes with continuous state and action spaces. Each agent maintains a local actor over a bounded graph neighborhood, and a localized least-squares temporal-difference critic evaluates a truncated action-value function through a spectral random-feature representation of the local transition kernel. The analysis makes four contributions. First, the truncated action-value function is constructed as a conditional expectation over the neighborhood, yielding a well-posed localized Bellman theory that removes the continuation-kernel mismatch of naive truncation arguments. Second, we expose a dimensional obstruction to temporal-difference stability for normalized random features and prove an unconditional excitation bound that reduces stability to a symmetric persistence-of-excitation condition, monitorable through an online matrix-concentration certificate. Third, under exponential spatial decay of agent interactions, the excitation condition, and smoothness of the objective, CDCPG drives an averaged per-agent stationarity measure to within any excess $ε$ of an explicitly characterized approximation floor using $\\widetilde{\\mathcal{O}}(ε^{-2})$ shared-oracle samples, and the excess dependence matches the smooth nonconvex first-order rate; per-agent computation and communication are governed by the neighborhood size rather than the network size. Fourth, an adaptive-locality rule selects the radius that balances truncation and graph-decay residuals against the target accuracy. Experiments on a networked linear-quadratic benchmark corroborate the locality and feature-dimension predictions.",
+      "authors": [
+        "Dongming Wang",
+        "Pengcheng Dai",
+        "Wenwu Yu",
+        "Wei Ren"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.LG"
+      ],
+      "published": "2026-07-20T22:41:43+00:00",
+      "link": "https://arxiv.org/pdf/2607.18554v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "scalable multi-agent reinforcement learning algorithm for cooperative tasks",
+      "llm_evidence_cn": "可扩展的多智能体强化学习算法适用于合作任务",
+      "llm_evidence": "可扩展的多智能体强化学习算法适用于合作任务",
+      "canonical_evidence": "可扩展的多智能体强化学习算法适用于合作任务",
+      "llm_tldr_en": "Develops CDCPG, a scalable multi-agent RL algorithm for networked MDPs with continuous state-action spaces, enabling cooperative policy learning through localized actor-critic updates.",
+      "llm_tldr_cn": "现有合作多智能体强化学习在连续状态动作空间中可扩展性不足。本文提出连续分布式耦合策略梯度算法，每个智能体维护局部Actor和价值函数，通过谱随机特征近似实现局部化学习。理论分析和仿真表明该方法可扩展至大规模网络，为无人机集群等合作任务提供了一种通用的强化学习框架。",
+      "llm_tldr": "现有合作多智能体强化学习在连续状态动作空间中可扩展性不足。本文提出连续分布式耦合策略梯度算法，每个智能体维护局部Actor和价值函数，通过谱随机特征近似实现局部化学习。理论分析和仿真表明该方法可扩展至大规模网络，为无人机集群等合作任务提供了一种通用的强化学习框架。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

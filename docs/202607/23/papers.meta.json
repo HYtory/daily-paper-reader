@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-23",
+  "date": "2026-07-23",
+  "generated_at": "2026-07-23T21:36:20",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/23/2607.19555v1-chmas-a-coupled-hierarchical-framework-for-multi-agent-reinforcement-learning",
+      "section": "deep",
+      "title_en": "CHMAS: A Coupled Hierarchical Framework for Multi-Agent Reinforcement Learning",
+      "authors": "Dongming Wang, Jie Xu, Yanyu Zhang, Wei Ren",
+      "date": "2026-07-21",
+      "pdf": "https://arxiv.org/pdf/2607.19555v1",
+      "score": "8.0",
+      "evidence": "多智能体强化学习框架，适用于无人机群协调任务",
+      "tldr": "多智能体强化学习面临全局协调与局部执行的时序平衡挑战。现有分层方法存在单向控制和战略脱离实际的问题。本文提出Coupled Hierarchical Multi-Agent System (CHMAS)，将决策分解为集中式战略规划和分布式战术执行，通过双向信息流和耦合系数λ连接，并采用异步更新协议。理论证明战略层收敛速度为O(log K/√K)；在觅食任务中成功学习空间分区探索策略。该框架为分层MARL提供了理论与实践基础。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-agent reinforcement learning (MARL) systems face fundamental   challenges in balancing global coordination with local execution   across different temporal scales. This paper introduces the Coupled   Hierarchical Multi-Agent System (CHMAS), a novel framework that   decomposes multi-agent decision-making into centralized strategic   planning and distributed tactical execution with bidirectional   information flow. The strategic layer integrates all agents' states   with an exclusive global environmental state to generate guidance   actions every $T$ timesteps, while tactical agents execute   distributed policies augmented by strategic guidance and local   neighborhood observations. Unlike existing hierarchical approaches   with unidirectional control, CHMAS establishes a feedback mechanism   where accumulated tactical rewards influence strategic objectives   through a coupling coefficient $λ$, ensuring strategic plans   remain grounded in tactical feasibility. To address the   non-stationarity inherent in hierarchical learning, we propose an   asynchronous update protocol where strategic parameters update every   $N_f$ tactical episodes, allowing tactical policies to converge to   quasi-stationary points between strategic changes. We present both a   general bi-level formulation capturing full system dynamics and a   tractable additive approximation enabling rigorous analysis.   Theoretical analysis proves that this asynchronous scheme achieves   $\\mathcal{O}(\\log K/\\sqrt{K})$ convergence for the strategic layer   after $K$ strategic updates under standard assumptions. Experimental   validation in a multi-agent foraging domain demonstrates successful   learning of spatially partitioned exploration strategies, with both   layers converging stably despite hierarchical coupling.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/23/2607.18554v1-scalable-policy-optimization-for-networked-multi-agent-reinforcement-learning-with-continuous-state-action-spaces",
+      "section": "quick",
+      "title_en": "Scalable Policy Optimization for Networked Multi-Agent Reinforcement Learning with Continuous State-Action Spaces",
+      "authors": "Dongming Wang, Pengcheng Dai, Wenwu Yu, Wei Ren",
+      "date": "2026-07-20",
+      "pdf": "https://arxiv.org/pdf/2607.18554v1",
+      "score": "7.0",
+      "evidence": "可扩展的多智能体强化学习算法适用于合作任务",
+      "tldr": "针对连续状态动作空间的网络化多智能体强化学习，提出CDCPG算法。每个智能体基于局部邻域维护actor-critic，通过谱随机特征表示学习截断动作值函数，避免了截断导致的核不匹配问题。证明了在指数空间衰减和激励条件下，算法达到O~(ε^{-2})样本复杂度的近似最优解，计算通信复杂度由邻域而非网络大小决定。理论贡献包括局部化Bellman理论、无条件激励界以及自适应邻域规则。",
+      "tags": "query:ui",
+      "abstract_en": "We develop the Continuous Distributed Coupled Policy Gradient (CDCPG) algorithm for cooperative reinforcement learning in networked Markov decision processes with continuous state and action spaces. Each agent maintains a local actor over a bounded graph neighborhood, and a localized least-squares temporal-difference critic evaluates a truncated action-value function through a spectral random-feature representation of the local transition kernel. The analysis makes four contributions. First, the truncated action-value function is constructed as a conditional expectation over the neighborhood, yielding a well-posed localized Bellman theory that removes the continuation-kernel mismatch of naive truncation arguments. Second, we expose a dimensional obstruction to temporal-difference stability for normalized random features and prove an unconditional excitation bound that reduces stability to a symmetric persistence-of-excitation condition, monitorable through an online matrix-concentration certificate. Third, under exponential spatial decay of agent interactions, the excitation condition, and smoothness of the objective, CDCPG drives an averaged per-agent stationarity measure to within any excess $ε$ of an explicitly characterized approximation floor using $\\widetilde{\\mathcal{O}}(ε^{-2})$ shared-oracle samples, and the excess dependence matches the smooth nonconvex first-order rate; per-agent computation and communication are governed by the neighborhood size rather than the network size. Fourth, an adaptive-locality rule selects the radius that balances truncation and graph-decay residuals against the target accuracy. Experiments on a networked linear-quadratic benchmark corroborate the locality and feature-dimension predictions.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

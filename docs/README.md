@@ -6,30 +6,28 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-22
-- 运行时间：2026-07-22 21:32:32 UTC
+- 最新运行日期：2026-07-23
+- 运行时间：2026-07-23 21:36:14 UTC
 - 运行状态：成功
-- 本次总论文数：3
-- 精读区：0
-- 速读区：3
+- 本次总论文数：2
+- 精读区：1
+- 速读区：1
 
 ### 今日简报（AI）
-今日收录3篇速读论文，聚焦连续动作协同任务、无人机视觉-语言-动作模型及参数化动作强化学习。重点阅读《A Self-Evolving Default Action for Cooperative Tasks》和《CosFly-VLA》中关于空间感知与自演化默认动作的创新思路。下一步可深入探索连续动作空间下的协作机制如何迁移至实际无人机控制场景。
-- 详情：[/202607/22/README](/202607/22/README)
+1) 今日精读8.0分耦合分层多智能体框架CHMAS，速读7.0分连续状态动作空间的可扩展策略优化。
+2) 最值得关注：CHMAS的层级耦合机制与网络化多智能体系统的连续控制方案。
+3) 建议深入理解分层协作设计原则，并尝试将可扩展优化方法迁移到实际分布式任务中验证。
+- 详情：[/202607/23/README](/202607/23/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [CHMAS: A Coupled Hierarchical Framework for Multi-Agent Reinforcement Learning](/202607/23/2607.19555v1-chmas-a-coupled-hierarchical-framework-for-multi-agent-reinforcement-learning)  
+   标签：评分：8.0/10、query:ui
+   evidence：多智能体强化学习框架，适用于无人机群协调任务
 
 ### 速读区论文标签
-1. [A Self-Evolving Default Action for Cooperative Tasks with Continuous Action Space](/202607/22/2607.18597v1-a-self-evolving-default-action-for-cooperative-tasks-with-continuous-action-space)  
+1. [Scalable Policy Optimization for Networked Multi-Agent Reinforcement Learning with Continuous State-Action Spaces](/202607/23/2607.18554v1-scalable-policy-optimization-for-networked-multi-agent-reinforcement-learning-with-continuous-state-action-spaces)  
    标签：评分：7.0/10、query:ui
-   evidence：适用于无人机群的多智能体强化学习框架
-2. [CosFly-VLA: A Spatially Aware Vision-Language-Action Model for UAV Tracking](/202607/22/2607.15004v1-cosfly-vla-a-spatially-aware-vision-language-action-model-for-uav-tracking)  
-   标签：评分：6.0/10、query:ui
-   evidence：处理无人机动态目标跟踪，与追逃博弈相关
-3. [Comparative Study of Multi-Agent Actor-Critic Algorithms in Parameterized Action Reinforcement Learning](/202607/22/2607.19117v1-comparative-study-of-multi-agent-actor-critic-algorithms-in-parameterized-action-reinforcement-learning)  
-   标签：评分：6.0/10、query:ui
-   evidence：多智能体演员-评论家算法在参数化动作强化学习中的比较，可用于无人机群
+   evidence：可扩展的多智能体强化学习算法适用于合作任务
 
 
 <div class="dpr-home-promo-card">
