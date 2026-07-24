@@ -6,28 +6,31 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-23
-- 运行时间：2026-07-23 21:36:14 UTC
+- 最新运行日期：2026-07-24
+- 运行时间：2026-07-24 21:26:56 UTC
 - 运行状态：成功
 - 本次总论文数：2
-- 精读区：1
-- 速读区：1
+- 精读区：0
+- 速读区：2
 
 ### 今日简报（AI）
-1) 今日精读8.0分耦合分层多智能体框架CHMAS，速读7.0分连续状态动作空间的可扩展策略优化。
-2) 最值得关注：CHMAS的层级耦合机制与网络化多智能体系统的连续控制方案。
-3) 建议深入理解分层协作设计原则，并尝试将可扩展优化方法迁移到实际分布式任务中验证。
-- 详情：[/202607/23/README](/202607/23/README)
+今日速读2篇论文，聚焦连续动作空间协同任务的自演化默认动作机制与基于CBF强化学习的多无人机安全运输。
+
+最值得关注的是《A Self-Evolving Default Action for Cooperative Tasks》（7.0分），提出智能体自主进化默认策略方法；《Safe and Scalable Multi-Drone Payload Transport》（6.0分）则展示了零样本仿真到真实迁移的CBF强化学习方案。
+
+建议优先精读第一篇，理解其自演化机制如何提升连续动作空间协同效率；第二篇适合关注无人机运输安全与可扩展性实践的读者参考。
+- 详情：[/202607/24/README](/202607/24/README)
 
 ### 精读区论文标签
-1. [CHMAS: A Coupled Hierarchical Framework for Multi-Agent Reinforcement Learning](/202607/23/2607.19555v1-chmas-a-coupled-hierarchical-framework-for-multi-agent-reinforcement-learning)  
-   标签：评分：8.0/10、query:ui
-   evidence：多智能体强化学习框架，适用于无人机群协调任务
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Scalable Policy Optimization for Networked Multi-Agent Reinforcement Learning with Continuous State-Action Spaces](/202607/23/2607.18554v1-scalable-policy-optimization-for-networked-multi-agent-reinforcement-learning-with-continuous-state-action-spaces)  
+1. [A Self-Evolving Default Action for Cooperative Tasks with Continuous Action Space](/202607/24/2607.18597v2-a-self-evolving-default-action-for-cooperative-tasks-with-continuous-action-space)  
    标签：评分：7.0/10、query:ui
-   evidence：可扩展的多智能体强化学习算法适用于合作任务
+   evidence：自演化默认动作的连续动作空间多智能体强化学习，可用于多无人机围捕
+2. [Safe and Scalable Multi-Drone Payload Transport via CBF-based Reinforcement Learning with Zero-Shot Sim-to-Real Transfer](/202607/24/2607.20665v1-safe-and-scalable-multi-drone-payload-transport-via-cbf-based-reinforcement-learning-with-zero-shot-sim-to-real-transfer)  
+   标签：评分：6.0/10、query:ui
+   evidence：基于CBF强化学习的多无人机协同运输，方法可迁移至协同围捕
 
 
 <div class="dpr-home-promo-card">

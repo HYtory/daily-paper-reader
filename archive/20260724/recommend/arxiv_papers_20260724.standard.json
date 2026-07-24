@@ -1,0 +1,94 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-24T21:25:57.924488+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.18597v2",
+      "source": "arxiv",
+      "title": "A Self-Evolving Default Action for Cooperative Tasks with Continuous Action Space",
+      "abstract": "Counterfactual credit assignment has proven effective in multi-agent reinforcement learning (MARL) for discrete action spaces, yet its extension to continuous-action cooperative tasks remains challenging. Existing methods that approximate the counterfactual baseline via Monte Carlo sampling often introduce bias into policy gradients and fail to guarantee convergence to local optima, as the sampled actions may not have been sufficiently trained. To address these limitations, we propose SAFE, a novel MARL framework that employs a counterfactual baseline conditioned on a self-evolving default action sampled from each agent's experience buffer. This design naturally extends to continuous action spaces without relying on additional simulations, reward models, or environment-specific prior knowledge. The baseline accurately quantifies each agent's contribution, and introduces no bias into the deterministic policy gradient, ensuring convergence to local optima. Extensive experiments on cooperative vehicular tasks demonstrate that SAFE consistently outperforms state-of-the-art models.",
+      "authors": [
+        "Shuangyao Huang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-07-21T00:17:55+00:00",
+      "link": "https://arxiv.org/pdf/2607.18597v2",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "self-evolving default action for continuous cooperative MARL, applicable to multi-UAV encirclement",
+      "llm_evidence_cn": "自演化默认动作的连续动作空间多智能体强化学习，可用于多无人机围捕",
+      "llm_evidence": "自演化默认动作的连续动作空间多智能体强化学习，可用于多无人机围捕",
+      "canonical_evidence": "自演化默认动作的连续动作空间多智能体强化学习，可用于多无人机围捕",
+      "llm_tldr_en": "Proposes SAFE, a MARL framework with a counterfactual baseline conditioned on self-evolving default actions, enabling efficient credit assignment in continuous action spaces.",
+      "llm_tldr_cn": "针对连续动作空间协同任务中反事实基线估计偏差的问题，提出了SAFE框架。该框架利用自演化默认动作（从各智能体经验缓冲池采样）构造反事实基线，避免了蒙特卡洛采样带来的偏差，无需额外仿真即可自然扩展到连续动作空间。理论分析表明SAFE能保证收敛到局部最优。该方法有望应用于多无人机协同围捕等连续控制场景。",
+      "llm_tldr": "针对连续动作空间协同任务中反事实基线估计偏差的问题，提出了SAFE框架。该框架利用自演化默认动作（从各智能体经验缓冲池采样）构造反事实基线，避免了蒙特卡洛采样带来的偏差，无需额外仿真即可自然扩展到连续动作空间。理论分析表明SAFE能保证收敛到局部最优。该方法有望应用于多无人机协同围捕等连续控制场景。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.20665v1",
+      "source": "arxiv",
+      "title": "Safe and Scalable Multi-Drone Payload Transport via CBF-based Reinforcement Learning with Zero-Shot Sim-to-Real Transfer",
+      "abstract": "Multi-drone payload transportation has emerged as a promising research paradigm with potential applications in construction, logistics, and disaster response. However, the complex coupled dynamics among drones, cables, and payloads pose significant challenges, and existing approaches remain limited in safety and scalability, particularly in dynamic and unstructured environments. In this work, we propose a learning-based framework for safe and scalable multi-drone cooperative payload transport. We introduce a minimal 2D abstraction that preserves the task-relevant drone-payload coupling required for coordination and safety, while remaining computationally efficient for large-scale learning. Using domain randomization over team size and physical parameters, we train a fully distributed policy via Discrete Graph Control Barrier Function Proximal Policy Optimization (DGPPO), enabling robust zero-shot sim-to-real transfer without fine-tuning. Extensive real-world evaluations demonstrate that a single learned policy generalizes across varying team sizes and task scenarios. Furthermore, multi-group hardware experiments show that the same policy can safely operate in dynamic environments, where other drone teams act as moving obstacles. These results indicate that the proposed framework enables efficient, safe, and scalable multi-drone payload transportation with strong generalization to complex real-world conditions.",
+      "authors": [
+        "Jaeyoun Choi",
+        "Oswin So",
+        "Songyuan Zhang",
+        "Cooper Taylor",
+        "Chuchu Fan"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.MA",
+        "eess.SY"
+      ],
+      "published": "2026-07-22T19:01:57+00:00",
+      "link": "https://arxiv.org/pdf/2607.20665v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-drone cooperative transport with CBF-based RL, transferable to cooperative encirclement",
+      "llm_evidence_cn": "基于CBF强化学习的多无人机协同运输，方法可迁移至协同围捕",
+      "llm_evidence": "基于CBF强化学习的多无人机协同运输，方法可迁移至协同围捕",
+      "canonical_evidence": "基于CBF强化学习的多无人机协同运输，方法可迁移至协同围捕",
+      "llm_tldr_en": "Proposes a safe and scalable multi-drone payload transport framework using CBF-based RL, enabling zero-shot sim-to-real transfer. Relevant for multi-UAV cooperative encirclement.",
+      "llm_tldr_cn": "多无人机协同运输面临复杂耦合动力学和安全挑战，现有方法在动态非结构环境中可扩展性不足。本文提出基于控制障碍函数(CBF)的强化学习框架，结合最小化2D抽象保持关键耦合，实现了大规模学习与零样本仿真到真实迁移。实验表明该方法安全可扩展，为多无人机协同围捕提供了可转移的协调与安全控制方法。",
+      "llm_tldr": "多无人机协同运输面临复杂耦合动力学和安全挑战，现有方法在动态非结构环境中可扩展性不足。本文提出基于控制障碍函数(CBF)的强化学习框架，结合最小化2D抽象保持关键耦合，实现了大规模学习与零样本仿真到真实迁移。实验表明该方法安全可扩展，为多无人机协同围捕提供了可转移的协调与安全控制方法。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

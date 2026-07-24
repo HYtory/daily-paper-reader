@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-24",
+  "date": "2026-07-24",
+  "generated_at": "2026-07-24T21:27:04",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/24/2607.18597v2-a-self-evolving-default-action-for-cooperative-tasks-with-continuous-action-space",
+      "section": "quick",
+      "title_en": "A Self-Evolving Default Action for Cooperative Tasks with Continuous Action Space",
+      "authors": "Shuangyao Huang",
+      "date": "2026-07-21",
+      "pdf": "https://arxiv.org/pdf/2607.18597v2",
+      "score": "7.0",
+      "evidence": "自演化默认动作的连续动作空间多智能体强化学习，可用于多无人机围捕",
+      "tldr": "现有反事实信用分配方法在连续动作空间中通过蒙特卡洛采样近似基线，引入偏差且无法保证收敛。为此提出SAFE框架，利用从经验缓冲区采样的自演化默认动作构建反事实基线，无需额外模拟或先验知识。该方法准确量化各智能体贡献，且不引入确定性策略梯度偏差，确保收敛到局部最优。在合作车辆任务中，SAFE显著超越当前最优模型。",
+      "tags": "query:ui",
+      "abstract_en": "Counterfactual credit assignment has proven effective in multi-agent reinforcement learning (MARL) for discrete action spaces, yet its extension to continuous-action cooperative tasks remains challenging. Existing methods that approximate the counterfactual baseline via Monte Carlo sampling often introduce bias into policy gradients and fail to guarantee convergence to local optima, as the sampled actions may not have been sufficiently trained. To address these limitations, we propose SAFE, a novel MARL framework that employs a counterfactual baseline conditioned on a self-evolving default action sampled from each agent's experience buffer. This design naturally extends to continuous action spaces without relying on additional simulations, reward models, or environment-specific prior knowledge. The baseline accurately quantifies each agent's contribution, and introduces no bias into the deterministic policy gradient, ensuring convergence to local optima. Extensive experiments on cooperative vehicular tasks demonstrate that SAFE consistently outperforms state-of-the-art models.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/24/2607.20665v1-safe-and-scalable-multi-drone-payload-transport-via-cbf-based-reinforcement-learning-with-zero-shot-sim-to-real-transfer",
+      "section": "quick",
+      "title_en": "Safe and Scalable Multi-Drone Payload Transport via CBF-based Reinforcement Learning with Zero-Shot Sim-to-Real Transfer",
+      "authors": "Jaeyoun Choi, Oswin So, Songyuan Zhang, Cooper Taylor, Chuchu Fan",
+      "date": "2026-07-22",
+      "pdf": "https://arxiv.org/pdf/2607.20665v1",
+      "score": "6.0",
+      "evidence": "基于CBF强化学习的多无人机协同运输，方法可迁移至协同围捕",
+      "tldr": "多无人机协同运输在建筑、物流和灾后救援中前景广阔，但动态非结构化环境下的安全控制和可扩展性仍是难题。本文提出基于最小2D抽象和离散图控制障碍函数PPO（DGPPO）的学习框架，通过域随机化训练分布式策略，无需微调即可零样本迁移至真实系统。单策略可泛化至不同团队规模（2至8架），并在多组无人机互为动态障碍物的真实实验中安全运行。该成果为高效、安全、可扩展的多无人机运输提供了有效方案，显著提升了在实际复杂环境中的适用性。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-drone payload transportation has emerged as a promising research paradigm with potential applications in construction, logistics, and disaster response. However, the complex coupled dynamics among drones, cables, and payloads pose significant challenges, and existing approaches remain limited in safety and scalability, particularly in dynamic and unstructured environments. In this work, we propose a learning-based framework for safe and scalable multi-drone cooperative payload transport. We introduce a minimal 2D abstraction that preserves the task-relevant drone-payload coupling required for coordination and safety, while remaining computationally efficient for large-scale learning. Using domain randomization over team size and physical parameters, we train a fully distributed policy via Discrete Graph Control Barrier Function Proximal Policy Optimization (DGPPO), enabling robust zero-shot sim-to-real transfer without fine-tuning. Extensive real-world evaluations demonstrate that a single learned policy generalizes across varying team sizes and task scenarios. Furthermore, multi-group hardware experiments show that the same policy can safely operate in dynamic environments, where other drone teams act as moving obstacles. These results indicate that the proposed framework enables efficient, safe, and scalable multi-drone payload transportation with strong generalization to complex real-world conditions.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
