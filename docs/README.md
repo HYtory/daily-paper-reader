@@ -6,31 +6,36 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-24
-- 运行时间：2026-07-24 21:26:56 UTC
+- 最新运行日期：2026-07-25
+- 运行时间：2026-07-25 21:13:19 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：5
 - 精读区：0
-- 速读区：2
+- 速读区：5
 
 ### 今日简报（AI）
-今日速读2篇论文，聚焦连续动作空间协同任务的自演化默认动作机制与基于CBF强化学习的多无人机安全运输。
-
-最值得关注的是《A Self-Evolving Default Action for Cooperative Tasks》（7.0分），提出智能体自主进化默认策略方法；《Safe and Scalable Multi-Drone Payload Transport》（6.0分）则展示了零样本仿真到真实迁移的CBF强化学习方案。
-
-建议优先精读第一篇，理解其自演化机制如何提升连续动作空间协同效率；第二篇适合关注无人机运输安全与可扩展性实践的读者参考。
-- 详情：[/202607/24/README](/202607/24/README)
+今日分享了5篇前沿论文，聚焦于无人机群体协同与动态系统实时控制。重点推荐两篇7.0分工作：一篇提出人群场景下基于在线POMDP的目标拦截规划，另一篇实现GPS与通信拒止环境中的无人机群地面目标保护。建议后续关注无人机自主决策与受限环境下的协同控制研究。
+- 详情：[/202607/25/README](/202607/25/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [A Self-Evolving Default Action for Cooperative Tasks with Continuous Action Space](/202607/24/2607.18597v2-a-self-evolving-default-action-for-cooperative-tasks-with-continuous-action-space)  
+1. [Beyond Fixed Goal Delivery: Online POMDP Planning for Target Interception in Crowds](/202607/25/2607.18517v1-beyond-fixed-goal-delivery-online-pomdp-planning-for-target-interception-in-crowds)  
    标签：评分：7.0/10、query:ui
-   evidence：自演化默认动作的连续动作空间多智能体强化学习，可用于多无人机围捕
-2. [Safe and Scalable Multi-Drone Payload Transport via CBF-based Reinforcement Learning with Zero-Shot Sim-to-Real Transfer](/202607/24/2607.20665v1-safe-and-scalable-multi-drone-payload-transport-via-cbf-based-reinforcement-learning-with-zero-shot-sim-to-real-transfer)  
+   evidence：针对目标拦截的在线POMDP规划，概念上与单无人机拦截相关
+2. [Decentralized UAV Swarms for Ground Target Protection in GPS- and Communication-Denied Environments](/202607/25/2607.20710v1-decentralized-uav-swarms-for-ground-target-protection-in-gps--and-communication-denied-environments)  
+   标签：评分：7.0/10、query:ui
+   evidence：无人机集群用于地面目标保护，直接关联多无人机协同围捕
+3. [Physics-enhanced reinforcement learning for real-time optimal control of dynamical systems](/202607/25/2607.16177v1-physics-enhanced-reinforcement-learning-for-real-time-optimal-control-of-dynamical-systems)  
    标签：评分：6.0/10、query:ui
-   evidence：基于CBF强化学习的多无人机协同运输，方法可迁移至协同围捕
+   evidence：物理增强强化学习用于动力系统控制，适用于无人机飞行控制
+4. [Value-Aware Prediction for Robust Multi-Agent Coordination Under Communication Loss](/202607/25/2607.17914v1-value-aware-prediction-for-robust-multi-agent-coordination-under-communication-loss)  
+   标签：评分：6.0/10、query:ui
+   evidence：多智能体RL协调，可迁移到无人机集群
+5. [Expert Behavior Prior Reinforcement Learning](/202607/25/2607.21302v1-expert-behavior-prior-reinforcement-learning)  
+   标签：评分：6.0/10、query:ui
+   evidence：专家行为先验RL方法可提升无人机拦截训练的样本效率
 
 
 <div class="dpr-home-promo-card">

@@ -1,0 +1,214 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-25T21:11:42.903606+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.18517v1",
+      "source": "arxiv",
+      "title": "Beyond Fixed Goal Delivery: Online POMDP Planning for Target Interception in Crowds",
+      "abstract": "Target interception in crowded environments requires reaching a moving objective while navigating among multiple uncertain human agents. Since human navigation intent is not directly observable, the robot must reason over multiple possible future interaction outcomes. We formulate interception in crowds as a partially observable Markov decision process and solve it online using tree search under a fixed computational budget. In this setting, the action-space structure directly shapes the search tree and how computational effort is allocated. We perform a controlled comparison between a sequential path-speed planner, which first plans a spatial path and then modulates speed along it, and a unified planner that jointly branches over steering and speed within tree search. Across simulations with up to 200 humans, both approaches perform similarly at low crowd density but diverge sharply as density increases. At the highest crowd density, the sequential planner has a safe-interception rate 31 percentage points lower and requires 44% more time than the unified steering-speed planner, revealing a structural limitation of spatial restriction. Project webpage: https://tic-planning.github.io/",
+      "authors": [
+        "Himanshu Gupta",
+        "Kelvin Aladum",
+        "Nisar Ahmed",
+        "Bradley Hayes",
+        "Zachary Sunberg"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-20T21:18:01+00:00",
+      "link": "https://arxiv.org/pdf/2607.18517v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "online POMDP planning for target interception, conceptually relevant to single UAV interception",
+      "llm_evidence_cn": "针对目标拦截的在线POMDP规划，概念上与单无人机拦截相关",
+      "llm_evidence": "针对目标拦截的在线POMDP规划，概念上与单无人机拦截相关",
+      "canonical_evidence": "针对目标拦截的在线POMDP规划，概念上与单无人机拦截相关",
+      "llm_tldr_en": "Formulates target interception in crowds as POMDP and solves online with tree search, offering planning methods transferable to single UAV interception.",
+      "llm_tldr_cn": "在拥挤环境中拦截移动目标需要推理不可观测的人类意图。本文将拦截问题建模为部分可观察马尔可夫决策过程（POMDP），并在固定计算预算下使用树搜索在线求解。对比实验表明，联合路径-速度规划器优于顺序方法，且该规划框架可直接适配到单无人机对移动目标的拦截场景。",
+      "llm_tldr": "在拥挤环境中拦截移动目标需要推理不可观测的人类意图。本文将拦截问题建模为部分可观察马尔可夫决策过程（POMDP），并在固定计算预算下使用树搜索在线求解。对比实验表明，联合路径-速度规划器优于顺序方法，且该规划框架可直接适配到单无人机对移动目标的拦截场景。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.16177v1",
+      "source": "arxiv",
+      "title": "Physics-enhanced reinforcement learning for real-time optimal control of dynamical systems",
+      "abstract": "Reinforcement learning (RL) has recently emerged as a promising feedback control strategy for nonlinear and complex dynamical systems. However, RL algorithms are sample inefficient and require a large number of interaction with the environment to synthesize optimal control strategies. Consequently, applications of RL are typically limited to sparse sensors and actuators due to the curse of dimensionality entailed by the exploration-exploitation dilemma in high-dimensional spaces. In this work, we bridge RL and traditional optimal control for dynamical system with a novel Physics-EnhAnced Reinforcement Learning (PEARL) paradigm tailored to the control of high-dimensional and parametric dynamical systems, exploiting the differentibility of their dynamics. Specifically, PEARL employs an actor-adjoint algorithm that leverages automatic differentiation to compute policy gradients over short horizons and adjoint-based sensitivities of future returns approximated via neural networks, significantly reducing the number of environment interactions, while mitigating long-term gradient instabilities. Through two challenging parametric navigation problems in unsteady flows, we show that PEARL (i) effectively exploits differentiable environments to outperform state-of-the-art RL algorithms, (ii) is sample efficient, thanks to the physics-guided policy learning, (iii) generalizes across multiple scenarios, which is crucial when dealing with parametric systems, and (iv) enables scaling RL to high-dimensional state and action spaces, without requiring low-dimensional state representations or multi-agent strategies.",
+      "authors": [
+        "Matteo Tomasetto",
+        "Nicolò Botteghi",
+        "Gabriele Bruni",
+        "Andrea Manzoni"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "math.OC"
+      ],
+      "published": "2026-07-17T17:56:05+00:00",
+      "link": "https://arxiv.org/pdf/2607.16177v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "physics-enhanced RL for control of dynamical systems, applicable to UAV flight control",
+      "llm_evidence_cn": "物理增强强化学习用于动力系统控制，适用于无人机飞行控制",
+      "llm_evidence": "物理增强强化学习用于动力系统控制，适用于无人机飞行控制",
+      "canonical_evidence": "物理增强强化学习用于动力系统控制，适用于无人机飞行控制",
+      "llm_tldr_en": "Integrates physics knowledge into RL (PEARL) for efficient optimal control of high-dimensional dynamical systems, beneficial for UAV maneuvering.",
+      "llm_tldr_cn": "强化学习在高维动力系统控制中面临样本效率低的问题。本文提出物理增强强化学习（PEARL）范式，利用系统微分信息嵌入策略网络，显著降低交互需求。在多个非线性控制基准上，PEARL实现了快速收敛和鲁棒控制，其将物理先验融入RL的思路可有效应用于无人机快速机动和拦截控制。",
+      "llm_tldr": "强化学习在高维动力系统控制中面临样本效率低的问题。本文提出物理增强强化学习（PEARL）范式，利用系统微分信息嵌入策略网络，显著降低交互需求。在多个非线性控制基准上，PEARL实现了快速收敛和鲁棒控制，其将物理先验融入RL的思路可有效应用于无人机快速机动和拦截控制。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.20710v1",
+      "source": "arxiv",
+      "title": "Decentralized UAV Swarms for Ground Target Protection in GPS- and Communication-Denied Environments",
+      "abstract": "The presence of UAVs in military operations has recently increased, also increasing the demand for defense systems against UAV attacks. UAVs can also be used as countermeasures. Most available methods rely on UAV-to-UAV communication and global positioning. However, such resources may not be available in modern warfare scenarios. To address these limitations, we propose a pipeline for ground-target protection against UAV attacks that employs autonomous swarms of UAVs. We assume a communication- and GPS-denied environment in which the UAVs use onboard sensors to track the target and coordinate as a swarm. We developed Kalman filters to estimate the states of unknown targets and the positions of UAVs in the swarm using only relative measurements. Also, our strategy is to encircle the target of interest to maximize coverage. To achieve that, we propose a decentralized swarm encirclement technique that adapts to the target's motion. Our approach was extensively validated using real robots, demonstrating its effectiveness in detecting, encircling, and intercepting hostile UAVs.",
+      "authors": [
+        "Dimitria Silveria",
+        "Paulo Ricardo Marques de Araujo",
+        "Tiago Nascimento",
+        "Sidney Givigi"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-22T20:26:07+00:00",
+      "link": "https://arxiv.org/pdf/2607.20710v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "UAV swarm for target protection, directly related to multiple UAV cooperative encirclement",
+      "llm_evidence_cn": "无人机集群用于地面目标保护，直接关联多无人机协同围捕",
+      "llm_evidence": "无人机集群用于地面目标保护，直接关联多无人机协同围捕",
+      "canonical_evidence": "无人机集群用于地面目标保护，直接关联多无人机协同围捕",
+      "llm_tldr_en": "Decentralized UAV swarm protects ground targets against hostile UAVs without GPS/communication, relevant to multi-UAV cooperative encirclement.",
+      "llm_tldr_cn": "针对GPS和通信拒止环境下的地面目标防护，本文提出利用自主无人机集群进行拦截。通过机载传感器跟踪未知目标，并使用卡尔曼滤波器估计状态与位置，实现无通信协调。该方法直接服务于多无人机围捕/拦截任务，虽未使用强化学习，但问题定义高度匹配。",
+      "llm_tldr": "针对GPS和通信拒止环境下的地面目标防护，本文提出利用自主无人机集群进行拦截。通过机载传感器跟踪未知目标，并使用卡尔曼滤波器估计状态与位置，实现无通信协调。该方法直接服务于多无人机围捕/拦截任务，虽未使用强化学习，但问题定义高度匹配。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.17914v1",
+      "source": "arxiv",
+      "title": "Value-Aware Prediction for Robust Multi-Agent Coordination Under Communication Loss",
+      "abstract": "Robust multi-agent coordination relies heavily on inter-agent communication, which is frequently disrupted by physical and environmental constraints in real-world deployments. To maintain operation during these intermittent communication failures, agents can employ internal prediction models to estimate missing shared state information. However, predictors trained with standard reconstruction objectives treat all transitions equally. In a Reinforcement Learning context, this forces the model to waste capacity learning stochastic exploration noise and the outdated dynamics of suboptimal policies. In this paper, we propose a value-aware extension of Multi-Agent Observation Sharing under Communication Dropout (MARO) to patch communication gaps; we refer to this method as Value-Aware MARO. By dynamically weighting the predictor's loss function using advantage estimates derived from the underlying actor-critic architecture, our objective explicitly couples the predictor's learning process to the policy's evolution. This formulation focuses the model's capacity on the intentional, high-return dynamics actively reinforced by the agents. We evaluate our framework on several tasks within the Multi-Agent Particle Environment under varying communication reliability levels. Experimental results demonstrate that our approach maintains performance under declining communication reliability, particularly below 40%. While our method performs comparably in tasks where the baseline already maintains high coordination, our value-aware weighting effectively prevents the performance collapse observed in the standard predictor during high-attrition scenarios. In these environments, our method achieves an average improvement in mean returns of more than 20% and reduces performance variance by a mean of 64.7% compared to the standard unweighted baseline.",
+      "authors": [
+        "Kemal Devrim Kafadar",
+        "Eren Özaltun",
+        "Mahmud Efnan Şanlı",
+        "Feyza Orak",
+        "Emirhan Gazi",
+        "Kubilay Kağan Kömürcü",
+        "Nazım Kemal Üre"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-07-20T13:13:22+00:00",
+      "link": "https://arxiv.org/pdf/2607.17914v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent RL coordination under communication loss, transferable to UAV swarm",
+      "llm_evidence_cn": "多智能体RL协调，可迁移到无人机集群",
+      "llm_evidence": "多智能体RL协调，可迁移到无人机集群",
+      "canonical_evidence": "多智能体RL协调，可迁移到无人机集群",
+      "llm_tldr_en": "Value-aware prediction improves multi-agent coordination under communication dropout, relevant to multi-agent RL for UAV swarms.",
+      "llm_tldr_cn": "针对多智能体通信中断下的协调问题，本文提出价值感知预测方法，扩展了MARO框架。通过避免对随机探索噪声和次优策略的学习资源浪费，提升了预测模型的样本效率。该方法可迁移至无人机集群协同围捕场景中的通信缺失情况，增强鲁棒性。",
+      "llm_tldr": "针对多智能体通信中断下的协调问题，本文提出价值感知预测方法，扩展了MARO框架。通过避免对随机探索噪声和次优策略的学习资源浪费，提升了预测模型的样本效率。该方法可迁移至无人机集群协同围捕场景中的通信缺失情况，增强鲁棒性。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.21302v1",
+      "source": "arxiv",
+      "title": "Expert Behavior Prior Reinforcement Learning",
+      "abstract": "Behavior prior reinforcement learning (BPRL) has emerged as a promising paradigm to improve sample efficiency in online reinforcement learning (RL) by leveraging policy priors derived from offline demonstrations. However, most existing BPRL methods rely on static offline datasets, which often suffer from low data diversity and suboptimal trajectory quality. This reliance restricts the effectiveness of policy priors, hindering both policy exploitation and stability during online training. Consequently, agents are prone to inefficient exploration and unstable learning dynamics. To address these limitations, we deviate from existing offline pre-training methods and propose an Expert Behavior Prior (EBP) algorithm. Specifically, we introduce a Q-guided conditional variational autoencoder (Q-CVAE) that learns to generate expert policy priors directly from the online replay buffer. This enables the generation of high-value actions for guiding policy updates without relying on pre-collected expert trajectories. To further enhance policy exploitation, we propose an expert policy guidance (EPG) mechanism that selects expert actions from a generative support set, and we integrate a policy gradient correction (PGC) module to harmonize Q-guidance with expert supervision, promoting stable and consistent policy improvement. Extensive experiments conducted on robotic control (Gym, PyBullet) and industrial control (DMControl) benchmarks demonstrate that EBP significantly outperforms state-of-the-art online RL algorithms, achieving higher sample efficiency and more stable convergence.",
+      "authors": [
+        "Gong Gao",
+        "Weidong Zhao",
+        "Xianhui Liu",
+        "Ning Jia"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-23T13:26:57+00:00",
+      "link": "https://arxiv.org/pdf/2607.21302v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "expert behavior prior RL method can improve sample efficiency for UAV interception training",
+      "llm_evidence_cn": "专家行为先验RL方法可提升无人机拦截训练的样本效率",
+      "llm_evidence": "专家行为先验RL方法可提升无人机拦截训练的样本效率",
+      "canonical_evidence": "专家行为先验RL方法可提升无人机拦截训练的样本效率",
+      "llm_tldr_en": "Proposes EBP algorithm with Q-guided CVAE to generate online expert priors, improving sample efficiency for RL, potentially useful for UAV interception.",
+      "llm_tldr_cn": "行为先验强化学习依赖静态离线条目，存在多样性低和质量差的问题。本文提出专家行为先验（EBP）算法，利用Q引导条件变分自编码器在线生成专家轨迹，从而增强策略先验的有效性。在连续控制任务中，EBP显著提升了样本效率和最终性能，其思想可迁移至无人机拦截任务的在线训练。",
+      "llm_tldr": "行为先验强化学习依赖静态离线条目，存在多样性低和质量差的问题。本文提出专家行为先验（EBP）算法，利用Q引导条件变分自编码器在线生成专家轨迹，从而增强策略先验的有效性。在连续控制任务中，EBP显著提升了样本效率和最终性能，其思想可迁移至无人机拦截任务的在线训练。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
