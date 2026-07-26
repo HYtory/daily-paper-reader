@@ -6,36 +6,36 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-25
-- 运行时间：2026-07-25 21:13:19 UTC
+- 最新运行日期：2026-07-26
+- 运行时间：2026-07-26 21:10:16 UTC
 - 运行状态：成功
 - 本次总论文数：5
 - 精读区：0
 - 速读区：5
 
 ### 今日简报（AI）
-今日分享了5篇前沿论文，聚焦于无人机群体协同与动态系统实时控制。重点推荐两篇7.0分工作：一篇提出人群场景下基于在线POMDP的目标拦截规划，另一篇实现GPS与通信拒止环境中的无人机群地面目标保护。建议后续关注无人机自主决策与受限环境下的协同控制研究。
-- 详情：[/202607/25/README](/202607/25/README)
+今日共速读3篇多智能体强化学习论文，聚焦无人驾驶车辆在比赛、无信号路口等场景的协调控制。最值得关注的是《Dreamer-CPC》的世界模型消息学习方案以及《Deep RL-Guided MPC》的防超车控制方法。建议初学者从“基于模型预测控制与强化学习结合”的方向切入，理解智能体间协同决策的基本逻辑。
+- 详情：[/202607/26/README](/202607/26/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Beyond Fixed Goal Delivery: Online POMDP Planning for Target Interception in Crowds](/202607/25/2607.18517v1-beyond-fixed-goal-delivery-online-pomdp-planning-for-target-interception-in-crowds)  
+1. [Dreamer-CPC: Message Learning with World Models for Decentralized Multi-agent Reinforcement Learning](/202607/26/2607.19809v1-dreamer-cpc-message-learning-with-world-models-for-decentralized-multi-agent-reinforcement-learning)  
    标签：评分：7.0/10、query:ui
-   evidence：针对目标拦截的在线POMDP规划，概念上与单无人机拦截相关
-2. [Decentralized UAV Swarms for Ground Target Protection in GPS- and Communication-Denied Environments](/202607/25/2607.20710v1-decentralized-uav-swarms-for-ground-target-protection-in-gps--and-communication-denied-environments)  
+   evidence：基于世界模型的去中心化多智能体强化学习通信方法
+2. [Deep Reinforcement-Learning-Guided Model Predictive Control for Preventing Overtakes in Autonomous Racing](/202607/26/2607.20973v1-deep-reinforcement-learning-guided-model-predictive-control-for-preventing-overtakes-in-autonomous-racing)  
    标签：评分：7.0/10、query:ui
-   evidence：无人机集群用于地面目标保护，直接关联多无人机协同围捕
-3. [Physics-enhanced reinforcement learning for real-time optimal control of dynamical systems](/202607/25/2607.16177v1-physics-enhanced-reinforcement-learning-for-real-time-optimal-control-of-dynamical-systems)  
+   evidence：使用RL引导MPC进行防御性阻挡，类比于无人机拦截
+3. [Compact Latent Coordination for Autonomous Vehicles at Unsignalized Intersections](/202607/26/2607.21488v1-compact-latent-coordination-for-autonomous-vehicles-at-unsignalized-intersections)  
+   标签：评分：7.0/10、query:ui
+   evidence：多智能体强化学习协调自主代理，可应用于无人机蜂群
+4. [RELIC: Revealed Principles for Learning Interpretable Composable Skills in Multi-Agent Planning](/202607/26/2607.16745v1-relic-revealed-principles-for-learning-interpretable-composable-skills-in-multi-agent-planning)  
    标签：评分：6.0/10、query:ui
-   evidence：物理增强强化学习用于动力系统控制，适用于无人机飞行控制
-4. [Value-Aware Prediction for Robust Multi-Agent Coordination Under Communication Loss](/202607/25/2607.17914v1-value-aware-prediction-for-robust-multi-agent-coordination-under-communication-loss)  
+   evidence：基于公开原则学习可解释可组合技能的多智能体规划框架
+5. [On Optimal Event-Triggered Distributed Control for Stochastic Multi-Agent Systems via Reinforcement Learning](/202607/26/2607.17635v1-on-optimal-event-triggered-distributed-control-for-stochastic-multi-agent-systems-via-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：多智能体RL协调，可迁移到无人机集群
-5. [Expert Behavior Prior Reinforcement Learning](/202607/25/2607.21302v1-expert-behavior-prior-reinforcement-learning)  
-   标签：评分：6.0/10、query:ui
-   evidence：专家行为先验RL方法可提升无人机拦截训练的样本效率
+   evidence：基于强化学习的随机多智能体系统分布式控制
 
 
 <div class="dpr-home-promo-card">

@@ -1,0 +1,211 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-26T21:08:45.122745+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.19809v1",
+      "source": "arxiv",
+      "title": "Dreamer-CPC: Message Learning with World Models for Decentralized Multi-agent Reinforcement Learning",
+      "abstract": "In multi-agent reinforcement learning (MARL), inter-agent communication is effective for improving performance under partial observability. Representation learning-based approaches enable decentralized agents to learn messages grounded in their own observations, but they rely only on current observations and cannot convey information accumulated over time. We propose Dreamer-CPC, a decentralized model-based MARL method that integrates message learning based on Collective Predictive Coding (CPC) into the world model of DreamerV3. Each agent independently maintains a world model and a message module, and infers and exchanges messages from the latent states of the world model that reflect the history of past observations and actions. We evaluated Dreamer-CPC in two environments: Observer, a non-cooperative information-sharing task, and CatchApple, a newly introduced task in which task-relevant observations are temporarily missing. In both environments, Dreamer-CPC outperformed IPPO-CPC, an existing CPC-based method that generates messages from current observations, as well as no-communication baselines. In particular, in CatchApple, Dreamer-CPC achieved 4 to 5 times the episode return of IPPO-CPC, demonstrating effective coordination where other methods fail due to missing observations. These results suggest that communication grounded in the latent dynamics of world models can support decentralized decision-making when current observations alone are insufficient.",
+      "authors": [
+        "Taisuke Takayama",
+        "Naoto Yoshida",
+        "Tadahiro Taniguchi"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.LG"
+      ],
+      "published": "2026-07-22T06:42:03+00:00",
+      "link": "https://arxiv.org/pdf/2607.19809v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "decentralized model-based MARL with world models for communication",
+      "llm_evidence_cn": "基于世界模型的去中心化多智能体强化学习通信方法",
+      "llm_evidence": "基于世界模型的去中心化多智能体强化学习通信方法",
+      "canonical_evidence": "基于世界模型的去中心化多智能体强化学习通信方法",
+      "llm_tldr_en": "Dreamer-CPC integrates world models with collective predictive coding for decentralized MARL, enabling agents to share latent state histories for improved coordination.",
+      "llm_tldr_cn": "针对去中心化多智能体强化学习中智能体无法传递历史信息的问题，提出Dreamer-CPC方法，将基于集体预测编码的消息学习集成到DreamerV3世界模型中，每个智能体独立维护世界模型并从潜在状态中提取历史信息进行交换。实验表明该方法在部分可观测环境下显著提升了协作性能，为多无人机围捕等任务提供了有效的通信机制。",
+      "llm_tldr": "针对去中心化多智能体强化学习中智能体无法传递历史信息的问题，提出Dreamer-CPC方法，将基于集体预测编码的消息学习集成到DreamerV3世界模型中，每个智能体独立维护世界模型并从潜在状态中提取历史信息进行交换。实验表明该方法在部分可观测环境下显著提升了协作性能，为多无人机围捕等任务提供了有效的通信机制。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.16745v1",
+      "source": "arxiv",
+      "title": "RELIC: Revealed Principles for Learning Interpretable Composable Skills in Multi-Agent Planning",
+      "abstract": "Multi-agent planning becomes substantially harder when agents must improve specialized decision-making skills while keeping their internal implementations private. This regime arises when agents are developed independently, expose different interfaces and capabilities, and must nevertheless coordinate without sharing executable policies. Prior research has largely assumed centralized optimization, shared policy access, or common skill representations, making it poorly suited to privacy-constrained cooperation. We introduce RELIC, a framework for learning interpretable and composable skills via revealed principles. Each agent refines its own programmatic skill through private LLM-guided search, while a trusted orchestrator evaluates proposed updates solely through team-level performance. Successful behaviors are not broadcast as code; instead, they are abstracted into portable principles that other agents can instantiate within their own interfaces and recombine with local strategies. This separates coordination from implementation sharing, enabling cross-agent transfer under heterogeneous skill signatures. RELIC thus introduces a new paradigm for privacy-preserving skill learning and coordination in multi-agent planning.",
+      "authors": [
+        "Nguyen Viet Tuan Kiet",
+        "Bui Dinh Pham",
+        "Duong Quoc Chinh",
+        "Dao Van Tung",
+        "Tran Cong Dao",
+        "Huynh Thi Thanh Binh"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-07-18T10:08:54+00:00",
+      "link": "https://arxiv.org/pdf/2607.16745v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent planning with interpretable composable skills via revealed principles",
+      "llm_evidence_cn": "基于公开原则学习可解释可组合技能的多智能体规划框架",
+      "llm_evidence": "基于公开原则学习可解释可组合技能的多智能体规划框架",
+      "canonical_evidence": "基于公开原则学习可解释可组合技能的多智能体规划框架",
+      "llm_tldr_en": "RELIC enables privacy-constrained multi-agent coordination by learning interpretable composable skills through private LLM-guided search and a trusted orchestrator.",
+      "llm_tldr_cn": "多智能体规划中智能体需独立改进技能且保持内部实现私有，现有集中式方法不适用。提出RELIC框架，每个智能体通过私有LLM引导搜索精炼编程技能，并由可信协调器评估技能组合。该方法支持隐私约束下的协调，为多无人机围捕中的技能分解与组合提供了新思路。",
+      "llm_tldr": "多智能体规划中智能体需独立改进技能且保持内部实现私有，现有集中式方法不适用。提出RELIC框架，每个智能体通过私有LLM引导搜索精炼编程技能，并由可信协调器评估技能组合。该方法支持隐私约束下的协调，为多无人机围捕中的技能分解与组合提供了新思路。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.20973v1",
+      "source": "arxiv",
+      "title": "Deep Reinforcement-Learning-Guided Model Predictive Control for Preventing Overtakes in Autonomous Racing",
+      "abstract": "This paper addresses defensive blocking in autonomous racing, where a vehicle must prevent a faster opponent from overtaking while operating near its dynamic limits. Different from lap-time minimization, we formulate defense as a spatial occupancy regulation problem via a hierarchical reinforcement-learning guided model predictive control framework. A Soft Actor-Critic strategic layer operates in the Frenet domain to generate geometry-aware defensive references, which are embedded into the nonlinear model predictive control formulation as spatial regularization under friction constraints. Evaluated on the Thunderhill West circuit in simulation, the framework increases average overtake time from 8.8 s to 14.6 s while significantly reducing opponent progress. Meanwhile, it allows the vehicle to utilize 83.4% of available tire force. The framework achieves a 33.3 ms mean solve time (13.9 ms std), supporting real-time high-speed adversarial interaction.",
+      "authors": [
+        "Yufei Xi",
+        "Yijie Liao",
+        "Tulga Ersal"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-23T06:50:59+00:00",
+      "link": "https://arxiv.org/pdf/2607.20973v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "RL-guided MPC for defensive blocking, analogous to UAV interception",
+      "llm_evidence_cn": "使用RL引导MPC进行防御性阻挡，类比于无人机拦截",
+      "llm_evidence": "使用RL引导MPC进行防御性阻挡，类比于无人机拦截",
+      "canonical_evidence": "使用RL引导MPC进行防御性阻挡，类比于无人机拦截",
+      "llm_tldr_en": "DRL-guided MPC framework for defensive blocking in autonomous racing, preventing overtakes by regulating spatial occupancy, transferable to UAV interception.",
+      "llm_tldr_cn": "本文针对赛车场景中的防御性阻挡问题，提出分层强化学习引导模型预测控制框架。SAC策略层在Frenet域生成几何感知防御参考，嵌入MPC实现空间占用调节。仿真显示阻挡时间从8.8秒延长至14.6秒。该方法的核心思想可直接迁移至无人机拦截任务，即通过RL引导的规划阻止目标逃脱。",
+      "llm_tldr": "本文针对赛车场景中的防御性阻挡问题，提出分层强化学习引导模型预测控制框架。SAC策略层在Frenet域生成几何感知防御参考，嵌入MPC实现空间占用调节。仿真显示阻挡时间从8.8秒延长至14.6秒。该方法的核心思想可直接迁移至无人机拦截任务，即通过RL引导的规划阻止目标逃脱。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.17635v1",
+      "source": "arxiv",
+      "title": "On Optimal Event-Triggered Distributed Control for Stochastic Multi-Agent Systems via Reinforcement Learning",
+      "abstract": "We propose a reinforcement learning (RL) based optimal distributed control algorithm for the multi-agent systems (MASs) with stochastic uncertainties. Unlike existing methods, during the optimized backstepping design process, we use the actor-critic-identifier structure. The actor neural network is used to reflect control behavior, the critic neural network works to evaluate control performance and the unknown stochastic uncertainties are handled by identifier neural network. Furthermore, a low-pass filter effectively suppresses problems stemming from non-affine nonlinear faults and a hybrid event-triggered control (ETC) strategy is proposed to reduce control frequency. We analyze our algorithm's operation, and we provide a Lyapunov-based stability proof that guarantees all errors are bounded, ensuring precise tracking between the leader and followers. We validate its correctness in a single-axis robotic manipulator simulation and finally, we compare against the non-optimal control algorithm highlighting our optimal control algorithm's operational advantages.",
+      "authors": [
+        "Ziming Wang",
+        "Bingbing Li",
+        "Karl H. Johansson",
+        "Apostolos I. Rikos"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-07-20T07:44:39+00:00",
+      "link": "https://arxiv.org/pdf/2607.17635v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "RL distributed control for stochastic multi-agent systems",
+      "llm_evidence_cn": "基于强化学习的随机多智能体系统分布式控制",
+      "llm_evidence": "基于强化学习的随机多智能体系统分布式控制",
+      "canonical_evidence": "基于强化学习的随机多智能体系统分布式控制",
+      "llm_tldr_en": "Proposes an RL-based optimal distributed control algorithm for stochastic MAS using actor-critic-identifier structure.",
+      "llm_tldr_cn": "针对随机不确定性的多智能体系统，现有分布式控制方法难以处理非仿射非线性故障。本文提出基于强化学习的优化反步控制算法，采用演员-评论家-辨识器结构，结合事件触发策略降低控制频率。理论分析和仿真验证了算法的有效性。该方法可用于多无人机编队围捕任务。",
+      "llm_tldr": "针对随机不确定性的多智能体系统，现有分布式控制方法难以处理非仿射非线性故障。本文提出基于强化学习的优化反步控制算法，采用演员-评论家-辨识器结构，结合事件触发策略降低控制频率。理论分析和仿真验证了算法的有效性。该方法可用于多无人机编队围捕任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.21488v1",
+      "source": "arxiv",
+      "title": "Compact Latent Coordination for Autonomous Vehicles at Unsignalized Intersections",
+      "abstract": "Coordinating autonomous vehicles at unsignalized intersections remains a critical challenge for multi-agent reinforcement learning (MARL) systems, which typically struggle with combinatorial action spaces, reliance on privileged information, or rigid agent designs. We propose Master-Agent Proto-plan System (MAPS), a hierarchical deep reinforcement learning (DRL) architecture in which a centralized Master agent generates a compact, continuous embedding, denoted as proto-plan, that encodes a global coordination strategy. Decentralized Worker agents integrate this embedding with local observations to execute vehicle-specific control, decoupling strategic intent from tactical execution and enabling independent optimization of each module.   As a proof-of-concept evaluation of this coordination mechanism, we test MAPS across 72 intersection configurations in HighwayEnv. MAPS achieves collision-free navigation while significantly reducing average travel time, outperforming state-of-the-art baselines. The learned proto-plans further exhibit robust generalization: a system trained with three agents achieves a 94% success rate when deployed zero-shot to five-agent scenarios, confirming that proto-plan-based hierarchical learning provides a promising framework for multi-vehicle coordination.",
+      "authors": [
+        "Gil Lifshits",
+        "Igal Bilik",
+        "Gilad Katz"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.MA",
+        "cs.RO"
+      ],
+      "published": "2026-07-23T16:28:35+00:00",
+      "link": "https://arxiv.org/pdf/2607.21488v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent RL for coordinating autonomous agents, applicable to UAV swarm",
+      "llm_evidence_cn": "多智能体强化学习协调自主代理，可应用于无人机蜂群",
+      "llm_evidence": "多智能体强化学习协调自主代理，可应用于无人机蜂群",
+      "canonical_evidence": "多智能体强化学习协调自主代理，可应用于无人机蜂群",
+      "llm_tldr_en": "Proposes Master-Agent Proto-plan System (MAPS), a hierarchical DRL architecture that uses a centralized master agent to generate compact latent coordination embeddings for decentralized workers, applied to autonomous vehicle coordination at unsignalized intersections.",
+      "llm_tldr_cn": "该论文提出主智能体原型计划系统（MAPS），一种分层深度强化学习架构。集中式主智能体生成紧凑的潜在协调嵌入，分式工作智能体据此执行车辆控制。在无信号交叉口自动驾驶协调任务中，MAPS显著优于现有方法，其分层解耦策略在协调场景中具有通用性，可迁移至多无人机围捕等任务。",
+      "llm_tldr": "该论文提出主智能体原型计划系统（MAPS），一种分层深度强化学习架构。集中式主智能体生成紧凑的潜在协调嵌入，分式工作智能体据此执行车辆控制。在无信号交叉口自动驾驶协调任务中，MAPS显著优于现有方法，其分层解耦策略在协调场景中具有通用性，可迁移至多无人机围捕等任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
