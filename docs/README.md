@@ -6,36 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-26
-- 运行时间：2026-07-26 21:10:16 UTC
+- 最新运行日期：2026-07-27
+- 运行时间：2026-07-27 21:27:36 UTC
 - 运行状态：成功
-- 本次总论文数：5
-- 精读区：0
-- 速读区：5
+- 本次总论文数：2
+- 精读区：1
+- 速读区：1
 
 ### 今日简报（AI）
-今日共速读3篇多智能体强化学习论文，聚焦无人驾驶车辆在比赛、无信号路口等场景的协调控制。最值得关注的是《Dreamer-CPC》的世界模型消息学习方案以及《Deep RL-Guided MPC》的防超车控制方法。建议初学者从“基于模型预测控制与强化学习结合”的方向切入，理解智能体间协同决策的基本逻辑。
-- 详情：[/202607/26/README](/202607/26/README)
+今日精读1篇、速读1篇，聚焦无人机网络覆盖与跨模态目标跟踪。最值得关注的是《Predictive Lightweight MARL》提出轻量化多智能体强化学习，应对稀疏信令下的弹性覆盖问题（评分8.0）。建议重点理解轻量MARL在无人机编队中的实际应用潜力。
+- 详情：[/202607/27/README](/202607/27/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Predictive Lightweight MARL for Resilient Coverage in Sparse-Signaling Aerial Networks](/202607/27/2607.22109v1-predictive-lightweight-marl-for-resilient-coverage-in-sparse-signaling-aerial-networks)  
+   标签：评分：8.0/10、query:ui
+   evidence：多智能体强化学习用于无人机群
 
 ### 速读区论文标签
-1. [Dreamer-CPC: Message Learning with World Models for Decentralized Multi-agent Reinforcement Learning](/202607/26/2607.19809v1-dreamer-cpc-message-learning-with-world-models-for-decentralized-multi-agent-reinforcement-learning)  
-   标签：评分：7.0/10、query:ui
-   evidence：基于世界模型的去中心化多智能体强化学习通信方法
-2. [Deep Reinforcement-Learning-Guided Model Predictive Control for Preventing Overtakes in Autonomous Racing](/202607/26/2607.20973v1-deep-reinforcement-learning-guided-model-predictive-control-for-preventing-overtakes-in-autonomous-racing)  
-   标签：评分：7.0/10、query:ui
-   evidence：使用RL引导MPC进行防御性阻挡，类比于无人机拦截
-3. [Compact Latent Coordination for Autonomous Vehicles at Unsignalized Intersections](/202607/26/2607.21488v1-compact-latent-coordination-for-autonomous-vehicles-at-unsignalized-intersections)  
-   标签：评分：7.0/10、query:ui
-   evidence：多智能体强化学习协调自主代理，可应用于无人机蜂群
-4. [RELIC: Revealed Principles for Learning Interpretable Composable Skills in Multi-Agent Planning](/202607/26/2607.16745v1-relic-revealed-principles-for-learning-interpretable-composable-skills-in-multi-agent-planning)  
+1. [Cross-Modal UAV Object Tracking: State-Aware Representation Learning and A Unified Benchmark](/202607/27/2607.18768v1-cross-modal-uav-object-tracking-state-aware-representation-learning-and-a-unified-benchmark)  
    标签：评分：6.0/10、query:ui
-   evidence：基于公开原则学习可解释可组合技能的多智能体规划框架
-5. [On Optimal Event-Triggered Distributed Control for Stochastic Multi-Agent Systems via Reinforcement Learning](/202607/26/2607.17635v1-on-optimal-event-triggered-distributed-control-for-stochastic-multi-agent-systems-via-reinforcement-learning)  
-   标签：评分：6.0/10、query:ui
-   evidence：基于强化学习的随机多智能体系统分布式控制
+   evidence：无人机目标跟踪，状态感知表示学习，支持追逃场景
 
 
 <div class="dpr-home-promo-card">

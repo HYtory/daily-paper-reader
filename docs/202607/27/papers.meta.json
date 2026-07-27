@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-27",
+  "date": "2026-07-27",
+  "generated_at": "2026-07-27T21:27:43",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/27/2607.22109v1-predictive-lightweight-marl-for-resilient-coverage-in-sparse-signaling-aerial-networks",
+      "section": "deep",
+      "title_en": "Predictive Lightweight MARL for Resilient Coverage in Sparse-Signaling Aerial Networks",
+      "authors": "Chuan-Chi Lai, Ang-Hsun Tsai",
+      "date": "2026-07-24",
+      "pdf": "https://arxiv.org/pdf/2607.22109v1",
+      "score": "8.0",
+      "evidence": "多智能体强化学习用于无人机群",
+      "tldr": "无人机群在带宽约束和稀疏信令下易出现协调崩溃，影响覆盖弹性。该文提出PL-MARL框架，通过运动学感知推理引擎利用物理先验主动重建邻居轨迹，实现计算与通信的高效权衡。仿真证明，在极端信令稀缺和节点故障下，该方法仍保持优越覆盖和任务连续性。主动推理将结构弹性与信令频率解耦，最小化控制开销，为鲁棒空中协调提供可扩展低延迟解决方案。",
+      "tags": "query:ui",
+      "abstract_en": "This letter proposes the Predictive Lightweight Multi-Agent Reinforcement Learning (PL-MARL) framework to ensure resilient coverage in bandwidth-constrained UAV swarms. To counter coordination collapse caused by sparse signaling and information aging, we introduce a Kinematic-Aware Inference Engine that proactively reconstructs neighbor trajectories via physical priors. This approach enables an efficient computation-for-communication trade-off, decoupling structural resilience from signaling frequency. Simulations confirm that PL-MARL maintains superior coverage and mission continuity under extreme signaling scarcity and node failure. Our results validate proactive inference as a scalable, low-latency solution for robust aerial coordination, effectively minimizing control overhead to preserve spectrum for payload services while ensuring resilience against interference.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/27/2607.18768v1-cross-modal-uav-object-tracking-state-aware-representation-learning-and-a-unified-benchmark",
+      "section": "quick",
+      "title_en": "Cross-Modal UAV Object Tracking: State-Aware Representation Learning and A Unified Benchmark",
+      "authors": "Yun Xiao, Zhihong Hong, Jiandong Jin, Chenglong Li, Jin Tang, Amir Hussain",
+      "date": "2026-07-21",
+      "pdf": "https://arxiv.org/pdf/2607.18768v1",
+      "score": "6.0",
+      "evidence": "无人机目标跟踪，状态感知表示学习，支持追逃场景",
+      "tldr": "无人机跟踪中，可见光与热红外传感器切换导致目标外观和位置突变，现有算法难以适应。提出状态感知表示学习SARLA，通过模态状态感知模块MSARM和空间状态感知模块SSARM分别建模外观与空间相关性，并设计空间偏移预测损失缓解切换影响。自建1079条序列、67万帧的CM-UOT基准，SARLA在20种方法中表现最优。",
+      "tags": "query:ui",
+      "abstract_en": "Unmanned Aerial Vehicle (UAV) object tracking has emerged as a popular research field with broad practical applications. Modern UAVs are increasingly equipped with both visible light and thermal infrared sensors. However, due to constraints in communication bandwidth, computational resources and power consumption, current systems often activate one modality and switch between modalities to maintain robust tracking in complex scenarios. Such modality switch inevitably leads to significant appearance change and sudden spatial shift, posing great challenges for existing tracking algorithms. To handle this problem, we propose a novel State-Aware Representation Learning Approach called SARLA, which perceives the inconsistent modality states of current frame with template and last frame in the target representations to adapt to the sudden changes in both appearance and position, for robust cross-modal object tracking. In particular, we propose the Modality State Aware Representation Module (MSARM) and Spatial State Aware Representation Module (SSARM). MSARM guides the model to learn appearance correlation, bridging the modality gap, while SSARM models cross-frame spatial correlation to mitigate sudden spatial shift impacts. In addition, we design a spatial shift prediction loss to further handle the effects of spatial variation caused by modality switch. To promote the development of this research field, we establish a large-scale video benchmark called CM-UOT, which consists of 1079 cross-modal sequences with an average video length greater than 621 frames and encompasses over 671K frames in total. Extensive experiments on CM-UOT dataset demonstrate the superior performance of the proposed SARLA against 20 excellent tracking methods. The source code, datasets, and evaluation protocols associated with this work are publicly available at: https://github.com/hongsmile365/sarla-.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
