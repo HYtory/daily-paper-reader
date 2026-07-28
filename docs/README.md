@@ -6,26 +6,24 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-27
-- 运行时间：2026-07-27 21:27:36 UTC
+- 最新运行日期：2026-07-28
+- 运行时间：2026-07-28 21:10:22 UTC
 - 运行状态：成功
-- 本次总论文数：2
-- 精读区：1
+- 本次总论文数：1
+- 精读区：0
 - 速读区：1
 
 ### 今日简报（AI）
-今日精读1篇、速读1篇，聚焦无人机网络覆盖与跨模态目标跟踪。最值得关注的是《Predictive Lightweight MARL》提出轻量化多智能体强化学习，应对稀疏信令下的弹性覆盖问题（评分8.0）。建议重点理解轻量MARL在无人机编队中的实际应用潜力。
-- 详情：[/202607/27/README](/202607/27/README)
+今日阅读了一篇关于连续动作空间协作任务的自演化默认行动研究论文。该论文提出一种自适应默认动作机制，可提升多智能体协作效率，值得关注。建议进一步了解其在机器人编队或自动驾驶等实际场景中的应用潜力。
+- 详情：[/202607/28/README](/202607/28/README)
 
 ### 精读区论文标签
-1. [Predictive Lightweight MARL for Resilient Coverage in Sparse-Signaling Aerial Networks](/202607/27/2607.22109v1-predictive-lightweight-marl-for-resilient-coverage-in-sparse-signaling-aerial-networks)  
-   标签：评分：8.0/10、query:ui
-   evidence：多智能体强化学习用于无人机群
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Cross-Modal UAV Object Tracking: State-Aware Representation Learning and A Unified Benchmark](/202607/27/2607.18768v1-cross-modal-uav-object-tracking-state-aware-representation-learning-and-a-unified-benchmark)  
-   标签：评分：6.0/10、query:ui
-   evidence：无人机目标跟踪，状态感知表示学习，支持追逃场景
+1. [A Self-Evolving Default Action for Cooperative Tasks with Continuous Action Space](/202607/28/2607.18597v3-a-self-evolving-default-action-for-cooperative-tasks-with-continuous-action-space)  
+   标签：评分：7.0/10、query:ui
+   evidence：面向连续动作空间合作任务的多智能体强化学习
 
 
 <div class="dpr-home-promo-card">

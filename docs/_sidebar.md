@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-28 <!--dpr-date:20260728-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/28/2607.18597v3-a-self-evolving-default-action-for-cooperative-tasks-with-continuous-action-space" data-sidebar-item="{&quot;title&quot;: &quot;A Self-Evolving Default Action for Cooperative Tasks with Continuous Action Space&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.18597v3-a-self-evolving-default-action-for-cooperative-tasks-with-continuous-action-space&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;面向连续动作空间合作任务的多智能体强化学习&quot;}">A Self-Evolving Default Action for Cooperative Tasks with Continuous Action Space</a>
   * 2026-07-27 <!--dpr-date:20260727-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/27/2607.22109v1-predictive-lightweight-marl-for-resilient-coverage-in-sparse-signaling-aerial-networks" data-sidebar-item="{&quot;title&quot;: &quot;Predictive Lightweight MARL for Resilient Coverage in Sparse-Signaling Aerial Networks&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.22109v1-predictive-lightweight-marl-for-resilient-coverage-in-sparse-signaling-aerial-networks&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;多智能体强化学习用于无人机群&quot;}">Predictive Lightweight MARL for Resilient Coverage in Sparse-Signaling Aerial Networks</a>
