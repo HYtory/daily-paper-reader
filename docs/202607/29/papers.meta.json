@@ -1,0 +1,69 @@
+{
+  "label": "2026-07-29",
+  "date": "2026-07-29",
+  "generated_at": "2026-07-29T21:30:34",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202607/29/2607.25754v1-cooperative-multi-uav-navigation-in-complex-environments-via-systematic-multi-agent-deep-reinforcement-learning",
+      "section": "deep",
+      "title_en": "Cooperative Multi-UAV Navigation in Complex Environments via Systematic Multi-Agent Deep Reinforcement Learning",
+      "authors": "Yu Su, Nabil Aouf",
+      "date": "2026-07-28",
+      "pdf": "https://arxiv.org/pdf/2607.25754v1",
+      "score": "9.0",
+      "evidence": "多智能体深度强化学习用于多无人机协作导航",
+      "tldr": "针对多无人机协同导航面临的局部最优陷阱、稀疏奖励、学习不平衡和跨场景泛化不足等问题，提出系统性多智能体深度强化学习框架。通过记忆感知和惩罚反向传播逃离局部最优，利用分层协作演示缓冲与行为克隆提升稀疏奖励下的学习效率，采用安全感知的课程调度防止灾难性遗忘，并结合结构感知的门控网络与混合专家机制实现零样本跨场景泛化。在混合静态-动态障碍环境中验证，展现了高协作成功率、鲁棒性和动态适应性。",
+      "tags": "query:ui",
+      "abstract_en": "Cooperative navigation of multi-agent UAVs in complex environments faces key challenges including local optima traps, sparse rewards, learning imbalance among agents, and insufficient cross-scenario generalisation. This paper proposes a multi-agent deep reinforcement learning framework that addresses these issues through coordinated exploration, demonstration exploitation, safe curriculum scheduling, and structure-aware generalisation. First, a perception mechanism combining memory of visited states, directional novelty estimates, and penalty backpropagation enables agents to proactively detect and escape local optima. Second, a hierarchical collaborative demonstration buffer with tiered behaviour cloning manages trajectories by degree of team collaboration and applies differential supervision to the actor network, improving demonstration utilisation under sparse collaborative signals. Third, a safety-aware dual-condition curriculum scheduling mechanism reviews mastered scenarios through back-testing and experience pre-filling during training, suppressing catastrophic forgetting while ensuring both task performance and flight safety. For generalisation, local geometric features computed from sensor readings are abstracted into a domain parameter, through which a structure-aware gating network and mixture-of-experts mechanism condition the policy on local structural patterns rather than scenario-specific coordinates, enabling cross-scenario transfer without exposure to the target environment. The framework is further validated under mixed static-dynamic obstacle settings, showing robust adaptability to dynamic disturbances. Simulation results confirm strong performance in collaboration success rate, navigation robustness, zero-shot cross-scenario generalisation, and dynamic environment adaptability.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/29/2607.25728v1-shared-voxel-map-based-cooperative-indoor-uav-guidance-with-a-multi-agent-soft-actor-critic-controller",
+      "section": "deep",
+      "title_en": "Shared Voxel-Map-Based Cooperative Indoor UAV Guidance with a Multi-Agent Soft Actor-Critic Controller",
+      "authors": "Thomas Hickling, Dylan Wynne, Yu Su, Nabil Aouf",
+      "date": "2026-07-28",
+      "pdf": "https://arxiv.org/pdf/2607.25728v1",
+      "score": "8.0",
+      "evidence": "多智能体强化学习实现无人机群协同",
+      "tldr": "针对GNSS拒止室内多无人机协同导航问题，提出共享体素地图世界模型与多智能体SAC控制器框架。多机融合360°LiDAR构建全局占据图，提取局部BEV特征，采用集中训练分散执行策略。仿真中走廊导航成功率达90.3%，真实实验验证双机稳定协作。该方法通过共享空间表示提供了可扩展的协同导航方案。",
+      "tags": "query:ui",
+      "abstract_en": "This paper presents a cooperative indoor UAV guidance framework that combines a shared voxel-map world model with a multi-agent Soft Actor-Critic (MASAC) controller. Multiple drones fuse 360 LiDAR observations into a common world-frame occupancy map, which is converted into a compact bird's-eye-view (BEV) representation and provided to each agent as an ego-aligned local crop. This integrate-in-world, act-in- ego design enables consistent multi-UAV spatial fusion whilst retaining decentralised continuous control. The policy combines BEV map features, near-field obstacle observations, and compact goal and peer-state information within a centralised-training, decentralised-execution framework. In simulation, the learned controller achieves a 90.3% success rate in corridor navigation, outperforming Astar planning, an artificial potential field controller, and a prior guidance method. To address residual sim-to-real mismatch, the simulation-trained policy is further adapted using offline imitation fine-tuning from real-world data. Real-world experiments in GNSS-denied indoor environments demonstrate stable two-UAV cooperative operation across increasingly chal- lenging obstacle layouts. The results show that shared voxel-map representations provide an effective and scalable spatial substrate for learned cooperative indoor UAV guidance.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/29/2607.23734v1-truav-distributed-multi-agent-reinforcement-learning-for-trajectory-planning-and-routing-enhancement-in-uav-aided-iot-enabled-vanets",
+      "section": "quick",
+      "title_en": "TRUAV: Distributed Multi-Agent Reinforcement Learning for Trajectory Planning and Routing Enhancement in UAV-Aided IoT-Enabled VANETs",
+      "authors": "Muhammad Umar Farooq Qaisar, Lin Zhang, Zhen Chen, Wajdy Othman, Shehzad Ashraf Chaudhry, Chang Liu",
+      "date": "2026-07-26",
+      "pdf": "https://arxiv.org/pdf/2607.23734v1",
+      "score": "7.0",
+      "evidence": "分布式MARL用于无人机轨迹规划与路由，与无人机群协同相关",
+      "tldr": "针对无人机辅助VANETs中集中式轨迹规划需要全局信息、难以在密集城区部署的问题，提出TRUAV分布式多智能体强化学习框架。每个无人机利用本地观测和潜在博弈奖励进行独立表格Q学习，实现联合轨迹规划与路由增强。在大规模仿真中，该方法在覆盖率和包传输率上接近集中式深度强化学习，同时显著降低中继延迟并提升能效。为无人机辅助物联网提供了可扩展的分布式解决方案。",
+      "tags": "query:ui",
+      "abstract_en": "Unmanned aerial vehicles (UAVs) have emerged as a key enabler of next-generation Internet of Things (IoT) ecosystems, offering flexible aerial relaying to extend connectivity across dynamic vehicular ad hoc networks (VANETs) in smart city environments. However, conventional centralized approaches for UAV trajectory planning require continuous global network state aggregation, making them impractical under bandwidth and energy constraints typical of dense urban deployments. In this article, we present TRUAV, a distributed multi-agent reinforcement learning framework based on independent tabular Q-learning for joint UAV trajectory planning and routing enhancement in UAV-aided VANETs. Each UAV is equipped with a local Q-learning agent that operates purely on locally observable information, including vehicle density, packet queue states, and neighbor UAV positions, thereby eliminating the need for global state exchange. A potential-game-inspired reward design encourages spatial diversity and routing-aware UAV positioning among interacting agents while accounting for energy consumption. Numerical simulations over a large urban area with 200 mobile vehicles show that the proposed TRUAV framework achieves network coverage and packet delivery ratios comparable to centralized deep reinforcement learning methods, while also improving relay delay and energy efficiency. Finally, we discuss emerging challenges and future research directions for distributed multi-agent UAV-assisted IoT systems.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/29/2607.25985v1-physics-aware-end-to-end-deep-reinforcement-learning-for-quadcopter-control-with-actuator-dynamics",
+      "section": "quick",
+      "title_en": "Physics-Aware End-to-End Deep Reinforcement Learning for Quadcopter Control with Actuator Dynamics",
+      "authors": "Ya-Chia Shen, Woei-Leong Chan",
+      "date": "2026-07-28",
+      "pdf": "https://arxiv.org/pdf/2607.25985v1",
+      "score": "7.0",
+      "evidence": "端到端深度强化学习四旋翼控制方法可应用于单无人机拦截",
+      "tldr": "四旋翼无人机欠驱动特性导致低层级控制困难。提出物理感知的端到端深度强化学习方法，直接输出推力和力矩，在Simulink高保真环境中集成刚体模型、伪逆动作分配及一阶电机动态。对比四种算法发现SAC和TD3稳定性和探索效率最优，PPO样本效率低。强调建模执行器滞后与气动力矩对稳定控制的重要性，并提供可复现基准。",
+      "tags": "query:ui",
+      "abstract_en": "Unmanned aerial vehicles (UAVs), particularly quadcopters, present unique challenges for autonomous control due to their underactuated dynamics: only four available control inputs must govern six degrees of freedom. This paper investigates a physics-aware, end-to-end deep reinforcement learning (DRL) approach that acts directly on low-level body inputs, total thrust and body torques $(T, τ_x, τ_y, τ_z)$, and closes the loop through a high-fidelity Simulink environment. Our simulator integrates a 12-state rigid-body model (MATLAB Level-2 S-Function) with (i) an Action2RPM allocation based on the Moore-Penrose pseudo-inverse of a coefficient matrix derived from thrust and drag terms, and (ii) first-order actuator dynamics for each motor (time constant $T_m = 0.076$ s), including rotor gyroscopic coupling. A shaped reward balances goal-reaching and stability using an exponential position well, attitude penalties, and quadratic velocity costs. Four DRL algorithms, DDPG, TD3, PPO, and SAC, are evaluated in two stages: (S1) thrust-only hover and (S2) hover with pitch torque and a translated goal. Results show that SAC and TD3 achieve superior stability and exploration efficiency, while PPO is less sample-efficient. The study highlights the significance of modeling actuator lags and aerodynamic moments for stable low-level control and provides a reproducible benchmark for quadcopter DRL.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,171 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-29T21:28:37.697999+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2607.25754v1",
+      "source": "arxiv",
+      "title": "Cooperative Multi-UAV Navigation in Complex Environments via Systematic Multi-Agent Deep Reinforcement Learning",
+      "abstract": "Cooperative navigation of multi-agent UAVs in complex environments faces key challenges including local optima traps, sparse rewards, learning imbalance among agents, and insufficient cross-scenario generalisation. This paper proposes a multi-agent deep reinforcement learning framework that addresses these issues through coordinated exploration, demonstration exploitation, safe curriculum scheduling, and structure-aware generalisation. First, a perception mechanism combining memory of visited states, directional novelty estimates, and penalty backpropagation enables agents to proactively detect and escape local optima. Second, a hierarchical collaborative demonstration buffer with tiered behaviour cloning manages trajectories by degree of team collaboration and applies differential supervision to the actor network, improving demonstration utilisation under sparse collaborative signals. Third, a safety-aware dual-condition curriculum scheduling mechanism reviews mastered scenarios through back-testing and experience pre-filling during training, suppressing catastrophic forgetting while ensuring both task performance and flight safety. For generalisation, local geometric features computed from sensor readings are abstracted into a domain parameter, through which a structure-aware gating network and mixture-of-experts mechanism condition the policy on local structural patterns rather than scenario-specific coordinates, enabling cross-scenario transfer without exposure to the target environment. The framework is further validated under mixed static-dynamic obstacle settings, showing robust adaptability to dynamic disturbances. Simulation results confirm strong performance in collaboration success rate, navigation robustness, zero-shot cross-scenario generalisation, and dynamic environment adaptability.",
+      "authors": [
+        "Yu Su",
+        "Nabil Aouf"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-28T14:16:11+00:00",
+      "link": "https://arxiv.org/pdf/2607.25754v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Multi-agent deep RL for cooperative UAV navigation",
+      "llm_evidence_cn": "多智能体深度强化学习用于多无人机协作导航",
+      "llm_evidence": "多智能体深度强化学习用于多无人机协作导航",
+      "canonical_evidence": "多智能体深度强化学习用于多无人机协作导航",
+      "llm_tldr_en": "Proposes a multi-agent deep RL framework addressing local optima, sparse rewards, and generalization for cooperative multi-UAV navigation in complex environments.",
+      "llm_tldr_cn": "针对多无人机在复杂环境中的协作导航面临局部最优、稀疏奖励和学习不平衡等问题，提出一种系统性多智能体深度强化学习框架，通过协调探索、示范利用和课程调度，使无人机能够主动跳出局部最优并提升泛化能力，实验表明该方法有效提升了导航成功率。",
+      "llm_tldr": "针对多无人机在复杂环境中的协作导航面临局部最优、稀疏奖励和学习不平衡等问题，提出一种系统性多智能体深度强化学习框架，通过协调探索、示范利用和课程调度，使无人机能够主动跳出局部最优并提升泛化能力，实验表明该方法有效提升了导航成功率。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.25728v1",
+      "source": "arxiv",
+      "title": "Shared Voxel-Map-Based Cooperative Indoor UAV Guidance with a Multi-Agent Soft Actor-Critic Controller",
+      "abstract": "This paper presents a cooperative indoor UAV guidance framework that combines a shared voxel-map world model with a multi-agent Soft Actor-Critic (MASAC) controller. Multiple drones fuse 360 LiDAR observations into a common world-frame occupancy map, which is converted into a compact bird's-eye-view (BEV) representation and provided to each agent as an ego-aligned local crop. This integrate-in-world, act-in- ego design enables consistent multi-UAV spatial fusion whilst retaining decentralised continuous control. The policy combines BEV map features, near-field obstacle observations, and compact goal and peer-state information within a centralised-training, decentralised-execution framework. In simulation, the learned controller achieves a 90.3% success rate in corridor navigation, outperforming Astar planning, an artificial potential field controller, and a prior guidance method. To address residual sim-to-real mismatch, the simulation-trained policy is further adapted using offline imitation fine-tuning from real-world data. Real-world experiments in GNSS-denied indoor environments demonstrate stable two-UAV cooperative operation across increasingly chal- lenging obstacle layouts. The results show that shared voxel-map representations provide an effective and scalable spatial substrate for learned cooperative indoor UAV guidance.",
+      "authors": [
+        "Thomas Hickling",
+        "Dylan Wynne",
+        "Yu Su",
+        "Nabil Aouf"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-07-28T13:52:12+00:00",
+      "link": "https://arxiv.org/pdf/2607.25728v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent reinforcement learning for UAV swarm cooperation",
+      "llm_evidence_cn": "多智能体强化学习实现无人机群协同",
+      "llm_evidence": "多智能体强化学习实现无人机群协同",
+      "canonical_evidence": "多智能体强化学习实现无人机群协同",
+      "llm_tldr_en": "Proposes a shared voxel-map-based cooperative indoor UAV guidance framework using multi-agent Soft Actor-Critic (MASAC). Multiple drones fuse LiDAR into a common map, enabling decentralized control with centralised training for coordinated navigation.",
+      "llm_tldr_cn": "现有室内多无人机协同导航面临感知融合和分布式控制的挑战。本文提出了一种基于共享体素地图和MASAC的协同框架，多个无人机将360度激光雷达观测融合为通用占据地图，并通过鸟瞰图表示实现去中心化控制。仿真结果表明，该方法实现了高效的多机协同避障与目标导航，为无人机群在复杂室内环境中的协作提供了有效方案。",
+      "llm_tldr": "现有室内多无人机协同导航面临感知融合和分布式控制的挑战。本文提出了一种基于共享体素地图和MASAC的协同框架，多个无人机将360度激光雷达观测融合为通用占据地图，并通过鸟瞰图表示实现去中心化控制。仿真结果表明，该方法实现了高效的多机协同避障与目标导航，为无人机群在复杂室内环境中的协作提供了有效方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.23734v1",
+      "source": "arxiv",
+      "title": "TRUAV: Distributed Multi-Agent Reinforcement Learning for Trajectory Planning and Routing Enhancement in UAV-Aided IoT-Enabled VANETs",
+      "abstract": "Unmanned aerial vehicles (UAVs) have emerged as a key enabler of next-generation Internet of Things (IoT) ecosystems, offering flexible aerial relaying to extend connectivity across dynamic vehicular ad hoc networks (VANETs) in smart city environments. However, conventional centralized approaches for UAV trajectory planning require continuous global network state aggregation, making them impractical under bandwidth and energy constraints typical of dense urban deployments. In this article, we present TRUAV, a distributed multi-agent reinforcement learning framework based on independent tabular Q-learning for joint UAV trajectory planning and routing enhancement in UAV-aided VANETs. Each UAV is equipped with a local Q-learning agent that operates purely on locally observable information, including vehicle density, packet queue states, and neighbor UAV positions, thereby eliminating the need for global state exchange. A potential-game-inspired reward design encourages spatial diversity and routing-aware UAV positioning among interacting agents while accounting for energy consumption. Numerical simulations over a large urban area with 200 mobile vehicles show that the proposed TRUAV framework achieves network coverage and packet delivery ratios comparable to centralized deep reinforcement learning methods, while also improving relay delay and energy efficiency. Finally, we discuss emerging challenges and future research directions for distributed multi-agent UAV-assisted IoT systems.",
+      "authors": [
+        "Muhammad Umar Farooq Qaisar",
+        "Lin Zhang",
+        "Zhen Chen",
+        "Wajdy Othman",
+        "Shehzad Ashraf Chaudhry",
+        "Chang Liu"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.LG"
+      ],
+      "published": "2026-07-26T16:06:08+00:00",
+      "link": "https://arxiv.org/pdf/2607.23734v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Distributed MARL for UAV trajectory planning and routing, relevant to UAV swarm coordination",
+      "llm_evidence_cn": "分布式MARL用于无人机轨迹规划与路由，与无人机群协同相关",
+      "llm_evidence": "分布式MARL用于无人机轨迹规划与路由，与无人机群协同相关",
+      "canonical_evidence": "分布式MARL用于无人机轨迹规划与路由，与无人机群协同相关",
+      "llm_tldr_en": "TRUAV proposes a distributed MARL framework using independent Q-learning for joint UAV trajectory planning and routing in UAV-aided VANETs, addressing bandwidth constraints.",
+      "llm_tldr_cn": "针对集中式无人机轨迹规划在带宽受限城市场景中不可行的问题，提出基于独立表格Q学习的分布式多智能体强化学习框架TRUAV，实现无人机轨迹规划与路由增强的联合优化。仿真表明，TRUAV在降低通信开销的同时提升了网络覆盖和能效，为多无人机协同任务提供了可扩展的分布式MARL方案，其核心思路可应用于无人机群拦截围捕中的轨迹协同优化。",
+      "llm_tldr": "针对集中式无人机轨迹规划在带宽受限城市场景中不可行的问题，提出基于独立表格Q学习的分布式多智能体强化学习框架TRUAV，实现无人机轨迹规划与路由增强的联合优化。仿真表明，TRUAV在降低通信开销的同时提升了网络覆盖和能效，为多无人机协同任务提供了可扩展的分布式MARL方案，其核心思路可应用于无人机群拦截围捕中的轨迹协同优化。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.25985v1",
+      "source": "arxiv",
+      "title": "Physics-Aware End-to-End Deep Reinforcement Learning for Quadcopter Control with Actuator Dynamics",
+      "abstract": "Unmanned aerial vehicles (UAVs), particularly quadcopters, present unique challenges for autonomous control due to their underactuated dynamics: only four available control inputs must govern six degrees of freedom. This paper investigates a physics-aware, end-to-end deep reinforcement learning (DRL) approach that acts directly on low-level body inputs, total thrust and body torques $(T, τ_x, τ_y, τ_z)$, and closes the loop through a high-fidelity Simulink environment. Our simulator integrates a 12-state rigid-body model (MATLAB Level-2 S-Function) with (i) an Action2RPM allocation based on the Moore-Penrose pseudo-inverse of a coefficient matrix derived from thrust and drag terms, and (ii) first-order actuator dynamics for each motor (time constant $T_m = 0.076$ s), including rotor gyroscopic coupling. A shaped reward balances goal-reaching and stability using an exponential position well, attitude penalties, and quadratic velocity costs. Four DRL algorithms, DDPG, TD3, PPO, and SAC, are evaluated in two stages: (S1) thrust-only hover and (S2) hover with pitch torque and a translated goal. Results show that SAC and TD3 achieve superior stability and exploration efficiency, while PPO is less sample-efficient. The study highlights the significance of modeling actuator lags and aerodynamic moments for stable low-level control and provides a reproducible benchmark for quadcopter DRL.",
+      "authors": [
+        "Ya-Chia Shen",
+        "Woei-Leong Chan"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG",
+        "eess.SY"
+      ],
+      "published": "2026-07-28T17:05:47+00:00",
+      "link": "https://arxiv.org/pdf/2607.25985v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "end-to-end DRL for quadcopter control which can be used for single UAV interception",
+      "llm_evidence_cn": "端到端深度强化学习四旋翼控制方法可应用于单无人机拦截",
+      "llm_evidence": "端到端深度强化学习四旋翼控制方法可应用于单无人机拦截",
+      "canonical_evidence": "端到端深度强化学习四旋翼控制方法可应用于单无人机拦截",
+      "llm_tldr_en": "Proposes a physics-aware end-to-end DRL approach for quadcopter control that acts on low-level body inputs, validated in a high-fidelity Simulink simulator.",
+      "llm_tldr_cn": "针对四旋翼无人机欠驱动控制难题，提出一种物理感知的端到端深度强化学习方法。该方法直接输出推力与机体扭矩等底层控制量，并通过高保真Simulink环境训练，集成了刚体模型、动作到旋翼转速映射以及一阶执行器动力学。实验证明该方法能稳定控制无人机并适应执行器动态，为单无人机拦截中的精确机动控制提供了可迁移的DRL解决方案。",
+      "llm_tldr": "针对四旋翼无人机欠驱动控制难题，提出一种物理感知的端到端深度强化学习方法。该方法直接输出推力与机体扭矩等底层控制量，并通过高保真Simulink环境训练，集成了刚体模型、动作到旋翼转速映射以及一阶执行器动力学。实验证明该方法能稳定控制无人机并适应执行器动态，为单无人机拦截中的精确机动控制提供了可迁移的DRL解决方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for single UAV interception",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
