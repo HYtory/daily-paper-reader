@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-30",
+  "date": "2026-07-30",
+  "generated_at": "2026-07-30T21:52:18",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/30/2607.26679v1-uav-swarming-for-air-ground-isac-via-cross-region-cooperation",
+      "section": "quick",
+      "title_en": "UAV Swarming for Air-Ground ISAC via Cross-Region Cooperation",
+      "authors": "Linghui Miao, Shijian Gao",
+      "date": "2026-07-29",
+      "pdf": "https://arxiv.org/pdf/2607.26679v1",
+      "score": "7.0",
+      "evidence": "使用多智能体近端策略优化的无人机集群",
+      "tldr": "空地一体化感知通信中，UAV蜂群面临地面通信需求动态不平衡与感知观测多样性不足的问题。提出跨区域合作框架，通过服务驱动区域划分和自适应握手机制优化通信与感知。基于MAPPO的分布式决策实现了约90%通信QoS，同时将CRB降低约45%。该方案显著增强了UAV蜂群在复杂场景下的协同能力。",
+      "tags": "query:ui",
+      "abstract_en": "To serve the volumetric air-ground space, uncrewed aerial vehicles (UAVs) are urgently needed. Yet, relying on them for integrated sensing and communication (ISAC) introduces two key challenges: 1) dynamic and imbalanced ground communication demand, and 2) limited observation diversity for sensing. To address these issues, a cross-region cooperative framework is designed to coordinate UAV swarms. Specifically, a service-driven regional partitioning scheme is proposed to support traffic-aware UAV communication, and an adaptive handshaking mechanism is introduced to improve cooperative sensing accuracy by mitigating residual inter-region phase errors with controlled synchronization overhead. Based on these designs, a region-level multi-agent proximal policy optimization (MAPPO) framework with centralized training and decentralized execution (CTDE) is developed for cross-region cooperative decision-making. Simulation results demonstrate that the proposed method achieves a communication quality-of-service (QoS) of approximately 90% and reduces the Cramér-Rao bound (CRB) by about 45% compared to conventional baselines.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/30/2607.21876v1-variance-reduced-q-learning-over-static-and-time-varying-networks",
+      "section": "quick",
+      "title_en": "Variance-Reduced Q-Learning over Static and Time-Varying Networks",
+      "authors": "Sreejeet Maity, Feng Zhu, Aritra Mitra, Robert W. Heath",
+      "date": "2026-07-24",
+      "pdf": "https://arxiv.org/pdf/2607.21876v1",
+      "score": "6.0",
+      "evidence": "分布式Q学习算法，线性加速比",
+      "tldr": "针对多智能体分布式协作学习最优状态-动作值函数问题，提出基于epoch的方差缩减分布式Q学习算法VRDQ。智能体在每个epoch内局部估计Bellman最优算子，并通过共识协议交换信息。在静态和时变网络下，算法均达到高概率有限时间收敛，并实现协作线性加速。关键贡献是仅需约O(1)通信量，显著优于先前工作。",
+      "tags": "query:ui",
+      "abstract_en": "We investigate a decentralized reinforcement learning problem involving multiple agents that interact with the same Markov Decision Process (MDP). The agents can exchange information over a network to collectively learn the optimal state-action value function. For this setting, we introduce a novel epoch-based distributed $Q$-learning algorithm called VRDQ, where within each epoch, agents locally estimate the Bellman optimality operator and diffuse information using a consensus-based protocol. For both static and time-varying networks, we establish high-probability finite-time convergence rates for VRDQ that enjoy linear speedups from collaboration. Crucially, we prove that such speedups in sample-complexity require only $\\tilde{O}(1)$ communication, substantially improving upon the communication costs in prior work.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

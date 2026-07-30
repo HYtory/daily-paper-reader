@@ -1,0 +1,92 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-30T21:51:38.333190+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.26679v1",
+      "source": "arxiv",
+      "title": "UAV Swarming for Air-Ground ISAC via Cross-Region Cooperation",
+      "abstract": "To serve the volumetric air-ground space, uncrewed aerial vehicles (UAVs) are urgently needed. Yet, relying on them for integrated sensing and communication (ISAC) introduces two key challenges: 1) dynamic and imbalanced ground communication demand, and 2) limited observation diversity for sensing. To address these issues, a cross-region cooperative framework is designed to coordinate UAV swarms. Specifically, a service-driven regional partitioning scheme is proposed to support traffic-aware UAV communication, and an adaptive handshaking mechanism is introduced to improve cooperative sensing accuracy by mitigating residual inter-region phase errors with controlled synchronization overhead. Based on these designs, a region-level multi-agent proximal policy optimization (MAPPO) framework with centralized training and decentralized execution (CTDE) is developed for cross-region cooperative decision-making. Simulation results demonstrate that the proposed method achieves a communication quality-of-service (QoS) of approximately 90% and reduces the Cramér-Rao bound (CRB) by about 45% compared to conventional baselines.",
+      "authors": [
+        "Linghui Miao",
+        "Shijian Gao"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-07-29T09:30:55+00:00",
+      "link": "https://arxiv.org/pdf/2607.26679v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "UAV swarming with multi-agent proximal policy optimization",
+      "llm_evidence_cn": "使用多智能体近端策略优化的无人机集群",
+      "llm_evidence": "使用多智能体近端策略优化的无人机集群",
+      "canonical_evidence": "使用多智能体近端策略优化的无人机集群",
+      "llm_tldr_en": "This paper proposes a cross-region cooperative framework for UAV swarms to serve air-ground ISAC, using multi-agent proximal policy optimization (MAPPO) for region-level coordination. It addresses dynamic communication demand and limited sensing diversity. The approach improves communication and sensing accuracy through adaptive handshaking.",
+      "llm_tldr_cn": "该论文针对无人机集群在空天地集成感知与通信中的挑战，提出了一种跨区域协作框架。采用多智能体近端策略优化（MAPPO）进行区域级协调，通过服务驱动的区域划分和自适应握手机制，解决了动态通信需求和感知多样性不足的问题。实验表明该方法能有效提升通信效率和感知精度，为无人机群组协同提供了新的强化学习解决方案。",
+      "llm_tldr": "该论文针对无人机集群在空天地集成感知与通信中的挑战，提出了一种跨区域协作框架。采用多智能体近端策略优化（MAPPO）进行区域级协调，通过服务驱动的区域划分和自适应握手机制，解决了动态通信需求和感知多样性不足的问题。实验表明该方法能有效提升通信效率和感知精度，为无人机群组协同提供了新的强化学习解决方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.21876v1",
+      "source": "arxiv",
+      "title": "Variance-Reduced Q-Learning over Static and Time-Varying Networks",
+      "abstract": "We investigate a decentralized reinforcement learning problem involving multiple agents that interact with the same Markov Decision Process (MDP). The agents can exchange information over a network to collectively learn the optimal state-action value function. For this setting, we introduce a novel epoch-based distributed $Q$-learning algorithm called VRDQ, where within each epoch, agents locally estimate the Bellman optimality operator and diffuse information using a consensus-based protocol. For both static and time-varying networks, we establish high-probability finite-time convergence rates for VRDQ that enjoy linear speedups from collaboration. Crucially, we prove that such speedups in sample-complexity require only $\\tilde{O}(1)$ communication, substantially improving upon the communication costs in prior work.",
+      "authors": [
+        "Sreejeet Maity",
+        "Feng Zhu",
+        "Aritra Mitra",
+        "Robert W. Heath"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "eess.SY"
+      ],
+      "published": "2026-07-24T00:24:09+00:00",
+      "link": "https://arxiv.org/pdf/2607.21876v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "decentralized Q-learning algorithm with linear speedup",
+      "llm_evidence_cn": "分布式Q学习算法，线性加速比",
+      "llm_evidence": "分布式Q学习算法，线性加速比",
+      "canonical_evidence": "分布式Q学习算法，线性加速比",
+      "llm_tldr_en": "Introduces VRDQ, a decentralized Q-learning algorithm over networks, achieving linear speedup with low communication cost, applicable to multi-agent UAV systems.",
+      "llm_tldr_cn": "提出一种基于通信网络的分布式Q学习算法VRDQ，在静态和时变网络上实现线性加速比，且通信成本低，为多无人机强化学习协同提供了理论支撑和实用算法。",
+      "llm_tldr": "提出一种基于通信网络的分布式Q学习算法VRDQ，在静态和时变网络上实现线性加速比，且通信成本低，为多无人机强化学习协同提供了理论支撑和实用算法。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
