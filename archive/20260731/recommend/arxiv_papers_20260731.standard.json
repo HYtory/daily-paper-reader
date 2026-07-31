@@ -1,0 +1,446 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-31T21:45:37.543056+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 9,
+    "quick_skim_target": 11,
+    "quick_selected": 9
+  },
+  "deep_dive": [
+    {
+      "id": "2607.25082v1",
+      "source": "arxiv",
+      "title": "PLATO: Pointer Learner for Agent and Task Openness",
+      "abstract": "Open agent systems (OASYS) are increasingly prevalent in real-world domains where the sets of agents and tasks change unpredictably over time. Such openness, including agent openness (AO) and task openness (TO), poses a fundamental challenge to multi-agent reinforcement learning (MARL), which typically assumes fixed state and action spaces. Existing methods address openness only partially: padding and masking approaches introduce artificial bounds, while recent graph-based or hypergraph methods handle one dimension of openness but still depend on restrictive assumptions. In this paper, we introduce Pointer Learner for Agent and Task Openness (PLATO), a pointer-network-based actor combined with a centralized graph neural network (GNN) critic, trained with multi-agent proximal policy optimization under a centralized training and decentralized execution paradigm. Our pointer-based actor outputs distributions directly over the current task set. This directly supports changing action spaces without masking or retraining. Our GNN critic encodes agent-task interactions as a graph that changes shape with task and agent composition. Together, these components consider AO and TO without the boundedness of existing approaches. We formalize PLATO in a Task-and-Agent-Open Markov Game (TaAgO-MG), extending prior task-open formulations, and prove it is well-defined over the resulting unbounded state and action spaces. We evaluate PLATO with the Methods for Open Agent Systems Evaluation Initiative (MOASEI) wildfire suppression domain, an environment designed for open multi-agent system evaluation, and we demonstrate strong performance and more consistent zero-shot generalization than state-of-the-art baselines in OASYS.",
+      "authors": [
+        "Alireza Saleh Abadi",
+        "Leen-Kiat Soh",
+        "Daniel Alan Redder",
+        "Adam Eck",
+        "Prashant Doshi"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-07-27T21:20:13+00:00",
+      "link": "https://arxiv.org/pdf/2607.25082v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent reinforcement learning with pointer networks for open sets of agents and tasks, transferable to UAV swarm coordination",
+      "llm_evidence_cn": "用于开放智能体与任务集合的多智能体强化学习方法，可迁移至无人机集群协同",
+      "llm_evidence": "用于开放智能体与任务集合的多智能体强化学习方法，可迁移至无人机集群协同",
+      "canonical_evidence": "用于开放智能体与任务集合的多智能体强化学习方法，可迁移至无人机集群协同",
+      "llm_tldr_en": "PLATO introduces a pointer-network-based actor and a centralized GNN critic for MARL in open agent systems, enabling policies to handle varying numbers of agents and tasks without fixed action spaces.",
+      "llm_tldr_cn": "开放智能体系统中智能体与任务集合随时间动态变化，这对通常假设固定状态与动作空间的多智能体强化学习构成挑战。现有方法只能部分解决此类开放性问题，本文提出PLATO，即基于指针网络的演员结合集中式图神经网络评论家，通过多智能体代理训练来适应智能体和任务的开放。PLATO能够有效处理变数智能体和任务，为无人机集群在动态环境中的协同围捕提供了可迁移的强化学习框架。",
+      "llm_tldr": "开放智能体系统中智能体与任务集合随时间动态变化，这对通常假设固定状态与动作空间的多智能体强化学习构成挑战。现有方法只能部分解决此类开放性问题，本文提出PLATO，即基于指针网络的演员结合集中式图神经网络评论家，通过多智能体代理训练来适应智能体和任务的开放。PLATO能够有效处理变数智能体和任务，为无人机集群在动态环境中的协同围捕提供了可迁移的强化学习框架。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.26370v1",
+      "source": "arxiv",
+      "title": "Self-Adaptive Learning and Model Predictive Control for Tracking Unknown Dynamics with No Regret",
+      "abstract": "We propose a self-adaptive online learning for control method for tracking unknown target dynamics. The target dynamics can exhibit switching behavior, particularly, a mixture of structured, random, and/or adversarial motion. Such challenging target tracking scenarios arise in applications of dynamic mapping, traffic control, and pursuit evasion, where robots need to track, pursue, or avoid collision with moving landmarks, objects, humans, etc., whose dynamics are unknown. Our method simultaneously learns multiple predictors from scratch, via self-supervised, one-shot, and computationally efficient learning, and adaptively selects the best one to match the observed target behavior. The method enjoys finite-time near-optimality guarantees in expectation, characterized as a function of the learning error of the target dynamics and the frequency that the target dynamics switch. In the absence of both error and switching, the method asymptotically matches the optimal non-causal control policy that knows a priori the target dynamics, i.e., the method enjoys no regret in expectation. In the presence of learning errors and switching, the method degrades gracefully, \\eg when there are errors and no switching, the average regret is proportional to the average learning error and switching times. To prove these guarantees, a novel technical approach is required compared to the existing works that employ RFF-based online learning. We validate our method in Crazyflie simulations and hardware experiments, across target trajectories that vary from structured to random to adversarial, in comparison to non-stochastic, kernel-based, and neural-network-based methods for online learning.",
+      "authors": [
+        "Atharva Navsalkar",
+        "Hongyu Zhou",
+        "Vasileios Tzoumas"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG",
+        "eess.SY"
+      ],
+      "published": "2026-07-29T01:07:28+00:00",
+      "link": "https://arxiv.org/pdf/2607.26370v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "explicitly targets pursuit-evasion scenarios by learning to track unknown target dynamics, relevant to UAV pursuit-evasion",
+      "llm_evidence_cn": "明确面向追逃场景，学习跟踪未知目标动力学，与无人机追逃博弈相关",
+      "llm_evidence": "明确面向追逃场景，学习跟踪未知目标动力学，与无人机追逃博弈相关",
+      "canonical_evidence": "明确面向追逃场景，学习跟踪未知目标动力学，与无人机追逃博弈相关",
+      "llm_tldr_en": "Presenting a self-adaptive online learning and model predictive control method that tracks unknown, switching target dynamics with no-regret, explicitly motivated by pursuit-evasion applications.",
+      "llm_tldr_cn": "目标动力学未知且可能发生切换（结构、随机或对抗性混合）时，传统跟踪方法难以保证性能。本文提出一种自适应的在线学习与控制方法，同时从零学习多个预测器，并通过自适应选择最佳预测器匹配目标行为，用于机器人跟踪、交通控制以及追逃等场景。该方法具有有限时间近似最优性，并且计算高效、无需监督。这些特点使其可直接用于无人机追捕与规避任务，提升对未知运动目标的拦截能力。",
+      "llm_tldr": "目标动力学未知且可能发生切换（结构、随机或对抗性混合）时，传统跟踪方法难以保证性能。本文提出一种自适应的在线学习与控制方法，同时从零学习多个预测器，并通过自适应选择最佳预测器匹配目标行为，用于机器人跟踪、交通控制以及追逃等场景。该方法具有有限时间近似最优性，并且计算高效、无需监督。这些特点使其可直接用于无人机追捕与规避任务，提升对未知运动目标的拦截能力。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.20822v1",
+      "source": "arxiv",
+      "title": "Robust Asynchronous Q-Learning under Reward and State Corruption via Batching",
+      "abstract": "Motivated by reinforcement learning in harsh environments, we consider the problem of learning an optimal policy subject to adversarially corrupted feedback. Specifically, at each time-step, an adversary can perturb both the reward and state observations of the learner following the Huber contamination model. To defend against such data corruption, we propose {\\texttt{BR-Async-Q}}: a novel, epoch-based, robust \\(Q\\)-learning algorithm built upon two key ideas: (i) partitioning the online data stream into batches to reduce variance, and (ii) constructing robust estimates of the Bellman optimality operator using such batched data. We prove a high-probability $\\ell_\\infty$ error bound for {\\texttt{BR-Async-Q}} that matches that for vanilla \\(Q\\)-learning, up to a small additive term that scales with the fraction of corrupted samples. To our knowledge, this provides the first robustness guarantee for asynchronous \\(Q\\)-learning subject to both reward and state corruption. Furthermore, when only rewards are corrupted, the dependence of our algorithm's bound on the corruption fraction is minimax optimal.",
+      "authors": [
+        "Sreejeet Maity",
+        "Aritra Mitra"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "eess.SY"
+      ],
+      "published": "2026-07-23T01:21:05+00:00",
+      "link": "https://arxiv.org/pdf/2607.20822v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Robust Q-learning algorithm that tolerates reward/state corruption; useful for UAV pursuit under noisy sensing",
+      "llm_evidence_cn": "鲁棒Q学习算法可抵抗奖励和状态干扰，适用于无人机追逃中的噪声环境",
+      "llm_evidence": "鲁棒Q学习算法可抵抗奖励和状态干扰，适用于无人机追逃中的噪声环境",
+      "canonical_evidence": "鲁棒Q学习算法可抵抗奖励和状态干扰，适用于无人机追逃中的噪声环境",
+      "llm_tldr_en": "BR-Async-Q is an epoch-based robust Q-learning algorithm that batches data to defend against adversarial reward and state corruption, with performance matching vanilla Q-learning. It provides resilience that could benefit RL-based UAV interception in adversarial settings.",
+      "llm_tldr_cn": "在恶劣环境中强化学习常面临奖励与状态观测被对抗性破坏的问题。该文提出BR-Async-Q算法，将在线数据流分段以降低方差，并利用批数据构造Bellman最优算子的鲁棒估计，给出高概率误差界。在污染模型下，算法误差界与标准Q学习匹配，保障了对抗环境下的可学习性。此类鲁棒方法可增强无人机追逃策略在干扰条件下的稳定性。",
+      "llm_tldr": "在恶劣环境中强化学习常面临奖励与状态观测被对抗性破坏的问题。该文提出BR-Async-Q算法，将在线数据流分段以降低方差，并利用批数据构造Bellman最优算子的鲁棒估计，给出高概率误差界。在污染模型下，算法误差界与标准Q学习匹配，保障了对抗环境下的可学习性。此类鲁棒方法可增强无人机追逃策略在干扰条件下的稳定性。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.21302v1",
+      "source": "arxiv",
+      "title": "Expert Behavior Prior Reinforcement Learning",
+      "abstract": "Behavior prior reinforcement learning (BPRL) has emerged as a promising paradigm to improve sample efficiency in online reinforcement learning (RL) by leveraging policy priors derived from offline demonstrations. However, most existing BPRL methods rely on static offline datasets, which often suffer from low data diversity and suboptimal trajectory quality. This reliance restricts the effectiveness of policy priors, hindering both policy exploitation and stability during online training. Consequently, agents are prone to inefficient exploration and unstable learning dynamics. To address these limitations, we deviate from existing offline pre-training methods and propose an Expert Behavior Prior (EBP) algorithm. Specifically, we introduce a Q-guided conditional variational autoencoder (Q-CVAE) that learns to generate expert policy priors directly from the online replay buffer. This enables the generation of high-value actions for guiding policy updates without relying on pre-collected expert trajectories. To further enhance policy exploitation, we propose an expert policy guidance (EPG) mechanism that selects expert actions from a generative support set, and we integrate a policy gradient correction (PGC) module to harmonize Q-guidance with expert supervision, promoting stable and consistent policy improvement. Extensive experiments conducted on robotic control (Gym, PyBullet) and industrial control (DMControl) benchmarks demonstrate that EBP significantly outperforms state-of-the-art online RL algorithms, achieving higher sample efficiency and more stable convergence.",
+      "authors": [
+        "Gong Gao",
+        "Weidong Zhao",
+        "Xianhui Liu",
+        "Ning Jia"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-23T13:26:57+00:00",
+      "link": "https://arxiv.org/pdf/2607.21302v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Generic RL algorithm using offline demonstration priors to improve sample efficiency, applicable to training single UAV interception policies",
+      "llm_evidence_cn": "利用离线演示先验提升在线RL样本效率的通用算法，可应用于训练单无人机拦截策略",
+      "llm_evidence": "利用离线演示先验提升在线RL样本效率的通用算法，可应用于训练单无人机拦截策略",
+      "canonical_evidence": "利用离线演示先验提升在线RL样本效率的通用算法，可应用于训练单无人机拦截策略",
+      "llm_tldr_en": "Expert Behavior Prior (EBP) algorithm uses Q-guided conditional variational autoencoders to derive behavior priors from diverse demonstrations, improving sample efficiency and stability in online RL, transferable to UAV interception training.",
+      "llm_tldr_cn": "该论文针对现有行为先验强化学习方法依赖静态离线数据、导致数据多样性不足和在线训练不稳定的问题，提出专家行为先验算法。算法利用Q指导的条件变分自编码器从演示中提取策略先验，并在在线训练中动态调整，以提高策略利用效率和训练稳定性。在多个RL基准任务上的实验表明，该方法相比现有BPRL方法具有更优的样本效率和收敛性能。该方法为单无人机拦截等样本稀缺任务的策略训练提供了可迁移的技术路径。",
+      "llm_tldr": "该论文针对现有行为先验强化学习方法依赖静态离线数据、导致数据多样性不足和在线训练不稳定的问题，提出专家行为先验算法。算法利用Q指导的条件变分自编码器从演示中提取策略先验，并在在线训练中动态调整，以提高策略利用效率和训练稳定性。在多个RL基准任务上的实验表明，该方法相比现有BPRL方法具有更优的样本效率和收敛性能。该方法为单无人机拦截等样本稀缺任务的策略训练提供了可迁移的技术路径。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for single UAV interception",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.21302v2",
+      "source": "arxiv",
+      "title": "Expert Behavior Prior Reinforcement Learning",
+      "abstract": "Behavior prior reinforcement learning (BPRL) has emerged as a promising paradigm to improve sample efficiency in online reinforcement learning (RL) by leveraging policy priors derived from offline demonstrations. However, most existing BPRL methods rely on static offline datasets, which often suffer from low data diversity and suboptimal trajectory quality. This reliance restricts the effectiveness of policy priors, hindering both policy exploitation and stability during online training. Consequently, agents are prone to inefficient exploration and unstable learning dynamics. To address these limitations, we deviate from existing offline pre-training methods and propose an Expert Behavior Prior (EBP) algorithm. Specifically, we introduce a Q-guided conditional variational autoencoder (Q-CVAE) that learns to generate expert policy priors directly from the online replay buffer. This enables the generation of high-value actions for guiding policy updates without relying on pre-collected expert trajectories. To further enhance policy exploitation, we propose an expert policy guidance (EPG) mechanism that selects expert actions from a generative support set, and we integrate a policy gradient correction (PGC) module to harmonize Q-guidance with expert supervision, promoting stable and consistent policy improvement. Extensive experiments conducted on robotic control (Gym, PyBullet) and industrial control (DMControl) benchmarks demonstrate that EBP significantly outperforms state-of-the-art online RL algorithms, achieving higher sample efficiency and more stable convergence.",
+      "authors": [
+        "Gong Gao",
+        "Weidong Zhao",
+        "Xianhui Liu",
+        "Ning Jia"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-23T13:26:57+00:00",
+      "link": "https://arxiv.org/pdf/2607.21302v2",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "General RL method with behavior priors; can improve sample efficiency in UAV pursuit/encirclement training",
+      "llm_evidence_cn": "通用强化学习方法，通过行为先验提升样本效率，可用于无人机追逃围捕训练",
+      "llm_evidence": "通用强化学习方法，通过行为先验提升样本效率，可用于无人机追逃围捕训练",
+      "canonical_evidence": "通用强化学习方法，通过行为先验提升样本效率，可用于无人机追逃围捕训练",
+      "llm_tldr_en": "Expert Behavior Prior (EBP) enhances online RL by using Q-guided conditional variational autoencoders to learn behavior priors from diverse experience, improving sample efficiency and learning stability. A general RL improvement applicable to UAV interception tasks.",
+      "llm_tldr_cn": "现有行为先验强化学习依赖静态离线数据，数据多样性与轨迹质量不足，导致在线学习探索低效且不稳定。该文提出专家行为先验算法，利用Q引导的条件变分自编码器动态生成专家行为先验，从而改善在线强化学习的样本效率与稳定性。在连续控制任务中验证了算法优势，可迁移至无人机拦截与围捕等复杂策略学习场景。",
+      "llm_tldr": "现有行为先验强化学习依赖静态离线数据，数据多样性与轨迹质量不足，导致在线学习探索低效且不稳定。该文提出专家行为先验算法，利用Q引导的条件变分自编码器动态生成专家行为先验，从而改善在线强化学习的样本效率与稳定性。在连续控制任务中验证了算法优势，可迁移至无人机拦截与围捕等复杂策略学习场景。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.23565v1",
+      "source": "arxiv",
+      "title": "Anticipatory Risk-Guided Reinforcement Learning for Safe Flight Through Dynamic Clutter",
+      "abstract": "Safe quadrotor navigation in cluttered and dynamic environments depends not only on instantaneous geometric perception, but more critically on anticipating collision risks induced by relative motion. Conventional modular pipelines frequently suffer from perception latency, while end-to-end learning methods relying on implicit scalar rewards often struggle to extract reliable spatio-temporal features without physics-grounded supervision. To address this, we propose an anticipatory risk-guided reinforcement learning framework. Leveraging privileged simulator states, we construct a directionally aligned future collision risk map based on the Closest Point of Approach (CPA). Through an asymmetric actor-critic architecture, the network is trained to self-predict this structured risk, which explicitly guides the visual policy during deployment. A lightweight spatio-temporal encoder extracts motion cues directly from onboard depth sequences, bypassing explicit object tracking or optical flow estimation. Extensive simulated and real-world experiments demonstrate that our method effectively improves safety margins and flight efficiency in dense dynamic clutters compared to existing baselines. Furthermore, the learned policy achieves robust zero-shot Sim-to-Real transfer on a physical quadrotor, relying purely on abstracted spatio-temporal depth sequences and its self-predicted risk priors, validating the effectiveness of our approach and its robust generalization from simulation to reality.",
+      "authors": [
+        "Yuchao Mei",
+        "Guohao Zhang",
+        "Luxia Ai",
+        "Haopeng Chen",
+        "Wenbing Tao"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-07-26T09:31:49+00:00",
+      "link": "https://arxiv.org/pdf/2607.23565v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "RL for quadrotor flight through dynamic clutter, directly relevant to UAV pursuit-evasion navigation",
+      "llm_evidence_cn": "强化学习用于四旋翼动态杂乱环境飞行，直接关联无人机追逃博弈导航",
+      "llm_evidence": "强化学习用于四旋翼动态杂乱环境飞行，直接关联无人机追逃博弈导航",
+      "canonical_evidence": "强化学习用于四旋翼动态杂乱环境飞行，直接关联无人机追逃博弈导航",
+      "llm_tldr_en": "This paper introduces an anticipatory risk-guided RL framework that uses privileged simulator states to build future collision-risk maps from the Closest Point of Approach, trained via an asymmetric actor-critic. It improves safe quadrotor navigation in dynamic environments and offers transferable ideas for UAV pursuit-evasion.",
+      "llm_tldr_cn": "动态杂乱环境中的安全飞行需要预判相对运动带来的碰撞风险，而端到端强化学习常难以提取可靠时空特征。本文提出预期风险引导的强化学习框架，利用特权模拟器状态构造基于最近接近点的方向对齐碰撞风险图，并通过非对称Actor-Critic训练。实验显示该方法在动态飞行测试中显著降低碰撞率并提升成功率。其风险感知思路可迁移至无人机追逃博弈中的主动规避与拦截决策。",
+      "llm_tldr": "动态杂乱环境中的安全飞行需要预判相对运动带来的碰撞风险，而端到端强化学习常难以提取可靠时空特征。本文提出预期风险引导的强化学习框架，利用特权模拟器状态构造基于最近接近点的方向对齐碰撞风险图，并通过非对称Actor-Critic训练。实验显示该方法在动态飞行测试中显著降低碰撞率并提升成功率。其风险感知思路可迁移至无人机追逃博弈中的主动规避与拦截决策。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.26511v1",
+      "source": "arxiv",
+      "title": "Semantic-Aware Temporal Adaptation for UAV Anti-UAV Tracking",
+      "abstract": "UAV Anti-UAV tracking is an emerging low-altitude security task for localizing an adversarial UAV using the onboard camera of a moving observer UAV. It differs from conventional UAV tracking and ground-based Anti-UAV tracking because both the camera platform and the target move simultaneously. This dual-dynamic setting induces rapid viewpoint changes, motion blur, scale variation, and visually similar distractors, making reliable appearance matching difficult. Under such rapidly changing conditions, fixed visual representations are often insufficient because target appearance becomes unreliable and feature distributions may deviate from the training domain. The target language description remains stable across frames and can therefore serve as a semantic anchor for temporal state propagation, while online feature-distribution alignment can reduce video-specific test-time shifts. In this paper, we propose \\emph{SATATrack}, a Semantic-Aware Temporal Adaptation framework for UAV Anti-UAV tracking. SATATrack introduces Semantic-Aware Context Propagation (SACP), which uses the target description to guide temporal context propagation across backbone stages and preserve target identity under rapid appearance changes. An auxiliary contrastive regularizer is used during training to discourage responses to semantically similar background regions. During inference, Temporal-Aware Distribution Alignment (TADA) aligns feature distributions online without updating model parameters, combining recent-frame estimates with training-time statistics for stability. SATATrack achieves state-of-the-art performance on the UAV-Anti-UAV benchmark while remaining competitive in Anti-UAV and UAV object tracking tasks. The code will be available at https://github.com/XiaozhenQiao/SATATrack.",
+      "authors": [
+        "Xiaozhen Qiao",
+        "Da Zhang",
+        "Yubin Guo",
+        "Junyu Gao",
+        "Zhiyuan Zhao",
+        "Xuelong Li"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-29T06:22:03+00:00",
+      "link": "https://arxiv.org/pdf/2607.26511v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "addresses UAV Anti-UAV tracking, a key component for single UAV interception of an adversarial drone",
+      "llm_evidence_cn": "面向无人机反无人机跟踪，是单无人机拦截敌方无人机的重要环节",
+      "llm_evidence": "面向无人机反无人机跟踪，是单无人机拦截敌方无人机的重要环节",
+      "canonical_evidence": "面向无人机反无人机跟踪，是单无人机拦截敌方无人机的重要环节",
+      "llm_tldr_en": "Introduces semantic-aware temporal adaptation for UAV Anti-UAV tracking, using stable language descriptions to handle rapid viewpoint changes and appearance variation in dual-dynamic settings.",
+      "llm_tldr_cn": "无人机反无人机跟踪要求从移动观察者视角定位对抗无人机，双方都运动导致视角剧变、运动模糊和相似干扰。固定视觉表征难以应对这种快速变化。本文利用目标语言描述作为稳定的语义锚点，提出语义感知的时间自适应方法，在动态变化中保持可靠的外观匹配。该方法能够适应特征分布偏移，提升对敌方无人机的持续跟踪能力，为单无人机拦截任务提供关键技术支撑。",
+      "llm_tldr": "无人机反无人机跟踪要求从移动观察者视角定位对抗无人机，双方都运动导致视角剧变、运动模糊和相似干扰。固定视觉表征难以应对这种快速变化。本文利用目标语言描述作为稳定的语义锚点，提出语义感知的时间自适应方法，在动态变化中保持可靠的外观匹配。该方法能够适应特征分布偏移，提升对敌方无人机的持续跟踪能力，为单无人机拦截任务提供关键技术支撑。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.23930v1",
+      "source": "arxiv",
+      "title": "Bridging Reinforcement Learning and Optimal Control via Feasible Action Mapping",
+      "abstract": "Operating constrained dynamical systems requires controllers to efficiently solve complex tasks while enforcing recursive feasibility and safety constraints. To address these competing requirements, we present Feasible Action for Optimal Control (FAOC), a novel control framework integrating Reinforcement Learning (RL) and Optimal Control (OC). The key contribution is a computationally efficient, optimization-based mapping algorithm that transforms the RL agent's action from a static abstract set into a state-dependent feasible parameter set of the Optimal Control Problem (OCP), guaranteeing strict satisfaction of the dynamical system's constraints. Thus, FAOC effectively combines the predictable safety of OC with the flexibility of RL. In contrast to prior work, the abstract action space of the RL agent does not require expert or heuristic design, and the OCP formulation is not compromised by the inability of RL to guarantee feasibility. We apply our approach to real-time motion planning for robot table tennis, which encapsulates these challenges. Via simulated experiments, we show that FAOC outperforms state-of-the-art baselines in both sample efficiency and closed-loop performance.",
+      "authors": [
+        "Stefan Richter",
+        "Alberto Giammarino",
+        "Guillem Torrente",
+        "Sam Blakeman",
+        "Peter Dürr"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "cs.RO"
+      ],
+      "published": "2026-07-27T02:01:14+00:00",
+      "link": "https://arxiv.org/pdf/2607.23930v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "integrates RL with optimal control via a feasible action mapping that enforces safety constraints, applicable to UAV interception control",
+      "llm_evidence_cn": "将强化学习与最优控制结合，通过可行动作映射保证安全性，适用于无人机拦截控制",
+      "llm_evidence": "将强化学习与最优控制结合，通过可行动作映射保证安全性，适用于无人机拦截控制",
+      "canonical_evidence": "将强化学习与最优控制结合，通过可行动作映射保证安全性，适用于无人机拦截控制",
+      "llm_tldr_en": "FAOC integrates reinforcement learning and optimal control by mapping abstract RL actions to state-dependent feasible parameters of an OCP, guaranteeing constraint satisfaction while retaining RL flexibility.",
+      "llm_tldr_cn": "在约束动态系统中，控制器需要在复杂任务中兼顾安全约束与性能。现有RL难以严格保证约束，最优控制又缺乏灵活性。本文提出可行动作映射（FAOC），将RL动作从静态抽象集合高效映射到状态依赖的最优控制问题可行参数集合，严格保证系统约束满足。该方法结合了最优控制的安全性与RL的灵活性，适用于无人机等系统的安全拦截控制，为RL在安全关键任务中的落地提供了新途径。",
+      "llm_tldr": "在约束动态系统中，控制器需要在复杂任务中兼顾安全约束与性能。现有RL难以严格保证约束，最优控制又缺乏灵活性。本文提出可行动作映射（FAOC），将RL动作从静态抽象集合高效映射到状态依赖的最优控制问题可行参数集合，严格保证系统约束满足。该方法结合了最优控制的安全性与RL的灵活性，适用于无人机等系统的安全拦截控制，为RL在安全关键任务中的落地提供了新途径。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.27812v1",
+      "source": "arxiv",
+      "title": "Localization and Pursuit of a Mobile Target using Distance-only Measurements",
+      "abstract": "This paper investigates localization and pursuit of a linearly moving target in a two-dimensional plane using distance measurements only. The distance from the target is estimated from pathloss measurements and is assumed to be noise-free. The proposed system consists of a receiver that is stationed at the origin and a mobile agent. The system does not rely on GPS, angle sensing, or multiple anchor nodes to localize the target. The proposed method first identifies the target quadrant and estimates its position. Consecutive target position estimates are then used to determine the motion vector and update the agent trajectory during pursuit. We show that a maximum of thirteen steps are required to localize the target and determine its motion vector. Simulation results show that the agent can successfully make a transition from search to pursuit phase, and also maintain a bounded tracking error.",
+      "authors": [
+        "Nabarupa Das",
+        "Suvadip Batabyal"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-07-30T07:51:37+00:00",
+      "link": "https://arxiv.org/pdf/2607.27812v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Pursuit of a mobile target using distance-only measurements; directly relevant to pursuit-evasion without RL",
+      "llm_evidence_cn": "基于纯距离测量的移动目标定位与追击，直接相关于追逃问题，但未使用强化学习",
+      "llm_evidence": "基于纯距离测量的移动目标定位与追击，直接相关于追逃问题，但未使用强化学习",
+      "canonical_evidence": "基于纯距离测量的移动目标定位与追击，直接相关于追逃问题，但未使用强化学习",
+      "llm_tldr_en": "A system with a stationary receiver and a mobile agent localizes and pursues a linearly moving target using only distance measurements, requiring at most 13 steps. Though not RL, it addresses the core pursuit-evasion problem using classical estimation.",
+      "llm_tldr_cn": "在无GPS、无测角、无多锚节点的条件下，移动目标定位与追击问题变得复杂。该文提出仅利用距离测量的定位追击方法：接收机固定于原点，经路径损耗估计距离，先判断目标象限并估计位置，再通过连续位置估计运动矢量以更新追击轨迹。理论上最多十三步即可完成定位与运动矢量确定，为低成本追逃系统提供了简洁的非RL解决方案。",
+      "llm_tldr": "在无GPS、无测角、无多锚节点的条件下，移动目标定位与追击问题变得复杂。该文提出仅利用距离测量的定位追击方法：接收机固定于原点，经路径损耗估计距离，先判断目标象限并估计位置，再通过连续位置估计运动矢量以更新追击轨迹。理论上最多十三步即可完成定位与运动矢量确定，为低成本追逃系统提供了简洁的非RL解决方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.25082v2",
+      "source": "arxiv",
+      "title": "PLATO: Pointer Learner for Agent and Task Openness",
+      "abstract": "Open agent systems (OASYS) are increasingly prevalent in real-world domains where the sets of agents and tasks change unpredictably over time. Such openness, including agent openness (AO) and task openness (TO), poses a fundamental challenge to multi-agent reinforcement learning (MARL), which typically assumes fixed state and action spaces. Existing methods address openness only partially: padding and masking approaches introduce artificial bounds, while recent graph-based or hypergraph methods handle one dimension of openness but still depend on restrictive assumptions. In this paper, we introduce Pointer Learner for Agent and Task Openness (PLATO), a pointer-network-based actor combined with a centralized graph neural network (GNN) critic, trained with multi-agent proximal policy optimization under a centralized training and decentralized execution paradigm. Our pointer-based actor outputs distributions directly over the current task set. This directly supports changing action spaces without masking or retraining. Our GNN critic encodes agent-task interactions as a graph that changes shape with task and agent composition. Together, these components consider AO and TO without the boundedness of existing approaches. We formalize PLATO in a Task-and-Agent-Open Markov Game (TaAgO-MG), extending prior task-open formulations, and prove it is well-defined over the resulting unbounded state and action spaces. We evaluate PLATO with the Methods for Open Agent Systems Evaluation Initiative (MOASEI) wildfire suppression domain, an environment designed for open multi-agent system evaluation, and we demonstrate strong performance and more consistent zero-shot generalization than state-of-the-art baselines in OASYS.",
+      "authors": [
+        "Alireza Saleh Abadi",
+        "Leen-Kiat Soh",
+        "Daniel Alan Redder",
+        "Adam Eck",
+        "Prashant Doshi"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-07-27T21:20:13+00:00",
+      "link": "https://arxiv.org/pdf/2607.25082v2",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "MARL for open agent and task spaces",
+      "llm_evidence_cn": "面向开放智能体与任务空间的多智能体强化学习",
+      "llm_evidence": "面向开放智能体与任务空间的多智能体强化学习",
+      "canonical_evidence": "面向开放智能体与任务空间的多智能体强化学习",
+      "llm_tldr_en": "Introduces PLATO, a pointer-network actor with a GNN critic, for multi-agent reinforcement learning under agent and task openness, handling varying numbers of agents and tasks.",
+      "llm_tldr_cn": "开放智能体系统中智能体与任务数量动态变化，传统多智能体强化学习假设固定状态动作空间而难以适用。本文提出PLATO，采用指针网络基的演员与集中式图神经网络评论家，结合多智能体近端策略优化进行训练。该方法有效应对智能体开放与任务开放两个维度，突破填充、掩码等方法的局限。实验证明PLATO在动态开放环境中显著提升了多智能体协同性能。",
+      "llm_tldr": "开放智能体系统中智能体与任务数量动态变化，传统多智能体强化学习假设固定状态动作空间而难以适用。本文提出PLATO，采用指针网络基的演员与集中式图神经网络评论家，结合多智能体近端策略优化进行训练。该方法有效应对智能体开放与任务开放两个维度，突破填充、掩码等方法的局限。实验证明PLATO在动态开放环境中显著提升了多智能体协同性能。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.27967v1",
+      "source": "arxiv",
+      "title": "MARS-RA: Rank Aggregation for Credit Assignment via Multimodal Comparisons in Embodied Multi-Agent Cooperation",
+      "abstract": "Credit assignment is a fundamental challenge in cooperative multi-agent reinforcement learning, particularly in embodied AI settings characterized by limited and delayed feedback as well as dynamically changing numbers of active agents. We propose MARS-RA, a framework that reformulates credit assignment as a rank aggregation problem using contribution-based pairwise comparisons among agents generated by large multimodal models. This shift from absolute to relative estimation ensures robustness against noise and dynamic agent participation, converting comparison results into contribution scores for potential-based reward shaping. We provide theoretical justification for the convergence and robustness of the proposed framework, and show that Shapley values can be used as an interpretive reference. Experimental results on challenging tasks of different types indicate that MARS-RA can guide agents toward effective cooperation.",
+      "authors": [
+        "Dawei Wang",
+        "Di Zhao",
+        "Xinyuan Liu",
+        "Marci Chi Ma",
+        "Xiaoyang Liu",
+        "Chengming Zhou",
+        "Gary Ushaw",
+        "Richard Davison"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-30T10:14:24+00:00",
+      "link": "https://arxiv.org/pdf/2607.27967v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "credit assignment method for cooperative MARL, transferable to multi-UAV swarm coordination",
+      "llm_evidence_cn": "面向协作多智能体强化学习的信用分配方法，可迁移至无人机集群协同",
+      "llm_evidence": "面向协作多智能体强化学习的信用分配方法，可迁移至无人机集群协同",
+      "canonical_evidence": "面向协作多智能体强化学习的信用分配方法，可迁移至无人机集群协同",
+      "llm_tldr_en": "Presents MARS-RA, a framework that recasts credit assignment as rank aggregation using multimodal comparison-based contribution scores for reward shaping in embodied cooperative multi-agent reinforcement learning.",
+      "llm_tldr_cn": "针对协作多智能体强化学习中反馈稀少且延迟、智能体数量动态变化等信用分配难题，提出MARS-RA框架，将信用分配转化为排序聚合问题，利用多模态大模型生成贡献比较结果并转换为势能奖励塑形。理论上证明了收敛性和鲁棒性，实验表明该方法对噪声和动态参与具有稳健性。该框架作为通用MARL信用分配方案，可应用于无人机集群协同等场景。",
+      "llm_tldr": "针对协作多智能体强化学习中反馈稀少且延迟、智能体数量动态变化等信用分配难题，提出MARS-RA框架，将信用分配转化为排序聚合问题，利用多模态大模型生成贡献比较结果并转换为势能奖励塑形。理论上证明了收敛性和鲁棒性，实验表明该方法对噪声和动态参与具有稳健性。该框架作为通用MARL信用分配方案，可应用于无人机集群协同等场景。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
