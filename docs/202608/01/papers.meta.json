@@ -1,0 +1,24 @@
+{
+  "label": "2026-08-01",
+  "date": "2026-08-01",
+  "generated_at": "2026-08-01T21:08:59",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202608/01/2607.23726v1-hierarchical-soft-actor-critic-for-sparse-reward-long-horizon-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Hierarchical Soft Actor-Critic for Sparse-Reward Long-Horizon Reinforcement Learning",
+      "authors": "Zahra Abdalla Elashaal, Afef Hfaiedh, Nahla Khraief, Issmail Ellabib, Giansalvo Cirrincione",
+      "date": "2026-07-26",
+      "pdf": "https://arxiv.org/pdf/2607.23726v1",
+      "score": "6.0",
+      "evidence": "用于稀疏奖励长时域任务的分层SAC方法，可迁移至无人机拦截场景",
+      "tldr": "稀疏奖励长视界强化学习任务面临探索困难。本文提出两层级分层强化学习框架，高层负责策略规划，底层采用连续控制软演员-评论家算法，利用熵正则化策略优化。在搜索救援数据集上训练评估，该框架在高成功率、覆盖效率和收敛性上均优于扁平SAC基线，验证了分层熵正则化策略对长视界稀疏奖励任务的有效性。",
+      "tags": "query:ui",
+      "abstract_en": "Exploration in sparse-reward long-horizon tasks poses significant challenges for reinforcement learning. To address these challenges, we propose a two-level Hierarchical Reinforcement Learning (HRL) framework. The first level handles high-level strategic planning, while the low-level uses the continuous-control Soft Actor-Critic (SAC) algorithm, and they utilize entropy-regularized policy optimization. The proposed framework was trained and evaluated using the Search-and-Rescue-2 (SAR-2) dataset. HRL-SAC effectively addresses sparse-reward long-horizon search problems characterized by delayed rewards and continuous control, and its outperforming the flat SAC baseline reinforcement learning in terms of success rates, coverage efficiency, and convergence. These findings indicate that hierarchical entropy-regularized policies are a promising solution to tackle long-horizon sparse-reward reinforcement learning tasks.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-01 <!--dpr-date:20260801-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/01/2607.23726v1-hierarchical-soft-actor-critic-for-sparse-reward-long-horizon-reinforcement-learning" data-sidebar-item="{&quot;title&quot;: &quot;Hierarchical Soft Actor-Critic for Sparse-Reward Long-Horizon Reinforcement Learning&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.23726v1-hierarchical-soft-actor-critic-for-sparse-reward-long-horizon-reinforcement-learning&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;用于稀疏奖励长时域任务的分层SAC方法，可迁移至无人机拦截场景&quot;}">Hierarchical Soft Actor-Critic for Sparse-Reward Long-Horizon Reinforcement Learning</a>
   * 2026-07-31 <!--dpr-date:20260731-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/31/2607.25082v1-plato-pointer-learner-for-agent-and-task-openness" data-sidebar-item="{&quot;title&quot;: &quot;PLATO: Pointer Learner for Agent and Task Openness&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.25082v1-plato-pointer-learner-for-agent-and-task-openness&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;用于开放智能体与任务集合的多智能体强化学习方法，可迁移至无人机集群协同&quot;}">PLATO: Pointer Learner for Agent and Task Openness</a>
