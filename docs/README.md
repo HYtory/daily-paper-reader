@@ -6,28 +6,28 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-01
-- 运行时间：2026-08-01 21:08:55 UTC
+- 最新运行日期：2026-08-02
+- 运行时间：2026-08-02 21:14:08 UTC
 - 运行状态：成功
 - 本次总论文数：1
 - 精读区：0
 - 速读区：1
 
 ### 今日简报（AI）
-今日速读1篇强化学习论文，聚焦稀疏奖励长时程任务。
+今日速读1篇人形机器人躲避球研究，聚焦安全控制。
 
-值得关注方向：分层Soft Actor-Critic解决长时序决策，评分6.0/10。
+亮点方向：将感知感知的CBF与强化学习结合，实现全身避障安全。
 
-建议后续对比分层RL基线方法，或深入精读该文。
-- 详情：[/202608/01/README](/202608/01/README)
+建议对机器人安全控制感兴趣的读者，花5分钟浏览该CBF-RL框架思路。
+- 详情：[/202608/02/README](/202608/02/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Hierarchical Soft Actor-Critic for Sparse-Reward Long-Horizon Reinforcement Learning](/202608/01/2607.23726v1-hierarchical-soft-actor-critic-for-sparse-reward-long-horizon-reinforcement-learning)  
+1. [PAC-MAN: Perception-Aware CBF-RL for Whole-Body Safety in Humanoid Dodgeball](/202608/02/2607.28623v1-pac-man-perception-aware-cbf-rl-for-whole-body-safety-in-humanoid-dodgeball)  
    标签：评分：6.0/10、query:ui
-   evidence：用于稀疏奖励长时域任务的分层SAC方法，可迁移至无人机拦截场景
+   evidence：基于强化学习的躲避策略，结合控制障碍函数与机载感知，虽为人形机器人场景，但可迁移至无人机追逃博弈
 
 
 <div class="dpr-home-promo-card">

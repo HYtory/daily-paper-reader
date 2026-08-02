@@ -1,0 +1,24 @@
+{
+  "label": "2026-08-02",
+  "date": "2026-08-02",
+  "generated_at": "2026-08-02T21:14:14",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202608/02/2607.28623v1-pac-man-perception-aware-cbf-rl-for-whole-body-safety-in-humanoid-dodgeball",
+      "section": "quick",
+      "title_en": "PAC-MAN: Perception-Aware CBF-RL for Whole-Body Safety in Humanoid Dodgeball",
+      "authors": "Lizhi Yang, Junheng Li, Aaron D. Ames",
+      "date": "2026-07-30",
+      "pdf": "https://arxiv.org/pdf/2607.28623v1",
+      "score": "6.0",
+      "evidence": "基于强化学习的躲避策略，结合控制障碍函数与机载感知，虽为人形机器人场景，但可迁移至无人机追逃博弈",
+      "tldr": "人形机器人在真实躲避球任务中需要全身安全避让，但部署时仅能依赖机载感知。PAC-MAN提出感知感知的CBF-RL框架：训练时将控制屏障函数作为安全引导，提供每个身体链路的距离度量；输入仅为头戴相机分割掩码深度，辅以对抗式运动先验增强闪避策略。在受控的任意链路接触基准上，该方法性能接近拥有精确状态的特权“预言器”；固定相机观测下，联合CBF仅作训练引导时性能下降，而轻量Link-CBF策略零样本部署在Unitree G1实体机器人上，容忍不完美感知，以95%成功率躲过来球，并利用语义分割适应不同球种。这表明将安全约束与感知观测相结合，是实现真实世界全身安全操控的关键路径。",
+      "tags": "query:ui",
+      "abstract_en": "We present PAC-MAN, a perception-aware CBF-RL framework that couples control-barrier safety with deployment-realistic onboard sensing for whole-body humanoid dodgeball. The deployed policy sees the ball only as segmentation-masked depth from a head-mounted camera, while training-time CBF guidance represents clearance to every body link, and an adversarial motion prior regularizes the resulting evasive reflexes. We evaluate on a controlled any-link contact benchmark with seeded throws in two regimes: single throws and a deployment loop in which the robot walks back to its station and recovers between throws. On this benchmark, the policy comes within a few points of a privileged state oracle: a fixed onboard camera alone is adequate for evasion. We find that usable barrier structure depends on perceptual observability: Joint-CBF gives the best performance with accurate ball states, degrades under fixed-camera observations when used only as training guidance, and recovers with a ball-tracking gimbal or privileged runtime filter. We therefore deploy a lightweight Link-CBF policy zero-shot on the Unitree G1 in the real world, where it tolerates imperfect perception, succeeds on 95% of throws, and uses semantic segmentation to dodge different balls.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

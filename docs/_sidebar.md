@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-02 <!--dpr-date:20260802-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/02/2607.28623v1-pac-man-perception-aware-cbf-rl-for-whole-body-safety-in-humanoid-dodgeball" data-sidebar-item="{&quot;title&quot;: &quot;PAC-MAN: Perception-Aware CBF-RL for Whole-Body Safety in Humanoid Dodgeball&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.28623v1-pac-man-perception-aware-cbf-rl-for-whole-body-safety-in-humanoid-dodgeball&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;基于强化学习的躲避策略，结合控制障碍函数与机载感知，虽为人形机器人场景，但可迁移至无人机追逃博弈&quot;}">PAC-MAN: Perception-Aware CBF-RL for Whole-Body Safety in Humanoid Dodgeball</a>
   * 2026-08-01 <!--dpr-date:20260801-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/01/2607.23726v1-hierarchical-soft-actor-critic-for-sparse-reward-long-horizon-reinforcement-learning" data-sidebar-item="{&quot;title&quot;: &quot;Hierarchical Soft Actor-Critic for Sparse-Reward Long-Horizon Reinforcement Learning&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.23726v1-hierarchical-soft-actor-critic-for-sparse-reward-long-horizon-reinforcement-learning&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;用于稀疏奖励长时域任务的分层SAC方法，可迁移至无人机拦截场景&quot;}">Hierarchical Soft Actor-Critic for Sparse-Reward Long-Horizon Reinforcement Learning</a>

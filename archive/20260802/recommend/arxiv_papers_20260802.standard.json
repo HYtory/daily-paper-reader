@@ -1,0 +1,55 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-02T21:13:23.847948+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.28623v1",
+      "source": "arxiv",
+      "title": "PAC-MAN: Perception-Aware CBF-RL for Whole-Body Safety in Humanoid Dodgeball",
+      "abstract": "We present PAC-MAN, a perception-aware CBF-RL framework that couples control-barrier safety with deployment-realistic onboard sensing for whole-body humanoid dodgeball. The deployed policy sees the ball only as segmentation-masked depth from a head-mounted camera, while training-time CBF guidance represents clearance to every body link, and an adversarial motion prior regularizes the resulting evasive reflexes. We evaluate on a controlled any-link contact benchmark with seeded throws in two regimes: single throws and a deployment loop in which the robot walks back to its station and recovers between throws. On this benchmark, the policy comes within a few points of a privileged state oracle: a fixed onboard camera alone is adequate for evasion. We find that usable barrier structure depends on perceptual observability: Joint-CBF gives the best performance with accurate ball states, degrades under fixed-camera observations when used only as training guidance, and recovers with a ball-tracking gimbal or privileged runtime filter. We therefore deploy a lightweight Link-CBF policy zero-shot on the Unitree G1 in the real world, where it tolerates imperfect perception, succeeds on 95% of throws, and uses semantic segmentation to dodge different balls.",
+      "authors": [
+        "Lizhi Yang",
+        "Junheng Li",
+        "Aaron D. Ames"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-07-30T17:59:35+00:00",
+      "link": "https://arxiv.org/pdf/2607.28623v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "RL-based evasion with control barrier functions and onboard perception, transferable to UAV pursuit-evasion despite humanoid domain",
+      "llm_evidence_cn": "基于强化学习的躲避策略，结合控制障碍函数与机载感知，虽为人形机器人场景，但可迁移至无人机追逃博弈",
+      "llm_evidence": "基于强化学习的躲避策略，结合控制障碍函数与机载感知，虽为人形机器人场景，但可迁移至无人机追逃博弈",
+      "canonical_evidence": "基于强化学习的躲避策略，结合控制障碍函数与机载感知，虽为人形机器人场景，但可迁移至无人机追逃博弈",
+      "llm_tldr_en": "PAC-MAN couples control-barrier safety with segmentation-masked depth RL for humanoid dodgeball, achieving evasion strong enough to nearly match a privileged oracle.",
+      "llm_tldr_cn": "人形机器人躲避球需要全身安全，但部署时仅能依赖机载感知。PAC-MAN框架将控制障碍函数与强化学习结合，利用分割掩码深度图像作为观测，并引入对抗运动先验来正则化躲避反射。在受控接触基准上，该策略的性能接近使用特权状态的Oracle，表明固定机载相机即可支撑有效躲避。该方法为追逃博弈中的规避策略提供了一种感知-安全耦合的强化学习范例，可借鉴到无人机等平台。",
+      "llm_tldr": "人形机器人躲避球需要全身安全，但部署时仅能依赖机载感知。PAC-MAN框架将控制障碍函数与强化学习结合，利用分割掩码深度图像作为观测，并引入对抗运动先验来正则化躲避反射。在受控接触基准上，该策略的性能接近使用特权状态的Oracle，表明固定机载相机即可支撑有效躲避。该方法为追逃博弈中的规避策略提供了一种感知-安全耦合的强化学习范例，可借鉴到无人机等平台。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
