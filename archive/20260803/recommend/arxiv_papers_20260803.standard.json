@@ -1,0 +1,96 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-03T20:20:53.232441+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.29203v1",
+      "source": "arxiv",
+      "title": "MROPE: A Multi-Robot Safe Cooperative Strategy via combined Predictive Safety Filters and Ellipse-based Constraint Compression",
+      "abstract": "Deploying drone swarms to track a dynamic target in cluttered environments presents severe computational and safety challenges. We propose MROPE, a hierarchical strategy that decouples the cooperative monitoring mission from strict local safety requirements. To overcome the computational bottlenecks typical of dense spaces, our approach dynamically aggregates complex obstacle geometries into a single safe bounding ellipse for each drone. Methodologically, this architecture is realized by combining distributed aggregative optimization for high-level swarm coordination, a decentralized consensus scheme for the safe area computation, and local Predictive Safety Filters (PSF) for real-time collision avoidance. Virtual and real-world experiments validate the framework, demonstrating superior real-time efficiency and scalability compared to centralized approaches.",
+      "authors": [
+        "Alice Rosetti",
+        "Lorenzo Pichierri",
+        "Domenico Cappello",
+        "Fabrizio Schiano",
+        "Giuseppe Notarstefano"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "eess.SY"
+      ],
+      "published": "2026-07-31T09:22:04+00:00",
+      "link": "https://arxiv.org/pdf/2607.29203v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-robot cooperative tracking of a dynamic target",
+      "llm_evidence_cn": "多机器人协同追踪动态目标",
+      "llm_evidence": "多机器人协同追踪动态目标",
+      "canonical_evidence": "多机器人协同追踪动态目标",
+      "llm_tldr_en": "Presents MROPE, a hierarchical multi-robot safe cooperative strategy using distributed aggregative optimization, decentralized consensus, and predictive safety filters for tracking a dynamic target in cluttered environments.",
+      "llm_tldr_cn": "针对杂乱环境中无人机群追踪动态目标带来的计算与安全挑战，提出MROPE分层策略，将协同监控任务与局部安全解耦，通过分布式聚集优化协调集群，用去中心化共识计算安全区域，并采用预测性安全滤波保证实时避碰；实验表明该方法在保障安全的同时实现了高效协同，为多机器人围捕与追踪提供了新的思路。",
+      "llm_tldr": "针对杂乱环境中无人机群追踪动态目标带来的计算与安全挑战，提出MROPE分层策略，将协同监控任务与局部安全解耦，通过分布式聚集优化协调集群，用去中心化共识计算安全区域，并采用预测性安全滤波保证实时避碰；实验表明该方法在保障安全的同时实现了高效协同，为多机器人围捕与追踪提供了新的思路。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.26040v1",
+      "source": "arxiv",
+      "title": "Reinformed Dreamer: An Asymmetric World Model Efficiently Trained through Latent Guidance",
+      "abstract": "Much like humans benefit from guidance while learning, reinforcement learning algorithms may benefit from additional supervision beyond rewards. Leveraging additional information during training to learn better representations and behaviors has been the focus of asymmetric reinforcement learning. This learning paradigm has proven effective under partial observability when additional state information is available, but also under full observability when more refined state information is available. Focusing on model-based reinforcement learning, we study the effect of asymmetric learning on observation representations and on privileged information representations. First, we identify a limitation in the privileged information representations learned by an asymmetric model-based algorithm known as the Informed Dreamer. Then, we propose a novel asymmetric representation learning objective using latent guidance, resulting in a new algorithm called the Reinformed Dreamer. Experiments across several benchmarks show a more consistent improvement over Dreamer than previous asymmetric approaches.",
+      "authors": [
+        "Gaspard Lambrechts",
+        "Adrien Bolland",
+        "Daniel Ebi",
+        "Damien Ernst"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "published": "2026-07-28T17:49:29+00:00",
+      "link": "https://arxiv.org/pdf/2607.26040v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Asymmetric world-model RL with latent guidance improves sample efficiency, useful for training UAV pursuit-evasion policies",
+      "llm_evidence_cn": "基于潜在引导的非对称世界模型强化学习可提升样本效率，适用于无人机追逃策略训练",
+      "llm_evidence": "基于潜在引导的非对称世界模型强化学习可提升样本效率，适用于无人机追逃策略训练",
+      "canonical_evidence": "基于潜在引导的非对称世界模型强化学习可提升样本效率，适用于无人机追逃策略训练",
+      "llm_tldr_en": "Proposes Reinformed Dreamer, an asymmetric model-based RL method that uses latent guidance to efficiently train world models, improving sample efficiency and representation learning.",
+      "llm_tldr_cn": "在无人机拦截与围捕等任务中，强化学习需要大量与环境交互，样本效率是关键难题。本文提出Reinformed Dreamer，一种通过潜在引导高效训练的非对称世界模型方法。该方法利用额外的潜在信息引导模型学习，改善观测表征和特权信息表征。实验显示该方法在提升样本效率的同时保持了较好的策略性能。这为无人机追逃等任务中的高效RL训练提供了新的工具。",
+      "llm_tldr": "在无人机拦截与围捕等任务中，强化学习需要大量与环境交互，样本效率是关键难题。本文提出Reinformed Dreamer，一种通过潜在引导高效训练的非对称世界模型方法。该方法利用额外的潜在信息引导模型学习，改善观测表征和特权信息表征。实验显示该方法在提升样本效率的同时保持了较好的策略性能。这为无人机追逃等任务中的高效RL训练提供了新的工具。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

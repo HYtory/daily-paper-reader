@@ -6,28 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-02
-- 运行时间：2026-08-02 21:14:08 UTC
+- 最新运行日期：2026-08-03
+- 运行时间：2026-08-03 20:23:37 UTC
 - 运行状态：成功
-- 本次总论文数：1
-- 精读区：0
+- 本次总论文数：2
+- 精读区：1
 - 速读区：1
 
 ### 今日简报（AI）
-今日速读1篇人形机器人躲避球研究，聚焦安全控制。
-
-亮点方向：将感知感知的CBF与强化学习结合，实现全身避障安全。
-
-建议对机器人安全控制感兴趣的读者，花5分钟浏览该CBF-RL框架思路。
-- 详情：[/202608/02/README](/202608/02/README)
+今日聚焦多机器人安全协同策略，另速读一篇世界模型研究。最值得看的是8.0分精读：结合预测安全滤波器与椭圆约束压缩，提升多机器人协同安全性。建议优先深入该安全控制方向，后续可关注其实际部署可行性。
+- 详情：[/202608/03/README](/202608/03/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [MROPE: A Multi-Robot Safe Cooperative Strategy via combined Predictive Safety Filters and Ellipse-based Constraint Compression](/202608/03/2607.29203v1-mrope-a-multi-robot-safe-cooperative-strategy-via-combined-predictive-safety-filters-and-ellipse-based-constraint-compression)  
+   标签：评分：8.0/10、query:ui
+   evidence：多机器人协同追踪动态目标
 
 ### 速读区论文标签
-1. [PAC-MAN: Perception-Aware CBF-RL for Whole-Body Safety in Humanoid Dodgeball](/202608/02/2607.28623v1-pac-man-perception-aware-cbf-rl-for-whole-body-safety-in-humanoid-dodgeball)  
+1. [Reinformed Dreamer: An Asymmetric World Model Efficiently Trained through Latent Guidance](/202608/03/2607.26040v1-reinformed-dreamer-an-asymmetric-world-model-efficiently-trained-through-latent-guidance)  
    标签：评分：6.0/10、query:ui
-   evidence：基于强化学习的躲避策略，结合控制障碍函数与机载感知，虽为人形机器人场景，但可迁移至无人机追逃博弈
+   evidence：基于潜在引导的非对称世界模型强化学习可提升样本效率，适用于无人机追逃策略训练
 
 
 <div class="dpr-home-promo-card">
