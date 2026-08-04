@@ -6,26 +6,33 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-03
-- 运行时间：2026-08-03 20:23:37 UTC
+- 最新运行日期：2026-08-04
+- 运行时间：2026-08-04 20:32:10 UTC
 - 运行状态：成功
-- 本次总论文数：2
-- 精读区：1
-- 速读区：1
+- 本次总论文数：4
+- 精读区：0
+- 速读区：4
 
 ### 今日简报（AI）
-今日聚焦多机器人安全协同策略，另速读一篇世界模型研究。最值得看的是8.0分精读：结合预测安全滤波器与椭圆约束压缩，提升多机器人协同安全性。建议优先深入该安全控制方向，后续可关注其实际部署可行性。
-- 详情：[/202608/03/README](/202608/03/README)
+今日速读4篇论文，聚焦学习型运动规划与强化学习控制方向，暂无精读。最值得关注的是动态环境学习式运动规划综述（7.0分），其涵盖基础算法到新兴范式；另可留意约束强化学习与超网络多任务控制。建议普通读者优先浏览运动规划综述，快速把握领域脉络。
+- 详情：[/202608/04/README](/202608/04/README)
 
 ### 精读区论文标签
-1. [MROPE: A Multi-Robot Safe Cooperative Strategy via combined Predictive Safety Filters and Ellipse-based Constraint Compression](/202608/03/2607.29203v1-mrope-a-multi-robot-safe-cooperative-strategy-via-combined-predictive-safety-filters-and-ellipse-based-constraint-compression)  
-   标签：评分：8.0/10、query:ui
-   evidence：多机器人协同追踪动态目标
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Reinformed Dreamer: An Asymmetric World Model Efficiently Trained through Latent Guidance](/202608/03/2607.26040v1-reinformed-dreamer-an-asymmetric-world-model-efficiently-trained-through-latent-guidance)  
+1. [Learning-Based Motion Planning for Dynamic Environments: From Foundational Algorithms to Emerging Paradigms](/202608/04/2608.00625v1-learning-based-motion-planning-for-dynamic-environments-from-foundational-algorithms-to-emerging-paradigms)  
+   标签：评分：7.0/10、query:ui
+   evidence：动态环境下学习型运动规划综述，涵盖多智能体交互，与无人机追逃相关
+2. [Constrained Reinforcement Learning Using Successor Representations](/202608/04/2607.24057v1-constrained-reinforcement-learning-using-successor-representations)  
    标签：评分：6.0/10、query:ui
-   evidence：基于潜在引导的非对称世界模型强化学习可提升样本效率，适用于无人机追逃策略训练
+   evidence：基于后继表示的约束RL，可迁移到无人机控制的安全约束场景
+3. [Learning Adaptive Multi-Task Guidance, Navigation, and Control via Hypernetworks](/202608/04/2607.24292v1-learning-adaptive-multi-task-guidance-navigation-and-control-via-hypernetworks)  
+   标签：评分：6.0/10、query:ui
+   evidence：超网络多任务强化学习用于制导导航控制，可适配无人机拦截与围捕策略
+4. [Embodied Passive Aeroacoustic Perception Enables Relative Sensing and Pursuit Between Aerial Robots](/202608/04/2608.00401v1-embodied-passive-aeroacoustic-perception-enables-relative-sensing-and-pursuit-between-aerial-robots)  
+   标签：评分：6.0/10、query:ui
+   evidence：基于被动气动声学感知实现单无人机对另一无人机的跟随，可用于追捕拦截
 
 
 <div class="dpr-home-promo-card">

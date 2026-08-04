@@ -1,0 +1,69 @@
+{
+  "label": "2026-08-04",
+  "date": "2026-08-04",
+  "generated_at": "2026-08-04T20:32:16",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202608/04/2608.00625v1-learning-based-motion-planning-for-dynamic-environments-from-foundational-algorithms-to-emerging-paradigms",
+      "section": "quick",
+      "title_en": "Learning-Based Motion Planning for Dynamic Environments: From Foundational Algorithms to Emerging Paradigms",
+      "authors": "Zongyuan Shen, Shalabh Gupta, Shancheng Zhao, Dehua Zhou, Gao Wang, Rui Cheng, Yaming Ou, Zhongqiang Ren, Yikui Zhai, C. L. Philip Chen",
+      "date": "2026-08-01",
+      "pdf": "https://arxiv.org/pdf/2608.00625v1",
+      "score": "7.0",
+      "evidence": "动态环境下学习型运动规划综述，涵盖多智能体交互，与无人机追逃相关",
+      "tldr": "动态环境中的运动规划是机器人学核心难题，目标是在移动障碍、不确定预测与多智能体交互下生成安全高效轨迹。本综述聚焦2015至2025年间学习驱动的代表性进展，按学习在规划流程中的角色提出全新分类，涵盖直接策略学习、学习增强的经典规划、混合规划与训练增强四类。深入剖析观测表示、预测不确定性、交互建模、规划器集成、安全约束及训练策略等关键因素，对比不同方法的适用场景与优劣，并指出模拟到现实迁移、安全可认证规划、密集人群导航等开放挑战，为相关研究提供系统性参考与未来方向指引。",
+      "tags": "query:ui",
+      "abstract_en": "Motion planning in dynamic environments is a fundamental problem in robotics, aiming to generate safe and efficient paths, trajectories, or control actions in the presence of moving obstacles, uncertain predictions, and multi-agent interactions. It has broad applications in autonomous driving, service robotics, warehouse logistics, human-robot collaboration, crowd navigation, and multi-robot systems. This survey reviews representative works published primarily between 2015 and 2025, with a particular focus on how recent learning-based advances extend, complement, or interact with classical planning foundations. We first revisit classical planning methods as algorithmic foundations and reference frameworks for learning-based extensions. We then propose a role-of-learning taxonomy that categorizes existing methods according to how learning participates in the planning pipeline, including direct policy learning, learning-augmented classical planning, hybrid planning, and training enhancement methods. For each category, we summarize the main problem settings, representative algorithms, key ideas, integration mechanisms, strengths, and limitations. We further analyze how observation representations, prediction uncertainty, interaction modeling, planner integration, safety constraints, and training strategies shape learning-based motion planning in dynamic environments. Finally, we discuss open challenges and future directions, including sim-to-real gap, safe and certifiable planning, dense crowd navigation, perception-planning coupling, and embodied AI.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/04/2607.24057v1-constrained-reinforcement-learning-using-successor-representations",
+      "section": "quick",
+      "title_en": "Constrained Reinforcement Learning Using Successor Representations",
+      "authors": "Michael Girstl, Alexander Mattick, Christopher Mutschler",
+      "date": "2026-07-27",
+      "pdf": "https://arxiv.org/pdf/2607.24057v1",
+      "score": "6.0",
+      "evidence": "基于后继表示的约束RL，可迁移到无人机控制的安全约束场景",
+      "tldr": "在现实强化学习中，常需在MDP中额外引入成本信号来表征安全约束，但现有方法难以适应成本函数的动态变化，导致策略无法快速应对新环境。为此，提出SafeDSR方法，将深度后继表示扩展至约束强化学习，通过引入一个可学习的权重矩阵来解耦价值函数中动态、奖励与成本的影响，从而在成本结构变化时仅需监督式更新该矩阵。在二维导航任务上的实验表明，SafeDSR在保持与现有方法相当性能的同时，具备更强的适应性和灵活性。这一工作为动态环境下的安全策略重训练提供了高效且可扩展的解决方案，具有实用意义。",
+      "tags": "query:ui",
+      "abstract_en": "Real-world Reinforcement Learning depends on the ability to formulate safety constraints into a policy. A common way to model such constraints is to introduce an additional cost signal in the Markov Decision Process, which notifies the agent of unwanted behavior independently of the reward signal. Unfortunately, current methods are hard to adapt to changes in the cost function introduced by, e.g., domain shift or obstacles moving over time. The lack of adaptability means that policies are too unflexible to deal with complex real-world conditions. We propose the Safe Deep Successor Representation (SafeDSR), a novel method that allows quick retraining of policies towards new cost structures. SafeDSR extends the Deep Successor Representation (Kulkarni et al., 2016) to Constrained Reinforcement Learning by introducing a single learnable weight matrix to decouple the learned value function across dynamics, rewards, and costs. This matrix can be updated in a supervised manner instead of having to adapt the whole network if the cost structure of the environment changes. We demonstrate this ability in a freely configurable two-dimensional navigation environment and show that our method is competitive on a simple navigation task while being considerably more flexible",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/04/2607.24292v1-learning-adaptive-multi-task-guidance-navigation-and-control-via-hypernetworks",
+      "section": "quick",
+      "title_en": "Learning Adaptive Multi-Task Guidance, Navigation, and Control via Hypernetworks",
+      "authors": "Ricard Marsal I Castan, Aman Arora, Antoine Richard, Andrej Orsula, Cédric Pradalier, Miguel A. Olivares-Méndez",
+      "date": "2026-07-27",
+      "pdf": "https://arxiv.org/pdf/2607.24292v1",
+      "score": "6.0",
+      "evidence": "超网络多任务强化学习用于制导导航控制，可适配无人机拦截与围捕策略",
+      "tldr": "太空自由飞行机器人面临多样的轨道任务，传统单任务控制策略难以适应变化，且扩展性差。HYPER-GNC利用超网络将物理信息任务嵌入映射到共享策略权重，实现单策略多任务强化学习。在速度跟踪、对接、检测和避障四个任务上，其样本效率与单任务专家相当，并能泛化到未见任务配置。物理卫星模拟器验证了仿真到现实的迁移，代码与模型已开源以支持复现。",
+      "tags": "query:ui",
+      "abstract_en": "Autonomous free-flying robots in orbital environments require controllers that are both versatile and resource-efficient, yet maintaining a separate, task-specific policy for each mission profile is architecturally brittle and limits operational flexibility as requirements evolve. We introduce HYPER-GNC, a multi-task reinforcement learning framework in which a hypernetwork maps physics-informed task embeddings to the weights of a shared actor-critic policy, enabling a single compact controller to master four distinct GNC tasks: velocity tracking, docking, inspection, and navigation with obstacle avoidance. The continuous embedding space allows the controller to generalize to novel mission configurations at deployment time without any retraining. Extensive experiments demonstrate that HYPER-GNC achieves sample efficiency comparable to single-task specialists while maintaining stability under significant inertial perturbations and external body wrenches. We further validate the framework on a physical satellite emulator, successfully bridging the simulation-to-reality gap across all mission profiles. Code, trained models, and deployment scripts are made publicly available to support reproducibility.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/04/2608.00401v1-embodied-passive-aeroacoustic-perception-enables-relative-sensing-and-pursuit-between-aerial-robots",
+      "section": "quick",
+      "title_en": "Embodied Passive Aeroacoustic Perception Enables Relative Sensing and Pursuit Between Aerial Robots",
+      "authors": "Yanbaihui Liu, Ravi Prakash, Li-Yu Lo, Nils Roede, Boyuan Chen",
+      "date": "2026-08-01",
+      "pdf": "https://arxiv.org/pdf/2608.00401v1",
+      "score": "6.0",
+      "evidence": "基于被动气动声学感知实现单无人机对另一无人机的跟随，可用于追捕拦截",
+      "tldr": "飞行机器人飞行时会产生结构化的气动声场，但常被自身噪声掩盖，极少用于相对感知。本文提出 SonicFly 框架，利用四麦克风阵列、旋翼声学表征和神经网络估计器，仅凭自然飞行声实现无人机间的被动追踪。户外实验中平均距离保持误差仅1.34米，证明该信号在强干扰下仍可支撑感知。该工作开辟了无源气动声学感知的新范式，为集群协作提供新途径。",
+      "tags": "query:ui",
+      "abstract_en": "Aerial robots generate structured aeroacoustic fields during flight, yet these signals have been underexplored as a source of onboard relative perception, particularly under the strong ego-acoustic interference generated during simultaneous flight in various outdoor conditions. We introduce embodied passive aeroacoustic perception, a sensing paradigm in which an aerial robot infers actionable relative-state information from the naturally generated sound of flight while operating within its own evolving aeroacoustic field. We present SonicFly, a passive aeroacoustic perception framework that enables one unmanned aerial vehicle to estimate and follow another using only the leader's intrinsic flight sound, without active acoustic signaling, inter-robot communication, GPS sharing, or external sensing infrastructure. The system uses a lightweight four-microphone array, rotorcraft-informed acoustic representations, a neural bearing-range estimator, and confidence-gated filtering for closed-loop flight. Through acoustic characterization, onboard localization, and outdoor pursuit experiments, we show that multirotor aeroacoustic signals contain sufficient information to support relative perception despite strong ego-acoustic interference, environmental variability, and changing flight geometry. During acoustic-only pursuit, SonicFly achieved a mean distance-maintenance error of 1.34 m across diverse outdoor trajectories and operating conditions. Analysis of the acoustic channel reveals design principles governing embodied passive aeroacoustic perception, including the roles of harmonic structure, spectral separability, and spatial acoustic cues in determining observability. Our results establish the feasibility of embodied passive aeroacoustic perception for aerial robots and suggest that naturally generated behavioral signals can serve as information for robotic perception and coordination.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
