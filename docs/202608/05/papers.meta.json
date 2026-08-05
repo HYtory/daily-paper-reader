@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-05",
+  "date": "2026-08-05",
+  "generated_at": "2026-08-05T20:40:56",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/05/2607.26509v1-collaborative-weighting-with-pessimistic-critic-for-mitigating-overestimation-in-off-policy-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Collaborative Weighting with Pessimistic Critic for Mitigating Overestimation in Off-Policy Reinforcement Learning",
+      "authors": "Gong Gao, Xiao Lai, Ziqi Xie, Guojie Chen, Xianhui Liu, Weidong Zhao",
+      "date": "2026-07-29",
+      "pdf": "https://arxiv.org/pdf/2607.26509v1",
+      "score": "7.0",
+      "evidence": "缓解过估计的离策略强化学习方法，可应用于无人机拦截与围捕训练",
+      "tldr": "深度off-policy强化学习算法在连续控制中常因TD学习噪声和贪心策略更新导致过估计偏差，使训练不稳定。现有方法多通过优先采样或修改目标来缓解，但易过度强调高不确定性转移，反而放大误差。本文提出CWAC统一框架，用分布性评论家刻画回报不确定性，协同加权TD误差与不确定性，并从回报分布悲观采样以抑制误差传播。该方法可无缝集成至SAC、TD3等，在多种模拟任务上显著提升性能，为鲁棒策略学习提供了新思路。",
+      "tags": "query:ui",
+      "abstract_en": "Deep off-policy reinforcement learning algorithms for continuous control typically rely on neural value function approximation to guide policy improvement. However, temporal-difference (TD) learning introduces noisy targets, resulting in non-stationary optimization, while greedy policy updates amplify early-stage estimation errors. The recursive propagation of such errors leads to persistent overestimation bias and degraded training stability in actor-critic methods. Existing approaches attempt to alleviate this issue via prioritized sampling or modified value learning objectives, but often overemphasize high-uncertainty transitions caused by limited data coverage or bootstrapping errors, thereby further amplifying bias.In this paper, we propose Collaborative Weighting Actor-Critic (CWAC), a unified framework that explicitly accounts for predictive uncertainty in value estimation. CWAC employs distributional critic to model return uncertainty and introduces a collaborative weighting mechanism that jointly reweights TD-errors and uncertainty, enabling robust learning from reliable samples while suppressing noisy updates. In addition, we incorporate a stochastic pessimistic value estimation scheme via sampling from the return distribution, which effectively mitigates error propagation during policy improvement. CWAC can be seamlessly integrated into existing off-policy algorithm frameworks such as SAC, TD3, and DDPG with minimal overhead. Empirical results demonstrate that our proposed method significantly enhances performance across a diverse range of simulated tasks. Our code is publicly available at https://anonymous.4open.science/r/CWAC-348E.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/05/2608.00679v1-hetgps-scalable-graph-multi-agent-reinforcement-learning-with-physics-anchored-adaptive-safety-for-ev-charging",
+      "section": "quick",
+      "title_en": "HetGPS: Scalable Graph Multi-Agent Reinforcement Learning with Physics-Anchored Adaptive Safety for EV Charging",
+      "authors": "Xiangwei Wang, Nanduni Nimalsiri, Yu Xia, Peng Wang, Saman Halgamuge",
+      "date": "2026-08-01",
+      "pdf": "https://arxiv.org/pdf/2608.00679v1",
+      "score": "6.0",
+      "evidence": "多智能体强化学习与安全协调方法，可迁移至无人机集群围捕",
+      "tldr": "大规模网络耦合智能体安全干预需在不影响任务策略前提下保护共享约束。为此提出HetGPS框架，将干预幅度与修正方向分离：学习图风险模型调度干预权限，物理模型锚定修正方向，并用于EV充电场景。在多个配电网系统（200-3218辆车）上，电压违规率从约3.9-7.7%降至0.5-3.4%，出发成功率保持99%以上，且模型规模不随车队规模增长。",
+      "tags": "query:ui",
+      "abstract_en": "Safety interventions for large populations of network-coupled agents must protect shared constraints without unnecessarily overriding task-oriented policy decisions. We present HetGPS, a hybrid graph-control framework synergizing learned graph risk with physics-anchored correction by separating intervention magnitude from corrective direction. An action-conditioned graph residual model schedules state-dependent intervention authority, while a physics model determines its direction. For electric vehicle (EV) charging, we couple this filter with a parameter-shared heterogeneous graph soft actor-critic policy, enabling topology-aware coordination with a learned model size independent of fleet size. Across five nested distribution networks with 200--3,218 EVs and 100 evaluation days, Adaptive Authority reduces bus--step voltage violations from 3.93--7.74\\% without filtering to 0.52--3.44\\%, while maintaining 99.06--100\\% departure success. Relative to the same physics-directed projection with fixed authority, it improves mean reward on all five networks and lowers the mean safety score on four. The deployed policy-and-risk model contains 383,702 learned parameters at every scale; at 3,218 EVs, a matched centralized SAC actor is about $170\\times$ larger. A policy trained on the eight-transformer system transfers zero-shot to the 16- and 32-transformer systems, attaining 0.57--0.75\\% violation rates and at least 99.99\\% departure success. These results show that learned graph risk can allocate intervention authority at scale while feeder physics anchors corrective action.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/05/2608.01128v1-ma-head-net-adaptive-rule-guided-multi-agent-drl-for-aoi-minimization-in-uav-assisted-emergency-networks",
+      "section": "quick",
+      "title_en": "MA-HEAD-Net: Adaptive Rule-Guided Multi-Agent DRL for AoI Minimization in UAV-Assisted Emergency Networks",
+      "authors": "Yixin Zhang, Zhuohui Yao, Wenchi Cheng, Walid Saad",
+      "date": "2026-08-02",
+      "pdf": "https://arxiv.org/pdf/2608.01128v1",
+      "score": "6.0",
+      "evidence": "多智能体深度强化学习用于无人机集群协调以最小化信息年龄",
+      "tldr": "面向灾后无人机应急通信，针对突发流量与异构业务下信息时效性不足的问题，研究AoI最小化。利用马尔可夫调制泊松过程建模突发到达，采用有限块长理论刻画传输时长与AoI耦合，提出微时隙嵌入调度机制平衡长短包。构建多Agent决策问题，设计自适应规则引导的多Agent深度强化学习框架MA-HEAD-Net，通过门控多头策略融合领域规则先验与学习策略，并联合优化。实验表明其收敛效率与AoI性能优于代表性基线。",
+      "tags": "query:ui",
+      "abstract_en": "In post-disaster scenarios, unmanned aerial vehicles (UAVs) are critical for establishing emergency communication networks. For time-critical rescue missions, information freshness is crucial because decisions based on outdated data may lead to ineffective control actions. This paper investigates age of information (AoI) minimization for UAV-assisted emergency communications with heterogeneous emergency services. We model bursty packet arrivals using a Markov-modulated Poisson process and adopt finite blocklength theory to capture the coupling among transmission duration, packet completion, and AoI evolution. To balance delay-tolerant long-packet transmission and urgent short-packet response, we propose a mini-slot-embedded scheduling mechanism with adaptive checkpoint-interval selection. We formulate the joint optimization of UAV trajectory control, user scheduling, and checkpoint-interval selection as a multi-agent decision problem, and develop MA-HEAD-Net, an adaptive rule-guided multi-agent deep reinforcement learning framework. MA-HEAD-Net incorporates communication-domain rule priors into a gated multi-head policy, where adaptive gates regulate the contributions of rule-prior and learned-policy logits for different subtasks. The policy and gating components are jointly optimized under multi-agent proximal policy optimization. Simulation results show that MA-HEAD-Net improves policy-formation efficiency compared with representative multi-agent deep reinforcement learning baselines and achieves lower AoI than both learning-based and heuristic methods in dynamic UAV-assisted emergency communication scenarios.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

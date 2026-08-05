@@ -6,33 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-04
-- 运行时间：2026-08-04 20:32:10 UTC
+- 最新运行日期：2026-08-05
+- 运行时间：2026-08-05 20:40:50 UTC
 - 运行状态：成功
-- 本次总论文数：4
+- 本次总论文数：3
 - 精读区：0
-- 速读区：4
+- 速读区：3
 
 ### 今日简报（AI）
-今日速读4篇论文，聚焦学习型运动规划与强化学习控制方向，暂无精读。最值得关注的是动态环境学习式运动规划综述（7.0分），其涵盖基础算法到新兴范式；另可留意约束强化学习与超网络多任务控制。建议普通读者优先浏览运动规划综述，快速把握领域脉络。
-- 详情：[/202608/04/README](/202608/04/README)
+今日共速读3篇论文，无精读，均为强化学习与多智能体方向。  
+最值得关注：缓解Off-Policy过估计的协作加权悲观评论家方法，以及面向EV充电的物理锚定安全多智能体框架。  
+建议优先精读《Collaborative Weighting with Pessimistic Critic》一篇，其余两篇可作扩展了解。
+- 详情：[/202608/05/README](/202608/05/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Learning-Based Motion Planning for Dynamic Environments: From Foundational Algorithms to Emerging Paradigms](/202608/04/2608.00625v1-learning-based-motion-planning-for-dynamic-environments-from-foundational-algorithms-to-emerging-paradigms)  
+1. [Collaborative Weighting with Pessimistic Critic for Mitigating Overestimation in Off-Policy Reinforcement Learning](/202608/05/2607.26509v1-collaborative-weighting-with-pessimistic-critic-for-mitigating-overestimation-in-off-policy-reinforcement-learning)  
    标签：评分：7.0/10、query:ui
-   evidence：动态环境下学习型运动规划综述，涵盖多智能体交互，与无人机追逃相关
-2. [Constrained Reinforcement Learning Using Successor Representations](/202608/04/2607.24057v1-constrained-reinforcement-learning-using-successor-representations)  
+   evidence：缓解过估计的离策略强化学习方法，可应用于无人机拦截与围捕训练
+2. [HetGPS: Scalable Graph Multi-Agent Reinforcement Learning with Physics-Anchored Adaptive Safety for EV Charging](/202608/05/2608.00679v1-hetgps-scalable-graph-multi-agent-reinforcement-learning-with-physics-anchored-adaptive-safety-for-ev-charging)  
    标签：评分：6.0/10、query:ui
-   evidence：基于后继表示的约束RL，可迁移到无人机控制的安全约束场景
-3. [Learning Adaptive Multi-Task Guidance, Navigation, and Control via Hypernetworks](/202608/04/2607.24292v1-learning-adaptive-multi-task-guidance-navigation-and-control-via-hypernetworks)  
+   evidence：多智能体强化学习与安全协调方法，可迁移至无人机集群围捕
+3. [MA-HEAD-Net: Adaptive Rule-Guided Multi-Agent DRL for AoI Minimization in UAV-Assisted Emergency Networks](/202608/05/2608.01128v1-ma-head-net-adaptive-rule-guided-multi-agent-drl-for-aoi-minimization-in-uav-assisted-emergency-networks)  
    标签：评分：6.0/10、query:ui
-   evidence：超网络多任务强化学习用于制导导航控制，可适配无人机拦截与围捕策略
-4. [Embodied Passive Aeroacoustic Perception Enables Relative Sensing and Pursuit Between Aerial Robots](/202608/04/2608.00401v1-embodied-passive-aeroacoustic-perception-enables-relative-sensing-and-pursuit-between-aerial-robots)  
-   标签：评分：6.0/10、query:ui
-   evidence：基于被动气动声学感知实现单无人机对另一无人机的跟随，可用于追捕拦截
+   evidence：多智能体深度强化学习用于无人机集群协调以最小化信息年龄
 
 
 <div class="dpr-home-promo-card">

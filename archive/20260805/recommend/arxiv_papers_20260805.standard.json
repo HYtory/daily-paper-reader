@@ -1,0 +1,137 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-05T20:39:11.050736+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.26509v1",
+      "source": "arxiv",
+      "title": "Collaborative Weighting with Pessimistic Critic for Mitigating Overestimation in Off-Policy Reinforcement Learning",
+      "abstract": "Deep off-policy reinforcement learning algorithms for continuous control typically rely on neural value function approximation to guide policy improvement. However, temporal-difference (TD) learning introduces noisy targets, resulting in non-stationary optimization, while greedy policy updates amplify early-stage estimation errors. The recursive propagation of such errors leads to persistent overestimation bias and degraded training stability in actor-critic methods. Existing approaches attempt to alleviate this issue via prioritized sampling or modified value learning objectives, but often overemphasize high-uncertainty transitions caused by limited data coverage or bootstrapping errors, thereby further amplifying bias.In this paper, we propose Collaborative Weighting Actor-Critic (CWAC), a unified framework that explicitly accounts for predictive uncertainty in value estimation. CWAC employs distributional critic to model return uncertainty and introduces a collaborative weighting mechanism that jointly reweights TD-errors and uncertainty, enabling robust learning from reliable samples while suppressing noisy updates. In addition, we incorporate a stochastic pessimistic value estimation scheme via sampling from the return distribution, which effectively mitigates error propagation during policy improvement. CWAC can be seamlessly integrated into existing off-policy algorithm frameworks such as SAC, TD3, and DDPG with minimal overhead. Empirical results demonstrate that our proposed method significantly enhances performance across a diverse range of simulated tasks. Our code is publicly available at https://anonymous.4open.science/r/CWAC-348E.",
+      "authors": [
+        "Gong Gao",
+        "Xiao Lai",
+        "Ziqi Xie",
+        "Guojie Chen",
+        "Xianhui Liu",
+        "Weidong Zhao"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-07-29T06:18:19+00:00",
+      "link": "https://arxiv.org/pdf/2607.26509v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "General off-policy RL method mitigating overestimation, applicable to UAV interception/encirclement training",
+      "llm_evidence_cn": "缓解过估计的离策略强化学习方法，可应用于无人机拦截与围捕训练",
+      "llm_evidence": "缓解过估计的离策略强化学习方法，可应用于无人机拦截与围捕训练",
+      "canonical_evidence": "缓解过估计的离策略强化学习方法，可应用于无人机拦截与围捕训练",
+      "llm_tldr_en": "Introduces collaborative weighting with pessimistic critic to mitigate overestimation in off-policy RL, improving training stability for continuous control tasks.",
+      "llm_tldr_cn": "针对离策略强化学习中价值函数过估计导致的训练不稳定问题，该文提出协同加权与悲观评论员方法，通过联合加权和悲观估计减少误差累积，提升连续控制任务的策略学习稳定性。该方法可作为通用改进模块，用于无人机拦截与围捕等复杂强化学习任务的训练，具有较好的迁移价值。",
+      "llm_tldr": "针对离策略强化学习中价值函数过估计导致的训练不稳定问题，该文提出协同加权与悲观评论员方法，通过联合加权和悲观估计减少误差累积，提升连续控制任务的策略学习稳定性。该方法可作为通用改进模块，用于无人机拦截与围捕等复杂强化学习任务的训练，具有较好的迁移价值。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.00679v1",
+      "source": "arxiv",
+      "title": "HetGPS: Scalable Graph Multi-Agent Reinforcement Learning with Physics-Anchored Adaptive Safety for EV Charging",
+      "abstract": "Safety interventions for large populations of network-coupled agents must protect shared constraints without unnecessarily overriding task-oriented policy decisions. We present HetGPS, a hybrid graph-control framework synergizing learned graph risk with physics-anchored correction by separating intervention magnitude from corrective direction. An action-conditioned graph residual model schedules state-dependent intervention authority, while a physics model determines its direction. For electric vehicle (EV) charging, we couple this filter with a parameter-shared heterogeneous graph soft actor-critic policy, enabling topology-aware coordination with a learned model size independent of fleet size. Across five nested distribution networks with 200--3,218 EVs and 100 evaluation days, Adaptive Authority reduces bus--step voltage violations from 3.93--7.74\\% without filtering to 0.52--3.44\\%, while maintaining 99.06--100\\% departure success. Relative to the same physics-directed projection with fixed authority, it improves mean reward on all five networks and lowers the mean safety score on four. The deployed policy-and-risk model contains 383,702 learned parameters at every scale; at 3,218 EVs, a matched centralized SAC actor is about $170\\times$ larger. A policy trained on the eight-transformer system transfers zero-shot to the 16- and 32-transformer systems, attaining 0.57--0.75\\% violation rates and at least 99.99\\% departure success. These results show that learned graph risk can allocate intervention authority at scale while feeder physics anchors corrective action.",
+      "authors": [
+        "Xiangwei Wang",
+        "Nanduni Nimalsiri",
+        "Yu Xia",
+        "Peng Wang",
+        "Saman Halgamuge"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-08-01T13:59:49+00:00",
+      "link": "https://arxiv.org/pdf/2608.00679v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent reinforcement learning with scalable coordination and safety, transferable to UAV swarm encirclement",
+      "llm_evidence_cn": "多智能体强化学习与安全协调方法，可迁移至无人机集群围捕",
+      "llm_evidence": "多智能体强化学习与安全协调方法，可迁移至无人机集群围捕",
+      "canonical_evidence": "多智能体强化学习与安全协调方法，可迁移至无人机集群围捕",
+      "llm_tldr_en": "A scalable graph MARL framework with physics-anchored safety filters for EV charging; model size independent of fleet size; topology-aware coordination applicable to multi-agent swarms.",
+      "llm_tldr_cn": "针对网络耦合多智能体的大规模安全约束问题，本文提出HetGPS混合图控制框架，将干预强度与校正方向分离，用动作条件图残差模型调度状态相关干预权，并由物理模型决定方向。结合参数共享的异构图软演员-评论家策略，实现了拓扑感知协调，且模型规模独立于智能体数量。实验表明该方法能在不频繁干预的情况下满足共享安全约束，对集群协同具有参考价值。",
+      "llm_tldr": "针对网络耦合多智能体的大规模安全约束问题，本文提出HetGPS混合图控制框架，将干预强度与校正方向分离，用动作条件图残差模型调度状态相关干预权，并由物理模型决定方向。结合参数共享的异构图软演员-评论家策略，实现了拓扑感知协调，且模型规模独立于智能体数量。实验表明该方法能在不频繁干预的情况下满足共享安全约束，对集群协同具有参考价值。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.01128v1",
+      "source": "arxiv",
+      "title": "MA-HEAD-Net: Adaptive Rule-Guided Multi-Agent DRL for AoI Minimization in UAV-Assisted Emergency Networks",
+      "abstract": "In post-disaster scenarios, unmanned aerial vehicles (UAVs) are critical for establishing emergency communication networks. For time-critical rescue missions, information freshness is crucial because decisions based on outdated data may lead to ineffective control actions. This paper investigates age of information (AoI) minimization for UAV-assisted emergency communications with heterogeneous emergency services. We model bursty packet arrivals using a Markov-modulated Poisson process and adopt finite blocklength theory to capture the coupling among transmission duration, packet completion, and AoI evolution. To balance delay-tolerant long-packet transmission and urgent short-packet response, we propose a mini-slot-embedded scheduling mechanism with adaptive checkpoint-interval selection. We formulate the joint optimization of UAV trajectory control, user scheduling, and checkpoint-interval selection as a multi-agent decision problem, and develop MA-HEAD-Net, an adaptive rule-guided multi-agent deep reinforcement learning framework. MA-HEAD-Net incorporates communication-domain rule priors into a gated multi-head policy, where adaptive gates regulate the contributions of rule-prior and learned-policy logits for different subtasks. The policy and gating components are jointly optimized under multi-agent proximal policy optimization. Simulation results show that MA-HEAD-Net improves policy-formation efficiency compared with representative multi-agent deep reinforcement learning baselines and achieves lower AoI than both learning-based and heuristic methods in dynamic UAV-assisted emergency communication scenarios.",
+      "authors": [
+        "Yixin Zhang",
+        "Zhuohui Yao",
+        "Wenchi Cheng",
+        "Walid Saad"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-08-02T10:05:50+00:00",
+      "link": "https://arxiv.org/pdf/2608.01128v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent deep reinforcement learning for UAV swarm coordination to minimize age of information",
+      "llm_evidence_cn": "多智能体深度强化学习用于无人机集群协调以最小化信息年龄",
+      "llm_evidence": "多智能体深度强化学习用于无人机集群协调以最小化信息年龄",
+      "canonical_evidence": "多智能体深度强化学习用于无人机集群协调以最小化信息年龄",
+      "llm_tldr_en": "Proposes MA-HEAD-Net, an adaptive rule-guided multi-agent DRL framework for AoI minimization in UAV-assisted emergency networks. It uses finite blocklength theory and mini-slot scheduling to handle heterogeneous services. Results show improved information freshness, demonstrating effective MARL for UAV swarm coordination.",
+      "llm_tldr_cn": "本文针对灾后无人机应急通信中的信息新鲜度问题，提出MA-HEAD-Net自适应规则引导的多智能体深度强化学习框架。该方法结合有限码长理论和mini-slot调度，通过多智能体DRL协同优化不同紧急业务的AoI。实验结果显示其在时延容忍与紧急短包传输之间取得了良好平衡，为多无人机协同调度提供了可借鉴的MARL方法。",
+      "llm_tldr": "本文针对灾后无人机应急通信中的信息新鲜度问题，提出MA-HEAD-Net自适应规则引导的多智能体深度强化学习框架。该方法结合有限码长理论和mini-slot调度，通过多智能体DRL协同优化不同紧急业务的AoI。实验结果显示其在时延容忍与紧急短包传输之间取得了良好平衡，为多无人机协同调度提供了可借鉴的MARL方法。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
