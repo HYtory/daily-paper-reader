@@ -6,32 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-05
-- 运行时间：2026-08-05 20:40:50 UTC
+- 最新运行日期：2026-08-07
+- 运行时间：2026-08-07 01:39:43 UTC
 - 运行状态：成功
 - 本次总论文数：3
 - 精读区：0
 - 速读区：3
 
 ### 今日简报（AI）
-今日共速读3篇论文，无精读，均为强化学习与多智能体方向。  
-最值得关注：缓解Off-Policy过估计的协作加权悲观评论家方法，以及面向EV充电的物理锚定安全多智能体框架。  
-建议优先精读《Collaborative Weighting with Pessimistic Critic》一篇，其余两篇可作扩展了解。
-- 详情：[/202608/05/README](/202608/05/README)
+今日速读3篇论文，聚焦无人机协同导航与多智能体路径规划。  
+最值得关注的是《CoNav-UAV》中基于Stackelberg学习的双高度协同导航，获7.0分。  
+建议后续可深入对比分层决策与LLM驱动的多智能体规划方案。
+- 详情：[/202608/07/README](/202608/07/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Collaborative Weighting with Pessimistic Critic for Mitigating Overestimation in Off-Policy Reinforcement Learning](/202608/05/2607.26509v1-collaborative-weighting-with-pessimistic-critic-for-mitigating-overestimation-in-off-policy-reinforcement-learning)  
+1. [CoNav-UAV: Cooperative Dual-Altitude Aerial Navigation via Stackelberg Learning](/202608/07/2608.01802v1-conav-uav-cooperative-dual-altitude-aerial-navigation-via-stackelberg-learning)  
    标签：评分：7.0/10、query:ui
-   evidence：缓解过估计的离策略强化学习方法，可应用于无人机拦截与围捕训练
-2. [HetGPS: Scalable Graph Multi-Agent Reinforcement Learning with Physics-Anchored Adaptive Safety for EV Charging](/202608/05/2608.00679v1-hetgps-scalable-graph-multi-agent-reinforcement-learning-with-physics-anchored-adaptive-safety-for-ev-charging)  
+   evidence：面向协同无人机导航的多智能体强化学习，可迁移至多无人机围捕协调
+2. [Multi-Agent Planning with Spatio-Temporal and Topological Constraints using STL-GO](/202608/07/2607.28679v1-multi-agent-planning-with-spatio-temporal-and-topological-constraints-using-stl-go)  
    标签：评分：6.0/10、query:ui
-   evidence：多智能体强化学习与安全协调方法，可迁移至无人机集群围捕
-3. [MA-HEAD-Net: Adaptive Rule-Guided Multi-Agent DRL for AoI Minimization in UAV-Assisted Emergency Networks](/202608/05/2608.01128v1-ma-head-net-adaptive-rule-guided-multi-agent-drl-for-aoi-minimization-in-uav-assisted-emergency-networks)  
+   evidence：带时空与拓扑约束的多智能体规划，可应用于协同围捕任务规划
+3. [Training Small LLMs as Spatial Multi-Agent Policies](/202608/07/2608.01425v1-training-small-llms-as-spatial-multi-agent-policies)  
    标签：评分：6.0/10、query:ui
-   evidence：多智能体深度强化学习用于无人机集群协调以最小化信息年龄
+   evidence：面向空间协作博弈的多智能体强化学习方法
 
 
 <div class="dpr-home-promo-card">

@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-07",
+  "date": "2026-08-07",
+  "generated_at": "2026-08-07T01:39:50",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/07/2608.01802v1-conav-uav-cooperative-dual-altitude-aerial-navigation-via-stackelberg-learning",
+      "section": "quick",
+      "title_en": "CoNav-UAV: Cooperative Dual-Altitude Aerial Navigation via Stackelberg Learning",
+      "authors": "Junru Song, Wenhao Zhang, Yang Yang, Xuekai Qiu, Feifei Wang, Weien Zhou, Tingsong Jiang, Ying Wen, Yang Li, Wen Yao",
+      "date": "2026-08-03",
+      "pdf": "https://arxiv.org/pdf/2608.01802v1",
+      "score": "7.0",
+      "evidence": "面向协同无人机导航的多智能体强化学习，可迁移至多无人机围捕协调",
+      "tldr": "目标导向的视觉语言导航在无人机平台上面临全局探索与近距离接近的矛盾，现有方法多依赖外部辅助或独立训练双智能体。CoNav-UAV将该任务建模为高层引导者与低层跟随者的Stackelberg博弈，仅依靠机载视觉语言输入。通过迭代Stackelberg学习交替优化，引导者用记忆内上下文学习，跟随者用DAgger式专家蒸馏。在AerialVLN基准上，成功率最高提升30.8点，跨场景提升9.0点，且适应数据减少约3倍。",
+      "tags": "query:ui",
+      "abstract_en": "Target-oriented vision-and-language navigation (VLN) on aerial platforms is attracting growing attention for missions such as disaster rescue, infrastructure inspection, and security patrol. In this task, an unmanned aerial vehicle (UAV) needs to locate targets given only a concise description of their appearance and surroundings. This requires global exploration and grounding as well as collision-free close-range approach, two interleaved processes difficult to reconcile within a single agent. Most existing methods transfer the ground VLN paradigm to a low-altitude UAV and compensate for its inefficient exploration with external assistance. A recent attempt deploys two UAVs at complementary altitudes yet still relies on privileged information and trains its two agents independently, precluding any mutual adaptation essential for cooperation. Here we propose CoNav-UAV, which explicitly models the task as a Stackelberg game between a high-altitude leader and a low-altitude follower, with the system operating on onboard visual and linguistic inputs alone. To solve this game, we introduce Iterative Stackelberg Learning. The leader's high-level vision-language reasoning is refined via memory-based in-context learning, while the follower's precise motion control is updated via DAgger-style expert distillation. The alternation drives both agents toward a Stackelberg equilibrium. CoNav-UAV consistently outperforms single- and dual-agent baselines across three high-fidelity urban scenes from the AerialVLN benchmark. Success rate improves by up to 30.8 points on the learning scene, and 9.0 points under cross-scene transfer while using about 3x less adaptation data. Further analyses validate the complementary gains of the leader and follower updates and reveal robust gains yet distinct learning dynamics across VLM backbones.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/07/2607.28679v1-multi-agent-planning-with-spatio-temporal-and-topological-constraints-using-stl-go",
+      "section": "quick",
+      "title_en": "Multi-Agent Planning with Spatio-Temporal and Topological Constraints using STL-GO",
+      "authors": "Sheryl Paul, Vidisha Kudalkar, Anand Balakrishnan, Lars Lindemann, Alberto Speranzon, Jyotirmoy V. Deshmukh",
+      "date": "2026-07-29",
+      "pdf": "https://arxiv.org/pdf/2607.28679v1",
+      "score": "6.0",
+      "evidence": "带时空与拓扑约束的多智能体规划，可应用于协同围捕任务规划",
+      "tldr": "多智能体路径规划中，常需处理时空（何时何地执行动作）与拓扑（智能体间交互）约束，这类问题通常依赖图结构表达。STL-GO逻辑通过图运算符可形式化多种动态拓扑。针对其规划求解，本文提出基于混合整数规划(MIP)和满足性模理论(SMT)的两种编码，将STL-GO规范转化为可满足性问题，并设计统一接口以灵活指定约束、拓扑及规范。在UAV搜救基准上评估，两种编码在动态多图交互下均能有效求解，兼容不同团队规模与图复杂度。该工作为多智能体复杂约束规划提供了新方法。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-agent planning problems arise in a variety of engineering applications, such as multi-robot wildfire fighting and unmanned aerial inspection in factories. A particular challenge is the existence of spatio-temporal (i.e., when and/or where an agent should do what) and topological constraints (i.e., how agents should interact), as typically formalized via the notion of graphs. Over the last years, various frameworks have been proposed that can capture such constraints via spatio-temporal logics. We focus here on spatio-temporal logic with graph operators (STL-GO), a recent formalism that supports reasoning about multiple agents and their topologies, such as sensing, communication, and task topologies. In this paper, we consider the problem of planning multi-agent paths that satisfy constraints written in STL-GO. This problem is particularly challenging due to the need of encoding multiple, potentially time-varying graphs via the graph operators inherent to STL-GO. We present two encodings of this problem, one based on mixed-integer programming (MIP) and another based on satisfiability modulo theory (SMT), with soundness guarantees. We provide a unified interface for specifying agent constraints, their graph topologies, and the STL-GO specification, enabling seamless use of both methods and facilitating direct comparison between them. We evaluate both encodings on a multi-UAV search-and-rescue benchmark, ablating over team size and graph complexity, highlighting the expressiveness of the proposed encodings under dynamic multi- graph interactions.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/07/2608.01425v1-training-small-llms-as-spatial-multi-agent-policies",
+      "section": "quick",
+      "title_en": "Training Small LLMs as Spatial Multi-Agent Policies",
+      "authors": "Yi Mao, Andrew Perrault",
+      "date": "2026-08-02",
+      "pdf": "https://arxiv.org/pdf/2608.01425v1",
+      "score": "6.0",
+      "evidence": "面向空间协作博弈的多智能体强化学习方法",
+      "tldr": "小型冻结LLM直接输出低级动作在空间合作游戏中零奖励，本文基于宏动作Dec-POMDP框架引入符号选项库来提升策略性。选项库由前沿编码模型从游戏源码起草，可行性守卫通过随机策略回放机械合成，各智能体用私有LoRA适配器，经PA-MAGRPO算法训练选项级策略。在三个游戏和四个小型基座上，模型从零奖励提升到胜任水平。行为审计揭示奖励与合作脱钩，合作仅任务必要时出现，因此必须将行为评估与奖励并列。",
+      "tags": "query:ui",
+      "abstract_en": "Training LLM-based multi-agent systems with multi-agent reinforcement learning is rapidly gaining traction, and a parallel line of work argues that such systems should be judged by their behavior, not only their reward. We take up both threads in spatial cooperative games, where small frozen LLMs prompted with low-level actions fail outright, earning zero reward. Guided by the options/semi-MDP framework---and, because option execution is asynchronous across agents, its multi-agent extension in macro-action Dec-POMDPs---we equip each game with a library of symbolic \\emph{options}: typed, state-feasible, short-horizon behaviors executed by a symbolic planner. Each library is drafted by a frontier coding model from the game's source code; the feasibility guards that filter each menu are then synthesized mechanically from cheap random-policy burn-in rollouts---a guard is adopted only if it explains repeated execution failures while hiding no logged success---so no guard is authored, selected, or reward-tuned by hand. Each agent's LLM acts as its policy over options, with a private per-agent LoRA adapter trained by a per-agent variant of multi-agent GRPO (PA-MAGRPO); this lifts frozen bases from zero reward to competent play across three games and four small backbones. Behavioral audits then reveal that reward and cooperation decouple: a rising reward curve may simply mean that one agent has learned to run the entire task alone while its partner idles---cooperation emerges only when the task makes it necessary. Reward alone is thus an unreliable readout of cooperation; behavioral evaluation must sit alongside it.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
