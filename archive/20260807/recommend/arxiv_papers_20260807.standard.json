@@ -1,15 +1,15 @@
 {
   "mode": "standard",
-  "generated_at": "2026-08-07T01:37:28.182672+00:00",
+  "generated_at": "2026-08-07T21:11:39.780934+00:00",
   "stats": {
     "mode": "standard",
     "tag_count": 1,
     "deep_divecandidates": 0,
     "deep_cap": 6,
     "deep_selected": 0,
-    "quick_candidates": 3,
+    "quick_candidates": 1,
     "quick_skim_target": 11,
-    "quick_selected": 3
+    "quick_selected": 1
   },
   "deep_dive": [],
   "quick_skim": [
@@ -41,98 +41,20 @@
         "keyword:ui",
         "query:ui"
       ],
-      "llm_score": 7.0,
-      "llm_evidence_en": "Multi-agent reinforcement learning for cooperative UAV navigation; transferable to multi-UAV encirclement coordination",
-      "llm_evidence_cn": "面向协同无人机导航的多智能体强化学习，可迁移至多无人机围捕协调",
-      "llm_evidence": "面向协同无人机导航的多智能体强化学习，可迁移至多无人机围捕协调",
-      "canonical_evidence": "面向协同无人机导航的多智能体强化学习，可迁移至多无人机围捕协调",
-      "llm_tldr_en": "CoNav-UAV uses Stackelberg learning to coordinate two UAVs at complementary altitudes for vision-language navigation, showing how cooperative MARL can handle target search and approach in aerial tasks.",
-      "llm_tldr_cn": "面向无人机视觉语言导航任务，提出CoNav-UAV框架，利用斯塔克尔伯格学习协调双高双机协作：低空无人机负责细粒度贴近目标，高空无人机负责全局探索。该方法解决了单智能体难以兼顾探索与接近的问题，为多无人机协同围捕与目标趋近提供了可借鉴的合作范式。",
-      "llm_tldr": "面向无人机视觉语言导航任务，提出CoNav-UAV框架，利用斯塔克尔伯格学习协调双高双机协作：低空无人机负责细粒度贴近目标，高空无人机负责全局探索。该方法解决了单智能体难以兼顾探索与接近的问题，为多无人机协同围捕与目标趋近提供了可借鉴的合作范式。",
-      "llm_tags": [
-        "query:ui"
-      ],
-      "matched_query_tag": "query:ui",
-      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
-      "matched_requirement_id": "req-5",
-      "selection_source": "fresh_fetch",
-      "quick_tier": "7"
-    },
-    {
-      "id": "2607.28679v1",
-      "source": "arxiv",
-      "title": "Multi-Agent Planning with Spatio-Temporal and Topological Constraints using STL-GO",
-      "abstract": "Multi-agent planning problems arise in a variety of engineering applications, such as multi-robot wildfire fighting and unmanned aerial inspection in factories. A particular challenge is the existence of spatio-temporal (i.e., when and/or where an agent should do what) and topological constraints (i.e., how agents should interact), as typically formalized via the notion of graphs. Over the last years, various frameworks have been proposed that can capture such constraints via spatio-temporal logics. We focus here on spatio-temporal logic with graph operators (STL-GO), a recent formalism that supports reasoning about multiple agents and their topologies, such as sensing, communication, and task topologies. In this paper, we consider the problem of planning multi-agent paths that satisfy constraints written in STL-GO. This problem is particularly challenging due to the need of encoding multiple, potentially time-varying graphs via the graph operators inherent to STL-GO. We present two encodings of this problem, one based on mixed-integer programming (MIP) and another based on satisfiability modulo theory (SMT), with soundness guarantees. We provide a unified interface for specifying agent constraints, their graph topologies, and the STL-GO specification, enabling seamless use of both methods and facilitating direct comparison between them. We evaluate both encodings on a multi-UAV search-and-rescue benchmark, ablating over team size and graph complexity, highlighting the expressiveness of the proposed encodings under dynamic multi- graph interactions.",
-      "authors": [
-        "Sheryl Paul",
-        "Vidisha Kudalkar",
-        "Anand Balakrishnan",
-        "Lars Lindemann",
-        "Alberto Speranzon",
-        "Jyotirmoy V. Deshmukh"
-      ],
-      "primary_category": "cs.AI",
-      "categories": [
-        "cs.AI",
-        "cs.MA"
-      ],
-      "published": "2026-07-29T16:12:58+00:00",
-      "link": "https://arxiv.org/pdf/2607.28679v1",
-      "tags": [
-        "keyword:ui",
-        "query:ui"
-      ],
       "llm_score": 6.0,
-      "llm_evidence_en": "Multi-agent planning with spatio-temporal and topological constraints; applicable to cooperative encirclement task planning",
-      "llm_evidence_cn": "带时空与拓扑约束的多智能体规划，可应用于协同围捕任务规划",
-      "llm_evidence": "带时空与拓扑约束的多智能体规划，可应用于协同围捕任务规划",
-      "canonical_evidence": "带时空与拓扑约束的多智能体规划，可应用于协同围捕任务规划",
-      "llm_tldr_en": "Addresses multi-agent planning under spatio-temporal and topological constraints using STL-GO logic, supporting scenarios like UAV inspection and wildfire fighting, relevant to coordinated encirclement maneuvers.",
-      "llm_tldr_cn": "针对多智能体规划中时空约束（何时何地执行动作）与拓扑约束（智能体间如何交互）的难题，基于STL-GO形式化框架提出求解方法，支持感知、通信和任务拓扑建模。该方法可应用于无人机巡检和多机器人灭火等场景，为多无人机协同围捕提供了约束化任务规划的通用工具。",
-      "llm_tldr": "针对多智能体规划中时空约束（何时何地执行动作）与拓扑约束（智能体间如何交互）的难题，基于STL-GO形式化框架提出求解方法，支持感知、通信和任务拓扑建模。该方法可应用于无人机巡检和多机器人灭火等场景，为多无人机协同围捕提供了约束化任务规划的通用工具。",
+      "llm_evidence_en": "Cooperative dual-UAV learning for target-oriented navigation, relevant to multi-UAV cooperative control and pursuit-evasion scenarios",
+      "llm_evidence_cn": "面向目标导航的双无人机协同学习，与多无人机协同控制及追逃场景相关",
+      "llm_evidence": "面向目标导航的双无人机协同学习，与多无人机协同控制及追逃场景相关",
+      "canonical_evidence": "面向目标导航的双无人机协同学习，与多无人机协同控制及追逃场景相关",
+      "llm_tldr_en": "Introduces CoNav-UAV, a cooperative dual-altitude aerial navigation system using Stackelberg learning for target-oriented vision-and-language navigation. Resolves the conflict between broad exploration and close-range approach, offering a promising model for multi-UAV cooperation.",
+      "llm_tldr_cn": "CoNav-UAV针对无人机目标导航中全域探索与近距离接近难以兼顾的问题，提出一种双高度协同导航框架。利用Stackelberg学习协调两架无人机的探索与接近策略，避免依赖特权信息，实现无碰撞的近距离目标定位。该框架展示了多无人机分层协作的可行性，可为拦截与围捕等任务提供协同控制参考。",
+      "llm_tldr": "CoNav-UAV针对无人机目标导航中全域探索与近距离接近难以兼顾的问题，提出一种双高度协同导航框架。利用Stackelberg学习协调两架无人机的探索与接近策略，避免依赖特权信息，实现无碰撞的近距离目标定位。该框架展示了多无人机分层协作的可行性，可为拦截与围捕等任务提供协同控制参考。",
       "llm_tags": [
-        "query:ui"
+        "query:ui:composite"
       ],
-      "matched_query_tag": "query:ui",
-      "matched_query_text": "multiple UAV cooperative encirclement",
-      "matched_requirement_id": "req-3",
-      "selection_source": "fresh_fetch",
-      "quick_tier": "6"
-    },
-    {
-      "id": "2608.01425v1",
-      "source": "arxiv",
-      "title": "Training Small LLMs as Spatial Multi-Agent Policies",
-      "abstract": "Training LLM-based multi-agent systems with multi-agent reinforcement learning is rapidly gaining traction, and a parallel line of work argues that such systems should be judged by their behavior, not only their reward. We take up both threads in spatial cooperative games, where small frozen LLMs prompted with low-level actions fail outright, earning zero reward. Guided by the options/semi-MDP framework---and, because option execution is asynchronous across agents, its multi-agent extension in macro-action Dec-POMDPs---we equip each game with a library of symbolic \\emph{options}: typed, state-feasible, short-horizon behaviors executed by a symbolic planner. Each library is drafted by a frontier coding model from the game's source code; the feasibility guards that filter each menu are then synthesized mechanically from cheap random-policy burn-in rollouts---a guard is adopted only if it explains repeated execution failures while hiding no logged success---so no guard is authored, selected, or reward-tuned by hand. Each agent's LLM acts as its policy over options, with a private per-agent LoRA adapter trained by a per-agent variant of multi-agent GRPO (PA-MAGRPO); this lifts frozen bases from zero reward to competent play across three games and four small backbones. Behavioral audits then reveal that reward and cooperation decouple: a rising reward curve may simply mean that one agent has learned to run the entire task alone while its partner idles---cooperation emerges only when the task makes it necessary. Reward alone is thus an unreliable readout of cooperation; behavioral evaluation must sit alongside it.",
-      "authors": [
-        "Yi Mao",
-        "Andrew Perrault"
-      ],
-      "primary_category": "cs.MA",
-      "categories": [
-        "cs.MA",
-        "cs.LG"
-      ],
-      "published": "2026-08-02T18:14:40+00:00",
-      "link": "https://arxiv.org/pdf/2608.01425v1",
-      "tags": [
-        "keyword:ui",
-        "query:ui"
-      ],
-      "llm_score": 6.0,
-      "llm_evidence_en": "multi-agent reinforcement learning for spatial cooperative games with options",
-      "llm_evidence_cn": "面向空间协作博弈的多智能体强化学习方法",
-      "llm_evidence": "面向空间协作博弈的多智能体强化学习方法",
-      "canonical_evidence": "面向空间协作博弈的多智能体强化学习方法",
-      "llm_tldr_en": "Training Small LLMs as Spatial Multi-Agent Policies uses options/semi-MDP and macro-action Dec-POMDPs to enable small frozen LLMs to solve spatial cooperative games, with symbolic option libraries and feasibility guards turning zero-reward failures into effective collaborative behavior.",
-      "llm_tldr_cn": "针对小型冻结语言模型在空间协作博弈中直接输出低层动作会完全失败的问题，本文基于选项/半马尔可夫决策过程及其多智能体扩展宏动作Dec-POMDP，为每个博弈构建类型化、状态可行的符号选项库，并由符号规划器执行。库由前沿编码模型从源码生成，可行性守卫确保动作安全可靠。实验表明，该方法使原本零奖励的模型获得有效协同行为，为多智能体强化学习提供了可借鉴的选项化训练范式。",
-      "llm_tldr": "针对小型冻结语言模型在空间协作博弈中直接输出低层动作会完全失败的问题，本文基于选项/半马尔可夫决策过程及其多智能体扩展宏动作Dec-POMDP，为每个博弈构建类型化、状态可行的符号选项库，并由符号规划器执行。库由前沿编码模型从源码生成，可行性守卫确保动作安全可靠。实验表明，该方法使原本零奖励的模型获得有效协同行为，为多智能体强化学习提供了可借鉴的选项化训练范式。",
-      "llm_tags": [
-        "query:ui"
-      ],
-      "matched_query_tag": "query:ui",
-      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
-      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
       "selection_source": "fresh_fetch",
       "quick_tier": "6"
     }

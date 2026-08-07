@@ -7,16 +7,14 @@
 
 ## 每次日报
 - 最新运行日期：2026-08-07
-- 运行时间：2026-08-07 01:39:43 UTC
+- 运行时间：2026-08-07 21:11:52 UTC
 - 运行状态：成功
-- 本次总论文数：3
+- 本次总论文数：1
 - 精读区：0
-- 速读区：3
+- 速读区：1
 
 ### 今日简报（AI）
-今日速读3篇论文，聚焦无人机协同导航与多智能体路径规划。  
-最值得关注的是《CoNav-UAV》中基于Stackelberg学习的双高度协同导航，获7.0分。  
-建议后续可深入对比分层决策与LLM驱动的多智能体规划方案。
+今日共速读1篇论文，暂无精读。最值得关注的是《CoNav-UAV》中基于Stackelberg学习实现双高度无人机协同导航的方向（6.0/10）。建议普通读者优先了解该方法的协作博弈框架，后续可关注其多机扩展实验。
 - 详情：[/202608/07/README](/202608/07/README)
 
 ### 精读区论文标签
@@ -24,14 +22,8 @@
 
 ### 速读区论文标签
 1. [CoNav-UAV: Cooperative Dual-Altitude Aerial Navigation via Stackelberg Learning](/202608/07/2608.01802v1-conav-uav-cooperative-dual-altitude-aerial-navigation-via-stackelberg-learning)  
-   标签：评分：7.0/10、query:ui
-   evidence：面向协同无人机导航的多智能体强化学习，可迁移至多无人机围捕协调
-2. [Multi-Agent Planning with Spatio-Temporal and Topological Constraints using STL-GO](/202608/07/2607.28679v1-multi-agent-planning-with-spatio-temporal-and-topological-constraints-using-stl-go)  
    标签：评分：6.0/10、query:ui
-   evidence：带时空与拓扑约束的多智能体规划，可应用于协同围捕任务规划
-3. [Training Small LLMs as Spatial Multi-Agent Policies](/202608/07/2608.01425v1-training-small-llms-as-spatial-multi-agent-policies)  
-   标签：评分：6.0/10、query:ui
-   evidence：面向空间协作博弈的多智能体强化学习方法
+   evidence：面向目标导航的双无人机协同学习，与多无人机协同控制及追逃场景相关
 
 
 <div class="dpr-home-promo-card">
