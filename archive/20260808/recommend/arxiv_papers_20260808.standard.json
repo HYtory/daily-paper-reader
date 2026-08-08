@@ -1,0 +1,209 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-08T20:47:17.190095+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.01133v1",
+      "source": "arxiv",
+      "title": "Policy Optimality Measurement for Multi-Vehicle Decision-Making: From Extrinsic Indicators to Intrinsic Quality",
+      "abstract": "Evaluating Multi-Agent Reinforcement Learning (MARL) policies in autonomous driving fundamentally relies on extrinsic statistical indicators (e.g., reward curves and success rates), which often mask intrinsic policy degradation and algorithmic blind spots. To break this black-box evaluation, this letter proposes a novel information-theoretic diagnostic framework. By leveraging a fully converged Monte Carlo Tree Search (MCTS) as an asymptotic oracle, we establish a theoretical ground-truth baseline distribution. We formulate a bounded policy optimality score ($\\mathcal{M}_{opt}$) using the forward KL divergence to rigorously penalize fatal collaborative omissions. Crucially, we semantically decouple this metric into lateral and longitudinal dimensions, creating a granular \"semantic microscope\". Extensive spatial and temporal diagnostics on state-of-the-art MARL architectures and exploration mechanisms demonstrate that our framework conclusively exposes hidden directional biases, identifies temporal average-policy traps, and transforms heuristic hyperparameter tuning into a visually trackable trajectory optimization. This framework establishes a rigorous, model-agnostic standard for benchmarking intrinsic multi-agent policy quality.",
+      "authors": [
+        "Ye Han",
+        "Lijun Zhang",
+        "Dejian Meng"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-08-02T10:21:58+00:00",
+      "link": "https://arxiv.org/pdf/2608.01133v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent RL policy evaluation framework applicable to UAV swarm coordination",
+      "llm_evidence_cn": "多智能体强化学习策略评估框架，可应用于无人机集群协同",
+      "llm_evidence": "多智能体强化学习策略评估框架，可应用于无人机集群协同",
+      "canonical_evidence": "多智能体强化学习策略评估框架，可应用于无人机集群协同",
+      "llm_tldr_en": "An information-theoretic diagnostic framework for MARL policies in multi-vehicle decision-making, using MCTS as an oracle to compute a bounded optimality score that penalizes fatal collaborative omissions.",
+      "llm_tldr_cn": "针对多智能体强化学习策略评估依赖外部指标而掩盖内在退化的问题，本文提出一种信息论诊断框架。利用MCTS作为渐近最优基准，构造有界策略最优性分数来惩罚致命协作遗漏。该方法可帮助识别多车协作中的策略缺陷，并有望迁移到无人机集群围捕等任务中，提升协同决策的可信度。",
+      "llm_tldr": "针对多智能体强化学习策略评估依赖外部指标而掩盖内在退化的问题，本文提出一种信息论诊断框架。利用MCTS作为渐近最优基准，构造有界策略最优性分数来惩罚致命协作遗漏。该方法可帮助识别多车协作中的策略缺陷，并有望迁移到无人机集群围捕等任务中，提升协同决策的可信度。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.01745v1",
+      "source": "arxiv",
+      "title": "Heterogeneous Multi-Agent Reinforcement Learning for Radio Resource Management under Coupled Finite-Horizon Constraints",
+      "abstract": "Maximizing throughput under proportional fairness in dense wireless networks requires jointly managing user association, scheduling, base station (BS) activation, and handover control under hard finite-horizon energy and handover budgets, which induces a fundamental tension between BS-side energy management and user-side handover regulation. While multi-agent reinforcement learning (MARL) is a natural framework for such distributed sequential control, its application here faces two difficulties: finite-horizon budget constraints cannot be evaluated at each time slot, and the nonlinear proportional fairness utility admits no principled per-slot decomposition. We propose HeLyMARL, a Lyapunov-embedded heterogeneous MARL framework that resolves both via drift-plus-penalty decomposition with virtual queues. The energy and handover constraint pressures are internalized directly into a unified per-slot reward, converting the constrained finite-horizon problem into an unconstrained MARL problem. Comparison against two Lagrangian-based alternatives reveals a timescale separation: Lagrangian relaxation regulates constraints only across training episodes, whereas the virtual queues of HeLyMARL bound cumulative budget consumption at every partial horizon within an episode, a pacing guarantee beyond the reach of greedy Lyapunov-based control. Simulations show that HeLyMARL is the only method that sustains the throughput-fairness balance together with uninterrupted service throughout the horizon, outperforming conventional MARL, Lyapunov-based, and constrained MARL benchmarks without premature budget exhaustion.",
+      "authors": [
+        "Yeonseo Jeong",
+        "Wonhyeok Ko",
+        "Sungweon Hong",
+        "Songnam Hong"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-03T06:11:38+00:00",
+      "link": "https://arxiv.org/pdf/2608.01745v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent RL framework under coupled constraints, transferable to multi-UAV cooperative encirclement",
+      "llm_evidence_cn": "耦合约束下的多智能体强化学习框架，可迁移到多无人机协同围捕",
+      "llm_evidence": "耦合约束下的多智能体强化学习框架，可迁移到多无人机协同围捕",
+      "canonical_evidence": "耦合约束下的多智能体强化学习框架，可迁移到多无人机协同围捕",
+      "llm_tldr_en": "Lyapunov-embedded heterogeneous MARL for radio resource management under coupled finite-horizon constraints, addressing nonlinear proportional fairness and hard budgets. Its constraint-aware multi-agent training is transferable to multi-UAV cooperative encirclement.",
+      "llm_tldr_cn": "密集无线网络中最大化比例公平吞吐量需要在用户关联、调度、基站开关和切换控制之间协同决策，并满足能量与切换的有限时域预算约束。现有MARL难以处理这种无法逐时隙评估的全局约束和非线性公平效用分解问题。本文提出Lyapunov嵌入的异构多智能体强化学习框架HeLyMARL，将约束感知机制融入多智能体训练，从而在分布式控制中平衡多个相互冲突的目标。该方法为多无人机协同围捕等带预算约束的多智能体任务提供了可借鉴的MARL建模与训练思路。",
+      "llm_tldr": "密集无线网络中最大化比例公平吞吐量需要在用户关联、调度、基站开关和切换控制之间协同决策，并满足能量与切换的有限时域预算约束。现有MARL难以处理这种无法逐时隙评估的全局约束和非线性公平效用分解问题。本文提出Lyapunov嵌入的异构多智能体强化学习框架HeLyMARL，将约束感知机制融入多智能体训练，从而在分布式控制中平衡多个相互冲突的目标。该方法为多无人机协同围捕等带预算约束的多智能体任务提供了可借鉴的MARL建模与训练思路。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.02034v1",
+      "source": "arxiv",
+      "title": "Upper-Expectile Multi-Step Q-Learning for Off-Policy Reinforcement Learning",
+      "abstract": "Multi-step returns accelerate reward propagation in off-policy reinforcement learning, but couple the evaluation of each decision to the suboptimal logged actions that follow it, inducing a pessimistic bias that grows with the horizon. We propose Expectile $n$-step Q-learning (ENQ), which replaces the symmetric $n$-step temporal-difference (TD) loss with an asymmetric expectile loss on the action-value error, with expectile level $τ$ as the only method-specific hyperparameter added beyond $n$-step TD. We prove that the ENQ operator is a $γ^{n}$-contraction. Under deterministic dynamics, at $τ=1$, its bias vanishes at the optimal action-value function $Q^*$ on covered in-support pairs, and the corresponding fixed point satisfies the separation-$n$ instance and its multiples of the lower-bound inequality used by Long-Horizon Q-learning (LQL). Under stochastic dynamics, the operator bias admits two-sided bounds with horizon-independent noise constants. Using a single expectile level $τ=0.8$ and a fixed backup horizon across 27 manipulation and navigation task instances, ENQ is competitive with LQL on aggregate, achieves higher measured training-step throughput in our profiling study, and benefits more from a ten-critic ensemble in a controlled scaling experiment.",
+      "authors": [
+        "Abdelghani Ghanem",
+        "Mounir Ghogho"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-03T10:30:56+00:00",
+      "link": "https://arxiv.org/pdf/2608.02034v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "general off-policy RL improvement applicable to UAV interception training",
+      "llm_evidence_cn": "通用的离策略强化学习改进，可应用于无人机拦截训练",
+      "llm_evidence": "通用的离策略强化学习改进，可应用于无人机拦截训练",
+      "canonical_evidence": "通用的离策略强化学习改进，可应用于无人机拦截训练",
+      "llm_tldr_en": "Multi-step returns in off-policy RL improve reward propagation but inject pessimistic bias from logged suboptimal actions. ENQ replaces the symmetric n-step TD loss with an asymmetric expectile loss, proving contraction and vanishing bias.",
+      "llm_tldr_cn": "离策略强化学习中多步回报虽能加速奖励传播，却会把后续次优动作的悲观偏差随轨迹长度放大。本文提出期望分位数n步Q学习（ENQ），用非对称期望分位数损失替代对称的n步时序差分损失，仅额外增加一个期望分位数超参数τ，并证明该算子具有γ^n收缩性。在确定性动力学下，τ=1时偏差在覆盖的样本上消失，对应不动点满足separation-n性质。ENQ为各类离策略控制任务提供了一种简单有效的偏差校正训练方法，可用于单无人机拦截等RL训练场景。",
+      "llm_tldr": "离策略强化学习中多步回报虽能加速奖励传播，却会把后续次优动作的悲观偏差随轨迹长度放大。本文提出期望分位数n步Q学习（ENQ），用非对称期望分位数损失替代对称的n步时序差分损失，仅额外增加一个期望分位数超参数τ，并证明该算子具有γ^n收缩性。在确定性动力学下，τ=1时偏差在覆盖的样本上消失，对应不动点满足separation-n性质。ENQ为各类离策略控制任务提供了一种简单有效的偏差校正训练方法，可用于单无人机拦截等RL训练场景。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.03978v1",
+      "source": "arxiv",
+      "title": "Stochastic Multiple Shooting Trajectory Optimization via Sequential Local Policy Evaluation",
+      "abstract": "Stochastic single shooting trajectory optimization methods such as Model Predictive Path Integral control (MPPI) have been widely adopted in robotics due to their ability to reason about probabilistic dynamics and provide solutions where model gradients are noisy, costly to evaluate, or unavailable. However, satisfaction of terminal constraints when shooting over long action sequences is often sample inefficient, requiring a large number of iterations for convergence. In this paper, we present a stochastic multiple shooting method that optimizes short control action sequences connected via local feedback policies to improve sample efficiency and convergence to a terminal set. Additionally, we show that we are able to synthesize approximate system Jacobians purely from rollouts, making the method suitable for model-based reinforcement learning with black-box dynamics. We demonstrate the algorithm has improved sample efficiency and terminal set convergence for three nonlinear, underactuated optimization problems: a classic cartpole swingup task with analytical dynamics, a cartpole swingup task with learned neural network dynamics, and a VTOL quadplane performing a high angle-of-attack, precision post-stall landing maneuver.",
+      "authors": [
+        "Ashwin Gupta",
+        "Joseph Moore"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-08-04T17:43:21+00:00",
+      "link": "https://arxiv.org/pdf/2608.03978v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "trajectory optimization with terminal set convergence, applicable to UAV pursuit-evasion planning",
+      "llm_evidence_cn": "带终端集收敛的轨迹优化方法，可用于无人机追逃规划",
+      "llm_evidence": "带终端集收敛的轨迹优化方法，可用于无人机追逃规划",
+      "canonical_evidence": "带终端集收敛的轨迹优化方法，可用于无人机追逃规划",
+      "llm_tldr_en": "Stochastic multiple shooting trajectory optimization optimizes short control sequences connected via local feedback policies to improve sample efficiency and terminal set convergence relative to single shooting methods like MPPI. Relevant to UAV pursuit-evasion planning with terminal interception constraints.",
+      "llm_tldr_cn": "针对随机单发轨迹优化在长动作序列与终端约束下样本效率低、收敛慢的问题，本文提出一种随机多重打靶方法，将短控制动作序列通过局部反馈策略连接，从而在保持概率动力学推理能力的同时提高采样效率并更好满足终端约束。实验表明该方法在收敛到终端集方面较MPPI更高效。该方法可推广到无人机追逃中需要满足拦截末端条件的轨迹规划场景，作为强化学习之外的一种互补控制方案。",
+      "llm_tldr": "针对随机单发轨迹优化在长动作序列与终端约束下样本效率低、收敛慢的问题，本文提出一种随机多重打靶方法，将短控制动作序列通过局部反馈策略连接，从而在保持概率动力学推理能力的同时提高采样效率并更好满足终端约束。实验表明该方法在收敛到终端集方面较MPPI更高效。该方法可推广到无人机追逃中需要满足拦截末端条件的轨迹规划场景，作为强化学习之外的一种互补控制方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.04121v1",
+      "source": "arxiv",
+      "title": "Interpretable Fuzzy Inference for UAV Target Tracking Using Bounding-Box Geometry",
+      "abstract": "Vision-based guidance of unmanned aerial vehicles (UAVs) toward unmanned ground vehicles (UGVs) supports cooperative aerial--ground robotics, but reliable continuous yaw estimation from onboard vision remains challenging because of sensing uncertainty, limited computation, and the need for interpretable control. Existing deep-learning and geometric-reconstruction approaches often require large datasets, external localization, or complex modeling assumptions, reducing transparency and deployment suitability on resource-constrained platforms. We present an interpretable fuzzy-inference framework that generates continuous yaw commands from low-dimensional features extracted from YOLO boxes: target centroid location, area, and aspect ratio. No explicit geometric modeling is required. A Mamdani fuzzy system serves as an interpretable baseline using a shoulder--triangle--shoulder input partition. It is followed by a first-order Takagi--Sugeno model with three antecedent membership terms per input, whose parameters are derived from training-set quantiles, yielding a compact 27-rule structure. Evaluation uses 6{,}169 labeled samples from a VICON motion-capture environment. Across five randomized train--test splits, the Takagi--Sugeno model achieves a test-set mean absolute error of $0.140^\\circ \\pm 0.003^\\circ$, a root mean squared error of $0.200^\\circ \\pm 0.008^\\circ$, and a maximum absolute error of $1.254^\\circ \\pm 0.121^\\circ$. Within-threshold accuracies are $99.676% \\pm 0.270%$ for $\\pm1^\\circ$ and $100.000% \\pm 0.000%$ for both $\\pm3^\\circ$ and $\\pm5^\\circ$. Directional consistency between image-plane horizontal displacement and predicted yaw sign reaches $90.254% \\pm 0.612%$. These results show that the framework is transparent, data-efficient, computationally lightweight, and suitable for real-time vision-based UAV guidance toward mobile ground targets.",
+      "authors": [
+        "Reza Ahmari",
+        "Ahmad Mohammadi",
+        "Vahid Hemmati",
+        "Nicholas Edmond",
+        "Hossein Z. Saghazadeh",
+        "Olusola Odeyomi",
+        "Parham Kebria",
+        "Abdollah Homaifar"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.CV"
+      ],
+      "published": "2026-08-04T18:18:29+00:00",
+      "link": "https://arxiv.org/pdf/2608.04121v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Vision-based UAV target tracking and yaw guidance toward a moving target; direct component for single-UAV interception",
+      "llm_evidence_cn": "基于视觉的UAV目标跟踪与偏航引导，直接服务于单机拦截",
+      "llm_evidence": "基于视觉的UAV目标跟踪与偏航引导，直接服务于单机拦截",
+      "canonical_evidence": "基于视觉的UAV目标跟踪与偏航引导，直接服务于单机拦截",
+      "llm_tldr_en": "An interpretable fuzzy-inference framework for UAV target tracking that generates yaw commands from YOLO bounding-box geometry, enabling reliable pursuit without deep learning or external localization.",
+      "llm_tldr_cn": "针对UAV对地面目标的视觉跟踪中连续偏航估计困难的问题，本文提出一种可解释模糊推理框架，仅利用YOLO检测框的低维几何特征生成连续偏航指令。该方法避免了对大数据集和外部定位的依赖，计算开销小、可解释性强，适用于资源受限平台。实验表明其能够可靠地引导UAV持续对准目标，为单机拦截/追踪任务提供了轻量而实用的技术路径。",
+      "llm_tldr": "针对UAV对地面目标的视觉跟踪中连续偏航估计困难的问题，本文提出一种可解释模糊推理框架，仅利用YOLO检测框的低维几何特征生成连续偏航指令。该方法避免了对大数据集和外部定位的依赖，计算开销小、可解释性强，适用于资源受限平台。实验表明其能够可靠地引导UAV持续对准目标，为单机拦截/追踪任务提供了轻量而实用的技术路径。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
