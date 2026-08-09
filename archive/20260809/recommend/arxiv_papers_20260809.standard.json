@@ -1,0 +1,335 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-09T19:27:53.758601+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 8,
+    "quick_skim_target": 11,
+    "quick_selected": 8
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.01425v1",
+      "source": "arxiv",
+      "title": "Training Small LLMs as Spatial Multi-Agent Policies",
+      "abstract": "Training LLM-based multi-agent systems with multi-agent reinforcement learning is rapidly gaining traction, and a parallel line of work argues that such systems should be judged by their behavior, not only their reward. We take up both threads in spatial cooperative games, where small frozen LLMs prompted with low-level actions fail outright, earning zero reward. Guided by the options/semi-MDP framework---and, because option execution is asynchronous across agents, its multi-agent extension in macro-action Dec-POMDPs---we equip each game with a library of symbolic \\emph{options}: typed, state-feasible, short-horizon behaviors executed by a symbolic planner. Each library is drafted by a frontier coding model from the game's source code; the feasibility guards that filter each menu are then synthesized mechanically from cheap random-policy burn-in rollouts---a guard is adopted only if it explains repeated execution failures while hiding no logged success---so no guard is authored, selected, or reward-tuned by hand. Each agent's LLM acts as its policy over options, with a private per-agent LoRA adapter trained by a per-agent variant of multi-agent GRPO (PA-MAGRPO); this lifts frozen bases from zero reward to competent play across three games and four small backbones. Behavioral audits then reveal that reward and cooperation decouple: a rising reward curve may simply mean that one agent has learned to run the entire task alone while its partner idles---cooperation emerges only when the task makes it necessary. Reward alone is thus an unreliable readout of cooperation; behavioral evaluation must sit alongside it.",
+      "authors": [
+        "Yi Mao",
+        "Andrew Perrault"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.LG"
+      ],
+      "published": "2026-08-02T18:14:40+00:00",
+      "link": "https://arxiv.org/pdf/2608.01425v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent RL for spatial cooperative games, transferable to UAV swarm coordination",
+      "llm_evidence_cn": "面向空间协作多智能体任务的强化学习，可迁移至无人机集群协同",
+      "llm_evidence": "面向空间协作多智能体任务的强化学习，可迁移至无人机集群协同",
+      "canonical_evidence": "面向空间协作多智能体任务的强化学习，可迁移至无人机集群协同",
+      "llm_tldr_en": "The paper trains small LLMs as policies in spatial cooperative multi-agent games using multi-agent RL with macro-action options and Dec-POMDPs, overcoming zero-reward failures, and offering transferable coordination methods relevant to UAV swarm tasks.",
+      "llm_tldr_cn": "针对空间协作游戏中冻结小型LLM在低层动作上无法获得奖励的问题，本文在宏动作Dec-POMDP与选项框架下，将符号选项库赋予多智能体策略，并用多智能体强化学习训练。实验表明该方法能有效解决空间协同任务，零奖励问题得到缓解，为无人机集群等空间多智能体协调提供了可迁移的强化学习训练范式。",
+      "llm_tldr": "针对空间协作游戏中冻结小型LLM在低层动作上无法获得奖励的问题，本文在宏动作Dec-POMDP与选项框架下，将符号选项库赋予多智能体策略，并用多智能体强化学习训练。实验表明该方法能有效解决空间协同任务，零奖励问题得到缓解，为无人机集群等空间多智能体协调提供了可迁移的强化学习训练范式。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.01205v1",
+      "source": "arxiv",
+      "title": "ReBRAC-v2: The Return of the King",
+      "abstract": "Recent offline reinforcement learning methods increasingly rely on expressive generative policies and specialized value-guidance mechanisms. We ask whether comparable progress can instead come from systematically modernizing a conventional behavior-regularized actor-critic while preserving its algorithmic simplicity. We introduce ReBRAC-v2, which directly trains an exact-likelihood normalizing flow as the RL actor, combines likelihood, MSE, and MAE behavior regularization, and integrates a classification-based residual critic, staged optimization, and multi-sample test-time action selection. Rather than tuning this recipe separately for every task, we develop a single shared configuration via roughly 600 Bayesian proposals on six challenging OGBench tasks, freeze all structural and optimization choices, and adapt only two behavior-regularization coefficients over a 16-point grid. Across ten common state-based OGBench categories, ReBRAC-v2 averages 74.8 compared to 52.3 for the next-best aggregate result and ranks first in eight categories. The same recipe, without structural changes, obtains the strongest averages in our comparisons on D4RL AntMaze (90.2) and Adroit (33.6). Fixed-recipe ablations show the largest sensitivity to the selected mixed cloning objective, staged training, sufficient flow capacity, and multi-sample inference, while showing that several smaller choices depend on the values of other hyperparameters. These results show that disciplined, transferable engineering can achieve state-of-the-art aggregate performance without abandoning a minimalist offline RL foundation.",
+      "authors": [
+        "Denis Tarasov",
+        "Robert K. Katzschmann"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-08-02T12:42:20+00:00",
+      "link": "https://arxiv.org/pdf/2608.01205v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "general offline RL algorithm applicable to UAV interception policy training",
+      "llm_evidence_cn": "通用离线强化学习算法，可应用于无人机拦截策略训练",
+      "llm_evidence": "通用离线强化学习算法，可应用于无人机拦截策略训练",
+      "canonical_evidence": "通用离线强化学习算法，可应用于无人机拦截策略训练",
+      "llm_tldr_en": "ReBRAC-v2 modernizes a behavior-regularized actor-critic using normalizing flows, residual critic, and single shared config, achieving strong OGBench results; the algorithm is a potentially transferable RL method for UAV interception.",
+      "llm_tldr_cn": "针对现有离线强化学习方法依赖复杂生成策略和专门价值引导机制的问题，本文提出ReBRAC-v2，通过规范流策略、分类残差critic、分段优化和多采样测试时动作选择，系统现代化传统行为正则actor-critic，并保持算法简洁。在六个OGBench任务上使用约600次贝叶斯调参统一配置，取得强结果。该方法作为通用离线RL算法，可直接迁移至无人机拦截等策略学习任务。",
+      "llm_tldr": "针对现有离线强化学习方法依赖复杂生成策略和专门价值引导机制的问题，本文提出ReBRAC-v2，通过规范流策略、分类残差critic、分段优化和多采样测试时动作选择，系统现代化传统行为正则actor-critic，并保持算法简洁。在六个OGBench任务上使用约600次贝叶斯调参统一配置，取得强结果。该方法作为通用离线RL算法，可直接迁移至无人机拦截等策略学习任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.05047v1",
+      "source": "arxiv",
+      "title": "Exact Model-Free Policy Iteration for Co-safe LTL Planning",
+      "abstract": "This work studies model-free reinforcement learning for co-safe linear temporal logic (sc-LTL) objectives in finite Markov decision processes, which can be reduced to maximal reachability objectives via the standard product construction. For this problem, direct sample-based bootstrap methods (e.g., TD or Q-learning) may fail to converge to optimal policies due to the noncontractive nature and nonuniqueness of solutions to the Bellman equation. We develop a new two-step model-free reinforcement learning method that first uses a discounted surrogate to identify a clamp set that resolves this nonuniqueness, and then applies undiscounted policy evaluation and greedy policy improvement with guarantees of finding an optimal solution. We prove almost-sure convergence of the policy evaluation step and finite termination of the policy iteration algorithm at an optimal policy. These theoretical results are validated through numerical experiments on a stochastic grid world.",
+      "authors": [
+        "Zetong Xuan",
+        "Yu Wang"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "cs.FL",
+        "cs.RO"
+      ],
+      "published": "2026-08-05T16:58:25+00:00",
+      "link": "https://arxiv.org/pdf/2608.05047v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Model-free RL with convergence guarantees for co-safe LTL objectives, directly applicable to formalizing encirclement and pursuit-evasion tasks.",
+      "llm_evidence_cn": "面向co-safe LTL目标的模型无关强化学习, 直接适用于围捕与追逃任务的形式化目标.",
+      "llm_evidence": "面向co-safe LTL目标的模型无关强化学习, 直接适用于围捕与追逃任务的形式化目标.",
+      "canonical_evidence": "面向co-safe LTL目标的模型无关强化学习, 直接适用于围捕与追逃任务的形式化目标.",
+      "llm_tldr_en": "Develops exact model-free policy iteration for co-safe LTL planning, using a discounted surrogate to resolve Bellman non-uniqueness and proving almost-sure convergence to optimal policies.",
+      "llm_tldr_cn": "针对co-safe线性时序逻辑目标, 直接基于采样的TD/Q学习可能因Bellman方程非压缩而无法收敛. 本文提出两步模型无关强化学习方法, 先利用折扣代理识别夹紧集合解决非唯一性, 再进行无折扣策略评估与贪心提升. 证明了该算法的几乎必然收敛, 并保证找到最优策略, 为具有时序任务约束的控制问题提供了理论保障.",
+      "llm_tldr": "针对co-safe线性时序逻辑目标, 直接基于采样的TD/Q学习可能因Bellman方程非压缩而无法收敛. 本文提出两步模型无关强化学习方法, 先利用折扣代理识别夹紧集合解决非唯一性, 再进行无折扣策略评估与贪心提升. 证明了该算法的几乎必然收敛, 并保证找到最优策略, 为具有时序任务约束的控制问题提供了理论保障.",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.01802v1",
+      "source": "arxiv",
+      "title": "CoNav-UAV: Cooperative Dual-Altitude Aerial Navigation via Stackelberg Learning",
+      "abstract": "Target-oriented vision-and-language navigation (VLN) on aerial platforms is attracting growing attention for missions such as disaster rescue, infrastructure inspection, and security patrol. In this task, an unmanned aerial vehicle (UAV) needs to locate targets given only a concise description of their appearance and surroundings. This requires global exploration and grounding as well as collision-free close-range approach, two interleaved processes difficult to reconcile within a single agent. Most existing methods transfer the ground VLN paradigm to a low-altitude UAV and compensate for its inefficient exploration with external assistance. A recent attempt deploys two UAVs at complementary altitudes yet still relies on privileged information and trains its two agents independently, precluding any mutual adaptation essential for cooperation. Here we propose CoNav-UAV, which explicitly models the task as a Stackelberg game between a high-altitude leader and a low-altitude follower, with the system operating on onboard visual and linguistic inputs alone. To solve this game, we introduce Iterative Stackelberg Learning. The leader's high-level vision-language reasoning is refined via memory-based in-context learning, while the follower's precise motion control is updated via DAgger-style expert distillation. The alternation drives both agents toward a Stackelberg equilibrium. CoNav-UAV consistently outperforms single- and dual-agent baselines across three high-fidelity urban scenes from the AerialVLN benchmark. Success rate improves by up to 30.8 points on the learning scene, and 9.0 points under cross-scene transfer while using about 3x less adaptation data. Further analyses validate the complementary gains of the leader and follower updates and reveal robust gains yet distinct learning dynamics across VLM backbones.",
+      "authors": [
+        "Junru Song",
+        "Wenhao Zhang",
+        "Yang Yang",
+        "Xuekai Qiu",
+        "Feifei Wang",
+        "Weien Zhou",
+        "Tingsong Jiang",
+        "Ying Wen",
+        "Yang Li",
+        "Wen Yao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-08-03T07:10:38+00:00",
+      "link": "https://arxiv.org/pdf/2608.01802v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Cooperative dual-altitude UAV navigation via Stackelberg learning, transferable to multi-UAV encirclement",
+      "llm_evidence_cn": "基于Stackelberg学习的双高度无人机协同导航，可迁移至多机围捕",
+      "llm_evidence": "基于Stackelberg学习的双高度无人机协同导航，可迁移至多机围捕",
+      "canonical_evidence": "基于Stackelberg学习的双高度无人机协同导航，可迁移至多机围捕",
+      "llm_tldr_en": "CoNav-UAV trains two UAVs at complementary altitudes with Stackelberg learning to perform target-oriented VLN, coordinating exploration and close-range approach without privileged information.",
+      "llm_tldr_cn": "针对单无人机在视觉-语言导航中难以兼顾全局探索与近距离接近目标的问题，本文提出CoNav-UAV，在互补高度部署两架无人机并通过Stackelberg学习协同导航。该方法避免了对特权信息的依赖，使低空无人机可专注于地面目标靠近，高空无人机负责全局探索。实验表明双高度协同能显著提升目标定位与接近效率，其协作机制可为多无人机围捕提供参考。",
+      "llm_tldr": "针对单无人机在视觉-语言导航中难以兼顾全局探索与近距离接近目标的问题，本文提出CoNav-UAV，在互补高度部署两架无人机并通过Stackelberg学习协同导航。该方法避免了对特权信息的依赖，使低空无人机可专注于地面目标靠近，高空无人机负责全局探索。实验表明双高度协同能显著提升目标定位与接近效率，其协作机制可为多无人机围捕提供参考。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.05989v1",
+      "source": "arxiv",
+      "title": "Observation-Grounded Self-Predictive Reinforcement Learning for Visual Continuous Control",
+      "abstract": "Sample-efficient policy learning from pixels is a long-standing challenge in reinforcement learning (RL). Recent dynamics-based representation learning methods have significantly improved the sample efficiency of model-free visual RL by learning dynamics-aware representations through auxiliary prediction performed either in latent space (self-prediction) or observation space (observation prediction). However, state-of-the-art methods from both categories still struggle on challenging visual control tasks when training data is limited. We posit that relying on either predictive objective alone may be insufficient. In contrast, observation prediction grounds learned representations in observation-level dynamics, but does not directly regularize the temporal predictability of latent representations over extended horizons. In this paper, we propose Observation-Grounded Self-Predictive Representations (OG-SPR), a model-free visual RL algorithm for continuous control that learns representations that are both temporally predictive in latent space and grounded in observation-level dynamics. OG-SPR incorporates two core auxiliary objectives: multi-step latent self-prediction and next-observation prediction. We empirically show that directly imposing latent self-prediction on the shared representation may over-constrain it and does not necessarily improve performance. To address this issue, OG-SPR introduces two lightweight adapters for latent self-prediction, allowing the shared representation to benefit from temporally predictive signals without being forced to directly satisfy the self-prediction objective. Experiments on 28 visual control tasks from the DeepMind Control Suite show that OG-SPR improves aggregate performance over state-of-the-art self-predictive and observation-predictive RL methods, with particularly pronounced gains in challenging domains such as dog and humanoid.",
+      "authors": [
+        "Xinwei Liu",
+        "Junyuan Liang",
+        "Jianting Zhang",
+        "Wuhui Chen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-08-06T13:02:59+00:00",
+      "link": "https://arxiv.org/pdf/2608.05989v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "sample-efficient visual RL for continuous control applicable to autonomous drone interception",
+      "llm_evidence_cn": "高效的视觉强化学习控制方法，可应用于自主无人机拦截",
+      "llm_evidence": "高效的视觉强化学习控制方法，可应用于自主无人机拦截",
+      "canonical_evidence": "高效的视觉强化学习控制方法，可应用于自主无人机拦截",
+      "llm_tldr_en": "A sample-efficient visual RL method for continuous control that grounds self-prediction in observation-level dynamics, improving policy learning from pixels; transferable to autonomous drone interception tasks.",
+      "llm_tldr_cn": "该论文针对像素输入的强化学习样本效率难题，提出观察接地的自预测强化学习方法，将观察空间预测与潜在空间自预测结合以学习动力学感知表征。实验表明在数据有限的挑战性视觉控制任务上，该方法显著提升样本效率并超过现有最优方法。这一通用视觉RL算法可迁移至无人机自主拦截等需要从像素学习控制策略的任务，为后续研究提供基础。",
+      "llm_tldr": "该论文针对像素输入的强化学习样本效率难题，提出观察接地的自预测强化学习方法，将观察空间预测与潜在空间自预测结合以学习动力学感知表征。实验表明在数据有限的挑战性视觉控制任务上，该方法显著提升样本效率并超过现有最优方法。这一通用视觉RL算法可迁移至无人机自主拦截等需要从像素学习控制策略的任务，为后续研究提供基础。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.03833v1",
+      "source": "arxiv",
+      "title": "History Matters: Meta-policy Delegation with Heterogeneous Multi-agent Reinforcement Learning",
+      "abstract": "AI agents are expected to play an increasingly important role in future decision-making systems. In this paper, we consider collaborative systems composed of heterogeneous multi-agent systems (MAS), where their members have different capabilities and operating costs. We study how agents can delegate tasks to one another so that certain research tasks can be completed effectively under resource-constrained scenarios. We first develop a multi-agent reinforcement learning-based (MARL) delegation training that enables agents to make sequential delegation decisions while minimizing the total execution cost. We then extend this approach to MARL with prescribed delegation topologies. Furthermore, we introduce two new frameworks for collaboration and delegation in multi-agent systems. The first framework proposes that an agent's policy depends not only on the current state of the underlying Markov decision process but also on the interaction history, including previous joint actions. This history-dependent formulation can improve coordination even in fully observable environments, where conventional MARL methods typically restrict policies to depend only on the current state. The second framework proposes a novel, potentially multi-dimensional monetary mechanism to facilitate the collaboration and delegation for MAS.",
+      "authors": [
+        "Ziqing Lu",
+        "Avinash Reddy Mudireddy",
+        "Sarra Alqahtani",
+        "Weiyu Xu"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-08-04T15:39:40+00:00",
+      "link": "https://arxiv.org/pdf/2608.03833v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "general MARL meta-policy delegation framework applicable to heterogeneous UAV swarm coordination",
+      "llm_evidence_cn": "面向异构无人机群协同的通用多智能体强化学习委托框架",
+      "llm_evidence": "面向异构无人机群协同的通用多智能体强化学习委托框架",
+      "canonical_evidence": "面向异构无人机群协同的通用多智能体强化学习委托框架",
+      "llm_tldr_en": "This paper develops MARL-based delegation training for heterogeneous multi-agent systems with prescribed topologies, enabling cost-efficient task allocation and collaboration.",
+      "llm_tldr_cn": "针对异构多智能体系统中成员能力与运行成本不同、资源受限时任务难以高效完成的问题，本文提出基于多智能体强化学习的委托训练框架，使智能体能够通过顺序委托决策最小化总执行成本，并将该方法扩展至预设委托拓扑。还引入了两种新协作框架。该成果可为无人机集群在拦截围捕中的任务分配与协同提供元级策略支持。",
+      "llm_tldr": "针对异构多智能体系统中成员能力与运行成本不同、资源受限时任务难以高效完成的问题，本文提出基于多智能体强化学习的委托训练框架，使智能体能够通过顺序委托决策最小化总执行成本，并将该方法扩展至预设委托拓扑。还引入了两种新协作框架。该成果可为无人机集群在拦截围捕中的任务分配与协同提供元级策略支持。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.04905v1",
+      "source": "arxiv",
+      "title": "PRIMAL3: Pathfinding via Reinforcement and Imitation Multi-Agent Learning - Leveraging LaCAM3",
+      "abstract": "We present PRIMAL3, an ultra-large-scale learning-based framework for multi-agent pathfinding (MAPF) that integrates reinforcement learning, topology-aware communication, LaCAM3-guided training, and PIBT-based action refinement. PRIMAL3 targets failures at topologically critical states, where agents must coordinate decisively around bottlenecks, dead ends, and persistent conflicts. Each agent is represented using features derived from cut vertices, dead-end regions, shortest-path distances, and blocking estimates. Two complementary graphs capture agent interactions: a same-direction following graph propagates multihop context along compatible paths, while a different-direction conflict graph differentiates agents competing for shared space through masked attention and relative features. During training, we propose to let policy entropy identify uncertain agents, for which LaCAM3 provides confidence-triggered action interventions and label-smoothed imitation targets. During execution, a priority-aware PIBT module refines the proposed joint actions using persistent, learned, and distance-aware priorities together with policy-aware fallback preferences while maintaining collision-free execution. The resulting framework combines learned exploration with structured expert guidance without requiring LaCAM3 at inference. Experiments demonstrate that PRIMAL3 substantially outperforms state-of-the-art learning-based baselines and scales to ultra-large instances with up to city-level 100,000 agents. Real-world experiments further demonstrate the feasibility of deploying PRIMAL3 on physical robotic systems and ablation studies validate the individual contributions the components we proposed. Project page: https://marmotlab.github.io/PRIMAL3/",
+      "authors": [
+        "Chengyang He",
+        "Tanishq Duhan",
+        "Gadiel Sznaier Camps",
+        "Fangyuan Wang",
+        "Yuhong Cao",
+        "Jiankai Sun",
+        "Ge Sun",
+        "Mac Schwager",
+        "Guillaume Sartoretti"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-08-05T14:33:59+00:00",
+      "link": "https://arxiv.org/pdf/2608.04905v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent pathfinding via reinforcement and imitation learning",
+      "llm_evidence_cn": "基于强化与模仿学习的多智能体路径规划",
+      "llm_evidence": "基于强化与模仿学习的多智能体路径规划",
+      "canonical_evidence": "基于强化与模仿学习的多智能体路径规划",
+      "llm_tldr_en": "PRIMAL3 integrates reinforcement learning, imitation learning, and LaCAM3 guidance to solve ultra-large-scale multi-agent pathfinding, tackling coordination at topologically critical states with bottleneck-aware features.",
+      "llm_tldr_cn": "针对大规模多智能体路径规划中拓扑关键状态（瓶颈、死胡同、持续冲突）的协调难题，提出PRIMAL3。该方法融合强化学习、拓扑感知通信、LaCAM3训练指导与PIBT动作精化，并用割点、死区等特征表示智能体。实验证明该方法在超大规模MAPF上显著提升成功率，为多机器人/多无人机协同路径规划提供了高效范式。",
+      "llm_tldr": "针对大规模多智能体路径规划中拓扑关键状态（瓶颈、死胡同、持续冲突）的协调难题，提出PRIMAL3。该方法融合强化学习、拓扑感知通信、LaCAM3训练指导与PIBT动作精化，并用割点、死区等特征表示智能体。实验证明该方法在超大规模MAPF上显著提升成功率，为多机器人/多无人机协同路径规划提供了高效范式。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.05597v1",
+      "source": "arxiv",
+      "title": "Uncertainty-Aware World Model for Aerial Image-Goal Navigation",
+      "abstract": "Aerial image-goal navigation requires an unmanned aerial vehicle (UAV) to reach a target location specified by a goal image. Existing world-model-based methods rank candidate trajectories using predicted futures, but typically rely on only one or a few point predictions, which is inadequate for large-scale outdoor environments with substantial future-state uncertainty. To address this limitation, we propose the Uncertainty-Aware Navigation World Model (UA-NWM), an efficient latent world model for aerial image-goal navigation, which formulates trajectory scoring as conditional out-of-distribution detection. UA-NWM represents plausible futures with an uncertainty subspace and decomposes the prediction--goal discrepancy into uncertainty-explainable and unexplainable components. Only the unexplainable residual is used for scoring, enabling robust selection without multiple future samples. Extensive experiments demonstrate that UA-NWM consistently outperforms existing navigation world models while maintaining low inference latency. Real-world UAV experiments further validate its practical applicability. Project page: https://duryi.github.io/UA-NWM-Project-Page",
+      "authors": [
+        "Deyi Zhu",
+        "Haoyu Fan",
+        "Yinan Zhu",
+        "Weichen Zhang",
+        "Shilin Ma",
+        "Xinlei Chen",
+        "Yansong Tang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-06T04:43:53+00:00",
+      "link": "https://arxiv.org/pdf/2608.05597v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Uncertainty-aware world model for UAV aerial navigation, applicable to target approach under uncertainty.",
+      "llm_evidence_cn": "面向无人机航拍导航的不确定性世界模型, 可应用于不确定环境下的目标接近任务.",
+      "llm_evidence": "面向无人机航拍导航的不确定性世界模型, 可应用于不确定环境下的目标接近任务.",
+      "canonical_evidence": "面向无人机航拍导航的不确定性世界模型, 可应用于不确定环境下的目标接近任务.",
+      "llm_tldr_en": "Proposes UA-NWM, an uncertainty-aware latent world model that scores trajectories as out-of-distribution detection for aerial image-goal navigation, improving robustness under large-scale outdoor uncertainty.",
+      "llm_tldr_cn": "现有世界模型方法在大型室外目标导航中仅依赖少量点预测, 难以处理未来状态的不确定性. 为此提出不确定性感知导航世界模型(UA-NWM), 将轨迹评分转化为条件分布外检测, 用不确定性子空间表示可能未来. 该方法能有效分解预测与目标间的差异, 提升无人机在复杂环境中的导航鲁棒性与到达准确率.",
+      "llm_tldr": "现有世界模型方法在大型室外目标导航中仅依赖少量点预测, 难以处理未来状态的不确定性. 为此提出不确定性感知导航世界模型(UA-NWM), 将轨迹评分转化为条件分布外检测, 用不确定性子空间表示可能未来. 该方法能有效分解预测与目标间的差异, 提升无人机在复杂环境中的导航鲁棒性与到达准确率.",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

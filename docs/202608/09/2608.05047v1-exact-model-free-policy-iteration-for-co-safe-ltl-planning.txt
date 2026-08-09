@@ -1,0 +1,685 @@
+Title: Exact Model-Free Policy Iteration for Co-safe LTL Planning
+
+URL Source: https://arxiv.org/pdf/2608.05047v1
+
+Published Time: Thu, 06 Aug 2026 01:15:48 GMT
+
+Number of Pages: 7
+
+Markdown Content:
+# Exact Model-Free Policy Iteration for Co-safe LTL Planning 
+
+Zetong Xuan and Yu Wang, Senior Member, IEEE 
+
+Abstract — This work studies model-free reinforcement learning for co-safe linear temporal logic (sc-LTL) objec-tives in finite Markov decision processes, which can be reduced to maximal reachability objectives via the stan-dard product construction. For this problem, direct sample-based bootstrap methods (e.g., TD or Q-learning) may fail to converge to optimal policies due to the noncontractive na-ture and nonuniqueness of solutions to the Bellman equa-tion. We develop a new two-step model-free reinforcement learning method that first uses a discounted surrogate to identify a clamp set that resolves this nonuniqueness, and then applies undiscounted policy evaluation and greedy policy improvement with guarantees of finding an optimal solution. We prove almost-sure convergence of the policy evaluation step and finite termination of the policy iteration algorithm at an optimal policy. These theoretical results are validated through numerical experiments on a stochastic grid world. 
+
+Index Terms — Markov decision processes, Reachability analysis, Reinforcement learning, Model checking. 
+
+n
+
+I. I NTRODUCTION 
+
+# MODEL-free reinforcement learning (RL) for co-safe linear temporal logic (sc-LTL) objectives [1] is im-portant for autonomous systems that accomplish complex rule-based tasks under unknown stochastic dynamics. Sc-LTL is the co-safe fragment of linear temporal logic (LTL) [2], whose satisfaction can be determined by a finite execution prefix, and is therefore naturally suited to tasks such as sequential completion, ordered visitation, and event-triggered termination [3]–[5]. When the model of the underlying Markov decision process (MDP) is unavailable, one must rely on sampled interactions to synthesize policies. In this setting, model-free methods are especially attractive because they are typically more scalable than model-based methods that rely on explicit model construction [6], which faces a memory bottleneck at scale. 
+
+This work was supported in part by the NSF CAREER Award No. 2541603 and ARO under Grant No. W911NF-25-1-0243. The authors are with the Department of Mechanical and Aerospace Engineering, University of Florida, Gainesville, FL 32611 USA (e-mail: z.xuan@ufl.edu; yuwang1@ufl.edu). This is the accepted version of a manuscript accepted for publication in the IEEE Control Systems Letters . The version of record is available at https://doi.org/10.1109/LCSYS.2026.3702192 .© 2026 IEEE. Personal use of this material is permitted. Permission from IEEE must be obtained for all other uses, in any current or future media, including reprinting/republishing this material for advertising or promotional purposes, creating new collective works, for resale or redistribution to servers or lists, or reuse of any copyrighted component of this work in other works. 
+
+Existing model-free RL methods for general LTL or LTL f
+
+introduce an unnecessary layer of indirection when applied to sc-LTL, incurring a gap between the learned policy and the optimal policy for the satisfaction probability. The issue for general LTL is that it is designed to express ω-regular behavior, whereas for sc-LTL, the desired objective already becomes a reachability probability after the standard product construction [2], [5], [7]. These methods optimize the expected return of a surrogate reward rather than the satisfaction prob-ability itself. The most common approach uses discounted rewards so that the resulting expected return approximates the satisfaction probability [8]–[13], but the discounted return may differ substantially from the true satisfaction probability for practical discount factors [14], [15]. Setting γ = 1 to recover the exact satisfaction probability is not applicable, since the Bellman operator is no longer a contraction and these algorithms lose their convergence guarantees. Average-reward alternatives [16] avoid this gap but enlarge the state space with reward-machine states. Although sc-LTL coincides with LTL f
+
+for reachability on finite MDPs [17], to the best of our knowl-edge, no model-free LTL f work directly computes an optimal policy for the satisfaction probability. Existing methods rely on analogous discounted weighted [18] or indicator-style [19] rewards, incurring the same gap. A direct model-free treatment of the reachability problem induced by sc-LTL is nevertheless nontrivial. The Bellman equation for reachability probability may admit multiple so-lutions in the absence of discounting [20]. When recurrent structure is present, other fixed-points may arise. Conse-quently, sample-based methods driven by bootstrapping, such as temporal-difference (TD) updates, may not converge to the true reachability probability. Existing sample-based methods for reachability also have important limitations. Some require additional assumptions or side information, such as knowl-edge of the topology of the underlying graph [21], expected conditional distance information [22], or model knowledge for identifying maximal end components in tree search [23]. This work develops an exact model-free RL method for sc-LTL objectives and establishes convergence guarantees that do not rely on surrogate approximation or graph search. The key idea is to identify and remove the recurrent structure responsible for the nonuniqueness of solutions, namely the clamp set. We first use a discounted formulation whose value function reveals whether the target can ever be reached. A positive value indicates that the target can be reached with positive probability, whereas a zero value identifies recurrent arXiv:2608.05047v1 [eess.SY] 5 Aug 2026 structure away from the target. After eliminating this source of nonuniqueness, the Bellman equation becomes well-posed on the remaining states. The true reachability probabilities can then be computed and used for greedy policy improvement. Unlike [20], which identifies end components by thresholding the repeated occurrence of state-action pairs along sampled paths, our method identifies the relevant recurrent structure through value function estimation, thereby utilizing bootstrap-ping and avoiding reliance on prescribed sampled-path lengths. Our work is different from existing sample-based methods for sc-LTL that consider modified formulations rather than the exact reachability problem induced by sc-LTL. Specifically, [24] solves a discounted surrogate problem via topology-guided approximate dynamic programming, while [25] per-forms search over a parameterized policy class. Relatedly, [26] studies sc-LTL control for hybrid systems via a reach-avoid decomposition and approximately solves the resulting subproblems in a model-based RL method. 
+
+II. P RELIMINARIES 
+
+This section introduces how an sc-LTL planning problem can be reduced to a maximal reachability problem. By the standard automata-based product construction, an sc-LTL ob-jective can be translated into a reachability objective on a finite product MDP [2], [5]. To streamline the presentation, we work directly with finite MDPs with reachability objectives and recall the Bellman equations for reachability. 
+
+Definition 1: A finite Markov decision process with reacha-bility objective is a tuple M = ( S, A, T, β, Z ) where (i) S is a finite set of states and β ∈ ∆( S) is the initial-state distribution, where ∆( S) denotes the set of probability distributions on S;(ii) A is a finite set of actions, and A(s) denotes the set of admissible actions at s ∈ S; (iii) T (·| s, a ) is the transition distribution for each admissible state-action pair (s, a ); (iv) 
+
+Z ⊆ S is the target set to be reached. A path of M is an infinite state sequence σ = s0s1s2 · · · 
+
+such that for all t ≥ 0, there exists at ∈ A(st) with 
+
+T (st+1 |st, a t) > 0. We say that σ satisfies the reachability objective if there exists t ∈ N such that st ∈ Z.
+
+Definition 2: A deterministic stationary policy is a function 
+
+π : S → A such that π(s) ∈ A(s) for all s ∈ S. Given π,the induced Markov chain has transition kernel T π (s′|s) := 
+
+T (s′|s, π (s)) for all s, s ′ ∈ S.Let Pπs and Eπs denote the probability measure and expec-tation, respectively, under policy π with initial state s0 = s.The reachability formulation studied here captures a broad class of sc-LTL planning problems. An sc-LTL objective can be translated into a reachability objective by the standard product construction, which builds a product MDP from the original MDP and a deterministic finite automaton (DFA) generated from the sc-LTL formula [2], [5]. The automaton state encodes the specification progress and is included in the product state. Thus, a stationary policy on the product MDP corresponds to a finite-memory policy on the original MDP, and it suffices to search for an optimal deterministic stationary policy on the product MDP [2]. On the product MDP, reaching the target set is equivalent to satisfying the sc-LTL objective. For any subset C ⊆ S, define the hitting time τC := inf {t ≥
+
+0 : st ∈ C}, with the convention inf ∅ = ∞. For a policy π,the value function V π : S → [0 , 1] is defined by 
+
+V π (s) := Pπs (τZ < ∞). (1) It satisfies the Bellman equation 
+
+V π (s) = 
+
+(
+
+1, s ∈ Z, 
+
+P 
+
+> s′∈S
+
+T π (s′|s) V π (s′), s / ∈ Z. (2) The associated state-action value function is defined as 
+
+Qπ (s, a ) := P 
+
+> s′∈S
+
+T (s′|s, a ) V π (s′) for s ∈ S, a ∈ A(s).Equivalently, for s / ∈ Z, one has V π (s) = Qπ (s, π (s)) .The maximal reachability problem seeks an optimal policy 
+
+π⋆ and the corresponding optimal value function, 
+
+π⋆ ∈ arg max π Es0∼β [V π (s0)] , V ⋆(s) := max π V π (s).
+
+Moreover, V ⋆ satisfies the Bellman optimality equation 
+
+V ⋆(s) = 
+
+
+
+1, s ∈ Z, 
+
+max 
+
+> a∈A(s)
+
+P
+
+> s′∈S
+
+T (s′|s, a ) V ⋆(s′), s / ∈ Z. (3) It is well known that (2) and (3) may admit multiple fixed-point solutions. Meanwhile V π and V ⋆ correspond to the least fixed-point solutions of (2) and (3), respectively [2]. 
+
+III. M OTIVATION 
+
+In this section, we explain why maximal reachability is difficult to solve from samples. In the model-free setting, one naturally relies on bootstrap updates such as TD and Q-learning. The difficulty is that, in the undiscounted case, the Bellman equations may admit multiple solutions, whereas reachability probabilities are given by the least fixed-point solutions. Consequently, bootstrap methods may converge to a solution that does not equal the reachability probability. 
+
+Example 1: Consider the following MDP. At state s, action 
+
+u1 keeps the process at s, whereas action u2 reaches a target state z ∈ Z with probability 1/2 and a non-target terminal state f ∈ S \ Z with probability 1/2. Thus V ⋆(s) = 1 /2. The Bellman optimality equation gives 
+
+Q⋆(s, u 2) = 12 , Q ⋆(s, u 1) = max {Q⋆(s, u 1), Q ⋆(s, u 2)}.
+
+Hence the Bellman optimality equation admits any assignment of the form Q⋆(s, u 2) = 1 /2 and Q⋆(s, u 1) ≥ 1/2 as a solution. The desired reachability values are given by its least solution. Therefore, a sample-based bootstrap method may not converge to a solution equal to the reachability probability and incorrectly prefer the self-loop action u1, which yields zero reachability. This phenomenon is not specific to that example. It arises from recurrent structure in the Markov chain. 
+
+Definition 3: A bottom strongly connected component (BSCC) of a Markov chain is a strongly connected component without outgoing transitions. On such BSCCs, sample-based bootstrap updates may settle at an arbitrary fixed-point of the Bellman equation. Under a policy π, any BSCC C disjoint from Z satisfies V π (s) = 0 
+
+for all s ∈ C, since once the path enters C, it cannot reach Z.However, the Bellman equation does not uniquely determine these zero values. Restricted to C,
+
+V π |C = T πC V π |C , (4) where V π |C ∈ R|C| is the restriction of V π to C, and T πC ∈
+
+R|C|×| C| is the corresponding submatrix of T π . Since C is a BSCC, every constant vector on C satisfies (4). In Example 1, under action u1, {s} is such a BSCC. 
+
+IV. M ETHODOLOGY 
+
+In this section, we develop a model-free policy iteration algorithm for maximal reachability. For each policy, we iden-tify from samples the states responsible for BSCC-induced nonuniqueness, perform undiscounted policy evaluation on the remaining states, and then apply greedy policy improvement. Formal guarantees are deferred to Sec. V. 
+
+A. Model-Free Policy Evaluation for Reachability 
+
+Fix a deterministic stationary policy π. Our goal is to remove the source of nonuniqueness in the undiscounted Bell-man equation before performing policy evaluation. To identify the states responsible for the BSCC-induced nonuniqueness from samples, we introduce the discounted surrogate 
+
+V πγ (s) := Eπs [γτZ 1{τZ < ∞} ], γ ∈ (0 , 1) , (5) where γ is a discount factor. To isolate this source of nonuniqueness, define the clamp set 
+
+F π := {s ∈ S : V πγ (s) = 0 } = {s ∈ S : V π (s) = 0 }. (6) Thus F π contains all BSCCs disjoint from Z under π, together with transient states with V π = 0 . Clamping these transient states does not affect the value function on S \ F π .Here, V πγ can be estimated from samples. For st /∈ Z,
+
+bV πγ (st) ← (1 − αt) bV πγ (st) + αt γ bV πγ (st+1 ), (7) where αt is a stepsize, st+1 ∼ T (· | st, π (st)) , and bV πγ (s) = 1 
+
+for s ∈ Z. The estimated clamp set is 
+
+bF π := {s ∈ S : bV πγ (s) ≤ ε}, (8) with threshold ε > 0. Define the exact and estimated evalua-tion domains by Sπ 
+
+> 0
+
+:= S \ (Z ∪ F π ), bSπ 
+
+> 0
+
+:= S \ (Z ∪ bF π ). We then perform undiscounted policy evaluation on the estimated domain bSπ 
+
+> 0
+
+. In implementation, bF π need not be constructed 
+
+Algorithm 1 Model-Free Policy Iteration for Reachability                                                                      
+
+> Require: Simulator access to s′∼T(·| s, a ); target set Z; discount factor
+> γ∈(0 ,1) ; clamp threshold ε; improvement threshold δ
+> 1: Initialize a deterministic stationary policy π0
+> 2: for k= 0 ,1,2, . . . do
+> 3: Estimate bVπk
+> γfrom samples under πkusing (7) 4: Update bFπkby (8) 5: Estimate bVπk
+> bFπkfrom samples under πkusing (10) 6: for all s∈S\Z,a∈A(s)do
+> 7: Estimate bQk(s, a )from samples by (11) 8: end for
+> 9: for all s∈S\Zdo
+> 10: Update πk+1 (s)according to (12) 11: end for
+> 12: if πk+1 =πkthen terminate
+> 13: end for
+> 14: return πk
+
+explicitly. For s ∈ bSπ 
+
+> 0
+
+, consider the clamped undiscounted Bellman equation, which is now well-posed. 
+
+V π  
+
+> bFπ
+
+(s) = X 
+
+> s′∈bSπ
+> 0
+
+T π (s′|s) V π  
+
+> bFπ
+
+(s′) + X
+
+> z∈Z
+
+T π (z|s). (9) Generally, for any policy π and any clamp set F ⊆ S \ Z, V πF
+
+is the value function under π with boundary value 0 on F and 
+
+1 on Z. The policy and clamp set indices vary independently. The corresponding sample recursion is 
+
+bV π  
+
+> bFπ
+
+(st) ← (1 − αt) bV π  
+
+> bFπ
+
+(st) + αt bV π  
+
+> bFπ
+
+(st+1 ), (10) for st ∈ bSπ 
+
+> 0
+
+, with boundary conditions bV π  
+
+> bFπ
+
+(s) = 1 if s ∈ Z
+
+and bV π  
+
+> bFπ
+
+(s) = 0 if s ∈ bF π . When bF π = F π , equivalently 
+
+bSπ 
+
+> 0
+
+= Sπ 
+
+> 0
+
+, V π  
+
+> bFπ
+
+agrees with the exact reachability probability 
+
+V π , as shown in Sec. V. 
+
+B. Model-Free Policy Iteration for Reachability 
+
+We now introduce a model-free policy iteration algorithm for maximal reachability. Given policy πk, for each s ∈ S \ Z
+
+and a ∈ A(s), we draw NQ independent samples and estimate the one-step state-action value by 
+
+bQk(s, a ) := 1
+
+NQ
+
+XNQ
+
+> i=1
+
+bV πk  
+
+> bFπk
+
+(s′
+
+> i
+
+). (11) For each s ∈ S \ Z, let a⋆k(s) ∈ arg max a∈A(s) bQk(s, a ).The next policy is updated by 
+
+πk+1 (s) = a⋆k(s) if bQk
+
+ s, a ⋆k(s) > bQk
+
+ s, π k(s) + δ, πk+1 (s) = πk(s) otherwise , (12) where δ ≥ 0 is an improvement threshold. Keeping the current action unless there exists a strict improvement is essential for the policy improvement result in Lemma 3. 
+
+V. C ONVERGENCE ANALYSIS 
+
+This section analyzes the convergence of Algorithm 1. For each fixed policy, policy evaluation recovers the exact reachability value function, and then establishes a convergence guarantee for policy iteration under the following conditions.  
+
+> •
+
+(PE1) the discounted TD recursion (7) converges almost surely to V πγ ; 
+
+> •
+
+(PE2) when exact recovery of the clamp set is claimed, the threshold ε satisfies ε < min { V πγ (s) : V πγ (s) > 0 }; 
+
+> •
+
+(PE3) for the clamped TD recursion (10), the Robbins– Monro stepsize conditions hold and every state in bSπ 
+
+> 0
+
+is visited infinitely often. 
+
+Remark 1: Conditions (PE1) and (PE3) are standard for asynchronous tabular TD with Robbins–Monro stepsizes and infinite state visitation [27], [28], easily enforced under sim-ulator access. Within (PE2), the choice of ε and γ controls the accuracy of clamp set recovery rather than the uniqueness of the clamped Bellman equation (9), which only requires 
+
+F π ⊆ bF π . (PE2) further ensures bF π = F π for exact recovery. A larger γ widens the valid ε region at the cost of slower discounted TD convergence. A quantitative sensitivity analysis is left to future work. A. Convergence of Sample-Based Policy Evaluation 
+
+For policy evaluation, we first show that the discounted evaluation stage eventually identifies the correct clamp set, and then show that the corresponding clamped evaluation stage converges to the true reachability value V π .The next lemma shows that the estimated clamp set eventu-ally contains and converges exactly to the true clamp set under a mild separation condition. 
+
+Lemma 1: Fix a policy π, and let bF πm := {s ∈ S :
+
+bV πγ,m (s) ≤ ε} denote the estimated clamp set after m dis-counted TD updates (7). Under (PE1), bF πm ⊇ F π eventually almost surely, where F π is defined in (6). Moreover, under (PE1)–(PE2), bF πm = F π eventually almost surely. 
+
+Proof: If ∥ bV πγ,m − V πγ ∥∞ ≤ ε, then for every s ∈ F π ,since V πγ (s) = 0 , we have bV πγ,m (s) ≤ | bV πγ,m (s) − V πγ (s)| ≤ ε,so s ∈ bF πm. Hence F π ⊆ bF πm, and the eventual inclusion follows from the almost-sure convergence of discounted TD. If in addition min { V πγ (s) : V πγ (s) > 0 } > ε, then almost-sure convergence implies that there exists m′ ≥ m
+
+such that ∥ bV πγ,m ′ − V πγ ∥∞ < min { V πγ (s) : V πγ (s) > 0 } − ε.Therefore, for every s / ∈ F π ,
+
+bV πγ,m ′ (s) ≥ V πγ (s) − ∥ bV πγ,m ′ − V πγ ∥∞ > ε, (13) so s / ∈ bF πm′ eventually. Combining this with F π ⊆ bF πm′ yields 
+
+bF πm′ = F π eventually almost surely. Once the estimated clamp set bF π contains F π , the clamped Bellman equation is uniquely solvable. Furthermore, when 
+
+bF π = F π , its solution equals V π . The following lemma establishes the convergence of policy evaluation. 
+
+Lemma 2: Fix a policy π. If F π ⊆ bF π , then the clamped Bellman equation (9) on bSπ 
+
+> 0
+
+admits a unique solution V π  
+
+> bFπ
+
+,and under (PE3) the recursion (10) converges almost surely to V π  
+
+> bFπ
+
+. Moreover, if bF π = F π , then V πF π (s) = V π (s) for all 
+
+s ∈ Sπ 
+
+> 0
+
+.
+
+Proof: All matrix-vector identities below are taken on 
+
+bSπ 
+
+> 0
+
+, with V π  
+
+> bFπ
+
+read as its restriction to bSπ 
+
+> 0
+
+. Express (9) on bSπ
+
+> 0
+
+in matrix form as 
+
+u = ¯Tπ, bF π u + bπ, bF π , (14) where u is the unknown value vector on bSπ 
+
+> 0
+
+, for s, s ′ ∈ bSπ 
+
+> 0
+
+,
+
+¯Tπ, bF π (s, s ′) := T (s′ | s, π (s)) ,bπ, bF π (s) := X 
+
+> z∈Z
+
+T (z | s, π (s)) .
+
+Since F π ⊆ bF π , every BSCC induced by π that is disjoint from Z is contained in bF π . Hence every state in bSπ 
+
+> 0
+
+is transient, and therefore ¯T nπ, bF π → 0 as n → ∞ . Thus the spectral radius ρ( ¯Tπ, bF π ) < 1. It follows that I − ¯Tπ, bF π is invertible, so (14) has the unique solution 
+
+V π  
+
+> bFπ
+
+= ( I − ¯Tπ, bF π )−1bπ, bF π . (15) If bF π = F π , then the clamp set is exactly the set of states with zero reachability probability under π. Hence, by uniqueness of the clamped Bellman equation, for s ∈ Sπ 
+
+> 0
+
+,
+
+V πF π (s) = V π (s). (16) We now analyze the sample recursion (10). This recursion performs tabular TD updates on bSπ 
+
+> 0
+
+, with boundary values fixed at 1 on Z and 0 on bF π . Hence it is an asynchronous fixed policy tabular TD scheme for the linear system (14). To invoke stochastic-approximation results, it remains to verify the associated ordinary differential equation, the stability of its equilibrium, the boundedness of the iterates, and the regularity of the noise sequence. First, the one-step TD error can be decomposed into the averaged drift bπ, bF π − (I − ¯Tπ, bF π )u plus a martingale-difference noise term. Accordingly, the associated ordinary differential equation is 
+
+˙u = bπ, bF π − (I − ¯Tπ, bF π )u. (17) Since ρ( ¯Tπ, bF π ) < 1, every eigenvalue of ¯Tπ, bF π −I has strictly negative real part. Hence the equilibrium V π  
+
+> bFπ
+
+is globally asymptotically stable. Second, if initialized in [0 , 1] with 0 <αt ≤ 1, the iterates remain bounded, since each TD update is a convex combination of the current value and a target in [0 , 1] . Third, in the finite-state setting, the one-step TD noise is a martingale-difference sequence with bounded second moment. By (PE3), the stepsize αt satisfies the Robbins– Monro conditions P 
+
+> t
+
+αt = ∞ and P 
+
+> t
+
+α2 
+
+> t
+
+< ∞, and every state in bSπ 
+
+> 0
+
+is visited infinitely often. Therefore, Prop. 4.6 of [28] implies that the clamped TD iterates converge almost surely to V π  
+
+> bFπ
+
+.
+
+B. Convergence of Policy Iteration 
+
+Now we present the convergence of the whole policy iteration. Since the classical policy improvement theorem does not apply in the undiscounted reachability setting, we prove monotonicity for a single policy improvement step, and then combine it with the policy evaluation. 
+
+Lemma 3: Given π, let π+ be given by the policy improve-ment step (12). Then for all s ∈ S, V π+
+
+(s) ≥ V π (s). If 
+
+π+̸ = π, then the inequality is strict at some state. 
+
+Proof: We proceed in three steps: set invariance, value function comparison, and strict improvement. First, we show that the update from π to π+ does not create any new BSCC disjoint from Z outside F π . By construction, for every s / ∈ Z,
+
+Qπ (s, π +(s)) ≥ V π (s), (18) with strict inequality whenever π+(s)̸ = π(s). Let C be any BSCC induced by π+ such that C ∩Z = ∅, and choose s⋆ ∈ C
+
+maximizing V π over C. Since C is closed, 
+
+Qπ (s⋆, π +(s⋆)) = X 
+
+> s′
+
+T (s′|s⋆, π +(s⋆)) V π (s′)
+
+≤ V π (s⋆). (19) Together with (18), this implies equality in (19). Hence every successor of s⋆ under π+ has the same V π -value as s⋆, and also π+(s⋆) = π(s⋆). Propagating this argument along paths in C, we conclude that V π is constant on C and π+(s) = π(s)
+
+for all s ∈ C. Thus C is also a BSCC under π. Since C ∩Z =
+
+∅, no state in C can reach Z under π, and hence C ⊆ F π .Therefore, every BSCC induced by π+ that is disjoint from 
+
+Z is contained in F π .Second, we compare values after clamping F π . All matrix-vector identities in this step are taken on Sπ 
+
+> 0
+
+, with V π and 
+
+V π+  
+
+> Fπ
+
+read as their restrictions to Sπ 
+
+> 0
+
+. Since every BSCC of π+
+
+disjoint from Z lies in F π , the subchain on Sπ 
+
+> 0
+
+is transient under π+. Therefore the clamped Bellman equation under π+
+
+has a unique solution V π+  
+
+> Fπ
+
+, satisfying 
+
+V π+  
+
+> Fπ
+
+= ¯Tπ+,F π V π+  
+
+> Fπ
+
++ bπ+,F π . (20) Equivalently, (I − ¯Tπ+,F π )V π+  
+
+> Fπ
+
+= bπ+,F π . Moreover, by the boundary conditions, for every s ∈ Sπ 
+
+> 0
+
+,
+
+  ¯Tπ+,F π V π + bπ+,F π
+
+(s) = Qπ (s, π +(s)) ≥ V π (s). (21) Therefore, 
+
+(I − ¯Tπ+,F π )( V π+  
+
+> Fπ
+
+− V π )= ( I − ¯Tπ+,F π )V π+  
+
+> Fπ
+
+− (I − ¯Tπ+,F π )V π
+
+= bπ+,F π −  V π − ¯Tπ+,F π V π 
+
+= ¯Tπ+,F π V π + bπ+,F π − V π ≥ 0. (22) Because ρ( ¯Tπ+,F π ) < 1, the inverse (I − ¯Tπ+,F π )−1 exists and is entrywise nonnegative, so V π+  
+
+> Fπ
+
+≥ V π on Sπ 
+
+> 0
+
+. Also, by construction of the clamped value function, 
+
+V π+  
+
+> Fπ
+
+(s) = Pπ+ 
+
+> s
+
+(τZ < τ F π ) ≤ Pπ+ 
+
+> s
+
+(τZ < ∞) = V π+
+
+(s),
+
+for every s ∈ Sπ 
+
+> 0
+
+. Combining this with V π+  
+
+> Fπ
+
+≥ V π , we obtain 
+
+V π+
+
+≥ V π on Sπ 
+
+> 0
+
+. The same inequality is trivial on F π and 
+
+Z. Therefore V π+
+
+≥ V π on all of S.Third, we prove strict improvement when π+̸ = π. If some changed state lies in Sπ 
+
+> 0
+
+, then by (18), the vector 
+
+r := ¯Tπ+,F π V π + bπ+,F π − V π
+
+is nonnegative and strictly positive in at least one component. By (22), we have V π+  
+
+> Fπ
+
+− V π = ( I − ¯Tπ+,F π )−1r. Since 
+
+ρ( ¯Tπ+,F π ) < 1, componentwise we have 
+
+(I − ¯Tπ+,F π )−1 = X∞
+
+> n=0
+
+¯T nπ+,F π ≥ I. 
+
+Hence, if rj > 0 for some component j, then 
+
+ V π+  
+
+> Fπ
+
+− V π  
+
+> j
+
+=  (I − ¯Tπ+,F π )−1r 
+
+> j
+
+≥ rj > 0.
+
+Therefore V π+  
+
+> Fπ
+
+> V π at some state, and thus V π+
+
+> V π at some state as well. Otherwise, every changed state lies in F π . Then for some 
+
+s ∈ F π , we have Qπ (s, π +(s)) > V π (s) = 0 . Using the already established monotonicity V π+
+
+≥ V π , we obtain 
+
+V π+
+
+(s) = X 
+
+> s′
+
+T (s′|s, π +(s)) V π+
+
+(s′)
+
+≥ X 
+
+> s′
+
+T (s′|s, π +(s)) V π (s′)= Qπ (s, π +(s)) > 0. (23) Thus V π+
+
+> V π at some state in either case. Finally, we combine the policy evaluation with the mono-tonic policy improvement to show that, when the action values used for policy improvement are evaluated exactly, Algo-rithm 1 terminates after finitely many policy improvements at an optimal policy with probability one. 
+
+Theorem 1: Under conditions (PE1)–(PE3), if policy im-provement is performed with δ = 0 and bQk(s, a ) = Qπk (s, a )
+
+for every iteration k and all relevant s, a , then Algorithm 1 terminates after finitely many policy improvements at an optimal policy with probability 1.
+
+Proof: Let ΠDS denote the finite set of deterministic stationary policies. For each π ∈ ΠDS , under conditions (PE1)–(PE3), the policy evaluation stage returns the exact value V π almost surely when run to convergence. Since ΠDS 
+
+is finite, the intersection of these almost-sure events over all 
+
+π ∈ ΠDS still has probability one. Fix a sample path in this event. On this sample path, because δ = 0 and the one-step values are evaluated exactly, each policy improvement step coincides with the exact update studied in Lemma 3. Whenever πk+1 ̸ = πk, Lemma 3 yields V πk+1 (s) ≥ V πk (s)
+
+for all s ∈ S with strict inequality at some state. Hence no policy can repeat along this sample path. Since ΠDS is finite, only finitely many policy improvements that change the policy are possible. Therefore, the policy iteration procedure terminates after finitely many policy improvements at some policy ¯π.For this terminal policy ¯π, no strict-improvement action exists. Hence, for every s / ∈ Z,
+
+V ¯π (s) = Q¯π (s, ¯π(s)) = max a∈A(s) Q¯π (s, a ).
+
+Together with the boundary condition V ¯π (z) = 1 for z ∈ Z,this shows that V ¯π satisfies the Bellman optimality equation (3). Since V ⋆ is the least fixed-point of (3) and every policy value satisfies V ¯π ≤ V ⋆, we obtain V ⋆ ≤ V ¯π ≤ V ⋆.Therefore V ¯π = V ⋆, and ¯π is optimal. 
+
+Remark 2: The exact- bQ assumption in Theorem 1 is a simplification keeping the statement focused on the resolution of nonuniqueness. For finite NQ, bQk in (11) concentrates around Qπk at a Hoeffding rate. With a strict-improvement threshold δ > 0 and the Hoeffding error of bQk kept below 
+
+δ/ 2, Algorithm 1 terminates with high probability at a policy 
+
+¯π such that max a Q¯π (s, a ) − V ¯π (s) ≤ 2δ.
+
+VI. C ASE STUDY 
+
+We validate the proposed method on a deliberately mislead-ing stochastic grid world. The 5×4 grid world has initial state 
+
+(0 , 1) , intermediate goal A = (0 , 3) , final goal B = (3 , 1) , and absorbing trap states T at all cells (x, y ) with x ∈ { 1, 2, 3}
+
+and y ∈ { 0, 2, 4}. The task is specified by the sc-LTL formula 
+
+φ = ♢(A ∧ ♢B) which requires the path to first reach A and then eventually reach B. The traps block all vertical movement between rows y = 1 and y = 3 except through column x = 0 .Intuitively, the agent must move upward along the left corridor to A, then return and cross to the right corridor to reach B. At each nonterminal state, the commanded action succeeds with probability 0.8, and the remaining probability is split equally between the two adjacent directions. Translating φ into a DFA yields a three-state automaton. The resulting product MDP has 
+
+60 states, where s0 denotes its initial state. This instance is designed to contain two difficulties for sample-based planning. First, the discounted surrogate is de-liberately misleading on this example. For γ = 0 .95 , a sub-optimal policy π′ has V π′ 
+
+> γ
+
+(s0) ≈ 0.404 but V π′
+
+(s0) = 0 .675 ,Fig. 1. Evolution of the exact value, the sample-based estimate, and the estimation error over policy iteration steps in the grid world. The estimate remains accurate, and the policy iteration reaches the optimal value. 
+
+whereas the optimal policy π⋆ has V π⋆
+
+(s0) ≈ 0.780 and a much smaller V π⋆ 
+
+> γ
+
+(s0) ≈ 0.017 . Thus, a policy that appears favorable under the discounted surrogate can be strongly suboptimal for the original sc-LTL objective. Second, the absorbing trap states induce BSCCs disjoint from Z, which cause nonuniqueness in the undiscounted Bellman equation. This case study therefore tests whether the proposed method can still recover the correct optimal policy for the sc-LTL objective despite both obstacles. The experiments were conducted using Python on a Win-dows 11 machine equipped with an Intel i9-14900K processor. We first solve the planning problem exactly by value iteration to obtain the ground truth, and then run the proposed policy iteration using samples only. We use γ = 0 .95 , ε = 1 e−3, 8e3
+
+discounted TD updates, 3e4 clamped TD updates, 1e4 samples in each policy improvement step, constant stepsize α = 0 .05 ,and threshold 1e−4.These numerical results are consistent with the theory in Sec. V. As shown in Fig. 1, the algorithm terminates after 
+
+7 policy improvements at a final policy with V πK (s0) =
+
+V ⋆(s0) = 0 .780 , indicating empirical recovery of the optimal policy and consistency with Theorem 1. Moreover, the sample-based clamped estimate bV πk  
+
+> bFπk
+
+(s0) closely tracks the exact value V πk (s0) throughout the iterations. The clamped policy evaluation is accurate, with max k ∥ bV πk  
+
+> bFπk
+
+− V πk ∥∞ = 1 .8 ×
+
+10 −2, supporting Lemma 2. In addition, the final estimated clamp set satisfies bF πK = F πK with | bF πK | = 18 , consistent with Lemma 1. Finally, although the value sequence is not strictly monotone at every policy improvement step because policy evaluation is sample-based, most updates are still im-proving, in qualitative agreement with Lemma 3. 
+
+VII. C ONCLUSION 
+
+This work studied model-free policy iteration for sc-LTL planning via maximal reachability. The method resolves the nonuniqueness of the undiscounted Bellman equation by identifying relevant BSCCs through a discounted surrogate, followed by well-posed undiscounted evaluation and greedy improvement. We proved almost-sure convergence of policy evaluation and, under exact one-step improvement, finite ter-mination at an optimal policy. 
+
+REFERENCES 
+
+[1] O. Kupferman and M. Y. Vardi, “Model checking of safety properties,” 
+
+Form. Methods Syst. Des. , vol. 19, no. 3, pp. 291–314, Nov. 2001. [2] C. Baier and J.-P. Katoen, Principles of Model Checking . Cambridge, MA, USA: The MIT Press, 2008, pp. 229–231. [3] H. Kress-Gazit, G. E. Fainekos, and G. J. Pappas, “Temporal-logic-based reactive mission and motion planning,” IEEE Trans. Robot. , vol. 25, no. 6, pp. 1370–1381, Dec. 2009. [4] S. L. Smith, J. T˚ umov´ a, C. Belta, and D. Rus, “Optimal path planning for surveillance with temporal-logic constraints,” Int. J. Robot. Res. , vol. 30, no. 14, pp. 1695–1708, Dec. 2011. [5] B. Lacerda, D. Parker, and N. Hawes, “Optimal and dynamic planning for Markov decision processes with co-safe LTL specifications,” in Proc. IEEE/RSJ Int. Conf. Intell. Robots Syst. , Chicago, IL, USA, Sep. 2014, pp. 1511–1516. [6] J. Fu and U. Topcu, “Probably approximately correct MDP learning and control with temporal logic constraints,” in Proc. Robot.: Sci. Syst. ,2014. [7] X. Ding, S. L. Smith, C. Belta, and D. Rus, “Optimal control of Markov decision processes with linear temporal logic constraints,” IEEE Trans. Autom. Control , vol. 59, no. 5, pp. 1244–1257, May 2014. [8] M. Hasanbeig, A. Abate, and D. Kroening, “Logically-constrained reinforcement learning,” 2018, arXiv:1801.08099. [9] H. Hasanbeig, D. Kroening, and A. Abate, “Certified reinforcement learning with logic guidance,” Artif. Intell. , vol. 322, p. 103949, Sep. 2023. [10] A. K. Bozkurt, Y. Wang, M. M. Zavlanos, and M. Pajic, “Control synthesis from linear temporal logic specifications using model-free reinforcement learning,” in Proc. IEEE Int. Conf. Robot. Autom. , 2020, pp. 10349–10355. [11] A. K. Bozkurt, Y. Wang, M. Zavlanos, and M. Pajic, “Model-free reinforcement learning for stochastic games with linear temporal logic objectives,” in Proc. IEEE Int. Conf. Robot. Autom. , 2021, pp. 10649– 10655. [12] D. Shao and M. Kwiatkowska, “Sample efficient model-free reinforce-ment learning from LTL specifications with optimality guarantees,” in 
+
+Proc. Int. Joint Conf. Artif. Intell. , 2023, pp. 4180–4189. [13] Y. Kantaros and J. Wang, “Sample-efficient reinforcement learning with temporal logic objectives: Leveraging the task specification to guide exploration,” IEEE Trans. Autom. Control , vol. 70, no. 5, pp. 2873– 2888, May 2025. [14] E. M. Hahn, M. Perez, S. Schewe, F. Somenzi, A. Trivedi, and D. Wojtczak, “Faithful and effective reward schemes for model-free reinforcement learning of omega-regular objectives,” in Proc. Int. Symp. Autom. Technol. Verif. Anal. , Hanoi, Vietnam, 2020, pp. 108–124. [15] C. Voloshin, A. Verma, and Y. Yue, “Eventual discounting temporal logic counterfactual experience replay,” in Proc. Int. Conf. Mach. Learn. ,2023, pp. 35137–35150. [16] X.-B. Le, D. Wagner, L. Witzman, A. Rabinovich, and L. Ong, “Rein-forcement learning with LTL and ω-regular objectives via optimality-preserving translation to average rewards,” Adv. Neural Inf. Process. Syst. , vol. 37, pp. 117109–117132, Dec. 2024. [17] G. De Giacomo and M. Y. Vardi, “Linear temporal logic and linear dynamic logic on finite traces,” in Proc. Int. Joint Conf. Artif. Intell. ,2013, pp. 854–860. [18] G. De Giacomo, L. Iocchi, M. Favorito, and F. Patrizi, “Foundations for restraining bolts: Reinforcement learning with LTL f /LDL f restraining specifications,” in Proc. Int. Conf. Autom. Plan. Schedul. , vol. 29, 2019, pp. 128–136. [19] R. Toro Icarte, T. Q. Klassen, R. Valenzano, and S. A. McIlraith, “Teaching multiple tasks to an RL agent using LTL,” in Proc. Int. Conf. Auton. Agents Multiagent Syst. , 2018, pp. 452–461. [20] T. Br´ azdil, K. Chatterjee, M. Chmel´ ık, V. Forejt, J. Kˇ ret´ ınsk´ y, M. Kwiatkowska, D. Parker, and M. Ujma, “Verification of Markov decision processes using learning algorithms,” in Proc. Int. Symp. Autom. Technol. Verif. Anal. , 2014, pp. 98–114. [21] P. Ashok, J. Kˇ ret´ ınsk´ y, and M. Weininger, “PAC statistical model checking for Markov decision processes and stochastic games,” in Proc. Int. Conf. Comput. Aided Verif. , 2019, pp. 497–519. [22] J. Svoboda, S. Bansal, and K. Chatterjee, “Reinforcement learning from reachability specifications: PAC guarantees with expected conditional distance,” in Proc. Int. Conf. Mach. Learn. , Jul. 2024, pp. 47331–47344. [23] P. Ashok, T. Br´ azdil, J. Kˇ ret´ ınsk´ y, and O. Sl´ ameˇ cka, “Monte Carlo tree search for verifying reachability in Markov decision processes,” in Proc. Int. Symp. Leveraging Appl. Formal Methods Verif. Validation , 2018, pp. 322–335. [24] L. Li and J. Fu, “Topological approximate dynamic programming under temporal logic constraints,” in Proc. IEEE Conf. Decis. Control , Dec. 2019, pp. 5330–5337. [25] L. Li and J. Fu, “Sampling-based approximate optimal temporal logic planning,” in Proc. IEEE Int. Conf. Robot. Autom. , Singapore, May 2017, pp. 1328–1335. [26] M. Cohen and C. Belta, “Temporal logic guided safe model-based reinforcement learning,” in Adaptive and Learning-Based Control of Safety-Critical Systems . Springer Int. Publ., 2023, pp. 165–192. [27] J. N. Tsitsiklis, “Asynchronous stochastic approximation and Q-learning,” Mach. Learn. , vol. 16, no. 3, pp. 185–202, Sep. 1994. [28] D. P. Bertsekas and J. N. Tsitsiklis, Neuro-Dynamic Programming .Belmont, MA, USA: Athena Scientific, 1996.

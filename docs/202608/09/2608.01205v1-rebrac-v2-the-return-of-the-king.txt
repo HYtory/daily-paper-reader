@@ -1,0 +1,756 @@
+Title: ReBRAC-v2: The Return of the King
+
+URL Source: https://arxiv.org/pdf/2608.01205v1
+
+Published Time: Tue, 04 Aug 2026 01:19:57 GMT
+
+Number of Pages: 19
+
+Markdown Content:
+# ReBRAC-v2: The Return of the King 
+
+## Denis Tarasov ∗, Robert K. Katzschmann 
+
+Soft Robotics Lab, D-MAVT ETH Zurich, Switzerland denis.tarasov@srl.ethz.ch 
+
+Abstract 
+
+Recent offline reinforcement learning methods increasingly rely on expressive generative policies and specialized value-guidance mechanisms. We ask whether comparable progress can instead come from systematically modernizing a conven-tional behavior-regularized actor-critic while preserving its algorithmic simplicity. We introduce ReBRAC-v2 , which di-rectly trains an exact-likelihood normalizing flow as the RL actor, combines likelihood, MSE, and MAE behavior regu-larization, and integrates a classification-based residual critic, staged optimization, and multi-sample test-time action selec-tion. Rather than tuning this recipe separately for every task, we develop a single shared configuration via roughly 600 Bayesian proposals on six challenging OGBench tasks, freeze all struc-tural and optimization choices, and adapt only two behavior-regularization coefficients over a 16-point grid. Across ten common state-based OGBench categories, ReBRAC-v2 aver-ages 74.8 compared to 52.3 for the next-best aggregate result and ranks first in eight categories. The same recipe, without structural changes, obtains the strongest averages in our compar-isons on D4RL AntMaze (90.2) and Adroit (33.6). Fixed-recipe ablations show the largest sensitivity to the selected mixed cloning objective, staged training, sufficient flow capacity, and multi-sample inference, while showing that several smaller choices depend on the values of other hyperparameters. These results show that disciplined, transferable engineering can achieve state-of-the-art aggregate performance without aban-doning a minimalist offline RL foundation. 1
+
+## Introduction 
+
+Offline reinforcement learning (RL) learns policies from a fixed dataset without further environment interaction (Levine et al. 2020). This setting is attractive when online exploration is expensive or unsafe, but it makes policy improvement brittle: actions outside the dataset support can receive unreliable value estimates, and the learner cannot repair these errors by collecting new experiences. Offline RL methods must therefore improve over the behavior policy while controlling the distribution shift induced by that improvement. Recent progress has increasingly relied on expressive gen-erative policies and specialized mechanisms for guiding them 
+
+> 1
+
+Source code: https://github.com/DT6A/ReBRAC-v2 
+
+> ∗
+
+Corresponding author. 
+
+with learned value functions. These methods can model mul-timodal behavior distributions but often introduce iterative action generation, auxiliary policies, distillation, or additional guidance machinery. At the same time, empirical performance depends heavily on less conspicuous choices in architecture, optimization, regularization, and evaluation. This creates an important methodological question: are increasingly elabo-rate offline RL algorithms necessary , or can a conventional behavior-regularized actor-critic remain competitive when its design choices are systematically modernized? ReBRAC (Tarasov et al. 2024a) pursued the latter direction. Starting from TD3+BC (Fujimoto and Gu 2021), it showed that a carefully selected collection of practical modifications can substantially strengthen a behavior-regularized baseline without changing its basic algorithmic principles. We follow the same philosophy and ask how far a second generation of design choices can advance ReBRAC. Here, minimalism 
+
+refers to the algorithmic structure: ReBRAC-v2 remains a conventional actor-critic trained by Bellman updates, policy improvement, and behavior regularization. It does not imply the smallest networks, the least computation, or the absence of sophisticated function approximators. The resulting ReBRAC-v2 is not defined by one replace-ment but by the integration of complementary advances while preserving this structure. Building on NF-RLBC (Ghugare and Eysenbach 2025), a major component is an exact-likelihood conditional normalizing-flow actor trained directly by critic gradients and mixed behavior cloning. Unlike it-erative diffusion or flow-matching policies, the flow itself is the end-to-end RL actor; no separate one-step policy is distilled from it. The mixed cloning objective combines flow likelihood with MSE and MAE attraction toward dataset actions. The critic, in turn, uses categorical value prediction, a deeper residual architecture, a compact ensemble, and aux-iliary next-state prediction. Staged actor and critic warm-ups, selected optimization and regularization choices, and multi-sample critic-guided action improvement complete the recipe. Figure 1 summarizes how these components augment the ReBRAC foundation. We also simplify the adaptation interface. ReBRAC regu-larizes both actor improvement and the critic target toward dataset actions. ReBRAC-v2 removes the critic-side penalty, whose effect was small in the original ablations and whose inclusion would introduce another environment-dependent co-arXiv:2608.01205v1 [cs.LG] 2 Aug 2026 REBRAC-v2 PIPELINE                                 
+
+> Offline dataset D
+> transitions (s, a, r, s ′)
+> Flow actor πϕ(a|s)
+> 14 affine-coupling blocks + PLU | uniform base + final tanh
+> exact likelihood | one-pass samples
+> Mixed BC: NLL + MSE + MAE
+> Four categorical critics
+> 201-bin HL-Gauss values | 5-layer residual trunks persistent next-state heads |mean Bellman target
+> Qmin for actor improvement and evaluation
+> current-actor a′+ target noise
+> Bellman + next-state MSE
+> −λQ min  actor gradient
+> STAGED OPTIMIZATION 1M updates total
+> 1. BC warm-up
+> actor only | 100K
+> 2. Critic warm-up
+> frozen actor | 200K
+> 3. Joint RL
+> delayed actor | 700K
+> EVALUATION frozen networks
+> Sample
+> 32 candidate actions from the EMA actor
+> Refine every action twice
+> a←a+η∇aQmin (s, a )
+> Select
+> execute the action with the highest Qmin
+> Shared recipe: Kron | GSP | target-policy noise | actor/critic regularization | evaluation-only EMA
+
+Figure 1: ReBRAC-v2 pipeline. Mixed behavior cloning and Qmin policy gradients train the flow actor, while four categorical critics use a mean Bellman target. The lower strips summarize staged training and frozen-network inference. efficient. After developing one shared architectural, optimiza-tion, regularization, training, and inference recipe through Bayesian search on six challenging OGBench tasks (Park et al. 2025), we freeze these choices. Downstream adaptation changes only the likelihood and auxiliary cloning coefficients through an explicit 4 × 4 grid. On OGBench, the selected pair is transferred from one default task to the remaining tasks in the same environment. This fixed two-parameter interface changes far less than the released configurations of the recent GFP (Tiofack et al. 2025) and FAC (Chae et al. 2026) meth-ods, as well as the concurrent DriftQL method (Houssaini et al. 2026), which vary additional structural settings across categories or datasets. As in the original ReBRAC study, this work presents no single ingredient as a standalone algorithmic invention. The contribution is the systematic integration and controlled anal-ysis of complementary advances within a familiar foundation. This integration yields a large empirical improvement. Across ten common state-based OGBench categories, ReBRAC-v2 averages 74.8, compared with 52.3 for the next strongest aggregate result, and ranks first in eight categories. It also obtains the strongest suite averages in our D4RL AntMaze and Adroit comparisons (Fu et al. 2020), scoring 90.2 and 33.6, respectively. These comparisons include GFP, FAC, and DriftQL; ReBRAC-v2 exceeds all three in aggregate across the common OGBench categories and the D4RL suite averages collected in our main table. Figure 2 shows that the improvement extends across the OGBench and D4RL score distributions rather than arising from a single task or benchmark suite. Our contributions are threefold: 
+
+• We systematically modernize ReBRAC while preserving its algorithmically minimalist, behavior-regularized actor-critic structure and evaluate the resulting components through controlled fixed-recipe ablations. 
+
+• Building on NF-RLBC’s direct exact-likelihood flow ac-tor, we combine critic-based policy improvement with mixed likelihood, MSE, and MAE behavior regularization without an iterative flow-matching policy or a distilled surrogate. 
+
+• We develop one shared recipe, expose only a fixed 16-configuration two-coefficient adaptation interface, and obtain the strongest aggregate results among the compared methods across ten common OGBench categories and the D4RL AntMaze and Adroit suites. 
+
+## Related Work 
+
+Minimalist Offline RL. TD3+BC (Fujimoto and Gu 2021) showed that a reconstruction penalty can turn TD3 (Fujimoto, Hoof, and Meger 2018) into a strong offline baseline, while ReBRAC (Tarasov et al. 2024a) systematically improved that foundation through a set of implementation and design choices without changing its policy-improvement principle. IQL (Kostrikov, Nair, and Levine 2021) instead avoids eval-uating unseen actions through expectile value learning and advantage-weighted imitation. ReBRAC-v2 continues the behavior-regularized line: it retains conventional Bellman learning and critic-guided policy improvement, removes the critic-side behavior penalty, and concentrates complexity in the actor representation, critic parameterization, optimization schedule, and evaluation procedure. Its contribution is there-fore a carefully developed recipe rather than a new offline RL objective. 
+
+Generative Behavior Models. Diffusion and flow-matching policies can represent multimodal behavior dis-tributions but ordinarily require iterative generation (Wang, Hunt, and Zhou 2022). FQL (Park, Li, and Levine 2025) maintains an iterative flow-matching behavior policy and distills it into a separate one-step actor optimized by the critic. This separation makes fast execution possible while retaining an expressive behavior reference but introduces two policy parameterizations and a distillation relation between them. ReBRAC-v2 instead uses one discrete invertible normalizing flow as the RL actor itself. The same parameters receive exact-likelihood, pointwise cloning, and critic gradients, requiring neither numerical flow integration nor a distilled surrogate. 
+
+Recent Generative Offline RL. GFP (Tiofack et al. 2025) extends the two-policy FQL structure with mutual value-aware guidance between the flow behavior model and the distilled actor. FAC (Chae et al. 2026) uses a flow-matching proxy both to regularize a separate actor and to identify low-density actions for critic penalization. Concurrent DriftQL (Houssaini et al. 2026) takes a different one-pass route, learning a stochas-tic generator through kernel attraction, repulsion, and critic terms rather than an explicit-density flow. ReBRAC-v2 differs from all three by retaining a standard behavior-regularized actor-critic with one exact-likelihood flow actor and no gen-erative proxy. At evaluation, it additionally samples, ranks, and refines actions with frozen critic gradients, building on test-time value optimization (Park et al. 2024). 0.0 0.2 0.4 0.6 0.8 1.0 1.2 
+
+> Normalized score ( τ)
+> 0.0 0.2 0.4 0.6 0.8 1.0
+> Fraction of runs with score >  τ
+> ReBRAC FQL GFP FAC DriftQL ReBRAC-v2
+
+(a) Performance profile. 0.25 0.50 0.75 ReBRAC-v2 DriftQL FAC GFP FQL ReBRAC     
+
+> Median
+> 0.4 0.6 0.8
+> IQM
+> 0.4 0.6
+> Mean
+> Normalized score
+
+(b) Aggregate normalized-score metrics. 0.0 0.2 0.4 0.6 0.8 1.0  
+
+> P(ReBRAC-v2 > baseline)
+> DriftQL FAC GFP FQL ReBRAC
+
+(c) Probability of improvement. 
+
+Figure 2: Aggregate OGBench and D4RL performance. ReBRAC-v2 has the strongest performance profile, median, interquartile mean (IQM), and mean. Panel (c) estimates the probability that ReBRAC-v2 outperforms each baseline. Appendix: Baseline Protocols details uncertainty and score provenance. 
+
+Normalizing-Flow Actors. Normalizing flows provide reparameterized sampling, exact change-of-variables like-lihoods, and one-pass generation. Akimov et al. (2022) pre-trained a flow as a conservative action encoder and optimized a separate controller in its latent space. The closest actor for-mulation is NF-RLBC (Ghugare and Eysenbach 2025), which already trains a conditional RealNVP/PLU actor directly through critic gradients and exact-likelihood behavior regular-ization in a minimalist RL+BC objective. We therefore do not claim the direct exact-likelihood flow actor or its likelihood-plus-Q objective as standalone inventions. ReBRAC-v2 builds on this formulation by adding mixed MSE and MAE cloning, the modernized critic and training recipe, and test-time search. Appendix Table 9 compares all methods on the 30 OGBench tasks reported for NF-RLBC. Related robotics results further motivate the policy parameterization (Tarasov et al. 2025; Yang et al. 2026). 
+
+Value Learning and Optimization. Our critic follows evi-dence that categorical objectives can improve value estimation in deep RL and offline RL (Farebrother et al. 2024; Tarasov, Brilliantov, and Kharlapenko 2024). Its depth and residual structure are motivated by studies of scaling offline value functions and stabilizing deeper critics (Kumar et al. 2022; Castanyer et al. 2025). Actor regularization follows prior evidence that simple optimization regularizers materially af-fect offline RL (Tarasov, Surina, and Gulcehre 2024); critic dropout and related regularization have likewise been studied as defenses against overestimation and instability (Hiraoka et al. 2021). We evaluate these components as interacting parts of the selected ReBRAC-v2 recipe, not as independent algorithmic contributions or universal rankings. 
+
+Ensembles, Training Schedules, and Averaging. 
+
+Ensemble-based offline RL methods, such as EDAC, use critic diversity to control extrapolation error, but larger ensembles increase training costs (An et al. 2021); ReBRAC-v2 therefore searches only two and four critics. Its warm-ups reflect the concern that a random critic should not immediately shape the policy; it is related to delayed policy updates and value pretraining (Fujimoto, Hoof, and Meger 2018; Park, Park, and Lee 2025). We retain auxiliary transition prediction throughout training, avoiding another switch-time parameter. Evaluation-only actor EMA follows imitation-learning practice (Block et al. 2024), but is not independently supported by our ablation. Thus, the search includes plausible stabilizers while our conclusions distinguish selection from controlled evidence. 
+
+## Preliminaries 
+
+Offline RL and Behavior Regularization. We consider an MDP M = ( S, A, P, r, γ ) and a fixed dataset D =
+
+{(si, a i, r i, s ′
+
+> i
+
+)}Ni=1 collected by unknown behavior policies (Levine et al. 2020). A behavior-regularized actor-critic im-proves a policy using a learned action-value function while penalizing deviation from dataset actions (Wu, Tucker, and Nachum 2019). For ˜a ∼ πϕ(· | s), a generic actor loss and Bellman target are 
+
+Lπ (ϕ) = E(s,a )∼D [−Qθ (s, ˜a) + απ F (˜ a, a )] , (1) 
+
+y = r + γ(1 − d) [ Q¯θ (s′, a ′) − αQF (a′, ˆa′)] . (2) Here a′ ∼ πϕ(· | s′) and ˆa′ are the corresponding dataset ac-tions. TD3+BC and ReBRAC instantiate F with simple action reconstruction penalties (Fujimoto and Gu 2021; Tarasov et al. 2024a). ReBRAC-v2 modifies both sides: it replaces the actor penalty with the mixed flow-based objective in Equation 6 and sets αQ = 0 , removing behavior regularization from the critic target. 
+
+Conditional Normalizing Flows. A normalizing-flow pol-icy represents actions as an invertible state-conditioned trans-formation a = fϕ(z; s) of a simple base variable z ∼ p0
+
+(Rezende and Mohamed 2015; Dinh, Sohl-Dickstein, and Bengio 2016). Its exact conditional likelihood follows from the change of variables: 
+
+log πϕ(a | s) = log p0
+
+
+
+f −1 
+
+> ϕ
+
+(a; s)
+
+
+
+− log det ∂f ϕ(z; s)
+
+∂z .
+
+(3) Invertibility therefore provides both reparameterized policy samples and exact likelihoods for dataset actions. ReBRAC-v2 uses the same flow for critic-based policy improvement and likelihood-based behavior regularization. 
+
+Categorical Value Estimation. Following classification-based value estimation (Imani and White 2018; Farebrother et al. 2024; Tarasov, Brilliantov, and Kharlapenko 2024), each critic outputs logits over K bins with centers ck. The resulting scalar value is Qθ (s, a ) = PKk=1 pθ (k | s, a )ck. A scalar Bellman target y is projected to a soft categorical target Π( y), and the critic minimizes 
+
+Lcls (θ) = −E(s,a,y )∼D 
+
+" KX
+
+> k=1
+
+Π( y)k log pθ (k | s, a )
+
+#
+
+. (4) The Method specifies how ReBRAC-v2 constructs y, aggre-gates its critic ensemble, and augments this objective with transition prediction. 
+
+## Method 
+
+Overview. ReBRAC-v2 retains the standard behavior-regularized actor-critic loop. A stochastic actor proposes an action, a critic ensemble supplies the policy-improvement gradient, and cloning terms constrain the actor toward the offline data. Figure 1 gives the high-level recipe; this sec-tion specifies how its components are parameterized and optimized. For ˜a ∼ πϕ(· | s), the actor minimizes 
+
+Lactor (ϕ) = −λ Es∼D [Qmin (s, ˜a)] + E(s,a )∼D [LBC (ϕ; s, a )] , (5) where Qmin = min m Qθm and λ = ( E|Qmin | + 10 −6)−1
+
+normalize the value scale. Each critic is trained with cate-gorical Bellman prediction plus an auxiliary transition loss. Training first initializes the actor by behavior cloning, then learns the critic for the fixed actor, and finally alternates be-tween critic and delayed actor updates. Appendix Algorithm 1 provides pseudocode. 
+
+End-to-End Normalizing-Flow Actor. We parameterize 
+
+πϕ(a | s) as a conditional affine coupling flow (Dinh, Sohl-Dickstein, and Bengio 2016; Ghugare and Eysenbach 2025; Tarasov et al. 2025; Yang et al. 2026). The selected actor has 14 RealNVP-style coupling blocks, PLU dimension mix-ing adapted from invertible linear flow layers (Kingma and Dhariwal 2018), a uniform base, and a final tanh transform. This provides exact likelihood, reparameterized one-pass sampling, and direct critic gradients; architecture details and search ranges appear in Appendix: Method Details. For a dataset action a and an independently sampled policy action ˜a, the behavior-regularization term in Equation 5 is 
+
+LBC (ϕ; s, a ) = − αNF log πϕ(a | s)+ αaux 
+
+1
+
+dA
+
+ ∥˜a − a∥22 + ∥˜a − a∥1
+
+ . (6) where dA is the action dimension; the implementation aver-ages both auxiliary losses over action coordinates. The exact negative log-likelihood trains the full conditional density, while MSE and MAE directly attract policy samples toward dataset actions. Their gradients weight residuals differently: MSE emphasizes large deviations, whereas MAE retains a constant-magnitude correction for nonzero residuals. Their combination is empirical rather than derived as an optimal objective; the Ablation Studies section and Appendix Table 4 separately test the likelihood, MSE, and MAE components. 
+
+Categorical Residual Critic Ensemble. ReBRAC-v2 uses four critics. The current actor generates the next action a′,clipped target noise is added as in TD3, and the target critics are aggregated by their mean: 
+
+y = r + γ(1 − d) 1
+
+M
+
+> M
+
+X
+
+> m=1
+
+¯Qm(s′, a ′), M = 4 , (7) Each critic predicts 201 categorical value bins and minimizes cross-entropy toward the HL-Gauss projection Π( y) from Farebrother et al. (2024), following its offline-RL use in Tarasov, Brilliantov, and Kharlapenko (2024). The search considers compact ensembles of two and four critics and minimum, mean, and maximum target aggregation; larger ensembles are excluded to control computation. The selected mean-bootstrap/minimum-improvement separation is empiri-cal, and the joint two-critic/minimum-target ablation cannot attribute effects to ensemble size and aggregation indepen-dently. Each critic has a five-layer residual trunk and separate two-layer value and next-state heads. GSP activation (Vitvit-skyi et al. 2026) is selected over ReLU and SiLU. Motivated by next-state prediction for shared offline-RL value repre-sentations (Park, Park, and Lee 2025), the auxiliary head minimizes Ldyn = ∥gψ (hθ (s, a )) − s′∥22 throughout train-ing, encouraging dynamics-aware features without affecting rollouts or Bellman targets. Its small ablation effect makes it a secondary representation regularizer; Appendix: Method Details specifies the architecture and motivation. 
+
+Optimization, Regularization, and Training Schedule. 
+
+The final configuration uses the Kronecker-factored PSGD op-timizer Kron (Castanyer et al. 2025); the search also includes AdamW (Loshchilov and Hutter 2017) and Adan (Xie et al. 2024), motivated by evidence that optimization design mate-rially affects deep RL (Castanyer et al. 2025; Lan et al. 2023). Competitive AdamW runs used different values for other hyperparameters, so this result does not establish a universal optimizer ranking. We search actor regularizers motivated by offline RL evidence (Tarasov, Surina, and Gulcehre 2024), and empirically transfer analogous weight decay, gradient noise, and dropout choices to the critic; critic dropout also has direct precedent in offline RL (Hiraoka et al. 2021). Exact ranges appear in the appendix. Training has three stages. First, 100,000 actor-only updates minimize Equation 6, producing an initial behavior model before any critic gradient reaches the policy. Second, the actor is frozen for 200,000 critic-only updates, allowing value learning to begin under a fixed data-regularized policy. Third, the remaining budget jointly trains the critic and the full actor objective, with the actor updated every two critic steps. Both warm-up lengths are selected in Bayesian development. This schedule is motivated by SERNF (Yang et al. 2026) and the general benefit of delaying policy updates until value estimates become more informative (Fujimoto, Hoof, and Meger 2018). The two warm-up stages and subsequent joint stage together comprise the one-million-update training budget. An actor EMA ( τEMA = 0 .005 ) is used only for evaluation; critic targets use the current actor. Although common in imitation learning (Block et al. 2024), EMA is retained only for protocol consistency because search and ablation evidence disagree. Multi-Sample Test-Time Improvement. Following OPEX (Park et al. 2024), we use frozen value gradients to improve actions without updating network parameters. ReBRAC-v2 extends its single-action, single-step update by exploiting the flow actor’s stochastic samples. At each state, we draw K
+
+candidates a(0)  
+
+> k
+
+∼ πϕEMA (· | s) and refine each for J steps: 
+
+a(j+1)  
+
+> k
+
+= Π A a(j) 
+
+> k
+
++ η
+
+∇aQmin (s, a )|a=a(j)
+
+> k
+
+∥∇ aQmin (s, a )|a=a(j)
+
+> k
+
+∥2 + ϵ
+
+!
+
+,
+
+(8) where Qmin is the minimum prediction across the four critics, and ΠA clips the result to the valid action range. We then execute 
+
+aeval = arg max  
+
+> a∈{ a(J)
+> k}Kk=1
+
+Qmin (s, a ). (9) The minimum across critics is used for both gradients and final selection, rejecting candidates that any critic evaluates as poor. No network parameters change during evaluation. Preliminary experiments fix K = 32 , J = 2 , and η = 0 .01 
+
+before Bayesian development; Figure 3 studies the sampling and refinement trade-off. 
+
+## Experimental Setup 
+
+Benchmarks. We evaluate on the state-based tasks shared by recent OGBench comparisons (Park et al. 2025) and on the standard D4RL AntMaze and Adroit suites (Fu et al. 2020). OGBench contributes 50 tasks: five tasks from each of AntMaze Large, AntMaze Giant, HumanoidMaze Medium, HumanoidMaze Large, AntSoccer Arena, Cube Single, Cube Double, Scene, Puzzle 3 × 3, and Puzzle 4 × 4. D4RL con-tributes six AntMaze datasets and the human and cloned datasets for Pen, Door, Hammer, and Relocate. We report the normalized scores defined by each benchmark, category averages over the five OGBench tasks, and suite averages over the corresponding D4RL datasets. 
+
+Shared Development and Adaptation. We separate de-velopment of a shared recipe from downstream behavior-regularization selection. W&B Bayesian Sweeps 2 evaluates approximately 600 proposals on six challenging OGBench tasks, using one seed per task and maximizing their mean normalized score. We then freeze all architectural, optimiza-tion, regularization, training, and inference choices and tune only (αNF , α aux ) over a 16-point grid using four seeds. On OGBench, the pair selected on an environment’s default task is transferred to its other four tasks; on D4RL, a slightly shifted 16-point grid is selected per dataset. Exact tasks, grids, preliminary fixed choices, and search domains appear in the appendix. 
+
+Evaluation Protocol. We evaluate the final checkpoint after a fixed training budget. OGBench evaluation uses five new seeds with 50 episodes per seed, while D4RL evaluation uses 10 new seeds with 100 episodes per AntMaze seed and 10 episodes per Adroit seed. ReBRAC-v2 seeds are disjoint from development and coefficient tuning. 
+
+> 2https://docs.wandb.ai/models/sweeps/sweep-config-keys
+
+Baseline Provenance. We rerun FAC (Chae et al. 2026), GFP (Tiofack et al. 2025), and DriftQL (Houssaini et al. 2026) with the authors’ released implementations and hy-perparameters under this protocol. In appendix we compare these reproductions with the corresponding source results. 
+
+Aggregate Analysis. Following RLiable (Agarwal et al. 2021), Figure 2 reports the performance profile, median, interquartile mean, mean, and probability that ReBRAC-v2 improves over each baseline across the collected OGBench and D4RL tasks. We compute uncertainty intervals whenever per-seed results are available; the exact construction and its interpretation are detailed in the appendix. 
+
+Adaptation Scope and Selection Effects. ReBRAC-v2 ex-poses one fixed two-coefficient adaptation interface and does not change architecture, discount, aggregation, density estima-tion, or inference settings by downstream category or dataset. In contrast, released GFP, FAC, and DriftQL configurations vary additional structural choices; Appendix Table 8 recon-structs these interfaces. The one-seed development scores are noisy and post-selection, but structural search covers only six of the ten OGBench categories. Evaluation additionally in-cludes the unseen AntMaze Large, HumanoidMaze Medium, Cube Single, and Puzzle 3 × 3 categories, four held-out tasks within each developed category, and all D4RL datasets. 
+
+## Main Results 
+
+OGBench. Table 1 shows that ReBRAC-v2 achieves an average normalized score of 74.8 across the ten common state-based OGBench categories, improving by 22.5 points over the next-best aggregate result, DriftQL at 52.3. The gain is broad: ReBRAC-v2 ranks first on eight categories, while Figure 2 shows the strongest median, IQM, and mean and a performance profile that dominates across most score thresholds. Improvements are particularly large on challenging long-horizon and compositional categories. ReBRAC-v2 scores 75.0 on AntMaze Giant versus 61.2 for DriftQL, 72.2 on HumanoidMaze Large versus 14.9 for GFP, 95.4 on Scene versus 72.0 for DriftQL, and 52.2 on Puzzle 4 × 4 versus 30.5 for GFP. It also reaches 99.6 on Puzzle 3 × 3 and remains competitive on Cube Single and AntSoccer Arena. Thus, the aggregate improvement is not attributable to a single environment family or isolated outlier. 
+
+D4RL AntMaze and Adroit. Table 1 also shows that the shared ReBRAC-v2 recipe transfers strongly to D4RL, obtaining the highest suite average in the main comparison on both AntMaze (90.2) and Adroit (33.6). On AntMaze, ReBRAC-v2 leads on three of six datasets, ties FAC on Large Diverse, and is within 3 points of the best score on each remaining dataset. On Adroit, the aggregate gain is concentrated in four tasks: ReBRAC-v2 achieves 114.9 and 110.7 on Pen Human and Pen Cloned, 24.0 on Door Cloned, and 3.6 on Relocate Cloned. It remains close to the best results on both Hammer datasets and Relocate Human, while Door Human remains effectively unsolved by all compared methods. 
+
+Failure Case. Cube Double is the clear exception: ReBRAC-v2 scores 8.3, below the original ReBRAC at 12.2 and the best Gaussian Policies Flow Policies Drift Normalizing Flow Task Category BC IQL ReBRAC IFQL FQL FAC GFP DriftQL ReBRAC-v2                                                                                                    
+
+> antmaze-large-navigate 10.6 53.4 80.8 28.0 78.6 57.2 93.0 88.5 97.8
+> antmaze-giant-navigate 0.2 4.0 26.2 2.6 8.6 0.2 32.0 61.2 75.0
+> humanoidmaze-medium-navigate 2.0 32.8 21.8 60.4 57.4 67.3 70.4 61.4 87.0
+> humanoidmaze-large-navigate 0.4 2.4 2.6 11.0 4.2 4.0 14.9 5.0 72.2
+> antsoccer-arena-navigate 1.0 8.4 0.0 33.2 60.2 65.5 64.8 62.2 67.4
+> cube-single-play 5.4 83.0 90.6 79.2 95.8 95.4 98.5 87.7 93.4 cube-double-play 1.6 6.4 12.2 14.0 28.6 26.0 40.1 17.8 8.3 scene-play 4.6 27.6 40.6 30.4 55.8 60.9 53.7 72.0 95.4
+> puzzle-3x3-play 1.8 9.0 21.6 19.0 29.6 98.8 23.3 40.2 99.6
+> puzzle-4x4-play 0.2 7.4 14.0 25.2 17.2 26.5 30.5 27.0 52.2 OGBench Average 2.8 23.4 31.0 30.3 43.6 50.2 52.1 52.3 74.8 D4RL AntMaze Average 17.2 57.2 78.7 64.8 83.5 85.3 83.3 77.3 90.2 D4RL Adroit Average 16.1 21.4 26.6 20.6 17.6 21.9 21.4 12.5 33.6
+
+Table 1: Aggregate OGBench and D4RL results. OGBench rows average five tasks; bold and underline mark the best and second-best result. Appendix Tables 3 and 9 give task-level scores, and Appendix Section provides the source-to-reproduction comparison. compared result, GFP at 40.1. Cube Double was itself one of the six development tasks, so this failure cannot be attributed to its category being absent from shared-recipe search. We do not have a conclusive explanation. The ablations below provide limited evidence of a task-specific critic mismatch, because removing critic regularization or residual connections improves Cube Double while reducing average performance. We therefore treat critic design as a plausible direction for investigation, not as an established mechanism. 
+
+Transfer and Adaptation Cost. The D4RL results do not come from a second structural search. Architecture, opti-mizer, critic design, regularizers, warm-ups, and inference are frozen after joint development on six OGBench tasks; D4RL changes only the candidate values of the same two behavior-regularization coefficients. The same structure trans-fers to four OGBench categories absent from Bayesian devel-opment, while within every category one coefficient pair is transferred from the default task to four others. The approx-imately 600 Bayesian proposals are therefore an amortized shared-recipe search, not per-task tuning or a claim of low total development compute. Downstream selection uses only 16 pairs, whereas released GFP, FAC, and DriftQL config-urations vary additional settings across domains (Appendix Table 8). This selection uses simulator returns and is therefore environment-assisted model selection, although every policy update remains offline; exact costs appear in the appendix. 
+
+## Ablation Studies 
+
+We change one component at a time on six default devel-opment tasks. All other hyperparameters, including both cloning coefficients, remain fixed as in ReBRAC (Tarasov et al. 2024a). Table 2 summarizes average effects; Appendix Table 4 reports all task-level results. These fixed-recipe ab-lations test direct substitution, not performance after jointly retuning other hyperparameters. 
+
+Objectives and Training Schedule. The clearest recipe-level sensitivity concerns the mixed cloning objective. Re-moving the auxiliary MSE+MAE term reduces the six-task average by 88.4%; using only MAE or only MSE reduces it by 22.9% and 18.8%, respectively. Removing the flow likelihood term costs 15.3%. Under the selected coefficients, neither likelihood-only training nor either auxiliary distance alone matches their combination. Because these interventions change the actor objective without retuning its coefficients, they show that the selected three-term recipe outperforms these fixed-coefficient substitutions; they do not establish intrinsic complementarity or performance after equally bud-geted retuning. Staged training also contributes: removing both warm-ups lowers the average by 13.9%, while removing only critic or behavior-cloning warm-up costs 9.6% and 5.6%. The larger effect of critic warm-up is consistent with the intended role of preventing a randomly initialized critic from immediately shaping the actor. This remains an empirical interpretation, but the direction is consistent across the joint and individual warm-up ablations. With all other values fixed, minimum target aggregation reduces the average by 93.5%, and AdamW by 65.2%. How-ever, Bayesian search found competitive runs with minimum aggregation and with AdamW when other hyperparameters had different values. These ablations therefore show that neither is a drop-in replacement for the final recipe, not that either is always worse. 
+
+Architecture and Regularization. Architecture and reg-ularization choices have smaller and less uniform effects. Reducing the ensemble from four critics to two, replacing GSP with ReLU, and removing critic residual connections reduce the average by 4.7%, 3.5%, and 5.1%. Removing actor regularization costs 6.5%, while removing critic or all regu-larizers costs only 1.6% or 1.0%. The combined effect being smaller than the actor-only effect underscores interaction and estimation noise rather than a monotonic contribution from 0 1 2 4               
+
+> Number of Q re fi nement steps
+> 12832 64
+> Number of inference samples
+> 55.1 54.7 56.9 59.3 57.8 59.6 61.1 61.0 62.8 63.6 64.2 62.3 62.4 64.4 63.9 62.8 60.6 61.8 60.9 60.2
+> Average over OGBench
+> 56 58 60 62 64
+> Score
+
+(a) Inference-time sampling and Q-refinement. 2 4 8 12 14 18 NF depth (num. coupling layers) 020 40 60 80 100  
+
+> Normalized score
+> ReBRAC-v2
+> average antmaze-giant antsoccer-arena cube-double humanoidmaze-large puzzle-4x4 scene
+
+(b) Normalizing-flow depth. 
+
+Figure 3: Inference-time compute and flow-capacity ablations. (a) Across the six OGBench development tasks, sampling provides the clearest average gain; refinement has task-dependent effects. (b) Depth is critical below eight layers, after which performance largely plateaus. each regularizer. Exact definitions are given in the appendix. Critic ablations expose task-specific trade-offs. Removing critic regularization raises AntSoccer from 49.0 to 59.5 and Cube Double from 14.5 to 24.5, but lowers AntMaze from 88.0 to 59.0, producing a 1.6% aggregate decrease. Removing residual connections likewise improves AntSoccer and Cube Double to 51.0 and 19.5, but lowers HumanoidMaze from 97.0 to 75.5. These patterns are compatible with task-specific critic mismatch, but do not identify its mechanism. Removing next-state prediction costs 4.1%, supporting a modest auxiliary-representation benefit. Disabling the evaluation EMA actor improves the average by 0.7% , providing no controlled evidence that EMA helps and contradicting its selection by noisy one-seed development. We retain it for protocol consistency, but do not count it as an independently validated contribution. 
+
+Flow Depth. Figure 3(b) isolates flow capacity. Relative to 14 layers, depths 2 and 4 cost 51.0% and 31.9%; depths 8 and 12 are within 4.1%, while depth 18 improves the average by 2.5%. Capacity is therefore critical at shallow depths, but performance largely plateaus from 8 to 18 layers; the selected depth is competitive rather than a unique optimum. Appendix Table 14 gives task-level results. 
+
+Inference-Time Compute. Figure 3(a) separates sampling from Q-gradient refinement across six OGBench tasks. With no refinement, increasing samples from one to eight improves the average by 14.1%; 32 performs similarly and 64 is worse. Four refinement steps improve the one-sample result by 7.6%. The best aggregate is 64.4 at (K, J ) = (32 , 1) ; the selected 
+
+(32 , 2) setting scores 63.9, improving on sampling alone by 2.4%. Sampling therefore provides the clearest gain, while refinement is smaller, non-monotonic, and task-dependent (Appendix Figure 4). The selected setting was fixed before Bayesian development, not chosen from this retrospective grid. 
+
+## Limitations and Future Work 
+
+The shared recipe is selected from approximately 600 noisy one-seed proposals on six tasks drawn from the final OG-Bench families. Transfer to their remaining tasks and to 
+
+Ablation Avg. ∆ (%) ReBRAC-v2 63.7 —min training aggregation † 4.2 -93.5 w/o auxiliary BC loss 7.4 -88.4 AdamW instead of Kron † 22.2 -65.2 aux BC: MAE only 49.1 -22.9 aux BC: MSE only 51.7 -18.8 w/o NF BC loss 53.9 -15.3 w/o warm-up stages 54.8 -13.9 w/o critic warm-up 57.6 -9.6 w/o actor regularizers 59.5 -6.5 w/o BC warm-up 60.1 -5.6 w/o critic residuals 60.4 -5.1 2 critics 60.7 -4.7 w/o next-state prediction 61.1 -4.1 ReLU activation 61.4 -3.5 w/o critic regularizers 62.7 -1.6 w/o all regularizers 63.0 -1.0 w/o actor EMA 64.1 +0.7 
+
+Table 2: Six-task fixed-recipe substitutions without retuning. 
+
+∆ measures sensitivity of the selected recipe, not indepen-dently retuned component importance; shading indicates degradation. †Bayesian search found competitive runs with this alternative and different surrounding hyperparameters. D4RL provides stronger evidence, but does not eliminate post-selection optimism. Selection uses environment returns, and the total development cost is substantial despite the nar-row final adaptation interface. Fixed-recipe ablations cannot fully separate interactions, and alternatives may recover after joint retuning. Multi-seed development and equally budgeted objective retuning would strengthen attribution. Evaluation is limited to state-based, fully offline simulation. Pixel observa-tions, offline-to-online tuning, and real-robot transfer remain open, as do improved critics for Cube Double and application of this modernization recipe beyond ReBRAC. 
+
+## Conclusion 
+
+ReBRAC-v2 demonstrates that disciplined modernization can push a minimalist offline actor-critic to state-of-the-art performance. Together, its flow actor, mixed behavior regularization, modernized critic, staged training, and multi-sample inference yield the strongest main-table OGBench and D4RL aggregates using a 16-point two-coefficient grid. References 
+
+Agarwal, R.; Schwarzer, M.; Castro, P. S.; Courville, A.; and Bellemare, M. G. 2021. Deep Reinforcement Learning at the Edge of the Statistical Precipice. Advances in Neural Information Processing Systems .Akimov, D.; Kurenkov, V.; Nikulin, A.; Tarasov, D.; and Kolesnikov, S. 2022. Let offline rl flow: Training conservative agents in the latent space of normalizing flows. arXiv preprint arXiv:2211.11096 .An, G.; Moon, S.; Kim, J.-H.; and Song, H. O. 2021. Uncertainty-based offline reinforcement learning with diversi-fied q-ensemble. Advances in neural information processing systems , 34: 7436–7447. Ba, J. L.; Kiros, J. R.; and Hinton, G. E. 2016. Layer normalization. arXiv preprint arXiv:1607.06450 .Block, A.; Foster, D.; Krishnamurthy, A.; Simchowitz, M.; and Zhang, C. 2024. Butterfly effects of sgd noise: Error amplification in behavior cloning and autoregression. In In-ternational Conference on Learning Representations , volume 2024, 56244–56302. Castanyer, R. C.; Obando-Ceron, J.; Li, L.; Bacon, P.-L.; Berseth, G.; Courville, A.; and Castro, P. S. 2025. Stable gradients for stable learning at scale in deep reinforcement learning. arXiv preprint arXiv:2506.15544 .Chae, J.; Park, J.; Shin, Y.; Kim, G.; Han, S.; and Sung, Y. 2026. Flow actor-critic for offline reinforcement learning. 
+
+arXiv preprint arXiv:2602.18015 .Dinh, L.; Sohl-Dickstein, J.; and Bengio, S. 2016. Density estimation using real nvp. arXiv preprint arXiv:1605.08803 .Durkan, C.; Bekasov, A.; Murray, I.; and Papamakarios, G. 2019. Neural spline flows. Advances in neural information processing systems , 32. Farebrother, J.; Orbay, J.; Vuong, Q.; Taïga, A. A.; Chebotar, Y.; Xiao, T.; Irpan, A.; Levine, S.; Castro, P. S.; Faust, A.; et al. 2024. Stop regressing: Training value functions via classifi-cation for scalable deep rl. arXiv preprint arXiv:2403.03950 .Fu, J.; Kumar, A.; Nachum, O.; Tucker, G.; and Levine, S. 2020. D4rl: Datasets for deep data-driven reinforcement learning. arXiv preprint arXiv:2004.07219 .Fujimoto, S.; and Gu, S. S. 2021. A minimalist approach to of-fline reinforcement learning. Advances in neural information processing systems , 34: 20132–20145. Fujimoto, S.; Hoof, H.; and Meger, D. 2018. Addressing function approximation error in actor-critic methods. In 
+
+International conference on machine learning , 1587–1596. PMLR. Ghugare, R.; and Eysenbach, B. 2025. Normalizing Flows are Capable Models for Continuous Control. In Advances in Neural Information Processing Systems , volume 38. Hiraoka, T.; Imagawa, T.; Hashimoto, T.; Onishi, T.; and Tsuruoka, Y. 2021. Dropout q-functions for doubly efficient reinforcement learning. arXiv preprint arXiv:2110.02034 .Houssaini, A.; Danesh, M. H.; Abyaneh, A.; Fujimoto, S.; Lin, H.-C.; and Meger, D. 2026. Drift Q-Learning. arXiv preprint arXiv:2606.00350 .Imani, E.; and White, M. 2018. Improving regression perfor-mance with distributional losses. In International conference on machine learning , 2157–2166. PMLR. Kingma, D. P.; and Dhariwal, P. 2018. Glow: Generative flow with invertible 1x1 convolutions. Advances in neural information processing systems , 31. Kostrikov, I.; Nair, A.; and Levine, S. 2021. Offline rein-forcement learning with implicit q-learning. arXiv preprint arXiv:2110.06169 .Kumar, A.; Agarwal, R.; Geng, X.; Tucker, G.; and Levine, S. 2022. Offline q-learning on diverse multi-task data both scales and generalizes. arXiv preprint arXiv:2211.15144 .Kumar, A.; Zhou, A.; Tucker, G.; and Levine, S. 2020. Conser-vative q-learning for offline reinforcement learning. Advances in Neural Information Processing Systems , 33: 1179–1191. Lan, Q.; Mahmood, A. R.; Yan, S.; and Xu, Z. 2023. Learn-ing to optimize for reinforcement learning. arXiv preprint arXiv:2302.01470 .Levine, S.; Kumar, A.; Tucker, G.; and Fu, J. 2020. Offline reinforcement learning: Tutorial, review, and perspectives on open problems. arXiv preprint arXiv:2005.01643 .Li, Q.; Park, S.; and Levine, S. 2025. Decoupled Q-Chunking. 
+
+arXiv preprint arXiv:2512.10926 .Li, Q.; Zhou, Z. P.; and Levine, S. 2026. Reinforcement learn-ing with action chunking. Advances in Neural Information Processing Systems , 38: 55518–55553. Loshchilov, I.; and Hutter, F. 2017. Decoupled weight decay regularization. arXiv preprint arXiv:1711.05101 .Park, J.; Park, M.; and Lee, D. 2025. Pretraining a Shared Q-Network for Data-Efficient Offline Reinforcement Learn-ing. In Advances in Neural Information Processing Systems ,volume 38. Park, S.; Frans, K.; Eysenbach, B.; and Levine, S. 2025. Ogbench: Benchmarking offline goal-conditioned rl. In Inter-national Conference on Learning Representations , volume 2025, 94937–94982. Park, S.; Frans, K.; Levine, S.; and Kumar, A. 2024. Is value learning really the main bottleneck in offline RL? Advances in Neural Information Processing Systems , 37: 79029–79056. Park, S.; Li, Q.; and Levine, S. 2025. Flow Q-Learning. In 
+
+International Conference on Machine Learning (ICML) .Rezende, D.; and Mohamed, S. 2015. Variational inference with normalizing flows. In International conference on machine learning , 1530–1538. PMLR. Tarasov, D.; Brilliantov, K.; and Kharlapenko, D. 2024. Is Value Functions Estimation with Classification Plug-and-play for Offline Reinforcement Learning? arXiv preprint arXiv:2406.06309 .Tarasov, D.; Kurenkov, V.; Nikulin, A.; and Kolesnikov, S. 2024a. Revisiting the minimalist approach to offline reinforce-ment learning. Advances in Neural Information Processing Systems , 36. Tarasov, D.; Nikulin, A.; Akimov, D.; Kurenkov, V.; and Kolesnikov, S. 2024b. CORL: Research-oriented deep of-fline reinforcement learning library. Advances in Neural Information Processing Systems , 36. Tarasov, D.; Nikulin, A.; Zisman, I.; Klepach, A.; Lyubaykin, N.; Polubarov, A.; Derevyagin, A.; and Kurenkov, V. 2025. Nina: Normalizing flows in action. training vla models with normalizing flows. arXiv preprint arXiv:2508.16845 .Tarasov, D.; Surina, A.; and Gulcehre, C. 2024. The role of deep learning regularizations on actors in offline rl. arXiv preprint arXiv:2409.07606 .Tiofack, F. N.; Hellard, T. L.; Schramm, F.; Perrin-Gilbert, N.; and Carpentier, J. 2025. Guided Flow Policy: Learning from High-Value Actions in Offline Reinforcement Learning. 
+
+arXiv preprint arXiv:2512.03973 .Vitvitskyi, A.; Boratko, M.; Grcic, M.; Pascanu, R.; Shah, D.; and Veličković, P. 2026. Mining Generalizable Activation Functions. arXiv preprint arXiv:2602.05688 .Wang, Z.; Hunt, J. J.; and Zhou, M. 2022. Diffusion policies as an expressive policy class for offline reinforcement learning. 
+
+arXiv preprint arXiv:2208.06193 .Wu, Y.; Tucker, G.; and Nachum, O. 2019. Behavior regularized offline reinforcement learning. arXiv preprint arXiv:1911.11361 .Xie, X.; Zhou, P.; Li, H.; Lin, Z.; and Yan, S. 2024. Adan: Adaptive nesterov momentum algorithm for faster optimizing deep models. IEEE Transactions on Pattern Analysis and Machine Intelligence , 46(12): 9508–9520. Yang, C.; Tarasov, D.; Liconti, D.; Zheng, H.; and Katzschmann, R. K. 2026. SERNF: Sample-Efficient Real-World Dexterous Policy Fine-Tuning via Action-Chunked Crit-ics and Normalizing Flows. arXiv preprint arXiv:2602.09580 .Method and Algorithm Details 
+
+Implementation provenance. Our implementation extends the CORL offline-RL codebase (Tarasov et al. 2024b). The ReBRAC-v2 components and configurations described in this paper are implemented on top of that foundation. 
+
+Actor and critic architecture. Each actor block applies a state-conditioned RealNVP coupling transform (Dinh, Sohl-Dickstein, and Bengio 2016) followed by a learned W = P LU linear flow adapted from invertible 1 × 1 convolutions (Kingma and Dhariwal 2018). PLU mixes action dimensions while retaining efficient inversion and log-determinant computation. The selected actor has 14 blocks; each conditioner is a two-hidden-layer MLP of width 256 with GSP, LayerNorm (Ba, Kiros, and Hinton 2016), and dropout. A final tanh bounds actions. The selected critic has a five-layer residual trunk with LayerNorm and dropout in each residual branch, followed by separate two-layer value and next-state heads. GSP is 
+
+σ(x) = GELU( x) (1 + 0 .5 sinc( x)) . (10) The search selects GSP over ReLU and SiLU, while residual connections remain enabled in all search configurations. 
+
+Numerical parameterization. Let Gmin and Gmax be the minimum and maximum Monte Carlo returns in the offline dataset and ∆ = Gmax − Gmin . The 201 critic bins partition [Gmin − 0.025∆ , G max + 0 .025∆] . The HL-Gauss projection integrates a Gaussian with standard deviation 0.75 bin widths over each bin and renormalizes its mass within this support, using 10 −6
+
+for numerical stability; out-of-support targets are not hard-clipped. The next-state MSE has coefficient 1 and uses the raw, unnormalized state vectors because state normalization is disabled in all reported configurations. The selected “uniform” flow base is implemented by sampling u ∼ U ([ −1, 1] dA ) and setting z = atanh( u) before the coupling flow; likelihood evaluation includes the corresponding transformed-uniform density. Before applying the inverse final 
+
+tanh , dataset actions are clipped coordinatewise to [−1 + 10 −6, 1 − 10 −6], and the log-Jacobian uses the same 10 −6 stabilizer. This defines finite likelihoods for dataset actions at the action bounds. 
+
+Auxiliary prediction and EMA. The transition head minimizes Ldyn = ∥gψ (hθ (s, a )) − s′∥22 for every critic update. Unlike transition-prediction pretraining that discards the objective during offline RL fine-tuning (Park, Park, and Lee 2025), ReBRAC-v2 retains it throughout. Actor averaging uses 
+
+ϕEMA ← (1 − τEMA )ϕEMA + τEMA ϕ, τEMA = 0 .005 , (11) only for evaluation. Critic targets use the current actor rather than a target or EMA actor. 
+
+Algorithm 1 ReBRAC-v2 training and evaluation  
+
+> 1:
+
+Initialize flow actor πϕ, EMA actor, four critics, and target critics  
+
+> 2:
+
+for t = 1 , . . . , T do  
+
+> 3:
+
+Sample (s, a, r, s ′, d ) ∼ D  
+
+> 4:
+
+if t ≤ TIL then  
+
+> 5:
+
+Update actor with LBC and update its EMA  
+
+> 6:
+
+else  
+
+> 7:
+
+Sample noisy a′ ∼ πϕ(· | s′) and form the mean-ensemble Bellman target  
+
+> 8:
+
+Update all critics with categorical Bellman loss plus Ldyn  
+
+> 9:
+
+if t > T IL + TQ and t mod d = 0 then  
+
+> 10:
+
+Update actor with −λQ min (s, ˜a) + LBC and update its EMA  
+
+> 11:
+
+end if  
+
+> 12:
+
+Polyak-update target critics on schedule  
+
+> 13:
+
+end if  
+
+> 14:
+
+end for  
+
+> 15:
+
+At evaluation, sample K EMA-actor actions, apply J normalized Qmin -gradient steps, and execute the candidate maximizing 
+
+Qmin 
+
+Explored Variants That Did Not Improve Results 
+
+We also evaluated several plausible extensions that were not retained because they did not improve the selected recipe within our development budget. These observations concern the tested implementations and hyperparameter ranges; they should not be read as general negative results for the underlying ideas. 
+
+Action chunking and multi-step targets. We chunked both the policy output and critic input following Q-chunking, which performs RL directly in a temporally extended action space (Li, Zhou, and Levine 2026). We also integrated the strong NS 
+
+baseline studied in Decoupled Q-Chunking (Li, Park, and Levine 2025): the policy remains single-step and a one-action critic is trained with an uncorrected n-step return target. Neither Q-chunking nor NS improved our development results over the selected single-action policy and one-step Bellman backup, so we retained the simpler formulation. Previous-transition context. We separately augmented the actor and critic inputs with the previous state only, the previous action only, or both, aiming to provide short-term context beyond the current transition. All three variants harmed performance in our setup, so the selected method retains the standard state input for the actor and state-action input for the critic. 
+
+More expressive flow transforms. We replaced affine coupling transforms with Neural Spline Flows, whose monotonic rational-quadratic splines provide a more flexible invertible elementwise transformation while preserving exact likelihood and analytic inversion (Durkan et al. 2019). Surprisingly, this additional expressivity did not improve performance even after substantial tuning of the spline-specific hyperparameters. We therefore retained affine coupling, which is also simpler and cheaper. 
+
+Multi-sample Bellman targets. We tested drawing multiple next actions from the target policy, evaluating each with the target critics, and combining the resulting values using minimum, mean, or maximum aggregation. This was intended to make the Bellman target less dependent on one policy sample or to favor higher-value candidates. The Bayesian search nevertheless preferred a single sampled action, and the multi-sample variants provided no consistent benefit. This differs from evaluation-time candidate selection: multi-sample inference improves the executed action without changing the critic’s training target. 
+
+## Full D4RL Results                                                                                                                      
+
+> Dataset BC IQL ReBRAC IFQL FQL FAC GFP DriftQL ReBRAC-v2
+> antmaze-umaze-v2 55 77 98 92 96 97.3 98.3 95.1 99.3
+> antmaze-umaze-diverse-v2 47 54 84 62 89 92.7 87.9 87.6 91.7 antmaze-medium-play-v2 066 90 56 78 79.7 82.9 75.7 90.8
+> antmaze-medium-diverse-v2 174 84 60 71 69.7 62.9 73.0 89.5
+> antmaze-large-play-v2 042 52 55 84 86.2 82.9 78.2 83.4 antmaze-large-diverse-v2 030 64 64 83 86.5 84.9 54.0 86.5
+> pen-human-v1 71 78 103 71 53 60.5 77.0 44.7 114.9
+> pen-cloned-v1 52 83 103 80 74 95.1 81.0 53.6 110.7
+> door-human-v1 230702.6 0.1 -0.1 0.0 door-cloned-v1 030224.9 0.5 0.0 24.0
+> hammer-human-v1 320314.3 1.6 0.4 4.2 hammer-cloned-v1 125211 7.7 9.4 1.0 11.1
+> relocate-human-v1 000000.1 0.3 -0.1 0.3
+> relocate-cloned-v1 002000.2 1.5 0.1 3.6
+
+Table 3: Task-level D4RL results underlying Table 1. ReBRAC-v2, FAC, GFP, and DriftQL entries are our reruns; uncertainty values and evaluation details are described in Appendix: Baseline Protocols. 
+
+## Full Ablation Results 
+
+Ablation antmaze-giant antsoccer-arena cube-double humanoidmaze-large puzzle-4x4 scene Avg. ∆ (%) ReBRAC-v2 88.0 ± 1.6 49.0 ± 10.0 14.5 ± 8.4 97.0 ± 1.2 33.5 ± 15.0 100.0 ± 0.0 63.7 —min training aggregation † 9.0 ± 8.9 0.0 ± 0.0 0.0 ± 0.0 1.5 ± 1.9 12.0 ± 3.7 2.5 ± 1.9 4.2 -93.5 w/o auxiliary BC loss 0.0 ± 0.0 0.5 ± 1.0 0.0 ± 0.0 0.0 ± 0.0 0.0 ± 0.0 44.0 ± 29.6 7.4 -88.4 AdamW instead of Kron † 15.0 ± 27.4 6.5 ± 4.1 3.5 ± 3.4 0.0 ± 0.0 8.5 ± 7.7 99.5 ± 1.0 22.2 -65.2 aux BC: MAE only 89.0 ± 2.6 40.0 ± 15.9 5.5 ± 1.0 38.0 ± 32.0 22.0 ± 2.8 100.0 ± 0.0 49.1 -22.9 aux BC: MSE only 88.0 ± 1.6 37.5 ± 9.8 3.5 ± 3.0 82.5 ± 9.1 2.0 ± 2.8 96.5 ± 1.0 51.7 -18.8 w/o NF BC loss 93.5 ± 5.7 26.5 ± 6.0 2.0 ± 2.8 88.0 ± 5.2 33.5 ± 23.5 80.0 ± 11.5 53.9 -15.3 w/o warm-up stages 93.0 ± 2.6 44.0 ± 1.6 3.0 ± 3.5 88.5 ± 9.0 0.5 ± 1.0 100.0 ± 0.0 54.8 -13.9 w/o critic warm-up 94.0 ± 5.4 45.5 ± 3.4 11.0 ± 7.0 88.0 ± 14.9 7.0 ± 5.8 100.0 ± 0.0 57.6 -9.6 w/o actor regularizers 92.5 ± 3.4 36.0 ± 5.9 8.5 ± 5.7 92.5 ± 1.9 31.0 ± 11.9 96.5 ± 3.4 59.5 -6.5 w/o BC warm-up 90.0 ± 4.0 39.5 ± 8.2 10.5 ± 10.1 94.5 ± 1.9 26.5 ± 8.1 99.5 ± 1.0 60.1 -5.6 w/o critic residuals 84.0 ± 4.3 51.0 ± 10.1 19.5 ± 10.8 75.5 ± 12.8 32.5 ± 6.6 100.0 ± 0.0 60.4 -5.1 2 critics 87.5 ± 1.0 46.0 ± 13.4 6.0 ± 3.7 94.5 ± 1.9 30.0 ± 14.3 100.0 ± 0.0 60.7 -4.7 w/o next-state prediction 83.5 ± 5.7 38.5 ± 5.3 9.0 ± 5.8 98.0 ± 0.0 37.5 ± 9.3 100.0 ± 0.0 61.1 -4.1 ReLU activation 89.5 ± 1.9 49.0 ± 4.8 9.5 ± 4.4 91.5 ± 1.0 29.0 ± 9.9 100.0 ± 0.0 61.4 -3.5 w/o critic regularizers 59.0 ± 19.9 59.5 ± 14.3 24.5 ± 8.1 97.0 ± 2.6 36.0 ± 13.5 100.0 ± 0.0 62.7 -1.6 w/o all regularizers 85.0 ± 10.1 53.5 ± 6.6 14.0 ± 13.0 98.5 ± 1.9 28.5 ± 10.1 98.5 ± 1.9 63.0 -1.0 w/o actor EMA 95.0 ± 3.8 48.5 ± 4.4 12.5 ± 5.3 95.0 ± 1.2 34.0 ± 10.8 99.5 ± 1.0 64.1 +0.7 
+
+Table 4: Task-level one-factor ablations without hyperparameter retuning. Entries are mean ± standard deviation over seeds; ∆ is the relative six-task average change. Cells are shaded relative to ReBRAC-v2. †Bayesian search found competitive runs with this alternative when other hyperparameters had different values. Hyperparameter Development Details 
+
+Shared-Recipe Search. The six development datasets are antmaze-giant-navigate-singletask-v0 ,
+
+antsoccer-arena-navigate-singletask-v0 , cube-double-play-singletask-v0 , humanoidmaze-large-navigate-singletask-v0 , puzzle-4x4-play-singletask-v0 , and scene-play-singletask-v0 . One proposal comprises six training runs with seed 0, and its objective is their unweighted mean normalized score. We evaluate 576 proposals, or 3,456 single-task runs. Preliminary experiments fix the MSE+MAE auxiliary loss, the uniform flow base, (K, J, η ) = (32 , 2, 0.01) , and the initial coefficients (αaux , α NF ) = (0 .03 , 3 × 10 −4). We subsequently freeze every architectural, optimization, regularization, training, and inference choice. Table 5 reports the complete search range for each parameter. Log-uniform intervals sample the parameter uniformly in log space. For actor_ema_tau , a value of 1 disables averaging. Values selected extremely close to zero, as well as regularizers rejected in preliminary experiments, are set exactly to zero in the final configuration. Table 6 gives the resulting shared values.                                                                                                    
+
+> Parameter Search domain Parameter Search domain
+> actor_bc_noise log-uniform [10 −4,10 −1]critic_objective_noise log-uniform [10 −6,10 −2]
+> activation {GSP, ReLU, SiLU} critic_warmup_epochs {0,50 ,100 ,200 }× 10 3updates
+> actor_ema_tau {0.003 ,0.005 ,0.01 ,1}critic_wd log-uniform [10 −8,10 −2]
+> actor_grad_noise log-uniform [10 −5,10 −1]il_warmup_epochs {0,50 ,100 ,200 }× 10 3updates
+> actor_learning_rate log-uniform [10 −5,3×10 −3]n_classes {51 ,101 ,201 }
+> actor_wd log-uniform [10 −6,10 −2]nf_dropout uniform [0 .01 ,0.2]
+> batch_size {512 ,1024 ,2048 }nf_hidden_dim {128 ,256 ,512 }
+> critic_dropout uniform [0 ,0.1] nf_n_hiddens {2,3}
+> critic_grad_noise log-uniform [10 −8,10 −3]nf_num_layers {6,8,10 ,12 ,14 ,16 }
+> critic_learning_rate log-uniform [10 −5,3×10 −3]nf_use_plu {false ,true }
+> critic_n_hiddens {4,5,6}num_critics {2,4}
+> next-state objective {disabled, enabled} optimizer_type {Kron, Adan, AdamW}
+> policy_noise {0,0.2}target_critic_ aggregation
+> {minimum, mean, maximum}
+> tau log-uniform [0 .005 ,0.05] gamma {0.99 ,0.995 ,0.999 }
+> use_target_actor {false ,true }
+
+Table 5: Hyperparameter ranges used for shared-recipe Bayesian development.                                                    
+
+> Parameter Selected value Parameter Selected value
+> Activation GSP Critic objective noise 0
+> Actor BC noise 1.153 ×10 −3Critic warm-up 200 ,000 updates Actor EMA τ0.005 Critic weight decay 3.685 ×10 −5
+> Actor gradient noise 2.592 ×10 −4IL warm-up 100 ,000 updates Actor learning rate 4.127 ×10 −5Value classes 201
+> Actor weight decay 9.632 ×10 −6Flow dropout 0.04812
+> Batch size 512 Flow hidden width 256
+> Critic dropout 0.004813 Flow conditioner depth 2
+> Critic gradient noise 5.037 ×10 −6Flow coupling layers 14
+> Critic learning rate 2.393 ×10 −5PLU mixing enabled Critic hidden layers 5Number of critics 4
+> Next-state objective enabled Optimizer Kron Target policy noise 0.2Target critic aggregation mean Target-network τ0.007311 Discount γ0.999
+> Target actor disabled
+
+Table 6: Shared hyperparameters selected by Bayesian development and then frozen for all reported OGBench and D4RL runs. Behavior-regularization coefficients are reported separately in Table 7. 
+
+Behavior-Regularization Adaptation. After fixing the shared recipe, we tune only (αNF , α aux ) using seeds 0–3. For OGBench, we evaluate αNF ∈ { 10 −4, 10 −3, 3 × 10 −3, 10 −2} and αaux ∈ { 0.03 , 0.1, 0.5, 1.0}, totaling 16 configurations. The pair selected on the default task of each environment is reused on its other four tasks. For each D4RL dataset, we instead evaluate 
+
+αNF ∈ { 10 −3, 3 × 10 −3, 10 −2, 3 × 10 −2} and αaux ∈ { 0.005 , 0.01 , 0.03 , 0.1}, again totaling 16 configurations. Thus, D4RL changes only the candidate coefficient values and selects a pair per dataset; the shared recipe remains unchanged. Table 7 reports every selected pair. Intermediate diagnostic evaluations logged during training are not used to select configurations. These interactions only choose hyperparameters; policy optimization never adds transitions to the offline datasets. The procedure is therefore offline RL with environment-assisted benchmark model selection, not fully offline model selection. Suite Category / dataset αNF αaux 
+
+OGBench AntMaze Large 10 −4 0.1
+
+OGBench AntMaze Giant 10 −4 0.03 
+
+OGBench HumanoidMaze Medium 10 −4 0.03 
+
+OGBench HumanoidMaze Large 10 −4 0.03 
+
+OGBench AntSoccer Arena 3×10 −3 0.1
+
+OGBench Cube Single 10 −4 1.0
+
+OGBench Cube Double 10 −3 0.1
+
+OGBench Scene 10 −3 0.5
+
+OGBench Puzzle 3 × 3 10 −2 0.5
+
+OGBench Puzzle 4 × 4 10 −4 0.1
+
+D4RL AntMaze Umaze 3×10 −2 0.1
+
+D4RL AntMaze Umaze Diverse 10 −3 0.1
+
+D4RL AntMaze Medium Play 3×10 −3 0.01 
+
+D4RL AntMaze Medium Diverse 10 −3 0.005 
+
+D4RL AntMaze Large Play 3×10 −3 0.005 
+
+D4RL AntMaze Large Diverse 10 −3 0.005 
+
+D4RL Adroit Pen Human 10 −3 0.1
+
+D4RL Adroit Pen Cloned 3×10 −2 0.1
+
+D4RL Adroit Door Human 3×10 −3 0.01 
+
+D4RL Adroit Door Cloned 10 −2 0.1
+
+D4RL Adroit Hammer Human 10 −2 0.01 
+
+D4RL Adroit Hammer Cloned 10 −3 0.01 
+
+D4RL Adroit Relocate Human 10 −2 0.01 
+
+D4RL Adroit Relocate Cloned 3×10 −2 0.1
+
+Table 7: Selected behavior-regularization coefficients. OGBench coefficients are selected on each category’s default task and transferred to its other four tasks; D4RL coefficients are selected per dataset. 
+
+Method Suite Task-varying released values Envelope Additional task-varying settings 
+
+ReBRAC-v2 OGBench αNF : {10 −4, 10 −3, 3×10 −3, 10 −2}; αaux : {.03 , . 1, . 5, 1} 4×4 = 16 None D4RL αNF : {.001 , . 003 , . 01 , . 03 }; αaux : {.005 , . 01 , . 03 , . 1} 4×4 = 16 None GFP OGBench α : {.1, . 3, 1, 3, 10 }; η : {10 −5, 10 −4, 10 −3, 10 −2, 10 −1} 5×5 = 25 Batch size, discount, flow steps, 
+
+Q/target/guidance aggregation; 1M-update horizon AntMaze α : {.03 , . 1}; η : {10 −5, 10 −3} 2×2 = 4 500K-update horizon Adroit α : {3, 10 }; η : {10 −5, 10 −4, 10 −2} 2×3 = 6 500K-update horizon FAC OGBench α : {.5, 1, 5}; λ : {.1, . 3, 1, 10 } 3×4 = 12 Q aggregation, density threshold, likelihood estimator AntMaze α : {.5, 1, 5}; λ : {.03 , . 1} 3×2 = 6 Dataset-wide density threshold Adroit α : {.5, 1, 5, 10 }; λ : {.03 , . 1, . 3, 1, 3, 10 } 4×6 = 24 Hutchinson likelihood estimator DriftQL OGBench T : {.02 , . 2, . 5, . 8}; α : {10 , 32 , 50 , 60 , 65 , 100 , 250 , 300 }; kernel: {L,G} 
+
+4×8×2 = 64 Discount, Q aggregation, generation count, noise dimension; 1M-update horizon AntMaze T : {.5}; α : {3, 5, 8, 12 , 15 }; kernel: {L,G} 1×5×2 = 10 Discount, Q aggregation; 500K-update hori-zon Adroit T : {.05 , . 2}; α : {1500 , 2000 , 2500 , 4500 , 5000 }; kernel: {L,G} 2×5×2 = 20 Discount, Q aggregation; 500K-update hori-zon 
+
+Table 8: Adaptation interfaces reconstructed from released configurations for the tasks compared in this paper. ReBRAC-v2 rows show the actual candidate grids evaluated; baseline rows show the Cartesian envelope of distinct values appearing in released final configurations, not the baselines’ actual numbers of tuning trials. L and G denote Laplace and Gaussian kernels. Adroit includes the human and cloned datasets used in our comparison. Gaussian Policies Flow Policies Drift Normalizing Flows Environment / Task BC IQL ReBRAC IFQL FQL FAC GFP DriftQL NF-RLBC ReBRAC-v2 
+
+antmaze-large-navigate / task1 ∗ 0 48 91 24.0 80.0 64.0 93.4 91.6 76.4 98.8 
+
+antmaze-large-navigate / task2 6 42 88 8.0 57.0 51.6 90.1 86.8 72.4 96.8 
+
+antmaze-large-navigate / task3 29 72 51 52.0 93.0 90.0 94.5 95.6 92.4 100.0 
+
+antmaze-large-navigate / task4 8 51 84 18.0 80.0 2.0 91.8 93.6 61.6 96.0 
+
+antmaze-large-navigate / task5 10 54 90 38.0 83.0 78.4 95.3 74.8 60.8 97.6 
+
+antmaze-giant-navigate / task1 ∗ 0 0 27 0.0 4.0 0.0 30.0 22.0 – 90.4 
+
+antmaze-giant-navigate / task2 0 1 16 0.0 9.0 0.8 66.5 74.8 – 74.8 
+
+antmaze-giant-navigate / task3 0 0 34 0.0 0.0 0.0 14.8 57.2 – 30.8 antmaze-giant-navigate / task4 0 0 5 0.0 14.0 0.0 0.0 74.8 – 94.8 
+
+antmaze-giant-navigate / task5 1 19 49 13.0 16.0 0.0 48.5 77.2 – 84.0 
+
+humanoidmaze-medium-navigate / task1 ∗ 1 32 16 69.0 19.0 56.4 86.2 22.4 3.6 98.0 
+
+humanoidmaze-medium-navigate / task2 1 41 18 85.0 94.0 87.2 79.2 80.8 18.8 97.2 
+
+humanoidmaze-medium-navigate / task3 6 25 36 49.0 74.0 79.6 88.3 58.4 14.8 96.4 
+
+humanoidmaze-medium-navigate / task4 0 0 15 1.0 3.0 15.2 0.0 48.8 1.6 44.0 humanoidmaze-medium-navigate / task5 2 66 24 98.0 97.0 98.0 98.6 96.8 20.8 99.2 
+
+humanoidmaze-large-navigate / task1 ∗ 0 3 2 6.0 7.0 3.6 0.0 8.4 – 95.2 
+
+humanoidmaze-large-navigate / task2 0 0 0 0.0 0.0 0.0 0.0 0.0 – 83.6 
+
+humanoidmaze-large-navigate / task3 1 7 8 48.0 11.0 12.0 33.9 16.0 – 26.8 humanoidmaze-large-navigate / task4 1 1 1 1.0 2.0 0.0 0.8 0.4 – 66.4 
+
+humanoidmaze-large-navigate / task5 0 1 2 0.0 1.0 4.4 39.9 0.4 – 88.8 
+
+antsoccer-arena-navigate / task1 2 14 0 61.0 77.0 83.2 83.3 84.8 60.0 94.8 
+
+antsoccer-arena-navigate / task2 2 17 0 75.0 88.0 95.6 89.9 85.6 55.6 83.6 antsoccer-arena-navigate / task3 0 6 0 14.0 61.0 54.0 59.7 50.8 42.0 57.6 antsoccer-arena-navigate / task4 ∗ 1 3 0 16.0 39.0 46.0 45.1 47.2 48.0 51.6 
+
+antsoccer-arena-navigate / task5 0 2 0 0.0 36.0 48.8 46.1 42.4 33.6 49.2 
+
+cube-single-play / task1 10 88 89 79.0 97.0 92.8 98.1 92.4 44.0 93.2 cube-single-play / task2 ∗ 3 85 92 73.0 97.0 99.2 99.4 89.2 64.0 95.6 cube-single-play / task3 9 91 93 88.0 98.0 98.8 100.0 95.2 76.8 95.6 cube-single-play / task4 2 73 92 79.0 94.0 98.0 99.4 82.8 60.0 91.6 cube-single-play / task5 3 78 87 77.0 93.0 88.0 95.6 78.8 61.6 90.8 cube-double-play / task1 8 27 45 35.0 61.0 53.2 74.1 46.8 – 6.4 cube-double-play / task2 ∗ 0 1 7 9.0 36.0 20.0 37.1 14.4 – 16.0 cube-double-play / task3 0 0 4 8.0 22.0 20.8 37.3 8.4 – 7.2 cube-double-play / task4 0 0 1 1.0 5.0 1.6 2.8 2.0 – 2.0 cube-double-play / task5 0 4 4 17.0 19.0 34.4 49.3 17.2 – 10.0 scene-play / task1 19 94 95 98.0 100.0 100.0 100.0 99.2 100.0 99.6 scene-play / task2 ∗ 1 12 50 0.0 76.0 100.0 93.4 88.8 88.0 100.0 
+
+scene-play / task3 1 32 55 54.0 98.0 94.8 74.9 95.6 98.8 95.2 scene-play / task4 2 0 3 0.0 5.0 9.6 0.0 68.4 85.6 95.6 
+
+scene-play / task5 0 0 0 0.0 0.0 0.0 0.0 8.0 0.0 86.8 
+
+puzzle-3x3-play / task1 5 33 97 94.0 90.0 100.0 96.5 97.2 99.6 100.0 
+
+puzzle-3x3-play / task2 1 4 1 1.0 16.0 98.8 0.4 0.8 99.6 99.6 
+
+puzzle-3x3-play / task3 1 3 3 0.0 10.0 98.4 0.8 3.2 97.6 98.8 
+
+puzzle-3x3-play / task4 ∗ 1 2 2 0.0 16.0 96.8 9.4 54.0 99.6 100.0 
+
+puzzle-3x3-play / task5 1 3 5 0.0 16.0 100.0 9.2 46.0 99.6 99.6 puzzle-4x4-play / task1 1 12 26 49.0 34.0 50.8 60.8 69.2 – 90.4 
+
+puzzle-4x4-play / task2 0 7 12 4.0 16.0 5.2 15.5 3.6 – 37.6 
+
+puzzle-4x4-play / task3 0 9 15 50.0 18.0 52.8 45.5 48.8 – 78.0 
+
+puzzle-4x4-play / task4 ∗ 0 5 10 21.0 11.0 21.2 19.6 10.0 – 30.0 
+
+puzzle-4x4-play / task5 0 4 7 2.0 7.0 2.4 10.8 3.6 – 25.2 
+
+Average (50 tasks) 2.8 23.4 31.0 30.3 43.6 50.2 52.1 52.3 – 74.8 
+
+Average (NF-RLBC 30 tasks) 4.2 35.7 42.6 41.7 62.9 74.2 67.3 68.7 61.2 90.1 
+
+Table 9: Full OGBench task-level results. We omit the common -singletask- and -v0 portions of task identifiers; ∗ marks the default task in each environment. ReBRAC-v2, FAC, GFP, and DriftQL entries are our final-checkpoint reruns. NF-RLBC results are reported by Ghugare and Eysenbach (2025) and converted from the original 0–1 scale. The first average covers all 50 tasks and therefore omits NF-RLBC; the second recomputes every method on the same 30 tasks reported for NF-RLBC. Reproducibility Notes 
+
+Random seeds. Bayesian development uses training seed 0, and behavior-regularization tuning uses seeds 0–3. Final OGBench evaluation uses seeds 10–14, while final D4RL evaluation uses seeds 10–19. Ablations use consecutive seeds beginning at 10, with the prefix length matching the reported number of runs (e.g., 10–13 for four runs). The released implementation initializes Python and JAX training randomness from the training seed and fixes the evaluation-environment seed to 42. 
+
+Compute and software. Experiments were distributed over heterogeneous academic compute acquired opportunistically, using NVIDIA H100 and NVIDIA TITAN RTX GPUs alongside different CPU models and memory capacities. ReBRAC-v2 uses one million gradient updates per run, and the accompanying code supplement provides a pinned Conda environment with the software and library versions used by the released implementation. 
+
+Code release. The accompanying supplement contains the ReBRAC-v2 training and evaluation implementations, final benchmark configurations, dataset-download helper, and pinned environment. This code will be released publicly under the Apache 2.0 license. 
+
+## Baseline and Aggregate-Plot Protocols 
+
+NF-RLBC Coverage. We additionally include the NF-RLBC results reported by Ghugare and Eysenbach (2025). NF-RLBC instantiates a maximum-entropy RL+BC objective with a six-block normalizing-flow policy and is evaluated with five seeds. Its paper reports 30 OGBench tasks spanning AntMaze Large, AntSoccer Arena, Cube Single, HumanoidMaze Medium, Puzzle 
+
+3 × 3, and Scene; Appendix Table 9 converts the reported means from the original 0–1 scale to our 0–100 convention. The table reports both the standard 50-task average and a fair comparison that recomputes every method on exactly these 30 tasks. On the matched subset, NF-RLBC averages 61.2, the next strongest baseline FAC averages 74.2, and ReBRAC-v2 averages 90.1; ReBRAC-v2 also obtains the higher category average in all six categories. Because NF-RLBC does not report the other 20 tasks and we do not have its seed-level scores, we exclude it from the 50-task main-table average and the RLiable plots. 
+
+Why Final-Checkpoint Evaluation? We use the policy produced at the end of a fixed training budget as the primary estimand. This rule is pre-specified, directly corresponds to the output of the training procedure, and introduces no checkpoint-selection window. It is also consistent with established pre-OGBench evaluation practice in TD3+BC, CQL, SAC-N/EDAC, and ReBRAC (Fujimoto and Gu 2021; Kumar et al. 2020; An et al. 2021; Tarasov et al. 2024a). CORL explicitly reports the performance of the “last trained policy” in its fixed-budget D4RL benchmark, including its IQL and ReBRAC implementations (Kostrikov, Nair, and Levine 2021; Tarasov et al. 2024b). Averaging several late checkpoints is not intrinsically invalid, but it evaluates a different quantity: performance over a chosen region of the learning trajectory. It therefore requires fixing the window, checkpoint count, spacing, and weighting. Such averaging can smooth transient variation, but it can also conceal late degradation or oscillation and can change method rankings relative to the final policy. Multi-seed evaluation addresses variability across independent runs; it does not characterize temporal instability within each run. We therefore rerun recent baselines under one final-checkpoint rule rather than directly comparing estimates with different meanings. 
+
+Source Protocols and Reproduction Differences. The GFP and DriftQL papers use eight seeds. On OGBench, they train for one million updates and average the checkpoints at 800K, 900K, and one million updates; on D4RL, they train for 500K updates and evaluate the final checkpoint. FAC reports eight seeds and 25 evaluation episodes, but its checkpoint-selection rule and complete evaluation protocol are not specified clearly enough to reconstruct. Each reproduction preserves the training horizon specified by the corresponding source paper or released configuration. In particular, baselines originally trained for 500K D4RL updates are rerun for 500K rather than one million updates. We align final-checkpoint selection, evaluation seeds, and episode counts without extending the original optimization budget. For GFP, changing to our protocol produces similar aggregate results: the OGBench average changes from 51.8 to 52.1, D4RL AntMaze from 83.1 to 83.3, and D4RL Adroit from 20.3 to 21.4. DriftQL changes from 53.9 to 52.3 on OGBench, from 84.2 to 77.3 on AntMaze, and from 14.5 to 12.5 on Adroit. FAC changes more substantially, from 60.3 to 50.2 on OGBench, 90.5 to 85.3 on AntMaze, and 25.9 to 21.9 on Adroit. Substituting FAC’s published values would not change its ordering relative to ReBRAC-v2 on OGBench (60.3 versus 74.8) or Adroit (25.9 versus 33.6), but would place FAC slightly higher on AntMaze (90.5 versus 90.2). We used the released implementations and hyperparameters, but the available evidence cannot distinguish among undocumented evaluation details, software or environment differences, stochastic variation, or mismatches between reported and released configurations. We therefore report discrepancies without assigning a cause. 
+
+ReBRAC-v2 under Late-Checkpoint Averaging. To isolate whether checkpoint selection explains the OGBench advantage, we also evaluate ReBRAC-v2 with the protocol used by GFP and DriftQL: within each seed, we average scores at 800K, 900K, and one million updates. Table 10 reports the resulting task-level comparison. The independently tracked final-checkpoint average is 75.0, close to the 74.8 reported in the main results, while late-checkpoint averaging yields 73.1, a decrease of 2.0 points. The largest category-level change is on HumanoidMaze Large (74.3 to 62.0), followed by AntMaze Giant (77.9 to 73.3); each of the remaining eight categories changes by at most 2.1 points, and AntSoccer Arena and Cube Double improve slightly. Most importantly, under the same averaging rule, ReBRAC-v2 remains 19.2 points above the published DriftQL average (53.9) and 21.3 points above GFP (51.8). It also remains 12.8 points above FAC’s published OGBench average (60.3), although FAC does not specify an equivalent checkpoint-selection protocol. Thus, the aggregate advantage does not arise from using the final checkpoint rather than late-checkpoint averaging. 
+
+Environment / Task Final (1M) Avg. (800K–1M) ∆
+
+antmaze-giant-navigate / task1 87 .6 ± 5.6 88 .4 ± 1.9 +0.8 antmaze-giant-navigate / task2 92 .8 ± 3.2 94 .1 ± 2.5 +1.3 antmaze-giant-navigate / task3 53 .2 ± 43 .6 37 .5 ± 35 .0 -15.7 antmaze-giant-navigate / task4 75 .2 ± 37 .8 73 .6 ± 36 .9 -1.6 antmaze-giant-navigate / task5 80 .8 ± 6.5 72 .9 ± 11 .0 -7.9 antmaze-large-navigate / task1 99 .2 ± 1.0 99 .2 ± 0.8 +0.0 antmaze-large-navigate / task2 96 .8 ± 3.7 96 .7 ± 2.3 -0.1 antmaze-large-navigate / task3 99 .2 ± 1.0 98 .5 ± 0.7 -0.7 antmaze-large-navigate / task4 98 .4 ± 1.5 97 .5 ± 2.2 -0.9 antmaze-large-navigate / task5 98 .8 ± 1.0 98 .4 ± 0.7 -0.4 antsoccer-arena-navigate / task1 92 .0 ± 1.3 92 .3 ± 1.8 +0.3 antsoccer-arena-navigate / task2 85 .6 ± 3.4 90 .7 ± 2.1 +5.1 antsoccer-arena-navigate / task3 44 .8 ± 6.1 47 .9 ± 6.1 +3.1 antsoccer-arena-navigate / task4 49 .6 ± 5.9 50 .0 ± 3.5 +0.4 antsoccer-arena-navigate / task5 52 .8 ± 4.8 48 .8 ± 3.6 -4.0 cube-double-play / task1 9.6 ± 3.2 8.8 ± 1.8 -0.8 cube-double-play / task2 8.8 ± 3.7 11 .3 ± 3.3 +2.5 cube-double-play / task3 14 .8 ± 4.7 15 .3 ± 4.4 +0.5 cube-double-play / task4 1.6 ± 1.5 1.7 ± 1.0 +0.1 cube-double-play / task5 11 .2 ± 8.3 12 .8 ± 10 .1 +1.6 cube-single-play / task1 90 .0 ± 3.3 91 .5 ± 3.1 +1.5 cube-single-play / task2 93 .6 ± 2.3 92 .8 ± 3.4 -0.8 cube-single-play / task3 95 .6 ± 2.3 95 .7 ± 1.5 +0.1 cube-single-play / task4 87 .2 ± 4.7 87 .7 ± 4.4 +0.5 cube-single-play / task5 89 .6 ± 6.2 88 .1 ± 4.0 -1.5 humanoidmaze-large-navigate / task1 96 .4 ± 2.3 96 .0 ± 1.3 -0.4 humanoidmaze-large-navigate / task2 79 .2 ± 7.5 73 .9 ± 4.3 -5.3 humanoidmaze-large-navigate / task3 26 .0 ± 15 .2 25 .2 ± 13 .4 -0.8 humanoidmaze-large-navigate / task4 86 .0 ± 5.9 32 .1 ± 3.6 -53.9 humanoidmaze-large-navigate / task5 84 .0 ± 8.9 82 .7 ± 7.1 -1.3 humanoidmaze-medium-navigate / task1 97 .6 ± 1.5 96 .4 ± 2.5 -1.2 humanoidmaze-medium-navigate / task2 96 .0 ± 2.8 95 .9 ± 1.9 -0.1 humanoidmaze-medium-navigate / task3 96 .8 ± 2.7 91 .1 ± 4.8 -5.7 humanoidmaze-medium-navigate / task4 37 .6 ± 13 .2 34 .5 ± 11 .2 -3.1 humanoidmaze-medium-navigate / task5 100 .0 ± 0.0 99 .5 ± 0.5 -0.5 puzzle-3x3-play / task1 100 .0 ± 0.0 99 .9 ± 0.3 -0.1 puzzle-3x3-play / task2 100 .0 ± 0.0 99 .9 ± 0.3 -0.1 puzzle-3x3-play / task3 99 .2 ± 1.6 99 .2 ± 0.8 +0.0 puzzle-3x3-play / task4 100 .0 ± 0.0 99 .6 ± 0.5 -0.4 puzzle-3x3-play / task5 99 .6 ± 0.8 99 .7 ± 0.5 +0.1 puzzle-4x4-play / task1 87 .6 ± 9.4 90 .7 ± 3.3 +3.1 puzzle-4x4-play / task2 38 .8 ± 13 .5 37 .2 ± 11 .6 -1.6 puzzle-4x4-play / task3 83 .2 ± 11 .4 81 .9 ± 10 .0 -1.3 puzzle-4x4-play / task4 38 .0 ± 17 .0 30 .1 ± 10 .1 -7.9 puzzle-4x4-play / task5 20 .0 ± 13 .2 21 .2 ± 6.9 +1.2 scene-play / task1 100 .0 ± 0.0 99 .7 ± 0.5 -0.3 scene-play / task2 100 .0 ± 0.0 99 .9 ± 0.3 -0.1 scene-play / task3 94 .4 ± 4.1 93 .6 ± 2.2 -0.8 scene-play / task4 95 .6 ± 1.5 92 .8 ± 1.1 -2.8 scene-play / task5 86 .4 ± 2.7 87 .7 ± 2.0 +1.3 
+
+Average (50 tasks) 75.0 73.1 -2.0 
+
+Table 10: Effect of checkpoint selection on ReBRAC-v2 OGBench scores. Entries are mean ± population standard deviation across five seeds. The averaged protocol first averages the 800K, 900K, and 1M scores within each seed. The final-checkpoint and averaged estimates are then aggregated identically across tasks. FAC GFP DriftQL Environment / Task Reported Ours Reported Ours Reported Ours 
+
+antmaze-large-navigate / task1 ∗ 94.0 64.0 95.4 93.4 95 91.6 antmaze-large-navigate / task2 86.0 51.6 92.2 90.1 85 86.8 antmaze-large-navigate / task3 97.5 90.0 95.6 94.5 97 95.6 antmaze-large-navigate / task4 89.5 2.0 90.6 91.8 91 93.6 antmaze-large-navigate / task5 96.0 78.4 95.0 95.3 92 74.8 antmaze-giant-navigate / task1 ∗ 6.5 0.0 12.6 30.0 32 22.0 antmaze-giant-navigate / task2 37.5 0.8 52.2 66.5 79 74.8 antmaze-giant-navigate / task3 0.5 0.0 13.7 14.8 43 57.2 antmaze-giant-navigate / task4 20.0 0.0 17.8 0.0 64 74.8 antmaze-giant-navigate / task5 50.5 0.0 43.2 48.5 85 77.2 humanoidmaze-medium-navigate / task1 ∗ 71.5 56.4 83.5 86.2 28 22.4 humanoidmaze-medium-navigate / task2 88.0 87.2 91.2 79.2 87 80.8 humanoidmaze-medium-navigate / task3 95.5 79.6 86.3 88.3 56 58.4 humanoidmaze-medium-navigate / task4 25.0 15.2 3.0 0.0 39 48.8 humanoidmaze-medium-navigate / task5 98.0 98.0 95.8 98.6 99 96.8 humanoidmaze-large-navigate / task1 ∗ 15.0 3.6 57.2 0.0 2 8.4 humanoidmaze-large-navigate / task2 0.0 0.0 0.1 0.0 0 0.0 humanoidmaze-large-navigate / task3 20.5 12.0 14.6 33.9 23 16.0 humanoidmaze-large-navigate / task4 4.5 0.0 3.7 0.8 1 0.4 humanoidmaze-large-navigate / task5 1.5 4.4 13.1 39.9 1 0.4 antsoccer-arena-navigate / task1 82.0 83.2 77.0 83.3 79 84.8 antsoccer-arena-navigate / task2 93.5 95.6 91.2 89.9 91 85.6 antsoccer-arena-navigate / task3 62.5 54.0 51.9 59.7 60 50.8 antsoccer-arena-navigate / task4 ∗ 53.0 46.0 40.2 45.1 48 47.2 antsoccer-arena-navigate / task5 47.5 48.8 29.1 46.1 48 42.4 cube-single-play / task1 99.0 92.8 99.1 98.1 94 92.4 cube-single-play / task2 ∗ 100.0 99.2 99.4 99.4 93 89.2 cube-single-play / task3 100.0 98.8 99.4 100.0 95 95.2 cube-single-play / task4 98.5 98.0 99.1 99.4 92 82.8 cube-single-play / task5 96.5 88.0 97.0 95.6 90 78.8 cube-double-play / task1 60.0 53.2 76.1 74.1 49 46.8 cube-double-play / task2 ∗ 37.5 20.0 53.3 37.1 23 14.4 cube-double-play / task3 31.5 20.8 43.3 37.3 9 8.4 cube-double-play / task4 4.0 1.6 7.1 2.8 3 2.0 cube-double-play / task5 32.5 34.4 56.3 49.3 43 17.2 scene-play / task1 100.0 100.0 99.8 100.0 100 99.2 scene-play / task2 ∗ 100.0 100.0 89.0 93.4 89 88.8 scene-play / task3 97.0 94.8 78.0 74.9 93 95.6 scene-play / task4 58.0 9.6 0.6 0.0 83 68.4 scene-play / task5 1.5 0.0 0.0 0.0 2 8.0 puzzle-3x3-play / task1 100.0 100.0 94.8 96.5 87 97.2 puzzle-3x3-play / task2 100.0 98.8 0.3 0.4 39 0.8 puzzle-3x3-play / task3 100.0 98.4 0.9 0.8 20 3.2 puzzle-3x3-play / task4 ∗ 100.0 96.8 5.4 9.4 10 54.0 puzzle-3x3-play / task5 100.0 100.0 14.1 9.2 19 46.0 puzzle-4x4-play / task1 52.0 50.8 50.0 60.8 72 69.2 puzzle-4x4-play / task2 7.5 5.2 9.9 15.5 4 3.6 puzzle-4x4-play / task3 62.0 52.8 46.2 45.5 47 48.8 puzzle-4x4-play / task4 ∗ 35.0 21.2 17.2 19.6 10 10.0 puzzle-4x4-play / task5 5.0 2.4 7.3 10.8 2 3.6 
+
+Average 60.3 50.2 51.8 52.1 53.9 52.3 
+
+Table 11: OGBench baseline reproduction table. Reported values are taken from the corresponding papers; “Ours” denotes evaluation under the ReBRAC-v2 final-checkpoint protocol. ∗ marks the default task in each environment. FAC GFP DriftQL Dataset Reported Ours Reported Ours Reported Ours                                           
+
+> antmaze-umaze-v2 98.5 97.3 96.8 98.3 96 95.1 antmaze-umaze-diverse-v2 93.5 92.7 91.9 87.9 86 87.6 antmaze-medium-play-v2 88.0 79.7 81.9 82.9 81 75.7 antmaze-medium-diverse-v2 85.0 69.7 61.6 62.9 75 73.0 antmaze-large-play-v2 90.0 86.2 82.6 82.9 83 78.2 antmaze-large-diverse-v2 88.0 86.5 84.1 84.9 84 54.0
+> Average 90.5 85.3 83.1 83.3 84.2 77.3
+
+Table 12: D4RL AntMaze baseline reproduction table. Reported values are taken from the corresponding papers; “Ours” denotes evaluation under the ReBRAC-v2 final-checkpoint protocol.                                                               
+
+> FAC GFP DriftQL Dataset Reported Ours Reported Ours Reported Ours
+> pen-human-v1 73.9 60.5 64.6 77.0 51 44.7 pen-cloned-v1 103.2 95.1 77.1 81.0 63 53.6 door-human-v1 5.5 2.6 0.3 0.1 0-0.1 door-cloned-v1 4.1 4.9 1.6 0.5 00.0 hammer-human-v1 8.6 4.3 4.4 1.6 10.4 hammer-cloned-v1 11.1 7.7 12.4 9.4 11.0 relocate-human-v1 0.6 0.1 0.5 0.3 0-0.1 relocate-cloned-v1 0.5 0.2 1.6 1.5 00.1
+> Average 25.9 21.9 20.3 21.4 14.5 12.5
+
+Table 13: D4RL Adroit baseline reproduction table. Reported values are taken from the corresponding papers; “Ours” denotes evaluation under the ReBRAC-v2 final-checkpoint protocol. 
+
+Matched-Protocol Reproductions. Tables 11–13 place reported and matched-protocol scores side by side for FAC, GFP, and DriftQL. All three reproductions preserve their source training horizons while using our final-checkpoint evaluation protocol. For exact reproducibility, we use FAC from https://github.com/JongseongChae/FAC at commit 
+
+a4f4dd4d5f9d9ecc46392582075da6dd509669b3 , GFP from https://github.com/Simple-Robotics/guided-flow-policy at commit e60468e31066ed072e494be8c6cce14ac19f60e9 , and DriftQL from https://github.com/anashoussaini/ driftql at commit 1ad1bbc2683b3f7cd8aa6e1d2c04504cceabad94 .
+
+RLiable Construction. ReBRAC-v2, FAC, GFP, and DriftQL use per-seed results from our OGBench and D4RL runs. For these methods, RLiable computes stratified-bootstrap uncertainty intervals; aggregate-metric intervals use 50,000 bootstrap replicates. For ReBRAC and FQL, only task-level means are available. We repeat each such task mean across five slots so that RLiable preserves its aggregate point estimate, but this synthetic repetition contains no within-task seed uncertainty; we therefore omit interval estimates for these methods. Consequently, Figure 2 supports aggregate point-estimate comparisons for all included methods, while intervals are informative only for methods with genuine seed-level results. The probability-of-improvement panel uses the same stratified bootstrap and compares ReBRAC-v2 separately against each baseline. 
+
+## Ablation Implementation Details 
+
+The grouped regularization ablations in Table 4 set the corresponding selected coefficients to zero without changing other hyperparameters. The actor ablation disables behavior-cloning noise, actor-gradient noise, actor weight decay, and normalizing-flow dropout. The critic ablation disables critic dropout, critic-gradient noise, and critic weight decay. The combined ablation disables all seven regularizers. As in the other one-factor ablations, neither behavior-cloning coefficient is retuned. 
+
+## Inference-Time Action Refinement 
+
+Figure 4 provides the six task-level results underlying the aggregate inference-time ablation in Figure 3. The response to inference compute is heterogeneous. In particular, on AntSoccer Arena, adding one or two refinement steps with 32 candidates increases the score from 42.5 to 54.5, even though refinement produces little change at that sample count after averaging across tasks. The best AntSoccer score, 55.0, occurs with eight candidates and two refinement steps. 0 1 2 4
+
+Number of Q re fi nement steps                
+
+> 12832 64
+> Number of inference samples
+> 88.0 88.0 87.5 89.5 87.0 89.0 90.0 88.0 87.5 88.5 90.0 89.0 89.5 88.0 86.0 90.0 87.0 86.0 87.0 88.0
+
+antmaze/giant_navigate_singletask_v0    
+
+> 86.0 86.5 87.0 87.5 88.0 88.5 89.0 89.5 90.0
+> Score 0124
+
+Number of Q re fi nement steps                
+
+> 12832 64
+> Number of inference samples
+> 29.5 19.5 31.0 35.5 32.5 36.5 36.0 48.0 51.0 51.0 55.0 49.5 42.5 54.5 54.5 46.0 38.0 46.0 40.0 41.0
+
+antsoccer/arena_navigate_singletask_v0    
+
+> 20 25 30 35 40 45 50 55
+> Score 0124
+
+Number of Q re fi nement steps                
+
+> 12832 64
+> Number of inference samples
+> 4.0 6.0 8.0 15.0 11.0 17.5 15.5 14.0 17.5 16.0 17.5 16.0 12.5 11.5 16.0 8.5 10.0 9.5 8.5 5.5
+
+cube/double_play_singletask_v0 
+
+> 46810 12 14 16
+> Score
+
+(a) AntMaze Giant Navigate. (b) AntSoccer Arena Navigate. (c) Cube Double Play. 0 1 2 4
+
+Number of Q re fi nement steps                
+
+> 12832 64
+> Number of inference samples
+> 90.0 92.0 90.7 88.7 90.0 90.7 91.3 91.3 92.7 94.0 94.0 94.0 98.7 94.7 96.7 96.7 97.3 96.7 96.7 98.7
+
+humanoidmaze/large_navigate_singletask_v0    
+
+> 90 92 94 96 98
+> Score 0124
+
+Number of Q re fi nement steps                
+
+> 12832 64
+> Number of inference samples
+> 23.0 26.5 26.5 27.0 29.5 25.0 33.5 24.5 28.0 32.0 29.5 25.5 31.5 38.5 30.0 35.5 31.0 32.5 33.5 28.0
+
+puzzle/4x4_play_singletask_v0    
+
+> 24 26 28 30 32 34 36 38
+> Score 0124
+
+Number of Q re fi nement steps                
+
+> 12832 64
+> Number of inference samples
+> 96.0 96.0 98.0 100.0 97.0 99.0 100.0 100.0 100.0 100.0 99.0 100.0 100.0 99.0 100.0 100.0 100.0 100.0 100.0 100.0
+
+scene/play_singletask_v0 
+
+> 96.0 96.5 97.0 97.5 98.0 98.5 99.0 99.5 100.0
+> Score
+
+(d) HumanoidMaze Large Navigate. (e) Puzzle 4x4 Play. (f) Scene Play. 
+
+Figure 4: Task-level sensitivity to inference-time compute. Each heatmap reports normalized score as a function of the number of sampled candidate actions and Q-guided refinement steps. 
+
+## Normalizing-Flow Depth Ablation 
+
+Table 14 provides the task-level results corresponding to Figure 3. Table 14: Effect of the normalizing-flow depth (number of coupling layers). Cells are shaded green/red when the score is above/below the reference depth. Ablation antmaze-giant antsoccer-arena cube-double humanoidmaze-large puzzle-4x4 scene Avg. depth 2 3.0 ± 3.8 18.5 ± 9.4 0.5 ± 1.0 55.5 ± 6.4 17.5 ± 10.2 92.0 ± 8.5 31.2 depth 4 26.5 ± 13.9 35.0 ± 10.1 6.0 ± 5.2 64.5 ± 16.8 28.5 ± 3.4 100.0 ± 0.0 43.4 depth 8 82.0 ± 7.7 51.5 ± 11.4 7.5 ± 6.0 91.0 ± 5.8 37.0 ± 10.4 99.0 ± 1.2 61.3 depth 12 91.0 ± 3.5 48.0 ± 10.7 11.5 ± 3.8 95.0 ± 4.8 21.0 ± 4.2 100.0 ± 0.0 61.1 depth 14 (reference) 88.0 ± 1.6 49.0 ± 10.0 14.5 ± 8.4 97.0 ± 1.2 33.5 ± 15.0 100.0 ± 0.0 63.7 depth 18 95.5 ± 2.5 60.0 ± 3.3 12.0 ± 4.9 97.0 ± 2.6 27.5 ± 9.0 100.0 ± 0.0 65.3

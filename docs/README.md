@@ -6,36 +6,47 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-08
-- 运行时间：2026-08-08 20:49:43 UTC
+- 最新运行日期：2026-08-09
+- 运行时间：2026-08-09 19:32:05 UTC
 - 运行状态：成功
-- 本次总论文数：5
+- 本次总论文数：8
 - 精读区：0
-- 速读区：5
+- 速读区：8
 
 ### 今日简报（AI）
-今日速读5篇论文，无精读，聚焦多智能体决策与强化学习前沿。最值得关注多车决策的“外在指标到内在质量”度量框架，以及异构多智能体在资源管理中的约束优化方法。建议后续优先精读这两篇，以深入理解其理论推导与实验设计。
-- 详情：[/202608/08/README](/202608/08/README)
+- 今日共生成 8 篇推荐（精读 0 篇，速读 8 篇）
+- 速读：《Training Small LLMs as Spatial Multi-Agent Policies》（7.0/10）, 《Exact Model-Free Policy Iteration for Co-safe LTL Planning》（7.0/10）, 《Observation-Grounded Self-Predictive Reinforcement Learning for Visual Continuous Control》（7.0/10）
+- 这些结果覆盖了当下较热的方向，建议先看精读区论文的关键问题与方法。
+- 详情：[/202608/09/README](/202608/09/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Policy Optimality Measurement for Multi-Vehicle Decision-Making: From Extrinsic Indicators to Intrinsic Quality](/202608/08/2608.01133v1-policy-optimality-measurement-for-multi-vehicle-decision-making-from-extrinsic-indicators-to-intrinsic-quality)  
+1. [Training Small LLMs as Spatial Multi-Agent Policies](/202608/09/2608.01425v1-training-small-llms-as-spatial-multi-agent-policies)  
+   标签：评分：7.0/10、query:ui
+   evidence：面向空间协作多智能体任务的强化学习，可迁移至无人机集群协同
+2. [Exact Model-Free Policy Iteration for Co-safe LTL Planning](/202608/09/2608.05047v1-exact-model-free-policy-iteration-for-co-safe-ltl-planning)  
+   标签：评分：7.0/10、query:ui
+   evidence：面向co-safe LTL目标的模型无关强化学习, 直接适用于围捕与追逃任务的形式化目标.
+3. [Observation-Grounded Self-Predictive Reinforcement Learning for Visual Continuous Control](/202608/09/2608.05989v1-observation-grounded-self-predictive-reinforcement-learning-for-visual-continuous-control)  
+   标签：评分：7.0/10、query:ui
+   evidence：高效的视觉强化学习控制方法，可应用于自主无人机拦截
+4. [ReBRAC-v2: The Return of the King](/202608/09/2608.01205v1-rebrac-v2-the-return-of-the-king)  
    标签：评分：6.0/10、query:ui
-   evidence：多智能体强化学习策略评估框架，可应用于无人机集群协同
-2. [Heterogeneous Multi-Agent Reinforcement Learning for Radio Resource Management under Coupled Finite-Horizon Constraints](/202608/08/2608.01745v1-heterogeneous-multi-agent-reinforcement-learning-for-radio-resource-management-under-coupled-finite-horizon-constraints)  
+   evidence：通用离线强化学习算法，可应用于无人机拦截策略训练
+5. [CoNav-UAV: Cooperative Dual-Altitude Aerial Navigation via Stackelberg Learning](/202608/09/2608.01802v1-conav-uav-cooperative-dual-altitude-aerial-navigation-via-stackelberg-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：耦合约束下的多智能体强化学习框架，可迁移到多无人机协同围捕
-3. [Upper-Expectile Multi-Step Q-Learning for Off-Policy Reinforcement Learning](/202608/08/2608.02034v1-upper-expectile-multi-step-q-learning-for-off-policy-reinforcement-learning)  
+   evidence：基于Stackelberg学习的双高度无人机协同导航，可迁移至多机围捕
+6. [History Matters: Meta-policy Delegation with Heterogeneous Multi-agent Reinforcement Learning](/202608/09/2608.03833v1-history-matters-meta-policy-delegation-with-heterogeneous-multi-agent-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：通用的离策略强化学习改进，可应用于无人机拦截训练
-4. [Stochastic Multiple Shooting Trajectory Optimization via Sequential Local Policy Evaluation](/202608/08/2608.03978v1-stochastic-multiple-shooting-trajectory-optimization-via-sequential-local-policy-evaluation)  
+   evidence：面向异构无人机群协同的通用多智能体强化学习委托框架
+7. [PRIMAL3: Pathfinding via Reinforcement and Imitation Multi-Agent Learning - Leveraging LaCAM3](/202608/09/2608.04905v1-primal3-pathfinding-via-reinforcement-and-imitation-multi-agent-learning---leveraging-lacam3)  
    标签：评分：6.0/10、query:ui
-   evidence：带终端集收敛的轨迹优化方法，可用于无人机追逃规划
-5. [Interpretable Fuzzy Inference for UAV Target Tracking Using Bounding-Box Geometry](/202608/08/2608.04121v1-interpretable-fuzzy-inference-for-uav-target-tracking-using-bounding-box-geometry)  
+   evidence：基于强化与模仿学习的多智能体路径规划
+8. [Uncertainty-Aware World Model for Aerial Image-Goal Navigation](/202608/09/2608.05597v1-uncertainty-aware-world-model-for-aerial-image-goal-navigation)  
    标签：评分：6.0/10、query:ui
-   evidence：基于视觉的UAV目标跟踪与偏航引导，直接服务于单机拦截
+   evidence：面向无人机航拍导航的不确定性世界模型, 可应用于不确定环境下的目标接近任务.
 
 
 <div class="dpr-home-promo-card">
