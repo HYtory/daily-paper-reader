@@ -1,0 +1,69 @@
+{
+  "label": "2026-08-11",
+  "date": "2026-08-11",
+  "generated_at": "2026-08-11T21:28:59",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202608/11/2608.09258v1-task-oriented-formation-decision-via-reinforcement-learning-herding-an-attacking-swarm",
+      "section": "deep",
+      "title_en": "Task-Oriented Formation Decision via Reinforcement Learning: Herding an Attacking Swarm",
+      "authors": "Zhaozong Wang, Guibin Sun, Jinyong Chen, Rui Zhou",
+      "date": "2026-08-10",
+      "pdf": "https://arxiv.org/pdf/2608.09258v1",
+      "score": "8.0",
+      "evidence": "基于强化学习的编队驱离攻击蜂群，可映射到多机器人协同围捕",
+      "tldr": "多机器人系统常需任务导向编队，现有研究多关注形状形成，本文研究牧群任务中的编队决策。攻击者机动性占优且策略未知，本文用低维参数编码编队形状，将决策转为参数优化，并通过强化学习离线训练策略以在线适应。仿真对比三个基线和扩展实验验证有效性，物理平台也验证可行性。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-robot systems can accomplish tasks that are difficult for a single robot by organizing into task-specific formations. Different from existing studies on multi-robot shape formation, we here study the task-oriented formation decision problem, with a focus on the herding task. This task is challenging due to the attackers' superior maneuverability and their unknown strategies. To address these challenges, we propose the following novel results. First, we encode the formation shape using a low-dimensional parameter vector. This parametric representation reformulates the formation decision as a parameter optimization problem, thereby resolving the limited flexibility of predefined shapes. By optimizing these formation parameters, the defenders' maneuverability disadvantage is mitigated through a formation shape that continuously adapts to task requirements. Second, we develop a reinforcement learning-based policy to regulate the formation parameters. Trained offline in simulations covering diverse attacking strategies, the learned policy can effectively handle adversarial unpredictability during online deployment. Comparative simulations against three baselines demonstrate that our method can successfully accomplish challenging herding tasks. Additional scalability simulations further verify its applicability to simulated scenarios involving dozens of robots. We also validate the practical feasibility of our method on a physical robotic platform with 3 attackers and 7 defenders.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/11/2608.06907v1-spatiotemporal-agility-time-constrained-reinforcement-learning-for-vision-guided-dynamic-quadrupedal-interception",
+      "section": "quick",
+      "title_en": "Spatiotemporal Agility: Time-Constrained Reinforcement Learning for Vision-Guided Dynamic Quadrupedal Interception",
+      "authors": "Yidong Zhu, Zibo Dai, Tongning Zhang, Leixin Chang, Hua Chen",
+      "date": "2026-08-07",
+      "pdf": "https://arxiv.org/pdf/2608.06907v1",
+      "score": "7.0",
+      "evidence": "视觉引导的强化学习动态目标拦截，方法可迁移至无人机拦截",
+      "tldr": "四足机器人动态拦截需在严格时间约束下精准到达目标，现有速度跟踪策略难以胜任。本文提出视觉预测落点与飞行时间，并训练直接以目标位置和时间条件化的强化学习运动策略，替代中间速度指令。在球捕捉实验中，该方法成功率更高且仿真到现实迁移差距更小，最终构建了多相机感知与闭环部署的实时拦截系统。",
+      "tags": "query:ui",
+      "abstract_en": "Legged robots require robust agility to perceive and interact with complex and dynamic environments within a constrained time. However, most existing quadruped locomotion works rely on velocity-tracking policy, which struggle to reach precise targets within strict temporal constraints. Moreover, integrating real-time perception with agile locomotion for highly dynamic targets remains challenging due to sensor latency and processing delays. To concretely study and benchmark such agility in dynamic settings, we introduce a challenging ball-catching task for legged robots. This paper proposes an integrated framework that combines a vision module for landing point and time prediction with a direct position and time conditioned RL locomotion policy, instead of intermediate velocity commands. Beyond the method design, this work presents a system-level contribution that completes real-time robotic interception system that integrates multi-camera perception, online trajectory prediction, low-latency target communication, and sim-to-real locomotion control into a closed-loop deployment pipeline. By explicitly predicting the future spatial-temporal target, our approach mitigates perception latency during dynamic interception. We conducted extensive ball-catching experiments for the legged robot. Through comparative experiments against a velocity-tracking baseline, our direct target-conditioned approach achieves a higher success rate in catching balls with predicted landing spots within 2 meters and flight times between 0.8 and 1.2 seconds. This shows that the robot has successfully completed the dynamic ball-catching task under our tested setup. Furthermore, our policy exhibits a smaller performance gap after deployment, suggesting improved sim-to-real behavior in these trials.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/11/2608.08604v1-multi-agent-reinforcement-learning-via-agent-specific-preference",
+      "section": "quick",
+      "title_en": "Multi-Agent Reinforcement Learning via Agent-Specific Preference",
+      "authors": "Ni Mu, Yao Luan, Yiqin Yang, Qing-Shan Jia",
+      "date": "2026-08-09",
+      "pdf": "https://arxiv.org/pdf/2608.08604v1",
+      "score": "7.0",
+      "evidence": "提出智能体特定偏好的多智能体强化学习框架，可应用于多无人机围捕等协同任务",
+      "tldr": "多智能体强化学习依赖全局奖励设计，异构场景下难以定义。提出MAGPIE，通过智能体专属偏好建模，每个智能体由专家偏好信号评估，消除全局评估需求。理论证明分散优化收敛到纳什均衡策略，聚合奖励优化等价于训练该策略。实验表明性能媲美奖励工程基线，适合奖励设计困难的场景。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-agent reinforcement learning (MARL) is a powerful framework for solving complex collaborative tasks, but it relies heavily on well-defined global reward functions. Designing such rewards is challenging, especially in systems with heterogeneous agents, where a single scalar objective may fail to capture diverse behaviors. In this paper, we introduce Multi-AGent Preference-Integrated lEarning (MAGPIE), which addresses these challenges through agent-specific preference modeling. Each agent is evaluated by a dedicated expert through preference signals, eliminating the need for global evaluation. We theoretically prove that optimizing these decentralized preferences converges to a Nash equilibrium policy. To integrate local preferences into a coherent global objective, we construct agent-specific reward models from preference data and combine them via a monotonic aggregation mechanism. We further prove that optimizing this aggregate reward model is equivalent to training the Nash equilibrium policy. Extensive experiments on benchmark multi-agent tasks and a sequential production line task show that MAGPIE achieves performance comparable to reward-engineered baselines, demonstrating its potential to facilitate policy learning in scenarios where precise reward engineering is impractical.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/11/2608.05989v1-observation-grounded-self-predictive-reinforcement-learning-for-visual-continuous-control",
+      "section": "quick",
+      "title_en": "Observation-Grounded Self-Predictive Reinforcement Learning for Visual Continuous Control",
+      "authors": "Xinwei Liu, Junyuan Liang, Jianting Zhang, Wuhui Chen",
+      "date": "2026-08-06",
+      "pdf": "https://arxiv.org/pdf/2608.05989v1",
+      "score": "6.0",
+      "evidence": "面向视觉连续控制的样本高效强化学习，可直接用于基于摄像头的自主无人机拦截",
+      "tldr": "从像素进行强化学习面临样本效率挑战。现有方法分别用潜空间自预测或观测预测学习动力学表征，但效果有限。本文提出OG-SPR，同时进行多步潜自预测和下一观测预测，并引入轻量适配器避免共享表征被过度约束。在28个视觉控制任务上超越现有方法，尤其在困难任务上提升显著。",
+      "tags": "query:ui",
+      "abstract_en": "Sample-efficient policy learning from pixels is a long-standing challenge in reinforcement learning (RL). Recent dynamics-based representation learning methods have significantly improved the sample efficiency of model-free visual RL by learning dynamics-aware representations through auxiliary prediction performed either in latent space (self-prediction) or observation space (observation prediction). However, state-of-the-art methods from both categories still struggle on challenging visual control tasks when training data is limited. We posit that relying on either predictive objective alone may be insufficient. In contrast, observation prediction grounds learned representations in observation-level dynamics, but does not directly regularize the temporal predictability of latent representations over extended horizons. In this paper, we propose Observation-Grounded Self-Predictive Representations (OG-SPR), a model-free visual RL algorithm for continuous control that learns representations that are both temporally predictive in latent space and grounded in observation-level dynamics. OG-SPR incorporates two core auxiliary objectives: multi-step latent self-prediction and next-observation prediction. We empirically show that directly imposing latent self-prediction on the shared representation may over-constrain it and does not necessarily improve performance. To address this issue, OG-SPR introduces two lightweight adapters for latent self-prediction, allowing the shared representation to benefit from temporally predictive signals without being forced to directly satisfy the self-prediction objective. Experiments on 28 visual control tasks from the DeepMind Control Suite show that OG-SPR improves aggregate performance over state-of-the-art self-predictive and observation-predictive RL methods, with particularly pronounced gains in challenging domains such as dog and humanoid.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

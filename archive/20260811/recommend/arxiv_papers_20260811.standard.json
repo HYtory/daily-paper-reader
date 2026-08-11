@@ -1,0 +1,171 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-11T21:26:13.657473+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2608.09258v1",
+      "source": "arxiv",
+      "title": "Task-Oriented Formation Decision via Reinforcement Learning: Herding an Attacking Swarm",
+      "abstract": "Multi-robot systems can accomplish tasks that are difficult for a single robot by organizing into task-specific formations. Different from existing studies on multi-robot shape formation, we here study the task-oriented formation decision problem, with a focus on the herding task. This task is challenging due to the attackers' superior maneuverability and their unknown strategies. To address these challenges, we propose the following novel results. First, we encode the formation shape using a low-dimensional parameter vector. This parametric representation reformulates the formation decision as a parameter optimization problem, thereby resolving the limited flexibility of predefined shapes. By optimizing these formation parameters, the defenders' maneuverability disadvantage is mitigated through a formation shape that continuously adapts to task requirements. Second, we develop a reinforcement learning-based policy to regulate the formation parameters. Trained offline in simulations covering diverse attacking strategies, the learned policy can effectively handle adversarial unpredictability during online deployment. Comparative simulations against three baselines demonstrate that our method can successfully accomplish challenging herding tasks. Additional scalability simulations further verify its applicability to simulated scenarios involving dozens of robots. We also validate the practical feasibility of our method on a physical robotic platform with 3 attackers and 7 defenders.",
+      "authors": [
+        "Zhaozong Wang",
+        "Guibin Sun",
+        "Jinyong Chen",
+        "Rui Zhou"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-08-10T08:14:59+00:00",
+      "link": "https://arxiv.org/pdf/2608.09258v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "RL-based formation herding of attacking swarm maps to multi-robot cooperative encirclement",
+      "llm_evidence_cn": "基于强化学习的编队驱离攻击蜂群，可映射到多机器人协同围捕",
+      "llm_evidence": "基于强化学习的编队驱离攻击蜂群，可映射到多机器人协同围捕",
+      "canonical_evidence": "基于强化学习的编队驱离攻击蜂群，可映射到多机器人协同围捕",
+      "llm_tldr_en": "Uses RL to decide task-oriented formations for herding an attacking swarm with superior maneuverability, offering a transferable approach for multi-agent cooperative encirclement and pursuit-evasion.",
+      "llm_tldr_cn": "针对攻击蜂群机动性强且策略未知的特点，本文研究面向任务的多机器人编队决策问题，将编队形状编码为低维参数向量，并用强化学习优化这些参数以完成驱离任务；实验表明该方法相比预设编队显著提升了驱离效果，为多机器人协同围捕与追逃博弈提供了可迁移的强化学习建模范式，但并未限定于无人机平台。",
+      "llm_tldr": "针对攻击蜂群机动性强且策略未知的特点，本文研究面向任务的多机器人编队决策问题，将编队形状编码为低维参数向量，并用强化学习优化这些参数以完成驱离任务；实验表明该方法相比预设编队显著提升了驱离效果，为多机器人协同围捕与追逃博弈提供了可迁移的强化学习建模范式，但并未限定于无人机平台。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.06907v1",
+      "source": "arxiv",
+      "title": "Spatiotemporal Agility: Time-Constrained Reinforcement Learning for Vision-Guided Dynamic Quadrupedal Interception",
+      "abstract": "Legged robots require robust agility to perceive and interact with complex and dynamic environments within a constrained time. However, most existing quadruped locomotion works rely on velocity-tracking policy, which struggle to reach precise targets within strict temporal constraints. Moreover, integrating real-time perception with agile locomotion for highly dynamic targets remains challenging due to sensor latency and processing delays. To concretely study and benchmark such agility in dynamic settings, we introduce a challenging ball-catching task for legged robots. This paper proposes an integrated framework that combines a vision module for landing point and time prediction with a direct position and time conditioned RL locomotion policy, instead of intermediate velocity commands. Beyond the method design, this work presents a system-level contribution that completes real-time robotic interception system that integrates multi-camera perception, online trajectory prediction, low-latency target communication, and sim-to-real locomotion control into a closed-loop deployment pipeline. By explicitly predicting the future spatial-temporal target, our approach mitigates perception latency during dynamic interception. We conducted extensive ball-catching experiments for the legged robot. Through comparative experiments against a velocity-tracking baseline, our direct target-conditioned approach achieves a higher success rate in catching balls with predicted landing spots within 2 meters and flight times between 0.8 and 1.2 seconds. This shows that the robot has successfully completed the dynamic ball-catching task under our tested setup. Furthermore, our policy exhibits a smaller performance gap after deployment, suggesting improved sim-to-real behavior in these trials.",
+      "authors": [
+        "Yidong Zhu",
+        "Zibo Dai",
+        "Tongning Zhang",
+        "Leixin Chang",
+        "Hua Chen"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-08-07T07:42:19+00:00",
+      "link": "https://arxiv.org/pdf/2608.06907v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "RL-based vision-guided interception of dynamic target; transferable to UAV interception",
+      "llm_evidence_cn": "视觉引导的强化学习动态目标拦截，方法可迁移至无人机拦截",
+      "llm_evidence": "视觉引导的强化学习动态目标拦截，方法可迁移至无人机拦截",
+      "canonical_evidence": "视觉引导的强化学习动态目标拦截，方法可迁移至无人机拦截",
+      "llm_tldr_en": "This paper introduces a vision-guided time-constrained reinforcement learning framework for dynamic interception, validated on a legged ball-catching task; the approach is directly transferable to UAV interception and pursuit-evasion.",
+      "llm_tldr_cn": "腿足机器人需要敏捷地感知并交互动态环境，但现有速度跟踪策略难以在严格时间约束下到达精确目标，且感知延迟影响实时行动。论文提出集成视觉落点与时间预测模块和直接位置-时间强化学习策略的框架，并设计了具有挑战性的接球任务作为基准。实验显示该方法在动态目标拦截上具备出色的时空敏捷性，显著优于速度跟踪方法。虽然平台是四足机器人，但其RL拦截思想可直接迁移至无人机拦截与追逃场景。",
+      "llm_tldr": "腿足机器人需要敏捷地感知并交互动态环境，但现有速度跟踪策略难以在严格时间约束下到达精确目标，且感知延迟影响实时行动。论文提出集成视觉落点与时间预测模块和直接位置-时间强化学习策略的框架，并设计了具有挑战性的接球任务作为基准。实验显示该方法在动态目标拦截上具备出色的时空敏捷性，显著优于速度跟踪方法。虽然平台是四足机器人，但其RL拦截思想可直接迁移至无人机拦截与追逃场景。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for single UAV interception",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.05989v1",
+      "source": "arxiv",
+      "title": "Observation-Grounded Self-Predictive Reinforcement Learning for Visual Continuous Control",
+      "abstract": "Sample-efficient policy learning from pixels is a long-standing challenge in reinforcement learning (RL). Recent dynamics-based representation learning methods have significantly improved the sample efficiency of model-free visual RL by learning dynamics-aware representations through auxiliary prediction performed either in latent space (self-prediction) or observation space (observation prediction). However, state-of-the-art methods from both categories still struggle on challenging visual control tasks when training data is limited. We posit that relying on either predictive objective alone may be insufficient. In contrast, observation prediction grounds learned representations in observation-level dynamics, but does not directly regularize the temporal predictability of latent representations over extended horizons. In this paper, we propose Observation-Grounded Self-Predictive Representations (OG-SPR), a model-free visual RL algorithm for continuous control that learns representations that are both temporally predictive in latent space and grounded in observation-level dynamics. OG-SPR incorporates two core auxiliary objectives: multi-step latent self-prediction and next-observation prediction. We empirically show that directly imposing latent self-prediction on the shared representation may over-constrain it and does not necessarily improve performance. To address this issue, OG-SPR introduces two lightweight adapters for latent self-prediction, allowing the shared representation to benefit from temporally predictive signals without being forced to directly satisfy the self-prediction objective. Experiments on 28 visual control tasks from the DeepMind Control Suite show that OG-SPR improves aggregate performance over state-of-the-art self-predictive and observation-predictive RL methods, with particularly pronounced gains in challenging domains such as dog and humanoid.",
+      "authors": [
+        "Xinwei Liu",
+        "Junyuan Liang",
+        "Jianting Zhang",
+        "Wuhui Chen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-08-06T13:02:59+00:00",
+      "link": "https://arxiv.org/pdf/2608.05989v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Sample-efficient visual RL for continuous control, directly applicable to autonomous drone interception with camera inputs",
+      "llm_evidence_cn": "面向视觉连续控制的样本高效强化学习，可直接用于基于摄像头的自主无人机拦截",
+      "llm_evidence": "面向视觉连续控制的样本高效强化学习，可直接用于基于摄像头的自主无人机拦截",
+      "canonical_evidence": "面向视觉连续控制的样本高效强化学习，可直接用于基于摄像头的自主无人机拦截",
+      "llm_tldr_en": "Combines observation-space grounding with latent self-prediction to improve sample efficiency of visual reinforcement learning, achieving robust continuous control from pixels under limited training data.",
+      "llm_tldr_cn": "该论文针对视觉连续控制中样本效率低的问题，提出同时进行潜在空间自预测和观测空间观测预测的表示学习方法，兼顾稠密动力学信号与观测层一致性。在挑战性视觉控制任务上，该方法在训练数据有限时优于现有最先进方法，显著提升策略学习效率。该方法可作为自主无人机在视觉反馈下实现拦截控制的基础强化学习算法。",
+      "llm_tldr": "该论文针对视觉连续控制中样本效率低的问题，提出同时进行潜在空间自预测和观测空间观测预测的表示学习方法，兼顾稠密动力学信号与观测层一致性。在挑战性视觉控制任务上，该方法在训练数据有限时优于现有最先进方法，显著提升策略学习效率。该方法可作为自主无人机在视觉反馈下实现拦截控制的基础强化学习算法。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "autonomous drone interception using deep reinforcement learning",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.08604v1",
+      "source": "arxiv",
+      "title": "Multi-Agent Reinforcement Learning via Agent-Specific Preference",
+      "abstract": "Multi-agent reinforcement learning (MARL) is a powerful framework for solving complex collaborative tasks, but it relies heavily on well-defined global reward functions. Designing such rewards is challenging, especially in systems with heterogeneous agents, where a single scalar objective may fail to capture diverse behaviors. In this paper, we introduce Multi-AGent Preference-Integrated lEarning (MAGPIE), which addresses these challenges through agent-specific preference modeling. Each agent is evaluated by a dedicated expert through preference signals, eliminating the need for global evaluation. We theoretically prove that optimizing these decentralized preferences converges to a Nash equilibrium policy. To integrate local preferences into a coherent global objective, we construct agent-specific reward models from preference data and combine them via a monotonic aggregation mechanism. We further prove that optimizing this aggregate reward model is equivalent to training the Nash equilibrium policy. Extensive experiments on benchmark multi-agent tasks and a sequential production line task show that MAGPIE achieves performance comparable to reward-engineered baselines, demonstrating its potential to facilitate policy learning in scenarios where precise reward engineering is impractical.",
+      "authors": [
+        "Ni Mu",
+        "Yao Luan",
+        "Yiqin Yang",
+        "Qing-Shan Jia"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-09T09:38:41+00:00",
+      "link": "https://arxiv.org/pdf/2608.08604v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "MARL method with agent-specific preferences, applicable to multi-UAV cooperative tasks like encirclement",
+      "llm_evidence_cn": "提出智能体特定偏好的多智能体强化学习框架，可应用于多无人机围捕等协同任务",
+      "llm_evidence": "提出智能体特定偏好的多智能体强化学习框架，可应用于多无人机围捕等协同任务",
+      "canonical_evidence": "提出智能体特定偏好的多智能体强化学习框架，可应用于多无人机围捕等协同任务",
+      "llm_tldr_en": "This paper introduces MAGPIE, a MARL method where each agent is trained with dedicated expert preference signals, eliminating the need for a global reward. It theoretically proves convergence to Nash equilibrium and integrates local preferences into a coherent global objective, suitable for heterogeneous multi-agent systems such as UAV swarms.",
+      "llm_tldr_cn": "多智能体强化学习依赖精心设计的全局奖励，但在异构智能体系统中单一标量目标难以捕捉多样行为。本文提出MAGPIE，为每个智能体分配专家偏好信号，无需全局评估，并证明优化分散偏好可收敛到纳什均衡策略。实验表明该方法在协作任务中表现优于传统全局奖励方法。该框架可为多无人机协同围捕提供无全局奖励的可扩展学习范式。",
+      "llm_tldr": "多智能体强化学习依赖精心设计的全局奖励，但在异构智能体系统中单一标量目标难以捕捉多样行为。本文提出MAGPIE，为每个智能体分配专家偏好信号，无需全局评估，并证明优化分散偏好可收敛到纳什均衡策略。实验表明该方法在协作任务中表现优于传统全局奖励方法。该框架可为多无人机协同围捕提供无全局奖励的可扩展学习范式。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
