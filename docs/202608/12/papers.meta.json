@@ -1,0 +1,69 @@
+{
+  "label": "2026-08-12",
+  "date": "2026-08-12",
+  "generated_at": "2026-08-12T21:01:15",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202608/12/2608.07170v1-drl-based-secure-transmission-for-rotatable-antenna-enabled-low-altitude-isac-systems",
+      "section": "quick",
+      "title_en": "DRL-Based Secure Transmission for Rotatable Antenna-Enabled Low-Altitude ISAC Systems",
+      "authors": "Chuan Liu, Hongyi Bian, Wei Gao, Qi Zhang, Yu Yao, Liang Yang, Feng Shu",
+      "date": "2026-08-07",
+      "pdf": "https://arxiv.org/pdf/2608.07170v1",
+      "score": "7.0",
+      "evidence": "采用多智能体近端策略优化处理无人机网络，与无人机集群多智能体强化学习直接相关",
+      "tldr": "低空经济推动ISAC系统发展，但UAV可能窃听合法用户。本文研究可旋转天线(RA)增强的低空ISAC安全传输系统，通过灵活调整天线3D波束方向提升阵列增益。提出MAPPO-T多智能体强化学习算法，联合优化发射波束成形与收发指向矩阵以最大化最小保密率。仿真表明RA较固定天线显著提升保密率，MAPPO-T优于标准算法。",
+      "tags": "query:ui",
+      "abstract_en": "The development of the low-altitude economy has driven innovation in intelligent antenna systems within ISAC systems. In this paper, we investigate a Rotatable Antenna (RA)-enabled low-altitude integrated sensing and communication (ISAC) system. In practical terms, the RA array can flexibly adjust the three-dimensional (3D) beam direction of each antenna to enhance array directional gain, thereby improving the communication security of legitimate mobile users against potential eavesdropping risks from the unmanned aerial vehicle (UAV). Our objective is to maximize the minimum secrecy rate (SR) by jointly optimizing transmit beamforming matrix, transmit and receive RAs' pointing matrices. To this end, an multi-agent proximal policy optimization with three improvement mechanisms (MAPPO-T) algorithm is proposed to cope with the issue of complex multi-agent collaborative decision-making problem. Simulation results show that the introduction of RAs can effectively improve SR performance compared to the traditional fixed orientation antenna (FOA)-based system. In addition, the proposed MAPPO-T algorithm validate the superiority compared to the standard MAPPO algorithm.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/12/2608.05588v1-search-aided-joint-agent-environment-reinforcement-learning-for-robust-lifelong-multi-agent-path-finding-with-rotations",
+      "section": "quick",
+      "title_en": "Search-Aided Joint Agent-Environment Reinforcement Learning for Robust Lifelong Multi-Agent Path Finding with Rotations",
+      "authors": "He Jiang, Jingtian Yan, Yulun Zhang, Yimin Tang, Tanishq Duhan, Rishi Veerapaneni, Guillaume Sartoretti, Jiaoyang Li",
+      "date": "2026-08-06",
+      "pdf": "https://arxiv.org/pdf/2608.05588v1",
+      "score": "6.0",
+      "evidence": "多智能体强化学习与路径规划方法，可迁移至多无人机围捕协同",
+      "tldr": "现实仓储中的终身多智能体路径规划需满足旋转约束与安全约束，现有学习方法多忽略此类运动限制。本文提出搜索增强的联合强化学习框架SJRL，结合Causal PIBT单步搜索与联合优化智能体及环境策略，并利用反向Dijkstra提供全局引导。实验表明SJRL在多种高密度地图上优于强搜索基线，并在混合现实仓库中验证。",
+      "tags": "query:ui",
+      "abstract_en": "Lifelong Multi-Agent Path Finding (LMAPF) requires repeatedly planning collision-free paths for agents that continuously receive new goals upon reaching their current ones. While many learning-based planners have been proposed for LMAPF, most rely on oversimplified kinematic assumptions that may overlook motion constraints critical to real-world performance. In this work, we study a more realistic LMAPF model derived from many real-world automated warehouse systems, termed LMAPF-R2, which incorporates robust safety constraints and in-place rotation constraints. These constraints substantially increase coordination difficulty, particularly in highly constrained spaces. To address these challenges, we propose Search-Aided Joint Reinforcement Learning (SJRL). We first augment neural policies with Causal PIBT, a single-step search-based planner that resolves agents' collisions and propagates their intentions. We then introduce a unified RL formulation that jointly optimizes agent and environment policies, where the environment policy learns graph edge costs to provide global movement guidance via backward Dijkstra search. Experiments demonstrate that SJRL achieves significant improvements over the strong search-based planner, Causal-PIBT, across multiple high-density maps. We further validate SJRL in a challenging mixed-reality warehouse environment with 8 physical robots and 248 virtual robots.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/12/2608.08255v1-learning-from-environmental-feedback-credit-assignment-across-multiple-timescales-for-agentic-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Learning from Environmental Feedback: Credit Assignment across Multiple Timescales for Agentic Reinforcement Learning",
+      "authors": "Yifu Huo, Shunjie Xing, Chenglong Wang, Peinan Feng, Qiaozhi He, Yan Ding, Anxiang Ma, Yuxin Gao, Tongran Liu, Tong Xiao, Jingbo Zhu",
+      "date": "2026-08-08",
+      "pdf": "https://arxiv.org/pdf/2608.08255v1",
+      "score": "6.0",
+      "evidence": "针对稀疏奖励的信用分配方法，可用于长时程拦截训练",
+      "tldr": "现实世界中的智能体强化学习常面临奖励延迟稀疏的挑战，信用分配旨在分解轨迹奖励以提供细粒度监督，但现有方法忽略环境交互中的过程信息。本文提出EFCA，一种多时间尺度信用分配方法，利用环境反馈提取短期反馈信号和中期状态历史信号，并通过回报重加权机制整合，补充长期结果信号。在ALFWorld和WebShop实验上，EFCA在任务成功率和任务质量上均优于强基线，验证了环境引导多时间尺度信用分配的有效性。",
+      "tags": "query:ui",
+      "abstract_en": "Agentic reinforcement learning (RL) often suffers from delayed and sparse rewards in real-world environments. A promising solution to this challenge is credit assignment, which aims to decompose trajectory-level rewards and provide more fine-grained supervision for intermediate decisions. However, existing credit assignment approaches ignore the rich process information naturally generated during environment interaction, e.g., interaction history. We argue that such information provides valuable supervision for identifying the contribution of individual actions. To this end, we propose Environmental Feedback-based Credit Assignment (EFCA), a multi-timescale credit assignment approach for long-horizon agentic RL. EFCA complements the long-term outcome signal with two environment-grounded process signals: a short-term feedback signal that captures the immediate effect of the current action and a medium-term state-history signal that identifies ineffective patterns from recent interactions. Both signals are directly extracted from environment feedback and integrated through a return reweighting mechanism. Experiments on ALFWorld and WebShop demonstrate that EFCA consistently improves both task success and task quality over strong baselines, highlighting the effectiveness of environment-grounded multi-timescale credit assignment for long-horizon agentic RL.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/12/2608.10542v1-nonlinear-model-predictive-control-via-sequential-convex-programming-for-drone-to-drone-docking",
+      "section": "quick",
+      "title_en": "Nonlinear Model Predictive Control via Sequential Convex Programming for Drone-to-Drone Docking",
+      "authors": "Neeraj Balachandar, Shriram Hari, Vishnu R. Unni",
+      "date": "2026-08-11",
+      "pdf": "https://arxiv.org/pdf/2608.10542v1",
+      "score": "6.0",
+      "evidence": "无人机间对接与目标运动控制，与单无人机拦截任务相关",
+      "tldr": "多旋翼空中对接在目标受扰动时面临非线性轨迹优化挑战。本文构建含扰动状态的降阶模型，采用序贯凸规划在滚动时域内求解有限时域最优控制，并融合噪声测量进行状态估计。在MuJoCo高保真仿真中验证了静止和匀速目标场景，对接锥角可低至10度，终端误差满足容差，且对标准差达0.5的风扰动保持稳健。结果表明该SCP框架能实现扰动鲁棒的安全空中对接。",
+      "tags": "query:ui",
+      "abstract_en": "Autonomous mid-air docking of multi-rotor vehicles under disturbance-driven target motion poses a constrained non-linear trajectory optimization challenge. This work formulates the docking task as a finite-horizon optimal control problem based on a reduced-order nonlinear model augmented with disturbance states. The resulting problem is solved using sequential convex programming within a receding-horizon framework to generate dynamically feasible docking trajectories. State estimation with noisy measurements is incorporated to enable robust relative motion prediction, while trajectory execution is validated in a high-fidelity rigid-body MuJoCo simulation environment. The proposed framework is evaluated for stationary and constant-velocity target motions, demonstrating reliable convergence to the docking interface while satisfying geometric capture constraints. Quantitatively, the method maintains negligible docking-cone violations and terminal state errors within prescribed tolerances, and achieves consistent, safe docking performance for cone half-angles as low as 10 degrees. Robust operation is observed for wind disturbance levels up to a standard deviation of 0.5, while preserving bounded approach velocities and stable control effort. These results demonstrate the effectiveness of the SCP-based trajectory optimization framework for disturbance-robust aerial docking under estimation uncertainty.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,1003 @@
+Title: DRL-Based Secure Transmission for Rotatable Antenna-Enabled Low-Altitude ISAC Systems
+
+URL Source: https://arxiv.org/pdf/2608.07170v1
+
+Published Time: Mon, 10 Aug 2026 00:53:04 GMT
+
+Number of Pages: 13
+
+Markdown Content:
+> 1
+
+# DRL-Based Secure Transmission for Rotatable Antenna-Enabled Low-Altitude ISAC Systems 
+
+Chuan Liu, Hongyi Bian, Wei Gao, Qi Zhang, Yu Yao, Liang Yang, and Feng Shu 
+
+Abstract —The development of the low-altitude economy has driven innovation in intelligent antenna systems within ISAC systems. In this paper, we investigate a Rotatable Antenna (RA)-enabled low-altitude integrated sensing and communication (ISAC) system. In practical terms, the RA array can flexi-bly adjust the three-dimensional (3D) beam direction of each antenna to enhance array directional gain, thereby improving the communication security of legitimate mobile users against potential eavesdropping risks from the unmanned aerial vehicle (UAV). Our objective is to maximize the minimum secrecy rate (SR) by jointly optimizing transmit beamforming matrix, transmit and receive RAs’ pointing matrices. To this end, an multi-agent proximal policy optimization with three improvement mechanisms (MAPPO-T) algorithm is proposed to cope with the issue of complex multi-agent collaborative decision-making prob-lem. Simulation results show that the introduction of RAs can effectively improve SR performance compared to the traditional fixed orientation antenna (FOA)-based system. In addition, the proposed MAPPO-T algorithm validate the superiority compared to the standard MAPPO algorithm. 
+
+Index Terms —Rotatable Antenna; integrated sensing and com-munication (ISAC); multi-agent proximal policy optimization (MAPPO). 
+
+I. I NTRODUCTION 
+
+A. Background 
+
+With the development of the low-altitude economy, low-altitude flight activities are becoming increasingly normalized and dense, posing a severe challenge to existing wireless net-works. The application scenarios in low-altitude environments require the coverage model of wireless networks to evolve from traditional ground coverage to a three-dimensional (3D) integrated coverage that encompasses both air and ground. Therefore, constructing a low-altitude communication network that meets the needs of low-altitude integrated sensing and communication (ISAC) [1]–[3], achieving air-ground cover-age, stable connections, and manageable control, has become 
+
+Chuan Liu is with the School of Electronic Information and Communi-cation, Huazhong University of Science and Technology, Wuhan 430074, China, and also with the Department of Information and Communication, China Electric Power Research Institute, Beijing 100192, China (e-mail: liu chuan@hust.edu.cn). Hongyi Bian, Wei Gao , Qi Zhang and Yu Yao are with the School of Infor-mation and Communication Engineering, Hainan University, Haikou, 570228, China (e-mail: hongyibian@hainanu.edu.cn; gaowei@hainanu.edu.cn; hdzhangqi0509@163.com; shell8696@hotmail.com). Liang Yang is with the College of Computer Science and Electronic Engineering, Hunan University, Changsha 410082, China, and also with the chool of Communication and Electronic Engineering, Jishou University, jishou, Hunan 416000, China (e-mail: liangy@hnu.edu.cn). Feng Shu is with the School of Information and Communication Engi-neering, Hainan University, Haikou, 570228, China, and also with the School of Electronic and Optical Engineering, Nanjing University of Science and Technology, Nanjing, 210094, China (e-mail: shufeng0101@163.com). 
+
+a key technological foundation for supporting the large-scale development of the low-altitude industry [4], [5]. However, ex-isting antenna systems that utilize fixed antenna architectures typically have a limited range of radiation angle adjustment, making it difficult to achieve continuous sensing and beam alignment for low-altitude unmanned aerial vehicles (UAVs). The inherent limitations of fixed antennas in lacking three-dimensional spatial degree of freedom (DoF) have led to the emergence of rotatable antennas (RAs) based on non-fixed architectures as a groundbreaking alternative [6], [7]. Notably, in low-altitude wireless networks, the ability to control the ori-entation of the RA’s line of sight holds particularly significant potential value. The reason is the antenna beams of traditional ground base stations (BSs) are typically optimized for ground users, resulting in limited vertical coverage that struggles to effectively support the ISAC needs of low-altitude aircraft [8]. Moreover, RAs can flexibly adjust the orientation of the main lobe of radiation through mechanical or electronic means, enabling precise focusing of signal energy on low-altitude targets, thereby expanding the coverage range in the vertical dimension and enhancing link quality [9]. Furthermore, the beam scanning characteristics of RAs facilitate continuous tracking and high-precision sensing of high-speed moving targets, providing crucial technical support for low-altitude airspace management. The unique beam tracking and scanning capabilities of RAs can enhance sensing accuracy and coverage in ISAC systems, which improve signal quality and effectively suppress interference by leveraging flexible beamforming and spatial multiplexing gains [10], [11]. More interestingly, RAs can adaptively scan spatial sectors, enhancing sensing coverage and resolution without the need for complex mechanical platforms. Furthermore, by independently controlling the ori-entation of the visual axes of different antennas in the array, RAs can collaboratively optimize the angular resolution of the sensing area and the link quality for communication users, thereby improving coverage efficiency and robustness of environmental perception in complex settings. In UAV communication and integrated air-ground-space networks, ubiquitous connectivity is a key capability that supports the transition of wireless networks from single spatial coverage to seamless global coverage [12], [13]. RAs can flexibly respond to the rapid trajectory changes of aerial targets by dynamically adjusting the orientation of their visual axes, thereby extending the 3D spatial coverage capability of BSs [14]. The core of RAs advantage lies in addressing the lim-itations of traditional downward-tilted antennas in supporting aerial nodes, which can efficiently cover airspace relying on arXiv:2608.07170v1 [eess.SP] 7 Aug 2026 2
+
+ground BSs, as well as be deployed on aerial platforms to ensure continuous communication for moving targets through dynamic beam tracking technology. With the deepening of research, intelligent steering antenna technology has gradually been applied in cutting-edge fields such as secure communication [15]. The channel character-istics of traditional fixed antenna arrays exhibit static repli-cability, making them susceptible to precise matching and interception by eavesdroppers [16]. In contrast, the time-varying characteristics introduced by the rotating structure effectively overcome this inherent flaw, making it difficult for eavesdroppers to track the signal transmission patterns, thus preventing effective interception [17]. The rotation of RAs synchronously drives the real-time switching of the radiation pattern and spatial beam direction. When the legitimate com-munication user is located in the preset desired transmission direction, RAs can continuously receive high-gain main lobe signals, ensuring the quality of link transmission; whereas eavesdropping nodes located in undesired directions can only capture low-gain sidelobe signals or deeply faded signals, thus failing to obtain effective communication information. 
+
+B. Overview of Related Work 
+
+The application of RAs requires extensive channel modeling and channel estimation experiments to lay the groundwork for wireless transmission research. Therefore, numerous re-searchers are dedicated to analyzing the challenges that RAs pose for acquiring channel state information (CSI) in systems [18]–[23]. Xiong et al. [18] investigated the fundamental principles of a novel intelligent RA and its system perfor-mance advantages, while discussing the main design issues of integrated sensing and communication systems based on RAs, and proposed corresponding solutions. Zheng et al. [19] systematically exploreed the technical principles and application scenarios of intelligent steering antennas, revealing their flexible adaptability in communication and sensing tasks. Zheng and Wu et al. [20], [21] established theoretical models for intelligent steering antenna-enabled wireless communi-cation systems, covering system modeling, channel charac-terization, and performance analysis. Reference [22] further proposed an efficient channel estimation algorithm suitable for intelligent steering antenna systems, effectively improving channel estimation accuracy and system stability. To overcome the increased cost of CSI estimation, authors in [23] further proposed a two-timescale channel modeling and optimization framework for six-dimensional (6D) RA arrays in cell-free networks, separating large-timescale 6D RA arrays control from small-timescale signal processing. As one of the most extensively researched technological paradigms currently, ISAC has also seen rotating antennas widely adopted by numerous researchers to advance the core technologies in this field. Zhou et al. [24] improved communication and sensing performance by introducing RAs to increase DoF. In order to reduce the operating costs of hardware, authors in [25] investigated multiple-BS enabled by RAs to enhance the efficient utilization of spatial resources in ISAC systems. Sun et al. [26] theoretically analyzed the gain mechanism of array rotation for near-field ISAC, filling the theoretical gap of rotating antennas in near-field integrated sensing and communication. Authors in [27] proposed a low-cost ISAC solution combining RAs with sub-connected hybrid beamforming to achieve cost-effective integrated sensing and communication performance. Zhang et al. [28] pioneered a near-field ISAC system framework that combines rotatable and movable antennas, dynamically adjusting antenna posi-tions and 3D rotation to simultaneously enhance communica-tion rates and sensing accuracy. In addition, Reference [29], [30] employed a rotatable half-wavelength antenna for UAV-assisted ISAC, providing a feasible solution for lightweight deployment of ISAC in low-altitude scenarios. However, security issues still pose certain challenges for researchers in the field of RA studies, which has consequently attracted in-depth exploration from a wide range of scholars. Dai et al. [31] first applied RA arrays to covert communication, effectively suppressing the detection probability of the monitor (Willie) through spatial domain directional control. Authors in [32] combined RAs with MIMO physical layer security, enhancing system security performance through rotational directional gain reshaping. Jiang et al. [33] proved the crit-ical theory that the average secrecy capacity exhibits quasi-concavity with respect to the rotation adjustment factor in non-real-time adjustable RA security communication scenarios, and derived the important conclusion that the secrecy outage probability is independent of the rotation angle at high signal-to-noise ratios. 
+
+C. Motivations and Contributions 
+
+Based on the aforementioned discussion, we study the se-cure transmission for RA-enabled low-altitude ISAC systems. Different from traditional fixed location users, the considera-tion for mobile users in the article is more in line with practical scenarios. In addition, most traditional methods are difficult to cope with mobile users and target scenarios, which failing to derive valid solutions to adapt the dynamic environment. To this end, we are committed to design a innovative deep reinforcement learning (DRL) algorithm to effectively solve collaborative decision-making problems in multi-agent envi-ronments. The main contributions are listed as follows:  
+
+> •
+
+In this paper, we propose a novel RA-enabled secure transmission for low-altitude ISAC systems, where the rotation angle of RA is adjusted dynamically at BS to enhance the system’s secure transmission and target sensing capabilities. In addition, the mobility of all users places the system in a dynamic environment subject to temporal changes. Thus, the max-min secrecy rate (SR) problem is formulated by jointly optimizing the transmit beamforming of BS and the pointing matrices of RAs, respectively.  
+
+> •
+
+To address the high dimensional action problem in com-plex dynamic environment, we introduced the multi-agent proximal policy optimization with three improvement mechanisms (MAPPO-T) algorithm to tackle multi-agent collaborative decision-making. Specifically, to address the potential limitations of the standard MAPPO algorithm, 3Target (Eve) 
+
+BS (Alice)  Users (Bobs) 
+
+# ... khtxtztymf,a m 
+
+> t, mxt, myt, mz,z m
+> 
+
+able Array 
+
+able Antennas  
+
+> Fig. 1. System model for active RIS-assisted secure transmission with RA arrays.
+
+we have incorporated a noise-based approach to mitigate overfitting and introduced an improvement based on recurrent neural networks (RNN) to handle time-series states. Additionally, we have implemented the Preserving Outputs Precisely while Adaptively Rescaling Targets (PopArt) method to address training instability issues.  
+
+> •
+
+The comprehensive simulation results demonstrate the advantages of the RA-enable ISAC systems, which can effectively enhance both secure transmission rate and sensing performance without requiring additional anten-nas. Furthermore, compared to the standard MAPPO algorithm and other benchmark schemes, the proposed MAPPO-T algorithm achieves significant improvements in secure transmission performance. 
+
+D. Organization and Notation 
+
+The remainder of the paper is organized as follows. In Sec-tion II, we present the RA-enabled low-altitude ISAC system and formulate the max-min SR optimization problem. Section III provides the proposed MAPPO-T algorithm to solve the thorny issue. The performance evaluation is presented in Section IV. Lastly, Section V provides the concluding remarks of this paper. 
+
+Notation : In this paper, scalars, vectors, and matrices are signified by standard fonts, bold lowercase letters, and bold uppercase letters, respectively. The conjugate, transpose, and Hermitian transpose operations are denoted by (·)∗, and (·)T ,
+
+(·)H , respectively. | · | , ∥ · ∥ , and ∥ · ∥ F stand for the norm, 
+
+l2-norm, and Frobenius-norm, respectively. IN corresponds to a N -dimensional identity matrix and CN (0 , σ 2) refers to the complex normal distribution with zero-mean and variance σ2.In addition, E{·} signifies the expectation operator and [·]+ is a value greater than or equal to zero. II. S YSTEM MODEL 
+
+As illustrated in Fig. 1, M = MxMz transmit rotatable uniform planar arrays (UPA) confidential information to K
+
+legitimate users (Bobs) via the line-of-sight (LoS) path, where 
+
+Mx and Mz represent the number of RAs along the horizontal and vertical directions, respectively. The UAV (Eve) to be detected eavesdrops on useful information from K mobile users while moving irregularly at a certain altitude in the air. Similarly, the receiving UPA is equipped with N = NxNz
+
+antennas connected to a single radio frequency chain, where 
+
+Nx and Nz denote the number of RAs along the horizontal and vertical directions, respectively. The distance between adjacent RAs is denoted by d, and thus the transmit and receiving UPA size can be mathematically described as A = Mxd × My d
+
+and A = Nxd × Ny d, respectively. Assuming the BS is equipped with directional antennas, while Bob and Eve are each equipped with a single isotropic antenna. Let Nx =
+
+{1, . . . , N x − 1} and Nz = {1, . . . , N z − 1} denote the index sets of RAs along the the horizontal and vertical directions within the transmit rotatable UPA, respectively. Similarly, let 
+
+Mx = {1, . . . , M x−1} and Mz = {1, . . . , M z −1} denote the index sets of RAs along the horizontal and vertical directions within the receive rotatable UPA, respectively. In the three-dimensional coordinate system, the m-th trans-mitting RA located at the mx-th row and mz -th column is used as the reference element, and its position can be denoted as 
+
+am ≜ amx,m z ≜ a(mx−1) Mz +mz = [( mx−1) d, 0, (mz −1) d]T ,
+
+(1) where mx ∈ M x and mz ∈ M z . The indices Mx and Mz
+
+can be mapped to m. Similarly, the position of the receiving RA located at the nx-th row and nz -th column can be denoted as 
+
+bn ≜ bnx,n z ≜ b(nx−1) Nz +Nz = [( nx − 1) d, 0, (nz − 1) d]T ,
+
+(2) where mx ∈ M x, mz ∈ M z . Let rk[l] represents the distance between the center of the transmit RA array and Bob k. Thus, the position of k-th Bob can be denoted by 
+
+uk[l] = [ uk,x [l], u k,y [l], u k,z [l]] T
+
+= [ rk[l]Θ k[l], r k[l]Λ k[l], r k[l]Ξ k[l]] T , (3) with Θk[l] ≜ sin ψk[l] sin ϕk[l], Λk[l] ≜ cos ψk[l], Ξk[l] ≜
+
+sin ψk[l] cos ϕk[l], where ψk[l] ∈ [0 , π ] and ϕk[l] ∈
+
+[−π/ 2, π/ 2] represent the zenith and azimuth angles from RA array to Bob k, respectively. The velocity of k-th mobile user is vk[l] = [ vk,x [l], v k,y [l], 0] T . Similarly, the position of Eve at time slot t can be denoted by 
+
+ue[l] = [ ex[l], e y [l], e z [l]] T , (4) with velocity ve[l] = [ ve,x [l], v e,y [l], v e,z [l]] T , where ex[l] ≜
+
+re[l] sin ψe[l] sin ϕe[l], ey [l] ≜ re[l] cos ψe[l], and ez [l] ≜
+
+re[l] sin ψe[l] cos ϕe[l]. re[l] represents the distance between the center of the transmit RA array and Eve at the time slot l.
+
+ψe[l] ∈ ∆ψ ∈ [0 , π ] and ϕe[l] ∈ ∆ϕ ∈ [−π/ 2, π/ 2] represent the zenith and azimuth angles from RA array to Willie at time slot l, where ∆ψ and ∆ϕ denote the estimation errors for 4txtztyrxrzry,a n 
+
+> ,z n
+> nfm
+
+f,a m 
+
+t, mxt, myt, mz,z m 
+
+
+
+> (a) Transmit rotational angle of the
+> m-th RA.
+
+txtztyrxrzry,a n 
+
+> ,z n
+> nfm
+
+f,a m 
+
+t, mxt, myt, mz,z m 
+
+ 
+
+> (b) Transmit rotational angle of the
+> n-th RA. Fig. 2. Illustration of transmit rotational angles and directional gain pattern.
+
+the zenith and azimuth angles, respectively. Accordingly, the distance from k-th Bob to m-th RA is expressed as 
+
+rk,m [l] = ∥uk[l] − am∥ = rk[l]×
+
+q
+
+1 − 2mxδk[l]Θ k[l] − 2mz δk[l]Λ k[l] + ( m2 
+
+> x
+
++ m2 
+
+> z
+
+)δ2
+
+> k
+
+[l],
+
+(5) 
+
+re,m [l] = ∥ue[l] − am∥ = re[l]×
+
+q
+
+1 − 2mxδe[l]Θ e[l] − 2mz δe[l]Λ e[l] + ( m2 
+
+> x
+
++ m2 
+
+> z
+
+)δ2
+
+> k
+
+[l],
+
+(6) where δk[l] ≜ drt,k [l] and δe[l] ≜ dre[l] . As shown in Fig. 2, the pointing vector of the m-th and n-th of the transmit and receiving UPA can be respectively denoted as 
+
+fm[l] = [sin θz,m [l] cos θa,m [l], sin θz,m [l] sin θa,m [l], cos θz,m [l]] T ,
+
+(7) 
+
+tn[l] = [sin θz,n [l] cos θa,n [l], sin θz,n sin θa,n [l], cos θz,n [l]] T ,
+
+(8) where θz,m [l], θa,m [l], θz,n [l] and θa,n [l] represent the zenith and azimuth angles of transmit and receive RAs, respectively, and ∥fm[l]∥ = ∥fn[l]∥ = 1 . Note that all RAs within the same UPA share an pointing vector. In practice, the boresight direction of RAs can be controlled jointly or separately via mechanical and electronic methods, subject to limited rotation precision and range. The rotation range of zenith angles can be denoted by 
+
+0 ≤ θz,m [l] ≤ θmax , ∀m, (9) 
+
+0 ≤ θz,n [l] ≤ θmax , ∀n, (10) where θmax ∈ [0 , π 
+
+> 2
+
+] denotes the maximum zenith angle. The minimal adjustable steps for the zenith and azimuth angles are denoted by θz, min and θa, min , respectively. The sets of all selectable angles for the zenith and azimuth angles of the m-th and n-th RA can be respectively denoted as 
+
+Γθz,m = {0, θ z,min , . . . , (Iz,m − 1) θz,min }, (11a) 
+
+Γθa,m = {0, θ a,min , . . . , (Ia,m − 1) θa,min }, (11b) 
+
+Γθz,n = {0, θ z,min , . . . , (Iz,n − 1) θz,min }, (11c) 
+
+Γθa,n = {0, θ a,min , . . . , (Ia,n − 1) θa,min }, (11d) where Iz,m , Ia,m , Iz,n and Ia,n represent the numbers of adjustable zenith and azimuth angles of m-th and n-th RA, respectively. Additionally, Im = Iz,m Ia,m and In = Iz,n Ia,n 
+
+denote the total number of pointing vectors of the m-th and 
+
+n-th RA. As described in reference [34], to avoid mutual signal reflection between the transmitting and receiving RAs, they must satisfy specific rotational constraints. Our work addresses the issue by maintaining a large separation between the transmitting RA and receiving RA, thus ensuring the absence of mutual signal reflection. 
+
+A. Channel Model 
+
+In this article, we investigate downlink multiuser transmis-sion with a quasi-static channel model and assume that Bobs and the sensing target are located in the near-field region of the BS. Considering multipath channels, according to [20], the line-of-sight (LoS) channel component hLoS  
+
+> k,m
+
+and the non-LoS (NLoS) channel component hNLoS  
+
+> k,m
+
+from the m-th RA to Bob 
+
+k can be expressed as 
+
+hLoS 
+
+> k,m
+
+[l] = 
+
+q A 
+
+> 4πr 2
+> k,m [l]
+
+G0 cos 2p(ωk,m [l]) e−j2 πλ rk,m [l], (12) 
+
+hNLoS  
+
+> k,m
+
+[l] = 
+
+> Q
+
+X
+
+> q=1
+
+r σq A 
+
+> 4πr 2
+> q,m rk,q
+
+G0 cos 2p(ωq,m )
+
+× e−j2 πλ (rq,m +rk,q )+ jτ q ,
+
+(13) where p denotes the directivity factor of RA, G0 = 2(2 p + 1) 
+
+denotes the maximum gain in the boresight direction, and 
+
+cos( ωk,m [l]) ≜ f Tm[l]uk,m [l] denotes the projection between 
+
+fm[l] and uk,m [l] with uk,m [l] ≜ uk[l] − am
+
+∥uk[l] − am∥ denoting the direction vector from RA m to Bob k. cq [l] ∈ R3×1 is the position of the q-th scatterer cluster, and τq denotes the phase shift corresponding to the q-th scatterer cluster. ωk,m [l]
+
+denotes the angle between the boresight direction and Bob k.
+
+cos( ωq,m [l]) ≜ f Tm[l]cq,m [l] denotes the projection between 
+
+fm[l] and cq,m [l] with cq,m [l] ≜ cq [l] − am
+
+∥cq [l] − am∥ being the direction vector from RA m to scatterer cluster q, where ωq,m 
+
+denotes the angle between the boresight direction and the q-th scatterer cluster, respectively. rq,m [l] = ∥cq [l] − am∥ and 
+
+rk,q [l] = ∥uk[l] − cq [l]∥ represent the distances from q-th (q = 1 , 2, . . . , Q ) scatterer cluster to m-th RA, and from k-th Bob to q-th scatterer cluster, respectively. Similarly, the LoS channel component hLoS e,m [l] and the NLoS channel component 
+
+hNLoS e,m [l] from the m-th RA to Eve can be expressed as 
+
+hLoS e,m [l] = 
+
+q A 
+
+> 4πr 2e,m [l]
+
+G0 cos 2p(ωe,m [l]) e−j2 πλ re,m [l], (14) 
+
+hNLoS e,m [l] = 
+
+> Q
+
+X
+
+> q=1
+
+q A  
+
+> 4πr 2
+> q,m [l]r2e,q [l]
+
+G0 cos 2p(ωq,m [l]) 
+
+× e−j2 πλ (rq,m [l]+ re,q [l])+ jτ q ,
+
+(15) where re,m [l] = ∥ue[l] − am∥ and re,q [l] = ∥ue[l] − cq ∥
+
+represent the distances from m-th RA to Eve and from q-th scatterer cluster to Eve, respectively. ωe,n denotes the angles between the boresight direction and Eve. Then, the direct 5
+
+channel hk ∈ CM ×1 and he ∈ CM ×1 from BS to Bob k
+
+and Eve can be separately denoted as 
+
+ˆhk[l] = ˆhLoS  
+
+> k
+
+[l] + ˆhNLoS  
+
+> k
+
+[l]= [ hLoS  
+
+> k, 1
+
+[l], h LoS  
+
+> k, 2
+
+[l], . . . , h LoS  
+
+> k,M
+
+[l]] T
+
++ [ hNLoS  
+
+> k, 1
+
+[l], h NLoS  
+
+> k, 2
+
+[l], . . . , h NLoS  
+
+> k,M
+
+[l]] T ,
+
+(16) 
+
+ˆhe[l] = hLoS e [l] + ˆhNLoS e [l]= [ hLoS e,1 [l], h LoS e,2 [l], . . . , h LoS e,M [l]] T
+
++ [ hNLoS e,1 [l], h NLoS e,2 [l], . . . , h NLoS e,M [l]] T .
+
+(17) Assume that the transmitter and receiver are sufficiently sep-arated such that their channels are independently distributed. The normalized spatial correlation matrix Rk[l] ∈ CM ×1 and 
+
+Re[l] ∈ CM ×1 at the BS for Bob k and Eve are respectively modeled as [35] 
+
+Rk[l] = 1
+
+A E
+
+nˆhk[l]ˆhH 
+
+> k
+
+[l]
+
+o
+
+, (18) 
+
+Re[l] = 1
+
+A E
+
+nˆhe[l]ˆhH 
+
+> e
+
+[l]
+
+o
+
+. (19) Thus, the channels of the direct link between BS and Bob 
+
+k and Eve can be represented as 
+
+hk[l] = ( Rk[l]) 12 ck[l], (20) 
+
+he[l] = ( Re[l]) 12 de[l], (21) where ck[l] and de[l] express the corresponding fast-fading vectors and follow an independent and identically distributed Gaussian distribution. 
+
+B. Communication and Radar Performance Metrics 
+
+The transmitted signal incorporating both communication and radar functions in the l-th is represented as follows 
+
+x[l] = Wc[l]sc[l] + Wr[l]sr[l] = W[l]s[l], (22) where sc[l] = [sc,1[l], . . . , s c,K [l]] T ∈ CK×1 denotes the communication symbols intended for K users, and sr[l] = [sr,1[l], . . . , s r,M [l]] T ∈ CM ×1 denotes M individual radar waveforms. Wc[l] = [ wc,1[l], wc,2[l], · · · , wc,K [l]] ∈ CM ×K
+
+and Wr[l] = [ wr, 1[l], wr, 2[l], · · · , wr,M [l]] ∈ CM ×M repre-sent the corresponding communication and radar beamforming matrix, respectively. In addition, we define the combined beamforming matrix W[l] ≜ [Wc[l], Wr[l]] ∈ CM ×(K+M )
+
+and symbol vector s[l] ≜ [sT 
+
+> c
+
+[l], sT 
+
+> r
+
+[l]] T to simplify the analysis. The received signal at the k-th Bob at time slot t
+
+is expressed as 
+
+yk[l] = hHk [l]x[l] + nk[l], (23) where nk ∼ CN (0 , σ 2
+
+> k
+
+) stands for the additive white Gaussian noise (AWGN) at the k-th user. In the multi-user commu-nication system, signals of different users can interfere with one another, and thus the received data rate of Bob k can be obtained as 
+
+Rb,k [l] = log 2 (1 + γb,k [l]) , (24) where 
+
+γb,k [l] = hHk [l]wc,k [l] 2
+
+PKi̸=k hHk [l]wc,i [l] 2 + PMj=1 hHk [l]wr,j [l] 2 + σ2
+
+> k
+
+[l] ,
+
+(25) Next, we consider the target sensing. For the Eve, the received signal at time slot l is modeled as 
+
+ye[l] = hH 
+
+> e
+
+[l]x[l] + ne[l], (26) where ne ∼ CN (0 , σ 2e ) denotes the AWGN at Eve. We assume that the sensing signal is unknown to the Eve. Correspond-ingly, the received SINR for the Eve is expressed as 
+
+Re,k [l] = log 2 (1 + γe,k [l]) , (27) where 
+
+γe,k [l] = hHk [l]wc,k [l] 2
+
+PKi̸=k hHk [l]wc,i [l] 2 + PMj=1 hHk [l]wr,j [l] 2 + σ2e [l] .
+
+(28) The signal transmitted to the target is reflected and then received by the BS again, the received echo signal by the BS at time slot l is 
+
+yr[l] = αhe[l]hH 
+
+> e
+
+[l]x[l] + nr[l], (29) where nr ∼ CN (0, σ 2r IN ) is the AWGN at the BS, and α
+
+represents the target radar cross section. 
+
+1) Secrecy rate (SR): In ISAC systems, the SR is a theo-retical metric used to quantify the system’s ability to ensure communication confidentiality while maintaining sensing per-formance. Its core definition typically refers to the information rate that the system can reliably and securely transmit to legitimate users in the presence of eavesdroppers or potentially malicious sensing targets. The SR for the k-th Bob can be expressed as 
+
+Rsec ,k [l] = [ Rb,k [l] − Re,k [l]] +, (30) where (a)+ = max {a, 0}.
+
+2) Mutual Information (MI): MI is a key metric for mea-suring the degree of interdependence between two random variables. In the design of integrated sensing and commu-nication, mutual information is often used to evaluate the correlation between transmitted signals and target echoes. By calculating the mutual information between transmitted signals and echo signals, it can be determined how much target-related information is contained in the received echoes. A higher mutual information value indicates stronger correla-tion between the transmitted signal and the echo, facilitating easier target monitoring and identification. Conversely, more complex signal processing algorithms may be required to extract target information. In sensing waveform design, mutual information can be utilized to select optimal sensing wave-forms, thereby improving detection performance and target recognition capabilities. Specifically, since the BS-Eve channel he[l] contains partial information about the target, the prior uncertainty of the target decreases upon receiving yr[l]. Therefore, we employ MI between he[l] and yr[l] under the condition of transmitted radar signal sr, which is denoted as I ( yr[l]; he[l] | sr[l]) to 6
+
+characterize how much information the radar can obtain from 
+
+yr, which is expressed as follows:. 
+
+I ( yr[l]; he[l] | sr[l]) = h (yr[l] |sr[l] ) − h (yr[l] |he[l], sr[l] ) = 12 log 1 + |α|2 PMj=1 he[l]hH 
+
+> e
+
+[l]wr,j [l] 2
+
+|α|2 PKi=1 ∥he[l]hH 
+
+> e
+
+[l]wc,k [l]∥2 + σ2r [l]
+
+!
+
+.
+
+(31) 
+
+C. Problem Formulation 
+
+In this paper, we aim to fully leverage the performance advantages offered by RA arrays to enhance both secure transmission and sensing performance. It is noteworthy that, as the multi-user secure transmission performance of the system is constrained by the lower bound, we focus on optimizing the worst user’s SR to enhance system robustness. To this end, the objective of our problem is to maximize the minimum SR for users by jointly optimizing the transmit beamforming matrix W[l], transmit and receive RAs’ pointing matrix F[l]
+
+and T[l]. In addition, the decision variable set is denoted as 
+
+X ≜ {W[l], F[l], T[l]}. Mathematically, the related optimiza-tion problem is formulated as 
+
+max  
+
+> X
+
+min 
+
+> k∈K
+
+1
+
+L
+
+> L
+
+X
+
+> l=1
+
+Rsec ,k [l] (32a) 
+
+s.t. γb,k [l] ≥ Γ, ∀k ∈ K (32b) 
+
+I ( yr[l]; he[l] | sr[l]) ≥ ξ, (32c) 
+
+∥W[l]∥2 
+
+> F
+
+≤ P, (32d) 
+
+0 ≤ arccos( f Tm[l]e3) ≤ θmax , ∀m (32e) 
+
+0 ≤ arccos( tTn [l]e3) ≤ θmax , ∀n (32f) 
+
+∥fm[l]∥ = 1 , ∀m (32g) 
+
+∥tn[l]∥ = 1 , ∀n (32h) where F[l] ≜ [f1[l], f2[l], . . . , fM [l]] ∈ R3×M and T[l] ≜
+
+[t1[l], t2[l], . . . , tN [l]] ∈ R3×N denote the transmit and receive RAs’ pointing matrix, respectively. Constraint (32a) and (32b) indicate the communication quality requirements and sensing MI constraint, respectively. Constraint (32d) indicates transmit power budget. Constraint (32e) and (32f) ensure that the rotation angles of RAs beam does not exceed a specified range, while constraint (32g) and (32h) ensure that fm and tn are unit vectors. III. P ROPOSED MAPPO-T A LGORITHM -BASED SECURE 
+
+TRANSMISSION SCHEME FOR RA-ENABLE ISAC S YSTEMS 
+
+Regarding the joint optimization problem of transmit beam-forming, pointing matrices of RAs in low-altitude ISAC systems, problem (32) naturally possesses the characteristics of multi-agent collaborative decision-making. However, tra-ditional convex optimization methods are constrained by the non-convexity of high-dimensional variables and the timeli-ness deficiency in dynamic user scenarios to solve the problem. Moreover, single-agent reinforcement learning suffers from the explosion of action space dimensions and the lack of collaborative logic, making it difficult to fully exploit the beam steering DoF of multiple RA units. Therefore, by adopting the centralized training with decentralized execution framework of the MAPPO algorithm, each RA unit is treated as an independent agent, using the global max-min secrecy rate as the reward to guide cooperative policy learning [36]. Trust region constraints are employed to avoid multi-agent policy oscillation, effectively reducing the complexity of the high-dimensional action space, and enabling real-time policy updates in dynamic user scenarios. 
+
+A. Markov Decision Process 
+
+The RAs’ pointing decision problem can be formulated as a discrete-time sequential decision-making problem. To address the multi-objective optimization problem of time sequential decision planning, the problem is mapped to a decentralized partially observable Markov Decision Process. In the system, all users acts as intelligent agents responsible for decision-making and regulating the system’s behavior. Thus, a multi-agent partially observable Markov Decision Process is defined by the tuple (S, O, A, R, P), which includes the state space 
+
+S, local observation set O, action space A, reward function 
+
+R for each agent, and state transition P . These elements are crucial for accurately modeling and solving the Markov decision process, as detailed below.  
+
+> •
+
+State space S: The state of the system is a description of all users and UAV status, including channel information for k-th user {h(n) 
+
+> i
+
+} and UAV {h(n)e }, as well as their corresponding achievable rates {R(n)b,k [l]} and {R(n)e,k [l]},respectively. Thus, the state of the system at time slot n
+
+is defined as 
+
+sn = {{ R(n)b,k [l]}, {R(n)e,k [l]}, {h(n) 
+
+> k
+
+}, {h(n)e }} , (33) where sn ∈ S , S is the set of all state space.  
+
+> •
+
+Observation set O: The information is observed by agent is the real time zenith and azimuth angles of the pointing vector. Thus, the observations of i-th agent at time slot 
+
+n can be expressed as 
+
+oni =
+
+{sin θ(n)z,i [l] cos θ(n)a,i [l], sin θ(n)z,i [l] sin θ(n)a,i [l], cos θ(n)z,i [l]},
+
+(34) where oni ∈ O , O is the set of all observation.  
+
+> •
+
+Action space A: The actions of the intelligent agents are consistent with the optimization variables of the system, thus including the transmit beamforming matrix W(n),the transmit and receive RAs’ pointing matrices F(n) and 
+
+T(n) of the BS. The action of the system at time slot n
+
+is defined as 
+
+an = {W(n)[l], F(n)[l], T(n)[l]}, (35) where an ∈ A , A is the set of all action set.  
+
+> •
+
+Reward function R: In this work, we have considered MAPPO with a common reward function. The reward function at time slot n is defined by rn, which is based on the SR achieved by all users from the environment, and can be calculated as 
+
+rn =
+
+> L
+
+X
+
+> l=1
+
+R(n)sec ,k [l]. (36) 7
+
+Algorithm 1 Prpoposed MAPPO-T Algorithm for Solving (32)  
+
+> 1:
+
+Initialize policy network parameters θ0, value function parameters ϕ0 
+
+> 2:
+
+for p = 1 , 2, . . . , Episodes do  
+
+> 3:
+
+Create empty buffer D for experience replay  
+
+> 4:
+
+for q = 1 , 2, . . . , Batchsize do  
+
+> 5:
+
+Initialize empty trajectory list τ 
+
+> 6:
+
+for n = 1 , 2, . . . , N do  
+
+> 7:
+
+for each agent i do  
+
+> 8:
+
+Select action based on policy network and cur-rent observation ani = πθp (oni ); 
+
+> 9:
+
+Compute value of current state using value func-tion: vni = Vϕp (sni ); 
+
+> 10:
+
+Sample a random noise vector xni ∼ N (0 , σ 2)
+
+for each agent;  
+
+> 11:
+
+Compute the noisy value vni (ϕ) according to Eq. (44);  
+
+> 12:
+
+end for  
+
+> 13:
+
+Execute all agents’ actions an, observe environ-ment feedback oni , rewards rn, next state sn+1 ,next observations on+1  
+
+> i
+
+; 
+
+> 14:
+
+Add current time step data to trajectory τ =[τ ; sni , o ni , a n, r n, s n+1  
+
+> i
+
+, o n+1  
+
+> i
+
+]; 
+
+> 15:
+
+Compute expected reward Rni according to Eq. (42);  
+
+> 16:
+
+Compute advantage estimate ˆAni according to Eq. (38);  
+
+> 17:
+
+end for  
+
+> 18:
+
+Merge trajectory τ into buffer D; 
+
+> 19:
+
+end for  
+
+> 20:
+
+Update policy network parameters θp → θp+1 using Adam optimizer according to Eq. (39) ;  
+
+> 21:
+
+Update value network parameters ϕp → ϕp+1 using Adam optimizer according to Eq. (43);  
+
+> 22:
+
+end for  
+
+> •
+
+State transition P : Transitioning from observation state 
+
+oni to state on+1  
+
+> i
+
+requires the agent i to complete the switch from action an to action an+1 .
+
+B. Standard MAPPO algorithm 
+
+The MAPPO algorithm is a reinforcement learning method that extends the single-agent proximal policy optimization algorithm to multi-agent environments, typically employing a centralized training and distributed execution framework. Under this framework, each agent possesses its own policy network and value network; however, during training, the value function can be updated using global state information and the joint actions of all agents, thereby mitigating the issue of environmental non-stationarity. The flowchart of the MAPPO-T method is shown in Algorithm 3. The number of agents is set to I = M + N , for each agent i, the policy πθi (ai|oi) is represented by parameters 
+
+θi, where oi denotes the local observation of the agent. The global state s and the joint actions a of all agents are taken Environment 
+
+> Centralized
+> training
+
+# ... 
+
+# ... Critic Network   
+
+> Critic Network
+> Critic Network
+> Distributed
+> execution
+> Reward Action
+> Experience Replay
+> Policy Policy Policy
+
+# ... 1a1o1r2a2o2rIoIrIa Observation        
+
+> Agent 1 Agent 2 Agent I
+> Agent 1 Agent 2 Agent I
+> Actor Network
+> GRU GRU GRU
+> Actor Network
+> Actor Network
+> Fig. 3. Framework of the MAPPO-T algorithm.
+
+as inputs to the value function Vϕi (s, a ), by which the joint state-action value is estimated. For the improvement of training efficiency and stability, the policy network parameters are shared among all agents, whereas neither exploration noise nor independent updates are shared. The target network or the old policy parameters θold ,i are initialized to be identical to θi.The algorithm first executes the interactive sampling pro-cess, deploying the current policy in the environment to collect trajectories. At time step n, the global state is sn. Each agent 
+
+i samples an action ani based on its local observation oi
+
+using the policy network πθi (ai|oi), After the joint action 
+
+an = (an 
+
+> 1
+
+, a n 
+
+> 2
+
+, . . . , a nI ) is applied to the environment, the global reward rn is obtained, and the system transitions to the next state sn+1 . The trajectory dataset stores local obser-vations, actions, global rewards, global states, and the action probabilities of the old policy before the update, πold ,i (ani |oni ),providing the foundation for subsequent importance sampling calculations. For each agent i, an estimate of the advantage function is first computed. The generalized advantage estimation (GAE) is introduced to calculate the advantage function to balance estimation bias and variance, the temporal differential residuals for agent i is defined by 
+
+δni = rn + γV ψ (sn+1 ) − Vψ (sn), (37) where Vψ (s) is the global state value output by the centralized value network, and the GAE function can be expressed as 
+
+ˆAni = 
+
+> N−n−1
+
+X
+
+> l=0
+
+(γλ )lδn+li , (38) where λ is the attenuation coefficient of the dominance esti-mation. The centralized value network takes the global state 8
+
+as input, which can effectively characterize the long-term benefits of multi-agent joint actions and improve the estimation accuracy of the dominance function. The objective function of the actor network πθ is expressed as the maximization of the expected value of the total expected return, i.e., the maximization of the expectation of the total reward, which is expressed as 
+
+LCLIP  
+
+> i
+
+(θi) = En h
+
+min 
+
+
+
+ρni , ˆAni , clip( ρni , 1 − ε, 1 + ε) ˆAni
+
+i 
+
+,
+
+(39) where ρni = πθi (ani |oni )
+
+πold ,i (ani |oni ) is the importance sampling ratio, which characterizes difference in the probabilities of the corresponding actions under the old and new policies, thereby preventing the training from diverging due to excessive policy updates. ε is the shear coefficient, which limits the range of policy updates through truncation operations. When the dominance function is positive, the constraint ratio does not exceed 1 + ε, and when the dominance function is negative, the constraint ratio is not less than 1 − ε, ensuring the stability of policy updates. The overall strategy loss is the weighted sum of all agents cutting the target and the entropy regularization term, which is represented as 
+
+H(πθi ) = −Eai∼πθi [log πθi (ai|oi)] . (40) Therefore, the total strategy objective function can be ex-pressed as 
+
+LPOL (θ) = 
+
+> N
+
+X
+
+> i=1
+
+LCLIP  
+
+> i
+
+(θi) + c2H(πθi ) , (41) where θ = {θ1, θ 2, . . . , θ I } denotes the set of policy parame-ters for all agents, and c2 is the entropy weight coefficient. Introducing policy entropy can enhance the ability to ex-plore strategies and avoid premature convergence to local optimal policies, The centralized value network updates by minimizing the mean square error, and the target value is determined by the cumulative discount return, which is given by 
+
+Rn =
+
+> ∞
+
+X
+
+> l=0
+
+γlrn+l, (42) where γ represents the discount factor, and rn+l is the local reward. Thus, the value loss function is 
+
+LVF  
+
+> i
+
+(ϕi) = En
+
+
+
+Vϕi (sn, a n) − ˆRn2
+
+. (43) 
+
+C. Three improved mechanisms 
+
+By combining the optimization techniques of the PPO algo-rithm with multi-agent cooperative systems, the MAPPO al-gorithm can effectively address collaborative decision-making problems in multi-agent environments. However, the MAPPO algorithm also faces several potential challenges, such as policy overfitting, the coordination of transmission and re-ception among multiple rotating array units, temporal cor-relation issues in RAs’ pointing decision, and training in-stability resulting from multi-agent collaborative decision-making, respectively. Therefore, to address these challenges, this paper introduces three improvement mechanisms, i.e., a noise-based processing approach, a recurrent neural network (RNN)-based improvement method, and the incorporation of PopArt technology, respectively. 
+
+1) Noise-based processing: The MAPPO algorithm uses a shared advantage value to learn policies for all agents, which may lead to overfitting of policies unrelated to that advantage. This issue is known as Policy Overfitting in Multi-agent Cooperation (POMAC). Due to limited sampling, POMAC can cause some policies to update in a suboptimal direction, thereby preventing the exploration of trajectories with higher returns. This issue may have a particularly significant impact when multiple agents are performing collaborative tasks. To address the potential POMAC problem, noise-based methods can be employed to resolve this issue. For the i-th agent, a Gaussian noise vector xi ∼ N  0, σ 2
+
+is randomly sampled, where σ2 is the variance, representing the noise intensity. Combine the noise xi with the state S and feed the integrated feature into the centralized value network to output an individual value vi for each agent. 
+
+vi = V (concat ( si, xi)) , ∀i = 1 , 2, . . . , K, (44) The noise value vi is propagated to the advantage value 
+
+Ai = r + γv i (sn) − vi
+
+ sn+1 , thereby smoothing the advan-tage value. 
+
+2) GRU-based improvement: In the standard MAPPO algo-rithm, multilayer perceptrons are adopted by default to con-struct the Actor policy network and the centralized Critic value network. Between network layers, only single-layer feature mapping and nonlinear transformation are performed. Con-sequently, instantaneous decision-making modeling is enabled solely based on local observations and global states at a single time step. The capability to capture temporally dependent in-formation is lacking, rendering the standard MAPPO algorithm poorly adaptable to the continuous temporal coupling charac-teristics inherent in multi-user cooperative communication and dynamic trajectory planning scenarios. To address this issue, an RNN module replaces the original feedforward structure in MAPPO, leveraging temporal mem-ory and state backtracking to encode historical observations, motion trajectories, and time-varying communication environ-ments. When the critic and policy networks are modified from multilayer perceptrons to RNNs, the loss function is summed over time, and the networks are trained via back-propagation through time. However, when long sequences are processed, potential vanishing or exploding gradient problems are inherent to the RNN, by which the learning of long-term dependencies is rendered difficult for the network. To address this problem, the Gated Recurrent Unit (GRU) was proposed to control the flow of information and effectively alleviate the problems of gradient vanishing and exploding by introducing gating mechanisms, which enabling the network to better capture long-term dependencies, improving the performance and generalization ability of the model. GRU introduces two most important gating units: reset gate and update gate, which are updated as follows: 
+
+Rn = σ(XtWxr + cW hr + br ), (45) 9
+
+Zn = σ(XtW xz + Hn−1Whz + bz ), (46) where Xn is a small batch input sample and Hn−1 is the hidden state of the previous time step. Wxr and W xz are weight parameters, br and bz are bias parameters, respectively. Integrating the reset gate with the conventional hidden state update mechanism can obtain candidate hidden states at the time step n:
+
+˜Hn = tanh( XtWxh + ( Rn ⊙ Hn−1)Whh + bh), (47) where Wxh and Whh are weight parameters, bh is bias parameter. The hidden state of the current time step can be calculated by the following equation: 
+
+Hn = Zt ⊙ Hn−1 + (1 − Zt) ⊙ ˜Hn. (48) 
+
+3) Incorporation of PopArt: Due to the variability and randomness of multi-agent environments, the magnitude of rewards may vary significantly across different environments or time steps, which can lead to instability in the training process. In particular, in multi-agent environments, the reward distributions of different agents may differ significantly. There-fore, the MAPPO algorithm incorporates the PopArt technique to address the reward normalization problem in multi-agent environments and achieve stable training. The core idea of PopArt is to maintain the stability of the output by adaptively rescaling the weights and biases of the neural network’s output layer, while simultaneously rescaling the targets. Specifically, PopArt is capable of adaptively normalizing and rescaling the targets without altering the already learned outputs. Firstly, during the training process, PopArt requires calculat-ing the mean and variance of rewards to maintain the moving average and variance of the rewards. The exponential weighted moving average method can achieve the calculation according to 
+
+μn = (1 − β) μn−1 + βR n, (49) 
+
+(σn)2 = (1 − β) ( σn−1)2 + β(Rn − μn)2, (50) where Rn is the current reward, μn and σ2 are the mean and variance of the reward, respectively, and β is a small learning rate. Next, the reward values are standardized using the statistical mean and variance. 
+
+Rn′
+
+= Rn − μn
+
+σn . (51) Finally, the output layer of the neural network is adjusted, and the weights and biases of the output layer are re-adjusted so that the network output remains unchanged. Specifically, the output layer of the neural network is assumed to be a linear layer y = W z + b, where W is the weight matrix, b is the bias vector, and z is the output of the hidden layer. In order to keep the output unchanged, the re-adjusted weights and biases are given as follow 
+
+W ′ = Wσn , b ′ = b − W μ n
+
+σn (52) 
+
+D. Computational Complexity Analysis 
+
+To evaluate the efficiency of the proposed solution, we mainly analyze the computational complexity of the Algorithm 1. Assuming a multi-agent system consists of I agents, with a single environmental interaction trajectory length of T , the dimensions of the single-layer hidden layer neurons in the policy network and centralized value network are unified as E, and the total number of network layers are Lπ and 
+
+Lv , respectively. The number of batch divisions in a single sampling round of the algorithm is B, the number of rounds of parameter iteration updates is P , the policy output dimension and the single agent action space dimension in continuous action scenarios are denoted as da, the local observation dimension of the agent is do, and the global state input di-mension is ds. In the environmental trajectory sampling stage, each agent independently completes policy inference based on local observations. The basic computational complexity of forward propagation in a single agent policy network is determined by the input dimension, network layers, and neuron size. The complexity of a single forward inference can be expressed as O(Lπ doE +Lπ Ed a). The overall inference com-plexity of K agents completing action sampling in parallel is 
+
+O(P (Lπ doE + Lπ Ed a)) . The centralized value network takes the global state as input, and the complexity of single step state value inference is O(Lv dsE). In the sampling process with a complete length of T , the total time complexity of this stage is O [T (IL π E(do + da) + Lv Ed s)] , and the sampling process only involves forward matrix operations and nonlinear activation calculations. The core computing overhead is concentrated in the pa-rameter optimization stage of multiple batches and rounds. The proposed algorithm adopts the goal of cutting PPO to complete single agent policy updates, and all agents share centralized value network parameters and indepen-dently maintain their own policy parameters. The sample size for a single batch is IT /B , and the complexity of solving the policy loss and backpropagation for a single agent in a single iteration is O(Lπ E(do + da)IT /B ). The complexity of calculating the policy gradient after stack-ing I agents is O (IL π E(do + da)T /B ); The centralized value network completes value fitting and gradient updat-ing for global samples, with a backpropagation complexity of O (Lv Ed sT /B ). Combined with the algorithm’s built-in P -round iterative optimization mechanism, the total time complexity of the complete parameter update phase can be integrated as O
+
+
+
+P T 
+
+
+
+IL π E(do + da) + Lv Ed s
+
+
+
+/B 
+
+
+
+.IV. S IMULATION RESULTS 
+
+In this section, the simulation results evaluate the perfor-mance of RA-enabled secure ISAC systems with the proposed MAPPO-T algorithm. In simulation settings, the BS is the origin of the global coordinate system. The BS operates at a carrier frequency of 2.4 GHz with a wavelength of λ = 0 .125 
+
+meter (m), which serving K = 3 users and sensing one UAV, with the interference of Q = 6 scatterer clusters [20]. The center coordinates of the transmitting UPA and the receiving UPA are set to [0 , 0, d 0]T and [0 , 0, 2d0]T , respectively. The 10                                                                                                                 
+
+> TABLE I SIMULATION PARAMETERS
+> Parameters Value
+> Position variable of the UPA center d0= 2 mNumber of antennas at the BS M=M= 9
+> Wavelength λ= 0 .01 mAntenna separation d=λ/ 2
+> Number of scatterer clutters Q= 6
+> Number of users K= 3
+> Initial distance between RAs to users r1=r2=r3= 50 mInitial zenith angles of users relative to the origin of the coordinate system
+> ϕ1=π/ 12 ,ϕ2=π/ 6,
+> ϕ3=π/ 4
+> Initial azimuth angles of users relative to the origin of the coordinate system
+> ψ1=−π/ 12 ,ψ2= 0 ,
+> ψ3=π/ 12
+> Velocity of users vk,x =vk,y = 1 m/s,
+> vk,z = 0 m/s Initial distance between RAs to UAV r0= 60 mInitial zenith angle of UAV relative to the origin of the coordinate system ϕe= 2 π/ 3
+> Initial azimuth angle of UAV relative to the origin of the coordinate system ψe=π/ 12
+> Velocity of UAV ve,x =ve,y =ve,z = 3 m/s BS power budget PBS = 30 dBm Noise power for users & target σ2
+> k=σ2e=−80 dBm TABLE II NEURAL NETWORK STRUCTURE OF MAPPO-T. Policy Input Output Activation 1st FC (None, norm(#obs)) (None, 128) relu →norm 2nd FC (None, 128) (None, 128) relu →norm 3rd FC (None 128) (None 128) relu →norm 4th FC (None, 128) (None, #acts) categorical Value Func Input Output Activation 1st FC (None, norm(#states)) (None, 128) relu →norm 2nd FC (None, 128) (None, 128) relu →norm 3rd FC (None 128) (None 128) relu →norm 4th FC (None, 128) (None, 1) none
+
+BS is equipped with M transmit RAs and N receive RAs. The RA array is centered at the origin, with an inter-antenna spacing of d = λ/ 2. We assume that the initial legitimate users’ zenith and azimuth angles with respect to the origin of the coordinate system are set as ϕ1 = π/ 12 , ϕ2 = π/ 6
+
+and ϕ3 = π/ 4, as well as ψ1 = −π/ 12 , ψ2 = 0 and 
+
+ψ3 = π/ 12 with r1 = r2 = r3 = 50 m are the distances between RAs to users, respectively. We set users’ velocity 
+
+[v1,x , v 1,y , v 1,z ]= [1 m/s, 1 m/s, 0 m/s], [v2,x , v 2,y , v 2,z ]= [1 m/s, 1 m/s, 0 m/s] and [v3,x , v 3,y , v 3,z ]= [1 m/s, 1 m/s, 0 m/s], respectively. Moreover, the initial UAV’s zenith and azimuth angles with respect to the origin of the coordinate system are set as ϕe = 2 π/ 3 and ψe = π/ 12 with velocity 
+
+[ve,x , v e,y , v e,z ]= [3 m/s, 3 m/s, 3 m/s], and r0 = 60 m denotes the distance from the origin to UAV. The average noise power is σ2 
+
+> k
+
+= σ2e = −80 dBm. Unless otherwise specified, the number of users, the number of transmit and receive RAs, the communication SINR requirement, the transmit power budget of BS, the MI threshold, and the maximum zenith angle are set to K = 3 , M = N = 9 , PBS = 30 dBm, Γ = 5 dB, ξ =1.5 and θmax = π/ 6, respectively. The simulation parameters for the proposed system are listed in Table I. The experiments took place on a Windows platform equipped with an Intel Core i7 processor, a GeForce 4070 graphics card, and 16GB of RAM. The architectures of 0 200 400 600 800 1000      
+
+> Episode index
+> 0246810 12 14 16
+> Average reward
+> Proposed MAPPO-T, M=N=16 Proposed MAPPO-T, M=N=9 MAPPO, M=N=16 MAPPO, M=N=9
+> Fig. 4. Convergence behavior of the proposed MAPPO-T compared to MAPPO algorithm.
+
+strategy network and value neural network are detailed in Table II, where FC denotes the fully connected layer. Both neural networks use the Adam optimizer during training, with learning rates set at 5 × 10 −4 and 10 −5, respectively. The clipping coefficient ε and strategy entropy coefficient σ in formula are set to 0.2 and 0.01, respectively. The discount factor γ and smoothing factor λ in Eq. (38) are set to 0.99 and 0.95, respectively. In addition, the time step, the batch size and the number of training epochs is set to 300, 1, 1000, respectively. To further validate the performance advantages of the pro-posed MAPPO-T algorithm in RA system, we consider other three benchmark methods for comparison, which are listed as follows:  
+
+> •
+
+MAPPO: The standard MAPPO algorithm, with pa-rameter settings consistent with those of the MAPPO-T algorithm.  
+
+> •
+
+Fixed orientation antenna (FOA): In this scheme, the orientations of all RAs are fixed at their reference orientations, i.e., fn = e3, ∀n, and the MMSE receive beamforming is applied at the BS.  
+
+> •
+
+Random orientation antenna (ROA): In this scheme, the orientation of each RA is randomly generated within the rotational ranges given by (9) and (10), and the MMSE receive beamforming is applied at the BS. Fig. 4 illustrates the convergence behavior of the proposed MAPPO-T method compared to MAPPO benchmark algo-rithm. The simulation results show that, under the same RA configuration, MAPPO-T demonstrates superior convergence performance compared to the standard MAPPO algorithm across the board. Furthermore, increasing the number of RA units yields significant performance gains. The reason is shown that more RA units provide greater beamforming flexibility, enabling simultaneous enhancement of legitimate user signals, suppression of eavesdropper interference, and improved sensing accuracy. Furthermore, the performance advantage of MAPPO-T in high-dimensional configurations demonstrates its adaptability to high-dimensional optimization 11 4 9 16 25      
+
+> Number of RAs
+> 0510 15 20 25
+> Max-min SR (bps/Hz)
+> Proposed MAPPO-T MAPPO ROA FOA
+> Fig. 5. The max-min SR versus the number of RAs M=N.
+
+spaces, whereas the standard MAPPO algorithm is unable to fully utilize the additional DoF due to constraints related to overfitting and training stability. More importantly, the amplitude of reward fluctuations during the convergence phase is smaller for MAPPO-T than for the standard MAPPO, vali-dating the superior adaptability and robustness of its strategy in dynamic user scenarios. Fig. 5 illustrates the max-min SR behavior of versus the number of RAs M = N . As shown in the figure, the max-min SR of all algorithms increases monotonically with the number of RAs. When the number of RAs is 16, the max-min SR of the MAPPO-T algorithm reaches 17.6 bps/Hz. This is attributed to the fact that an increased number of RA units enhances the sys-tem’s beam control flexibility, thereby strengthening legitimate user signals while simultaneously suppressing eavesdropper signals, which leads to an improvement in the security rate. Furthermore, the proposed MAPPO-T algorithm consistently outperforms the comparison algorithms. This is because the standard MAPPO algorithm is limited by overfitting and training instability, preventing it from fully utilizing the RA unit’s DoF, resulting in suboptimal performance. Meanwhile, the ROA algorithm employs a random RA pointing strategy, leading to a lack of specificity in beam control and thus limited improvement in the security rate. The FOA algorithm, which uses a fixed RA pointing strategy, cannot adapt to the dynamic channel conditions caused by user mobility, resulting in the worst performance. Fig. 6 depicts the max-min SR behavior versus the antenna directivity factor p. When p = 4 , the MAPPO-T algorithm achieves a maximum-minimum secure data rate of approx-imately 7.9 bps/Hz, representing an improvement of about 1.1% over the standard MAPPO algorithm. In addition, the max-min SR of MAPPO-T and MAPPO algorithms monoton-ically increases with the increase of antenna directional factor, while the max-min SR of ROA and FOA algorithms shows a trend of first increasing and then decreasing with the increase of antenna directional factor. This is attributed to the fact that the larger p of the antenna, the narrower the main lobe width of the beam, and the more concentrated the energy is towards the 0 0.5 1 1.5 2 2.5 3 3.5 46.6 6.8 77.2 7.4 7.6 7.8 8        
+
+> Max-min SR(bps/Hz)
+> Proposed MAPPO-T MAPPO ROA FOA
+> Fig. 6. Max-min SR versus the antenna directivity factor p.-10 -5 0510
+> Communication SINR requirement (dB)
+> 123456789
+> Max-min SR (bps/Hz)
+> Proposed MAPPO-T MAPPO ROA FOA
+> Fig. 7. Max-min SR versus the communication SINR requirement Γ.
+
+target direction. Therefore, RA systems with larger p-values can more effectively enhance directional gain in the multi-user direction, thereby achieving greater max-min SR. How-ever, ROA and FOA algorithms lack dynamic optimization capabilities and cannot adjust beam strategies with changes in p. When p is too large, the beam becomes too narrow, resulting in decreased signal coverage for legitimate users during movement and ineffective interference suppression by eavesdroppers, leading to a decrease in confidentiality rate. Therefore, the proposed MAPPO-T algorithm maintains stable performance advantages in adapting to dynamic environments under different p conditions. Fig. 7 describes the the max-min SR versus the commu-nication SINR requirement Γ. It is evident that the max min secrecy rate of all algorithms monotonically increases with the increase of communication SINR requirements. The proposed MAPPO-T algorithm achieves a performance improvement of about 11.3% compared to the standard MAPPO algorithm when the communication SINR requirement is 10dB. This is due to the fact that the MAPPO-T algorithm can effectively improve the SR by jointly optimizing beamforming and RA 12 0.5 1 1.5 2 2.5 3        
+
+> MI threshold
+> 44.5 55.5 66.5 77.5 88.5
+> Max-min SR (bps/Hz)
+> Proposed MAPPO-T MAPPO ROA FOA
+> Fig. 8. Max-min SR versus the MI threshold ξ.-5 0510 15
+> Transmit power (dBm)
+> 0246810 12 14 16 18 20
+> Max-min SR (bps/Hz)
+> Proposed MAPPO-T MAPPO ROA FOA
+> Fig. 9. Max-min SR versus the transmit power PBS .
+
+pointing matrix to enhance legitimate user signals and sup-press eavesdropper interference under higher SINR constraints, demonstrating the stable performance advantage and the ro-bustness of the MAPPO-T algorithm strict communication constraints. In Fig. 8, we analyze the relationship between max-min SR and MI threshold ξ. We observed that the max-min SR of all algorithms monotonically decreases with increasing mutual information threshold, and the performance of the proposed MAPPO-T algorithm consistently outperforms other compared algorithms. This is attributed to the fact that the increase in mutual information threshold imposes higher constraints on the target perception performance, and the system needs to allocate more resources to meet the perception requirements, resulting in a reduction in the resources available on the communication side to improve the confidentiality rate. The MAPPO-T algorithm can dynamically balance communica-tion and perception resources by jointly optimizing base station beamforming and RA pointing matrix, and maintain high confidentiality rates even under high mutual information thresholds. Max-min SR (bps/Hz)  Proposed MAPPO-T MAPPO ROA FOA   
+
+> Fig. 10. Max-min SR versus the maximum zenith angle θmax .
+
+Fig. 9 illustrates the max-min SR behavior comparison against the transmit power PBS . We can observe a clear trend that the max-min SR of all algorithms monotonically increases with the transmit power PBS . This is because the increase in 
+
+PBS provides higher signal DoF, enhances the signal strength of legitimate users, and suppresses eavesdropper interference, thereby improving the secrecy rate. Moreover, the MAPPO-T algorithm fully exploits the additional power resources to maximize the improvement in secrecy performance, while the ROA and FOA algorithms lack and effective utilization, resulting in limited performance improvement. Therefore, the performance advantage of the MAPPO-T algorithm under high transmit power becomes increasingly significant as power increases, reflecting its optimization capability and robustness in scenarios with abundant power resources. Finally, Fig. 10 demonstrates the max-min SR versus the maximum zenith angle θmax . First, as θmax increases, the max-min secrecy rate of the proposed MAPPO-T algorithm first increases rapidly and then stabilizes. Specifically, when 
+
+θmax ≤ π/ 10 , the performance improvement is significant, and a small rotation adjustment range can achieve obvious performance gains. When θmax exceeds π/ 5, the performance tends to stabilize, and the RA system obtains sufficient DoF to balance the array directional gains in a multipath channel. Furthermore, the proposed RA system always outperforms the ROA and FOA systems, because the latter two systems cannot independently adjust the direction of each individual antenna to reconfigure the directional gain pattern of the entire array. The random directional gain of the ROA system allows it to radiate signals in any direction, thus achieving a better rate gain than the FOA system. However, the RA pointing of the ROA system cannot form an ordered array directional gain pattern as the zenith angle expands, resulting in performance loss. V. C ONCLUSION 
+
+In this paper, we studied a novel RA-enabled active RIS-aided ISAC systems to enhance the secure transmission. The core objective of our work is to maximize the minimum 13 
+
+SR of legitimate mobile users, which is achieved by jointly optimizing the transmit beamforming matrix, the pointing matrices of RA arrays. To address the complex multi-agent collaborative decision-making problem, we proposed a multi-agent proximal policy optimization algorithm with three im-provement mechanisms, termed MAPPO-T. Simulation results demonstrated that the introduction of RAs significantly im-proves SR performance compared to conventional FOA-based systems. Furthermore, the proposed MAPPO-T algorithm ex-hibits superior performance over the standard MAPPO algo-rithm, validating the effectiveness of the three incorporated improvement mechanisms. REFERENCES [1] F. Liu, Y. Cui, C. Masouros, J. Xu, T. X. Han, Y. C. Eldar, and S. Buzzi, “Integrated sensing and communications: Toward dual-functional wire-less networks for 6g and beyond,” IEEE J. Sel. Areas Commun. , vol. 40, no. 6, pp. 1728–1767, 2022. [2] T. Mao, J. Yang, L. Liang, and S. Jin, “Hybrid beamforming design for bistatic integrated sensing and communication systems,” IEEE Transac-tions on Communications , vol. 73, no. 11, pp. 10 360–10 376, 2025. [3] Y. Yao, J. Zhang, P. Miao, L. Zhang, G. Chen, F. Shu, and K.-K. Wong, “Hybrid ris-enhanced isac secure systems: Joint optimization in the presence of an extended target,” IEEE Trans. Commun. , vol. 73, no. 12, pp. 15 688–15 704, Dec. 2025. [4] Y. Yao, W. Xiao, P. Miao, G. Chen, H. Yang, C.-B. Chae, and K.-K. Wong, “Uav-rhs-enabled full-duplex isac covert system: Robust beam-forming and trajectory optimization,” IEEE Trans. Commun. , vol. 74, pp. 5637–5653, 2026. [5] J. Jiang, F. Shu, M. Chen, J. Bai, M. Li, Y. Wang, and J. Wang, “Enhanced direction-sensing methods and performance analysis in low-altitude wireless network via a rotatable antenna array,” Chinese Journal of Electronics , vol. 36, pp. 1–13, 2022. [Online]. Available: https://cje.ejournal.org.cn/en/article/doi/10.23919/cje.2026.00.126 [6] Y. Tan, B. Zheng, Y. Fang, D. W. Kwan Ng, J. Xu, and R. Zhang, “Ro-tatable antenna-enabled spectrum sharing in cognitive radio systems,” 
+
+IEEE Wireless Commun. Lett. , vol. 15, pp. 1732–1736, 2026. [7] X. Shao, W. Mei, C. You, Q. Wu, B. Zheng, C.-X. Wang, J. Li, R. Zhang, R. Schober, L. Zhu, W. Zhuang, and X. Shen, “A tutorial on six-dimensional movable antenna for 6g networks: Synergizing positionable and rotatable antennas,” IEEE Communications Surveys & Tutorials ,vol. 28, pp. 3666–3709, 2026. [8] X. Zhang, L. Xiang, J. Wang, X. Gao, D. W. K. Ng, and R. Schober, “Rotatable antenna array enabled uav mmwave massive mimo commu-nication,” IEEE Trans. Commun. , vol. 74, pp. 1219–1236, 2026. [9] S. Li, J. Tang, B. Zheng, L. Zhu, C. Yang, N. Zhao, X. Y. Zhang, and K.-K. Wong, “Rotatable antenna system empowered low-altitude economy: Opportunities and challenges,” IEEE Wirel. Commun. , vol. 33, no. 1, pp. 116–123, 2026. [10] X. Wang, Q. Li, W. Zhu, F. Shu, M. Huang, F. Zhou, R. Chen, C. Pan, Y. Wu, and J. Wang, “Two efficient beamforming methods for hybrid irs-aided af relay wireless networks,” Science China Information Sciences , vol. 68, no. 4, p. 142301, 2025. [Online]. Available: https://doi.org/10.1007/s11432-024-4275-x [11] J. Feng, Z. Liu, J. Dai, H. Chen, and F. Chen, “Rotatable antenna-enhanced beamforming: Signal enhancement and interference suppres-sion,” IEEE Trans. Veh. Technol. , pp. 1–6, 2026. [12] S. Chen, G. Chen, L. Shi, Q. Wu, and K. Wei, “Rotatable antenna meets uav: Towards dual-level channel reconfiguration paradigm for isac,” IEEE Trans. Veh. Technol. , pp. 1–6, 2026. [13] Y. Yao, W. Xiao, P. Miao, G. Chen, H. Yang, C.-B. Chae, and K.-K. Wong, “Uav-relay-aided secure maritime networks coexisting with satellite networks: Robust beamforming and trajectory optimization,” 
+
+IEEE Trans. Wireless Commun. , vol. 25, pp. 2342–2358, 2026. [14] Y. Zhang, C. You, R. Zhang, B. Zheng, H. C. So, D. Niyato, and T. Q. S. Quek, “Rotatable antenna enabled multi-cell mixed near-field and far-field communications,” IEEE Trans. Wireless Commun. , vol. 25, pp. 16 120–16 135, 2026. [15] M. Li, F. Shu, Y. Si, R. Chen, C. Pan, and Y. Wu, “Near-field directional modulation for ris-aided movable antenna mimo systems with hardware impairments,” IEEE Trans. Network Sci. Eng. , vol. 13, pp. 3944–3959, 2026. [16] Y. Wang, Y. Li, M. Chen, Y. Yao, F. Shu, and J. Wang, “Enhanced channel estimation for near-field irs-aided multi-user mimo system via a large deep residual network,” Science China Information Sciences , vol. 68, no. 7, p. 170309, 2025. [Online]. Available: https://doi.org/10.1007/s11432-024-4449-7 [17] F. Shu, Y. Teng, J. Li, M. Huang, W. Shi, J. Li, Y. Wu, and J. Wang, “Enhanced secrecy rate maximization for directional modulation net-works via irs,” IEEE Trans. Commun. , vol. 69, no. 12, pp. 8388–8401, 2021. [18] X. Xiong, B. Zheng, W. Wu, W. Zhu, M. Wen, S. Lin, and Y. Zeng, “Intelligent rotatable antenna for integrated sensing, communication, and computation: Challenges and opportunities,” IEEE Wirel. Commun. ,vol. 33, no. 1, pp. 173–180, 2026. [19] B. Zheng, T. Ma, C. You, J. Tang, R. Schober, and R. Zhang, “Rotatable antenna enabled wireless communication and sensing: Opportunities and challenges,” IEEE Wirel. Commun. , pp. 1–8, 2025. [20] B. Zheng, Q. Wu, T. Ma, and R. Zhang, “Rotatable antenna enabled wireless communication: Modeling and optimization,” IEEE Trans. Commun. , pp. 1–1, 2026. [21] Q. Wu, B. Zheng, T. Ma, and R. Zhang, “Modeling and optimization for rotatable antenna enabled wireless communication,” in ICC 2025 - IEEE International Conference on Communications , 2025, pp. 1055–1060. [22] X. Xiong, B. Zheng, W. Wu, X. Shao, L. Dai, M.-M. Zhao, and J. Tang, “Efficient channel estimation for rotatable antenna-enabled wireless communication,” IEEE Wireless Commun. Lett. , vol. 14, no. 11, pp. 3719–3723, 2025. [23] W. Wang, Y. Huang, W. Ni, C. Zhang, and D. Wang, “Two-timescale optimization for aerial rotatable antenna array in cell-free networks with dynamic users,” IEEE Trans. Wireless Commun. , vol. 25, pp. 13 181– 13 198, 2026. [24] C. Zhou, C. You, B. Zheng, X. Shao, and R. Zhang, “Rotatable antennas for integrated sensing and communications,” IEEE Wireless Commun. Lett. , vol. 14, no. 9, pp. 2838–2842, 2025. [25] K. Qu, H. Li, C. Sun, W. Zhang, S. Guo, and H. Zhang, “Rotatable array-enabled multi-bs cooperative isac transmit beampattern design,” 
+
+IEEE Trans. Veh. Technol. , vol. 74, no. 9, pp. 14 775–14 780, 2025. [26] Y. Sun, H. Xu, C. Ouyang, and H. Yang, “Rotatable and movable antenna-enabled near-field integrated sensing and communication,” IEEE Internet Things J. , vol. 12, no. 21, pp. 45 119–45 132, 2025. [27] Z. Wang, L. Yin, Z. Lei, Y. Liu, Y. Sun, and H. Yang, “Rotatable array-aided hybrid beamforming for integrated sensing and communication,” 
+
+IEEE Internet Things J. , vol. 13, no. 7, pp. 14 364–14 377, 2026. [28] Y. Zhang, H. C. So, D. Niyato, and C. Masouros, “Rotatable antennas for near-field integrated sensing and communication,” IEEE Trans. Wireless Commun. , vol. 25, pp. 10 986–11 001, 2026. [29] F. Pei, L. Xiang, and A. Klein, “Transmit beamforming and array steering optimization for uav-aided bistatic isac,” in GLOBECOM 2024 - 2024 IEEE Global Communications Conference , 2024, pp. 5405–5410. [30] F. Pei, A. Klein, and L. Xiang, “Uav-aided isac with a rotatable dipole array: Joint beamforming and steering optimization,” in 2025 14th International ITG Conference on Systems, Communications and Coding (SCC) , 2025, pp. 1–6. [31] Q. Dai, B. Zheng, Y. Tan, W. Mei, S. Gong, J. Tang, and C. Xing, “Rotat-able antenna-enabled covert communication,” IEEE Wireless Commun. Lett. , vol. 15, pp. 2268–2272, 2026. [32] L. Dai, B. Zheng, Q. Wu, C. You, R. Schober, and R. Zhang, “Ro-tatable antenna-enabled secure wireless communication,” IEEE Wireless Commun. Lett. , vol. 14, no. 11, pp. 3440–3444, 2025. [33] P. Jiang, Q. Li, L. Mai, and Q. Zhang, “Average secrecy capacity maximization of rotatable antenna-assisted secure communications,” 2025. [Online]. Available: https://arxiv.org/abs/2511.18097 [34] X. Shao, Q. Jiang, and R. Zhang, “6d movable antenna based on user distribution: Modeling and optimization,” IEEE Trans. Wireless Commun. , vol. 24, no. 1, pp. 355–370, 2025. [35] E. Bj¨ ornson and L. Sanguinetti, “Rayleigh fading modeling and channel hardening for reconfigurable intelligent surfaces,” IEEE Wireless Com-mun. Lett. , vol. 10, no. 4, pp. 830–834, 2021. [36] T. Yu, X. Wang, J. Hu, and J. Yang, “Multi-agent proximal policy optimization-based dynamic client selection for federated ai in 6g-oriented internet of vehicles,” IEEE Transactions on Vehicular Tech-nology , vol. 73, no. 9, pp. 13 611–13 624, 2024.
