@@ -1,0 +1,362 @@
+Title: Latent Semantic State Estimation for Reliable Swarming of UAVs under Intermittent Connectivity
+
+URL Source: https://arxiv.org/pdf/2608.08895v1
+
+Published Time: Tue, 11 Aug 2026 01:34:57 GMT
+
+Number of Pages: 6
+
+Markdown Content:
+# Latent Semantic State Estimation for Reliable Swarming of UAVs under Intermittent Connectivity 
+
+Paris A. Karakasis and Walid Saad 
+
+Institute for Advanced Computing and Bradley Dept. of Electrical and Computer Engineering Virginia Tech , Alexandria, VA, USA Emails: {parisk, walids }@vt.edu 
+
+Abstract —Cooperative multi-unmanned aerial vehicle (UAV) reconnaissance is often hindered by intermittent air-to-air com-munications where link dropouts lead to uncoordinated ex-ploration and redundant mapping. Existing approaches rely on explicit exchange of high-dimensional spatial data or raw observations, incurring significant overhead, and often revert to reactive individual exploration during outages. This paper proposes a memory-augmented framework in which each UAV maintains a structured latent state decomposed into map, task, and memory components. During dropout, a generative predictor conditioned on the memory state infers substitute peer messages in the latent space, making the estimation task more tractable and directly aligned with the cooperative objective. The framework is trained end-to-end under the centralized training with decentral-ized execution paradigm. Simulation results demonstrate that the proposed framework closely matches the performance of a fully connected swarm, while remaining robust across a wide range of link failure conditions. 
+
+Index Terms —UAV swarms, cooperative reconnaissance, in-termittent communication, latent state estimation, multi-agent reinforcement learning, memory-augmented coordination 
+
+I. I NTRODUCTION 
+
+Unmanned aerial vehicle (UAV) swarms are increasingly deployed in safety-critical applications such as search-and-rescue, environmental monitoring, and surveillance [1]. In these settings, inter-agent coordination and regular exchange of observations and task-relevant information is essential for effective UAV task completion [2]. In cooperative recon-naissance tasks, UAVs naturally tend to disperse across the environment to cover it efficiently. The resulting dispersion increases the likelihood of air-to-air (A2A) wireless com-munication link degradation. Unlike tightly coupled swarms operating in proximity, the UAVs here form a loosely coordi-nated swarm where spatial dispersion is a feature of effective operation rather than an anomaly. As a result, coordination under intermittent connectivity emerges as a core design requirement rather than an edge case. In real UAV deployments, A2A communication links are inherently unreliable. Factors such as distance-dependent path loss, multipath fading at low altitudes, beam misalignment 
+
+This research was supported by the U.S. National Science Foundation under Grant CNS-2210254. © 2026 IEEE. Personal use of this material is permitted. Permission from IEEE must be obtained for all other uses, in any current or future media, including reprinting/republishing this material for advertising or promotional purposes, creating new collective works, for resale or redistribution to servers or lists, or reuse of any copyrighted component of this work in other works. 
+
+from rapid maneuvers, co-channel interference, atmospheric attenuation, energy constraints, and hardware failures can all cause intermittent link dropout [3]–[7], [20]. Hence, commu-nication dropout is an expected feature of real deployments, directly impairing coordination and mission performance. This poses a fundamental question: How can UAVs remain effec-tively coordinated when communication with the swarm is temporarily unavailable? Answering this question requires overcoming three challenges. First, the UAV swarm must maintain safe separation between its members, which requires each UAV to know all its neighbors’ states. Second, without peer information, UAVs may revisit already-covered areas which can directly degrade collective performance. Third, predicting raw observations of all collaborating UAVs in the swarm becomes computationally prohibitive as the swarm grows. Thus, there is a need for compact representations that can capture, out of all the observations and states of the other UAVs, only the necessary information needed for coordination. 
+
+A. Related Works 
+
+Prior works have addressed partial aspects of these chal-lenges [8]–[19]. Semantic communication [10] replaces the classical goal of bit-level reconstruction with preserving the meaning of the source data at the receiver, while task-oriented communication is narrower still, retaining only what the receiver needs for its downstream task. In [11], an encoder-decoder pair is trained end-to-end to learn a low-dimensional representation sufficient for the receiver’s purpose. In [12] and [13], the idea is extended to multi-agent reinforcement learning (MARL) to discover effective messaging strategies. However, these works assume reliable wireless links and do not address communication dropout. To improve robustness, the authors in [9] and [16] employ regularized learning, but they treat communication dropouts as noise to be tolerated rather than information to be recovered. More recently, the authors in [8], [15], and [17] propose using generative models to reconstruct missing information via recurrent networks, variational auto-encoders, and auto-regressive imputation, respectively. How-ever, all three operate on raw observations or generic, non-task-oriented features, making reconstruction costly and only loosely aligned with the coordination objective. A shared limitation of all the approaches above is that none of them learns a compact, task-oriented latent representation capable of sustaining coordination under intermittent communication. arXiv:2608.08895v1 [eess.SP] 9 Aug 2026 Recent works in multi-UAV cooperative mapping and explo-ration, such as [18] and [19], explicitly communicate spatial data, e.g., frontier points, poses, and occupancy grid updates. However, these solutions incur significant communication overhead and lack any mechanism to maintain coordination during outages. While some works have introduced memory-based representations for individual exploration guidance [14], these representations are not directly designed to capture in-formation related to the other UAVs in the swarm. Hence, they cannot be reliably used to substitute missing peer information. 
+
+B. Contributions 
+
+The main contribution of this paper is a memory-augmented framework for cooperative UAV reconnaissance that maintains effective coordination under intermittent A2A communication. Our approach enables each UAV, within a swarm, to maintain a coherent internal representation that supports both local decision-making and swarm coordination, even when links to the other UAVs in the swarm are unavailable. To this end, we make the following contributions:  
+
+> •
+
+We design a structured latent state, maintained locally by each UAV and decomposed into map, task, and memory components, that enables task-oriented communication focused solely on coordination.  
+
+> •
+
+We introduce a memory-based generative predictor that locally infers the missing aggregated message based on each UAV’s accumulated latent history.  
+
+> •
+
+We propose an asymmetric update strategy that shields map estimates from hallucinated updates during dropout. Unlike the approaches covered in Section I-A, our method operates on compact task-oriented and semantic represen-tations, defined as latent encodings retaining only the coordination-relevant content of each UAV’s observations, and as map compressions decoding to the swarm’s collective map estimate, respectively . This design choice makes prediction of the missing aggregated peer message more tractable and directly aligned with the cooperative objective. The proposed framework is trained end-to-end under the centralized training with decentralized execution (CTDE) paradigm [21], and at execution time each UAV operates fully autonomously using only local observations and available messages. Simulation results show that the proposed approach closely matches the performance of a fully connected swarm across a wide range of link failures. This indicates that intermittent communication need not impose a severe performance penalty, as the swarm learns to coordinate nearly as well as if all links were reliable. II. S YSTEM MODEL AND TASK FORMULATION 
+
+We consider a set N of N UAVs forming a cooperative swarm tasked with exploring and mapping an unknown envi-ronment. Each UAV operates based on local observations and limited communication with its collaborative peers, making coordination under partial information essential. The collective goal is to build an accurate and complete map while maintain-ing effective swarm coordination during exploration. The cooperative reconnaissance task can be formal-ized as a decentralized partially observable Markov deci-sion process (Dec-POMDP), defined by the tuple M =
+
+⟨N , S, {A i}, T , R, O, P o, γ ⟩. Given a discretized spatial grid 
+
+X , the ground truth occupancy map M : X → { 0, 1} indicates which areas are free (0) or occupied (1). Through explo-ration, each UAV incrementally contributes to a collectively constructed estimate ˆM t : X → { 0, 1, −1}, where −1 is used for cells that have not yet been observed up to time t.Hence, the environment at time t is described by a global state 
+
+st = ( {eit}i∈N , ˆM t) ∈ S . Here, eit = [ pit; vit; χit; bit] is the proprioceptive state of UAV i, comprising its position pit ∈ R3,velocity vit ∈ R3, heading χit ∈ R, and remaining energy level bit ∈ R+. In our model, UAVs move in continuous 3D space. The grid only discretizes the environment for mapping and coverage. The energy of each UAV depletes at a constant rate κ per time step from an initial budget of bi 
+
+> 0
+
+= 100 . The complete reconstruction of M , i.e., ˆM t∗ , is nonnegative at some time t∗ and constitutes the task completion criterion. The mission terminates early if any UAV depletes its energy. The global state st is not directly accessible to any single UAV. Instead, UAVs rely on a local observation oit ∈ O
+
+generated stochastically as oit ∼ Po(oit | st, pit), reflecting the limited and noisy nature of onboard sensing. When available, communication with peers is also used when a UAV selects an action ait ∈ A i. The action space Ai consists of feasible velocity commands subject to operational constraints. The joint action at = [a1 
+
+> t
+
+; . . . ; aNt ] drives the state transition 
+
+st+1 ∼ T (st+1 | st, at), where T is a stochastic tran-sition kernel governing UAV motion dynamics. Following the cooperative MARL paradigm, all UAVs share a common reward rt = R(st, at), defined in Section II-B, and cooperate to maximize the expected discounted return E
+
+hPTt=0 γtrt
+
+i
+
+,where γ ∈ [0 , 1) is a discount factor. The cooperative nature of the task fundamentally distin-guishes a UAV swarm from a set of independent ones. Since each UAV observes only a limited portion of the environment, 
+
+M cannot be reconstructed by a single UAV acting alone, and effective coordination requires each UAV to maintain awareness of its peers’ progress. When links are unavailable, each UAV must rely on its current local observation and accu-mulated history (past observations and communications) to ap-proximate this collective awareness. The partial observability of st makes explicit state tracking intractable. This motivates the use of learned latent representations that compress partial, noisy observations into a compact, task-aligned summary that is cheap to exchange and can be tractably inferred from history when links drop. We call such a representation semantic 
+
+when it admits a decoder to an external referent under an explicit distortion measure, so that its content is fixed by what it represents rather than only by the action it induces. Section III-A makes this concrete for the map component of the exchanged message. A. Intermittent Communication Model 
+
+Inter-UAV communication can be modeled as a time-varying directed graph Gt = ( N , Et), where a directed edge 
+
+(j, i ) ∈ E t exists if and only if UAV i successfully receives a transmission from UAV j at time t. Hence, the set of active neighbors of UAV i at time t is defined as N it = {j ∈ N :(j, i ) ∈ E t}. The topology of Gt is governed by the underlying A2A wireless channel. For UAV-to-UAV links, a Rician fading model is appropriate, as A2A propagation typically features a dominant line-of-sight (LoS) component alongside scattered multipath contributions [3], [4], and [7]. The received signal-to-interference-plus-noise ratio (SINR) at UAV i from UAV j at time t is given by:                 
+
+> Γj→it=Pjt
+> σ2+Iit
+> · | hj→it|2· ∥ pit−pjt∥−α·Latm
+> t·ξj→it,(1)
+
+where P jt is the transmit power of UAV j at time t, σ2 is the noise power assumed fixed and common across all UAVs, Iit
+
+is the time-varying co-channel interference [27], [28], α is the path loss exponent capturing degradation as UAVs disperse, 
+
+Latm  
+
+> t
+
+∈ (0 , 1] is an atmospheric attenuation factor [20], hj→it
+
+is the complex Rician fading coefficient modeling small-scale A2A fading, whose K-factor grows with altitude [4], [29], and 
+
+ξj→it ∈ { 0, 1} is a Bernoulli indicator of abrupt link failure. A link (j, i ) is considered active at time t if Γj→it ≥ βth .
+
+B. Cooperative Reward Formulation 
+
+Evaluating collective performance requires access to infor-mation that no single UAV can observe locally. This informa-tion is captured by the full global state st, which defines a shared reward signal rt = R(st, at) measuring the swarm’s joint progress toward the reconnaissance objective. Our reward consists of three parts rt = wcov rcov  
+
+> t
+
++
+
+wred rred  
+
+> t
+
++ wcoll rcoll  
+
+> t
+
+, where wcov , w red , w coll > 0 are weighting coefficients. The reward rcov  
+
+> t
+
+incentivizes efficient exploration of new areas. Let C( ˆM t) be the set of cells observed at least once by any UAV up to time t. The marginal increase in collective coverage, penalized by a constant c > 0 to discourage stalling, yields rcov  
+
+> t
+
+= |C( ˆM t)| − | C( ˆM t−1)| − c.This term is computed centrally during training, as it requires 
+
+ˆM t over consecutive steps. The penalty rred  
+
+> t
+
+discourages UAVs from revisiting areas already covered by their peers. Let 
+
+Cit ⊆ C( ˆM t) \ C( ˆM t−1) be the set of cells newly observed by UAV i at time t. Then, rred  
+
+> t
+
+= − P 
+
+> i<j
+
+Cit ∩ Cjt , i.e., the pairwise explored region overlap. The penalty rcoll  
+
+> t
+
+discourages unsafe proximity, penalizing UAV pairs closer than dsafe , i.e., 
+
+rcoll  
+
+> t
+
+= − P 
+
+> i<j
+
+1
+
+h
+
+∥pit − pjt ∥ < d safe 
+
+i
+
+.Next, we must solve the core problem of sustaining co-ordinated, efficient, and collision-free exploration when the messages of the other UAVs in the swarm fail to arrive. III. M EMORY -A UGMENTED COORDINATION UNDER 
+
+COMMUNICATION DROPOUT 
+
+Our framework is trained end-to-end under the CTDE paradigm and is built around a structured latent state de-composition, an asymmetric dropout strategy that preserves map integrity, and a memory-based predictor inferring missing messages from the UAV’s accumulated latent history. 
+
+A. Latent Representation and Memory 
+
+We decompose the latent state of UAV i into three compo-nents. The map state μit ∈ Rdμ encodes a compressed estimate of the occupancy map ˆM t. The task state τ it ∈ Rdτ encodes the UAV’s operational status and swarm coordination state, driving decentralized decisions. The memory state ρit ∈ Rdρ
+
+recurrently accumulates a compressed history of observations, task states, and past communications, providing the context for predicting missing aggregated messages during outages. 
+
+1) Map state update: The map state is updated via a recurrent function Eϕ. Given the aggregated map message 
+
+mμ,i t (Section III-B), previous μit−1 gets updated with the UAV’s current local observation and position by μit =
+
+Eϕ
+
+
+
+μit−1, oit, pit, mμ,i t
+
+
+
+. During training, Eϕ and a de-coder Dη are trained jointly under a map reconstruction objective (Section III-E), ensuring that μit serves as a com-pressed approximation of the swarm’s current map estimate 
+
+ˆM t. The map state therefore satisfies the semantic criterion of Section II, as it admits a decoder to the referent ˆM t under a distortion measure. The task state τ it has no such referent and is therefore task-oriented in the narrower sense. In case no message is received, we let mμ,i t = 0, ensuring μit is never updated with hallucinated information. For the remaining updates, ¯mit equals mit when a message is received and a predicted substitute otherwise (Section III-C). In both cases, ¯mit represents a complete aggregated message, with ¯mμ,i t serving as its map component (Section III-B). 
+
+2) Task state update: The task state is updated at each time step by a recurrent function F θ that integrates the previous task and map states with the UAV’s current local observation, proprioceptive state, and the best available aggregated mes-sage, τ it = F θ
+
+ τ it−1, oit, eit, μit−1, ¯mit
+
+.
+
+3) Memory state update: The memory state is updated at each time step by a recurrent model Gψ applied to the previous memory and task states, local observation, and best available aggregated message from time t − 1, ρit =
+
+Gψ
+
+ ρit−1, τ it−1, oit−1, ¯mit−1
+
+. By conditioning on ¯mit−1,the memory state models the dynamics of swarm information flow beyond what local observations reveal. In our implementation, Gψ , as well as Eϕ and F θ , will be realized as gated recurrent units [23]. 
+
+B. Message Aggregation 
+
+Each UAV j broadcasts the message zjt−1 =
+
+h
+
+μjt−1; τ jt−1
+
+i
+
+at each time step. Since state update functions require fixed-size inputs, the set Mit =
+
+n
+
+zjt−1 : j ∈ N it
+
+o
+
+must be re-duced to a permutation-invariant summary vector mit ∈
+
+Rd. We adopt mean pooling as the aggregation mechanism, 
+
+mit = 1  
+
+> |N it|
+
+P 
+
+> j∈N it
+
+zjt−1. Mean pooling is parameter-free, permutation-invariant, and preserves the structure of the ag-gregated message. The resulting vector mit = [ mμ,i t , mτ,i t ]
+
+decomposes naturally into map and task components. Only the map component mμ,i t is passed to Eϕ, while the full message 
+
+mit is used by the remaining state updates. 
+
+C. Memory-based Message Prediction 
+
+When UAV i loses contact with all neighbors (i.e., N it =
+
+∅), a generative model P ζ is used to predict the aggregated message the UAV expects to receive. Since ρit accumulates information only up to time t − 1, the latest local observation 
+
+oit and proprioceptive state eit are additionally provided to incorporate the most current sensory information via ˆmit =
+
+P ζ
+
+ ρit, oit, eit
+
+. Thus, the best available message ¯mit equals 
+
+mit when N it̸ = ∅, or ˆmit otherwise, ensuring that decisions are taken on the most up-to-date swarm representation. 
+
+D. Actor-Critic Architecture 
+
+Each UAV selects its action through an actor-policy πξ(ait |
+
+τ it ) that maps its current task state τ it to a distribution over 
+
+Ai. Since τ it encodes the UAV’s local observations, spatial awareness, and best available message, the policy operates identically whether or not communication was available at time t. As all UAVs are homogeneous in hardware and task structure, the policy parameters ξ are shared across the swarm. Model sharing improves sample efficiency and scales to swarms of arbitrary size. In our implementation, the actor network maps τ it to the mean and diagonal covariance of a Gaussian distribution, from which velocity and heading commands are sampled at execution time. Training πξ on the shared reward rt alone yields noisy gradients, since rt
+
+depends on all UAVs’ joint actions [25]. Thus, we employ the actor-critic framework with a centralized critic Vω (st).The actor is updated with the advantage ˆAt = Rt − Vω (st),where Rt = PTk=t γk−trk, providing low-variance estimates for stabilized training [24], [26]. We adopt the multi-agent proximal policy optimization (MAPPO) [22] algorithm, as its on-policy nature is compatible with our recurrent updates. 
+
+E. Joint Training Objective 
+
+We propose training the entire architecture end-to-end cen-trally, combining MAPPO’s objective with self-supervised losses for map reconstruction and message prediction        
+
+> L(ξ,ω,ϕ,η,θ,ψ,ζ) = −L CLIP (ξ)+
+
+c1 LVF (ω)+c2 Lmap (ϕ, η) + c3 Lpred (ζ, ψ),
+
+(2) where LCLIP (ξ) is the clipped surrogate objective [22], 
+
+LVF (ω) = 1
+
+> T
+
+PTt=1 (Rt − Vω (st)) 2 is the critic loss, and 
+
+c1, c 2, c 3 > 0 are scalar hyperparameters that balance the relative importance of each objective. Note that θ is updated implicitly through backpropagation. The map loss trains Eϕ and Dη to reconstruct ˆM t via      
+
+> Lmap (ϕ,η) = 1
+> N T
+> NX
+> i=1
+> TX
+> t=1
+> Dη
+> 
+> μit
+> 
+> −ˆMt
+> 2
+> F
+> .(3)
+
+This ensures that each UAV’s map state μit serves as a reliable compressed representation of the current global map estimate, as required by the map state update in Section III-A. The prediction loss measures the mean squared error between received aggregated messages and their predictions, over time        
+
+> Lpred (ζ,ψ) = 1
+> N
+> X
+> i∈N
+> 1
+> |T i
+> comm |
+> X
+> t∈T i
+> comm
+> mit−ˆmit
+> 2
+> ,(4)
+
+where T i 
+
+> comm
+
+= {t : N it̸ = ∅} is the set of time steps at which UAV i has at least one active neighbor. Training follows a standard on-policy rollout procedure, with dropouts simulated by sampling link states per Section II-A. The joint loss L
+
+is computed over each batch and a single gradient update is applied to all parameters simultaneously, until convergence. IV. S IMULATION RESULTS AND ANALYSIS 
+
+We evaluate our framework in a 50 × 50 discrete grid environment with a swarm of N = 3 UAVs, each equipped with a sensor range of 2 cells. UAVs are initialized at random positions, at an altitude of 10 m with zero initial velocity and uniformly random headings, and they execute continuous velocity commands over episodes of T = 1000 steps ( κ =0.1). During motion, UAV altitude is constrained to [5 , 20] mand horizontal positions are clipped to the arena bounds. The ground-truth occupancy map is generated independently for each episode by placing 30 occupied cells uniformly at random over the grid. The A2A channel follows the model of Section II-A, with Rician factor K = 5, Latm = 0.9,
+
+P j = 20 dBm, and α = 2 . We set the SINR detection thresh-old to βth = 0 .05 and the noise power to σ2 = 1 , and draw the interference as I ∼ U (0 , 0.5) . A link failure probability of pf = 0 .3 is used during training. As this paper presents a proof of concept, these values are chosen to pose a meaningful challenge to the framework without pushing it to its limits. All latent states have dimension dμ = dτ = dρ = 512 .The framework is trained for 1600 epochs of 600 steps each across 40 parallel environments using MAPPO, with discount factor γ = 0 .99 , GAE parameter λ = 0 .95 , clipping parameter 
+
+ϵ = 0 .2, and entropy coefficient 0.01 . The reward weights are 
+
+wcov = 0 .4, w red = 0 .02 , w coll = 0 .8, while the loss weights are set to c1 = 0 .5 and c2 = c3 = 5 . The learning rate is 10 −4
+
+for the first 1000 epochs and 10 −5 thereafter. All results are averaged over 10 Monte Carlo runs. To assess each proposed component’s contribution, we compare five conditions. Proposed (full) corresponds to the complete framework at test time. No predictor replaces ˆmit
+
+with a zero vector during dropout. No memory zeroes ρit before it gets used in any update. Full comm forces all links active at every step, serving as a coordination upper bound. No comm 
+
+forces all links inactive throughout, serving as a lower bound. Table I presents the final coverage, collisions, and steps to 90% coverage for the five conditions. The proposed model achieves 90 .98 ±2.92% final coverage, within 1.5% of the full communication upper bound. These results show that latent-space prediction alone nearly recovers uninterrupted commu-nication performance. Removing the message predictor is the most harmful ablation, reducing coverage to 70 .30 ± 3.61% 
+
+and raising collisions nearly sixfold ( 8.70 vs 54 .90 ). The lack of a predictor deteriorates performance more than No TABLE I ABLATION STUDY RESULTS (LEFT ) AND ROBUSTNESS TO COMMUNICATION DROPOUT (RIGHT ), AVERAGED OVER 10 M ONTE CARLO RUNS .
+
+Condition Coverage (%) Collisions Steps to 90% 
+
+Full comm (UB) 92 .40 ± 2.64 10 .30 ± 12 .54 732 .71 ± 90 .58 
+
+Proposed (full) 90 .98 ± 2.92 8.70 ± 8.49 692 .71 ± 189 .04 
+
+No memory 81 .90 ± 5.51 41 .50 ± 24 .08 N/A No comm (LB) 83 .44 ± 4.80 31 .90 ± 21 .85 N/A No predictor 70 .30 ± 3.61 54 .90 ± 26 .12 N/A 
+
+pf Coverage (%) Steps to 90% 
+
+0.00 91 .66 ± 2.33 665 0.05 92 .59 ± 2.04 593 0.15 91 .36 ± 2.00 758 0.30 90 .89 ± 2.18 651 0.50 90 .96 ± 2.17 677 
+
+comm ( 83 .44% , 31 .90 collisions), which shows that an all-zero vector in place of the missing message actively misleads the swarm. Removing the memory is less severe but still substantial ( 81 .90 ± 5.51% ). Without the accumulated history, the predictor loses the context it conditions on, and the resulting degradation indicates that prediction quality depends on memory rather than current observations alone. Neither ablation reaches 90% coverage within the episode horizon, whereas the proposed model matches the full communication upper bound in collisions ( 8.70 vs 10 .30 ). Table I also presents coverage under a sweep of pf ∈ { 0.00 , 0.05 , 0.15 , 0.30 , 0.50 }.Our approach maintains consistently high coverage ranging from 90 .89% to 92 .59% , with low variance and no monotonic degradation with pf , showing that the latent-space predictor sustains coordination even under severe link failures. V. C ONCLUSION 
+
+In this paper, we have proposed a memory-augmented framework for cooperative UAV reconnaissance under inter-mittent A2A communication. Each UAV maintains a structured latent state decomposed into map, task, and memory compo-nents. During dropout, a generative predictor infers a substitute for the aggregated peer message from the UAV’s accumulated history in the latent space. An asymmetric strategy shields map estimates from hallucinated updates. Simulation results show that the proposed approach achieves 90 .98% final coverage under pf = 0 .3, closing the gap to the full communication upper bound to less than 1.5% . Performance remains stable across link failure probabilities up to 50% . Our ablations show both the memory state and the predictor to be essential, as removing either degrades coverage and increases colli-sions. Future work includes benchmarking against explicit-communication mapping approaches [18], [19], and extending our approach to larger swarms and heterogeneous platforms. REFERENCES [1] A. Puri, “A Survey of Unmanned Aerial Vehicles (UAV) for Traffic Surveillance,” Technical Report, Department of Computer Science and Engineering, University of South Florida, 2005, pp. 1–29. [2] M. Campion, P. Ranganathan, and S. Faruque, “UAV swarm commu-nication and control architectures: A review,” J. Unmanned Veh. Syst. ,vol. 7, no. 2, pp. 93–106, 2019. [3] C. Yan, L. Fu, J. Zhang, and J. Wang, “A comprehensive survey on UAV communication channel modeling,” IEEE Access , vol. 7, pp. 107769– 107792, 2019. [4] N. Goddemeier and C. Wietfeld, “Investigation of air-to-air channel characteristics and a UAV specific extension to the Rice model,” in Proc. of IEEE Globecom Workshops , 2015. [5] L. Gupta, R. Jain, and G. Vaszkun, “Survey of important issues in UAV communication networks,” IEEE Commun. Surveys Tuts. , vol. 18, no. 2, pp. 1123–1152, 2016. [6] M. Mozaffari, W. Saad, M. Bennis, Y.-H. Nam, and M. Debbah, “A tutorial on UAVs for wireless networks: Applications, challenges, and open problems,” IEEE Commun. Surveys Tuts. , vol. 21, no. 3, pp. 2334– 2360, 2019. [7] D. W. Matolak and U.-C. Fiebig, “UAV channel models: Review and future research,” in Proc. of 13th European Conference on Antennas and Propagation (EuCAP) , 2019. [8] R. Zhang, J. Wang, J. Ge, and Q. Huang, “Multiagent cooperative search learning with intermittent communication,” IEEE Intell. Syst. , vol. 39, no. 2, pp. 11–20, Mar./Apr. 2024. [9] W. Kim, M. Cho, and Y. Sung, “Message-dropout: An efficient training method for multi-agent deep reinforcement learning,” in Proc. of AAAI Conf. Artificial Intelligence , 2019. [10] Z. Qin, X. Tao, J. Lu, and G. Y. Li, “Semantic communications: Principles and challenges,” arXiv preprint arXiv:2212.00556 , 2022. [11] H. Xie, Z. Qin, G. Y. Li, and B.-H. Juang, “Deep learning enabled semantic communication systems,” IEEE Trans. Signal Process. , vol. 69, pp. 2663–2675, 2021. [12] S. Sukhbaatar, A. Szlam, and R. Fergus, “Learning multiagent commu-nication with backpropagation,” in Proc. of Adv. in Neural Inf. Process Syst. (NeurIPS) , 2016. [13] J. Foerster, I. A. Assael, N. de Freitas, and S. Whiteson, “Learning to communicate with deep multi-agent reinforcement learning,” in Proc. of Adv. in Neural Inf. Process Syst. (NeurIPS) , 2016. [14] B. Zhang, T. Wang, M. Li, Y. Cui, X. Lin, and Z. Zhu, “Multiple unmanned aerial vehicle (multi-UAV) reconnaissance and search with limited communication range using semantic episodic memory in rein-forcement learning,” Drones , vol. 8, no. 8, p. 393, 2024. [15] L. Fu, J. Wang, and H. Luo, “Multi-agent reinforcement learning for cooperative search under aperiodically intermittent communication,” 
+
+Expert Syst. Appl. , vol. 280, p. 127526, 2025. [16] N. Guan, T. Duong, and G. S. Soh, “FCMNet: Full communication multi-hop network for multi-agent reinforcement learning,” in Proc. of ACM Int. Conf. Auton. Agents and Multiagent Syst. (AAMAS) , 2022. [17] P. P. Santos et al., “Centralized training with hybrid execution in multi-agent reinforcement learning via predictive observation imputation,” 
+
+Artificial Intelligence , vol. 348, p. 104404, 2025. [18] N. Mahdoui, V. Fr´ emont, and E. Natalizio, “Communicating multi-UAV system for cooperative SLAM-based exploration,” J. Intell. Robot. Syst. ,vol. 98, no. 2, pp. 325–343, 2020. [19] J. Westheider, J. R¨ uckin, and M. Popovi´ c, “Multi-UAV adaptive path planning using deep reinforcement learning,” in Proc. of IEEE/RSJ Int. Conf. Intelligent Robots and Systems (IROS) , 2023. [20] Int. Telecommunication Union, “Specific attenuation model for rain for use in prediction methods,” ITU-R Recommendation P.838-3 , 2005. [21] C. Amato, “An introduction to centralized training for decentralized execution in cooperative multi-agent reinforcement learning,” arXiv preprint arXiv:2409.03052 , 2024. [22] C. Yu, A. Velu, E. Vinitsky, J. Gao, P. Abbeel, and S. Ermon, “The surprising effectiveness of PPO in cooperative multi-agent games,” in 
+
+Proc. of Adv. in Neural Inf. Process Syst. (NeurIPS) , 2022. [23] K. Cho, B. van Merri¨ enboer, C. Gulcehre, D. Bahdanau, F. Bougares, H. Schwenk, and Y. Bengio, “Learning phrase representations using RNN encoder-decoder for statistical machine translation,” in Proc. of Conf. Empirical Methods Natural Language Processing (EMNLP) , 2014. [24] R. Lowe, Y. Wu, A. Tamar, J. Harb, P. Abbeel, and I. Mordatch, “Multi-agent actor-critic for mixed cooperative-competitive environments,” in 
+
+Proc. of Adv. in Neural Inf. Process Syst. (NeurIPS) , 2017. [25] R. S. Sutton and A. G. Barto, Reinforcement Learning: An Introduction ,2nd ed. Cambridge, MA: MIT Press, 2018. [26] V. R. Konda and J. N. Tsitsiklis, “Actor-critic algorithms,” in Proc. of Adv. in Neural Inf. Process Syst. (NeurIPS) , 2000. [27] L. Zhou, X. Chen, M. Hong, S. Jin et al. , “Efficient resource allocation for multi-UAV communication against adjacent and co-channel interfer-ence,” IEEE Trans. Veh. Technol. , 2021. [28] A. A. Khuwaja, G. Zheng, Y. Chen, and W. Feng, “Optimum deployment of multiple UAVs for coverage area maximization in the presence of co-channel interference,” IEEE Access , 2019. [29] N. Moraitis, K. Psychogios, and A. D. Panagopoulos, “A survey of path loss prediction and channel models for unmanned aerial systems for system-level simulations,” Sensors , vol. 23, no. 10, p. 4775, 2023.

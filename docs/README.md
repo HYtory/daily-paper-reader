@@ -6,37 +6,36 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-12
-- 运行时间：2026-08-12 21:01:08 UTC
+- 最新运行日期：2026-08-13
+- 运行时间：2026-08-13 21:26:28 UTC
 - 运行状态：成功
-- 本次总论文数：4
+- 本次总论文数：5
 - 精读区：0
-- 速读区：4
+- 速读区：5
 
 ### 今日简报（AI）
-今日速读3篇强化学习相关论文，聚焦安全传输、多智能体路径规划与智能体反馈机制，最高分为7.0。
-
-最值得关注的是将深度强化学习用于可旋转天线的低空通感一体化安全传输，以及多智能体路径规划中的旋转动作鲁棒性研究。
-
-下一步可优先精读高分论文，并追踪DRL与动态天线/更复杂动作空间的结合方向。
-- 详情：[/202608/12/README](/202608/12/README)
+今日共推荐5篇论文，均速读完成，聚焦多智能体协同与自主导航。最值得关注UAV在间歇连接下的潜状态估计（7.0分），以及多智能体策略组合的安全性分析（7.0分）。下一步可优先精读这两篇，深入理解可靠通信与策略迁移的挑战。
+- 详情：[/202608/13/README](/202608/13/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [DRL-Based Secure Transmission for Rotatable Antenna-Enabled Low-Altitude ISAC Systems](/202608/12/2608.07170v1-drl-based-secure-transmission-for-rotatable-antenna-enabled-low-altitude-isac-systems)  
+1. [Latent Semantic State Estimation for Reliable Swarming of UAVs under Intermittent Connectivity](/202608/13/2608.08895v1-latent-semantic-state-estimation-for-reliable-swarming-of-uavs-under-intermittent-connectivity)  
    标签：评分：7.0/10、query:ui
-   evidence：采用多智能体近端策略优化处理无人机网络，与无人机集群多智能体强化学习直接相关
-2. [Search-Aided Joint Agent-Environment Reinforcement Learning for Robust Lifelong Multi-Agent Path Finding with Rotations](/202608/12/2608.05588v1-search-aided-joint-agent-environment-reinforcement-learning-for-robust-lifelong-multi-agent-path-finding-with-rotations)  
+   evidence：针对间歇连接下的多无人机集群提出潜在语义状态估计方法，支持可靠协同与通信。
+2. [Is Per-Agent Policy Composition Safe? Rethinking Successor-Feature Transfer in Cooperative Multi-Agent Reinforcement Learning](/202608/13/2608.11658v1-is-per-agent-policy-composition-safe-rethinking-successor-feature-transfer-in-cooperative-multi-agent-reinforcement-learning)  
+   标签：评分：7.0/10、query:ui
+   evidence：基于后继特征的安全多智能体策略迁移的合作多智能体强化学习
+3. [Unified Planning-Learning Framework for Robust UUV Navigation Under Partial Observability](/202608/13/2608.05365v1-unified-planning-learning-framework-for-robust-uuv-navigation-under-partial-observability)  
    标签：评分：6.0/10、query:ui
-   evidence：多智能体强化学习与路径规划方法，可迁移至多无人机围捕协同
-3. [Learning from Environmental Feedback: Credit Assignment across Multiple Timescales for Agentic Reinforcement Learning](/202608/12/2608.08255v1-learning-from-environmental-feedback-credit-assignment-across-multiple-timescales-for-agentic-reinforcement-learning)  
+   evidence：UUV导航的统一规划与强化学习框架，处理跟踪与回避，可迁移至单无人机拦截场景
+4. [RecoverFly: A Failure-Aware Reinforcement Learning Post-Training Framework for Aerial Vision-Language Navigation](/202608/13/2608.09467v1-recoverfly-a-failure-aware-reinforcement-learning-post-training-framework-for-aerial-vision-language-navigation)  
    标签：评分：6.0/10、query:ui
-   evidence：针对稀疏奖励的信用分配方法，可用于长时程拦截训练
-4. [Nonlinear Model Predictive Control via Sequential Convex Programming for Drone-to-Drone Docking](/202608/12/2608.10542v1-nonlinear-model-predictive-control-via-sequential-convex-programming-for-drone-to-drone-docking)  
+   evidence：面向无人机视觉语言导航的强化学习后训练框架，解决样本效率与策略偏移问题，与无人机自主控制相关。
+5. [IADD-TR: Intervention-Aware Dynamics Decoupling with Targeted Regularization for Model-Based Reinforcement Learning](/202608/13/2608.10634v1-iadd-tr-intervention-aware-dynamics-decoupling-with-targeted-regularization-for-model-based-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：无人机间对接与目标运动控制，与单无人机拦截任务相关
+   evidence：基于模型的强化学习方法，可迁移至无人机拦截/围捕任务
 
 
 <div class="dpr-home-promo-card">

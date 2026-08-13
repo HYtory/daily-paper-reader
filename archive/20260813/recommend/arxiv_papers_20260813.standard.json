@@ -1,0 +1,207 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-13T21:24:50.437763+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.08895v1",
+      "source": "arxiv",
+      "title": "Latent Semantic State Estimation for Reliable Swarming of UAVs under Intermittent Connectivity",
+      "abstract": "Cooperative multi-unmanned aerial vehicle (UAV) reconnaissance is often hindered by intermittent air-to-air communications where link dropouts lead to uncoordinated exploration and redundant mapping. Existing approaches rely on explicit exchange of high-dimensional spatial data or raw observations, incurring significant overhead, and often revert to reactive individual exploration during outages. This paper proposes a memory-augmented framework in which each UAV maintains a structured latent state decomposed into map, task, and memory components. During dropout, a generative predictor conditioned on the memory state infers substitute peer messages in the latent space, making the estimation task more tractable and directly aligned with the cooperative objective. The framework is trained end-to-end under the centralized training with decentralized execution paradigm. Simulation results demonstrate that the proposed framework closely matches the performance of a fully connected swarm, while remaining robust across a wide range of link failure conditions.",
+      "authors": [
+        "Paris A. Karakasis",
+        "Walid Saad"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP"
+      ],
+      "published": "2026-08-09T20:16:36+00:00",
+      "link": "https://arxiv.org/pdf/2608.08895v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Latent semantic state estimation for multi-UAV swarms under intermittent connectivity; supports reliable cooperative coordination.",
+      "llm_evidence_cn": "针对间歇连接下的多无人机集群提出潜在语义状态估计方法，支持可靠协同与通信。",
+      "llm_evidence": "针对间歇连接下的多无人机集群提出潜在语义状态估计方法，支持可靠协同与通信。",
+      "canonical_evidence": "针对间歇连接下的多无人机集群提出潜在语义状态估计方法，支持可靠协同与通信。",
+      "llm_tldr_en": "Proposes a memory-augmented framework for multi-UAV swarms where each UAV maintains a latent state and infers missing peer messages during communication dropouts, improving coordinated exploration and mapping under intermittent connectivity.",
+      "llm_tldr_cn": "多无人机协同侦察常受间歇通信影响，断链导致探索不协调和重复建图。本文提出记忆增强框架，将每个无人机的状态分解为地图、任务和记忆三部分，在通信中断时利用生成式预测器推断对等节点的潜在消息。该方法在链路断开时仍能维持协同作业，提高集群可靠性和效率，可为基于强化学习的集群协同提供稳定的状态支撑。",
+      "llm_tldr": "多无人机协同侦察常受间歇通信影响，断链导致探索不协调和重复建图。本文提出记忆增强框架，将每个无人机的状态分解为地图、任务和记忆三部分，在通信中断时利用生成式预测器推断对等节点的潜在消息。该方法在链路断开时仍能维持协同作业，提高集群可靠性和效率，可为基于强化学习的集群协同提供稳定的状态支撑。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.05365v1",
+      "source": "arxiv",
+      "title": "Unified Planning-Learning Framework for Robust UUV Navigation Under Partial Observability",
+      "abstract": "This paper presents an observation-only autonomy framework for Unmanned Underwater Vehicles (UUVs) navigation in dynamic underwater environments that integrates persistent occupancy mapping, global clearance-aware planning, and risk-aware local control. The proposed pipeline constructs occupancy maps solely from onboard sonar and depth image observations, adapts a clearance-constrained global planner (GP) to provide long-horizon structure, and integrates a reinforcement learning (RL) policy to handle short-range tracking and reactive avoidance. To further support decision-making under partial observability, the system learns a compact latent state representation from onboard sensor data, encoding environmental structure, obstacle dynamics, and uncertainty. Behavior tree (BT) distillation with staged supervision is introduced to improve safety and training stability, while an uncertainty-calibrated distillation mechanism reweights teacher guidance using online latent-model uncertainty, emphasizing uncertain regimes during learning, with time-to-collision (TTC) and clearance cues remaining explicit in planning and local policy features. To demonstrate the efficacy of the framework, a reproducible multi-seed evaluation protocol is established in high-fidelity GPU-accelerated simulation using NVIDIA Isaac Sim, and performance is benchmarked against BT-only and standard RL baselines. The results obtained demonstrate improved robustness and safety under dynamic conditions, thus providing a general pipeline with a unified hybrid planning learning architecture and a reproducible methodology for robust UUV autonomy under partial observability.",
+      "authors": [
+        "Md Ether Deowan",
+        "Eleni Kelasidi"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-08-05T19:37:22+00:00",
+      "link": "https://arxiv.org/pdf/2608.05365v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Unified planning and RL framework for UUV tracking and avoidance, transferable to single-UAV interception scenarios",
+      "llm_evidence_cn": "UUV导航的统一规划与强化学习框架，处理跟踪与回避，可迁移至单无人机拦截场景",
+      "llm_evidence": "UUV导航的统一规划与强化学习框架，处理跟踪与回避，可迁移至单无人机拦截场景",
+      "canonical_evidence": "UUV导航的统一规划与强化学习框架，处理跟踪与回避，可迁移至单无人机拦截场景",
+      "llm_tldr_en": "Presents an observation-only autonomy framework for UUVs that integrates occupancy mapping, clearance-aware global planning, and an RL policy for short-range tracking and reactive avoidance, learning compact latent states from sensor data for robust navigation under partial observability.",
+      "llm_tldr_cn": "面向动态水下环境的UUV自主导航，本文提出仅依赖观测的规划-学习框架。该框架结合持久占用地图、全局避碰规划与风险感知局部控制，并引入强化学习策略处理短距离跟踪与反应式避障。系统还从传感器数据学习紧凑潜在状态表征，以支持部分可观测下的决策。实验表明该框架能在动态环境中实现鲁棒导航，其强化学习跟踪与控制思想对无人机拦截任务具有方法迁移价值。",
+      "llm_tldr": "面向动态水下环境的UUV自主导航，本文提出仅依赖观测的规划-学习框架。该框架结合持久占用地图、全局避碰规划与风险感知局部控制，并引入强化学习策略处理短距离跟踪与反应式避障。系统还从传感器数据学习紧凑潜在状态表征，以支持部分可观测下的决策。实验表明该框架能在动态环境中实现鲁棒导航，其强化学习跟踪与控制思想对无人机拦截任务具有方法迁移价值。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for single UAV interception",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.11658v1",
+      "source": "arxiv",
+      "title": "Is Per-Agent Policy Composition Safe? Rethinking Successor-Feature Transfer in Cooperative Multi-Agent Reinforcement Learning",
+      "abstract": "Many reinforcement learning systems, from fleet management to traffic signal control, must serve an objective that changes dynamically after deployment, and retraining a policy for each new objective is prohibitively expensive. For a single agent, this problem is well understood: successor features with generalized policy improvement, together with their universal extension, recombine a library of learned policies into a policy for any new objective, with a guarantee that the result is never worse than any policy in the library. However, multi-agent transfer has received far less attention, and the common practice of letting each agent recombine its own library independently inherits the recipe but not the guarantee. We prove that this independent composition can produce joint behavior strictly worse than every policy in the library, because recombining teammates changes the environment each agent faces and invalidates the values it relies on, a failure with no single-agent counterpart. We further show that the only unconditionally safe fixed rule is synchronized composition, which moves the whole team to one jointly trained policy but cannot serve objectives that assign different goals to different agents. To attain safety and flexibility at once, we propose MA-USFA, a hierarchical method with two layers: a lower layer of universal successor feature approximators that predicts each agent's successor features while conditioned on its teammates' objectives, and an upper composer that selects, across agents, which library entry each agent should follow and supplies the cross-agent correction a per-agent value cannot represent. Trained once over the distribution of objectives, it is applied at deployment with no per-task adaptation.",
+      "authors": [
+        "Zijian Zhao",
+        "Sen Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-08-12T04:56:52+00:00",
+      "link": "https://arxiv.org/pdf/2608.11658v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "cooperative MARL with successor features for safe multi-agent policy transfer",
+      "llm_evidence_cn": "基于后继特征的安全多智能体策略迁移的合作多智能体强化学习",
+      "llm_evidence": "基于后继特征的安全多智能体策略迁移的合作多智能体强化学习",
+      "canonical_evidence": "基于后继特征的安全多智能体策略迁移的合作多智能体强化学习",
+      "llm_tldr_en": "This paper examines safety of per-agent policy composition in cooperative multi-agent reinforcement learning, showing that independent successor-feature recombination can be unsafe, and proposes a rethinking for transfer to new objectives.",
+      "llm_tldr_cn": "很多多智能体系统需要在部署后动态改变目标，逐个重新训练策略代价高昂。本文关注合作多智能体强化学习中的后继特征迁移，指出各智能体独立组合自身策略库可能带来安全问题。通过对逐智能体策略组合的安全性进行重新审视，提出更可靠的多智能体目标迁移方法。该工作为多无人机蜂群在动态任务中的策略复用与安全迁移提供了理论基础。",
+      "llm_tldr": "很多多智能体系统需要在部署后动态改变目标，逐个重新训练策略代价高昂。本文关注合作多智能体强化学习中的后继特征迁移，指出各智能体独立组合自身策略库可能带来安全问题。通过对逐智能体策略组合的安全性进行重新审视，提出更可靠的多智能体目标迁移方法。该工作为多无人机蜂群在动态任务中的策略复用与安全迁移提供了理论基础。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.09467v1",
+      "source": "arxiv",
+      "title": "RecoverFly: A Failure-Aware Reinforcement Learning Post-Training Framework for Aerial Vision-Language Navigation",
+      "abstract": "Unmanned aerial vehicle vision-language navigation (UAV-VLN) requires agents to translate visual observations and language instructions into reliable flight actions in complex environments. Although recent end-to-end UAV vision-language-action (UAV-VLA) policies reduce reliance on separately designed perception, planning, and control modules, their behavior-cloning objectives provide limited corrective supervision for interactive closed-loop execution. Reinforcement learning (RL) offers a promising solution, while its effectiveness is constrained by inefficient use of samples, long-tailed scene distributions, and policy distribution shift during optimization. To this end, we propose RecoverFly, a failure-aware RL post-training framework for end-to-end UAV-VLA policies. Specifically, RecoverFly adapts token-level RL for stable optimization of grammar-constrained autoregressive UAV actions, revisits unresolved failure cases to strengthen corrective learning and sample utilization, and combines a two-stage long-tail scene curriculum with reference-policy regularization to improve scene adaptation while preserving acquired capabilities. Experiments on the TravelUAV benchmark demonstrate that RecoverFly achieves the best performance on the seen, unseen-map, and unseen-object splits. Moreover, compared to the AerialVLA initialization, RecoverFly improves success rate by 3.12 to 8.37 percentage points under a total rollout budget of about 30\\% of the training-set size, validating its effectiveness, robustness, and generalization capabilities.",
+      "authors": [
+        "Boxiong Wang",
+        "Hui Kang",
+        "Geng Sun",
+        "Jiahui Li",
+        "Chao Yu",
+        "Daxin Tian"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-08-10T11:37:46+00:00",
+      "link": "https://arxiv.org/pdf/2608.09467v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "UAV RL post-training framework for vision-language navigation; addresses reward sample efficiency and policy shift, relevant to UAV autonomous control.",
+      "llm_evidence_cn": "面向无人机视觉语言导航的强化学习后训练框架，解决样本效率与策略偏移问题，与无人机自主控制相关。",
+      "llm_evidence": "面向无人机视觉语言导航的强化学习后训练框架，解决样本效率与策略偏移问题，与无人机自主控制相关。",
+      "canonical_evidence": "面向无人机视觉语言导航的强化学习后训练框架，解决样本效率与策略偏移问题，与无人机自主控制相关。",
+      "llm_tldr_en": "Proposes RecoverFly, a failure-aware RL post-training framework for UAV vision-language-action policies. It mitigates sample inefficiency and policy shift in closed-loop execution, improving navigation reliability.",
+      "llm_tldr_cn": "无人机视觉语言导航需要将视觉和语言指令转化为可靠飞行动作，但基于行为克隆的端到端策略缺少闭环修正监督。本文提出RecoverFly，一个故障感知的强化学习后训练框架，针对样本利用率低和策略分布偏移进行优化。实验表明该框架可提升无人机在复杂场景下视觉语言导航的闭环执行可靠性与泛化能力。",
+      "llm_tldr": "无人机视觉语言导航需要将视觉和语言指令转化为可靠飞行动作，但基于行为克隆的端到端策略缺少闭环修正监督。本文提出RecoverFly，一个故障感知的强化学习后训练框架，针对样本利用率低和策略分布偏移进行优化。实验表明该框架可提升无人机在复杂场景下视觉语言导航的闭环执行可靠性与泛化能力。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.10634v1",
+      "source": "arxiv",
+      "title": "IADD-TR: Intervention-Aware Dynamics Decoupling with Targeted Regularization for Model-Based Reinforcement Learning",
+      "abstract": "Model-based reinforcement learning (MBRL), which learns environment dynamics to generate synthetic experience, is a promising approach to sample-efficient decision making. Numerous methods have been developed to improve dynamics prediction and policy optimization for MBRL through uncertainty estimation, model regularization, and conservative value learning. However, these methods typically treat the transition model and critic as monolithic predictors, overlooking the policy-induced data bias. Consequently, action can become entangled with environmental evolution, while uneven action coverage may distort the counterfactual value estimates used for policy improvement. To address this, we propose IADD-TR, a unified framework combining Intervention-Aware Dynamics Decoupling (IADD) and Targeted Regularization (TR). IADD factorizes transitions into an action-intervention stage and an action-free natural evolution stage, using a zero-action anchor to resolve the non-uniqueness of this two-stage factorization for robust generalization. Its latent and state-aligned components are identifiable up to an invertible within-block transformation and pointwise, respectively. For policy learning, we derive TR from the efficient influence function of a replay-state policy-gradient functional. TR augments the critic with an action-density-scaled residual correction and optimizes a targeted loss, yielding doubly robust policy-gradient estimation when either the critic or the replay action density is consistently specified. Extensive experiments on five MuJoCo tasks show that IADD-TR achieves competitive returns with improved sample efficiency.",
+      "authors": [
+        "Zefeng Liang",
+        "Jie Qiao",
+        "Ruichu Cai",
+        "Weilin Chen",
+        "Zhifeng Hao"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-11T08:20:02+00:00",
+      "link": "https://arxiv.org/pdf/2608.10634v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "model-based reinforcement learning method transferable to UAV interception tasks",
+      "llm_evidence_cn": "基于模型的强化学习方法，可迁移至无人机拦截/围捕任务",
+      "llm_evidence": "基于模型的强化学习方法，可迁移至无人机拦截/围捕任务",
+      "canonical_evidence": "基于模型的强化学习方法，可迁移至无人机拦截/围捕任务",
+      "llm_tldr_en": "Introduces intervention-aware dynamics decoupling with targeted regularization for model-based RL, improving sample efficiency and policy learning, which can benefit UAV interception and encirclement training.",
+      "llm_tldr_cn": "针对基于模型的强化学习中策略导致的数据偏差问题，论文提出干预感知的动力学解耦与目标正则化方法，将转移模型和评价器解耦以减少动作与环境演化的纠缠。该方法在多种连续控制任务上能提升样本效率和策略性能。由于其对模型偏差的纠正具有通用性，可有效应用于无人机拦截与围捕等复杂控制任务的训练，加速策略收敛并提高稳定性。",
+      "llm_tldr": "针对基于模型的强化学习中策略导致的数据偏差问题，论文提出干预感知的动力学解耦与目标正则化方法，将转移模型和评价器解耦以减少动作与环境演化的纠缠。该方法在多种连续控制任务上能提升样本效率和策略性能。由于其对模型偏差的纠正具有通用性，可有效应用于无人机拦截与围捕等复杂控制任务的训练，加速策略收敛并提高稳定性。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

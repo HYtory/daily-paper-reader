@@ -1,0 +1,520 @@
+Title: Unified Planning-Learning Framework for Robust UUV Navigation Under Partial Observability
+
+URL Source: https://arxiv.org/pdf/2608.05365v1
+
+Published Time: Fri, 07 Aug 2026 00:10:46 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+# Unified Planning–Learning Framework for Robust UUV Navigation Under Partial Observability 
+
+Md Ether Deowan 1 and Eleni Kelasidi 1
+
+Abstract — This paper presents an observation-only autonomy framework for Unmanned Underwater Vehicles (UUVs) naviga-tion in dynamic underwater environments that integrates per-sistent occupancy mapping, global clearance-aware planning, and risk-aware local control. The proposed pipeline constructs occupancy maps solely from onboard sonar and depth image observations, adapts a clearance-constrained global planner (GP) to provide long-horizon structure, and integrates a rein-forcement learning (RL) policy to handle short-range tracking and reactive avoidance. To further support decision-making under partial observability, the system learns a compact la-tent state representation from onboard sensor data, encoding environmental structure, obstacle dynamics, and uncertainty. Behavior tree (BT) distillation with staged supervision is in-troduced to improve safety and training stability, while an uncertainty-calibrated distillation mechanism reweights teacher guidance using online latent-model uncertainty, emphasizing uncertain regimes during learning, with time-to-collision (TTC) and clearance cues remaining explicit in planning and local policy features. To demonstrate the efficacy of the framework, a reproducible multi-seed evaluation protocol is established in high-fidelity GPU-accelerated simulation using NVIDIA Isaac Sim, and performance is benchmarked against BT-only and standard RL baselines. The results obtained demonstrate improved robustness and safety under dynamic conditions, thus providing a general pipeline with a unified hybrid plan-ning–learning architecture and a reproducible methodology for robust UUV autonomy under partial observability. 
+
+I. I NTRODUCTION 
+
+Autonomous underwater navigation presents unique chal-lenges that distinguish it from terrestrial and aerial robotics due to constrained sensing capabilities, complex hydrody-namic effects, GPS-denied localization, and highly dynamic environments involving moving obstacles such as marine life and other vehicles [1]–[3]. These factors lead to apartially observable and uncertain decision-making problem, where conventional motion planning approaches often ex-hibit limited performance [2]. Simultaneous Localization and Mapping (SLAM) methods have therefore been investigated for autonomous UUV operation [4], [5]. However, current state-of-the-art systems such as SVIn2 and TURTLMap [6], [7] remain challenged in low-texture, repetitive, and unstruc-tured underwater environments. More recent work on robust localization and mapping, such as the framework proposed in [8], has demonstrated promising real-time applicability in dynamic aquaculture scenarios. Similarly, motion planning approaches in [9]–[11] have enabled collision-free navigation in the presence of ocean currents, control errors, and dynamic  
+
+> 1Department of Mechanical and Industrial Engineering, Faculty of En-gineering, NTNU, Trondheim, Norway.
+
+md.e.deowan@ntnu.no, eleni.kelasidi@ntnu.no 
+
+environments containing static and dynamic obstacles. Nev-ertheless, these approaches rely on the assumption of known environments and predefined obstacle information. Classical underwater navigation pipelines are largely built on graph-search and sampling-based planners such as A*, RRT, and RRT*, as well as clearance-aware methods such as Voronoi-based path planning, typically combined with reactive local obstacle avoidance [2], [12]–[15]. These ap-proaches offer geometric interpretability and completeness guarantees, and remain dominant in UUV systems due to their clear structure and feasibility properties. However, they remain brittle under dynamic changes, uncertain perception, and time-varying scenes [2], [3]. Reactive controllers also lack strategic foresight and may produce suboptimal or unsafe behaviors, while the separation between perception, planning, and control can lead to inconsistent decisions when environmental assumptions are violated [2]. In dy-namic environments, precomputed routes can quickly be-come invalid, and frequent replanning under noisy maps may introduce instability or excessive computational load [2], [3]. Recent underwater works attempt to improve reactivity by combining artificial potential fields with deep RL con-trollers, including CAPF-TD3 and PPO-IIFDS variants for 3D dynamic avoidance [16], [17], as well as reward-shaped TD3 variants targeting trajectory smoothness and energy efficiency [18], [19]. Although these methods enhance local responsiveness, they are commonly evaluated under simpli-fied obstacle models or constrained scenario assumptions, often without strict observation-only sensing constraints and mapping uncertainty. A related limitation appears at the perception layer. Occu-pancy grid mapping (OGM) remains the standard represen-tation for fusing uncertain range measurements into prob-abilistic free/occupied space [20]. In underwater robotics, OGMs are widely paired with forward-looking sonar to enable real-time obstacle detection and navigation. Recent work demonstrates OGM-based obstacle avoidance coupled with potential-field control [21], and sonar-based SLAM sys-tems integrating filtering-based state estimation [22]. While effective for local obstacle handling, many OGM-based systems remain predominantly reactive and short-horizon. Their robustness can degrade when dynamic obstacles appear abruptly or when sonar artifacts such as multipath and bubbles corrupt map updates. Moreover, mapping, planning, and control are frequently evaluated in isolation, masking interface-level failure modes that arise when perception un-certainty propagates into planning decisions. To improve adaptability under such uncertainty, deep arXiv:2608.05365v1 [cs.RO] 5 Aug 2026 reinforcement learning (DRL), particularly model-free algo-rithms such as Proximal policy optimization (PPO) and Soft Actor-Critic (SAC) [23]–[25], offers a promising alternative by learning end-to-end policies that map observations di-rectly to actions. These methods have been increasingly ap-plied to underwater control tasks including station-keeping, tracking, and docking [23], [24]. However, pure DRL ap-proaches remain sample-intensive, exhibit unsafe exploration during early training, and often assume privileged state access or simplified obstacle models [26]. As a result, many learned policies are evaluated under conditions that do not reflect observation-only deployment constraints. Because of this sample complexity, high-throughput sim-ulation platforms play a central role in underwater robot learning. MarineGym has significantly improved training throughput and reproducibility through GPU-accelerated hy-drodynamics and standardized benchmarks [26]. In parallel, perception-focused simulators provide increasingly realistic underwater sensing models, including imaging sonar and physics-based rendering, helping reduce the sim-to-real gap for observation-driven autonomy [27]–[31]. Representative platforms include OceanSim [27], HoloOcean [28], UNav-Sim [29], UUV Simulator [30], and Stonefish [31]. These advances enable more realistic evaluation, but they do not by themselves resolve the architectural gap between mapping, planning, and safety-aware learning. This gap motivates hybrid planning–learning architectures that combine the long-horizon structure of classical planners with the adaptability of learned local controllers [2]. Policy distillation and imitation learning transfer structured priors from expert or rule-based controllers into neural policies [32], while BTs provide interpretable and supervisory logic widely used in robotics autonomy stacks [33]. However, existing distillation approaches typically apply fixed super-vision schedules and uniform weighting of teacher signals, without conditioning guidance strength on real-time collision risk or environmental uncertainty. As a result, safety-critical regimes such as near-obstacle interactions or replanning transitions are not explicitly emphasized during learning. Overall, prior work has advanced individual components of underwater autonomy, including global planning, sonar-based mapping, RL control, and high-fidelity simulation, but often treats them in isolation or under partially privileged settings. A persistent gap remains in unified, observation-only autonomy stacks that tightly couple persistent sonar-based mapping, clearance-aware global replanning, and risk-aware learned local control under moving obstacles. This paper proposed a hybrid architecture that com-bines the complementary strengths of classical planning and learned decision-making, and thus addressed this integration gap by enforcing observation-only constraints end-to-end and introducing risk-calibrated supervision to stabilize safety-critical learning in dynamic environments. Therefore, unlike prior work that evaluates isolated modules, the developed framework enforces observation-only constraints across map-ping, planning, and control, enabling realistic assessment of full autonomy stacks under dynamic uncertainty. In summary, the contributions of this work are: C1. A hierarchical motion planning framework integrating clearance-aware Voronoi-based global planning with RRT fallback and learned local policies for UUV navi-gation in dynamic underwater environments. C2. A BT distillation method that bootstraps deep RL train-ing with expert demonstrations, significantly improving sample efficiency and safety. C3. A latent world model architecture that compactly rep-resents environmental structure, obstacle dynamics, and uncertainty from partial sensor observations. C4. Extensive validation in high-fidelity GPU-accelerated simulation demonstrating successful navigation in com-plex underwater environments with curriculum learning. C5. Integration of sonar-based perception with occupancy grid mapping for real-time dynamic obstacle handling. The remainder of this paper is organized as follows: Section II details the proposed framework including the latent world model, hierarchical planning architecture, and BT distillation approach. Section III describes the experi-mental setup and training procedures. Section IV presents quantitative results and analysis. Section V concludes with discussion and future work. II. M ETHODOLOGY 
+
+The navigation is formulated as a partially observable stochastic control problem with latent physical state xt,onboard observation ot, and action at = [ut, v t, w t, r t]
+
+(surge, sway, heave, yaw-rate). The system evolves as 
+
+xt+1 ∼ p(xt+1 | xt, a t, ω t), ot ∼ p(ot | xt, ν t), (1) with process disturbance ωt and sensor noise νt. The policy is optimized under strict observation-only constraints: 
+
+ot =
+
+h
+
+osonar  
+
+> t
+
+, o depth  
+
+> t
+
+, o imu  
+
+> t
+
+, o vel  
+
+> t
+
+, o path 
+
+> t
+
+i
+
+(2) and objective 
+
+max 
+
+> πθ
+
+Eπθ
+
+" TX
+
+> t=0
+
+γtrt
+
+#
+
+s.t. Pr( collision ) ≤ ϵ, a t ∈ A , x t ∈ X , π θ (at|o≤t).
+
+(3) Here, Eπθ denotes expectation over trajectories induced by policy πθ , rt is reward, T is the horizon, γ is the discount factor, ϵ is the collision-risk bound, and A/X encode ac-tuator/feasibility limits for at/xt. The end-to-end autonomy stack is a coupled recursion 
+
+ M s 
+
+> t
+
+, M d 
+
+> t
+
+, Πt, ϕ t, a t
+
+ = G
+
+
+
+M s
+
+> t−1
+
+, M d
+
+> t−1
+
+,
+
+Πt−1, o t, a t−1
+
+
+
+,
+
+(4) where M s 
+
+> t
+
+and M d 
+
+> t
+
+are static and dynamic occupancy mem-ories, Πt is the global path, and ϕt are local-policy features. The operator G(·) denotes the closed-loop update map of the full autonomy stack. As illustrated in Fig. 1, persistent mapping and risk accumulation correspond to Sec. II-A; latent world modeling and uncertainty estimation correspond to Sec. II-D; and global planning, local decision-making, and closed-loop control correspond to Sec. II-B. The BT distillation module in Sec. II-C is used during training to shape the policy and which is shown in Fig. 2. 
+
+A. Sonar-Based Mapping and Risk Representation 
+
+Occupancy is updated from sonar hit/free-space evidence and depth-gated consistency. The implementation maintains separate static and dynamic layers: 
+
+M s
+
+t (c) = clip 
+
+
+
+(1 − λs)M s
+
+t−1(c) + ηocc Is-hit 
+
+t (c)
+
+− ηfree Ifree 
+
+t (c) + ηdepth Idepth 
+
+t (c), 0, 1
+
+
+
+,
+
+(5) 
+
+M d
+
+t (c) = clip 
+
+
+
+(1 − λd)M d
+
+t−1(c) + ηdyn Id-hit 
+
+t (c)
+
+− ηdyn ,free Ifree 
+
+t (c) + ηstamp Istamp 
+
+t (c), 0, 1
+
+
+
+,
+
+(6) with fused occupancy 
+
+Mt(c) = max  M s
+
+t (c), M d
+
+t (c) . (7) Each layer stores a bounded cell-wise occupancy belief in 
+
+[0 , 1] where c indexes a grid cell in the local occupancy map. Here, λs, λ d are static/dynamic decay factors, and 
+
+ηocc , η free , η depth , η dyn , η dyn ,free , η stamp are bounded update gains. The terms Is-hit 
+
+t (c), Id-hit 
+
+t (c), Ifree 
+
+t (c), Idepth 
+
+t (c), and 
+
+Istamp 
+
+t (c) are binary indicators for static-hit, dynamic-hit, free-space, depth-consistency, and dynamic-stamp evidence, respectively. During runtime, dynamic occupancy is inferred from observation-derived motion evidence only (temporal sonar inconsistency and Doppler-relative motion). Simulator-side dynamic stamping is used only as an optional debugging aid, meaning that all reported experiments keep this term disabled to preserve strict observation-only sensing. Planning uses an online clearance field 
+
+δt(c) = min( docc ,t (c), d bnd (c)) , (8) where docc ,t (c) is distance-to-occupied space at time t and 
+
+dbnd (c) is distance-to-boundary. For path diagnostics, ascalar risk map and its path-averaged density are used: 
+
+Rt(c) = αmM s
+
+t (c) + αdM d
+
+t (c) + αδ
+
+1
+
+δt(c) + ε (9) 
+
+¯Rt = 1
+
+H
+
+HX
+
+j=1 
+
+Rt(pt,j ), (10) where αm, α d, α δ are weight static occupancy, dynamic occupancy, and clearance penalty, respectively; pt,j is the jth point on the finite-horizon lookahead path segment Π(H)
+
+t =
+
+{pt, 1, . . . , p t,H }. Here, H is the lookahead horizon and ε > 0
+
+is a numerical regularizer. Mission Manager 
+
+> Control and Execution
+> Hybrid Motion Planning Decision Autonomy Layer
+> Latent Underwater World Model
+> Multi-modal Encoder
+> Sensor Fusion and
+> Denoising
+> Latent State z
+> Compact World
+> Representation
+> Latent Dynamics
+> Predictor
+> State Transition Model
+> Future Latent Rollouts
+> Dynamic Obstacle and
+> Current Prediction
+> RL Policy
+> DQN or PPO
+> Distilation
+> Behavior Modes
+> Cruise, Avoid, Replan, Explore,
+> Return, Energy Optimal
+> Global Planner
+> RRT star, A star, D star
+> Learned Guidance
+> Heuristic or Sampling Bias
+> Local Reactive Planner
+> Learned Obstacle Avoidance
+> Trajectory Smoothing
+> Velocity and Dynamics Optimization
+> Stabilization Controller
+> Vehicle Actuators
+> Mission Goals
+> Constraints
+> Energy, Safety, Time
+> On-board Sensors
+> Sonar
+> Depth Camera
+> Depth and
+> Pressure
+> DVL and IMU
+
+Fig. 1: Latent world model guided hybrid autonomy architec-ture. Multi-modal sensing is fused into a compact latent state with learned dynamics rollouts for risk-aware prediction, which informs learned guidance, global and local planning, RL-based behavior selection, and closed-loop control. 
+
+B. Hierarchical Global and Local Planning and Control 
+
+The global planner operates over the updated occupancy and clearance memories. Global planning is constrained to traversable cells 
+
+Ωt = {c | Mt(c) < τ occ , δ t(c) ≥ dmin }, (11) and path synthesis is posed as 
+
+P ⋆t = arg min 
+
+P ⊂Ωt
+
+X
+
+i
+
+∥pi+1 − pi∥2
+
+max( δt(pi), ε r ) . (12) Here, P = {pi} is a candidate waypoint sequence and 
+
+P ⋆t is the selected minimum-cost path; τocc is the occu-pancy threshold, dmin is the minimum clearance, and εr
+
+regularizes low-clearance costs. Voronoi planning is exe-cuted first because medial-axis paths maximize clearance in narrow passages and are less sensitive to local sonar-map uncertainty than shortest grid paths. A pure occupancy-grid A* planner was not used as the primary global planner because, without aggressive inflation, grid-optimal paths can hug occupied cells and amplify sonar/map discretization errors; RRT remains as a fallback when Voronoi connectivity fails. Replanning is event-triggered by: (i) no-progress/stuck detection, implemented as low speed away from the goal for a fixed window; (ii) safety/TTC events, using near-obstacle range and TTC termination thresholds; and (iii) map or dynamic-obstacle intersection with the lookahead path, including a constant-velocity forecast over a 2.5 s horizon. The local policy πθ receives path-relative and propriocep-tive features 
+
+ϕt =
+
+h
+
+∆plh 
+
+t , e ψt , e ct 
+
+t , v bt , ω bt , ξ sonar 
+
+t , ξ wm 
+
+t
+
+i
+
+, (13) Fig. 2: Overview of the proposed observation-only autonomy framework. Multi-modal sonar and state inputs are fused into a latent representation zt. A learned latent dynamics model predicts ˆzt+1 and ˆot+1 , producing uncertainty ˆσt and online residual features appended to policy observations. TTC and path-risk signals are used in local policy/planning features, while BT distillation is uncertainty-calibrated through λrisk  
+
+> t
+
+. The policy outputs continuous control actions at and operates in a closed-loop perception–prediction–control pipeline. where ∆plh  
+
+> t
+
+is lookahead displacement, eψt is heading error, 
+
+ect  
+
+> t
+
+is cross-track error, ξsonar  
+
+> t
+
+are sectorized range/TTC features, and ξwm  
+
+> t
+
+are latent world-model features. Here, vbt
+
+and ωbt denote body-frame linear and angular velocities, re-spectively. In practice, ξwm  
+
+> t
+
+contains the one-step prediction residual and an uncertainty proxy derived from the latent world model. Reward shaping is defined as 
+
+rt = ralive + wp∆st − wddt − wct |ect  
+
+> t
+
+| − wcCt − wttc Tt
+
+− wv ∥vt∥2over + wuUt + whHt + wsιsucc  
+
+> t
+
+− wf ιfail 
+
+> t
+
+− wtilt Θt − weff Et, (14) where ∆st is path progress, dt is path-reference distance, 
+
+Ct is soft clearance violation, Tt is TTC penalty, and 
+
+∥vt∥over penalizes overspeed beyond configured safety ve-locity. Here, ralive is a constant per-step survival reward, 
+
+Ut denotes uprightness, and Ht denotes heading-alignment reward; Θt is tilt magnitude and Et is mean control ef-fort. Terminal indicators are defined as ιsucc  
+
+> t
+
+∈ { 0, 1} and 
+
+ιfail  
+
+> t
+
+∈ {0, 1}, equal to 1 only when success or failure termination is triggered at step t, respectively. The coef-ficients wp, w d, w ct , w c, w ttc , w v , w u, w h, w s, w f , w tilt , w eff 
+
+are manually selected from stable validation rollouts, then fixed for all PPO comparisons; no automated reward-weight search or sensitivity sweep is claimed. The reward combines progress tracking, safety penalties, attitude stabilization, and terminal success/failure terms. In addition to reward shaping, hard safety constraints are enforced online: 
+
+dmin  
+
+> t
+
+≥ dcoll , TTC t ≥ τcoll , (15) with immediate termination when violated, ensuring policy updates are always conditioned on explicit safety boundaries. Here, dmin  
+
+> t
+
+is the minimum instantaneous obstacle clearance, 
+
+dcoll is the collision-clearance threshold, and τcoll is the TTC safety threshold. 
+
+C. BT-Guided Distillation for Policy Learning 
+
+To improve sample efficiency and suppress unsafe explo-ration, RL is trained with BT distillation: 
+
+L(θ) = LRL (θ) + λt E∥μθ (ϕt) − aBT  
+
+> t
+
+∥22
+
+ , (16) where LRL denotes the underlying RL objective (e.g., PPO loss), and aBT  
+
+> t
+
+is the teacher action generated by the behavior tree. The staged schedule is 
+
+λt =
+
+
+
+1.0, t ≤ 800 ,
+
+0.2
+
+
+
+1 − t − 800 1600 − 800 
+
+
+
+, 800 < t ≤ 1600 ,
+
+0, t > 1600 ,
+
+(17) where t denotes policy-update iteration. This schedule tran-sitions from expert-guided stabilization for optimization. 
+
+D. Latent World Model and Uncertainty-Aware Supervision 
+
+Partial observability is addressed with an online latent predictor: 
+
+zt = fφ(ot), ˆzt+1 = gψ (zt, a t), ˆot+1 = hω (ˆ zt+1 ), (18) where ot and at are the observation and action, and fφ,
+
+gψ , and hω denote the encoder, latent dynamics model, and decoder. The loss has two parts: one asks the decoder to Static Obstacles Dynamic Obstacles 
+
+> BlueROV2
+> Tank BlueROV2
+> MHL tank from Ocensim
+
+Fig. 3: Representative simulation environment with dynamic obstacles. The scene contains a mix of static and moving obstacles, with the UUV tasked to navigate from a start location to a goal while avoiding collisions. predict selected next-observation terms, and the other asks the dynamics model to predict the next latent state: 
+
+LWM = Lrecon (ˆ ot+1 , ˜ot+1 ) + β∥zt+1 − ˆzt+1 ∥22, (19) where β weights the latent-dynamics loss. Both targets are one-step quantities: ˜ot+1 = o(1: dtar ) 
+
+> t+1
+
+is the first dtar 
+
+entries of the next observation, and zt+1 = fφ(ot+1 ) is the encoded next observation. Here dtar = 24 : 3 relative goal-position errors in the body frame, 2 heading-error terms 
+
+[sin eψt , cos eψt ], 3 body-frame velocities, yaw rate, depth, roll and pitch, and the first 12 sonar ranges. World-model (WM) architecture, optimizer settings, and β are listed in Table IV. 
+
+Lrecon is Gaussian negative log likelihood (NLL), or mean-squared error (MSE) when NLL is disabled; the decoder log-variance log cvar t provides an uncertainty proxy 
+
+σt = mean   exp(log cvar t), (20) which is tracked by an exponential moving average 
+
+¯σt = (1 − ρ)¯ σt−1 + ρσ t, (21) where ρ ∈ (0 , 1] is the EMA update factor. This quantity is a decoder-variance proxy used for policy-feature augmentation and distillation scaling; it is not a separately calibrated collision probability or probabilistic safety guarantee. The policy receives two online WM features (predic-tion residual and uncertainty proxy), and BT distillation is uncertainty-calibrated by 
+
+st = clip(1 + α¯σt, 1, s max ) , λrisk  
+
+> t
+
+= λtst, (22) where λt is the staged base distillation weight, α ≥ 0 controls uncertainty-to-supervision gain, and smax ≥ 1 bounds mul-tiplicative amplification. The gains are given in Table IV; they keep risk scaling bounded while increasing teacher influence in high-uncertainty rollouts. The mechanism’s run-time/training separation and data flow are illustrated in Fig. 2. 
+
+E. Ablation Protocol and Implementation 
+
+To isolate the effect of each architectural component, a controlled ablation set is evaluated under identical seeds and scenario distributions: (A) Full : OGM + GP + BT curriculum distillation + LWM with uncertainty scaling ( α > 0); (B) 
+
+LWM risk : same as Full with α = 0; (C) LWM : world model input removed ( ξwm  
+
+> t
+
+= 0); (D) BT distill : pure PPO under the same mapping and planning stack. To validate the hierarchical planner, all variants are evaluated using success rate, collision rate, episodic return, average episode time, and time-to-success (TTS). The corresponding aggregate performance comparison is reported in Table I. TABLE I: Navigation performance in underwater scenarios. Lower TTS indicates faster and more reliable navigation.                               
+
+> Method Succ. ↑Coll. ↓Return ↑Avg. (s) ↓TTS (s) ↓
+> PPO w/o distill 0.20 0.40 +197.3 22.84 114.2 PPO 20% distill 0.46 0.20 +173.4 13.44 67.2 PPO curr. distill 0.87 0.15 +176.4 11.41 15.8 BT 0.80 0.10 +40.0 14.50 32.5
+
+Each control cycle performs: (i) map and risk updates 
+
+(M s 
+
+> t
+
+, M d 
+
+> t
+
+), (ii) global planning Πt via Voronoi with event-triggered RRT fallback, (iii) local control at = πθ (ϕt),and (iv) safety termination checks. Training is conducted in vectorized Isaac Sim with safety penalties active. Reward de-sign, termination conditions, and evaluation protocol remain fixed across ablations where only the targeted component is modified, ensuring attributable performance differences. III. E XPERIMENTAL SETUP 
+
+All experiments are conducted in Isaac Sim with GPU-accelerated underwater physics in a pool-like maze with static and moving obstacles. The simulated platform is a BlueROV2-class vehicle (MarineGym BlueROV asset) [26]; key hydrodynamic, sensing, timing, and safety parameters are listed in Table IV. The vehicle executes continuous 4-DoF commands with pitch and roll stabilization at =[ut, v t, w t, r t]. Policy inputs are strictly observation-only, using sonar-derived, proprioceptive, and planner-relative path features as discussed in Sec. II. Measured workstation timing is summarized in Table II. For learning-based methods, training is implemented through the Isaac Lab reinforcement learning stack [34]. The primary learner is PPO, trained using the RL-Games and RSL-RL backends; PPO and auxiliary-model settings are summarized in Table IV. BT supervision follows the staged distillation schedule in Sec. II. In world-model runs, two online features, uncertainty and one-step prediction residual, are appended to the policy input. Safety is enforced during both training and evaluation via collision/TTC termination. Dynamic obstacles follow scripted kinematic waypoint/loop trajectories with randomized phase and assigned nominal speed; they do not actively avoid or react to the UUV. The robustness sweep summarized in Fig. 5 assigns the same TABLE II: Workstation deployability timing. Values are not embedded-hardware guarantees.                   
+
+> Component Mean Max / note WM encoder 0.015 ms CPU microbench. WM dynamics 0.015 ms CPU microbench. WM decoder 0.027 ms mean+logvar PPO policy 0.110 ms 0.127 ms Mapping update 3.33 ms 6.17 ms Global planner 5.22 ms 9.89 ms Full Python/Isaac loop 28.63 ms 39.88 ms; 20 ms budget Replanning rate 6.21 Hz 52.1 replans/episode
+
+nominal speed v to all moving obstacles in a condition, abstracting more complex marine-life and current-driven mo-tion. Robustness is encouraged through randomized start/goal placement, obstacle layouts, and interaction conditions; hy-drodynamic parameters are kept fixed to the active vehicle configuration. The OceanSim check in Fig. 3 uses a separate pool-style scene, rendering pipeline, and scene geometry, and should be interpreted as a qualitative perception/scene-transfer check rather than a full hydrodynamic transfer benchmark. TABLE III: Runtime versus dynamic-obstacle density.                 
+
+> Dobstacles 036915 Loop time (ms) 19.7 25.2 28.6 31.6 38.0 Replans/episode 51.9 62.7 54.4 48.8 42.7
+
+Experiments are run on an AMD Ryzen 9 9950X3D CPU, NVIDIA RTX 5090 (32 GB VRAM), and 60 GB RAM. Table II shows that learned inference is negligible relative to mapping/planning and simulator overhead; dense scenes can exceed the 50 Hz budget, so embedded deployment requires platform-specific profiling. IV. R ESULTS AND ANALYSIS 
+
+A. Training Efficiency and World Model Learning 
+
+Fig. 4 demonstrates that incorporating latent world model-ing with distillation substantially improves learning dynam-ics. Distillation-based policies converge faster and achieve higher stable reward compared to PPO without distillation. The online training success curve is conservative because it is measured during exploratory rollouts, whereas Table I reports fixed-policy, multi-seed evaluation without exploration noise. Crucially, reward improvements correspond to consistent increases in task success, confirming that gains are not attributable to reward shaping artifacts. Simultaneously, reconstruction and dynamics losses de-crease smoothly and stabilize, verifying that the latent world model learns compact representations and stable one-step predictive dynamics. This stable predictive structure provides a principled mechanism for improved policy updates and underpins the observed performance gains. 
+
+B. Quantitative Navigation Performance 
+
+All methods are evaluated using the multi-seed protocol described in Sec. III (5 seeds × 5 trials, 25 episodes per method). The reported metrics are success rate, collision rate (including TTC-based terminations), episodic return, average episode time, and time-to-success (TTS): 
+
+(a) Mean training reward  (b) Task success rate 
+
+(c) Reconstruction loss  (d) Dynamics prediction loss 
+
+Fig. 4: Training dynamics and latent world model conver-gence. Distillation-based variants exhibit accelerated learn-ing, improved stability, and consistent one-step world model convergence compared to PPO without distillation. Training success is measured online during learning and is separate from the fixed multi-seed evaluation protocol in Table I. 
+
+TTS = AvgTime SuccessRate , (23) which jointly penalizes slow execution and unreliability. Table I reveals a decisive performance advantage for the curriculum-distilled policy. It achieves nearly a 4×
+
+improvement in success rate over PPO without distillation, while simultaneously reducing collision rate and dramatically lowering TTS (15.8s vs. 114.2s). Episodic return is therefore treated as a diagnostic training signal rather than the primary operational metric. The higher return of PPO without distilla-tion occurs because survival, progress, and attitude-alignment rewards can accumulate before a late collision or timeout, even when the episode does not complete the mission safely. For deployment-oriented comparison, success, collision, and TTS are prioritized because they directly measure goal completion, safety, and reliability-weighted speed. The curriculum-distilled variant achieves a favorable safety–efficiency balance, approaching the robustness of the BT baseline while maintaining superior efficiency and adapt-ability. This demonstrates that latent world model distillation effectively regularizes policy learning and improves real-world operational reliability. 
+
+C. Robustness Under Increasing Dynamic Complexity 
+
+Fig. 5 provides a structured robustness test over jointly increasing scene complexity. Each condition is indexed by (S, D, v ), where S ∈ {4, 8, 12 } denotes static obstacle count with randomized layouts, D ∈{0, 3, 6, 9, 15 } denotes dynamic obstacle count, and v ∈{0.2, 0.4, 0.6, 0.8, 1.5, 3.0} m/s denotes dynamic obstacle speed. The left panel reports collision rate and the right panel reports success rate; each cell reports rate (%) and mean time-to-success. Fig. 5: Robustness evaluation across static obstacle ( S = 4 , 8, 12 ), dynamic obstacle counts ( D = 0 , 3, 6, 9, 15 ), and speeds (v = 0 .2–3.0 m/s). Left: collision rate (%). Right: success rate (%). In-cell values report mean time-to-success (seconds).  
+
+> (a) Scenario A (b) Scenario B
+
+Fig. 6: Representative trajectory rollouts overlaid on the sonar occupancy map. Gray/black cells denote occupied static-map evidence, red/pink overlays denote dynamic occupancy evidence, colored curves denote method trajectories, and the star marks the goal. Apparent visual overlap with occupied cells can occur from accumulated map projection and is not counted as collision unless the collision/TTC termination condition is triggered. Distillation-based policies produce smoother and more goal-directed trajectories with reduced oscillatory behavior. Across low-to-moderate dynamic complexity, the policy sustains high success with low collision. For S ≤ 8, D ≤ 9,and v ≤ 1.5 m/s, mean success is 82.8% and mean collision is 1.1%, with 38 of 40 conditions having zero collision. For D ≤ 3, collision remains below 0.4% on average over all static clutter and speed settings. This indicates that the observation-only stack remains stable under substantial variation in obstacle layout and motion. Degradation appears mainly in the extreme corner cases: high static clutter, highest dynamic congestion, and fastest obstacles ( v = 3 .0 m/s). This defines an operational bound-ary rather than a general failure mode: obstacle speed reaches 3.0 m/s while robot maximum speed is 0.6 m/s, reducing re-action margin and making evasive motion underactuated. The results also reflect a safety completion tradeoff: larger clear-ance/TTC margins can recover zero collision, but increase conservative detours, stuck episodes, and timeouts. Overall, the sweep shows robustness over practical conditions and graceful degradation under adversarial motion regimes. 
+
+D. Qualitative Trajectory Analysis 
+
+Fig. 6 complements Table I by showing how the metrics appear in trajectory space. Scenario A represents a moder-ately cluttered case with local obstacle interaction near the goal region; Scenario B represents a harder case requiring larger heading correction and longer obstacle-aware detour-ing. In both scenarios, the non-distilled PPO policy exhibits less stable route selection and larger path inefficiency, while distillation-based policies are more directed and consistent. The qualitative trends are aligned with the quantitative outcomes: curriculum-distilled PPO achieves a better safety– efficiency balance, with smoother progress, fewer unnec-essary deviations, and more reliable goal-oriented motion. The BT baseline remains conservative and safe, whereas the distilled learned policy preserves safety while adapting more efficiently to local geometry changes. Together, these results support the claim that BT-guided distillation with latent world-model cues improves practical navigation behavior under dynamic underwater conditions. V. C ONCLUSION 
+
+This paper presented an observation-only hybrid auton-omy framework for UUV navigation in dynamic underwater environments, combining persistent sonar-based occupancy mapping, clearance-aware global planning, and a learned lo-cal controller trained with BT-guided distillation. To improve robustness under partial observability, this work integrated a latent world model and uncertainty-calibrated supervision during policy optimization. Across multi-seed experiments in high-fidelity simulation, the framework improved relia-bility and safety-efficiency balance relative to non-distilled RL baselines, while maintaining strong performance under increasing dynamic obstacle density and speed. The results demonstrated that structured planning and uncertainty-aware learning can be integrated into a closed-loop autonomy stack without privileged map access. This reduces unsafe exploration, improves stability near obstacle interactions, and yields more consistent navigation than non-distilled RL baselines. These results are simulation evidence rather than a claim of real-world readiness. The most vulnerable transfer components are sonar artifacts, hydrodynamic mismatch and currents, localization drift, perception noise, and actuator delay/saturation. Future work will validate these components through hardware-in-the-loop, tank, and open-water tests, and will investigate online adaptation and risk-aware replan-ning for long-horizon robustness under real sensing artifacts. REFERENCES [1] L. D. Evjemo, S. J. Ohrem, B. Su, M. Føre, and E. Kelasidi, Aquacul-ture Robotics: Challenges, Opportunities and Future Prospects and the Role of Digital Twin Technology and Autonomous Solutions . Cham: Springer Nature Switzerland, 2026. [2] D. Zhu, T. Yan, and S. X. Yang, “Motion planning and tracking control of unmanned underwater vehicles: Technologies, challenges and prospects,” 2022. [3] T. I. Fossen, Handbook of Marine Craft Hydrodynamics and Motion Control . Wiley, 2011. [4] M. Singh and K. Alexis, “Deepvl: Dynamics and inertial measurements-based deep velocity learning for underwater odometry,” in IEEE Int. Conf. Robot. Autom. , 2025. [5] A. Cardaillac, H. B. Amundsen, E. Kelasidi, and M. Ludvigsen, “Application of maneuvering based control for autonomous inspection of aquaculture net pens,” in 8th Asia-Pacific Conf. Intell. Robot Syst. ,2023. [6] W. Wang, B. Joshi, N. Burgdorfer, K. Batsosc, A. Q. Lid, P. Mordo-haia, and I. Rekleitisb, “Real-time dense 3d mapping of underwater environments,” in IEEE Int. Conf. Robot. Autom. , 2023. [7] J. Song, O. Bagoren, R. Andigani, A. V. Sethuraman, and K. A. Skinner, “Turtlmap: Real-time localization and dense mapping of low-texture underwater environments with a low-cost unmanned underwa-ter vehicle,” 2024. [8] M. Job, D. Botta, V. Reijgwart, L. Ebner, A. Studer, R. Siegwart, and E. Kelasidi, “Leveraging learned monocular depth prediction for pose estimation and mapping on unmanned underwater vehicles,” Front. Robot. AI , vol. 12, 2025. [9] M. Xanthidis, E. Kelasidi, and K. Alexis, “Resiplan: Closing the planning-acting loop for safe underwater navigation,” in 2023 IEEE Int. Conf. Robot. Autom. (ICRA) , 2023. [10] H. B. Amundsen, T. F. Olsen, M. Xanthidis, M. Føre, and E. Kelasidi, “Rump: Robust underwater motion planning in dynamic environments of fast-moving obstacles,” in 2024 IEEE Int. Conf. Robot. Autom. (ICRA) , 2024. [11] H. B. Amundsen, M. Føre, S. J. Ohrem, B. O. A. Haugaløkken, and E. Kelasidi, “Three-dimensional obstacle avoidance and path planning for unmanned underwater vehicles using elastic bands,” IEEE Trans. Field Robot. , 2024. [12] P. E. Hart, N. J. Nilsson, and B. Raphael, “A formal basis for the heuristic determination of minimum cost paths,” IEEE Trans. Syst. Sci. Cybern. , vol. 4, 1968. [13] S. M. LaValle, “Rapidly-exploring random trees: A new tool for path planning,” 1998. [14] S. Karaman and E. Frazzoli, “Sampling-based algorithms for optimal motion planning,” Int. J. Robot. Res. , vol. 30, 2011. [15] H. Choset and J. Burdick, “Sensor-based exploration: The hierarchical generalized voronoi graph,” Int. J. Robot. Res. , vol. 19, 2000. [16] D. Li, M. Cheng, S. Wang, and B. Wang, “Cooperative path planning and trajectory tracking for autonomous underwater vehicles using adaptive compensation artificial potential field and twin delayed deep deterministic policy gradient algorithm,” Ocean Eng. , vol. 322, 2025. [17] J. Liu, J. Weng, W. Liu, C. Sun, and Y. Yuan, “Path planning and dynamic obstacle avoidance for autonomous underwater vehicles using ppo-iifds,” J. Mar. Sci. Eng. , vol. 13, 2025. [18] K. Su, Y. Yang, L. Wang, W. Xu, H. Fang, W. Jiang, and S. Qin, “An improved twin delayed deep deterministic policy gradient with adaptive reward and prioritized replay for autonomous underwater vehicle path planning,” Ocean Eng. , vol. 340, 2026. [19] H. Chen, X. Yuan, H. Wang, S. Chen, and L. Liu, “Deep reinforce-ment learning trajectory tracking and obstacle avoidance for deep-sea mining vehicle,” Ocean Eng. , vol. 298, 2024. [20] A. Elfes, “Using occupancy grids for mobile robot perception and navigation,” Computer , vol. 22, 1989. [21] H.-S. Jin, H. Kang, M.-G. Kim, M.-J. Lee, and J.-H. Li, “Ogm-based real-time obstacle detection and avoidance using a multi-beam forward looking sonar,” J. Ocean Eng. Technol. , 2024. [22] X. Mu et al. , “Occupancy grid-based auv slam method with forward-looking sonar,” J. Mar. Sci. Eng. , vol. 10, 2022. [23] J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov, “Proximal policy optimization algorithms,” 2017. [24] T. Haarnoja, A. Zhou, P. Abbeel, and S. Levine, “Soft actor-critic: Off-policy maximum entropy deep reinforcement learning with a stochastic actor,” in Int. Conf. Mach. Learn. (ICML) , 2018. [25] M. E. Deowan, M. S. Yeasher Yousha, T. M. Hossain, S. Hassan, and R. Marxer, “Optimizing underwater robot navigation: A study of drl algorithms and multi-modal sensor fusion,” in 2025 IEEE Int. Conf. Robot. Autom. (ICRA) , 2025. [26] S. Chu, Z. Huang, Y. Li, M. Lin, D. Li, I. Carlucho, Y. R. Petillot, and C. Yang, “Marinegym: A high-performance reinforcement learning platform for underwater robotics,” 2025. [27] J. Song, H. Ma, O. Bagoren, A. V. Sethuraman, Y. Zhang, and K. A. Skinner, “Oceansim: A gpu-accelerated underwater robot perception simulation framework,” 2025. [28] E. Potokar, S. Ashford, M. Kaess, and J. G. Mangelson, “Holoocean: An underwater robotics simulator,” in 2022 IEEE Int. Conf. Robot. Autom. (ICRA) , 2022. [29] A. Amer, O. ´ Alvarez-Tu˜ n´ on, H. I. Ugurlu, J. l. F. Sejersen, Y. Brodskiy, and E. Kayacan, “Unav-sim: A visually realistic underwater robotics simulator and synthetic data-generation framework,” in 2023 21st Int. Conf. Adv. Robot. (ICAR) , 2023. [30] M. M. M. Manh˜ aes, S. A. Scherer, M. Voss, L. R. Douat, and T. Rauschenbach, “Uuv simulator: A gazebo-based package for un-derwater intervention and multi-robot simulation,” in OCEANS 2016 MTS/IEEE Monterey , 2016. [31] M. Grimaldi, P. Cieslak, E. Ochoa, V. Bharti, H. Rajani, I. Carlucho, M. Koskinopoulou, Y. R. Petillot, and N. Gracias, “Stonefish: Sup-porting machine learning research in marine robotics,” in 2025 IEEE Int. Conf. Robot. Autom. (ICRA) , 2025. [32] A. A. Rusu, S. G. Colmenarejo, C ¸ . G¨ ulc ¸ehre, G. Desjardins, J. Kirk-patrick, R. Pascanu, V. Mnih, K. Kavukcuoglu, and R. Hadsell, “Policy distillation,” in Int. Conf. Learn. Represent. (ICLR) , 2016. [33] M. Colledanchise and P. ¨ Ogren, Behavior Trees in Robotics and AI: An Introduction . CRC Press, 2018. [34] NVIDIA, “Isaac lab documentation,” https://isaac-sim.github.io/ IsaacLab/, 2024, accessed: 2026-03-02. 
+
+APPENDIX 
+
+TABLE IV: Reproducibility parameters.
