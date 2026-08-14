@@ -6,36 +6,35 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-13
-- 运行时间：2026-08-13 21:26:28 UTC
+- 最新运行日期：2026-08-14
+- 运行时间：2026-08-14 21:11:59 UTC
 - 运行状态：成功
 - 本次总论文数：5
-- 精读区：0
-- 速读区：5
+- 精读区：2
+- 速读区：3
 
 ### 今日简报（AI）
-今日共推荐5篇论文，均速读完成，聚焦多智能体协同与自主导航。最值得关注UAV在间歇连接下的潜状态估计（7.0分），以及多智能体策略组合的安全性分析（7.0分）。下一步可优先精读这两篇，深入理解可靠通信与策略迁移的挑战。
-- 详情：[/202608/13/README](/202608/13/README)
+今日精读5篇，聚焦多智能体强化学习在海洋无人系统协同追踪中的应用。最值得关注两项高分工作：基于值梯度引导的多AUV水下目标跟踪，以及异构USV受限港口水域的选项引导残差协同追踪。建议普通读者先理解多智能体扩散强化学习与残差策略设计，可快速把握该领域前沿方向。
+- 详情：[/202608/14/README](/202608/14/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Multi-AUV Ad-hoc network-based Target Tracking: A Value Gradient Guidance Multi-Agent Diffusion Reinforcement Learning Approach](/202608/14/2608.12436v1-multi-auv-ad-hoc-network-based-target-tracking-a-value-gradient-guidance-multi-agent-diffusion-reinforcement-learning-approach)  
+   标签：评分：8.0/10、query:ui
+   evidence：多智能体扩散强化学习用于水下集群协同目标跟踪，与多无人机协同拦截围捕高度相似
+2. [OGR-MARL: Option-Guided Residual Multi-Agent Reinforcement Learning for Heterogeneous USV Cooperative Pursuit in Constrained Port Waterways](/202608/14/2608.12995v1-ogr-marl-option-guided-residual-multi-agent-reinforcement-learning-for-heterogeneous-usv-cooperative-pursuit-in-constrained-port-waterways)  
+   标签：评分：8.0/10、query:ui
+   evidence：面向异构智能体协同追捕逃逸者的多智能体强化学习，与无人机围捕任务直接类比
 
 ### 速读区论文标签
-1. [Latent Semantic State Estimation for Reliable Swarming of UAVs under Intermittent Connectivity](/202608/13/2608.08895v1-latent-semantic-state-estimation-for-reliable-swarming-of-uavs-under-intermittent-connectivity)  
+1. [Decentralized Multi-Player Q-Learning in Episodic Markov Decision Processes with Information Asymmetry](/202608/14/2608.12753v1-decentralized-multi-player-q-learning-in-episodic-markov-decision-processes-with-information-asymmetry)  
    标签：评分：7.0/10、query:ui
-   evidence：针对间歇连接下的多无人机集群提出潜在语义状态估计方法，支持可靠协同与通信。
-2. [Is Per-Agent Policy Composition Safe? Rethinking Successor-Feature Transfer in Cooperative Multi-Agent Reinforcement Learning](/202608/13/2608.11658v1-is-per-agent-policy-composition-safe-rethinking-successor-feature-transfer-in-cooperative-multi-agent-reinforcement-learning)  
-   标签：评分：7.0/10、query:ui
-   evidence：基于后继特征的安全多智能体策略迁移的合作多智能体强化学习
-3. [Unified Planning-Learning Framework for Robust UUV Navigation Under Partial Observability](/202608/13/2608.05365v1-unified-planning-learning-framework-for-robust-uuv-navigation-under-partial-observability)  
+   evidence：去中心化多玩家Q学习，面向多智能体强化学习
+2. [A Unified Framework for Dynamic Reward Shaping in Reinforcement Learning](/202608/14/2608.08158v1-a-unified-framework-for-dynamic-reward-shaping-in-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：UUV导航的统一规划与强化学习框架，处理跟踪与回避，可迁移至单无人机拦截场景
-4. [RecoverFly: A Failure-Aware Reinforcement Learning Post-Training Framework for Aerial Vision-Language Navigation](/202608/13/2608.09467v1-recoverfly-a-failure-aware-reinforcement-learning-post-training-framework-for-aerial-vision-language-navigation)  
+   evidence：动态奖励塑形框架，可迁移至无人机拦截强化学习
+3. [Efficient Real-World Online Reinforcement Learning for Robot Manipulation via Centralized Training and Critic Decomposition](/202608/14/2608.09762v1-efficient-real-world-online-reinforcement-learning-for-robot-manipulation-via-centralized-training-and-critic-decomposition)  
    标签：评分：6.0/10、query:ui
-   evidence：面向无人机视觉语言导航的强化学习后训练框架，解决样本效率与策略偏移问题，与无人机自主控制相关。
-5. [IADD-TR: Intervention-Aware Dynamics Decoupling with Targeted Regularization for Model-Based Reinforcement Learning](/202608/13/2608.10634v1-iadd-tr-intervention-aware-dynamics-decoupling-with-targeted-regularization-for-model-based-reinforcement-learning)  
-   标签：评分：6.0/10、query:ui
-   evidence：基于模型的强化学习方法，可迁移至无人机拦截/围捕任务
+   evidence：提出面向真实世界多智能体训练的统一RL框架（CTDE+HRA），可迁移至无人机集群多智能体强化学习
 
 
 <div class="dpr-home-promo-card">
