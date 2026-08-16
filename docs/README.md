@@ -6,28 +6,22 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-15
-- 运行时间：2026-08-15 19:00:36 UTC
+- 最新运行日期：2026-08-16
+- 运行时间：2026-08-16 19:49:09 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：0
 - 精读区：0
-- 速读区：1
+- 速读区：0
 
 ### 今日简报（AI）
-今日仅速读1篇论文，无精读，主题为智能体强化学习中的环境反馈与多时间尺度信用分配。
-
-最值得关注的是《Learning from Environmental Feedback》一文（6.0/10），探讨如何利用环境反馈在多个时间尺度上分配信用，适合强化学习研究者参考。
-
-建议普通读者先了解“信用分配”基本概念，再结合自身场景评估该方法对智能体长期决策的启发，不必急于精读全文。
-- 详情：[/202608/15/README](/202608/15/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/202608/16/README](/202608/16/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Learning from Environmental Feedback: Credit Assignment across Multiple Timescales for Agentic Reinforcement Learning](/202608/15/2608.08255v1-learning-from-environmental-feedback-credit-assignment-across-multiple-timescales-for-agentic-reinforcement-learning)  
-   标签：评分：6.0/10、query:ui
-   evidence：面向稀疏奖励强化学习的信用分配方法，可应用于无人机拦截与围捕
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
