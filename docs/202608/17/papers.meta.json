@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-17",
+  "date": "2026-08-17",
+  "generated_at": "2026-08-17T20:28:01",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/17/2608.14135v1-agilepe-autonomous-uav-pursuit-evasion-via-self-play-reinforcement-learning",
+      "section": "deep",
+      "title_en": "AgilePE: Autonomous UAV Pursuit-Evasion via Self-Play Reinforcement Learning",
+      "authors": "Wenhao Tang, Tianyang Chen, Zhejun Cui, Boyuan An, Jiayu Chen, Ruize Zhang, Huidong Liu, Tianyue Wu, Qingmin Liao, Fei Gao, Yu Wang, Chao Yu",
+      "date": "2026-08-14",
+      "pdf": "https://arxiv.org/pdf/2608.14135v1",
+      "score": "10.0",
+      "evidence": "基于自博弈深度强化学习的无人机自主追逃",
+      "tldr": "自主追逃对无人机是挑战，传统方法难以应对高维空中交互。AgilePE通过自博弈强化学习，将状态直接映射到集总推力和机体角速度指令，结合优先级虚构自博弈与多样化对手池，实现端到端敏捷机动。策略零样本迁移至真实四旋翼，复现闪避与侧翼战术，为自主追逃提供完整系统方案。",
+      "tags": "query:ui",
+      "abstract_en": "Autonomous pursuit-evasion is a fundamental challenge for Unmanned Aerial Vehicles (UAVs), requiring rapid decision-making under tightly coupled dynamics and continuously changing opponent behaviors. Traditional rule-based or differential-game approaches often struggle with high-dimensional aerial interactions and agile maneuvering. We present AgilePE, a complete system for autonomous UAV pursuit-evasion via self-play reinforcement learning. AgilePE integrates agile low-level control, competitive policy optimization, and sim-to-real deployment in a unified framework. The policy directly maps onboard state observations to Collective Thrust and Body Rates (CTBR) commands, enabling end-to-end agile maneuvering without intermediate trajectory planners or waypoint controllers. For training, we use competitive self-play with Prioritized Fictitious Self-Play (PFSP) and a diversified opponent pool, enabling agents to improve against historical policies while stabilizing optimization and reducing policy oscillation. This process leads to the emergence of sophisticated pursuit and evasion strategies. For real-world deployment, we develop a hardware-aligned simulation pipeline that models actuator-response dynamics, communication latency, and domain randomization. The learned policies transfer zero-shot to real quadrotors without task-specific tuning. Real-world experiments reproduce pursuit-evasion tactics observed in simulation, including rapid dodging and flanking, and demonstrate interactive two-agent zero-shot deployment.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/17/2608.10403v1-threat-guided-policy-aware-scene-perturbation-for-safe-autonomous-driving-with-online-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Threat-guided Policy-aware Scene Perturbation for Safe Autonomous Driving with Online Reinforcement Learning",
+      "authors": "Xincong Hu, Lei Ou, Maosen Li, Jingtao Zhang, Liguo Hou, Zongzhang Zhang",
+      "date": "2026-08-11",
+      "pdf": "https://arxiv.org/pdf/2608.10403v1",
+      "score": "6.0",
+      "evidence": "提出策略感知的安全关键场景扰动方法，可迁移至无人机拦截/追逃的对抗训练",
+      "tldr": "在线强化学习自动驾驶因长尾分布难以遭遇危险场景，威胁安全。现有场景生成方法忽略与当前策略的关联。提出TPSP，利用策略感知场景编码器捕获策略与环境的交互，只对关键目标做威胁引导的选择性扰动。实验表明在NAVSIM v2约四百万公里数据上提升安全学习效率，消融验证优于随机扰动，为自动驾驶安全训练提供新思路。",
+      "tags": "query:ui",
+      "abstract_en": "Reinforcement learning (RL) has shown promising performance in autonomous driving, yet ensuring the safety of online RL policies remains challenging due to insufficient exposure to safety-critical driving scenes. The long-tailed nature of real-world traffic situations makes dangerous and rare interactions difficult to encounter through conventional sampling, limiting the ability of RL policies to learn robust safety behaviors. Existing methods improve training diversity by synthesizing challenging scenes or adversarial situations. However, these approaches typically optimize scene generation objectives separately from the evolving policy, without explicitly modeling how generated perturbations relate to the current policy's weaknesses and learning needs. In this paper, we propose Threat-guided Policy-aware Scene Perturbation (TPSP) for safe autonomous driving with online RL. TPSP introduces a policy-aware scene encoder to capture the interaction between policy behaviors and surrounding environments, enabling scene perturbation aligned with the current policy. Based on this representation, TPSP selectively perturbs critical objects rather than applying uniform modifications across the scene. Furthermore, we develop a threat-guided optimization strategy that evaluates perturbed scenes through threat-level differences between policy rollouts on original and perturbed scenes, guiding the generation of safety-critical scenes with higher training value. Comprehensive experiments demonstrate that TPSP improves safety learning efficiency, achieving strong safety performance on NAVSIM v2 with approximately 4 million kilometers of simulated driving data. Ablation studies verify that policy-aware targeted perturbations provide more informative safety-critical experiences than random or policy-unaware strategies, enabling safer driving under limited interaction budgets.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/17/2608.14335v1-multi-agent-reinforcement-learning-for-joint-handover-management-and-power-allocation-in-multi-orbit-satellite-networks",
+      "section": "quick",
+      "title_en": "Multi-Agent Reinforcement Learning for Joint Handover Management and Power Allocation in Multi-Orbit Satellite Networks",
+      "authors": "Yassine Afif, Ashutosh Balakrishnan, Philippe Martins, Mohammed Almekhlafi, Antoine Lesage-Landry, Gunes Karabulut Kurt",
+      "date": "2026-08-14",
+      "pdf": "https://arxiv.org/pdf/2608.14335v1",
+      "score": "6.0",
+      "evidence": "基于MAPPO的多智能体协调方法，可迁移到多无人机集群强化学习",
+      "tldr": "面向6G多轨道卫星网络，需在快速LEO动态下协同优化用户关联、功率分配与切换管理。将问题分解为MARL关联决策与凸功率分配，采用MAPPO和TarMAC训练关联策略，并通过状态编码轨道层感知的切换惩罚。真实TLE场景下达到SNR贪心方案92%吞吐量，切换减少四倍以上，优于仅LEO策略。验证了多轨道协同的收益，为动态多星座资源管理提供了新范式。",
+      "tags": "query:ui",
+      "abstract_en": "Future sixth-generation non-terrestrial networks are expected to combine low Earth orbit (LEO), medium Earth orbit (MEO), and geostationary Earth orbit (GEO) satellites, whose complementary layers must be coordinated through joint user association, power allocation, and handover management under fast LEO dynamics. This paper studies this problem by formulating it as a mixed-integer nonlinear program and decomposing it into a multi-agent reinforcement learning (MARL) policy that selects the associations and a convex power-allocation subproblem solved exactly at each time slot that defines the reward of the MARL part. The association policy is trained with multi-agent proximal policy optimization (MAPPO) and the targeted multi-agent communication (TarMAC) mechanism, and is made aware of the orbital layer through a state that encodes layer-dependent handover penalties. Evaluated on a realistic multi-constellation scenario built from real two-line element data over Nairobi, Kenya, the proposed policy reaches 92% of the throughput of a greedy signal-to-noise ratio (SNR) maximizing scheme while triggering more than four times fewer handovers, and improves throughput by roughly 14% over a conservative stay heuristic. Compared to an LEO-only learned policy of identical architecture, it attains slightly higher throughput with fewer handovers by offloading a fraction of the users to the MEO and GEO layers, an emergent multi-orbit behavior that drives its favorable throughput and handover trade-off.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
