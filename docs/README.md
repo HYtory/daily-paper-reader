@@ -6,29 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-17
-- 运行时间：2026-08-17 20:27:56 UTC
+- 最新运行日期：2026-08-18
+- 运行时间：2026-08-18 21:02:21 UTC
 - 运行状态：成功
-- 本次总论文数：3
-- 精读区：1
+- 本次总论文数：4
+- 精读区：2
 - 速读区：2
 
 ### 今日简报（AI）
-今日精读1篇、速读2篇，共3篇论文，聚焦强化学习前沿应用。最值得关注的是满分精读《AgilePE》，用自博弈强化学习解决无人机追逐-逃避问题。建议优先研读该文，可再结合自动驾驶安全与卫星网络两篇拓宽视野。
-- 详情：[/202608/17/README](/202608/17/README)
+今日精读4篇论文（2精读+2速读），重点聚焦多智能体博弈与无人机协同方向。最值得关注的是UC-PSRO（9.0）提出的博弈策略生成框架，以及KC-BFPRL（8.0）用于草地恢复的多无人机强化学习方案。建议后续优先深入理解这两个精读工作，它们分别代表对抗场景与合作任务中的前沿方法。
+- 详情：[/202608/18/README](/202608/18/README)
 
 ### 精读区论文标签
-1. [AgilePE: Autonomous UAV Pursuit-Evasion via Self-Play Reinforcement Learning](/202608/17/2608.14135v1-agilepe-autonomous-uav-pursuit-evasion-via-self-play-reinforcement-learning)  
-   标签：评分：10.0/10、query:ui
-   evidence：基于自博弈深度强化学习的无人机自主追逃
+1. [UC-PSRO: Utility-Conditioned Policy-Space Response Oracles with a Communication-Dropout Curriculum for Game-Theoretic Course-of-Action Generation in Adversarial Swarms](/202608/18/2608.15372v1-uc-psro-utility-conditioned-policy-space-response-oracles-with-a-communication-dropout-curriculum-for-game-theoretic-course-of-action-generation-in-adversarial-swarms)  
+   标签：评分：9.0/10、query:ui
+   evidence：蓝红对抗无人机蜂群博弈决策，PSRO自博弈生成行动方案
+2. [KC-BFPRL: Knowledge-Guided Multi-UAV Collaboration for Grassland Restoration via Bilevel Formerpointer-Based Reinforcement Learning](/202608/18/2608.16326v1-kc-bfprl-knowledge-guided-multi-uav-collaboration-for-grassland-restoration-via-bilevel-formerpointer-based-reinforcement-learning)  
+   标签：评分：8.0/10、query:ui
+   evidence：面向多无人机协作与任务分配的多智能体强化学习框架
 
 ### 速读区论文标签
-1. [Threat-guided Policy-aware Scene Perturbation for Safe Autonomous Driving with Online Reinforcement Learning](/202608/17/2608.10403v1-threat-guided-policy-aware-scene-perturbation-for-safe-autonomous-driving-with-online-reinforcement-learning)  
+1. [JitTrack: Onboard Multi-Object Tracking Against Viewpoint Jitter for Agile UAVs](/202608/18/2608.10485v1-jittrack-onboard-multi-object-tracking-against-viewpoint-jitter-for-agile-uavs)  
    标签：评分：6.0/10、query:ui
-   evidence：提出策略感知的安全关键场景扰动方法，可迁移至无人机拦截/追逃的对抗训练
-2. [Multi-Agent Reinforcement Learning for Joint Handover Management and Power Allocation in Multi-Orbit Satellite Networks](/202608/17/2608.14335v1-multi-agent-reinforcement-learning-for-joint-handover-management-and-power-allocation-in-multi-orbit-satellite-networks)  
+   evidence：面向敏捷无人机的机载多目标跟踪器，支持拦截任务中的目标跟随
+2. [A Temporal Barrier Framework for Collision Avoidance in Multi-Agent Autonomous Aerial Vehicles](/202608/18/2608.14239v1-a-temporal-barrier-framework-for-collision-avoidance-in-multi-agent-autonomous-aerial-vehicles)  
    标签：评分：6.0/10、query:ui
-   evidence：基于MAPPO的多智能体协调方法，可迁移到多无人机集群强化学习
+   evidence：多智能体飞行器防碰撞方法，可用于围捕任务安全保障
 
 
 <div class="dpr-home-promo-card">

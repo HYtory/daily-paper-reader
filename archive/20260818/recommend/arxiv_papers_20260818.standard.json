@@ -1,0 +1,170 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-18T20:59:23.168519+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2608.15372v1",
+      "source": "arxiv",
+      "title": "UC-PSRO: Utility-Conditioned Policy-Space Response Oracles with a Communication-Dropout Curriculum for Game-Theoretic Course-of-Action Generation in Adversarial Swarms",
+      "abstract": "We study generating game-theoretically optimized Courses of Action (COAs) for a Blue UAS swarm against an adaptive Red adversary in a communication-degraded environment, motivated by (but not derived from) a public U.S. Air Force SBIR solicitation. We propose UC-PSRO (Utility-Conditioned Policy-Space Response Oracles with a Communication-Dropout Curriculum), combining three mechanisms: (i) PSRO self-play, so Blue and Red policies train as approximate best responses to each other rather than one side against a fixed scripted opponent; (ii) FiLM conditioning of the Blue policy on a Commander's-Intent weight vector, sampled from a Dirichlet distribution during training, so one trained policy is re-steerable at execution time without retraining; and (iii) a curriculum annealing communication-graph edge dropout during training, so the swarm learns decentralized, peer-to-peer fallback instead of depending on full connectivity. We evaluate on a synthetic, unclassified stand-in for the solicitation's maritime scenario, with 5 seeds at N=25 Blue agents and a scalability sweep to N=200. We find a genuine trade-off, not a uniform win: the communication-dropout curriculum alone gives the strongest, most robust mission-completion rates of any learned method, improving counter-intuitively as denial increases (35% to 62% success as dropout rises from 0 to 0.75); adding utility-conditioning and PSRO self-play substantially slows convergence within a fixed budget, and we find no reliable exploitability advantage for self-play over a fixed-opponent policy, both statistically indistinguishable from a small, near-zero gap. We report this honestly as a convergence cost not yet offset by a demonstrated robustness benefit, rather than overstating one method as dominant, and provide a fully vectorized, open environment training at N=200 agents in single-digit milliseconds per step on a single consumer GPU.",
+      "authors": [
+        "Phillip Jiang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-08-15T18:52:50+00:00",
+      "link": "https://arxiv.org/pdf/2608.15372v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Game-theoretic Blue-Red adversarial UAS swarm course-of-action generation via PSRO self-play",
+      "llm_evidence_cn": "蓝红对抗无人机蜂群博弈决策，PSRO自博弈生成行动方案",
+      "llm_evidence": "蓝红对抗无人机蜂群博弈决策，PSRO自博弈生成行动方案",
+      "canonical_evidence": "蓝红对抗无人机蜂群博弈决策，PSRO自博弈生成行动方案",
+      "llm_tldr_en": "Proposes UC-PSRO, combining PSRO self-play, FiLM conditioning on commander intent, and a communication-dropout curriculum, to generate game-theoretically optimized courses of action for Blue UAS swarm against adaptive Red adversary.",
+      "llm_tldr_cn": "该论文针对通信降级环境下蓝方无人机蜂群对抗自适应红方对手的博弈决策问题，提出UC-PSRO框架。方法结合策略空间响应预言机自博弈、以指挥官意图向量为条件的FiLM策略调制和通信中断课程，使蓝红双方策略互为近似最优响应。结果表明该方法能生成博弈论优化的行动方案，为无人机群对抗与围捕任务提供了可迁移的自博弈训练范式。",
+      "llm_tldr": "该论文针对通信降级环境下蓝方无人机蜂群对抗自适应红方对手的博弈决策问题，提出UC-PSRO框架。方法结合策略空间响应预言机自博弈、以指挥官意图向量为条件的FiLM策略调制和通信中断课程，使蓝红双方策略互为近似最优响应。结果表明该方法能生成博弈论优化的行动方案，为无人机群对抗与围捕任务提供了可迁移的自博弈训练范式。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.16326v1",
+      "source": "arxiv",
+      "title": "KC-BFPRL: Knowledge-Guided Multi-UAV Collaboration for Grassland Restoration via Bilevel Formerpointer-Based Reinforcement Learning",
+      "abstract": "Multi-unmanned aerial vehicle (UAV) systems provide scalable service platforms for large-scale environmental tasks, such as grassland ecosystem restoration. However, coordinating fleet operations requires solving the restoration area maximization problem (RAMP). This non-linear combinatorial optimization challenge is complicated by payload-dependent energy dynamics and heterogeneous ecological degradation. We propose a novel knowledge-guided collaborative bilevel formerpointer reinforcement learning framework (KC-BFPRL) to address this complexity. Using a hierarchical paradigm, KC-BFPRL decomposes RAMP into global task allocation and local restoration planning, with the latter further divided into upper-level trajectory planning and lower-level restoration area allocation. Our specialized architecture pairs featuring a Transformer-based encoder that fuses static environmental features with dynamic UAV states, and a Pointer Network decoder trained via a robust actor-critic framework. By embedding ecological priority rules and heuristic logic, KC-BFPRL achieves a structured warm-start, solving the RL cold-start problem while ensuring strict constraint satisfaction. Extensive experiments demonstrate that KC-BFPRL consistently outperforms state-of-the-art baselines, achieving superior objective values and efficiency. It maintains a $0.00\\%$ optimality gap in the most complex scenarios U8-R160 and operates nearly three times faster than MAPDP, validating its robustness, scalability, and real-time applicability for large-scale automated ecological restoration.",
+      "authors": [
+        "Dongbin Jiao",
+        "Xianyi Wang",
+        "Yuchen Yuan",
+        "Weibo Yang",
+        "Peng Yang",
+        "Peng Zhao",
+        "Zhanhuan Shang",
+        "Shi Yan"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-08-17T09:30:48+00:00",
+      "link": "https://arxiv.org/pdf/2608.16326v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Multi-agent reinforcement learning framework for multi-UAV collaboration and task allocation",
+      "llm_evidence_cn": "面向多无人机协作与任务分配的多智能体强化学习框架",
+      "llm_evidence": "面向多无人机协作与任务分配的多智能体强化学习框架",
+      "canonical_evidence": "面向多无人机协作与任务分配的多智能体强化学习框架",
+      "llm_tldr_en": "Proposes KC-BFPRL, a knowledge-guided bilevel formerpointer RL framework that decomposes multi-UAV grassland restoration area maximization into global task allocation and local restoration planning.",
+      "llm_tldr_cn": "针对多无人机协同草原恢复中的区域最大化问题，论文提出知识引导的双层前指针强化学习框架KC-BFPRL。该方法将非线性组合优化分解为全局任务分配与局部恢复规划，利用分层强化学习范式协调机队。实验表明该框架能高效求解任务分配并优化恢复面积，为多智能体无人机协同调度提供了可借鉴的MARL方案。",
+      "llm_tldr": "针对多无人机协同草原恢复中的区域最大化问题，论文提出知识引导的双层前指针强化学习框架KC-BFPRL。该方法将非线性组合优化分解为全局任务分配与局部恢复规划，利用分层强化学习范式协调机队。实验表明该框架能高效求解任务分配并优化恢复面积，为多智能体无人机协同调度提供了可借鉴的MARL方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.10485v1",
+      "source": "arxiv",
+      "title": "JitTrack: Onboard Multi-Object Tracking Against Viewpoint Jitter for Agile UAVs",
+      "abstract": "Multi-object tracking (MOT) onboard agile unmanned aerial vehicles (UAVs) remains challenging due to severe viewpoint jitter induced by camera ego-motion. Rapid attitude changes during flight often lead to significant target displacement across frames, causing inaccurate target association and degraded tracking performance. Existing UAV MOT methods are primarily evaluated on offline benchmarks and seldom address the practical requirements of real-world onboard deployment, including robustness to camera motion and active target following. To address these challenges, we propose JitTrack, an active onboard multi-object tracking framework that accommodates drone dynamics and camera ego-motion. Built upon a query-based transformer tracker, JitTrack introduces semantic refinement to improve the detection of emerging targets, motion-aware query rectification to compensate for target misalignment caused by viewpoint jitter, and a motion-inspired denoising training strategy that simulates camera motion patterns for robust supervision. Furthermore, we develop a perception-planning-control closed-loop tracking pipeline for real-world deployment, enabling collision-free and physically feasible target following on agile UAVs. Extensive experiments on public UAV MOT benchmarks demonstrate consistent improvements over the baseline method, while real-world flight experiments validate the effectiveness and practicality of JitTrack for robust onboard visual tracking under viewpoint jitter.",
+      "authors": [
+        "Yachun Shan",
+        "Feitian Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-08-11T05:00:31+00:00",
+      "link": "https://arxiv.org/pdf/2608.10485v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Onboard multi-object tracker for agile UAVs, enabling target following for interception",
+      "llm_evidence_cn": "面向敏捷无人机的机载多目标跟踪器，支持拦截任务中的目标跟随",
+      "llm_evidence": "面向敏捷无人机的机载多目标跟踪器，支持拦截任务中的目标跟随",
+      "canonical_evidence": "面向敏捷无人机的机载多目标跟踪器，支持拦截任务中的目标跟随",
+      "llm_tldr_en": "Presents JitTrack, an active onboard multi-object tracking framework for agile UAVs that handles viewpoint jitter via a query-based transformer tracker, improving target association and real-time deployment.",
+      "llm_tldr_cn": "敏捷无人机在执行机载多目标跟踪时，因相机自运动引起严重视角抖动，导致跨帧目标位移大、关联不准。现有方法多在离线评测中表现良好，难以满足真实机载部署对相机运动鲁棒性和主动目标跟随的需求。JitTrack基于查询式Transformer跟踪器，融合无人机动力学和相机自运动信息，构建主动机载多目标跟踪框架。实验表明该方法能有效提升抖动条件下的目标关联准确率，支持实时机载部署，为单无人机持续跟踪并拦截目标提供可靠的视觉感知能力。",
+      "llm_tldr": "敏捷无人机在执行机载多目标跟踪时，因相机自运动引起严重视角抖动，导致跨帧目标位移大、关联不准。现有方法多在离线评测中表现良好，难以满足真实机载部署对相机运动鲁棒性和主动目标跟随的需求。JitTrack基于查询式Transformer跟踪器，融合无人机动力学和相机自运动信息，构建主动机载多目标跟踪框架。实验表明该方法能有效提升抖动条件下的目标关联准确率，支持实时机载部署，为单无人机持续跟踪并拦截目标提供可靠的视觉感知能力。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.14239v1",
+      "source": "arxiv",
+      "title": "A Temporal Barrier Framework for Collision Avoidance in Multi-Agent Autonomous Aerial Vehicles",
+      "abstract": "Operating teams of autonomous aircraft in dynamic, uncertain, and potentially adversarial environments requires safety protocols that are reliable yet selective, and allow agents to fly in close proximity while making progress toward mission objectives. We introduce adversarial time-to-collision (aTTC), a risk metric that quantifies, for a given agent, how quickly any surrounding agent could reach it assuming adversarial intent. We embed aTTC into the control barrier function (CBF) framework, defining the barrier directly in time rather than distance or velocity. The resulting aTTC-CBF is inherently anticipatory: agents modulate their own velocity based not on whether a peer is on a collision course, but on how quickly one could reach collision given its dynamical constraints. A differentiable neural-network surrogate makes the aTTC computable in real time within a standard CBF quadratic program. Across long time-horizon simulations of 3D independent-pursuit and formation-flight scenarios, the aTTC-CBF achieves up to twice the waypoint progress at half the collision rate of a higher-order distance-based CBF baseline.",
+      "authors": [
+        "Benedikt Barthel Sorensen",
+        "Mitchell Black",
+        "Erfaun Noorani",
+        "Themistoklis Sapsis"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "cs.RO",
+        "math.OC"
+      ],
+      "published": "2026-08-14T12:15:00+00:00",
+      "link": "https://arxiv.org/pdf/2608.14239v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent aerial collision avoidance method useful for cooperative encirclement safety",
+      "llm_evidence_cn": "多智能体飞行器防碰撞方法，可用于围捕任务安全保障",
+      "llm_evidence": "多智能体飞行器防碰撞方法，可用于围捕任务安全保障",
+      "canonical_evidence": "多智能体飞行器防碰撞方法，可用于围捕任务安全保障",
+      "llm_tldr_en": "Introduces adversarial time-to-collision (aTTC) embedded in a control barrier function to define barriers in time, enabling anticipatory velocity modulation for close-proximity multi-agent aerial teams in adversarial settings.",
+      "llm_tldr_cn": "多架自主飞行器在动态、不确定且可能对抗的环境中执行任务时，需要可靠且有选择性的安全协议，以支持近距离飞行和任务推进。本文提出对抗性碰撞时间aTTC，量化周围智能体在敌意假设下最快接近所需时间，并将其嵌入控制障碍函数，在时间域而非距离或速度域定义势垒。该aTTC-CBF使各智能体根据对手可能达到的最短时间主动调节速度，实验验证了其在高对抗场景下对多智能体编队安全和任务效率的保障，为多无人机协同围捕中的安全保持提供了通用工具。",
+      "llm_tldr": "多架自主飞行器在动态、不确定且可能对抗的环境中执行任务时，需要可靠且有选择性的安全协议，以支持近距离飞行和任务推进。本文提出对抗性碰撞时间aTTC，量化周围智能体在敌意假设下最快接近所需时间，并将其嵌入控制障碍函数，在时间域而非距离或速度域定义势垒。该aTTC-CBF使各智能体根据对手可能达到的最短时间主动调节速度，实验验证了其在高对抗场景下对多智能体编队安全和任务效率的保障，为多无人机协同围捕中的安全保持提供了通用工具。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,1405 @@
+Title: KC-BFPRL: Knowledge-Guided Multi-UAV Collaboration for Grassland Restoration via Bilevel Formerpointer-Based Reinforcement Learning
+
+URL Source: https://arxiv.org/pdf/2608.16326v1
+
+Published Time: Tue, 18 Aug 2026 02:22:23 GMT
+
+Number of Pages: 14
+
+Markdown Content:
+> 1
+
+# KC-BFPRL: Knowledge-Guided Multi-UAV Collaboration for Grassland Restoration via Bilevel Formerpointer-Based Reinforcement Learning 
+
+Dongbin Jiao ∗† , Member, IEEE, Xianyi Wang ∗, Yuchen Yuan ∗, Weibo Yang ¶, Peng Yang §, Senior Member, IEEE ,Peng Zhao ∗, Zhanhuan Shang ∥, and Shi Yan ∗, Senior Member, IEEE 
+
+Abstract —Multi-unmanned aerial vehicle (UAV) systems pro-vide scalable service platforms for large-scale environmental tasks, such as grassland ecosystem restoration. However, coor-dinating fleet operations requires solving the restoration area maximization problem (RAMP). This non-linear combinatorial optimization challenge is complicated by payload-dependent energy dynamics and heterogeneous ecological degradation. We propose a novel knowledge-guided collaborative bilevel former-pointer reinforcement learning framework (KC-BFPRL) to ad-dress this complexity. Using a hierarchical paradigm, KC-BFPRL decomposes RAMP into global task allocation and local restora-tion planning, with the latter further divided into upper-level trajectory planning and lower-level restoration area allocation. Our specialized architecture pairs featuring a Transformer-based encoder that fuses static environmental features with dynamic UAV states, and a Pointer Network decoder trained via a robust actor-critic framework. By embedding ecological priority rules and heuristic logic, KC-BFPRL achieves a structured warm-start, solving the RL cold-start problem while ensuring strict constraint satisfaction. Extensive experiments demonstrate that KC-BFPRL consistently outperforms state-of-the-art baselines, achieving superior objective values and efficiency. It maintains a 0.00% optimality gap in the most complex scenarios U8-R160 and operates nearly three times faster than MAPDP, validating its robustness, scalability, and real-time applicability for large-scale automated ecological restoration. 
+
+Index Terms —Multi-UAV collaboration, grassland restoration, knowledge-guided learning, deep reinforcement learning (DRL), trajectory planning, restoration area allocation. 
+
+I. I NTRODUCTION 
+
+Grassland ecosystems are vital for global ecological sta-bility, yet accelerating environmental degradation demands scalable and efficient restoration interventions [1], [2]. While traditional manual methods are prohibitively labor-intensive, the integration of unmanned aerial vehicles (UAVs) has in-troduced a transformative paradigm in ecological engineering 
+
+∗School of Information Science and Engineering, Lanzhou University, Lanzhou, 730000, P. R. China (e-mail: {jiaodb, wxianyi2025, yuanych2020, zhaopeng, yanshi }@lzu.edu.cn). 
+
+†Key Laboratory of Tourism Information Fusion Processing and Data Ownership Protection, Ministry of Culture and Tourism, Lanzhou University, Lanzhou, 730000, P. R. China. 
+
+§Department of Statistics and Data Science, Southern University of Science and Technology, Shenzhen 518055, P. R. China (e-mail: yangp@sustech.edu.cn). 
+
+¶School of Automobile, Chang’an University, Xi’an, 710064, P. R. China (e-mail: wbyang@chd.edu.cn). 
+
+∥State Key Laboratory of Grassland Agro-Ecosystem, College of Ecology, Lanzhou University, Lanzhou, 730000, P. R. China (e-mail: shangzhh@lzu.edu.cn). 
+
+by offering high operational flexibility and low deployment costs. Despite these advantages, current UAV frameworks are predominantly designed for passive monitoring. Transitioning to active restoration, such as aerial seeding, introduces pro-found operational complexities. Unlike lightweight monitoring missions, carrying heavy seed payloads drastically depletes battery reserves and constrains aerodynamic maneuverability. Consequently, the severe energy and payload limitations of a single UAV render it insufficient for executing large-scale restoration across degraded terrains [3]. To overcome this bottleneck, a strategic shift toward multi-UAV collaborative systems is imperative [4], [5]. While fleet coordination enables parallel execution, orchestrating such a system introduces immense computational complexity, for-mulated here as the restoration area maximization problem (RAMP). Distinct from standard vehicle routing problem (VRP) formulations, RAMP represents a highly coupled, non-linear combinatorial optimization challenge characterized by heterogeneous degradation levels and stringent resource con-straints [3]. The system dynamics exhibit strong nonlinearity and intricate coupling among decision variables: different regions require distinct seeding densities, while a UAV’s energy expenditure is non-linear, decreasing progressively with payload discharge. As a result, RAMP entails a tightly coupled joint optimization of task allocation and path planning, with the primary objective of maximizing the total restored areas before battery depletion. Existing approaches to solving such complex collaborative problems generally fall into two categories: heuristic optimiza-tion and deterministic methods [6]. Traditional meta-heuristics (e.g., Genetic Algorithms (GA), Particle Swarm Optimization (PSO)) are computationally lightweight but demand substan-tial domain expertise, lack cross-scale generalization, and frequently stagnate in inferior local optima [7]. Conversely, deterministic methods struggle with the high dimensionality and dynamic state spaces of multi-agent environments, rapidly becoming computationally intractable as fleet and network sizes expand [8]. To address the longstanding trade-off between solution quality and computational efficiency, this paper proposes a novel framework based on deep reinforcement learning (DRL). DRL is particularly suited to this problem due to its capacity to handle high-dimensional state spaces and learn nonlinear decision policies directly from interaction data [9]. Building on this capability, we introduce the knowledge-guided collabora-arXiv:2608.16326v1 [cs.MA] 17 Aug 2026 2
+
+tive bilevel formerpointer reinforcement learning framework, termed KC-BFPRL. To effectively fuse static environmental features with dynamic UAV states, KC-BFPRL incorporates a specialized architecture featuring a Transformer-based encoder and a Pointer Network decoder trained via a robust actor-critic mechanism. Departing from inefficient, undirected exploration, KC-BFPRL utilizes ecological priority rules and heuristic scheduling logic as an inductive scaffold [10]. This structured domain knowledge explicitly addresses the cold-start problem, significantly enhancing sample efficiency and policy feasibility [11]. To implement this vision, the grassland restoration process is modeled as a hierarchical Markov decision process (MDP), in which each UAV as an intelligent agent. This design decomposes the complex RAMP into global task allocation and local restoration planning. Specifically, the local planning subproblem is further decoupled into two tightly interde-pendent levels: upper-level trajectory planning, where UAVs optimize visitation order to minimize energy waste; and lower-level restoration area allocation, which dynamically determines the optimal seeding quantity at each node to balance eco-logical impact against residual payload and energy reserves. By integrating these levels, KC-BFPRL provides a principled warm-start mechanism that enables UAVs to efficiently acquire complex cooperative behaviors while simultaneously optimiz-ing individual energy states, ultimately achieving enhanced restoration coverage with rapid, real-time inference capability. The main contributions are summarized as follows: (1) We mathematically model large-scale multi-UAV grassland restoration as RAMP, a complex, non-linear optimization prob-lem coupling routing, task allocation, and payload-dependent energy dynamics. (2) We propose KC-BFPRL, a knowledge-guided bilevel reinforcement learning framework that inte-grates ecological priorities and heuristic logic into a hierar-chical decision-as-a-service architecture. (3) Experiments on 10800 instances demonstrate that The KC-BFPRL shows KC-BFPRL outperforms baselines, maintaining a 0.00% optimality gap in complex cases and achieving nearly three times faster inference than MAPDP with robust generalization. The remainder of this paper is organized as follows. Sec-tion II reviews the related literature. Section III details the system model and problem formulation. Section IV introduces the proposed KC-BFPRL framework. Section V presents the experimental evaluation, and Section VI concludes this work. II. R ELATED WORK 
+
+This section reviews the methodological shift from tradi-tional heuristics to knowledge-guided, data-driven paradigms for solving RAMP. By examining the intersection of pre-cision agriculture, combinatorial optimization, and MARL, identifying critical research gaps that motivate our KC-BFPRL framework. 
+
+A. UAV-based Ecological Restoration and Agriculture. 
+
+The application of UAVs in precision agriculture has evolved significantly over the past decade. Initially, UAVs served primarily as mobile platforms for remote sensing and environmental monitoring [12]–[14]. early studies predomi-nantly leveraged hyperspectral imaging to classify vegetation health and assess degradation levels [15], [16]. However, recent advances in payload capacity have trans-formed these platforms from passive observers to active actu-ators capable of complex tasks like aerial seeding [17]. Unlike traditional agricultural spraying that assumes uniform coverage [18], [19], grassland restoration involves highly heterogeneous environments where seeding requirements vary strictly by local degradation levels [3]. Most existing studies focus on simple coverage metrics and fail to account for the complex coupling between a UAV’s limited payload, energy constraints, and the spatially varying urgency of restoration demands. 
+
+B. Multi-UAV Task Allocation and Path Planning. 
+
+To address the challenges of routing and task allocation for multi-UAV system, early studies rely heavily on mathematical programming and heuristic algorithms. Exact methods, such as mixed-integer linear programming (MILP), can yield global optimal solutions but are constrained by NP-hardness, mak-ing them computationally intractable for large-scale scenarios involving dozens of tasks [20]. As a result, heuristic and meta-heuristic approaches have emerged as the prevailing solution paradigm. Algorithms including GA, PSO, and ant colony optimization (ACO) have been extensively applied to the VRP and its variants [21]–[24]. A representative example is CHAPBILM [3], a coupled heuristic framework designed explicitly for bi-level optimization in grassland restoration. Although these heuristic approaches provide stable and interpretable solutions, they incur substantial computational overhead. As the scale of degraded regions expands, their iterative search processes ex-hibit near-exponential growth in execution time. Furthermore, these methods typically require complete re-optimization from scratch whenever environmental parameters shift. This inher-ent inflexibility precludes their deployment in time-critical, large-scale scenarios that demand rapid, real-time decision-making and dynamic replanning. 
+
+C. DRL for Multi-Agent Collaboration. 
+
+To reduce the computational bottlenecks of heuristic op-timization and deterministic methods, recent research has in-creasingly shifted toward DRL. Within this paradigm, the joint problem of routing and allocation is formulated as a neural combinatorial optimization (NCO) challenge [25]. Pioneering works, such as Pointer Networks [26] and the attention model [27], have demonstrated that neural architectures can learn to construct near-optimal solutions for the Traveling Salesman Problem (TSP) and VRP almost instantaneously following offline training [28]. In the multi-UAV domain, MARL frameworks, such as MADDPG and QMIX, have been adopted to enable decentral-ized cooperation among agents [29]. Recent advances include methods like MAPDP, which exploits context embeddings to decompose large-scale problems [30], and CAMP, which lever-ages attention mechanisms to facilitate inter-agent communica-tion [31]. However, despite their rapid inference speeds, these 3
+
+purely learning-based approaches face profound challenges in strictly constrained restoration scenarios. Lacking prior do-main knowledge, agents depend entirely on undirected explo-ration, resulting in slow convergence and a pronounced cold-start problem. Moreover, their centralized training paradigms often collapse as the number of agents and nodes increases, a fundamental limitation known as the curse of dimensionality. Most importantly, the inherent “black box” nature of pure DPL makes it difficult to rigorously enforce hard operational constraints, such as energy limits and payload capacities, frequently resulting in infeasible restoration planning. 
+
+D. Knowledge-Guided and Hybrid Learning Approaches. 
+
+The inherent limitations of purely heuristic and strictly learning-based approaches have catalyzed a growing interest in knowledge-guided paradigms. These methods aim to embed domain-specific rules or expert priors directly into the learning process to guide state-space exploration and ensure solution feasibility [32], [33]. Existing hybrid approaches typically de-pend on heuristics to generate demonstration data for imitation learning or utilize RL to select high-level heuristic operators [34]. However, these existing approaches rarely address the tightly coupled, non-linear constraints characteristic of eco-logical restoration within a unified, end-to-end architecture. To bridge these gaps, this paper proposes KC-BFPRL, a knowledge-guided collaborative bilevel formerpointer RL framework for large-scale grassland restoration. Unlike pure MARL methods (e.g., MAPDP), KC-BFPRL explicitly inte-grates ecological priority and heuristic scheduling logic into the policy learning process, providing a structured warm-start that effectively mitigates the cold-start problem. In contrast to traditional heuristic approaches (e.g., CHAPBILM), KC-BFPRL shifts the computational burden to the offline training phase, enabling rapid real-time inference during deployment. By synergistically combining domain-structured optimality with the adaptability and scalability of DRL, KC-BFPRL offers a robust and efficient solution for constrained, large-scale grassland restoration planning. III. S YSTEM MODEL AND PROBLEM FORMULATION 
+
+This section details the multi-UAV collaborative grassland restoration model, UAV energy consumption dynamics, and the RAMP formulation. 
+
+A. Multi-UAV Collaborative Grassland Restoration Model 
+
+As depicted in Fig. 1, we considers a scenario where a set 
+
+U of homogeneous UAVs equipped with BeiDou Navigation Satellite System (BDS) modules and seed dispensers. These UAVs fly at a fixed altitude with a constant flight speed. The mission is coordinated from a central Base Station (BS), which handles scheduling, maintenance, and data processing. The collaborative restoration process is modeled as a com-plete directed weighted graph G = (V, A ). The vertex set 
+
+V = {v0, v 1, . . . , v N } includes the BS v0 (the depot) and the degraded regions Va = V \ { v0}. The arc set A = {aij =(vi, v j )|vi, v j ∈ V, i ̸ = j} represents the flight paths with a Euclidean distance dij .Restored  Regions      
+
+> UAV
+> Base Station
+> 0.1 0.3 0.5 0.7 0.9
+> Degradation Degree
+> Fig. 1. An example of multi-restored regions by multi-UAV collaborative.
+
+Each region vi has a degradation severity level li ∈ (0 , 1) ,where a higher score indicates more severe degradation (rep-resented by lighter colors in Fig. 1). Following international ecological restoration standards [35], regions with li < 0.3
+
+can self-recovery, while those with li > 0.8 are beyond effective UAV intervention. Consequently, we focuses on the critical interval li ∈ [0 .3, 0.8] , where UAV seeding significantly accelerates recovery and reduces costs [3]. Spatially, each region vi is discretized into ci unit circles. A UAV hovers over a circle to sow a seed quantity determined by li. All UAVs depart from the BS with maximum energy Emax and seed payload Q, and must complete their tasks and return to the BS before energy depletion. 
+
+B. UAV Energy Consumption Model 
+
+Following [3], a UAV’s mission energy consumption com-prises seeding Es, aerial photography Eap , and flight Ef
+
+components. As established in [36], flight energy at a constant altitude and speed is directly proportional to the total payload weight. 
+
+1) Energy Consumption for Seeding: The total energy required to dispense seeds across all restored regions is for-mulated as: 
+
+Es =
+
+> N
+
+X
+
+> i=1
+> N
+
+X 
+
+> j̸=i
+
+σieixij , (1) where σi is the number of restored unit circles in region vi,and xij indicates whether a UAV travels from vi to vj . The unit seeding energy is ei = ηq i, where η > 0 is a coefficient and qi = (1 + li)γ is the seed weight, with γ being an environmental-specific grassland parameter. 
+
+2) Energy Consumption for Aerial Photography: The total energy consumed by the onboard hyperspectral camera to acquire data at all restored regions is: 
+
+Eap = eap NX
+
+> i=1
+> N
+
+X 
+
+> j̸=i
+
+σixij , (2) where eap is the data acquisition energy per unit circle. 
+
+3) Energy Consumption for Flight: The flight energy de-pends on travel distance and varying payload weight: 
+
+Ef =
+
+> N
+
+X
+
+> i=1
+> N
+
+X 
+
+> j̸=i
+
+efij dij xij , (3) where efij is the energy consumption rate per unit distance along edge (i, j ), defined as [36]: 
+
+efij = P (¯ qij ) = ( M + ¯ qij ) 32
+
+s
+
+g3
+
+2ρςh , (4) 4
+
+where ¯qij is the seed payload from vi to vj , and M = W + m
+
+is the UAV’s tare weight (frame weight W and battery weight 
+
+> m
+
+). The constants g, ρ, ς, and h denote gravitational acceler-ation, air density, rotor disc area, and the number of rotors, respectively. 
+
+C. Restoration Area Maximization Model 
+
+While collaborative multi-UAV systems significantly en-hance restoration coverage and efficiency through coordinated task allocation, individual UAV remains confronted with strin-gent individual constraints of limited flight endurance and pay-load capacity. These persistent energy limitations preclude the complete restoration of all degraded sites in a single mission. Consequently, it is necessary to develop resource-aware opti-mization strategies that prioritize ecologically critical regions to maximize the restoration impact within available energy budgets. To quantify this impact, we define the optimization objective function C as follows.      
+
+> C=
+> NX
+> i=1
+> [1 + ( li−0.3)] σi,
+
+(5) where the term li − 0.3 serves as an ecological weight factor, explicitly prioritizing regions with higher degradation severity levels li to maximize the environmental benefit of the inter-vention. 
+
+D. Mathematical Model 
+
+The objective of the multi-UAV collaborative scheduling is to maximize the weighted sum of restored areas while strictly adhering to energy and payload constraints. The prob-lem is formulated as a mixed-integer nonlinear programming (MINLP) model:        
+
+> max
+> xuij
+> σui
+> X
+> u∈UNX
+> i=1
+> NX
+> j̸=i
+> (1 + li−0.3) σui xuij
+
+(6a) s.t.             
+
+> NX
+> i=1
+> NX
+> j̸=i
+> (σui eui +eap σui )xuij
+> +
+> NX
+> i=0
+> NX
+> j̸=i
+> efuij dij xuij ≤Emax ,∀u∈U,
+
+(6b)       
+
+> X
+> u∈UNX
+> i=1
+> i̸=j
+> σui qui xuij ≤Q, ∀j∈Va
+
+(6c)             
+
+> NX
+> j=0
+> j̸=i
+> ¯quji −
+> NX
+> j=0
+> j̸=i
+> ¯quij =σui qui ,∀i∈Va,∀u∈U
+
+(6d)           
+
+> ¯quij ≤Qx uij ,∀(i, j )∈A, ∀u∈U
+
+(6e)          
+
+> X
+> u∈UNX
+> j=0
+> j̸=i
+> xuji =X
+> u∈UNX
+> j=0
+> j̸=i
+> xuij = 1 ,∀i∈Va
+
+(6f)       
+
+> NX
+> j=1
+> xu0j=
+> NX
+> j=1
+> xuj 0= 1 ,∀u∈U
+
+(6g)        
+
+> xuij ∈ { 0,1},∀(i, j ),∀u∈U
+
+(6h)               
+
+> 1≤σui ≤cui ,σui ∈N+,∀i∈Va,∀u∈U
+
+(6i)        
+
+> ¯quij ≥0,∀(i, j ),∀u∈U.
+
+(6j) Here, the binary decision variable xuij equals 1 if UAV u
+
+traverses arc (vi, v j ). Constraints (6b) ensure that the total energy consumed by both operations and flight does not exceed the capacity Emax for each UAV. Constraints (6c) require that the total seed weight Q carried by each UAV must be fully dispensed before returning to the base station. Constraints (6d) govern the payload dynamics: the seed weight carried by each UAV decreases by exactly the amount required at each restored region, while simultaneously eliminating illegal subtours. Con-straints (6e) guarantee that the seed demand at each restoration region vj does not exceed the remaining payload capacity of the servicing UAV. Constraints (6f) ensures that each UAV visits each restoration region at most once and departs after completing the seeding operation. Constraints (6g) requires that each UAV route begins and terminates at the base station. Constraint (6h) enforces binary integrality on the decision variables. Constraint (6i) limits the restoration work at each region to not exceed its maximum capacity. Constraint (6j) imposes nonnegativity restrictions on all relevant variables. The optimization problem (6) is a complex, NP-hard VRP variant with variable demands and nonlinear costs. Its direct solution is intractable due to three intrinsic challenges: (1) 
+
+coupled decision variables , as restoration region size, seed demand, and UAV trajectories are strictly interdependent; (2) 
+
+dynamic problem structure , where payload-dependent energy consumption fluctuates as service sequences evolve; and (3) 
+
+high computational complexity , making exact optimization methods infeasible for large-scale instances. IV. M ETHODOLOGY 
+
+This section outlines the problem decomposition and chal-lenges of the RAMP for multi-UAV collaboration grassland restoration. It then introduces the BFPRL for single-UAV trajectory planning and local restoration decisions, and finally details the KC-BFPRL for solving the large-scale RAMP. 
+
+A. Problem Decomposition 
+
+As illustrated in 2, the large-scale problem is decomposed into two interrelated subproblems: multi-UAV task allocation and single-UAV restoration planning. The former assigns spe-cific regions to individual UAVs to balance fleet workloads and maximize resource efficiency. The latter optimizes the trajectory and operational coverage of each UAV, maximizing the total restored area while minimizing energy consumption. These two subproblems are solved through a hierarchical and collaborative mechanism. The task allocation layer provides the structural framework that guides subsequent restoration planning. Reciprocally, the outcomes of the planning layer dynamically inform and update the task allocation, establishing a real-time feedback loop that ensures the mission is executed cooperatively. Furthermore, the single-UAV restoration planning subprob-lem is further decomposed into a tightly coupled bilevel struc-ture: upper-level trajectory planning and lower-level restora-tion area allocation. This bilevel coupling is detailed in Section III-D and is consistent with structures discussed in existing literature [3]. 5Multi -UAV Collaborative               
+
+> Grassland Restoration
+> UAV Task Allocation
+> (Which UAV →Which Region )
+> UAV Restoration Planning
+> (How UAV Executes Mission)
+> K-means
+> Clustering
+> Fitness
+> Θ( u, vᵢ)
+> Dynamic
+> Reallocation
+> MDP
+> Modeling Neural Network Reward Function
+> State s(i) Reward
+> R( π)
+> Policy π(s) Encoder Decoder
+> Problem Context
+> Allocated Tasks
+> Trajectory Feedback Area Feedback
+> Guides Feedback
+> Loss L
+> Strong Coupling
+> Route Objectives Region Context
+> Strong Coupling
+> Route Objectives Region Context
+> UAV Trajectory Planning
+> Energy
+> Consumption
+> Model
+> Path
+> Optimization
+> Constraint
+> Validation
+> UAV Trajectory Planning
+> Energy
+> Consumption
+> Model
+> Path
+> Optimization
+> Constraint
+> Validation
+> Restoration Area Allocation
+> Priority
+> Sorting
+> Area Decision
+> Unit
+> Dynamic
+> Adjust
+> Restoration Area Allocation
+> Priority
+> Sorting
+> Area Decision
+> Unit
+> Dynamic
+> Adjust
+
+Fig. 2. Knowledge-guided multi-UAV collaborative framework. 
+
+B. Single-UAV Trajectory Planning and Restoration Area Al-location 1) Modeling RAMP via BFPRL: Modeled as an intelligent agent starting from depot v0, each UAV employs a stochastic policy πθ to generate a trajectory τ = {(vit, a it)}Tt=0 , where 
+
+vit and ait denote the visited node and restored area at step 
+
+t, respectively. To maximize the total restored areas under operational constraints, we formulate this process as a four-component MDP and train πθ using the REINFORCE algo-rithm with a Greedy Rollout Baseline [37] to maximize the expected objective in Eq. (5). 
+
+a) State: At each step t, the MDP state is defined as 
+
+st = ( vt, q rem  
+
+> t
+
+, E rem  
+
+> t
+
+, mt, ξt), where qrem  
+
+> t
+
+and Erem  
+
+> t
+
+denote the remaining payload and energy, mt ∈ { 0, 1}N is the visited-node mask vector, and ξt tracks the remaining restorable unit circles per region. Each node vit = (xi, y i, l i) contains its static geographical coordinates (xi, y i) and degradation level 
+
+li. To avoid ambiguity, action variables are not part of the state, and they are denoted separately in the Action paragraph. In the BFPRL model, the UAV’s state at decision step i is denoted as s<i , where i ∈ [1 , n + 1] ∩ N+. The initial state is 
+
+s<1 = ( v0, Q, E max , m0, ξ0), where only the depot is marked as visited in m0. Termination occurs when the UAV returns to the depot or no feasible actions remain. 
+
+b) Action: In BFPRL, the action at step i expands the partial solution s<i by selecting ai = (ji, δ i), where ji is the next selected node and δi is the seeding amount (re-stored circles) executed at ji. To ensure operational viability, a feasibility mask Mi(j, δ ) ∈ {0, 1} restricts sampling to unvisited nodes that satisfy all payload and energy constraints, including a safe return to the depot. This stepwise formulation enables the joint optimization of trajectory planning and area allocation. 
+
+c) Transition: State transitions are deterministic, i.e., 
+
+P s<i +1 | s<i , s i
+
+ = 1. This means that selecting action 
+
+ai = ( ji, δ i) in state s<i transitions the system to the next state s<i +1 with probability 1. Crucially, the transition also includes strict resource updates: remaining energy becomes 
+
+Erem (i + 1) = Erem (i) − Ec(i), where the total energy consumption at step i is equal to Ef (i) + Es(i) + Eap (i).Meanwhile, the payload becomes qrem  
+
+> i+1
+
+= qrem  
+
+> i
+
+− δiqji . The visitation mask and remaining restorable areas are updated via mi+1 [ji] = 1 and ξi+1 (ji) = max {0, ξ i(ji) − δi}. Infeasible actions are masked to −∞ prior to sampling. If an infeasible action is still selected due to numerical instability, the episode is immediately terminated with a penalty and a forced return to the depot. 
+
+d) Reward: Guided by this principle and the specific characteristics of the RAMP, we design a multi-component reward function R(π | V ). This function balances the dual objectives of restoration area maximization and operational energy constraints, defined as follows: 
+
+R(π | V ) = αr ·
+
+> n
+
+X
+
+> i=1
+
+ 1 + ( li − 0.3) σi − αp · pe, (7) where αr and αp are balancing coefficients. The penalty pe is triggered if the energy constraint is violated: 
+
+pe =
+
+Pn−1 
+
+> i=0
+
+di,i +1 + dn, 0, Erest < 00, Erest ≥ 0,
+
+(8) where di,i +1 denotes the flight distance between consecu-tive restored regions vi and vi+1 . If the energy constraint is violated, the penalty equals the total path length. This design encourages the model to prioritize shorter, feasible paths during early training stages while optimizing restoration allocation. 6
+
+e) Policy: The restoration process is modeled as a se-quence of decisions, where the action at step i is ai = ( ji, δ i)
+
+and the policy is factorized via the chain rule: 
+
+p(π | s) = 
+
+> n
+
+Y
+
+> i=1
+
+p ji | s<i 
+
+ p δi | ji, s <i 
+
+, (9) where p ji | s<i 
+
+ denotes the probability of selecting the next node, and p δi | ji, s <i 
+
+ denotes the conditional probability of selecting the restoration level after node ji is chosen. This factorization explicitly captures the sequential dependency of the joint action on the historical trajectory of visited states and actions. 
+
+2) BFPRL Architecture Design: To learn the stochastic policy π in Eq. (9), we parameterize it as a neural network πθ ,where θ ∈ Θ denotes the complete set of trainable parameters across the encoder and decoder modules, as shown in Fig. 3. Spatial  Degradation  Metrics Spatial  Degradation  Metrics     
+
+> Add & Norm
+> Multi -Head Attention
+> Feed Forward
+> Add & Norm
+> Encoder
+> Attention
+> Mechanism
+> Mask
+> Operation
+> State Update
+> Process
+> Linear
+> Decoder
+> Tanh
+> Softmax
+> Initial UAV State Initial UAV State
+> Instances
+> Qmax E
+> current state = i
+> States
+> Remaining
+> Energy
+> Visited Nodes
+> Remaining
+> Energy
+> Visited Nodes
+> current state = i
+> States
+> Remaining
+> Energy
+> Visited Nodes 1-
+> tanh
+> sigmoid
+> sigmoid
+> Decoder
+
+Fig. 3. Architecture of BFPRL. 
+
+a) State Feature Extraction: The model Mθ processes both static and dynamic state features. Static features encom-pass intrinsic environmental attributes, such as the spatial co-ordinates and degradation levels of target regions. In contrast, dynamic features capture the time-varying operational status of the UAV, such as remaining energy and payload weight. Optimizing Θ enables the model to perform high-dimensional feature embedding and sequential decision modeling based on these extracted state representations. 
+
+b) Improved Encoder-Decoder Architecture: Building on [38], we propose a tailored encoder-decoder architecture for the RAMP. As illustrated in Fig. 3, the model adopts a Transformer-based encoder [39] to extracts global contextual representations from input sequences. Subsequently, an Pointer Network [26] is integrated as an autoregressive decoder to sequentially generate environment-dependent restoration deci-sions. This enables the joint optimization of dynamic UAV trajectories and adaptive area allocation. 
+
+c) Encoder: The encoder integrates heterogeneous in-puts, including static environmental features (coordinates, degradation) and dynamic UAV states (energy, payload), to generate a global contextual representation. It consists of 
+
+nlayers Transformer blocks utilizing Batch Normalization (BN) instead of standard LayerNorm to stabilize training. First, input features Hin ∈ Rn×din are linearly embedded into dimension de:
+
+Hl=0 = Hin Win ∈ Rn×de , (10) where Win is the input embedding weight matrix. Each subsequent layer l ∈ {0, . . . , n layers − 1} applies multi-head attention (MHA) and a feed-forward network (FFN) with residual connections and BN: 
+
+Hl+1  
+
+> rc
+
+= BN 
+
+MHA l+1 (Hl) + Hl
+
+, (11) 
+
+Hl+1 = BN 
+
+ReLU 
+
+Hl+1  
+
+> rc
+
+Wl+1 1
+
+
+
+Wl+1 2 + Hl+1 
+
+> rc
+
+
+
+, (12) where MHA l+1 (·) denotes the attention mechanism at layer 
+
+l + 1 , Hl+1  
+
+> rc
+
+is the intermediate residual connection, Wl+1 1 and 
+
+Wl+1 2 are the weight matrices of the FFN, and BN (·) denotes batch normalization. The final output H(nlayers ) provides the comprehensive global representation required by the decoder. 
+
+d) Decoder: The autoregressive decoder constructs the UAV restoration plan via stepwise decoding. At step i, a Gated Recurrent Unit (GRU) maintains the sequential hidden state: 
+
+oi, Hgru  
+
+> i
+
+=
+
+( GRU (H0 
+
+> i
+
+, 0), i = 0 
+
+GRU (Hi−1 
+
+> i
+
+, Hgru 
+
+> i−1
+
+), i > 0, (13) where Hgru  
+
+> i
+
+is the GRU hidden state, oi is the GRU output, H0
+
+> i
+
+is the initial input, and Hi−1 
+
+> i
+
+is the current input feature at step 
+
+i. This recurrent mechanism ensures that the decision at the current step is informed by the complete historical trajectory constructed so far. Conditioned on the encoder output and the current dynamic state, an attention mechanism computes the decoder context representation at i as follows: 
+
+hdec  
+
+> i
+
+= Attention 
+
+H(nlayers ), dynamic i, oi
+
+
+
+. (14) Following the computation of the contextual representation, the pointer decoder evaluates the selection probability for each candidate node. The raw selection score μij for candidate node 
+
+j is computed as: 
+
+μij =
+
+
+
+ζ · tanh 
+
+
+
+(Wq hdec  
+
+> i
+
+)⊤(Wkhenc  
+
+> j
+
+)
+
+
+
+, j / ∈ πi
+
+−∞ , otherwise , (15) where Wq and Wk are query and key weight matrices, and ζ is a scaling factor (typically set to 10). If πi is the set of already visited nodes, its score is set to −∞ , which ensures that the node cannot be selected again. The node-selection probability is then obtained by 
+
+pθ (ji = j | s<i ) = Softmax (μi)j . (16) After the node ji is selected, an area-allocation head predicts the restoration level from a feasible set Di(ji). This set is dynamically constrained by the remaining payload, energy, and residual restorable areas: 
+
+ν(ji) 
+
+> iδ
+
+= w⊤ 
+
+> δ
+
+ReLU 
+
+
+
+Wδ
+
+h
+
+hdec  
+
+> i
+
+; henc  
+
+> ji
+
+; dynamic i
+
+i 
+
+, δ ∈ Di(ji),
+
+(17) 
+
+pθ (δi = δ | ji, s <i ) = Softmax 
+
+ν(ji)
+
+> i
+
+ 
+
+> δ
+
+. (18) 7
+
+Accordingly, the joint action distribution factorizes as 
+
+pθ (ai | s<i ) = pθ (ji | s<i ) pθ (δi | ji, s <i ). (19) During forward propagation, the model Mθ (x) takes the input problem instance x and outputs both the trajectory cost 
+
+C and the aggregated log-probability: 
+
+(C, log p) ← Mθ (x), (20) where the aggregated log-probability across all L steps is given by: 
+
+log p =
+
+> L
+
+X
+
+> i=1
+
+[log pθ (ji | s<i ) + log pθ (δi | ji, s <i )] . (21) This trajectory-level output facilitates the subsequent gradient-based optimization of the policy parameters θ.
+
+3) Model Training and Optimization: To train the single-UAV restoration model, we employ an actor-critic algo-rithm [40] combined with the Adam optimizer [41] to update the policy network πθ . As an extension of the REINFORCE algorithm [42], this dual-network approach effectively stabi-lizes training and accelerates convergence. 
+
+a) Actor Network Optimization: The actor network ap-proximates the policy probability function p(π|s) for the restoration task. Let θ denote its trainable parameters, the optimization objective is to maximize the expected return under the policy induced by θ:
+
+J(θ | s) = Eπ∼pθ (·| s)[R(π | s)] . (22) Following [42], the policy gradient is derived using the advantage function A(π | s):
+
+∇θ J(θ | s) = Eπ∼pθ (·| s) [( R(π | s) − b(s)) ∇θ ln pθ (π | s)] = Eπ∼pθ (·| s) [A(π | s)∇θ ln pθ (π | s)] , (23) where R(π | s) denotes the reward obtained during the grass-land restoration process, and pθ (π | s) is the probability that the actor network selects a restoration region and its corresponding restoration area size at each autoregressive decision step. The term b(s) is the baseline value estimate provided by the critic network. The advantage function A(π | s) = R(π | s) − b(s)
+
+evaluates the relative performance of policy π against the expected value of state s. A positive advantage reinforces the selected actions via the term ∇θ ln pθ (π | s), whereas a negative advantage reduces suboptimal actions. For a training batch of size B with L decision steps, the gradient is approximated as: 
+
+∇θ J(θ | s) ≈ 1
+
+B
+
+> B
+
+X
+
+> i=1
+> L
+
+X
+
+> j=1
+
+A(πi,j | si,j )∇θ ln pθ (πi,j | si,j ) .
+
+(24) 
+
+b) Critic Network Optimization: Let θc denote the pa-rameters of the critic network, the objective of the critic is to minimize the discrepancy between the predicted baseline value 
+
+bθc (Vi) and the experienced return R(π | Vi). Accordingly, the loss function can be approximated by the mean squared error (MSE): 
+
+L(θc | s) ≈ 1
+
+B
+
+> B
+
+X
+
+> i=1
+
+bθc (Vi) − R(π | Vi) 22 . (25) 
+
+Algorithm 1: BFPRL Training for Single-UAV Tra-jectory Planning and Restoration Area Allocation 
+
+Input : Initial model parameters θ, training epochs Nepoch ,batch size B, learning rate α, gradient clipping threshold gmax , validation set size |Dval |.
+
+Output: Optimal policy parameters θ∗, trained actor network 
+
+Mθ∗ , critic baseline network B∗.
+
+// Initialization  
+
+> 1
+
+Mθ ← InitializeActor (θ); Bmodel ← InitializeCritic () ; 
+
+> 2
+
+O ← Adam ({M θ , Bmodel }, α ) ; // Init Optimizer  
+
+> 3
+
+Dval ← GenerateInstances (|Dval |) ; // Validation Set  
+
+> 4
+
+Rbest ← −∞ ; θ∗ ← θ;
+
+// Main Training Loop  
+
+> 5
+
+for epoch ← 1 to Nepoch do  
+
+> 6
+
+Dtrain ← GenerateInstances () ; // Training Set  
+
+> 7
+
+foreach Batch ∈ Split (Dtrain , B ) do  
+
+> 8
+
+(C, log p) ← M θ (Batch ) ; // Forward pass  
+
+> 9
+
+bv ← B model (Batch ) ; // Baseline estimate // Compute Losses (Eq. 26)  
+
+> 10
+
+LR ← 1
+
+> B
+
+PBi=1 (Ci − bv,i ) · log pi; 
+
+> 11
+
+Lb ← BaselineLoss (bv , C ); 
+
+> 12
+
+L ← L R + Lb ; // Total Loss // Backpropagation  
+
+> 13
+
+∇θ ← ∇ θ L; 
+
+> 14
+
+∥∇ θ ∥2 ← min( ∥∇ θ ∥2, g max ) ; // Gradient Clipping  
+
+> 15
+
+θ ← O (θ, ∇θ ) ; // Update Parameters  
+
+> 16
+
+end 
+
+// Validation Phase  
+
+> 17
+
+Mθ .SetMode (GreedyDecoding ); 
+
+> 18
+
+Cval ← EvaluatePolicy (Mθ , D val ); 
+
+> 19
+
+¯r ← − 1
+
+> |Dval |
+
+P|Dval | 
+
+> i=1
+
+Cval ,i ; // Avg Reward  
+
+> 20
+
+if ¯r > R best then  
+
+> 21
+
+θ∗ ← θ; Rbest ← ¯r ; // Save Best Model  
+
+> 22
+
+end  
+
+> 23
+
+end  
+
+> 24
+
+return θ∗, Mθ∗ , B∗;
+
+c) Unified Training Procedure: As detailed in Algo-rithm 1, the actor and critic networks are jointly optimized using Adam with a scheduled learning rate α. The total loss 
+
+L = LR + Lb combines the critic’s baseline loss Lb and the actor’s policy gradient loss: 
+
+LR = 1
+
+B
+
+> B
+
+X
+
+> i=1
+
+(Ci − bv,i ) · log pi, (26) where Ci is the actual cost (negative reward) and bv,i is the critic-estimated baseline. To prevent gradient explosion, gradients are clipped via ∥∇ θ ∥2 ← min( ∥∇ θ ∥2, g max ) prior to parameter updates. After each epoch, the model is evaluated on a validation set Dval via greedy decoding. We retain the optimal parameters θ∗ that maximize the average validation reward: 
+
+θ∗ = arg max 
+
+> θ
+
+− 1
+
+|Dval |
+
+> |Dval |
+
+X
+
+> i=1
+
+Cval ,i 
+
+ (27) This architecture ensures stable gradient estimation and rapid convergence to an optimal single-UAV restoration policy. 
+
+C. Knowledge-Guided Multi-UAV Collaboration Framework 
+
+To address the challenges of large-scale degraded grass-land restoration, we propose KC-BFPRL, a knowledge-guided 8
+
+multi-UAV collaboration framework. Built upon a bilevel formerpointer reinforcement learning approach, KC-BFPRL adopts the hierarchical collaborative architecture illustrated in Fig. 2. Following an “external collaboration, internal intel-ligence” paradigm, a ground control center (GCC) manages global cooperative scheduling and dynamic map updates. Concurrently, individual UAVs utilize the Transformer-Pointer based BFPRL model for local sequential decision-making to optimize flight trajectories and restoration allocations. This ar-chitecture strategically couples global scheduling data with lo-cal perception, effectively balancing computational efficiency and global restoration performance. 
+
+1) Collaboration Scheduling Mechanism: To facilitate col-laboration, the global target set Va = V \ { v0} is parti-tioned into m mutually exclusive subsets, one for each UAV     
+
+> u∈U={1, . . . , m }
+
+, satisfying m ≪ n. Each subset Vu =  
+
+> {v1
+> u, v 2
+> u, . . . , v hu}
+
+assigns h regions to UAV u, where each region is defined by a tuple viu = (id iu, p iu, l iu, a iu) representing its identifier, spatial coordinates, degradation level, and restorable area size, respectively. The operational state of UAV u is defined as Su =   
+
+> pu, E rem
+> u, V vis
+> u, A rep
+> u
+> 
+
+, where pu is the current position, Erem 
+
+> u
+
+is the remaining energy, V vis  
+
+> u
+
+tracks the sequence of visited regions, and Arep  
+
+> u
+
+is the total accumulated restored areas. To synchronize interactions between the UAVs and the GCC, a semaphore variable SP u is introduced to estimate the time cost for the next task:         
+
+> SP u=d(pu, v i
+> next )
+> v+ρ·arep
+> i
+> r,
+
+(28) where d(·) is the Euclidean distance, v denotes the UAV’s flight speed, r represents the restoration rate (areas per unit time), ρ
+
+is a weighting factor, and arep  
+
+> i
+
+is the target region size at the next node vnext  
+
+> i
+
+.
+
+2) Multi-UAV Information Sharing Strategy: To optimize task distribution via dynamic information exchange, a match-ing cost function K(u, v i) evaluates the suitability of assigning region vi to UAV u. Balancing spatial proximity, task urgency, and workload, it is formulated as:            
+
+> K(u, v i) = α·d(pu,pi) + β·1
+> li
+> +ϵ·1
+> ai
+> ,
+
+(29) where α, β, ϵ are tunable weight coefficients for distance, degradation level, and restoration area size, respectively. A lower K value indicates a higher assignment priority. To achieve global optimization, this cooperative scheduling process iteratively executes the following five key steps. 
+
+Step 1: Initial Partitioning . The global target region Va
+
+is partitioned via spatial clustering (e.g., K-means), allocating an initial subset V 0 
+
+> u
+
+to each UAV u.
+
+Step 2: Baseline Trajectory Optimization . Based on V 0 
+
+> u
+
+,each UAV computes an energy-feasible trajectory to maximize its baseline restoration gain Au1:    
+
+> (Pu1, A u1) = arg max
+> P∈P (Mu)
+> X
+> vi∈P
+> arep
+> i,
+
+(30) where P(Mu) denotes the set of energy-feasible paths and arep i is the number of restoration areas in region vi.
+
+Step 3: Global Task Reallocation . The GCC tentatively reassigns tasks based on the real-time fleet states, allocating each region to the UAV that minimizes the matching cost K:        
+
+> Vtmp
+> u=
+> 
+> vi∈Vau= arg min
+> u′∈UK(u′, v i)
+> 
+> .
+
+(31) 
+
+Step 4: Candidate Trajectory Generation . Based on the ten-tative partition V tmp u , each UAV replans its trajectory to determine the potential restoration gain, denoted as Au2.
+
+Step 5: Global Decision . The system evaluates the efficacy of the reallocation by comparing aggregate restora-tion gains of baseline (Step 2) and candidate (Step 4) plans. The tentative allocation is adopted only if it improves global performance:      
+
+> Vu=
+> (Vtmp
+> u,
+
+if P     
+
+> u∈UAu2≥P
+> u∈UAu1
+> Vu,
+
+otherwise . (32) This iterative information-sharing mechanism facilitates dy-namic task reallocation, maximizing the total restored area under strict energy constraints. 
+
+3) Decision-Making and Execution: UAVs execute restora-tion decisions sequentially based on calculated semaphore priorities. The UAV with the minimum semaphore is selected first:    
+
+> u∗= arg min
+> u∈USP u.
+
+(33) Upon completing its current task at vcurr  
+
+> i
+
+, UAV u∗ selects the next target region within its assigned subset by minimizing the local matching cost:    
+
+> vnext
+> i= arg min
+> vi∈Vu∗
+> K(u∗, v i).
+
+(34) The state of u∗ is then updated as:            
+
+> Su∗=
+> 
+> vnext
+> i, E rem
+> u∗−Eflight −Erepair ,Vvis
+> u∗∪ { vcurr
+> i}, A rep
+> u∗+arep
+> i
+> 
+> ,
+
+(35) The process (summarized in Algorithm 2) repeats until all global tasks are completed or energy constraints force a return to the depot. V. E XPERIMENTAL EVALUATION AND ANALYSIS 
+
+This section presents comprehensive experiments validating the effectiveness and generalization of the proposed KC-BFPRL framework for the RAMP. 
+
+A. Experiment Settings 
+
+All experiments were conducted on a workstation equipped with an AMD Ryzen Threadripper 3970X CPU, NVIDIA RTX 3090 Ti GPU, and 192 GB RAM, utilizing Python 3.9 and PyTorch 1.12.1 (CUDA 11.3) on Ubuntu 22.04. 9
+
+Algorithm 2: Knowledge-Guided Multi-UAV Collab-oration Scheduling Algorithm for RAMP 
+
+Input : Global parameter set P , initial restoration map partitions {V 0 
+
+> u
+
+}mu=1 , UAV states {S0
+
+> u
+
+}mu=1 ,pre-trained RL model parameters Mθ .
+
+Output: UAV trajectories {Pu}mu=1 , cumulative restored areas {Au}mu=1 , remaining energy {Eu}mu=1 .
+
+// Initialization  
+
+> 1
+
+Initialize Vu ← V 0 
+
+> u
+
+, P u ← ∅ , S u ← S0
+
+> u
+
+, ∀u ∈ U ;
+
+Mglobal ← S Vu;
+
+// Main Scheduling Loop  
+
+> 2
+
+while Mglobal ̸ = ∅ do 
+
+// Phase I: Distributed Planning &Global Reallocation  
+
+> 3
+
+Compute baseline: 
+
+(E(1)  
+
+> u
+
+, A (1)  
+
+> u
+
+) ← PlanTrajectory (Mθ , V u) ∀u ∈ U ; 
+
+> 4
+
+Update global map: 
+
+Mglobal ← UpdateAllocation ({Vu, A (1)  
+
+> u
+
+}); 
+
+> 5
+
+Compute candidate: V tmp  
+
+> u
+
+← GetTasks (Mglobal );
+
+(E(2)  
+
+> u
+
+, A (2)  
+
+> u
+
+) ← PlanTrajectory (Mθ , V tmp  
+
+> u
+
+) ∀u; 
+
+> 6
+
+if P A(2)  
+
+> u
+
+≥ P A(1)  
+
+> u
+
+then Update maps: 
+
+{Vu} ← { V tmp  
+
+> u
+
+};
+
+// Phase II: Semaphore-based Execution  
+
+> 7
+
+Select active UAV: u∗ ← arg min u SP u; Select target: 
+
+v∗ ← arg min v∈Vu∗ K(u∗, v ); 
+
+> 8
+
+if v∗̸ = NULL then  
+
+> 9
+
+ExecuteRestoration( u∗, v ∗); Vu∗ ← Vu∗ \ { v∗}; 
+
+> 10
+
+Update state Su∗ (Energy, Position, Area) per Eq. (35);  
+
+> 11
+
+Update semaphore SP u∗ based on new state;  
+
+> 12
+
+end  
+
+> 13
+
+end 
+
+// Termination  
+
+> 14
+
+foreach UAV u ∈ U do ReturnToDepot( u);  
+
+> 15
+
+; 
+
+> 16
+
+return {P u}Uu=1 , {Au}Uu=1 , {Eu}Uu=1 .
+
+1) Instance Generation: To evaluate the KC-BFPRL frame-work’s generalization across diverse spatial scales and con-straints, we generated 10800 test instances spanning 108 parameter configurations. These configurations combine three fleet sizes M ∈ {4, 6, 8}, six problem scales N ∈{60 , 80 , . . . , 160 } target regions, spanning areas from 500 ×
+
+500 m2 to 1000 × 1000 m2, and six workload levels, where the number of unit circles δ per degraded region is uniformly sampled from the set {10 , 15 , . . . , 35 } in increments of 5 across all scenarios. Configurations are denoted as UM-RN, e.g., U4-R60. For each instance, the BS is fixed at (0 , 0) . Target coor-dinates are uniformly sampled in [0 , 1] 2 and scaled to the specific spatial area, with degradation levels li ∼ U (0 , 1) . To accommodate larger domains, the initial UAV energy Emax 
+
+is proportionally scaled from 1.00 × 10 7 J to 7.59 × 10 7 J. To ensure statistical reliability, we evaluate 100 independent random instances per configuration. 
+
+2) Compared Algorithms: We evaluate KC-BFPRL against three state-of-the-art baselines: (1) CHAPBILM [3] : A spe-cialized heuristic for UAV grassland restoration combin-ing population-based incremental learning with a maximum-residual-energy local search. (2) MAPDP [30] : A multi-agent routing algorithm utilizing paired context embedding and a collaborative advantage actor-critic (A2C) approach. (3) CAMP [31] : An attention-based multi-agent model fea-turing inter-agent communication and a centralized-training distributed-execution (CTDE) framework. Since the original MAPDP and CAMP were not originally designed for the RAMP, we adapted their input layers and decoder masking mechanisms to accommodate our problem constraints while preserving their core architectures. Detailed parameter configurations are provided in Appendix A. 
+
+3) Parameter Settings: Following [36], the UAV oper-ational parameters are set as follows: the frame mass is initialized to M = 1 .5 kg, gravitational acceleration to g = 9 .8
+
+m/s 2, air density ρ = 1 .024 kg/m 3, rotor disc area ς = 0 .2
+
+m2, and the number of rotors to h = 6 . Regarding the energy consumption dynamics in Section III-B, the seeding energy coefficient is set to η = 5 × 10 4, the environmental parameter to γ = 1 .5, and the aerial photography energy consumption to 
+
+eap = 2 × 10 4 J. 
+
+B. Performance Evaluation 
+
+Following established evaluation protocols [3], [43], we evaluate KC-BFPRL framework across six key performance metrics: average objective value (Obj.), average optimality gap (Gap), average energy efficiency (ratio of task energy to total energy), average total trajectory length, average total restora-tion areas (Areas), and average computation time (Time). All data are rounded to the shown precision (with Areas rounded down), and best results are in bold. 
+
+1) Scalability and Performance Comparison: To validate its adaptability and scalability, the KC-BFPRL framework is evaluated across diverse problem scales. The task complexity is systematically tested using target node counts ranging from 
+
+n = 60 to n = 160 in increments of 20, spanning scenarios from small-to-medium scenarios to medium-to-large scales. For each scale, performance is further assessed under varying fleet configurations of 4, 6, and 8 UAVs. First, we evaluate training stability of the model in Fig. 8 of Appendix B, which reveals a trade-off between efficiency and performance. A distinct trade-off between training effi-ciency and restoration performance is evident. While MAPDP demonstrates the fastest convergence and CAMP converges moderately with limited improvement in restoration area, KC-BFPRL requires the longest training period. However, this extended training enables KC-BFPRL to achieve a signif-icantly superior restoration outcome. As confirmed by the final convergence states in Fig. 4, the KC-BFPRL models exhibit robust stability, indicating the successful acquisition of effective, high-performance restoration policies. Subsequently, to provide intuitive insight into the model’s decision-making, Fig. 9 of Appendix B visualizes the optimal trajectories for random instances with seed 1234. These results confirm that KC-BFPRL generates logical, efficient paths across various scales, effectively coordinating the multi-UAV fleet to maxi-mize restoration coverage. 
+
+2) Comparison With State-of-the-Art Methods: We evalu-ate our method against CHAPBILM [3], MAPDP [30], and CAMP [31]. The experimental results for fleet sizes of U4, 10 0 200 400 600 800 
+
+> Training Step
+> 0123456
+> Loss
+> KC-BFPRL CAMP MAPDP
+
+Fig. 4. Comparison of training convergence curves for the three learning-based algorithms in scenario U4-R60. 
+
+(a) U4-R60 (b) U6-R80 (c) U8-R100 (d) U4-R60 
+
+(e) U6-R80 (f) U8-R100 (g) U4-R60 (h) U6-R80 
+
+(i) U8-R100 (j) U4-R60 (k) U6-R80 (l) U8-R100 Fig. 5. Optimal trajectories generated by the four algorithms for 4, 6, and 8 UAVs across three small-to-medium-scale scenarios: (a)-(c) CAMP, (d)-(f) CHAPBILM, (g)-(i) MAPDP, and (j)-(l) KC-BFPRL. 
+
+U6, and U8 are presented in Tables I, II, and III, respectively. The optimality gap is defined as the normalized difference between the average objective value of a given method (Obj.) and the best objective value (Obj best ) across all methods: Gap = Obj best −Obj Obj best × 100% .Tables I to III show that KC-BFPRL consistently outper-forms baselines across all fleet sizes and scales, particularly in large-scale scenarios involving 120 to 160 regions, with the minor exception of U4-R160. In the complex U8-R160 instance, it surpasses MAPDP and CAMP by 12 .03% in objective value and approximately 38 .55% in total restored areas, respectively. While MAPDP’s optimality gap widens to 10 .74% as complexity increases, KC-BFPRL maintains a 
+
+0.00% gap across all 8-UAV instances. Furthermore, it is nearly three times faster than MAPDP, effectively mitigating the “curse of dimensionality”. Its robustness is highlighted by maintaining a mean optimality gap under 2% as the fleet scales. Statistical results in presented Fig. 6 and Table V of Appendix B demonstrate the superiority of KC-BFPRL across 
+
+TABLE I COMPARISON OF AVERAGE PERFORMANCE ACROSS FOUR ALGORITHMS FOR 4-UAV C OLLABORATIVE GRASSLAND RESTORATION IN ALL 
+
+SCENARIOS .
+
+Areas Pending Restoration Metric Algorithms CAMP CHAPBILM MAPDP KC-BFPRL 
+
+60 Obj. 675.60 798.51 862.34 945.80 
+
+Areas 612 742 789 863 
+
+Time (s) 11.21 892.49 45.79 15.81 Gap (%) 28.59 15.57 8.83 0.00 
+
+80 Obj. 878.00 1065.42 1125.51 1248.27 
+
+Areas 798 968 1023 1134 
+
+Time (s) 53.24 1287.65 62.44 16.85 
+
+Gap (%) 29.65 14.64 9.83 0.00 
+
+100 Obj. 1048.18 1306.40 1628.46 1585.39 Areas 952 1187 1478 1442 Time (s) 67.82 1654.37 78.98 21.55 
+
+Gap (%) 35.65 19.77 0.00 2.64 120 Obj. 1272.43 1566.26 1688.11 1908.76 
+
+Areas 1156 1423 1534 1735 
+
+Time (s) 25.89 2021.71 94.59 28.90 Gap (%) 33.33 17.95 11.55 0.00 
+
+140 Obj. 1526.65 1858.53 2006.35 2296.12 
+
+Areas 1387 1689 1823 2087 
+
+Time (s) 98.52 2456.27 111.81 31.22 
+
+Gap (%) 33.52 19.05 12.63 0.00 
+
+160 Obj. 1798.08 2186.17 2756.82 2698.50 Areas 1634 1987 2504 2453 Time (s) 114.22 2874.56 128.93 36.70 
+
+Gap (%) 34.75 20.69 0.00 2.12 TABLE II COMPARISON OF AVERAGE PERFORMANCE ACROSS FOUR ALGORITHMS FOR 6-UAV C OLLABORATIVE GRASSLAND RESTORATION IN ALL 
+
+SCENARIOS .
+
+Areas Pending Restoration Metric Algorithms CAMP CHAPBILM MAPDP KC-BFPRL 
+
+60 Obj. 1010.59 1198.18 1306.18 1425.49 
+
+Areas 918 1089 1187 1295 
+
+Time (s) 16.82 1340.78 68.98 22.74 Gap (%) 29.10 15.95 8.37 0.00 
+
+80 Obj. 1317.09 1528.79 1898.60 1834.28 Areas 1197 1389 1726 1666 Time (s) 76.57 1789.31 89.21 24.74 
+
+Gap (%) 30.63 19.48 0.00 3.39 100 Obj. 1572.18 1907.65 2116.23 2348.22 
+
+Areas 1429 1734 1923 2134 
+
+Time (s) 95.88 2287.49 112.81 31.24 
+
+Gap (%) 33.05 18.77 9.88 0.00 
+
+120 Obj. 1908.63 2298.59 2528.63 2858.27 
+
+Areas 1735 2089 2298 2598 
+
+Time (s) 38.96 2798.62 136.71 41.54 Gap (%) 33.22 19.59 11.53 0.00 
+
+140 Obj. 2292.66 2702.57 3007.60 3398.74 
+
+Areas 2084 2456 2734 3089 
+
+Time (s) 135.88 3356.91 161.33 45.11 
+
+Gap (%) 32.56 20.48 11.51 0.00 
+
+160 Obj. 2695.76 3154.12 3518.65 3998.35 
+
+Areas 2450 2867 3198 3634 
+
+Time (s) 54.21 3897.26 186.84 56.82 Gap (%) 32.57 21.12 12.00 0.00 
+
+four key metrics. It achieves the highest average restora-tion areas of 1109.73, outperforming MAPDP, CHAPBILM, and CAMP by 11 .60% , 28 .09% , and 58 .52% , respectively. It 11 
+
+TABLE III COMPARISON OF AVERAGE PERFORMANCE ACROSS FOUR ALGORITHMS FOR 8-UAV C OLLABORATIVE GRASSLAND RESTORATION IN ALL 
+
+SCENARIOS .
+
+Areas Pending Restoration Metric Algorithms CAMP CHAPBILM MAPDP KC-BFPRL 
+
+60 Obj. 1347.36 1428.41 1789.27 1718.95 Areas 1224 1298 1625 1562 Time (s) 69.77 1643.51 82.11 22.64 
+
+Gap (%) 24.69 20.16 0.00 3.93 80 Obj. 1756.63 1868.25 2076.01 2298.61 
+
+Areas 1596 1698 1887 2089 
+
+Time (s) 29.87 2156.76 107.32 32.15 Gap (%) 23.58 18.71 9.68 0.00 
+
+100 Obj. 2097.20 2298.57 2604.63 2898.23 
+
+Areas 1906 2089 2367 2634 
+
+Time (s) 114.52 2734.87 134.90 37.52 
+
+Gap (%) 27.64 20.69 10.13 0.00 
+
+120 Obj. 2544.18 2776.27 3154.13 3518.46 
+
+Areas 2312 2523 2867 3198 
+
+Time (s) 42.19 3287.69 162.83 48.71 Gap (%) 27.69 21.09 10.35 0.00 
+
+140 Obj. 2990.23 3264.11 3726.34 4178.61 
+
+Areas 2718 2967 3387 3798 
+
+Time (s) 163.24 3865.97 192.11 53.48 
+
+Gap (%) 28.45 21.88 10.83 0.00 
+
+160 Obj. 3547.14 3835.99 4386.42 4914.08 
+
+Areas 3224 3487 3987 4467 
+
+Time (s) 65.19 4453.23 222.46 68.54 Gap (%) 27.82 21.93 10.74 0.00 CAMP CHAPBILM MAPDP KC-BFPRL 0.40 0.45 0.50 0.55 0.60 
+
+> Energy Efficiency
+
+(a) Energy efficiency CAMP CHAPBILM MAPDP KC-BFPRL 500 1000 1500 2000 2500 3000  
+
+> Number of Restoration Areas
+
+(b) Number of restoration areas CAMP CHAPBILM MAPDP KC-BFPRL 02500 5000 7500 10000 12500 15000 17500 
+
+> Trajectory Length
+
+(c) Trajectory length CAMP CHAPBILM MAPDP KC-BFPRL 01000 2000 3000 4000 5000  
+
+> Objective Function Value
+
+(d) Objective function value Fig. 6. Comparative performance of the four algorithms on four key metrics. 
+
+also yields the most efficient flight paths, with an average length of 4068.40, representing distance reductions of 3.69% ,
+
+12 .83% , and 13 .56% compared to the baselines. Moreover, KC-BFPRL exhibits higher median and minimum values along with lower standard deviations in energy efficiency, resulting in a mean value of 0.538 that underscores its exceptional stability. Finally, KC-BFPRL surpasses its closest competitor, MAPDP, by 8.90% in overall objective value, validating its practical engineering value for large-scale, complex ecological restoration tasks. 
+
+3) Generalization and Robustness Study: We evaluate the model’s generalization by testing a fixed policy across varying 
+
+(a) U4-R120 (b) U6-R120 (c) U8-R120 
+
+(d) U4-R140 (e) U6-R140 (f) U8-R140 
+
+(g) U4-R160 (h) U6-R160 (i) U8-R160 Fig. 7. Visualization of optimal KC-BFPRL trajectories for 4, 6, and 8 UAVs across three medium-to-large-scale scenarios. 
+
+problem sizes without fine-tuning. Fig. 7 shows that KC-BFPRL maintains high-quality solutions even in mismatched settings with minimal performance loss. Notably, the pre-trained model often outperforms baselines specifically trained for those scenarios. These results confirm the versatility of our knowledge-guided framework and its potential for broad applicability in complex multi-UAV challenges. 
+
+4) Discussion: Based on the comparative performance analysis, we delineate the specific applicability of each algo-rithm to different operational contexts. KC-BFPRL balances optimality and efficiency, making it ideal for large-scale, complex missions involving over 100 restoration regions that require real-time decision-making. In contrast, MAPDP is suitable for precision-critical tasks where latency is acceptable, while CHAPBILM is best for smaller, training-free offline scenarios with fewer than 80 regions. KC-BFPRL’s success lies in its knowledge-guided paradigm, which prunes the search space using ecological priority, heuristic logic, and hierarchical coordination. This “warm-start” avoids learning from scratch and mitigates the “curse of dimensionality.” Furthermore, by utilizing transparent heuristics, the framework enhances interpretability and provides a systematic guide for selecting algorithms based on mission scale and resource constraints. VI. C ONCLUSION 
+
+This paper addressed the critical challenge of multi-UAV collaborative grassland restoration by formulating the RAMP and proposing the KC-BFPRL framework. By integrating domain expertise, specifically ecological priority and heuris-tic scheduling logic, with the adaptive capability of DRL, 12 
+
+the proposed approach effectively bridges the gap between centralized coordination and decentralized execution. Exten-sive experiments demonstrates that KC-BFPRL significantly outperforms state-of-the-art heuristic and learning-based base-lines, successfully enabling real-time, high-precision decision-making. Essentially, the knowledge-guided paradigm ensures robust scalability and interpretability, maintaining near-optimal performance even as task complexity increases. Future work will explore problem-decomposition for lower latency and conduct real-world trials under dynamic environmental uncer-tainties to advance autonomous ecological engineering. APPENDIX AHYPERPARAMETER CONFIGURATION FOR MULTI -A GENT 
+
+REINFORCEMENT LEARNING METHODS 
+
+All multi-agent reinforcement learning (MARL) baselines were implemented using the source code and hyperparameters provided in their original publications. To ensure an equi-table comparison, each baseline model was trained for 10000 epochs, consistent with the training protocol established for KC-BFPRL. Because the native architectures of MAPDP and CAMP cannot be directly applied to RAMP, we adapted their input representations and constraint-handling mechanisms to align with our mathematical formulation. Specifically, we explicitly integrated the critical constraints governing spatially heterogeneous degradation levels and dynamic UAV energy limitations into their decision-making processes. The specific parameter settings are shown in the table IV.                                
+
+> TABLE IV TRANSFORMER MODEL TRAINING PARAMETERS
+> Parameter Description Value
+> nlayers number of Transformer layers 3
+> din input dimension 4 ( x,y,l,R)
+> deembedding dimension 128
+> Cattention scaling factor 10
+> Nepoch number of epochs 100
+> Bbatch size 256
+> αlearning rate (Adam) 3×10 −4
+> gmax gradient clipping threshold 0.5
+> Dval validation set size 256
+> Tepochs number of epochs (training) 10000
+> αppenalty term weight 10.0
+> αrrecovery term weight 1.0
+
+APPENDIX BEXTENDED EXPERIMENTAL RESULTS 
+
+Fig. 8 illustrates the accumulation of total restored areas across training epochs, comparing the learning curves of the three learning-based approaches under the U4-R60 configura-tion. Fig. 9 visualizes the optimal trajectories generated by the proposed KC-BFPRL framework. The rows correspond to varying fleet sizes (4, 6, and 8 UAVs), while the columns denote three distinct medium-to-large-scale scenarios. This layout provides a clear qualitative assessment of the algo-rithm’s path-planning performance across different mission scales and spatial constraints. 0 2000 4000 6000 8000       
+
+> Episode
+> 020 40 60 80 100
+> Total Restoration Areas
+> KC-BFPRL MAPDP CAMP
+> Fig. 8. Evolution of total restoration areas across training epochs for the three learning-based algorithms in scenario U4-R60.
+> (a) U4-R60 (b) U6-R60 (c) U8-R60
+> (d) U4-R80 (e) U6-R80 (f) U8-R80
+> (g) U4-A100 (h) U6-R100 (i) U8-R100 Fig. 9. Visualization of optimal KC-BFPRL trajectories for 4, 6, and 8 UAVs across three small-to-medium-scale scenarios.
+
+Table V presents a comprehensive comparison of the av-erage performance metrics achieved by the four algorithms. The reported values are averaged across all test instances, pro-viding a consolidated evaluation of each algorithm’s relative effectiveness across the primary criteria. ACKNOWLEDGMENT 
+
+This work was supported in part by the National Natural Science Foundation of China under Grant 62233003 and 62272210, and in part by the Natural Science Foundation of Gansu Province under Grant 24JRRA430. We thank Mr. B. Liu for his assistance and the anonymous reviewers for their constructive feedback which improved this manuscript. 13 
+
+TABLE V COMPARISON OF AVERAGE PERFORMANCE METRICS ACROSS THE FOUR ALGORITHMS .                                                                                  
+
+> Metric Algorithm Mean Std Median Min Max Q75
+> Restoration Areas CAMP 700 359 625 203 2216 838 CHAPBILM 866 449 725 292 2263 1067 MAPDP 994 487 872 262 2510 1232 KC-BFPRL 1109 544 971 322 2941 1395
+> Energy Efficiency CAMP 0.457 0.043 0.437 0.411 0.570 0.477 CHAPBILM 0.494 0.052 0.469 0.431 0.582 0.547 MAPDP 0.537 0.047 0.555 0.441 0.598 0.575
+> KC-BFPRL 0.538 0.035 0.548 0.453 0.597 0.566 Trajectory Length CAMP 4706.47 2677.40 4052.19 853.68 13725.89 6173.27 CHAPBILM 4667.37 2716.91 3669.33 859.86 13507.69 6631.64 MAPDP 4224.46 2561.48 3433.10 949.60 13821.66 5639.78 KC-BFPRL 4068.40 2379.57 3419.49 918.53 12655.74 5509.92
+> Objective Value CAMP 1024.52 543.90 893.03 233.07 3239.36 1204.10 CHAPBILM 1313.71 712.87 1121.74 334.85 4000.82 1620.81 MAPDP 1515.66 829.19 1296.49 230.85 4568.51 1936.94 KC-BFPRL 1650.54 865.87 1437.29 442.23 5009.81 2073.11
+
+REFERENCES [1] L. Sommer, B. C. Campos, S. Harvolk-Sch¨ oning, T. W. Donath, T. Kleinebecker, and Y. P. Klinger, “Grassland restoration with plant material transfer–bridging the knowledge gap between science and practice,” Global Ecology and Conservation , vol. 47, p. e02638, 2023. [2] B. G. Waring, “Grand challenges in ecosystem restoration,” p. 1353829, 2024. [3] D. Jiao, L. Wang, P. Yang, W. Yang, Y. Peng, Z. Shang, and F. Ren, “Unmanned Aerial Vehicle-enabled grassland restoration with energy-sensitive of trajectory design and restoration areas allocation via a cooperative memetic algorithm,” Engineering Applications of Artificial Intelligence , vol. 133, p. 108084, 2024. [4] Y. Rizk, M. Awad, and E. W. Tunstel, “Cooperative heterogeneous multi-robot systems: A survey,” ACM Computing Surveys (CSUR) , vol. 52, no. 2, pp. 1–31, 2019. [5] Z. Yang, Z. Xiao, Z. Han, and X.-G. Xia, “Joint path planning and trans-mission scheduling for multi-UAV data collection,” IEEE Transactions on Vehicular Technology , vol. 75, no. 4, pp. 6600–6615, 2025. [6] N. Lahrichi, T. G. Crainic, M. Gendreau, W. Rei, G. C. Cris ¸an, and T. Vi-dal, “An integrative cooperative search framework for multi-decision-attribute combinatorial optimization: Application to the MDPVRP,” 
+
+European Journal of Operational Research , vol. 246, no. 2, pp. 400–412, 2015. [7] F. J. C. Verd` u, L. Castelli, and L. Bortolussi, “Scaling combinatorial optimization neural improvement heuristics with online search and adap-tation,” in Proceedings of the AAAI Conference on Artificial Intelligence ,vol. 39, no. 25, 2025, pp. 27 135–27 143. [8] X. Huo and M. Liu, “Two-facet scalable cooperative optimization of multi-agent systems in the networked environment,” IEEE Transactions on Control Systems Technology , vol. 30, no. 6, pp. 2317–2332, 2022. [9] J. Liang, J. Zhao, C. Wang, X. Yang, K. Yue, and W. Li, “Enhancing the robustness of UAV search path planning based on deep reinforce-ment learning for complex disaster scenarios,” IEEE Transactions on Vehicular Technology , vol. 75, no. 1, pp. 392–404, 2025. [10] H. Zhang, Q. Li, and X. Yao, “Knowledge-guided optimization for complex vehicle routing with 3D loading constraints,” in International Conference on Parallel Problem Solving from Nature . Springer, 2024, pp. 133–148. [11] J. Roy, P. Barde, F. Harvey, D. Nowrouzezahrai, and C. Pal, “Promoting coordination through policy regularization in multi-agent deep reinforce-ment learning,” Advances in Neural Information Processing Systems ,vol. 33, pp. 15 774–15 785, 2020. [12] K. Anderson and K. J. Gaston, “Lightweight unmanned aerial vehicles will revolutionize spatial ecology,” Frontiers in Ecology and the Envi-ronment , vol. 11, no. 3, pp. 138–146, 2013. [13] L. P. Osco, J. M. Junior, A. P. M. Ramos, L. A. de Castro Jorge, S. N. Fatholahi, J. de Andrade Silva, E. T. Matsubara, H. Pistori, W. N. Gonc ¸alves, and J. Li, “A review on deep learning in UAV remote sensing,” International Journal of Applied Earth Observation and Geoinformation , vol. 102, p. 102456, 2021. [14] N. Bono Rossello, R. F. Carpio, A. Gasparri, and E. Garone, “Information-driven path planning for UAV with limited autonomy in large-scale field monitoring,” IEEE Transactions on Automation Science and Engineering , vol. 19, no. 3, pp. 2450–2460, 2022. [15] H. P. Xu, J. Zhang, X. P. Pang, Q. Wang, W. N. Zhang, J. Wang, and Z. G. Guo, “Responses of plant productivity and soil nutrient concen-trations to different alpine grassland degradation levels,” Environmental Monitoring and Assessment , vol. 191, no. 11, p. 678, 2019. [16] L. Nepi, G. Quattrini, S. Pesaresi, A. Mancini, and R. Pierdicca, “AI-based estimation of forest plant community composition from UAV imagery,” Ecological Informatics , p. 103199, 2025. [17] R. I. Mukhamediev, K. Yakunin, M. Aubakirov, I. Assanov, Y. Kuchin, A. Symagulov, V. Levashenko, E. Zaitseva, D. Sokolov, and Y. Amir-galiyev, “Coverage path planning optimization of heterogeneous UAVs group for precision agriculture,” IEEE Access , vol. 11, pp. 5789–5803, 2023. [18] J. Kim, S. Kim, C. Ju, and H. I. Son, “Unmanned aerial vehicles in agri-culture: A review of perspective of platform, control, and applications,” 
+
+IEEE Access , vol. 7, pp. 105 100–105 115, 2019. [19] P. Radoglou-Grammatikis, P. Sarigiannidis, T. Lagkas, and I. Moscho-lios, “A compilation of UAV applications for precision agriculture,” 
+
+Computer Networks , vol. 172, p. 107148, 2020. [20] M. Jones, S. Djahel, and K. Welsh, “Path-planning for unmanned aerial vehicles with environment complexity considerations: A survey,” ACM Computing Surveys , vol. 55, no. 11, pp. 1–39, 2023. [21] J. Xie and J. Chen, “Multiregional coverage path planning for multiple energy constrained UAVs,” IEEE Transactions on Intelligent Transporta-tion Systems , vol. 23, no. 10, pp. 17 366–17 381, 2022. [22] J. Chen, F. Ling, Y. Zhang, T. You, Y. Liu, and X. Du, “Coverage path planning of heterogeneous unmanned aerial vehicles based on ant colony system,” Swarm and Evolutionary Computation , vol. 69, p. 101005, 2022. [23] C. Zhang, J. Guo, F. Wang, B. Chen, C. Fan, L. Yu, and Z. Wang, “A dynamic parameters genetic algorithm for collaborative strike task allocation of unmanned aerial vehicle clusters towards heterogeneous targets,” Applied Soft Computing , vol. 175, p. 113075, 2025. [24] R. Xu, Z. Huang, C. Wang, and H. Yan, “Evolving collaborative differential evolution for dynamic multi-objective UAV path planning,” 
+
+IEEE Transactions on Vehicular Technology , vol. 75, no. 5, pp. 7456– 7468, 2025. [25] X. Wu, D. Wang, L. Wen, Y. Xiao, C. Wu, Y. Wu, C. Yu, D. L. Maskell, and Y. Zhou, “Neural combinatorial optimization algorithms for solving vehicle routing problems: A comprehensive survey with perspectives,” 
+
+arXiv preprint arXiv:2406.00415 , 2024. [26] O. Vinyals, M. Fortunato, and N. Jaitly, “Pointer networks,” Advances in Neural Information Processing Systems , vol. 28, 2015. [27] W. Kool, H. van Hoof, and M. Welling, “Attention, learn to solve routing problems!” in International Conference on Learning Representations ,2019. [28] D. Jiao, Z. Chen, X. Wang, J. Shi, S. Liu, and S. Yan, “OD-DEAL: Dy-namic expert-guided adversarial learning with online decomposition for scalable capacitated vehicle routing,” arXiv preprint arXiv:2602.00488 ,2026. [29] T. Rashid, M. Samvelyan, C. S. De Witt, G. Farquhar, J. Foerster, and S. Whiteson, “Monotonic value function factorisation for deep multi-agent reinforcement learning,” Journal of Machine Learning Research ,vol. 21, no. 178, pp. 1–51, 2020. [30] Z. Zong, M. Zheng, Y. Li, and D. Jin, “MAPDP: Cooperative multi-agent reinforcement learning to solve pickup and delivery problems,” in 
+
+Proceedings of the AAAI Conference on Artificial Intelligence , vol. 36, no. 9, 2022, pp. 9980–9988. [31] C. Hua, F. Berto, J. Son, S. Kang, C. Kwon, and J. Park, “CAMP: Col-laborative attention model with profiles for vehicle routing problems,” in Proceedings of the 24th International Conference on Autonomous Agents and Multiagent Systems , 2025, pp. 1015–1024. [32] X. Gao, J. Si, Y. Wen, M. Li, and H. H. Huang, “Knowledge-guided re-inforcement learning control for robotic lower limb prosthesis,” in 2020 IEEE International Conference on Robotics and Automation (ICRA) .IEEE, 2020, pp. 754–760. [33] R. Shahbazian, A. Ciacco, G. Macrina, and F. Guerriero, “Knowledge-guided hybrid deep reinforcement learning for the dynamic multi-depot electric vehicle routing problem,” Computers & Operations Research ,p. 107217, 2025. [34] V. Bui and T. Mai, “Imitation improvement learning for large-scale ca-pacitated vehicle routing problems,” in Proceedings of the International Conference on Automated Planning and Scheduling , vol. 33, 2023, pp. 551–559. 14 
+
+[35] G. D. Gann, T. McDonald, B. Walder, J. Aronson, C. R. Nelson, J. Jonson, J. G. Hallett, C. Eisenberg, M. R. Guariguata, J. Liu et al. ,“International principles and standards for the practice of ecological restoration,” Restoration Ecology , vol. 27, no. S1, pp. S1–S46, 2019. [36] K. Dorling, J. Heinrichs, G. G. Messier, and S. Magierowski, “Vehicle routing problems for drone delivery,” IEEE Transactions on Systems, Man, and Cybernetics: Systems , vol. 47, no. 1, pp. 70–85, 2017. [37] I. Bello, H. Pham, Q. V. Le, M. Norouzi, and S. Bengio, “Neural com-binatorial optimization with reinforcement learning,” in International Conference on Learning Representations (ICLR), Workshop Track , 2017, pp. 1–5. [38] X. Bresson and T. Laurent, “The transformer network for the traveling salesman problem,” arXiv preprint arXiv:2103.03012 , 2021. [39] A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N. Gomez, Ł. Kaiser, and I. Polosukhin, “Attention is all you need,” Advances in Neural Information Processing Systems , vol. 30, 2017. [40] R. S. Sutton, D. McAllester, S. Singh, and Y. Mansour, “Policy gradi-ent methods for reinforcement learning with function approximation,” 
+
+Advances in Neural Information Processing Systems , vol. 12, 1999. [41] D. P. Kingma and J. Ba, “Adam: A method for stochastic optimiza-tion,” in Proceedings of the 3rd International Conference on Learning Representations (ICLR) , San Diego, CA, 2015. [42] R. J. Williams, “Simple statistical gradient-following algorithms for connectionist reinforcement learning,” Machine Learning , vol. 8, no. 3, pp. 229–256, 1992. [43] X. Mao, G. Wu, M. Fan, Z. Cao, and W. Pedrycz, “DL-DRL: A double-level deep reinforcement learning approach for large-scale task scheduling of multi-UAV,” IEEE Transactions on Automation Science and Engineering , vol. 22, pp. 1028–1044, 2024.
