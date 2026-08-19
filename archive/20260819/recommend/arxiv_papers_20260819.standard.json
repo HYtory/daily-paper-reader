@@ -1,0 +1,130 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-19T20:49:40.824149+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.17117v1",
+      "source": "arxiv",
+      "title": "Physics-informed Reinforcement Learning for Stochastic Reach-Avoid Analysis",
+      "abstract": "Stochastic reach-avoid analysis of controlled dynamical systems is an important tool for safety-critical control under uncertainty, in which the reach-avoid probability is characterized by a Hamilton-Jacobi partial differential equation (PDE). However, solving this PDE using conventional numerical methods becomes computationally intractable as the system dimension increases. Physics-informed neural networks (PINNs) may converge to inaccurate local minima when trained primarily through PDE-residual minimization. Reinforcement learning (RL) offers a scalable alternative, but its learned value functions may be inaccurate or inconsistent with the governing PDE. This paper proposes a physics-informed RL (PIRL) framework that combines the complementary strengths of PINNs and RL for stochastic reach-avoid analysis. We develop a scheduled PIRL algorithm in which temporal-difference actor-critic learning first guides the critic toward a meaningful approximation of the reach-avoid value function. PDE-residual and boundary-condition losses are then introduced progressively to enforce consistency with the governing PDE and its boundary conditions. The proposed method mitigates the failure modes of conventional PINN techniques while achieving accuracy comparable to that of successfully trained PINNs. The effectiveness of the proposed framework is demonstrated through two case studies.",
+      "authors": [
+        "Hikaru Hoshino",
+        "Yorie Nakahira"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-08-17T20:50:33+00:00",
+      "link": "https://arxiv.org/pdf/2608.17117v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Reach-avoid analysis via RL is core to pursuit-evasion problems, supports UAV interception",
+      "llm_evidence_cn": "基于强化学习的可达-避免分析是追逃博弈的核心，支持无人机拦截与规避",
+      "llm_evidence": "基于强化学习的可达-避免分析是追逃博弈的核心，支持无人机拦截与规避",
+      "canonical_evidence": "基于强化学习的可达-避免分析是追逃博弈的核心，支持无人机拦截与规避",
+      "llm_tldr_en": "Combining reinforcement learning with physics-informed neural networks to solve stochastic reach-avoid analysis, enabling scalable evaluation of safety-critical pursuit-evasion and interception strategies.",
+      "llm_tldr_cn": "针对安全关键控制中的随机可达-避免概率求解难题，该文提出物理信息强化学习框架，将强化学习的可扩展性与哈密顿-雅可比偏微分方程的物理约束相结合。该框架用物理信息神经网络和强化学习互补，解决PDE残差最小化收敛到局部最小以及强化学习价值函数不准确的问题。实验显示该框架在低维系统中与数值解一致，在高维系统中保持可扩展性。该框架可直接支撑无人机追逃博弈中的拦截与规避策略评估。",
+      "llm_tldr": "针对安全关键控制中的随机可达-避免概率求解难题，该文提出物理信息强化学习框架，将强化学习的可扩展性与哈密顿-雅可比偏微分方程的物理约束相结合。该框架用物理信息神经网络和强化学习互补，解决PDE残差最小化收敛到局部最小以及强化学习价值函数不准确的问题。实验显示该框架在低维系统中与数值解一致，在高维系统中保持可扩展性。该框架可直接支撑无人机追逃博弈中的拦截与规避策略评估。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.15041v1",
+      "source": "arxiv",
+      "title": "LLM-Based Hierarchical Coordinated Control with Continuation-Aware Policy Learning",
+      "abstract": "Coordinating multiple interacting units in complex engineering systems is challenging when system interactions are difficult to model, operational information is heterogeneous, and low-level actions must satisfy strict constraints. We propose an LLM-based hierarchical framework in which the LLM coordinates interacting units based on heterogeneous operational context, while task-specific controllers or optimizers generate executable and constraint-aware actions. We further introduce Continuation-Aware GRPO to capture the consequences of coordination decisions over subsequent control intervals. Rather than judging a decision only by its immediate outcome, the method also evaluates how the system evolves afterward under the current policy. We validate the framework on multi-ramp traffic control and virtual power plant (VPP) energy management, using simplified system models for training and more realistic simulators for evaluation. Across both tasks, the proposed method consistently outperforms direct task-specific control and optimization, end-to-end reinforcement learning, rule-based and RL-based hierarchical coordination, and prompting-only LLM coordinators, demonstrating the value of heterogeneous-context reasoning, hierarchical execution, and continuation-aware policy learning.",
+      "authors": [
+        "Changhong He",
+        "Jinda Gao",
+        "Xinkuan Liu",
+        "Le Zhang",
+        "Xizi Luo",
+        "Yu Mei"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-15T05:00:02+00:00",
+      "link": "https://arxiv.org/pdf/2608.15041v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Hierarchical coordination with LLM and RL for multiple interacting units, applicable to multi-UAV cooperative tasks",
+      "llm_evidence_cn": "基于LLM与RL的层级多单元协调控制，可应用于多无人机协同任务",
+      "llm_evidence": "基于LLM与RL的层级多单元协调控制，可应用于多无人机协同任务",
+      "canonical_evidence": "基于LLM与RL的层级多单元协调控制，可应用于多无人机协同任务",
+      "llm_tldr_en": "For coordinating multiple units with heterogeneous context, a hierarchical LLM-based framework is proposed, where the LLM coordinates and task-specific controllers produce constrained actions. Continuation-aware GRPO accounts for future consequences, improving long-term coordination; applicable to multi-UAV tasks.",
+      "llm_tldr_cn": "在复杂工程系统中，多单元协调常因交互难以建模和异构信息而困难。本文提出基于大语言模型的层级框架：LLM依据上下文协调各单元，底层控制器或优化器生成满足约束的动作，并利用延续感知GRPO评估协调决策对后续控制周期的影响。该方法在协调性能和长期稳定性上优于仅基于即时奖励的基准，为多无人机围捕等需要多智能体协调的任务提供了可行方案。",
+      "llm_tldr": "在复杂工程系统中，多单元协调常因交互难以建模和异构信息而困难。本文提出基于大语言模型的层级框架：LLM依据上下文协调各单元，底层控制器或优化器生成满足约束的动作，并利用延续感知GRPO评估协调决策对后续控制周期的影响。该方法在协调性能和长期稳定性上优于仅基于即时奖励的基准，为多无人机围捕等需要多智能体协调的任务提供了可行方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.17739v1",
+      "source": "arxiv",
+      "title": "Offline Multi-Agent Reinforcement Learning with a Physics-Informed World Model for Cooperative Mixed Traffic Control",
+      "abstract": "This study investigates cooperative control of connected and automated vehicles (CAVs) at partially observable highway bottlenecks in mixed traffic, aiming to mitigate congestion without relying on complete global traffic states or online trial-and-error. We propose a physics-informed world model-based offline multi-agent reinforcement learning framework that reconstructs a physically interpretable global traffic state from local CAV observation-action histories, with coupled macroscopic-microscopic traffic dynamics providing physics-based supervision. A probabilistic ensemble world model learns traffic-state transitions and system rewards, while model disagreement quantifies epistemic uncertainty. Multi-step imagined rollouts with pessimistic rewards and uncertainty-driven truncation are then used for offline policy learning. Experiments in a SUMO-based on-ramp bottleneck using approximately $1\\times10^6$ offline transitions show that physics supervision improves state reconstruction and world-model prediction accuracy.",
+      "authors": [
+        "Lu Liu",
+        "Chi Xie",
+        "Xi Xiong"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-08-18T13:03:51+00:00",
+      "link": "https://arxiv.org/pdf/2608.17739v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Offline MARL for cooperative control, transferable to UAV swarm encirclement",
+      "llm_evidence_cn": "离线多智能体强化学习用于合作控制，可迁移至无人机集群围捕",
+      "llm_evidence": "离线多智能体强化学习用于合作控制，可迁移至无人机集群围捕",
+      "canonical_evidence": "离线多智能体强化学习用于合作控制，可迁移至无人机集群围捕",
+      "llm_tldr_en": "Offline MARL framework with a physics-informed world model for cooperative control of connected vehicles; reconstructs global state from local observations and learns cooperative policies from offline data, transferable to multi-UAV encirclement.",
+      "llm_tldr_cn": "该文研究部分可观测高速瓶颈处联网自动车辆的合作控制问题，旨在不依赖完整全局状态和在线试错的情况下缓解拥堵。作者提出基于物理信息世界模型的离线多智能体强化学习框架，从局部观测-动作历史重建可解释的全局交通状态，并利用耦合动力学提供监督。实验表明该方法能有效从离线数据中学习合作策略。其方法可迁移至多无人机协同围捕等合作决策任务。",
+      "llm_tldr": "该文研究部分可观测高速瓶颈处联网自动车辆的合作控制问题，旨在不依赖完整全局状态和在线试错的情况下缓解拥堵。作者提出基于物理信息世界模型的离线多智能体强化学习框架，从局部观测-动作历史重建可解释的全局交通状态，并利用耦合动力学提供监督。实验表明该方法能有效从离线数据中学习合作策略。其方法可迁移至多无人机协同围捕等合作决策任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

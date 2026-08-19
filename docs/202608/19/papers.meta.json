@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-19",
+  "date": "2026-08-19",
+  "generated_at": "2026-08-19T20:51:36",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/19/2608.17117v1-physics-informed-reinforcement-learning-for-stochastic-reach-avoid-analysis",
+      "section": "quick",
+      "title_en": "Physics-informed Reinforcement Learning for Stochastic Reach-Avoid Analysis",
+      "authors": "Hikaru Hoshino, Yorie Nakahira",
+      "date": "2026-08-17",
+      "pdf": "https://arxiv.org/pdf/2608.17117v1",
+      "score": "7.0",
+      "evidence": "基于强化学习的可达-避免分析是追逃博弈的核心，支持无人机拦截与规避",
+      "tldr": "针对随机可达性分析中哈密尔顿雅可比偏微分方程求解困难的问题，物理信息神经网络易陷入局部最优，而强化学习的价值函数又不满足方程。为此本文提出物理信息强化学习框架，先用时序差分演员评论家方法获得合理的价值函数近似，再逐步加入偏微分方程残差与边界条件损失进行校正。该框架缓解了传统物理信息神经网络的失效模式，精度可与成功训练的物理信息神经网络相媲美。",
+      "tags": "query:ui",
+      "abstract_en": "Stochastic reach-avoid analysis of controlled dynamical systems is an important tool for safety-critical control under uncertainty, in which the reach-avoid probability is characterized by a Hamilton-Jacobi partial differential equation (PDE). However, solving this PDE using conventional numerical methods becomes computationally intractable as the system dimension increases. Physics-informed neural networks (PINNs) may converge to inaccurate local minima when trained primarily through PDE-residual minimization. Reinforcement learning (RL) offers a scalable alternative, but its learned value functions may be inaccurate or inconsistent with the governing PDE. This paper proposes a physics-informed RL (PIRL) framework that combines the complementary strengths of PINNs and RL for stochastic reach-avoid analysis. We develop a scheduled PIRL algorithm in which temporal-difference actor-critic learning first guides the critic toward a meaningful approximation of the reach-avoid value function. PDE-residual and boundary-condition losses are then introduced progressively to enforce consistency with the governing PDE and its boundary conditions. The proposed method mitigates the failure modes of conventional PINN techniques while achieving accuracy comparable to that of successfully trained PINNs. The effectiveness of the proposed framework is demonstrated through two case studies.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/19/2608.15041v1-llm-based-hierarchical-coordinated-control-with-continuation-aware-policy-learning",
+      "section": "quick",
+      "title_en": "LLM-Based Hierarchical Coordinated Control with Continuation-Aware Policy Learning",
+      "authors": "Changhong He, Jinda Gao, Xinkuan Liu, Le Zhang, Xizi Luo, Yu Mei",
+      "date": "2026-08-15",
+      "pdf": "https://arxiv.org/pdf/2608.15041v1",
+      "score": "6.0",
+      "evidence": "基于LLM与RL的层级多单元协调控制，可应用于多无人机协同任务",
+      "tldr": "复杂工程系统中多单元协调面临交互建模难、信息异构和严格约束等挑战。为此提出基于LLM的分层协调框架，由LLM融合异构运行上下文制定协调决策，底层任务专用控制器/优化器生成满足约束的可执行动作；并设计延续感知GRPO，依据后续系统演化评估决策效果。在多匝道交通与虚拟电厂两个任务中，该方法超越了直接控制、端到端强化学习和已有分层协调方法，展现出语义推理与分层执行结合的优势。",
+      "tags": "query:ui",
+      "abstract_en": "Coordinating multiple interacting units in complex engineering systems is challenging when system interactions are difficult to model, operational information is heterogeneous, and low-level actions must satisfy strict constraints. We propose an LLM-based hierarchical framework in which the LLM coordinates interacting units based on heterogeneous operational context, while task-specific controllers or optimizers generate executable and constraint-aware actions. We further introduce Continuation-Aware GRPO to capture the consequences of coordination decisions over subsequent control intervals. Rather than judging a decision only by its immediate outcome, the method also evaluates how the system evolves afterward under the current policy. We validate the framework on multi-ramp traffic control and virtual power plant (VPP) energy management, using simplified system models for training and more realistic simulators for evaluation. Across both tasks, the proposed method consistently outperforms direct task-specific control and optimization, end-to-end reinforcement learning, rule-based and RL-based hierarchical coordination, and prompting-only LLM coordinators, demonstrating the value of heterogeneous-context reasoning, hierarchical execution, and continuation-aware policy learning.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/19/2608.17739v1-offline-multi-agent-reinforcement-learning-with-a-physics-informed-world-model-for-cooperative-mixed-traffic-control",
+      "section": "quick",
+      "title_en": "Offline Multi-Agent Reinforcement Learning with a Physics-Informed World Model for Cooperative Mixed Traffic Control",
+      "authors": "Lu Liu, Chi Xie, Xi Xiong",
+      "date": "2026-08-18",
+      "pdf": "https://arxiv.org/pdf/2608.17739v1",
+      "score": "6.0",
+      "evidence": "离线多智能体强化学习用于合作控制，可迁移至无人机集群围捕",
+      "tldr": "面向部分可观测混合交通瓶颈的CAV协同控制，提出物理信息世界模型的离线多智能体强化学习框架。通过宏观-微观耦合动力学监督重构全局状态，利用概率集成模型估计不确定性并驱动悲观离线训练。SUMO实验表明物理监督提升状态重构与世界模型预测精度，实现无在线试错的协同拥堵缓解。",
+      "tags": "query:ui",
+      "abstract_en": "This study investigates cooperative control of connected and automated vehicles (CAVs) at partially observable highway bottlenecks in mixed traffic, aiming to mitigate congestion without relying on complete global traffic states or online trial-and-error. We propose a physics-informed world model-based offline multi-agent reinforcement learning framework that reconstructs a physically interpretable global traffic state from local CAV observation-action histories, with coupled macroscopic-microscopic traffic dynamics providing physics-based supervision. A probabilistic ensemble world model learns traffic-state transitions and system rewards, while model disagreement quantifies epistemic uncertainty. Multi-step imagined rollouts with pessimistic rewards and uncertainty-driven truncation are then used for offline policy learning. Experiments in a SUMO-based on-ramp bottleneck using approximately $1\\times10^6$ offline transitions show that physics supervision improves state reconstruction and world-model prediction accuracy.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

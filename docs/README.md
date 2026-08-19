@@ -6,32 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-18
-- 运行时间：2026-08-18 21:02:21 UTC
+- 最新运行日期：2026-08-19
+- 运行时间：2026-08-19 20:51:32 UTC
 - 运行状态：成功
-- 本次总论文数：4
-- 精读区：2
-- 速读区：2
+- 本次总论文数：3
+- 精读区：0
+- 速读区：3
 
 ### 今日简报（AI）
-今日精读4篇论文（2精读+2速读），重点聚焦多智能体博弈与无人机协同方向。最值得关注的是UC-PSRO（9.0）提出的博弈策略生成框架，以及KC-BFPRL（8.0）用于草地恢复的多无人机强化学习方案。建议后续优先深入理解这两个精读工作，它们分别代表对抗场景与合作任务中的前沿方法。
-- 详情：[/202608/18/README](/202608/18/README)
+今日精读3篇速读论文，聚焦强化学习与物理信息融合的智能控制前沿。  
+最值得关注的是物理信息强化学习用于随机可达性分析（7.0分），以及LLM驱动的分层协同控制策略。  
+建议优先浏览高分的可达性分析框架，再对比多智能体交通控制的世界模型方法。
+- 详情：[/202608/19/README](/202608/19/README)
 
 ### 精读区论文标签
-1. [UC-PSRO: Utility-Conditioned Policy-Space Response Oracles with a Communication-Dropout Curriculum for Game-Theoretic Course-of-Action Generation in Adversarial Swarms](/202608/18/2608.15372v1-uc-psro-utility-conditioned-policy-space-response-oracles-with-a-communication-dropout-curriculum-for-game-theoretic-course-of-action-generation-in-adversarial-swarms)  
-   标签：评分：9.0/10、query:ui
-   evidence：蓝红对抗无人机蜂群博弈决策，PSRO自博弈生成行动方案
-2. [KC-BFPRL: Knowledge-Guided Multi-UAV Collaboration for Grassland Restoration via Bilevel Formerpointer-Based Reinforcement Learning](/202608/18/2608.16326v1-kc-bfprl-knowledge-guided-multi-uav-collaboration-for-grassland-restoration-via-bilevel-formerpointer-based-reinforcement-learning)  
-   标签：评分：8.0/10、query:ui
-   evidence：面向多无人机协作与任务分配的多智能体强化学习框架
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [JitTrack: Onboard Multi-Object Tracking Against Viewpoint Jitter for Agile UAVs](/202608/18/2608.10485v1-jittrack-onboard-multi-object-tracking-against-viewpoint-jitter-for-agile-uavs)  
+1. [Physics-informed Reinforcement Learning for Stochastic Reach-Avoid Analysis](/202608/19/2608.17117v1-physics-informed-reinforcement-learning-for-stochastic-reach-avoid-analysis)  
+   标签：评分：7.0/10、query:ui
+   evidence：基于强化学习的可达-避免分析是追逃博弈的核心，支持无人机拦截与规避
+2. [LLM-Based Hierarchical Coordinated Control with Continuation-Aware Policy Learning](/202608/19/2608.15041v1-llm-based-hierarchical-coordinated-control-with-continuation-aware-policy-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：面向敏捷无人机的机载多目标跟踪器，支持拦截任务中的目标跟随
-2. [A Temporal Barrier Framework for Collision Avoidance in Multi-Agent Autonomous Aerial Vehicles](/202608/18/2608.14239v1-a-temporal-barrier-framework-for-collision-avoidance-in-multi-agent-autonomous-aerial-vehicles)  
+   evidence：基于LLM与RL的层级多单元协调控制，可应用于多无人机协同任务
+3. [Offline Multi-Agent Reinforcement Learning with a Physics-Informed World Model for Cooperative Mixed Traffic Control](/202608/19/2608.17739v1-offline-multi-agent-reinforcement-learning-with-a-physics-informed-world-model-for-cooperative-mixed-traffic-control)  
    标签：评分：6.0/10、query:ui
-   evidence：多智能体飞行器防碰撞方法，可用于围捕任务安全保障
+   evidence：离线多智能体强化学习用于合作控制，可迁移至无人机集群围捕
 
 
 <div class="dpr-home-promo-card">
