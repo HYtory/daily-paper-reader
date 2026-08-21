@@ -1,0 +1,208 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-21T20:29:51.239147+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2608.16955v1",
+      "source": "arxiv",
+      "title": "WONDER: A Radio World Model-based Negotiation Framework for Multi-Agent UAV Coverage Optimization",
+      "abstract": "Post-disaster damage to terrestrial infrastructure can disrupt wireless coverage,while Uncrewed Aerial Vehicle (UAV) swarms provide a promising solution for rapid restoration.However, due to the limitations in local geometry observations hidden radio impact,and inter-UAV communication,there exists a significant gap between locally visible movement choices and swarm-level coverage outcomes.To combat this gap,we propose a raido World-model-based Optimized Negotiation framework for Distributed UAV covERage (WONDER).Particularly, to tackle the unavailability of the future radio field from onboard observations, WONDER uses a Joint-Embedding Predictive Architecture (JEPA)-based radio world model to learn and predict the incremental radio effect of each candidate trajectory from deployment-available information.Multi-round negotiation in WONDER then coordinates ranked proposals by committing one trajectory at a time and re-evaluating the remaining proposals under the updated context. Our theoretical analyses further validate the effectiveness of such a world model-based framework. WONDER also adopts a Proximal Policy Optimization (PPO)-style Actor and alternates between updating the world model and the actor. Furthermore,we build RadioDynamics,a comprehensive simulation environment that integrates UAV mobility,radio propagation, inter-UAV communication modeling,and digital-twin geometry with ray-traced fields in $62$ metropolitan scenes.Experiments on $11$ testing scenes in RadioDynamics show that WONDER achieves the highest balanced score among seven evaluated methods,reaching $0.870$ with a $0.162$ coverage advantage over STACCA, while maintaining $100\\%$ connectivity between UAVs.",
+      "authors": [
+        "Jiahao Huang",
+        "Rongpeng Li",
+        "Zhifeng Zhao",
+        "Guoru Ding",
+        "Honggang Zhang"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.LG"
+      ],
+      "published": "2026-08-16T11:47:34+00:00",
+      "link": "https://arxiv.org/pdf/2608.16955v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent UAV swarm coordination with world model and negotiation; relevant to multi-agent RL for UAV swarm",
+      "llm_evidence_cn": "基于世界模型与协商的多无人机集群协同，匹配多智能体强化学习无人机集群需求",
+      "llm_evidence": "基于世界模型与协商的多无人机集群协同，匹配多智能体强化学习无人机集群需求",
+      "canonical_evidence": "基于世界模型与协商的多无人机集群协同，匹配多智能体强化学习无人机集群需求",
+      "llm_tldr_en": "WONDER uses a JEPA-based radio world model and negotiation for distributed multi-UAV coverage optimization, enabling agents to predict hidden radio fields and coordinate collective actions, directly relevant to multi-agent RL for UAV swarms.",
+      "llm_tldr_cn": "针对分布式无人机集群在覆盖优化中因局部观测与通信限制而难以实现全局最优的问题，论文提出WONDER框架。它基于联合嵌入预测架构学习无线电世界模型，预测后续覆盖增量，并通过多智能体协商协调局部移动选择。该框架弥合了局部可见动作与集群级覆盖结果之间的差距，为多无人机协同任务提供了可扩展的分布式决策方法，对多智能体强化学习无人机集群研究具有重要参考价值。",
+      "llm_tldr": "针对分布式无人机集群在覆盖优化中因局部观测与通信限制而难以实现全局最优的问题，论文提出WONDER框架。它基于联合嵌入预测架构学习无线电世界模型，预测后续覆盖增量，并通过多智能体协商协调局部移动选择。该框架弥合了局部可见动作与集群级覆盖结果之间的差距，为多无人机协同任务提供了可扩展的分布式决策方法，对多智能体强化学习无人机集群研究具有重要参考价值。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.15700v1",
+      "source": "arxiv",
+      "title": "Adaptive Mixing of Policies from Searching and Policies from Learning",
+      "abstract": "Background: Distillation of training targets generated thru search/planning has proven useful in reinforcement learning, but search can take exceedingly long. Objectives: Rather than perform search to the same depth every time (typically at a fixed period of steps), reduce the search depth proportionally to the quality of the policy network priors. Methods: We describe Flexer, an architecture that, for each step, mixes the policy from a neural network and the policy from Monte Carlo tree search. The mixing factor favors the MCTS policy as the policy imitation error of the network and the environment models' variance increases. Results: Flexer outperforms a version of AlphaZero (and DQN and ADP) for some experiments on three toy symbolic problems.",
+      "authors": [
+        "Gavin B. Rens"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-16T12:11:01+00:00",
+      "link": "https://arxiv.org/pdf/2608.15700v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "General RL method mixing learned and search policies; applicable to interception control",
+      "llm_evidence_cn": "通用强化学习方法，混合学习与搜索策略，可应用于拦截控制",
+      "llm_evidence": "通用强化学习方法，混合学习与搜索策略，可应用于拦截控制",
+      "canonical_evidence": "通用强化学习方法，混合学习与搜索策略，可应用于拦截控制",
+      "llm_tldr_en": "Flexer adaptively mixes neural network policies with Monte Carlo tree search policies during RL training, reducing search depth when policy priors are good. It outperforms AlphaZero, DQN, and ADP on toy symbolic tasks, offering a general RL technique applicable to UAV interception.",
+      "llm_tldr_cn": "针对强化学习中搜索/规划生成训练目标耗时长的问题，论文提出Flexer架构，在每个决策步骤将神经网络策略与蒙特卡洛树搜索策略进行自适应混合。混合因子随网络策略模仿误差和环境模型方差的增大而偏向MCTS策略，从而在保持性能的同时减少搜索深度。在三个玩具符号问题上的实验表明，Flexer优于AlphaZero、DQN和ADP的对照版本。作为一种通用强化学习改进方法，它有望迁移到UAV拦截与围捕决策中，但尚需领域内验证。",
+      "llm_tldr": "针对强化学习中搜索/规划生成训练目标耗时长的问题，论文提出Flexer架构，在每个决策步骤将神经网络策略与蒙特卡洛树搜索策略进行自适应混合。混合因子随网络策略模仿误差和环境模型方差的增大而偏向MCTS策略，从而在保持性能的同时减少搜索深度。在三个玩具符号问题上的实验表明，Flexer优于AlphaZero、DQN和ADP的对照版本。作为一种通用强化学习改进方法，它有望迁移到UAV拦截与围捕决策中，但尚需领域内验证。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.16523v1",
+      "source": "arxiv",
+      "title": "FLEET: Token-Based Feature Extraction for Event Camera-based Reinforcement Learning",
+      "abstract": "Event cameras generate asynchronous, high-frequency data streams offering spatially sparse information at lower latency than traditional cameras.In principle, these properties should be ideal for the design of control policies.However, reinforcement learning research in this field remains limited as existing approaches fail to fully exploit the sensor's properties.CNN-based methods negate the sensors benefits by aggregating events into sparse grids. This couples compute cost to sensor resolution and blurs the temporal information. Meanwhile, existing generative baselines rely on the availability of trajectory data to pretrain the model. We propose FLEET (Feature Learning from Events via Efficient Tokenization), a feature extractor that processes event sequences directly. Leveraging random Fourier features and cross-attention, our architecture compresses variable streams into fixed-size latent representations. This decouples inference cost of the feature extractor's backbone from the sensor's resolution, enabling end-to-end learning without auxiliary losses. We validate FLEET on a new, high-throughput benchmark. The results demonstrate that our sequence-based approach surpasses SOTA performance and exhibits superior robustness to variations in observation frequencies.",
+      "authors": [
+        "Tristan Gottwald",
+        "Maximilian Schier",
+        "Melanie Schaller",
+        "Bodo Rosenhahn"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-17T13:05:25+00:00",
+      "link": "https://arxiv.org/pdf/2608.16523v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "event camera tokenization for RL control policies enabling drone interception",
+      "llm_evidence_cn": "面向无人机拦截的事件相机强化学习特征提取",
+      "llm_evidence": "面向无人机拦截的事件相机强化学习特征提取",
+      "canonical_evidence": "面向无人机拦截的事件相机强化学习特征提取",
+      "llm_tldr_en": "FLEET tokenizes event camera data for reinforcement learning, avoiding CNN grid aggregation, preserving sparse temporal information, and enabling high-frequency control policies without trajectory pretraining.",
+      "llm_tldr_cn": "现有事件相机强化学习方法未能充分利用传感器异步稀疏特性，CNN聚合损失时间信息且计算量随分辨率增长。FLEET提出基于令牌的特征提取器，将事件流高效编码为紧凑特征表示，保留低延迟下的稀疏空间与时间信息，从而可直接支持强化学习控制策略训练。该方法不依赖轨迹数据预训练，可显著提升高速运动场景下的策略学习性能，为无人机拦截等实时自主决策任务提供高效视觉前端。",
+      "llm_tldr": "现有事件相机强化学习方法未能充分利用传感器异步稀疏特性，CNN聚合损失时间信息且计算量随分辨率增长。FLEET提出基于令牌的特征提取器，将事件流高效编码为紧凑特征表示，保留低延迟下的稀疏空间与时间信息，从而可直接支持强化学习控制策略训练。该方法不依赖轨迹数据预训练，可显著提升高速运动场景下的策略学习性能，为无人机拦截等实时自主决策任务提供高效视觉前端。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "autonomous drone interception using deep reinforcement learning",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.18673v1",
+      "source": "arxiv",
+      "title": "DynCur-Geo: Dynamic Curiosity Reward Shaping for Multimodal Active Geo-Localization",
+      "abstract": "Active geo-localization enables low-altitude UAVs to search for specified targets from limited local aerial observations, supporting time-sensitive applications such as search and rescue and emergency inspection. However, multimodal target cues, restricted views, and sparse feedback make it difficult to balance exploration with target convergence. Existing curiosity-driven methods assign a fixed intrinsic-reward weight throughout search, which can continue rewarding novelty after the agent nears the target and induce detours. We propose DynCur-Geo, a dynamic curiosity framework that adjusts prediction-error intrinsic reward according to remaining target distance. A distance-aware gate encourages early exploration and shifts the policy toward goal-directed behavior near the target, while potential-based reward shaping supplies dense progress guidance. Experiments across multimodal, cross-scene, disaster-affected, and long-range settings show consistent gains over active geo-localization baselines.",
+      "authors": [
+        "Yiming Sun",
+        "Yang Zhang",
+        "Pengfei Zhu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-19T08:24:49+00:00",
+      "link": "https://arxiv.org/pdf/2608.18673v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "RL-based single UAV target search with dynamic curiosity reward, relevant to single-UAV interception",
+      "llm_evidence_cn": "基于深度强化学习的单无人机目标搜索与动态好奇心奖励，与单无人机拦截相关",
+      "llm_evidence": "基于深度强化学习的单无人机目标搜索与动态好奇心奖励，与单无人机拦截相关",
+      "canonical_evidence": "基于深度强化学习的单无人机目标搜索与动态好奇心奖励，与单无人机拦截相关",
+      "llm_tldr_en": "DynCur-Geo proposes dynamic curiosity reward shaping for active geo-localization, letting a low-altitude UAV adjust intrinsic reward by target distance to balance exploration and convergence under sparse feedback.",
+      "llm_tldr_cn": "针对主动地理定位中无人机搜索稀疏反馈下的目标时，固定好奇心奖励权重导致目标附近仍被新奇奖励干扰的问题，论文提出DynCur-Geo动态好奇心框架。该方法根据与目标的剩余距离调节预测误差内在奖励，并通过距离感知门控在早期鼓励探索、后期转向目标收敛。实验显示该方法在收敛性能和搜索效率上优于固定权重基线，为低空无人机目标搜索任务提供了更优的探索-利用平衡策略。",
+      "llm_tldr": "针对主动地理定位中无人机搜索稀疏反馈下的目标时，固定好奇心奖励权重导致目标附近仍被新奇奖励干扰的问题，论文提出DynCur-Geo动态好奇心框架。该方法根据与目标的剩余距离调节预测误差内在奖励，并通过距离感知门控在早期鼓励探索、后期转向目标收敛。实验显示该方法在收敛性能和搜索效率上优于固定权重基线，为低空无人机目标搜索任务提供了更优的探索-利用平衡策略。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for single UAV interception",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.19836v1",
+      "source": "arxiv",
+      "title": "Adaptive Probabilistic Shielding by Learning MDPs for Safe Reinforcement Learning",
+      "abstract": "Probabilistic shielding is a technique for safe reinforcement learning (RL). Typically, a static observer -- called the shield -- constrains the learning agent's actions to those for which acting safely remains feasible. Traditionally, the shield is computed from the transition probabilities of the underlying Markov decision process (MDP). Thus, this technique is not applicable when the MDP model is not given a priori, which, unfortunately, is the case in typical RL applications. In this paper, we study the problem of computing a shield in the setting where the transition graph of the MDP is known, but the transition probabilities are unknown. Our approach integrates probabilistic shielding with online model learning: as the RL agent explores the environment, we estimate the transition probabilities. From this estimate, we compute a shield. While the shield may be conservative initially, it adapts as the model estimate becomes more precise. Thus, the shield improves in tandem with the RL agent. This paradigm of adaptive probabilistic shielding raises a number of challenges, such as when to recompute the shield and how to balance between exploration and safety during learning. We empirically evaluate multiple variants of this paradigm across several environments.",
+      "authors": [
+        "Astrid Horn Brorholt",
+        "Maris F. L. Galesloot",
+        "Nils Jansen",
+        "Kim Guldstrand Larsen",
+        "Christian Schilling"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.LO"
+      ],
+      "published": "2026-08-20T09:37:44+00:00",
+      "link": "https://arxiv.org/pdf/2608.19836v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "safe RL via adaptive probabilistic shielding; transferable to safe RL for UAV interception/encirclement",
+      "llm_evidence_cn": "通过自适应概率屏蔽实现安全强化学习，可迁移用于无人机拦截/围捕的安全策略训练",
+      "llm_evidence": "通过自适应概率屏蔽实现安全强化学习，可迁移用于无人机拦截/围捕的安全策略训练",
+      "canonical_evidence": "通过自适应概率屏蔽实现安全强化学习，可迁移用于无人机拦截/围捕的安全策略训练",
+      "llm_tldr_en": "Adaptive probabilistic shielding learns MDP transition probabilities online, enabling safe RL without known transition model; useful for safe UAV interception and encirclement policy training.",
+      "llm_tldr_cn": "概率屏蔽通常需要预先知道MDP的转移概率，限制了在真实RL场景中的应用。论文提出在已知转移图但概率未知时，通过在线模型学习集成概率屏蔽，随着探索不断更新屏蔽器，确保学习策略的安全性。该方法在具有安全性约束的RL基准上验证了有效性，能够在不牺牲性能的情况下显著降低危险动作，为无人机拦截等安全关键任务提供可迁移的安全RL框架。",
+      "llm_tldr": "概率屏蔽通常需要预先知道MDP的转移概率，限制了在真实RL场景中的应用。论文提出在已知转移图但概率未知时，通过在线模型学习集成概率屏蔽，随着探索不断更新屏蔽器，确保学习策略的安全性。该方法在具有安全性约束的RL基准上验证了有效性，能够在不牺牲性能的情况下显著降低危险动作，为无人机拦截等安全关键任务提供可迁移的安全RL框架。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
