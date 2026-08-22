@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-22 <!--dpr-date:20260822-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/22/2608.19375v1-learning-the-right-abstraction-neural-reduced-dynamics-for-complex-robot-control" data-sidebar-item="{&quot;title&quot;: &quot;Learning the Right Abstraction: Neural Reduced Dynamics for Complex Robot Control&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.19375v1-learning-the-right-abstraction-neural-reduced-dynamics-for-complex-robot-control&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;神经约简动力学框架可加速复杂机器人的强化学习，为无人机集群拦截/围捕策略的高通量训练提供关键支撑&quot;}">Learning the Right Abstraction: Neural Reduced Dynamics for Complex Robot Control</a>
   * 2026-08-21 <!--dpr-date:20260821-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/21/2608.16955v1-wonder-a-radio-world-model-based-negotiation-framework-for-multi-agent-uav-coverage-optimization" data-sidebar-item="{&quot;title&quot;: &quot;WONDER: A Radio World Model-based Negotiation Framework for Multi-Agent UAV Coverage Optimization&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.16955v1-wonder-a-radio-world-model-based-negotiation-framework-for-multi-agent-uav-coverage-optimization&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;基于世界模型与协商的多无人机集群协同，匹配多智能体强化学习无人机集群需求&quot;}">WONDER: A Radio World Model-based Negotiation Framework for Multi-Agent UAV Coverage Optimization</a>

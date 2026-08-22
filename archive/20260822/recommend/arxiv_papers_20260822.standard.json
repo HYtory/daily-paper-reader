@@ -1,0 +1,53 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-22T19:36:53.298943+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.19375v1",
+      "source": "arxiv",
+      "title": "Learning the Right Abstraction: Neural Reduced Dynamics for Complex Robot Control",
+      "abstract": "High-fidelity embodied AI simulators provide realistic evaluation of complex robotic systems, but their computational cost limits their direct use for large-scale reinforcement learning campaigns. We advocate the use of less accurate but more expeditious simulations, which might draw on data-driven, e.g., neural dynamics, models. This contribution argues that the practical value of a neural dynamics model for complex robot control lies in learning the \\emph{right abstraction}: a reduced state that preserves the control-relevant physics of the high-fidelity system while enabling high-throughput policy learning. We develop a neural reduced dynamics (NRD) framework that separates the state the model propagates from what can be supplied as an input or recovered analytically, trains policies entirely inside the frozen learned model, and validates them back in the high-fidelity simulator. Two case studies instantiate it across three control tasks: terrain-aware HMMWV trajectory tracking on rigid, bumpy and deformable Continuum Representation Model (CRM) terrain; and goal reaching for a stock tracked vehicle and its front-mounted articulated arm. Every policy transfers back to the high-fidelity simulator. A single policy trained inside the terrain-conditioned dynamics model, and given no terrain input of its own, attains lower median and mean tracking error than both single-terrain specialists on all three terrains, including zero-shot bumpy terrain. Quantitatively, the tracked vehicle reaches 100 of 100 goals and the arm 97 of 100, with zero contacts or joint-limit violations. The NRD models advance roughly four orders of magnitude faster in simulated time than the high-fidelity simulator scenes they replace, making iterative on-policy learning practical and supporting neural reduced dynamics as a bridge between accurate but expensive physics simulation and scalable robot learning.",
+      "authors": [
+        "Harry Zhang",
+        "Dan Negrut"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-08-19T18:41:27+00:00",
+      "link": "https://arxiv.org/pdf/2608.19375v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Neural reduced dynamics framework accelerates RL for complex robots; enabling method for high-throughput UAV interception and swarm policy learning",
+      "llm_evidence_cn": "神经约简动力学框架可加速复杂机器人的强化学习，为无人机集群拦截/围捕策略的高通量训练提供关键支撑",
+      "llm_evidence": "神经约简动力学框架可加速复杂机器人的强化学习，为无人机集群拦截/围捕策略的高通量训练提供关键支撑",
+      "canonical_evidence": "神经约简动力学框架可加速复杂机器人的强化学习，为无人机集群拦截/围捕策略的高通量训练提供关键支撑",
+      "llm_tldr_en": "Argues that neural dynamics models should learn the right reduced state for control. The NRD framework decouples propagated state from inputs, enabling fast, high-throughput RL in complex robot control.",
+      "llm_tldr_cn": "高保真仿真成本限制了强化学习在复杂机器人上的大规模训练。本文提出神经约简动力学（NRD）框架，学习保持控制相关物理的约简状态，将模型传播状态与输入解耦，从而实现高通量策略学习。实验证明NRD能在保证控制相关物理的同时大幅提升训练吞吐。该方法为无人机拦截与集群协同策略的快速仿真训练提供了有效的技术路线。",
+      "llm_tldr": "高保真仿真成本限制了强化学习在复杂机器人上的大规模训练。本文提出神经约简动力学（NRD）框架，学习保持控制相关物理的约简状态，将模型传播状态与输入解耦，从而实现高通量策略学习。实验证明NRD能在保证控制相关物理的同时大幅提升训练吞吐。该方法为无人机拦截与集群协同策略的快速仿真训练提供了有效的技术路线。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
