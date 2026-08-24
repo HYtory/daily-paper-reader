@@ -1,0 +1,440 @@
+Title: FF-MPCC: High-speed Agile Formation Flight with Model Predictive Contouring Control
+
+URL Source: https://arxiv.org/pdf/2608.21056v1
+
+Published Time: Mon, 24 Aug 2026 00:48:42 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+This work has been submitted to the IEEE Robotics and Automation Letters for possible publication. Copyright may be transferred without notice, after which this version may no longer be accessible. 
+
+# FF-MPCC: High-speed Agile Formation Flight with Model Predictive Contouring Control 
+
+Aditya Dandwate, V´ ıt Kr´ atk´ y, Parakh M. Gupta, Martin Saska, Robert Pˇ eniˇ cka 
+
+Abstract —Flying in a prescribed formation in an agile manner remains a challenging problem in the field of Uncrewed Aerial Vehicles (UAVs), particularly when following highly-demanding trajectories that require flight at platform limits. We address this problem by proposing a novel decentralized approach to formation flight along a given path that integrates formation maintenance into the Model Predictive Contouring Control (MPCC) framework allowing UAVs to adapt their progression along complex paths while respecting individual dynamic con-straints and maintaining desired formation. To this end, we introduce a novel reparametrization and synchronization method for dynamic formation geometries together with a decentralized approach to determine the desired positions for the individual UAVs. The proposed approach allows the formation to coordinate high-speed path following without compromising the formation integrity. The proposed approach is validated through extensive simulation and real-world experiments involving scenarios with varying complexity of paths and changes of required formation shape on the fly. In comparison to time-parameterized trajectory tracking, we demonstrate improved formation maintenance by 65% in high-speed flight with velocities up to 21 m s −1, while achieving comparable times required to reach the goal. 
+
+SUPPLEMENTARY MATERIAL  
+
+> Video: https://youtu.be/MCOkhx0mBJc
+
+I. I NTRODUCTION 
+
+Teams of multi-rotor Uncrewed Aerial Vehicles (UAVs) op-erating in formation enable applications that are difficult or impossible for a single vehicle, including coordinated inspections [1], environmental monitoring [2] and coopera-tive transportation [3], where formations provide increased sensing coverage, robustness, and task execution efficiency. However, achieving these benefits in real-world deployments often requires reliable formation flight in high-speed scenarios under aggressive maneuvers, changing mission objectives, and operation in dynamic environments. Formation flight under these conditions is considerably more challenging than single-UAV navigation. A planned trajectory that is dynamically feasible for the formation cen-ter is not necessarily feasible for all UAVs since individ-ual formation members experience different path curvatures, and therefore require different velocities and accelerations. Consequently, existing methods typically require dynamically feasible trajectories to be generated simultaneously for every UAV considering the formation constraints [4], [5]. How-ever, due to their computationally-demanding nature, such approaches limit the reactivity and only allow for low-rate 
+
+> The authors are with the Multi-robot Systems Group, Faculty of Elec-trical Engineering, Czech Technical University in Prague, Czech Repub-lic (http://mrs.fel.cvut.cz/). This work has been supported by the Czech Science Foundation (GA ˇ CR) under research project No. 23-06162M, by the European Union under the project Robotics and advanced industrial production (reg. no. CZ.02.01.01/00 /22 008/0004590), and by CTU grant no. SGS26/077/OHK3/1T/13.
+> 0 s 0 s 0 s 0 s 0 s 0 s 0 s 0 s 0 s 0 s 0 s 0 s 0 s 0 s 0 s 0 s 0 s 2.3 s 2.3 s 2.3 s 2.3 s 2.3 s 2.3 s 2.3 s 2.3 s 2.3 s 2.3 s 2.3 s 2.3 s 2.3 s 2.3 s 2.3 s 2.3 s 2.3 s Transition Transition Transition Transition Transition Transition Transition Transition Transition Transition Transition Transition Transition Transition Transition Transition Transition 6.1 s 6.1 s 6.1 s 6.1 s 6.1 s 6.1 s 6.1 s 6.1 s 6.1 s 6.1 s 6.1 s 6.1 s 6.1 s 6.1 s 6.1 s 6.1 s 6.1 s
+> 60 m 60 m 60 m 60 m 60 m 60 m 60 m 60 m 60 m 60 m 60 m 60 m 60 m 60 m 60 m 60 m 60 m
+
+Fig. 1: Deployment of the proposed approach in a real-world scenario with three UAVs navigating along a straight line with transition from triangular to straight line formation with speeds up to 21 m s −1.adaptation to disturbance or communication failures. An al-ternative approach that plans trajectories with significantly tighter dynamic constraints than the actual vehicle limits to ensure feasibility for all formation members yields overly conservative trajectories that substantially reduce flight speed and overall flight efficiency. Model Predictive Contouring Control (MPCC) [6] addresses similar challenges in single-UAV flight by optimizing pro-gression along a geometric path online instead of tracking a precomputed time-parametrized trajectory. Although this enables adaptation to disturbances and dynamic environments, as demonstrated in aggressive single-UAV flight [7], extending MPCC to decentralized formation flight remains challenging. Existing formation control methods primarily focus on maintaining cohesion and collision avoidance, while often sacrificing the time-efficiency of the operation [4], [5], [8]. The methods where time optimality is a primary objective typically face the same issues with pre-plannning as their single-UAV counterparts along with the additional overhead of maintaining feasible trajectories for all UAVs in the forma-tion [9]. On the other hand, the existing MPCC-based forma-tion approaches ignore or relax strict formation constraints in favour of time optimality and general swarming [10]– [12]. Consequently, none of the existing approaches is able to provide decentralized agile formation flight that combines online trajectory optimization with preservation of prescribed, dynamically evolving formation shapes. To address this problem, we propose Formation Flight Model Predictive Contouring Control (FF-MPCC) decentral-ized control framework for aggressive UAV formation flight. FF-MPCC jointly optimizes progression along the path and adherence to the desired formation geometry within a single optimization problem. The synchronization among UAVs is achieved through a heading-aware formation representation arXiv:2608.21056v1 [cs.RO] 21 Aug 2026 that parameterizes continuously evolving formation geome-tries by path progression, combined with a distributed rigid-body fitting procedure that constructs a formation-consistent reference from neighboring UAVs states. This enables each UAV to continuously minimize formation errors and adapt to disturbances while independently optimizing its own motion and progress along the path. The proposed approach is evaluated through extensive sim-ulations against a conventional planning-and-control pipeline based on preplanned minimum-time trajectories and Nonlinear Model Predictive Control (NMPC)-based trajectory tracking, and is further validated in real-world experiments (see Fig. 1) at velocities of up to 21 m s −1 and acceleration limits of 
+
+30 m s −2. Compared with the baseline, FF-MPCC improves formation accuracy by 65% while maintaining comparable or better flight times. The results demonstrate that fast agile formation flight can be achieved in a decentralized manner by imposing the formation constraints directly at the control level, using only low-bandwidth communication of UAV states and no preplanned dynamically feasible trajectories. II. R ELATED WORKS 
+
+The problem addressed in this work lies at the intersection of single-UAV agile flight and multi-UAV formation control. Both fields have experienced significant advances towards increase in speed of the motion, reliability, and scalability in recent years. However, they have evolved largely separately. Methods for agile single-UAV flight typically do not consider formation constraints, while formation-flight methods often prioritize cohesion, collision avoidance, or reconfiguration over time-optimal progression towards goal region. In the field of single-UAV agile flight, Model Predictive Control (MPC) based algorithms are widely used due to its ability to explicitly handle system constraints while optimizing future control actions [13], [14]. In particular, NMPC has become increasingly popular for agile flight, as it allows the nonlinear vehicle dynamics and actuator limits to be considered directly in the optimization problem [15]–[17]. This makes NMPC well-suited for accurate trajectory tracking under aggressive manoeuvres while staying within actuator constraints. However, NMPC-based approaches usually rely on dynamically-feasible reference trajectories generated by a separate planner, commonly using time-optimal planning algorithms [18], [19]. Although these planners can produce highly dynamic motions, the separation between planning and control becomes limiting when the reference trajectory is difficult to track, or needs to be replanned on the flight. MPCC addresses this limitation by optimizing progression along a geometric path while minimizing contouring and lag errors, instead of tracking fully time-parametrized reference trajectory. Thus, it removes the need to prescribe the temporal evolution of the reference in advance and allows the controller to determine the progression along the path online. MPCC has already been applied to quadrotors and other robotic sys-tems [12], [20], [21], and has demonstrated strong performance in agile flying and drone racing [7], [22]. However, these works focus on single-vehicle operation only. Formation flight has been extensively studied in the context of multi-UAV systems. Existing methods typically focus on formation cohesion and reshaping [9], obstacle avoidance [23], [24], communication constraints, and decentralized coordina-tion. A large body of formation-flight research considers navi-gation in cluttered or obstacle-rich environments [5], [8], [25], These approaches demonstrate the importance of adapting the formation to the environment, but generally do not focus on time-optimal progression along a prescribed trajectory. Several works have specifically explored MPCC or MPCC-inspired approaches for multi-robot systems and formation flight. The authors of [11] propose a neural network to learn time optimal allocations to facilitate online re-planning, but considers only mutual collision and do not enforce any other mean of coordination. Similarly, time-optimal swarm trajec-tory generation has been investigated in [26], where MPCC is used to improve the temporal efficiency of swarm motion. Bio-inspired MPCC formulations for fixed-wing swarms have also been explored [10], although their assumptions and vehicle dynamics differ from the agile multirotor UAVs. While these methods improve swarm performance, and address general time optimal trajectory planning, they do not consider for-mation geometry constraints. This work bridges the gap between agile MPCC-based flight and formation-constrained multi-UAV flight by integrat-ing formation constraints directly into the nonlinear MPCC formulation, combined with an online distributed formation fitting that provides every UAV with its formation-consistent target position from the current and predicted states of its neighbours. This enables coordinated UAV teams to navigate aggressively along a shared path while respecting both vehicle dynamics and formation geometry. III. M ETHODOLOGY 
+
+This section first introduces the quadrotor model, followed by a description of the proposed FF-MPCC optimal control problem formulation, reference formation path generation, and formation coordination approach. 
+
+A. Quadrotor Dynamics 
+
+The quadrotor state can be described by its position p ∈ R3,orientation q ∈ SO (3) , linear velocity v ∈ R3 and angular velocity in body frame ω ∈ R3. The input to the dynam-ics (1) is the collective thrust of the quadrotor in body frame 
+
+fT = 0 0 f T and body torques τ . The dynamics in world-frame can be described by differential equations 
+
+˙p = v, ˙v = 1
+
+m R(q)( fT + fD ) + g,
+
+˙q = 12 q ⊙
+
+ 0
+
+ω
+
+
+
+, ˙ω = J−1(τ − ω × Jω ),(1) where ⊙ represents the quaternion multiplication, R(q) the rotation matrix of q, m the quadrotor mass, J its inertia, g
+
+the gravity vector, and fD the drag force. We model the drag fD as a linear function of the velocity in the body frame, such that fD = −kv vB, where vB = RT (q)v
+
+is the velocity in the body frame and kv = kvx kvy kvz 
+
+
+
+is the vector of drag coefficients. The collective thrust f in fT and the body torques τ can be calculated from the individual rotor thrusts f = [ f1, f 2, f 3, f 4]of motor with propeller i ∈ { 1, 2, 3, 4} as: 
+
+f = P4 
+
+> i=1
+
+fi, τ =
+
+ 
+
+> l√2
+
+(f1 − f2 − f3 + f4) 
+
+> l√2
+
+(−f1 − f2 + f3 + f4)
+
+κ(f1 − f2 + f3 − f4)
+
+ ,(2) where l is the distance from the center of mass of a symmetric quadrotor to each motor and κ is the torque coefficient of the motor with propeller. 
+
+B. Formation Flight Model Predictive Contouring Control Formulation 
+
+In contrast to the classical NMPC [15], which tracks a full-state reference trajectory explicitly parameterized in time, the FF-MPCC framework, similarly to MPCC, tracks a ge-ometric path parameterized by its arc length instead. The time parametrization along the path is not prescribed a priori but is determined online by the FF-MPCC solver. As per standard MPCC [7] frameworks, the cumulative arc length of the reference path (or progress) is denoted by θ, and the arc length at time-step k is denoted by θk. The FF-MPCC cost function comprises four principal terms: a lag error term 
+
+el(θk) penalizing deviation along the direction of travel, a 
+
+contour error term ec(θk) penalizing lateral deviation from the path, a progress maximization term vθ that encourages fast forward motion, and a formation error term ef (θk) penaliz-ing deviation from the desired geometric relationship among drones in the formation. By optimizing this cost function at each time step, FF-MPCC dynamically balances the path following accuracy against forward advancement along the path and the precision of keeping the given formation shape. The reference 3D path parametrized by its arc length is 
+
+pr (θ) = [ xr (θ), y r (θ), z r (θ)] T and the actual spatial position of the drone at time-step k is denoted by pk = [ xk, y k, z k]T .Let t(θk) ∈ R3 be the tangent of pr (θk) evaluated at θk.The position error at time-step k can be then computed as 
+
+e(θk) = pk −pr (θk), and can be decomposed into the contour error ec(θk) and lag error el(θk) such that 
+
+e(θk) = el(θk) + ec(θk). (3) The lag error is approximated by projecting e(θk) onto t(θk),
+
+el(θk) = ( t(θk)T e(θk)) t(θk). (4) The arc-length parametrization of pr (θ), which by definition has a unit norm of the tangent t(θk) for any θk, allows the lag error to be expressed as a scalar el(θk). The contour error is computed as a difference between the position error e(θk)
+
+and the lag error el(θk), i.e., ec(θk) = e(θk) − el(θk). This means the contour error is the projection of the position error onto the plane orthogonal to the tangent vector t(θk) in pk.Arc-length parametrized paths {p1 
+
+> r
+
+(θ), . . . , p Nr (θ)} for all UAVs Di, i ∈ {1, . . . , N } are generated as described in Sec. III-C. The paths are generated such that for every point on the formation-center path, the corresponding points on the individual UAV paths form exactly the desired formation shape. However, the FF-MPCC solvers of individual UAVs are decoupled, and thus have the freedom to track their paths of different lengths with distinct velocity profiles, which might result in non-cohesive formations. FF-MPCC resolves this     
+
+> p1
+> r(θ)
+> p1
+> r(θk)
+> p2
+> r(θ)
+> p3
+> r(θ)
+> p1
+> k
+> p2
+> k
+> p3
+> k
+
+pck
+
+> λ1
+> λ2
+> λ3
+> e1
+> f
+> e1
+> c
+> e1
+> l
+> e1
+
+Fig. 2: Geometric error formulation for a three-UAV formation at time-step k. The current position of UAV Di is denoted by 
+
+pik, with pck representing the formation center. The target ge-ometry positions are defined by λi, from which the formation errors eif are calculated. The total tracking error e1 is the vector sum of the contour error e1 
+
+> c
+
+and lag error e1 
+
+> l
+
+, which are defined relative to the reference position p1 
+
+> r
+
+(θk) on the arc-length parametrized reference path. by interlinking the UAVs in a decentralized fashion: at each control iteration, ego-UAV Di receives the current position and the predicted positions from the FF-MPCC solution of all other-UAVs Dj , j ∈ { 1, . . . , N } \ { i}. To enforce formation geometry, a formation target position λik ∈ R3 is defined for each Di and time step k as a world-frame position that best preserves the prescribed formation shape given the actual or predicted positions of the ego-UAV Di and all other-UAVs 
+
+Dj at time step k. To this end, the target position is obtained by rigid body fitting of the reference formation shape to the current and predicted UAVs’ positions. The fitting procedure is described in more detail in Sec. III-D. The formation target position λk is then used to define a formation error ef,k as the Euclidean distance between its actual position pk and its corresponding shape fitting target position λk with 
+
+ef,k = ∥pk − λk∥2 . (5) The formation error ef,k is then minimized as part of the FF-MPCC optimization problem, which encourages the UAV to synchronize in order to maintain the desired formation geometry while tracking its reference path and maximizing progress along it. All the formation, contour and lag errors are illustrated in a 2D example in Fig. 2 for a triangular formation of three UAVs. In parallel with path tracking accuracy and the maintenance of the formation shape, FF-MPCC maximizes the progress along the reference path. Following the single-drone MPCC formulation proposed in [7], the progress-maximization ob-jective is encoded directly in the cost function by maximizing the arc-length speed vθ,k . This term incentivizes the drone to advance along the path, while the lag, contour, and formation terms jointly constrain the deviations from the reference path and formation shape. The state of the modelled UAV dynamics in (1) is aug-mented by the single rotor thrusts fk (where k denotes the time-step), the path progress θk, and the virtual speed vθ,k .To enforce limits on the rate of change of the thrust and virtual speed, thus preventing noisy control inputs, the progress acceleration ∆vθ and thrust acceleration ∆f are chosen as the control inputs. The resulting augmented state space x is 
+
+x = pT qT vT wT f T θ vθ
+
+T , (6) the control input with progress acceleration and thrust accel-eration, respectively, is 
+
+u = ∆vθ ∆f T T , (7) and the dynamics of the augmented states are 
+
+fk+1 = fk + ∆ fk∆t, θk+1 = θk + vθ,k ∆t, vθ,k +1 = vθ,k + ∆ vθ,k ∆t. 
+
+(8) The full FF-MPCC optimal control problem with a finite prediction horizon N is then formulated as follows: 
+
+u∗ = arg min 
+
+> u
+> N
+
+X
+
+> k=0
+
+
+
+∥el(θk )∥2 
+
+> Ql
+
++ ∥ec(θk )∥2 
+
+> Qc
+
++ ∥ef,k ∥2
+
+> Qf
+
+− μv θ,k + ∥ωk ∥2 
+
+> Qω
+
++ ∥∆vθ,k ∥2
+
+> R∆v
+
++ ∥∆fk ∥2
+
+> R∆f
+
+
+
+(9a) s. t. x0 = x, (9b) 
+
+xk+1 = f (xk , uk ), (9c) 
+
+ωmin ≤ ωk ≤ ωmax , (9d) 
+
+fmin ≤ fk ≤ fmax , (9e) 
+
+0 ≤ vθ,k ≤ vθ, max , (9f) 
+
+∆vθ, min ≤ ∆vθ,k ≤ ∆vθ, max , (9g) 
+
+∆fmin ≤ ∆fk ≤ ∆fmax . (9h) 
+
+The objective (9a) minimizes the lag error, contour error, and formation error, penalized by the positive semi-definite weight matrices Ql, Qc, and Qf , respectively, while maximiz-ing progress through the negative term −μv θ,k . Additionally, the angular velocity ωk, the progress speed change ∆vθ,k , and the thrust changes ∆fk are penalized with weights Qω , R∆v ,and R∆f , respectively, to promote smooth control inputs and avoid aggressive bang-bang behavior. The constraints (9b)– (9h) enforce the system initial state (9b) and its dynamics (9c); and constrain angular velocity (9d), thrust (9e), progress speed (9f), and the rates of change of progress speed (9g) and thrust (9h). 
+
+C. Reference Formation Trajectory Generation 
+
+The reference trajectory of the formation is composed of two coupled components: the global trajectory of the formation center and a time-varying formation geometry that specifies the relative positions of the UAVs. Both components are synchronized through a path parameter τ ∈ [0 , τ max ], where each value of τ uniquely identifies a point on the center trajectory and the corresponding formation geometry. Let the continuous center trajectory be denoted by pcr (τ ) : [0 , τ max ] → R3. To allow the formation to vary continuously along the center trajectory, the desired geometry is represented by the matrix-valued function M (τ ), which maps each path parameter to the corresponding formation configuration. In practice, this function is constructed from a finite set of user-defined formation key-frames. For any path parameter τ lying between two consecutive key-frames located at τk and τk+1 ,the formation matrix is obtained by linear interpolation, 
+
+M(τ ) = (1 − α)M(τk) + αM(τk+1 ), (10) where α = τ − τk
+
+τk+1 − τk
+
+, τ k ≤ τ ≤ τk+1 . This interpolation yields a continuous evolution of the formation geometry along the trajectory, allowing the formation to either maintain a con-stant geometry over an interval or transition smoothly between distinct configurations. An example of how the formation geometry is defined by the key-frames and how it evolves with the path parameter τ is shown in Fig. 3. The ith column of M (τ ) is the relative coordinate vec-tor ri(τ ) = [ xi(τ ), y i(τ ), z i(τ )] T , representing the desired position of UAV Di with respect to the formation center. As the formation geometry is defined in the local formation frame, it is transformed into the world frame before generating individual UAV trajectories. The nominal trajectory of UAV 
+
+Di in the world frame is given by 
+
+pir (τ ) = pcr (τ ) + Rz
+
+ ψ(τ )ri(τ ), (11) where Rz
+
+ ψ(τ ) ∈ SO (3) is the rotation matrix about the z-axis, and ψ(τ ) is the formation center heading. ‘
+
+> ABC
+
+τnorm            
+
+> 0.0 0.20 0.4 0.60 0.80 1.0
+> Static Transition Static Transition Static Triangle Line Triangle
+
+Fig. 3: Visualization of the formation geometry generation over the normalized path parameter τnorm = τ /τ max . The example illustrates the smooth interpolation between defined static key-frames through dynamic transition intervals. The paths pir (τ ) obtained from (11) are subsequently re-parametrized by the cumulative arc length θ introduced in Sec. III-B, as per standard MPCC frameworks [7]. Following the approach of [27], each trajectory is sampled and approxi-mately equidistant knot points are extracted. These points are then used to construct a continuous, piecewise cubic spline representation of each UAV’s path: 
+
+pir (θ) = 
+
+
+
+ρ0(θ), θ0 ≤ θ ≤ θ1
+
+ρ1(θ), θ1 < θ ≤ θ2
+
+... ...
+
+ρS−1(θ), θS−1 < θ ≤ θS
+
+(12) where ρs(θ) denotes the s-th cubic spline segment, θ0 = 0 ,
+
+θS = θmax , and S is the total number of segments used to approximate the path. Although the generated reference trajectories pir (θ) im-plicitly encode the desired formation geometry, independent progress optimization causes UAVs to generally occupy differ-ent progression states, while disturbances may further induce trajectory deviations. Therefore, the shape profile M (τ ) is also re-parameterized with respect to the arc-length variable 
+
+θ, allowing the desired formation geometry to be evaluated consistently during optimization. For each UAV Di, the arc-length re-parameterization defines a strictly monotonic forward mapping Fi : τ 7 → θ. Owing to this monotonicity, there exists a well defined inverse mapping 
+
+τ = F−1 
+
+> i
+
+(θ). Substituting with this inverse mapping yields the shape profile parametrized by arc length: 
+
+M (θ) := M  F−1 
+
+> i
+
+(θ) . (13) Consequently, both the reference trajectory pir (θ) and the formation geometry M (θ) are tightly coupled and evaluated using the identical arc-length parameter θ. The next section describes how these synchronized representations are used for online formation coordination. 
+
+D. In Flight Formation Coordination 
+
+In the proposed FF-MPCC, each UAV solves its own opti-mization problem independently, using the knowledge of the current and predicted positions of the remaining formation members to keep the desired formation shape. This coordi-nation is achieved through the formation error formulation introduced in Sec. III-B, which requires the computation of the target position λi for ego UAV Di. This formation error is evaluated at every shooting node of the prediction horizon. Therefore, each UAV computes a sequence of target positions corresponding to the predicted future states considered by the optimizer. This requires an estimate of the predicted motion of neighbouring UAVs over the same prediction horizon. To provide this information in a decentralized manner, every UAV periodically broadcasts both its current state and the predicted trajectory generated by its local MPCC controller. At each control iteration, UAV Di combines its own predicted states with the latest predicted trajectories received from neighbouring UAVs to estimate the formation state at every prediction stage. Using these predicted neighbour states, UAV 
+
+Di constructs the measured formation position matrix Pm
+
+for each prediction stage. The desired formation geometry is obtained from M (θik), where θik denotes the predicted path progression of the ego UAV at prediction stage k. A rigid-body transformation is then computed to best align the reference formation shape M (θik) with the measured formation Pm.Finally, the target position λik for the ego UAV is extracted from the transformed reference formation and used to evaluate the formation error in the optimization problem (see Alg. 1). Since the coordination involves information exchange over a wireless network, communication latency must be com-pensated when reconstructing the neighbour trajectories. Let 
+
+δ = T0 − Ts denote the communication delay, where Ts
+
+is the message timestamp and T0 is the current time. For prediction stage k, the required neighbour state corresponds to the time instant tk = δ + k∆T, where ∆T is the controller discretization timestep. The neighbour state is then obtained by linearly interpolating between the two predicted trajectory samples that bound tk.The proposed distributed approach eliminates the need for 
+
+Algorithm 1: Distributed Target Position Computation                                                               
+
+> Input: Pm∈R3×N: Measured formation positions,
+> M(θ)∈R3×N: Desired formation geometry, ifront :Front UAV index, i: Ego UAV index
+> Out: λi∈R3: Desired world-frame target position
+> 1cm←1
+> N
+> PNk=1 Pm[: , k ]// Measured center
+> 2cr←1
+> N
+> PNk=1 M(θ)[: , k ]// Reference center
+> 3vxy ←Pm[1 : 2 , i front ]−cm[1 : 2] // Estimate heading
+> 4ψ←computeYaw( vxy )
+> 5R←Rz(ψ)
+> 6t←cm−Rc r// Rigid-body fitting
+> 7λi←RM (θ)[: , i ] + t// Extract ego target
+> 8return λi
+
+centralized coordination and allows each UAV to continuously determine its desired position within the formation based on its predicted state and the predicted neighbour states received through communication. In contrast to other methods, our proposed method allows the formation to adapt to in-flight disturbances and also to slower formation members, while maintaining the desired geometric structure. A simple illus-tration of the fitting process is shown in Fig. 4.  
+
+> Dego
+> D1
+> D0
+> λego
+> Real frame Reference frame Rigid Body Fit
+
+Fig. 4: Distributed rigid-body fitting. The green and red dashed triangles denote the desired fitted and the current formation, respectively. The target position λego is computed from the estimated positions of D0 and D1. Each UAV performs the procedure independently using local information. IV. R ESULTS 
+
+The performance of the proposed FF-MPCC is demonstrated in extensive simulations and real world flights. Simulations and real word experiments are conducted with identical custom agile quadrotor model measuring 300 mm in diagonal length and weighing 1.2 kg . Each quadcopter is equipped with RTK GPS, a CubePilot flight controller with PX4 firmware and is commanded by the MRS UAV system architecture [28] running on Khadas Vim3 Pro single-board computer. The collective thrust of the UAVs is capped at 48 N in the controller constraints, while the per motor thrust is capped at 17 N . The position data of the neighboring robots in the formation is shared over a standard WiFi interface at 10 Hz frequency with an average delay of 15 ms .
+
+A. Experiment Methodology 
+
+The goal of FF-MPCC is to enable fast formation flight; therefore, we rely on formation accuracy and flight completion time to evaluate its performance. The formation flight accuracy is evaluated using two metrics, both computed over uniformly sampled trajectory measurements collected during the experi-ment. The first is the Mean Absolute Pairwise Distance Error (MAPDE): 
+
+MAPDE = 1
+
+T  N
+
+> 2
+
+
+
+> T
+
+X 
+
+> k=1
+> N−1
+
+X
+
+> i=1
+> N
+
+X
+
+> j=i+1
+
+dij (k) − d∗ 
+
+> ij
+
+(k) , (14) where dij (k) − d∗ 
+
+> ij
+
+(k) is the pairwise distance error for the UAV pair {Di, D j }. Here, dij (k) and d∗ 
+
+> ij
+
+(k) represent the actual and desired mutual Euclidean distances at time step k,respectively, T denotes the total number of recorded trajectory samples, and N is the number of UAVs. The desired pairwise distances are computed based on the reference shape matrix 
+
+M (θik) (13), where θik denotes the progress of Di at timestep 
+
+k. Since neighboring UAVs may evaluate the desired geometry at slightly different progression values, the pairwise reference distances are computed independently for each UAV. While MAPDE evaluates relative spacing, it fails to capture the overall orientation (heading) of the formation and does not scale reliably for larger formations ( N > 3). To address these limitations, we introduce the Spatial Formation Tracking Error (SFTE). The SFTE at any given time step k is computed following these steps: 1) Orientation Alignment: The actual center of formation 
+
+pc(k) is computed and projected onto the reference center path pcr (defined in Sec. III-C) to locate the closest Euclidean point. The path tangent at this point yields the desired formation heading ψc(k), which defines the rotation matrix R(ψ) used to orient M (θik).2) Anchoring: To evaluate shape distortion independently of global translation errors, each UAV Di is sequentially treated as a local coordinate anchor. The rotated shape matrix is translated such that the expected position of 
+
+Di aligns with its actual recorded position. 3) Error Evaluation: With the shape matrix rotated by 
+
+ψc(k) and anchored at Di, the Euclidean distance error between the actual position of every other UAV Dj
+
+(j̸ = i) and its corresponding target position λji,k on the matrix is computed. Formally, the SFTE is given by 
+
+SFTE = 1
+
+T N (N − 1) 
+
+> T
+
+X
+
+> k=1
+> N
+
+X
+
+> i=1
+> N
+
+X 
+
+> j=1
+> j̸=i
+
+pjk − λji,k , (15) where pjk is the actual position of UAV Dj at timestep k.Mission completion time is defined as the time required for the entire formation to reach its target destination. A UAV is considered to have reached its goal when it enters a spherical region of radius 0.75 m centered at its assigned endpoint Thus, the mission completion time corresponds to the maximum arrival time among all UAVs. This definition is used consistently across all experiments. 
+
+B. Simulation Results 
+
+We evaluate our method through Gazebo simulations. We first present an ablation study to isolate the impact of our formation error weight, followed by a comparative evaluation against NMPC-based approach. 
+
+1) Ablation Study 
+
+We conducted an ablation study to demonstrate the necessity of the formation error cost introduced in (5). The evaluation scenario tasks a team of three UAVs ( N = 3 ) with tracking a sine wave center path while maintaining a static equilateral triangular shape. To establish the ablation baseline, we first run the simulation with the formation error weight qf set to 0 in the objective function (9a), eliminating the influence of the formation error in the cost, thus, causing the UAVs to track their trajectories independently. We then rerun the exact same path using a sweep of different non-zero values for qf
+
+to analyze the effects on all metrics. 
+
+Fig. 5: Ablation study of the influence of configuration param-eter qf on formation completion time and formation accuracy metrics evaluated using 3 agents scenarios. Performance pro-files are color-coded by parameter value. The results of the ablation study are summarized in Fig. 5. The baseline with qf = 0 , which corresponds to the traditional MPCC, is omitted from the plots as it is a clear outlier with a MAPDE of 1.82 m and an SFTE of 3.41 m , at a completion time of 12 .55 s . In contrast, all non-zero values of 
+
+qf result in MAPDE within 0.25 m to 0.78 m and SFTE within 
+
+1.08 m to 1.3 m , at completion times within 13 .21 s to 14 .98 s .The introduced formation error thus improves the formation accuracy by at least 57% in MAPDE and 62% in SFTE. The results in Fig. 5a show that increasing qf creates a clear trade-off: higher penalty weights systematically drive down the MAPDE, but they increase the total completion time. This is a result of slowdown in individual UAVs to maintain cohesion in challenging sections of the trajectory, causing a slowdown overall. The SFTE in Fig. 5b does not follow the same trend as it is largely influenced by rigid-body orientation errors rather than exact distances. However, it stays consistently low for all non-zero qf , which indicates that even small qf values are enough to maintain the formation orientation. 
+
+2) Comparative Evaluation 
+
+To evaluate the overall performance of our proposed frame-work, we compare it against a conventional planning-and-control pipeline, further denoted as PMM+NMPC, that com-bines minimum-time trajectory planning with NMPC-based trajectory tracking. The setup of PMM+NMPC involves ap-plying PMM [19] to generate time optimal trajectory of the defined formation center pdc . The center trajectory is then offset using the formation geometry defined in (13) to generate individual UAV trajectories for tracking. To compute MAPDE we use the reference pairwise distances obtained from the shape matrix at time k. For SFTE and completion time, we employ the same method described in Sec. IV-A, ensuring evaluation consistency. TABLE I: Comparison of the baseline PMM+NMPC and the proposed FF-MPCC in formation flight scenarios. All simualtions are conducted with identical constant gains, and the reported results are averaged over 20 trials per scenario.                                                                                           
+
+> Path type Formation Alignment Path length [m] PMM+NMPC FF-MPCC SFTE [m] MAPDE [m] Time [s] SFTE [m] MAPDE [m] Time [s] Straight Line Triangle Yes 60 0.095 0.056 4.406 0.093 0.049 5.341 Straight Line Triangle-Line Yes 60 0.935 0.532 4.443 0.250 0.176 5.084 Straight Line Triangle-Line-Triangle Yes 60 1.764 1.051 4.927 1.195 0.397 6.361 Spiral Triangle Yes 62.93 2.643 0.116 6.139 0.262 0.081 5.963
+> Spiral Triangle-Line Yes 62.93 3.371 0.305 5.910 0.223 0.107 6.285 Spiral Triangle-Line-Triangle Yes 62.93 3.567 0.388 6.094 0.466 0.183 7.324 Sine Wave Triangle Yes 195.19 2.985 0.662 16.897 1.186 0.238 14.618
+> Sine Wave Triangle-Line Yes 195.19 2.267 0.724 16.456 1.006 0.353 13.691
+> Sine Wave Triangle-Line-Triangle Yes 195.19 3.239 0.932 16.974 0.992 0.323 13.535
+
+(a) PMM+NMPC trajectory Profile 
+
+(b) FF-MPCC trajectory Profile 
+
+Fig. 6: Trajectory comparison between the baseline PMM+NMPC and FF-MPCC for a sine-wave path with a triangle-line-triangle formation geometry. Dashed lines denote the reference trajectories generated by each method, solid lines the trajectories flown by the individual UAVs. FF-MPCC consistently outperforms PMM+NMPC in both MAPDE and SFTE in all simulations with margins greater than 30% while also providing faster completion times in half the tested scenarios (see Table I and Fig. 7). While FF-MPCC exhibits longer completion times in some cases, for every scenario there exist gain settings that match the completion times of PMM+NMPC while still achieving superior formation accuracy. The advantages of the proposed method are more pronounced in challenging scenarios with curved trajectories and complex dynamic formation timelines. FF-MPCC can adapt to non feasible paths with greater agility while also maintaining formation integrity at sharp curves. The trajectory plots of a sample scenario for both the methods, highlighting these effects, can be seen in Fig. 6. 
+
+C. Real World Experiment 
+
+Field experiments were conducted using a three-UAV sce-nario to validate the feasibility of the proposed decentralized 
+
+Fig. 7: Scatter of actual UAV positions around the reference shape after transformation to the reference frame for the Sine Wave with static Triangle formation listed in Table I. The dashed triangle denotes the desired formation. The formation is centered at its centroid, with UAV 1 defining the orientation of the reference frame. FF-MPCC framework under real-world conditions. The ex-perimental flights were performed along a 60 m straight-line trajectory and evaluated two representative formation profiles. The first scenario maintained a static equilateral triangle with a side length of 10 m . The second scenario transitioned from the same triangular configuration to a co-linear formation with a total length of 8.66 m . The successful execution of both scenarios demonstrates the ability of the proposed framework to maintain and reconfigure formation geometry during flight without centralized coordination under real-world conditions. The reconstructed trajectories and corresponding images for both scenarios are shown in Fig. 8. V. C ONCLUSION 
+
+This paper presents FF-MPCC, a distributed MPCC-based framework for decentralized multi-UAV formation flight. The proposed approach jointly optimizes path progression and formation accuracy, enabling agile and time-efficient formation flight along predefined paths without requiring offline gen-eration of dynamically feasible trajectories. By combining a heading-aware formation representation with distributed rigid-body fitting, each UAV independently optimizes its motion while maintaining the prescribed, dynamically evolving for-mation geometry. The presented results demonstrate that the advantages of MPCC, previously established for single-UAV flight, can be successfully extended to fast decentralized formation flight, providing a practical solution for agile multi-UAV operations under realistic communication conditions. (a) Triangle-Line transition (b) Triangle only 
+
+Fig. 8: Real-world validation experiments. The top image in each column shows the reconstructed trajectories, while the bottom image shows the corresponding captured experimental scene. The global formation path for both scenarios is a straight line, where a) depicts a transitional geometry from triangle to straight line while b) shows a static triangular geometry. REFERENCES [1] P. Petracek, V. Kratky, T. Baca, M. Petrlik, and M. Saska, “New Era in Cultural Heritage Preservation: Cooperative Aerial Autonomy for Fast Digitalization of Difficult-to-Access Interiors of Historical Monuments,” 
+
+IEEE Robotics & Automation Magazine , vol. 31, no. 2, pp. 8–25, 2024. [2] M. R. Brust and B. M. Strimbu, “A networked swarm model for UAV deployment in the assessment of forest environments,” in 2015 IEEE Tenth International Conference on Intelligent Sensors, Sensor Networks and Information Processing (ISSNIP) , 2015, pp. 1–6. [3] L. F. C. Ccari and P. R. Yanyachi, “A novel neural network-based robust adaptive formation control for cooperative transport of a payload using two underactuated quadcopters,” IEEE Access , vol. 11, pp. 36 015– 36 028, 2023. [4] M. Saska, D. Hert, T. Baca, V. Kratky, and T. Nascimento, “Formation control of unmanned micro aerial vehicles for straitened environments,” 
+
+Autonomous Robots , vol. 44, no. 6, pp. 991–1008, 2020. [5] L. Quan, L. Yin, T. Zhang, M. Wang, R. Wang, S. Zhong, X. Zhou, Y. Cao, C. Xu, and F. Gao, “Robust and Efficient Trajectory Planning for Formation Flight in Dense Environments,” IEEE Transactions on Robotics , vol. 39, no. 6, pp. 4785–4804, 2023. [6] D. Lam, C. Manzie, and M. Good, “Model predictive contouring control,” in 49th IEEE Conference on Decision and Control (CDC) ,2010, pp. 6137–6142. [7] A. Romero, S. Sun, P. Foehn, and D. Scaramuzza, “Model predictive contouring control for time-optimal quadrotor flight,” IEEE Transactions on Robotics , vol. 38, no. 6, pp. 3340–3356, 2022. [8] Y. Zhou, L. Quan, C. Xu, G. Xu, and F. Gao, “RE-Formation: Resilient and Efficient Formation Planning in Large-Scale Distributed Aerial Swarms,” IEEE Transactions on Automation Science and Engineering ,vol. 22, pp. 21 212–21 227, 2025. [9] V. Kratky, R. Penicka, J. Horyna, P. Stibinger, T. Baca, M. Petrlik, P. Stepan, and M. Saska, “CAT-ORA: Collision-Aware Time-Optimal Formation Reshaping for Efficient Robot Coordination in 3-D Environ-ments,” IEEE Transactions on Robotics , vol. 41, pp. 2950–2969, 2025. [10] J. Deng, Y. Deng, and H. Duan, “Bioinspired Homotopic Model Pre-dictive Contouring Control for Fixed-Wing Unmanned Aerial Vehicle Swarm,” IEEE Transactions on Circuits and Systems I: Regular Papers ,vol. 73, no. 3, pp. 2143–2155, 2026. [11] X. Guan, F. Zhao, S. Tian, and S. Li, “Learning Time-Optimal Online Replanning for Distributed Model Predictive Contouring Control of Quadrotors,” in 2025 IEEE International Conference on Robotics and Automation (ICRA) , 2025, pp. 14 527–14 533. [12] B. S. Guevara, V. Moya, L. F. Recalde, D. Pozo-Espin, D. C. Gandolfo, and J. M. Toibero, “Model Predictive Contouring Control with Barrier and Lyapunov Functions for Stable Path-Following in UAV systems,” 2024, arXiv:2411.00668 [cs.RO]. [Online]. Available: https://arxiv.org/abs/2411.00668 [13] H. Nguyen, M. Kamel, K. Alexis, and R. Siegwart, “Model Predictive Control for Micro Aerial Vehicles: A Survey,” in 2021 European Control Conference (ECC) , 2021, pp. 1556–1563. [14] M. Diehl, H. Bock, H. Diedam, and P.-B. Wieber, Fast Direct Multiple Shooting Algorithms for Optimal Robot Control . Springer Berlin Heidelberg, 2006, pp. 65–93. [15] P. M. Gupta, O. Proch´ azka, J. Hˇ rebec, M. Novosad, R. Pˇ eniˇ cka, and M. Saska, “LoL-NMPC: Low-Level Dynamics Integration in Nonlinear Model Predictive Control for Unmanned Aerial Vehicles,” in 2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) , 2025, pp. 1186–1193. [16] S. Sun, A. Romero, P. Foehn, E. Kaufmann, and D. Scaramuzza, “A comparative study of nonlinear mpc and differential-flatness-based control for quadrotor agile flight,” IEEE Transactions on Robotics ,vol. 38, no. 6, pp. 3357–3373, 2022. [17] M. A. Gomaa, O. De Silva, G. K. Mann, and R. G. Gosine, “Com-putationally efficient stability-based nonlinear model predictive control design for quadrotor aerial vehicles,” IEEE Transactions on Control Systems Technology , vol. 31, no. 2, pp. 615–630, 2022. [18] R. Penicka and D. Scaramuzza, “Minimum-time quadrotor waypoint flight in cluttered environments,” IEEE Robotics and Automation Letters ,vol. 7, no. 2, pp. 5719–5726, 2022. [19] K. Teissing, M. Novosad, R. Penicka, and M. Saska, “Real-Time Planning of Minimum-Time Trajectories for Agile UAV Flight,” IEEE Robotics and Automation Letters , vol. 9, no. 11, pp. 10 351–10 358, 2024. [20] J. Ji, X. Zhou, C. Xu, and F. Gao, “CMPCC: Corridor-based Model Predictive Contouring Control for Aggressive Drone Flight,” 2021, arXiv:2007.03271 [cs.RO]. [Online]. Available: https://arxiv.org/abs/ 2007.03271 [21] A. Liniger, A. Domahidi, and M. Morari, “Optimization-Based Au-tonomous Racing of 1:43 Scale RC Cars,” Optimal Control Applications and Methods , vol. 36, no. 5, pp. 628–647, 2014. [22] A. Romero, R. Penicka, and D. Scaramuzza, “Time-optimal online replanning for agile quadrotor flight,” IEEE Robotics and Automation Letters , vol. 7, no. 3, pp. 7730–7737, 2022. [23] N. Wang, J. Dai, and J. Ying, “UAV formation obstacle avoidance control algorithm based on improved artificial potential field and consensus,” 
+
+International Journal of Aeronautical and Space Sciences , vol. 22, no. 6, pp. 1413–1427, 2021. [24] J. Seo, Y. Kim, S. Kim, and A. Tsourdos, “Collision avoidance strategies for unmanned aerial vehicles in formation flight,” IEEE Transactions on aerospace and electronic systems , vol. 53, no. 6, pp. 2718–2734, 2017. [25] J. Zhang, B. Hou, and R. Huang, “Agile Trajectory Planning and Large Obstacle Avoidance for Formation Flight Using a Virtual Core,” IEEE Robotics and Automation Letters , vol. 10, no. 8, pp. 8546–8553, 2025. [26] H. Pan, M. Zahmatkesh, F. Rekabi-Bana, F. Arvin, and J. Hu, “T-STAR: Time-Optimal Swarm Trajectory Planning for Quadrotor Unmanned Aerial Vehicles,” IEEE Transactions on Intelligent Transportation Sys-tems , vol. 26, no. 8, pp. 12 532–12 547, 2025. [27] H. Wang, J. Kearney, and K. Atkinson, “Arc-length parameterized spline curves for real-time simulation,” in Proc. 5th international conference on curves and surfaces , vol. 387396, 2002. [28] T. B´ aˇ ca, M. Petrl´ ık, M. Vrba, V. Spurn´ y, R. Pˇ eniˇ cka, D. Hert, and M. Saska, “The MRS UAV System: Pushing the Frontiers of Repro-ducible Research, Real-world Deployment, and Education with Au-tonomous Unmanned Aerial Vehicles,” Journal of Intelligent & Robotic Systems , vol. 102, 05 2021.

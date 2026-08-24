@@ -1,0 +1,102 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-24T19:23:35.674798+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.16195v1",
+      "source": "arxiv",
+      "title": "RoboStriker: Latent-Space Strategic Games for Autonomous Humanoid Boxing",
+      "abstract": "Achieving human-level competitive intelligence and physical agility in humanoid robots remains a profound challenge, particularly in contact-rich and highly dynamic tasks such as boxing. While Multi-Agent Reinforcement Learning offers a principled framework for strategic interaction, its direct application to unstructured raw motor spaces inevitably leads to joint-level physical collapse, preventing the emergence of any viable combat tactics. To resolve this fundamental conflict between strategic exploration and physical feasibility, we formulate the humanoid combat task as a novel two-player latent-space zero-sum Markov game. Under standard regularity and approximate best-response assumptions, we show that the latent formulation induces an equivalent game over the decoder-reachable action manifold, providing an approximate-Nash interpretation of the resulting self-play dynamics. To instantiate this theoretical formulation, we propose RoboStriker, a hierarchical framework that decouples high-level reasoning from low-level execution. It first distills the tracking expertise of predefined boxing motions into a topologically bounded latent manifold. This structured latent foundation subsequently drives multi-agent co-evolution via Latent-Space Neural Fictitious Self-Play. Extensive experimental results demonstrate that gaming within this structured latent space substantially outperforms direct exploration. By constraining strategic exploration through a pretrained motion decoder, RoboStriker substantially reduces the catastrophic balance failures observed in raw action-space methods and achieves superior tactical performance in both competitive win rates and striking efficiency. Finally, we successfully deploy and validate our learned combat policies on real-world humanoid robots. Our code and video and supplementary materials are available at RoboStriker.",
+      "authors": [
+        "Kangning Yin",
+        "Kaige Liu",
+        "Zhe Cao",
+        "Wentao Dong",
+        "Weishuai Zeng",
+        "Tianyi Zhang",
+        "Qiang Zhang",
+        "Jingbo Wang",
+        "Jiangmiao Pang",
+        "Yang Li",
+        "Ming Zhou",
+        "Weinan Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-08-17T07:19:09+00:00",
+      "link": "https://arxiv.org/pdf/2608.16195v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Two-player zero-sum Markov game with latent-space RL, a transferable method for pursuit-evasion style competitive strategies",
+      "llm_evidence_cn": "双人零和博弈与潜在空间强化学习，对追逃类对抗策略具有方法迁移价值",
+      "llm_evidence": "双人零和博弈与潜在空间强化学习，对追逃类对抗策略具有方法迁移价值",
+      "canonical_evidence": "双人零和博弈与潜在空间强化学习，对追逃类对抗策略具有方法迁移价值",
+      "llm_tldr_en": "Models humanoid boxing as a two-player latent-space zero-sum Markov game, proves equivalence to original game under assumptions, yielding physically feasible competitive strategies transferable to pursuit-evasion.",
+      "llm_tldr_cn": "该论文针对人形机器人拳击等接触型动态对抗任务中，直接在原始运动空间应用多智能体强化学习会导致关节物理崩溃的问题，提出将战斗任务建模为双人潜在空间零和马尔可夫博弈。通过潜在空间表示与近似最优反应假设，证明了该表示与原始博弈的等价性，从而兼顾策略探索与物理可行性。实验表明该框架能促进有效对抗战术的涌现，为包括追逃在内的对抗性多智能体任务提供了可借鉴的RL范式。",
+      "llm_tldr": "该论文针对人形机器人拳击等接触型动态对抗任务中，直接在原始运动空间应用多智能体强化学习会导致关节物理崩溃的问题，提出将战斗任务建模为双人潜在空间零和马尔可夫博弈。通过潜在空间表示与近似最优反应假设，证明了该表示与原始博弈的等价性，从而兼顾策略探索与物理可行性。实验表明该框架能促进有效对抗战术的涌现，为包括追逃在内的对抗性多智能体任务提供了可借鉴的RL范式。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.21056v1",
+      "source": "arxiv",
+      "title": "FF-MPCC: High-speed Agile Formation Flight with Model Predictive Contouring Control",
+      "abstract": "Flying in a prescribed formation in an agile manner remains a challenging problem in the field of UAVs, particularly when following highly-demanding trajectories that require flight at platform limits. We address this problem by proposing a novel decentralized approach to formation flight along a given path that integrates formation maintenance into the MPCC framework, allowing UAVs to adapt their progression along complex paths while respecting individual dynamic constraints and maintaining the desired formation. To this end, we introduce a novel reparametrization and synchronization method for dynamic formation geometries together with a decentralized approach to determine the desired positions for the individual UAVs. The proposed approach allows the formation to coordinate high-speed path following without compromising formation integrity. The proposed approach is validated through extensive simulation and real-world experiments involving scenarios with varying complexity of paths and changes of required formation shape on the fly. In comparison to time-parameterized trajectory tracking, we demonstrate improved formation maintenance by 65% in high-speed flight with velocities up to 21 m/s, while achieving comparable times required to reach the goal.",
+      "authors": [
+        "Aditya Dandwate",
+        "Vit Kratky",
+        "Parakh M. Gupta",
+        "Martin Saska",
+        "Robert Penicka"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-08-21T12:56:07+00:00",
+      "link": "https://arxiv.org/pdf/2608.21056v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Decentralized multi-UAV formation flight method relevant to cooperative encirclement geometry",
+      "llm_evidence_cn": "分散式多无人机编队飞行方法，与协同围捕的队形控制相关",
+      "llm_evidence": "分散式多无人机编队飞行方法，与协同围捕的队形控制相关",
+      "canonical_evidence": "分散式多无人机编队飞行方法，与协同围捕的队形控制相关",
+      "llm_tldr_en": "Proposes a decentralized Model Predictive Contouring Control approach that integrates formation maintenance, allowing UAVs to adapt progression along complex paths while respecting dynamic constraints, useful for multi-UAV cooperative encirclement.",
+      "llm_tldr_cn": "无人机在高速机动中保持规定队形并跟踪复杂航线是挑战性问题。该文提出FF-MPCC，一种将编队保持集成进模型预测等值线控制（MPCC）的分散式方法，使各无人机在满足自身动力学约束的同时同步调整路径进度，保持期望编队几何。该方法支持动态编队形状的重参数化与同步，可用于多无人机协同围捕等需要紧密协作的任务。该工作提供了编队控制的新思路，但并未涉及强化学习。",
+      "llm_tldr": "无人机在高速机动中保持规定队形并跟踪复杂航线是挑战性问题。该文提出FF-MPCC，一种将编队保持集成进模型预测等值线控制（MPCC）的分散式方法，使各无人机在满足自身动力学约束的同时同步调整路径进度，保持期望编队几何。该方法支持动态编队形状的重参数化与同步，可用于多无人机协同围捕等需要紧密协作的任务。该工作提供了编队控制的新思路，但并未涉及强化学习。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
