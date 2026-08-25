@@ -6,29 +6,27 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-24
-- 运行时间：2026-08-24 19:25:00 UTC
+- 最新运行日期：2026-08-25
+- 运行时间：2026-08-25 20:27:31 UTC
 - 运行状态：成功
 - 本次总论文数：2
 - 精读区：0
 - 速读区：2
 
 ### 今日简报（AI）
-今日速读两篇论文，聚焦机器人拳击与无人机编队飞行。  
-值得关注的方向：自主格斗中的策略博弈，以及高速编队下的模型预测控制。  
-建议后续可精读其中一篇，或延伸关注控制与博弈结合的应用场景。
-- 详情：[/202608/24/README](/202608/24/README)
+今日速读2篇论文，聚焦无人机通信控制与模型预测控制两大方向。其中《RMWorld》提出基于信息价值引导的多轮学习框架，《SRL-MPC》引入形状感知强化学习，均为6.0分，值得关注。建议后续可精读其中一篇，深入验证方法在真实场景中的迁移效果。
+- 详情：[/202608/25/README](/202608/25/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [RoboStriker: Latent-Space Strategic Games for Autonomous Humanoid Boxing](/202608/24/2608.16195v1-robostriker-latent-space-strategic-games-for-autonomous-humanoid-boxing)  
+1. [RMWorld: Task-Aware Radio World Models with Value-of-Information Guided Multi-Trial Learning for Multi-UAV Communication Control](/202608/25/2608.20126v1-rmworld-task-aware-radio-world-models-with-value-of-information-guided-multi-trial-learning-for-multi-uav-communication-control)  
    标签：评分：6.0/10、query:ui
-   evidence：双人零和博弈与潜在空间强化学习，对追逃类对抗策略具有方法迁移价值
-2. [FF-MPCC: High-speed Agile Formation Flight with Model Predictive Contouring Control](/202608/24/2608.21056v1-ff-mpcc-high-speed-agile-formation-flight-with-model-predictive-contouring-control)  
+   evidence：面向多无人机协作通信控制的基于模型强化学习
+2. [SRL-MPC: Shape-Aware Reinforcement Learned Model Predictive Control](/202608/25/2608.21175v1-srl-mpc-shape-aware-reinforcement-learned-model-predictive-control)  
    标签：评分：6.0/10、query:ui
-   evidence：分散式多无人机编队飞行方法，与协同围捕的队形控制相关
+   evidence：将强化学习与模型预测控制和安全屏障结合用于导航，可迁移到无人机拦截与围捕。
 
 
 <div class="dpr-home-promo-card">

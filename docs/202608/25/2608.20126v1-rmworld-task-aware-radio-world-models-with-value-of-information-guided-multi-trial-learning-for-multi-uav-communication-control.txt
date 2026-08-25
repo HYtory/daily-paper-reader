@@ -1,0 +1,970 @@
+Title: RMWorld: Task-Aware Radio World Models with Value-of-Information Guided Multi-Trial Learning for Multi-UAV Communication Control
+
+URL Source: https://arxiv.org/pdf/2608.20126v1
+
+Published Time: Fri, 21 Aug 2026 01:00:03 GMT
+
+Number of Pages: 13
+
+Markdown Content:
+> 1
+
+# RMWorld: Task-Aware Radio World Models with Value-of-Information Guided Multi-Trial Learning for Multi-UAV Communication Control 
+
+Xiucheng Wang, Nan Cheng, and Junxi Huang 
+
+Abstract —Reliable multi-UAV communication control depends on predicting which aerial links will serve traffic before mea-surements are available. Radio world models (radio WMs) make such planning tractable, but their errors are nonuniform: a globally accurate model may still fail along high-demand corridors or association boundaries where rate errors reverse control decisions. This mismatch creates a learning challenge. Link queries must reduce decision-relevant channel uncertainty, while counterfactual trials must be filtered so that biased rollouts do not corrupt the policy. Existing acquisition and model-based control treat these budgets separately, valuing uncertainty, coverage, or optimistic return rather than risk reduction. We present RMWorld, a task-aware radio-WM framework that couples value-of-information channel calibration with credibility-diversity multi-trial selection. A biased propagation formula is corrected by a Bayesian residual, and each link is valued by its exact one-label reduction in locally linearized task-integrated posterior rate variance. Counterfactual branches are selected by a task-gated log-determinant objective, followed by conflict projection and fixed-batch validation. We derive the variance-reduction identity, prove posterior task-risk equivalence and the submodular greedy guarantee, and establish a scoped first-order non-interference result. Across 100 paired 3GPP trials RMWorld reaches 0.949 bit/s/Hz task-weighted RMSE, and across 30 severe-load DeepMIMO trials it reduces median backlog by 0.967 versus Ensemble UCB at 37.5% more offline rollouts. 
+
+Index Terms —Multi-UAV communications, radio world mod-els, multi-trial learning, model mismatch, value of information, submodular optimization. 
+
+I. I NTRODUCTION 
+
+Channel knowledge is the substrate of multi-UAV com-munication control: it determines where aerial access points should move, which users should be associated, and which traffic should be served first. Accurate measurements or ray tracing can reveal that knowledge, but neither can exhaust the locations, users, and future trajectories that a controller must consider. A radio world model (radio WM) replaces this dense interaction with a predictive channel environment learned from propagation formulas, sparse labels, or neural features. This replacement is operationally important because every planning decision can be rehearsed in the radio WM before scarce flight time, spectrum, or high-fidelity simulation is consumed. It is also dangerous because the controller learns the model’s errors together with its useful structure. The central design problem is therefore not merely to fit a globally accurate channel predictor 
+
+Xiucheng Wang, Nan Cheng, and Junxi Huang are with the School of Telecommunications Engineering, Xidian University. Corresponding author: Nan Cheng. 
+
+or to optimize a policy inside it. It is to decide which evidence can make an imperfect radio WM reliable for the decisions that matter. Figure 1 summarizes the resulting design logic through coupled evidence allocation at the channel and policy levels. The difficulty is that radio-WM fidelity is valuable only through its effect on a downstream decision. Errors near an association boundary can reverse the served user, while larger errors in regions the fleet never visits can be harmless. The same asymmetry appears along high-demand corridors, near blockage transitions, and wherever rate sensitivity changes sharply. Consequently, global reconstruction error can regard two radio WMs as equivalent even when one induces substan-tially higher task risk. The population comparison and matched spatial example in Fig. 2 make this structural mismatch visible; the figure is evidence for the argument, not the argument itself. Three additional couplings make the problem harder. Point-wise uncertainty need not imply value of information, task relevance can repeatedly select correlated links, and channel labels operate at a different granularity from counterfactual policy trials. A sound learner must therefore allocate evidence across both levels without treating uncertainty, relevance, or diversity as interchangeable notions. Existing solutions leave this requirement unresolved be-cause they optimize useful but partial surrogates. Radio-map reconstruction and active surveying primarily seek map-wide fidelity, geometric coverage, or local uncertainty, while model-based controllers commonly retain trials by predicted return, action spread, or ensemble optimism. The first family can spend labels on propagation regions that do not affect service, and the second can trust a diverse but systematically biased counterfactual. Even a task-weighted uncertainty rule remains myopic when several selected links convey the same posterior information. Fig. 3 illustrates the missing distinction: useful queries do not merely cluster near users, but trace residual directions whose correction changes demand-weighted rate predictions across the task distribution. Sequential covariance updates then make already explained directions less attrac-tive, converting coverage into nonredundant task evidence. This logic motivates a joint view of radio-WM calibration and multi-trial control as two budgeted evidence-selection problems. The formal gap is to quantify the reduction each candidate causes, rather than score only what the candidate currently looks like. RMWorld fills this gap through value-of-information-guided multi-trial learning. At the channel level, it expresses the discrepancy between an estimated propagation formula and arXiv:2608.20126v1 [cs.IT] 20 Aug 2026 2(a) Task-Critical Mismatch  (b) RMWorld 
+
+Channel-Level Evidence 
+
+> task cues
+> demand
+> posterior
+> coupling
+> sensitivity
+> candidate links
+> R’
+> ෡R
+> true. pred.
+> R’
+> ෡Rlarge error
+> low impact
+> task-critical
+> association trip
+
+Error magnitude  ≠ Task impact        
+
+> task-aware value
+> ∆(𝑞|𝐷)
+> select 𝑞 1
+> select 𝑞 2
+> …
+> select 𝑞 𝑘
+> update ∑
+> update ∑
+> HF labels 𝑅 *Radio-WM Ensemble
+
+Policy-Level Evidence    
+
+> current
+> state candidate
+> trials update
+> directions
+
+𝑧 𝑏  
+
+> selected
+> set
+
+𝑆  conflict-aware  
+
+> update policy fixed-batch
+> validation
+
+𝑅 ∗
+
+෠𝑅 +
+
+> predicted
+> gain
+> task-credible
+> update-complementary
+
+√ 
+
+> 𝒈 𝒕
+> 𝒈 0
+> ෦𝒈 t
+> √
+> 𝑑(𝛼 1)
+> 𝑑(𝛼 2)
+> 𝑑(𝛼 3)
+> couterfractual
+> rollouts { ෠ 𝑅 (𝑚) }
+
+Fig. 1. Motivation and workflow of RMWorld. Panel (a) illustrates why channel-error magnitude alone does not determine task impact, and panel (b) shows the coupled channel-level and policy-level evidence-allocation pipeline. 1.0 1.1 
+
+Global RMSE 
+
+> 0.9 1.0 1.1 1.2
+> Task-weighted RMSE
+
+AB
+
+(a)  
+
+> 01
+
+Error or regret (bit/s/Hz) 
+
+> Global Task Assoc.
+> 1.086 0.986 0.036
+> 1.087 1.224 0.099
+
+(b) 
+
+> Case A Case B 0.050 0.075 0.100 0.125 0.150
+
+Fig. 2. Global error is not task error in standardized 3GPP TR 36.777 analytic simulations. Panel (a) shows 100 frozen initial formula-radio-WM trials. Panel (b) isolates cases A and B through a fixed near-match rule on global RMSE: their global RMSEs differ by only 0.0013 bit/s/Hz, yet their task-weighted RMSEs differ by 0.2373 bit/s/Hz and their association regrets by 0.0634 bit/s/Hz. This pair is the largest task gap among the 74 pairs that satisfy the same near-match rule, shown because it makes the mechanism legible; the population quantiles reported in Sec. V-D are the quantitative claim. These data are simulated, not measured. 
+
+the realized formula channel as a Bayesian residual, then selects the link with the largest exact one-query reduction in locally linearized task-integrated posterior rate variance. This reduction couples task occupancy, rate sensitivity, candidate uncertainty, and cross-link covariance in one score. At the policy level, RMWorld evaluates several counterfactual trials but retains only directions that are both credible under en-semble disagreement and complementary in update space. A task-gated log-determinant objective supplies this credibility-diversity tradeoff, while conflict projection and fixed-batch validation limit harmful auxiliary updates. The analysis mir-rors the two levels rather than forcing them under one claim: a posterior task-risk identity justifies channel acquisition, submodularity supports greedy branch selection, and a scoped first-order result characterizes projection. These mechanisms close the loop from task demand to channel evidence, from calibrated rate predictions to counterfactual labels, and from selected labels to the deployed controller. The central insight is that an imperfect radio WM should be improved and trusted according to the same downstream task geometry. The contributions are fourfold. 1) We formulate imperfect-radio-WM learning as two cou-pled evidence-allocation problems: which channel link should calibrate the radio WM and which counterfactual trial should update the controller. The formulation makes downstream task risk, rather than global map error, the common design currency. 2) We derive an acquisition score equal to the exact one-label reduction in task-integrated posterior rate vari-ance under a linear-Gaussian residual and local rate linearization. The derivation exposes how task geometry, rate sensitivity, and residual covariance jointly determine label value. 3) We develop a policy-level selector whose task-gated log-determinant objective is monotone submodular, prove its cardinality-constrained greedy guarantee, and state a deliberately scoped first-order result for the unprecon-ditioned projected direction. A fixed-batch line search handles the finite-step case left outside that result. 4) We provide a reproducible evidence chain across 100 paired 3GPP formula trials, 30 paired severe-load Deep-MIMO trials, 30 load-boundary probes, and a paired neural-feature study. RMWorld attains 0.949 bit/s/Hz task-weighted RMSE in the formula study and reduces severe-load median backlog by 0.967 versus Ensemble 3
+
+UCB, while the audits expose unresolved decision end-points and the 37.5% rollout overhead. II. R ELATED WORK 
+
+A. Radio World Models for UAV Communication Control 
+
+UAV-assisted communication couples trajectory planning, user association, and resource allocation through a spatially heterogeneous channel [1], [2]. Reinforcement learning ad-dresses repeated movement and interference decisions that resist direct optimization [3], while simultaneous navigation and radio mapping makes channel acquisition part of the motion policy [4]. Model-based policy search reduces physical interaction through probabilistic dynamics, ensembles, and short-horizon rollouts [5]–[7]. These methods establish the value of learning an environment model, but their control guarantee remains conditional on where that model is accurate. Radio maps and channel knowledge maps (CKMs) provide the communication-specific representation by encoding location-dependent propagation structure [8]–[10]. Neural estimators reconstruct dense maps from geometry or sparse observations, including RadioUNet, completion autoencoders, and diffusion-based RadioDiff [11]–[13]. Active UAV surveying further chooses trajectories that reduce mapping uncertainty [14], and environment CKMs have been consumed by joint UAV trajectory and communication decisions [15]. This literature makes radio environments learnable and actionable, yet it usually optimizes reconstruction, coverage, survey efficiency, or control with a given map rather than the downstream value of each newly acquired link. 
+
+B. Task-Aware Acquisition and Multi-Trial Learning 
+
+Ensembles provide competitive epistemic signals for con-servative prediction and model-based control [16], [17], which motivates variance and optimistic-confidence baselines. How-ever, pointwise variance describes uncertainty at a candi-date rather than the task-risk reduction caused by observing it, while task weighting alone can repeatedly select corre-lated links. Log-determinant experimental design addresses redundancy by rewarding complementary directions [18], and cardinality-constrained greedy maximization has the classical approximation guarantee for normalized monotone submodu-lar objectives [19]. RMWorld uses these principles selectively rather than conflating them: channel acquisition is an inte-grated A-optimal variance reduction from a rank-one posterior update, whereas policy-trial selection uses a task-gated log-determinant objective. Counterfactual model rollouts can ex-pose several plausible updates from one nominal state [6], [16], but optimistic return alone is brittle under radio-WM bias and diversity alone can preserve reliably poor trials. The proposed selector therefore gates predicted improvement by ensemble disagreement and represents each trial by the gradient of the update it would actually induce. Conflict projection follows the broader principle of protecting a nominal objective from competing gradients, while fixed-batch validation is related to trust-region control of finite updates [20], [21]. Unlike prior work that optimizes radio-map acquisition or multi-trial policy −5 0 5  
+
+> Horizontal
+> −4 −2 024
+> Vertical
+> (a)
+> Warm Ensemble Variance
+> −5 05
+> Horizontal
+> −4 −2 024
+> (b)
+> Warm RMWorld
+> 0.55 0.60 0.65 0.70 0.75 0.80
+> Pointwise std.
+> 2.72 2.74 2.76 2.78 2.80 2.82
+> Integrated VOI
+> Fig. 3. Query allocation on a representative frozen 3GPP trial. Panel (a) shows that ensemble variance follows locally uncertain links. Panel (b) shows that RMWorld values how one label reduces integrated rate uncertainty over the task distribution and updates its covariance after each selection. Both methods receive four warm-start labels and the same total budget of 32 labels.
+
+search in isolation, RMWorld connects them through down-stream task geometry and explicitly separates the posterior guarantees from realized error under model misspecification. III. S YSTEM MODEL AND PROBLEM FORMULATION 
+
+A. Multi-UAV Communication Task 
+
+Consider N UAVs serving U ground users over a planar region X . UAV i has position pti ∈ X at decision step t, and user u has position qu and remaining traffic Qtu. A shared policy πθ maps UAV positions, user locations, remaining demands, and geometric context to movement actions. Let 
+
+R⋆iu (pti) denote the spectral efficiency under the unknown channel and let atiu ∈ { 0, 1} denote the scheduler assignment. The queue evolves according to 
+
+Qt+1  
+
+> u
+
+=
+
+"
+
+Qtu − τ
+
+> N
+
+X
+
+> i=1
+
+atiu R⋆iu (pti)
+
+#
+
+> +
+
+, (1) where τ absorbs the resource-block duration and bandwidth normalization. The control endpoint is the normalized cumu-lative backlog area 
+
+L(θ; R⋆) = 1
+
+T P 
+
+> u
+
+Q0
+
+> uT
+
+X
+
+> t=1
+> U
+
+X
+
+> u=1
+
+Qtu, (2) which penalizes both unfinished traffic and late service. The policy is trained without dense access to R⋆. Instead, an ensemble of radio WMs { bR(m)}Mm=1 supplies differen-tiable rollout rates. High-fidelity access reveals R⋆iu (p) only for queried links, which may correspond to measurement, a detailed simulator, or held-out ray tracing. The budget is separated into link labels for radio-WM calibration and audited counterfactuals for policy training. This separation is essential because a branch can expose many links while only a small subset can be labeled. 
+
+B. Formula Radio World Model and Task Error 
+
+The primary evidence uses the UMa-AV model in 3GPP TR 36.777 [22]. For aerial height h in meters, carrier fre-quency fc in GHz, and two- and three-dimensional distances 
+
+d and d3D in meters, define 
+
+d1(h) = max {460 log 10 h − 700 , 18 },p1(h) = max {4300 log 10 h − 3800 , 1}, (3) 4
+
+and 
+
+PL(d, h ) = 
+
+
+
+1, d ≤ d1(h),d1(h)
+
+d + e−d/p 1(h)
+
+
+
+1 − d1(h)
+
+d
+
+
+
+, d > d 1(h).
+
+(4) The LOS and NLOS path losses are 
+
+PL L = 28 + 22 log 10 d3D + 20 log 10 fc,
+
+fPL N = −17 .5 + (46 − 7 log 10 h) log 10 d3D 
+
++ 20 log 10 
+
+ 40 πf c
+
+3
+
+
+
+,
+
+PL N = max {PL L, fPL N}. (5) For state s ∈ { L, N}, γs = 10 (Ptx −PL s−Pn)/10 and Rs =log 2(1 + γs). The expected rate is PLRL + (1 − PL)RN. The realized formula side uses the correct physical parameters and hidden spatially correlated, state-specific shadow fields. Each estimated formula member uses biased height, frequency, LOS prior, and path-loss offsets, followed by a sparse user-specific log-rate residual. More explicitly, let ϑ⋆ collect the correct height, carrier, and standardized LOS/NLOS parameters, and let Zs,u (x) be a zero-mean, unit-variance spatial field that is hidden from the learner. The realized rate oracle is 
+
+Γ⋆s,u,x = 10 {Ptx −PL s(x;ϑ⋆)−σsZs,u (x)−Pn}/10 ,R⋆u,x = X
+
+> s∈{ L,N}
+
+ps(x; ϑ⋆) log 2(1 + Γ ⋆s,u,x ), (6) where pN = 1 − pL. Formula radio-WM member m instead predicts 
+
+bR(m) 
+
+> u,x
+
+(D) = R3GPP (x; ϑm) exp 
+
+
+
+ϕT 
+
+> x
+
+bβm,u (D)
+
+
+
+, (7) where ϑm contains biased physical parameters, ϕx is a nor-malized radial-basis design, and bβm,u is fit only from queried rates. Thus the radio-WM error used throughout the primary evidence is literally 
+
+eu,x (D) = M −1
+
+> M
+
+X
+
+> m=1
+
+bR(m) 
+
+> u,x
+
+(D) − R⋆u,x . (8) This construction is deliberately harder than estimating one scalar path-loss exponent. It combines parametric mismatch, nonlinear propagation through SNR, a spatially structured omitted field, and sparse correction, while retaining a trans-parent ground-truth formula on both sides. It therefore isolates whether evidence allocation can repair a consequential formula error without attributing the result to an opaque learned oracle. For query set D, the formula radio-WM error is the differ-ence between ensemble-mean predicted and realized formula rates at the same geometry. Let cu denote user u’s demand, 
+
+du(x) the distance from x to that user, and dcor ,u(x) the distance to the nearer line segment joining an initial UAV location to that user. The frozen task distribution is 
+
+wu,x ∝ cu
+
+
+
+0.12 + 0 .48 exp 
+
+
+
+− d2
+
+> u
+
+(x)2(2 .1) 2
+
+
+
++ 0 .40 exp − d2cor ,u(x)2(0 .85) 2
+
+! 
+
+. (9) The nonzero background term prevents the learner from declaring the rest of the map irrelevant; the neighborhood and corridor terms encode where association and service are likely to consume rates. The primary channel endpoint is 
+
+Ew(D) = 
+
+P 
+
+> u,x
+
+wu,x 
+
+ Ru,x (D) − R⋆u,x 
+
+2
+
+P 
+
+> u,x
+
+wu,x 
+
+!1/2
+
+. (10) Global RMSE assigns all evaluated links equal weight. Asso-ciation regret instead compares the realized utility of the user selected by R with that of the user selected by R⋆. These endpoints separate model fit, task-local fit, and a discontinuous downstream decision. 
+
+C. Two-Level Budgeted Learning Problem 
+
+At training episode e, the policy generates a nominal branch and B counterfactual branches by perturbing the common action-noise realization. The ensemble predicts each branch loss, and the learner retains at most K branches for local supervision. Within the high-fidelity audit, the learner can request only a limited set of link labels. The channel decision chooses links that reduce Ew, while the policy decision chooses branches that improve the nominal policy without redundant gradients. The overall problem can be written as 
+
+min  
+
+> θ,{D e,S e}
+
+E[L(θ; R⋆)] + μ E[Ew(DE )] s.t. |D E | ≤ Q, |Se| ≤ K, (11) where Q is the total link-label budget and μ states the calibration role. RMWorld solves the two discrete allocations with different objectives and guarantees. It does not claim that optimizing the local surrogates globally solves (11). IV. RMW ORLD : T ASK -A WARE RADIO -WM AND 
+
+MULTI -T RIAL LEARNING 
+
+A. Task-Integrated Channel Evidence 
+
+For user u, let βu be the coefficient of a log-rate residual with regularized posterior covariance Σu ⪰ 0. Candidate query q = ( uq , x q ) has residual feature xq and observation variance σ2 
+
+> q
+
+. The rate derivative at evaluation link (u, x ) is 
+
+au,x = ∇βu
+
+bRu,x , which equals bRu,x ϕx for the multiplicative residual used in the formula model. With joint task mass 
+
+W = P 
+
+> v,x
+
+wv,x , RMWorld forms one block per user: 
+
+Hu = 1
+
+W
+
+X
+
+> x
+
+wu,x au,x aT
+
+> u,x
+
+. (12) The value assigned to query q is 
+
+∆( q | D ) = xT 
+
+> q
+
+Σuq Huq Σuq xq
+
+σ2 
+
+> q
+
++ xT 
+
+> q
+
+Σuq xq
+
+. (13) The common denominator W is essential: it preserves relative demand when links from different users compete for one label budget. The numerator couples current coefficient uncertainty, joint task sensitivity, and the candidate feature. The denomina-tor discounts observations already explained by the posterior design. After each selection, RMWorld updates the affected 5
+
+covariance block before rescoring all candidates, making a batch responsive to information already acquired. 
+
+Theorem 1 (Exact local variance reduction) . Assume inde-pendent user residuals yq = xT 
+
+> q
+
+βuq + ηq with ηq ∼ N (0 , σ 2 
+
+> q
+
+),covariances Σu ⪰ 0, and local rate linearizations represented by Hu ⪰ 0. If V (D) = P 
+
+> u
+
+tr( HuΣu), then one observation at q reduces V by exactly (13) , and ∆( q | D ) ≥ 0.Proof. The Gaussian rank-one covariance update is 
+
+Σ+ 
+
+> uq
+
+= Σuq − Σuq xq xT 
+
+> q
+
+Σuq
+
+σ2 
+
+> q
+
++ xT 
+
+> q
+
+Σuq xq
+
+. (14) Only block uq changes. Substituting (14) into V (D) − V (D ∪ {q}) and applying trace cyclicity yields (13). Its denominator is positive and its numerator is nonnegative because Huq and 
+
+Σuq are positive semidefinite. The next result connects this algebraic quantity to the experimental endpoint rather than leaving P 
+
+> u
+
+tr( HuΣu) as an abstract design criterion. 
+
+Proposition 1 (Posterior task-risk equivalence) . Let 
+
+ρw(u, x ) = wu,x /W , let δR u,x = aT
+
+> u,x
+
+(βu − bβu), and assume βu | D has mean bβu and covariance Σu. Then 
+
+E(u,x )∼ρw EδR 2 
+
+> u,x
+
+| D  = X
+
+> u
+
+tr( HuΣu) = V (D). (15) 
+
+Consequently, ∆( q | D ) is the exact reduction in posterior expected squared task-local rate error under the stated lin-earization. Proof. Conditioned on D, the zero-mean coefficient error gives E[δR 2 
+
+> u,x
+
+| D ] = aT
+
+> u,x
+
+Σuau,x . Averaging with the joint distribution ρw, applying trace cyclicity, and substituting (12) yields (15). The final statement follows from Theorem 1. Proposition 1 explains why the acquisition criterion is aligned with the squared quantity inside (10); the reported RMSE is its square root evaluated against the realized formula oracle. It also separates RMWorld from three plausible short-cuts. Pointwise variance estimates uncertainty at the candidate itself, whereas (13) asks how that candidate changes risk over all task links. Multiplying pointwise variance by wq recognizes an important location but ignores cross-location covariance. Determinant design rewards spanning features but need not prioritize directions that have large mass in the joint task Gram blocks. RMWorld contains all three ingredients—candidate uncertainty, task sensitivity, and posterior coupling—in one reduction identity. Theorems 1 and Proposition 1 are one-query statements for a linear-Gaussian residual and a local rate approximation. Within one query batch, RMWorld freezes {Hu} at the pre-batch linearization and applies the identity repeatedly while updating the affected covariance block after every label. After residual refitting, it rebuilds the rate derivatives and Gram blocks for the next batch. We neither assert global submodular-ity nor attach an approximation ratio to this greedy A-optimal batch. This scope distinction is important because the policy-level log-determinant objective below has a different structure and supports a different guarantee. 
+
+B. Task-Gated Multi-Trial Selection 
+
+Let Lb,m be the cumulative backlog predicted for coun-terfactual branch b by ensemble member m, with b = 0
+
+denoting the nominal branch. The predicted improvement is 
+
+db,m = L0,m − Lb,m . RMWorld uses a normalized pessimistic estimate 
+
+db = [mean m(db,m ) − β std m(db,m )] +
+
+max {median j | mean m(dj,m )|, ϵ d} ,ub = min {db, 1}. (16) A branch contributes task utility only when its predicted improvement remains positive after ensemble disagreement is charged. This gate avoids spending a selection slot on a direction that is diverse but not credibly useful. The branch descriptor is aligned with the update that train-ing will actually apply. Let q+ 
+
+> b
+
+and q− 
+
+> b
+
+be soft probabilities for positive and negative branch labels, and let ℓ+ 
+
+> b
+
+and ℓ−
+
+> b
+
+be the corresponding local imitation and rejection losses. The induced descriptor and its reliability-weighted normalization are 
+
+gb = ∇θ
+
+ q+ 
+
+> b
+
+w+ℓ+ 
+
+> b
+
++ q− 
+
+> b
+
+w−ℓ−
+
+> b
+
+ ,
+
+zb = √rb
+
+gb
+
+max {∥ gb∥2, ϵ g } , (17) where rb ∈ [rmin , 1] summarizes the magnitude and sign consistency of ensemble comparisons with the nominal branch. For selected set S, RMWorld maximizes 
+
+F (S) = log det I + X
+
+> b∈S
+
+zbzT
+
+> b
+
+!
+
++ λ X
+
+> b∈S
+
+ub, |S| ≤ K. 
+
+(18) The first term rewards complementary update directions, while the second preserves task credibility. Sylvester’s identity per-mits evaluation through the smaller selected-branch Gram matrix. 
+
+Theorem 2 (Greedy branch guarantee) . Assume that 
+
+{zb, u b}Bb=1 are fixed within one selection step, ub ≥ 0,and F (∅) = 0. Then (18) is normalized, monotone, and submodular. The cardinality-K greedy set Sg satisfies 
+
+F (Sg) ≥ (1 − e−1) max  
+
+> |S|≤ K
+
+F (S). (19) 
+
+Proof. For AS = I + P 
+
+> j∈S
+
+zj zT 
+
+> j
+
+, the matrix determinant lemma gives marginal information gain 
+
+∆info  
+
+> b
+
+(S) = log  1 + zT 
+
+> b
+
+A−1 
+
+> S
+
+zb
+
+ ≥ 0. (20) If S ⊆ T , then AS ⪯ AT and A−1 
+
+> S
+
+⪰ A−1 
+
+> T
+
+, which establishes diminishing returns. The task term is nonnegative and modular, so it preserves normalization, monotonicity, and submodularity. The result in (19) follows from cardinality-constrained greedy maximization [19]. 
+
+C. Conflict Projection and Fixed-Batch Validation 
+
+Let g0 = ∇θ L0 be the nominal gradient and gt the aggregate selected-branch gradient. Motivated by gradient-surgery methods for competing objectives [20], RMWorld 6
+
+removes only the component of gt that conflicts with the nominal direction: 
+
+egt = gt − min {⟨ g0, gt⟩, 0}
+
+max {∥ g0∥22, ϵ g } g0,
+
+d(α) = g0
+
+max {∥ g0∥2, ϵ g } + α egt
+
+max {∥ egt∥2, ϵ g } ,
+
+d(α) = d(α)max {∥ d(α)∥2, 1} . (21) This operation concerns optimization interference, not geomet-ric collision avoidance. It cannot certify physical safety, and the experiments report collision diagnostics separately. 
+
+Proposition 2 (First-order non-interference) . Suppose 
+
+∥g0∥22 ≥ ϵg . Then ⟨g0, egt⟩ ≥ 0. Consequently, 
+
+⟨g0, d(α)⟩ ≥ ∥g0∥2/(1 + α) for α ≥ 0. If L0 is L-smooth, the unpreconditioned step θ+ = θ − ηd(α) decreases 
+
+L0 whenever 
+
+0 < η < 2∥g0∥2
+
+L(1 + α) . (22) 
+
+Proof. Under the stated norm condition, the numerical clamp in (21) is inactive. When ⟨g0, gt⟩ < 0, substitution makes the projected inner product zero; otherwise the projection leaves 
+
+gt unchanged. The triangle inequality gives ∥d(α)∥2 ≤ 1 + α,which yields the alignment lower bound after clipping. Ap-plying L-smoothness to −ηd(α) gives 
+
+L0(θ+) ≤ L0(θ) − η∥g0∥2
+
+1 + α + Lη 2
+
+2 . (23) The right-hand side is strictly smaller under (22). The proposition applies before AdamW preconditioning and excludes the clamp-active near-zero-gradient regime, so RMWorld does not transfer this descent bound to every implemented step. Instead, it evaluates α in the finite set A =
+
+{0, 0.25 α0, 0.5α0, α 0} on a fixed common-random-number radio-WM batch. It returns zero when the best measured gain is below a margin and otherwise returns the minimizing candidate. The chosen update therefore cannot exceed the nominal update’s loss on that reused validation batch. This is a finite-batch dominance statement, not a guarantee for the unknown physical channel. For B branches, M models, rollout horizon Hr , and descrip-tor dimension D, pool construction costs O(BM H r ) model steps and descriptor construction uses B backward passes. Greedy policy selection costs O(KBD ) inner-product work with rank-one marginal updates. Channel acquisition evaluates candidate quadratic forms and updates a small residual covari-ance after each chosen link. These operations occur during offline training; deployment executes the same policy-forward structure as the single-trial reference. V. E XPERIMENTAL EVALUATION 
+
+A. Evidence Sources and Protocols 
+
+The evaluation is organized by claim rather than by dataset prestige. The 3GPP study isolates the causal channel-calibration mechanism because both the true and estimated 
+
+Algorithm 1 Task-aware radio-WM and multi-trial RMWorld episode. 
+
+Require: Policy πθ , radio-WM ensemble, branch budget K,link budget Qe. 
+
+> 1:
+
+Roll out the nominal branch and B counterfactual branches with common random numbers.  
+
+> 2:
+
+Compute ub, rb, and update-aligned descriptors zb. 
+
+> 3:
+
+Greedily select Se by the marginal gain of (18).  
+
+> 4:
+
+if link calibration is enabled then  
+
+> 5:
+
+Expose candidate links from the audited counterfactual and build {Hu}. 
+
+> 6:
+
+for q = 1 to Qe do  
+
+> 7:
+
+Maximize (13), obtain the rate, and apply (14).  
+
+> 8:
+
+end for  
+
+> 9:
+
+Refit the residual radio WM and relabel selected branches.  
+
+> 10:
+
+end if  
+
+> 11:
+
+Form (21) and choose α on the fixed validation batch.  
+
+> 12:
+
+Update θ and retain the best radio-WM checkpoint.                        
+
+> TABLE I EXPERIMENTAL PROTOCOLS AND INFERENTIAL ROLES . T HE 3GPP
+> BLOCKS USE TR 36.777 UM A-AV FORMULA CHANNELS ;THE CONTROL BLOCKS USE THE HELD -OUT DEEP MIMO O1 SLICE . A LL SCENES CONTAIN TWO UAV S AND FOUR USERS .Evidence block Paired nHF budget Endpoint / role
+> 3GPP formula radio WM 100 32 links wRMSE / primary mechanism DeepMIMO control 30; 10/load 6 audits Backlog / external + boundary Neural-feature radio WM 30 32 links wRMSE / sensitivity Long-horizon stress 30 12 updates Backlog / scope boundary
+
+formulas are explicit. The DeepMIMO study tests policy-level end-to-end control on held-out ray-tracing rate maps outside the formula family [23]. To avoid attributing a compound change to either level, the former holds the residual estimator fixed and varies the link selector, whereas the latter freezes the high-fidelity audit machinery and varies the branch selector. Algorithm 1 shows their composable loop; no DeepMIMO comparison is presented as a test of the channel-acquisition module. The neural-feature study changes the residual repre-sentation while preserving paired channel and task instances. A long-horizon stress test is retained as boundary evidence because longer training does not separate the methods reliably. The 3GPP experiment uses an 81 ×81 evaluation grid, which yields 26,244 user-location links, and a 21 × 21 query lattice per user, which yields 1,764 candidates. Every method receives four warm-start labels and 28 adaptive labels. The physical configuration uses a 60 m aerial height, 25 m base-station height, 3.5 GHz carrier, 30 dBm transmit power, 20 MHz bandwidth, and 7 dB noise figure. Three formula members start from different biased physical parameters and learn user-specific residual heads. Paired methods share the realized channel fields, task weights, formula ensemble, and query budget. The DeepMIMO benchmark uses the O1 outdoor map at a held-out 42.4 m aerial slice. Four user positions, two UAVs, and two circular obstacles define each scene. Initial tasks are sampled as (2+1 .5ξ)×8 with ξ ∼ U [0 , 1] , placing the 30-seed main comparison in the severe-load regime selected before the 7
+
+formal seeds. Each seed uses six training episodes of 35 steps and a deterministic evaluation horizon of 160 steps. Multi-trial methods share a pool of five branches, retain two, use an ensemble of three radio WMs, and receive one high-fidelity audit per episode. A same-protocol boundary scan changes only the offered-load multiplier to 4, 6, or 10 and uses 10 paired seeds per load; these 30 additional runs are exploratory and are not added to the main Holm family. 
+
+B. Baselines, Endpoints, and Statistics 
+
+No published method jointly exposes the same link-label budget, counterfactual-trial budget, and imperfect-radio-WM interface, so labeling one imported algorithm as a direct end-to-end SOTA comparator would be misleading. We instead construct a category-complete state-of-the-art (SOTA) roster from the strongest contemporary principles in active radio sur-veying, Bayesian experimental design, ensemble model-based control, optimistic exploration, and gradient-space diversity. Each selector is reimplemented behind the same candidate in-terface, which makes the experiment a controlled comparison of evidence-selection principles rather than software stacks. The baselines are organized as follows.  
+
+> •
+
+Channel-calibration selectors: Random is the assumption-light floor. Spatial D-opt instantiates determinant-based sensor placement [18]; Ensemble Variance instantiates conservative epistemic acquisition [17]; Task-Weighted Variance adds the task distribution to the uncertainty logic used in active radio surveying [10], [14]; and Gradient D-opt applies determinant design to rate-gradient features [18]. Together they span geometry, pointwise uncertainty, task-local uncertainty, and gradient diversity, which are the leading SOTA acquisition principles relevant to a sparse radio WM. RMWorld differs only in valuing the integrated posterior risk reduction caused by the label.  
+
+> •
+
+Multi-trial control selectors: Single-Trial radio WM represents classical one-rollout model-based policy learn-ing [5], [7]. Random Multi-Trial tests the gain from a larger stochastic candidate pool; Action Entropy priori-tizes behavioral spread; Ensemble UCB combines pre-dicted return with epistemic optimism, following ensem-ble model-based control [6], [16], [17]; and Gradient Information selects diverse update directions using the gradient-space principle underlying experimental design and conflict-aware learning [18], [20]. This group cov-ers the strongest plausible alternatives based on trial count, action diversity, optimism, and update diversity. RMWorld adds task credibility to diversity rather than introducing a different controller backbone.  
+
+> •
+
+Fairness and inferential scope: All multi-trial methods share the candidate pool, common random numbers, local positive/negative update, conflict projection, high-fidelity budget, and checkpoint rule. They differ in branch selection, except that RMWorld also invokes the finite radio-WM line search whose extra calls are reported explicitly. Single-Trial radio WM is an unequal-compute, low-cost reference and is not treated as an equal-budget                                   
+
+> TABLE II CONTROLLED BASELINE OPERATORS . E VERY SELECTOR USES THE SHARED CANDIDATE POOL AND THE BUDGET OF ITS EVIDENCE LEVEL ;
+> ONLY THE FROZEN RANKING AND BATCH -CONSTRUCTION RULES CHANGE .
+> Level Selector Frozen ranking operator Batch rule Channel Random Uniform sampling Without replacement Spatial D-opt Spatial-feature log-det Greedy Ensemble Variance Predictive standard deviation Static top-B
+> Task-Weighted Variance Task weight ×standard deviation Static top-B
+> Gradient D-opt Rate-gradient log-det Greedy
+> RMWorld Integrated posterior-risk reduction Sequential conditioning
+> Policy Single Trial Nominal branch One branch Random Multi-Trial Uniform sampling Fixed-Ksubset Action Entropy Action-descriptor log-det Greedy Ensemble UCB Mean gain +disagreement Static top-K
+> Gradient Information Reliability-weighted gradient log-det Greedy
+> RMWorld Task-gated gradient log-det Greedy +batch validation
+
+selector. Primary conclusions therefore emphasize pre-specified paired comparisons with the external multi-trial selectors and retain unresolved comparisons instead of declaring blanket SOTA superiority. Table II exposes the controlled operator changed by each comparison, without assigning qualitative capabilities to a method. On the channel side, Ensemble Variance ranks can-didates by predictive standard deviation, Task-Weighted Vari-ance multiplies that score by the frozen task weight, and the two D-opt variants greedily maximize spatial- or rate-feature log-determinants. RMWorld instead evaluates how a candidate changes integrated posterior risk after conditioning, so the value-of-information score automatically discounts evidence made redundant by earlier queries. On the policy side, Action Entropy applies the same corrected identity-regularized log-determinant operator to action descriptors, Ensemble UCB ranks mean predicted improvement plus ensemble disagree-ment, and Gradient Information applies log-determinant design to reliability-weighted update gradients. RMWorld changes this last operator by adding the nonnegative task lower-confidence term in (18). Hyperparameters, secondary tie-breaking by candidate index, and the candidate order were frozen before formal seeds, while common random numbers ensure that a selector cannot benefit from an easier roll-out realization. The comparison therefore isolates alternative evidence-selection rules under shared models, budgets, and optimizers. We report medians and interquartile ranges because sev-eral endpoints are skewed. Paired differences use percentile bootstrap confidence intervals, exact win/tie/loss counts, and two-sided Wilcoxon signed-rank tests. Holm correction is applied over each prespecified family of baseline compar-isons. A comparison is described as supported only when the adjusted test rejects and the paired direction favors RM-World. Association regret, collision incidence, label yield, and representative trajectories remain secondary diagnostics unless a separate corrected test is reported. Across all tables, light-blue rows identify the primary evidence block, oracle or proposed configuration, frozen operating point, or decisive RMWorld-family contrast; boldface marks the key value, best value, or statistically resolved effect, and underlining marks a descriptive runner-up. These visual cues guide reading but do not replace confidence intervals or multiplicity-corrected tests. 8           
+
+> TABLE III PRIMARY FORMULA -RADIO -WM TEMPLATES BEFORE TRIAL -WISE JITTER . O FFSETS bP,bL,AND bNACT ON THE LOS LOGIT AND
+> LOS/NLOS PATH LOSS .
+
+Member h (m) fc (GHz) bP bL (dB) bN (dB) 
+
+True formula 60 3.50 0 0 0Radio WM 1 42 3.20 -0.65 1.50 3.00 Radio WM 2 52 3.50 -0.25 0.50 1.00 Radio WM 3 72 3.80 0.20 -0.50 -1.00 
+
+C. Paired Estimands and Leakage Controls 
+
+The experimental unit is an entire frozen task and channel realization, not an individual grid link, time step, or UAV. In the 3GPP block, one trial fixes three independent random streams: the spatial shadow realization, the initial formula ensemble, and the task distribution. All selectors receive exactly those objects, the same four user-balanced warm links, the same candidate lattice, and the same 28 remaining labels. A fresh residual estimator is constructed for every method, preventing calibrated coefficients or queried links from leaking across a paired comparison. The 81 × 81 evaluation grid is never used as training data: only selected points on the nested 
+
+21 ×21 candidate lattice reveal the realized rate. Evaluation on all 26,244 user-location pairs occurs after fitting and therefore measures spatial generalization from 32 labels rather than interpolation over a fully observed map. The realized 3GPP oracle uses smooth state-specific shadow fields produced from independent latent Gaussian fields and scaled by the standardized LOS and NLOS shadow terms. The estimated members do not observe those fields. Their fixed bias templates are listed in Table III; small trial-wise jitter is applied to each template before selection begins. The templates straddle the true 60 m and 3.5 GHz configuration but do not include the hidden shadow realization. Each user-specific correction has an intercept plus a normalized 4 × 4 radial-basis design, uses unit residual observation variance in the acquisition covariance, and applies ridge penalties 1 (intercept) and 12 (other coefficients). Residual heads bootstrap only the queried log-rate ratios. The resampling indices are common across methods at every checkpoint, so their warm-start fits are identical and subsequent fitted differences originate from selected evidence rather than method-specific bootstrap noise. For DeepMIMO, paired seeds fix the rate map, UAV starts, user demands, obstacles, policy initialization, and common branch perturbations. The multi-trial selectors share candidate count, retained count, high-fidelity audits, and local update machinery; radio-WM rollout calls are recorded rather than assumed equal. This distinction matters because a link-query budget is a data constraint, while a rollout count is a computa-tional constraint. The low-cost Single-Trial radio WM violates the latter matching condition and is therefore labeled as a reference. The neural-feature study returns to exact link-budget matching and reuses the first 30 primary channel/task pairs, changing only the residual feature map and its representation seed. Table IV records the sign convention and statistical family before presenting results. Bootstrap resampling operates on                                                                        
+
+> TABLE IV FROZEN PAIRED ESTIMANDS AND INFERENTIAL SCOPE . F ORMULA IMPROVEMENTS ARE COMPARATOR MINUS RMW ORLD ;BACKLOG DIFFERENCES ARE RMW ORLD MINUS COMPARATOR .HIS THE HOLM FAMILY SIZE .Block nPaired estimand HRole
+> 3GPP formula 100 wRMSE gain 5Primary
+> DeepMIMO control 30; 10/load Backlog difference 5; – External / boundary Neural features 30 wRMSE gain 5Sensitivity Internal audit 30/row Backlog difference 10 Attribution Stress tests 30 Median [IQR] –Boundary TABLE V PRIMARY 3GPP FORMULA -RADIO -WM EVIDENCE OVER 100 PAIRED TRIALS AT 32 LABELS . T HE UPPER PANEL REPORTS MARGINAL ENDPOINTS ;THE LOWER PANEL REPORTS COMPARATOR -MINUS -RMW ORLD W RMSE EFFECTS . P OSITIVE EFFECTS AND RBC FAVOR RMW ORLD . T ESTS USE PAIRED WILCOXON SIGNED RANKS WITH PRATT ZEROS AND HOLM CORRECTION .
+> Method wRMSE [IQR] Regret [IQR] Time (ms) Random 1.094 [1.012,1.200] 0.086 [0.066,0.122] 37.3 Spatial D-opt 1.363 [1.204,1.569] 0.108 [0.077,0.159] 75.6 Ens.-Var 0.988 [0.940,1.050] 0.091 [0.067,0.122] 38.0 Task-Var 0.998 [0.923,1.050] 0.086 [0.064,0.111] 34.7
+> Grad. D-opt 0.984 [0.927,1.096] 0.108 [0.075,0.133] 76.0
+> RMWorld 0.949 [0.905,1.020] 0.085 [0.064,0.110] 342.8 RMWorld gain vs. Task-Var 4.9% 0.001 +308 .1
+
+Comparator Gain [95% CI] W/T/L pHolm RBC Random 0.123 [0.102,0.149] 96/0/4 < 0.001 0.977 Spatial D-opt 0.400 [0.338,0.453] 99/0/1 < 0.001 0.999 Ens.-Var 0.032 [0.019,0.041] 79/0/21 < 0.001 0.710 Task-Var 0.024 [0.015,0.035] 78/0/22 < 0.001 0.634 Grad. D-opt 0.042 [0.034,0.049] 82/0/18 < 0.001 0.867 
+
+paired trial differences, so its interval targets the median within-instance effect rather than the difference between two unpaired marginal medians. Win/tie/loss counts expose sign stability that a single central estimate can conceal, while rank-biserial correlation reports paired effect direction. A result is not promoted when a nominal test and bootstrap interval disagree, when multiplicity correction removes significance, or when the comparator receives a materially different compute budget. This decision rule is responsible for the deliberately narrower DeepMIMO claim in Sec. V-E. 
+
+D. Primary 3GPP Formula-Radio-WM Evidence 
+
+At the fixed 32-label budget, RMWorld attains a median task-weighted formula RMSE of 0.949 bit/s/Hz. Ensemble Variance, Task-Weighted Variance, and Gradient D-opt reach 
+
+0.988 , 0.998 , and 0.984 bit/s/Hz. The corresponding paired improvements are 0.032 , 0.024 , and 0.042 bit/s/Hz, and RM-World wins 79, 78, and 82 of 100 trials. Every comparison remains significant after Holm correction with pHolm < 0.001 .The primary claim is therefore consistent reduction of task-weighted formula error, not an order-of-magnitude effect. Spatial D-opt is the weakest selector despite covering the can-didate geometry broadly, and its 1.363 bit/s/Hz median shows that parameter-space volume and rate-domain task error can diverge sharply under nonlinear LOS/NLOS mixing. Pointwise Ensemble Variance is much stronger, which confirms that uncertainty matters, but it does not account for how a label changes integrated task error. Task-Weighted Variance narrows 910 20 30 
+
+Query budget 
+
+> 1.0 1.1 1.2 1.3
+> Weighted RMSE
+
+(a)   
+
+> 10 20 30
+
+Query budget 
+
+> 0.08 0.10
+> Assoc. regret
+
+(b)   
+
+> 0.0 0.2 0.4
+
+Paired RMSE gain 
+
+> Random Spatial Ens.-Var Task-Var Grad.
+> 96/100 99/100 79/100 78/100 82/100
+
+(c)   
+
+> 20 100 500
+
+Time (ms, log) 
+
+> 1.0 1.1 1.2 1.3
+> Final RMSE
+
+(d)  
+
+> 02
+
+Absolute error 
+
+> 0.00 0.25 0.50 0.75 1.00
+> CDF
+
+(e)      
+
+> Biased RMWorld Random Spatial D-opt Ens.-Var Task-Var Grad. D-opt RMWorld
+
+Fig. 4. Five-panel primary result from 100 paired standardized 3GPP TR 36.777 UMa-AV analytic simulations. The panels report (a) task-weighted RMSE versus budget, (b) association regret versus budget, (c) paired final effects with bootstrap intervals and win counts, (d) the final error-cost frontier, and (e) the spatial absolute-error distribution in the representative mechanism trial. Curves show medians, and highlighted bands are 95% bootstrap confidence intervals. All methods use 32 link labels including four warm-start labels. −5.0 −2.5 0.0 2.5 5.0 
+
+Horizontal coordinate 
+
+> −4 −2 024
+> Vertical coordinate
+
+(a)     
+
+> −5.0 −2.5 0.0 2.5 5.0
+
+Horizontal coordinate 
+
+> −4 −2 024
+
+(b) 
+
+> RMWorld queries (8)
+> −1 01
+> Biased signed error
+> −1 01
+> Calibrated signed error
+
+Fig. 5. Spatial calibration mechanism in the median-RMWorld trial for the user with the largest task-weighted gain. Panel (a) shows the biased signed formula error, and panel (b) overlays RMWorld queries on the calibrated signed error. This standardized analytic realization explains the aggregate result but does not estimate a population effect. 
+
+the gap, yet RMWorld still wins 78 paired trials because covariance reduction distinguishes an informative feature from a merely important location. Gradient D-opt wins on some instances but loses to RMWorld in 82 trials because its determinant objective does not directly minimize integrated posterior rate variance. These contrasts connect the aggregate gain to the value-of-information mechanism rather than to any one spatial sampling heuristic. The association endpoint provides a cautious decision-level check. RMWorld has the lowest descriptive median regret, 
+
+0.085 bit/s/Hz, compared with 0.086 for Task-Weighted Vari-ance and Random and 0.108 for Gradient D-opt. Intermediate regret is nonmonotone in Fig. 4, which is expected because user association changes discontinuously at an argmax bound-ary. We therefore do not infer that every RMSE improvement must reduce regret or claim a corrected significance result for this endpoint. The role of this metric is to confirm that the primary calibration gain is not obviously purchased by worse association. Fig. 5 traces the aggregate improvement to a spatial mech-anism. The initial formula residual is structured rather than independent, so nearby links share both bias and posterior information. The task distribution concentrates on service corridors and user neighborhoods instead of the full grid. RMWorld selects links whose residual features couple those regions to large rate derivatives, then shifts the task-local 0.0 0.2 0.4 
+
+> Paired wRMSE gain
+> Static vs. sequential Integrated vs. local Task integration
+> 60/40 83/17 98/2
+
+(a)   
+
+> 10 20 30
+> Query budget
+> 0.2 0.4 0.6 0.8 1.0
+> Fraction of warm-start value
+> Increases: 0/280 surrogate 117/280 realized
+
+(b) 
+
+> Posterior task risk Realized wRMSE
+
+Fig. 6. Attribution and theory–endpoint boundary. Panel (a) reports paired 32-label wRMSE effects with 95% bootstrap intervals and win/loss counts. Panel (b) normalizes the posterior surrogate and realized wRMSE to each trial’s warm-start value over 40 instrumented trials. TABLE VI CONTROLLED 3GPP ATTRIBUTION AND THEORY –ENDPOINT AUDIT .POSITIVE GAIN FAVORS THE FIRST NAMED METHOD . H OLM CORRECTION COVERS THREE CONTRASTS .
+
+Arm Task scope Seq. wRMSE Task-Var Local No 0.998 Seq. Task-Var Local Yes 0.983 A-opt ( H = I) None Yes 1.306 
+
+RMWorld Integrated Yes 0.949 
+
+Contrast Gain [95% CI] W/T/L pH
+
+RMWorld vs. A-opt 0.352 [0.253,0.413] 98/0/2 < 0.001 
+
+RMWorld vs. Seq. Task-Var 0.045 [0.037,0.052] 83/0/17 < 0.001 
+
+Static vs. sequential Task-Var 0.016 [0.0001,0.030] 60/0/40 0.021 Quantity Final reduction Increases Final worse 
+
+Posterior surrogate 75.9% 0/280 –Realized wRMSE 5.0% 117/280 9/40 
+
+error distribution leftward. This evidence is consistent with the variance-reduction derivation, although a single representative map is not used as a statistical claim. The same mechanism carries a clear offline price: in the deterministic rerun, RM-World takes a median 342 .8 ms per trial, compared with 
+
+34 .7 ms for Task-Weighted Variance and 76 .0 ms for Gradient D-opt. The ratios are approximately 9.9× and 4.5×, respec-tively, because integrated quadratic forms are reevaluated for all candidate links after each sequential covariance update. This computation changes training-time evidence allocation but does not add a channel-acquisition module to deployment inference. 10 4 6 8 10     
+
+> Off ered-load scale
+> 70 80 90 100 110 120
+> Final backlog area
+> (a)
+> Single-WM Ens. UCB Grad. Info RMWorld
+> 46810
+> Off ered-load scale
+> −2 −1 01
+> RMWorld − Ens. UCB backlog
+> n=10 n=10 n=30 n=10
+> (b)
+> Fig. 7. Same-protocol DeepMIMO load boundary. Panel (a) reports marginal median backlog with interquartile bands; panel (b) reports the within-seed median RMWorld-minus-Ensemble-UCB effect and 95% bootstrap interval. Negative effects favor RMWorld. Load 8 is the prespecified 30-seed com-parison; loads 4, 6, and 10 are 10-seed exploratory probes outside the Holm family.
+
+The attribution audit separates task integration from within-batch re-scoring under the same paired instances. Replacing the identity Gram matrix by the joint integrated task Gram yields a median 0.352 bit/s/Hz gain and wins 98 of 100 trials. Against sequential pointwise Task-Var, integration contributes 
+
+0.045 and wins 83 trials. The sequential-only contrast also illustrates why the paired estimand matters: its marginal me-dians are 0.998 (static) and 0.983 (sequential), yet within-instance differences favor static Task-Var in 60 trials, with a paired median 0.016 and pHolm = 0 .021 . Thus task integration produces the robust measured gap; sequential re-scoring alone is instance-dependent and does not explain RMWorld’s advan-tage. Fig. 6(b) also prevents the posterior identity from being mistaken for a realized-error guarantee. Over 280 acquisition transitions, the instrumented P 
+
+> u
+
+tr( HuΣu) trajectory never increases and falls by a median 75 .9% , whereas realized wRMSE falls by only 5.0% at the endpoint, increases in 117 transitions, and finishes above its warm-start value in 9 of 40 trials. This gap is compatible with Theorem 1: the theorem controls posterior variance inside the local residual model, not omitted shadow structure, refit-induced derivative changes, or realized squared bias. 
+
+E. End-to-End DeepMIMO Control 
+
+RMWorld has the lowest descriptive median backlog, 
+
+110 .896 , in the high-load control task. The strongest sup-ported equal-budget external comparison is Ensemble UCB: the paired median difference is −0.967 , its bootstrap interval remains below zero, RMWorld wins 23 of 30 seeds, and the Holm-adjusted test gives p = 0 .010 . This comparison matters because Ensemble UCB receives the same branch pool and high-fidelity audit count but chooses optimistic predicted improvement rather than task-credible gradient evidence. The result supports end-to-end transfer of the selection principle to a channel map that is outside the analytic formula family. The remaining contrasts prevent a universal superiority statement: the nominal test against Random Multi-Trial gives p = 0 .046 ,but its bootstrap interval crosses zero, so the evidence is fragile across summaries. Action Entropy and Gradient Information are unresolved with adjusted p values of 0.095 and 0.339 .Single-Trial radio WM gives a favorable paired result but uses                                     
+
+> TABLE VII PAIRED HIGH -LOAD DEEP MIMO CONTROL EVIDENCE OVER 30 SEEDS .BACKLOG IS MEDIAN [IQR]. T HE LOWER PANEL REPORTS
+> RMW ORLD -MINUS -COMPARATOR PAIRED EFFECTS AND
+> HOLM -ADJUSTED WILCOXON TESTS . S INGLE -T RIAL RADIO WM IS AN UNEQUAL -BUDGET ,LOW -COST REFERENCE .
+> Method Backlog [IQR] Radio-WM calls Yield (%) Single-Trial radio WM 112.055 [108.058,114.903] 24 0.0 Random MT 112.529 [108.119,115.932] 192 41.7 Action Entropy 111.129 [108.269,114.805] 192 41.7 Ensemble UCB 111.926 [108.318,116.001] 192 33.3 Gradient Info 111.583 [109.245,114.654] 192 54.2
+> RMWorld 110.896 [107.185,115.296] 264 62.5
+> Gain vs. Ens. UCB −0.967 paired +72 +29 .2pp
+
+Comparator RMWorld ∆ [95% CI] W/T/L pHolm 
+
+Single-Trial radio WM -0.677 [-0.997,-0.063] 20/0/10 0.028 Random MT -0.503 [-1.337,0.339] 19/0/11 0.046 Action Entropy -0.679 [-1.358,0.267] 19/0/11 0.095 Ensemble UCB -0.967 [-1.372,-0.290] 23/0/7 0.010 
+
+Gradient Info -0.171 [-0.721,0.455] 17/0/13 0.339 
+
+only 24 radio-WM calls and is not an equal-budget selector. Accordingly, the paper claims a supported advantage over Ensemble UCB and reports the other comparisons without collapsing them into an “all baselines” claim. Fig. 7 marks the operating boundary rather than imply-ing monotone gain. The exploratory RMWorld-minus-UCB effects are −1.356 [−2.405 , 0.631 ], −0.164 [−1.445 , 1.364 ], and −0.043 [−0.475 , 1.700 ] at loads 4, 6, and 10; only the prespecified load-8 interval excludes zero. Loads 4 and 10 also expose why the paired estimand is indispensable: their marginal RMWorld/UCB medians are 74 .954 /74 .830 and 
+
+119 .250 /118 .666 , respectively, although the median within-seed differences are negative. This apparent discrepancy is not contradictory because medians are not additive, and it rules out a universal or load-monotone advantage by localizing the supported result to the severe load-8 regime. Table VII then exposes the corresponding cost-quality tradeoff. RMWorld uses 264 radio-WM rollout calls versus 192 for each multi-trial selector, and its median runtime is 33 .15 s versus 26 .4–
+
+26 .8 s, amounting to 37 .5% more calls and about 25% more wall time than Ensemble UCB. Its confirmed-label yield is 
+
+62 .5% , 29.2 percentage points above UCB and 8.3 points above Gradient Information. Yield remains descriptive because it is an intermediate mechanism, not the prespecified endpoint. 
+
+F. Mechanism Audits and Stress Boundaries 
+
+The selector-controlled DeepMIMO experiment is the ap-propriate external comparison because all multi-trial meth-ods share the same update machinery. Additional experi-ments diagnose paired removals within the RMWorld family, candidate-pool sensitivity, and a longer training horizon; they are not pooled into the main ranking. Their purpose is to expose when the proposed ingredients matter and where extra computation stops improving the endpoint. The paired removal audit in Table VIII therefore asks a narrower question: Basic Gradient Information removes update alignment and conflict projection, while Gradient Information with Update Alignment removes only conflict projection. The reported difference is RMWorld minus the ablation, so a negative value favors 11 
+
+TABLE VIII PAIRED INTERNAL RMW ORLD AUDIT OVER 30 SEEDS PER ROW .REMOVED A+P DENOTES UPDATE ALIGNMENT AND CONFLICT PROJECTION ; P DENOTES PROJECTION ONLY . N EGATIVE DIFFERENCES FAVOR THE FULL UPDATE , AND pH CORRECTS ALL TEN CONTRASTS .
+
+Scene Removed Median ∆ [95% CI] W/T/L pH RBC O1/0.0 m A+P -0.012 [-0.056,0.063] 16/0/14 1.0000 0.006 O1/0.0 m P -0.043 [-0.087,0.002] 19/0/11 1.0000 -0.260 O1/0.8 m A+P -0.018 [-0.061,0.025] 17/0/13 1.0000 -0.028 O1/0.8 m P -0.016 [-0.103,0.004] 18/0/12 0.9546 -0.277 O1/1.6 m A+P -0.029 [-0.094,-0.007] 21/0/9 0.6619 -0.260 O1/1.6 m P -0.066 [-0.122,-0.013] 23/0/7 0.0602 -0.518 O1/2.4 m A+P -0.027 [-0.083,-0.002] 21/0/9 1.0000 -0.131 
+
+O1/2.4 m P -0.070 [-0.108,-0.025] 24/0/6 0.0109 -0.622 
+
+ASU/cross A+P 0.204 [-1.708,2.366] 13/0/17 1.0000 0.015 ASU/cross P 0.136 [-0.898,1.120] 13/0/17 1.0000 -0.002 10 20 30 
+
+> Query budget
+> 0.9 1.0 1.1 1.2
+> Weighted RMSE
+
+(a)   
+
+> 0.0 0.2 0.4
+> Paired RMSE gain
+> Random Spatial Ens.-Var Task-Var Grad.
+> 21/30 28/30 20/30 21/30 25/30
+
+(b)      
+
+> Random Spatial D-opt Ens.-Var Task-Var Grad. D-opt RMWorld
+
+Fig. 8. Neural-feature radio-WM sensitivity over 30 paired trials. The residual model uses a frozen two-layer tanh random-feature encoder with a query-trained ridge output head. Panel (a) reports RMSE versus query budget, and panel (b) reports paired final effects. This experiment does not constitute fully end-to-end neural-network training. 
+
+the full update. Holm correction covers all scene-by-ablation comparisons in this audit family. Only the severe O1 altitude shift resolves the contribution beyond the adjusted threshold. At the 2.4 m O1 shift, adding conflict projection to the aligned update produces a paired median difference of −0.070 ,a bootstrap interval of [−0.108 , −0.025] , 24 wins in 30 seeds, and pHolm = 0 .0109 . The milder O1 shifts show favorable paired directions but do not survive family-wise correction. The ASU cross-scene rows do not favor RMWorld and have wide intervals, indicating that the same local update geometry does not transfer automatically across map families. This pattern supports the projection as a severe-mismatch stabilizer, not a universal source of backlog reduction. A separately frozen branch-budget sweep gives an additional non-result: increasing (B, K ) from (3 , 1) to (7 , 5) changes median back-log only from 38 .840 to 38 .910 , while radio-WM calls double from 96 to 192. The default (5 , 2) is therefore a moderate-cost operating point, not an empirically unique optimum. 
+
+G. Representation Sensitivity and Boundary Tests 
+
+The neural-feature study changes the residual representa-tion while keeping the channel, task, and budget instances paired with the first 30 formula trials. RMWorld reaches a median RMSE of 0.962 bit/s/Hz, compared with 1.009 
+
+for Ensemble Variance, 1.003 for Task-Weighted Variance, and 0.989 for Gradient D-opt. It wins 20, 21, and 25 of 
+
+TABLE IX NEURAL -FEATURE RADIO -WM SENSITIVITY OVER 30 PAIRED TRIALS AT 
+
+32 LABELS . T HE UPPER PANEL REPORTS MARGINAL ENDPOINTS ; THE LOWER PANEL REPORTS COMPARATOR -MINUS -RMW ORLD W RMSE 
+
+> EFFECTS
+
+. P OSITIVE EFFECTS AND RBC FAVOR RMW ORLD ; pH IS HOLM ADJUSTED .                          
+
+> Method wRMSE [IQR] Regret [IQR] Time (ms) Random 1.012 [0.934,1.133] 0.104 [0.083,0.132] 116.9
+> Spatial D-opt 1.236 [1.141,1.433] 0.125 [0.101,0.156] 157.0 Ens.-Var 1.009 [0.954,1.063] 0.128 [0.086,0.137] 123.0 Task-Var 1.003 [0.945,1.062] 0.102 [0.072,0.119] 124.7 Grad. D-opt 0.989 [0.951,1.130] 0.109 [0.079,0.134] 383.9
+> RMWorld 0.962 [0.906,1.052] 0.095 [0.068,0.116] 446.6 RMWorld gain vs. Grad. D-opt 2.7% 0.014 +62 .7
+
+Comparator Gain [95% CI] W/T/L pH RBC Random 0.044 [0.018,0.106] 21/0/9 0.012 0.587 Spatial D-opt 0.321 [0.190,0.448] 28/0/2 < 0.001 0.987 Ens.-Var 0.040 [0.010,0.102] 20/0/10 0.037 0.488 Task-Var 0.035 [0.003,0.065] 21/0/9 0.037 0.480 Grad. D-opt 0.060 [0.026,0.100] 25/0/5 0.004 0.665 
+
+30 paired comparisons, respectively; all Holm-adjusted tests remain below 0.05 (range 0.004 –0.037 ). Paired formula and neural RMWorld errors have Spearman correlation 0.79 , while the median neural-minus-formula shift is −0.011 bit/s/Hz. These are representation diagnostics, not evidence of end-to-end deep-model generalization. The association diagnostic is weaker than the primary RMSE result: RMWorld and Task-Weighted Variance have medians of 0.095 and 0.102 bit/s/Hz, and the table does not attach a corrected decision-level test. This descriptive difference is consistent with, but does not resolve, behavior at discontinuous association boundaries. It also shows why the paper does not treat association regret as a guaranteed monotone consequence of integrated variance re-duction. The primary conclusion remains about task-weighted radio-WM error. The 30-seed long-horizon stress states another boundary rather than hiding it. After 12 policy updates, RMWorld has median backlog 38 .146 , while Single-Trial radio WM, Basic Gradient Information, and Gradient Information with alignment obtain 38 .448 , 37 .879 , and 38 .298 . Their interquar-tile ranges overlap substantially, so the experiment does not support long-horizon superiority. This outcome suggests that the available radio-WM signal saturates before additional counterfactual updates create stable separation; more training is not a substitute for better evidence quality here. Across the three evidence blocks, offline computation is therefore the consistent tradeoff. Channel-level RMWorld is slower because it recomputes integrated variance reductions, and policy-level RMWorld uses additional counterfactual rollouts plus fixed-batch validation. The method is query-budget matched in its primary comparisons but is not uniformly training-compute matched. Its deployment cost remains one policy forward pass because acquisition, formula fitting, branch selection, and line search stop after training. This distinction prevents “sample efficient” from being used as a synonym for “computationally cheap.” 12 
+
+TABLE X VALIDITY MATRIX . E ACH MITIGATION IS ENFORCED IN THE REPORTED PROTOCOL ; THE LAST COLUMN STATES THE CLAIM THAT REMAINS OUTSIDE THE EVIDENCE .              
+
+> Threat Protocol mitigation Remaining scope Oracle realism 3GPP formula + held-out DeepMIMO No field measurement WM misspecification Biased physics + hidden shadow + neural features No dynamic blockage
+> Causal attribution One level varied per primary block Joint synergy not identified
+> Multiplicity Frozen families, paired CI/W/T/L, Holm tests Load scan exploratory Compute fairness Queries fixed; calls and time reported Training FLOPs unequal Representation Formula and random-feature residuals No end-to-end neural WM
+
+H. Threats to Validity and Reproducibility 
+
+The evidence supports a scoped causal claim rather than universal radio intelligence. The standardized 3GPP block makes the true and estimated propagation formulas explicit and introduces hidden correlated shadow structure that the learner cannot observe directly [22]. This transparency isolates evidence allocation from an opaque oracle, but the rates remain simulated rather than measured. Freezing the channel field, task distribution, warm start, formula ensemble, and query budget within every paired trial removes the main nuisance variation between selectors. Separating channel calibration from policy selection across the two primary blocks further prevents a compound improvement from being assigned to the wrong level. The exact identity in Theorem 1, however, is conditional on the local linear-Gaussian residual and therefore does not guarantee monotone realized error under omitted physics. Discontinuous association and collision outcomes likewise remain diagnostics unless their own corrected tests are reported. Table X records these boundaries beside the mitigation that makes each retained claim interpretable. External validity is tested by moving policy learning to a held-out DeepMIMO ray-tracing slice whose rates are out-side the analytic formula family [23], but one outdoor map cannot represent all blockage, mobility, or fleet regimes. The load scan and cross-scene audit are therefore used to locate failure boundaries, not to enlarge the confirmatory family after observing results. The neural-feature study changes the residual basis under matched channel and task instances, yet its frozen random encoder does not establish end-to-end neural-radio-WM generalization. Computational validity is treated separately from query efficiency: label and audit budgets are matched where claimed, while rollout calls, runtime, and unequal-cost references remain visible. Reproducibility follows the same separation of concerns. Every headline statistic is regenerated from stored per-trial arrays through deterministic analysis scripts, the common-random-number streams and tie-breaking order are frozen, and the artifact manifest links each table or figure to its aggregate source. These controls make the reported paired estimands auditable, although independent measured-channel replication remains necessary before deployment claims can be made. VI. C ONCLUSION 
+
+RMWorld has formulated multi-UAV learning with imper-fect radio world models as two coupled evidence-allocation problems and has linked task-integrated radio-WM calibration to update-aligned counterfactual selection. It has established an exact local channel variance-reduction identity, a submodular greedy guarantee for branch selection, and a scoped first-order result for conflict projection. The resulting framework improves the consistency of task-weighted formula-based radio-WM calibration and provides a supported severe-load gain over Ensemble UCB; load probes delimit that gain as nonuniversal, while cost audits expose the offline computation and unresolved comparisons. Future work will test measured channels, dynamic blockage, larger fleets, and fully trained neural radio world models. REFERENCES [1] Y. Zeng, J. Lyu, and R. Zhang, “Accessing from the sky: A tutorial on UAV communications for 5G and beyond,” Proceedings of the IEEE ,vol. 107, no. 12, pp. 2327–2375, Dec. 2019. [2] M. Mozaffari, W. Saad, M. Bennis, Y.-H. Nam, and M. Debbah, “A tutorial on UAVs for wireless networks: Applications, challenges, and open problems,” IEEE Communications Surveys & Tutorials , vol. 21, no. 3, pp. 2334–2360, 2019. [3] U. Challita, W. Saad, and C. Bettstetter, “Interference management for cellular-connected UAVs: A deep reinforcement learning approach,” 
+
+IEEE Transactions on Wireless Communications , vol. 18, no. 4, pp. 2125–2140, Apr. 2019. [4] Y. Zeng, X. Xu, S. Jin, and R. Zhang, “Simultaneous navigation and radio mapping for cellular-connected UAV with deep reinforcement learning,” IEEE Transactions on Wireless Communications , vol. 20, no. 7, pp. 4205–4220, 2021. [5] M. P. Deisenroth and C. E. Rasmussen, “PILCO: A model-based and data-efficient approach to policy search,” in Proceedings of the International Conference on Machine Learning , 2011. [6] K. Chua, R. Calandra, R. McAllister, and S. Levine, “Deep reinforce-ment learning in a handful of trials using probabilistic dynamics models,” in Advances in Neural Information Processing Systems , vol. 31, 2018. [7] M. Janner, J. Fu, M. Zhang, and S. Levine, “When to trust your model: Model-based policy optimization,” in Advances in Neural Information Processing Systems , vol. 32, 2019. [8] J. Chen, U. Yatnalli, and D. Gesbert, “Learning radio maps for UAV-Aided wireless networks: A segmented regression approach,” in Pro-ceedings of the IEEE International Conference on Communications ,2017, pp. 1–6. [9] Y. Zeng and X. Xu, “Toward environment-aware 6G communications via channel knowledge map,” IEEE Wireless Communications , vol. 28, no. 3, pp. 84–91, 2021. [10] Y. Zeng, J. Chen, J. Xu, D. Wu, X. Xu, S. Jin, X. Gao, D. Gesbert, S. Cui, and R. Zhang, “A tutorial on environment-aware communications via channel knowledge map for 6G,” IEEE Communications Surveys & Tutorials , vol. 26, no. 3, pp. 1478–1519, 2024. [11] R. Levie, C. Yapar, G. Kutyniok, and G. Caire, “RadioUNet: Fast radio map estimation with convolutional neural networks,” IEEE Transactions on Wireless Communications , vol. 20, no. 6, pp. 4001–4015, 2021. [12] Y. Teganya and D. Romero, “Deep completion autoencoders for ra-dio map estimation,” IEEE Transactions on Wireless Communications ,vol. 21, no. 3, pp. 1710–1724, 2022. [13] X. Wang, K. Tao, N. Cheng, Z. Yin, Z. Li, Y. Zhang, and X. Shen, “RadioDiff: An effective generative diffusion model for sampling-free dynamic radio map construction,” IEEE Transactions on Cognitive Communications and Networking , vol. 11, no. 2, pp. 738–750, 2025. [14] R. Shrestha, D. Romero, and S. P. Chepuri, “Spectrum surveying: Active radio map estimation with autonomous UAVs,” IEEE Transactions on Wireless Communications , vol. 22, no. 1, pp. 627–641, 2023. [15] C. Zhan, H. Hu, Z. Liu, J. Wang, N. Cheng, and S. Mao, “Aerial video streaming over 3D cellular networks: An environment and channel knowledge map approach,” IEEE Transactions on Wireless Communi-cations , vol. 23, no. 2, pp. 1432–1446, 2024. [16] T. Kurutach, I. Clavera, Y. Duan, A. Tamar, and P. Abbeel, “Model-ensemble trust-region policy optimization,” in Proceedings of the Inter-national Conference on Learning Representations , 2018. [17] K. Ciosek, V. Fortuin, R. Tomioka, K. Hofmann, and R. Turner, “Conser-vative uncertainty estimation by fitting prior networks,” in Proceedings of the International Conference on Learning Representations , 2020. [18] A. Krause and C. Guestrin, “Near-optimal sensor placements in Gaussian processes: Theory, efficient algorithms and empirical studies,” Journal of Machine Learning Research , vol. 9, pp. 235–284, 2008. 13 
+
+[19] G. L. Nemhauser, L. A. Wolsey, and M. L. Fisher, “An analysis of approximations for maximizing submodular set functions—I,” Mathe-matical Programming , vol. 14, no. 1, pp. 265–294, 1978. [20] T. Yu, S. Kumar, A. Gupta, S. Levine, K. Hausman, and C. Finn, “Gradient surgery for multi-task learning,” in Advances in Neural Information Processing Systems , vol. 33, 2020. [21] J. Schulman, S. Levine, P. Abbeel, M. Jordan, and P. Moritz, “Trust region policy optimization,” in Proceedings of the International Confer-ence on Machine Learning , 2015. [22] 3rd Generation Partnership Project (3GPP), “Enhanced LTE support for aerial vehicles,” 3rd Generation Partnership Project, Tech. Rep. TR 36.777, V15.0.0, 2017. [23] A. Alkhateeb, “DeepMIMO: A generic deep learning dataset for mil-limeter wave and massive MIMO applications,” in Proceedings of the Information Theory and Applications Workshop , 2019.

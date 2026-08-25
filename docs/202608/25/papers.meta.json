@@ -1,0 +1,39 @@
+{
+  "label": "2026-08-25",
+  "date": "2026-08-25",
+  "generated_at": "2026-08-25T20:27:36",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202608/25/2608.20126v1-rmworld-task-aware-radio-world-models-with-value-of-information-guided-multi-trial-learning-for-multi-uav-communication-control",
+      "section": "quick",
+      "title_en": "RMWorld: Task-Aware Radio World Models with Value-of-Information Guided Multi-Trial Learning for Multi-UAV Communication Control",
+      "authors": "Xiucheng Wang, Nan Cheng, Junxi Huan",
+      "date": "2026-08-20",
+      "pdf": "https://arxiv.org/pdf/2608.20126v1",
+      "score": "6.0",
+      "evidence": "面向多无人机协作通信控制的基于模型强化学习",
+      "tldr": "多无人机通信控制需要提前预测链路质量以调度流量，但无线电世界模型的误差空间分布不均，全局误差小不代表关键路径预测准。现有方法分开优化感知与模型训练，忽视决策风险。RMWorld将任务感知引入无线信道建模，利用价值信息导向的多试验学习，对链路进行贝叶斯残差校正，并选择高可信高多样性的反事实分支。在3GPP与DeepMIMO基准上，RMWorld达到0.949 bit/s/Hz任务加权RMSE，中等负载下积压降低约96.7%，同时仅多消耗37.5%离线rollout。这为任务驱动无线建模建立了新标杆。",
+      "tags": "query:ui",
+      "abstract_en": "Reliable multi-UAV communication control depends on predicting which aerial links will serve traffic before measurements are available. Radio world models (radio WMs) make such planning tractable, but their errors are nonuniform: a globally accurate model may still fail along high-demand corridors or association boundaries where rate errors reverse control decisions. This mismatch creates a learning challenge. Link queries must reduce decision-relevant channel uncertainty, while counterfactual trials must be filtered so that biased rollouts do not corrupt the policy. Existing acquisition and model-based control treat these budgets separately, valuing uncertainty, coverage, or optimistic return rather than risk reduction. We present RMWorld, a task-aware radio-WM framework that couples value-of-information channel calibration with credibility-diversity multi-trial selection. A biased propagation formula is corrected by a Bayesian residual, and each link is valued by its exact one-label reduction in locally linearized task-integrated posterior rate variance. Counterfactual branches are selected by a task-gated log-determinant objective, followed by conflict projection and fixed-batch validation. We derive the variance-reduction identity, prove posterior task-risk equivalence and the submodular greedy guarantee, and establish a scoped first-order non-interference result. Across 100 paired 3GPP trials RMWorld reaches 0.949~bit/s/Hz task-weighted RMSE, and across 30 severe-load DeepMIMO trials it reduces median backlog by 0.967 versus Ensemble UCB at 37.5\\% more offline rollouts.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/25/2608.21175v1-srl-mpc-shape-aware-reinforcement-learned-model-predictive-control",
+      "section": "quick",
+      "title_en": "SRL-MPC: Shape-Aware Reinforcement Learned Model Predictive Control",
+      "authors": "Ruihua Han, Rui Gao, Zhe Liu, Xinyi Wang, Chang Chen, Shuai Wang, Qi Hao, Jia Pan, Hengshuang Zhao",
+      "date": "2026-08-21",
+      "pdf": "https://arxiv.org/pdf/2608.21175v1",
+      "score": "6.0",
+      "evidence": "将强化学习与模型预测控制和安全屏障结合用于导航，可迁移到无人机拦截与围捕。",
+      "tldr": "异构人群与机器人车队的安全形状感知导航面临挑战，传统方法依赖同质假设或简化几何。提出SRL-MPC方法，利用支撑函数变换的几何分离特征构造高阶控制障碍函数约束，并由强化学习策略实时调整MPC参数，兼顾安全结构与适应性。在随机人群与任意形状车队实验中，显著提升安全性和适应性，且可扩展鲁棒。",
+      "tags": "query:ui",
+      "abstract_en": "Safe and efficient shape-aware navigation in heterogeneous crowds and robot fleets remains challenging. Traditional approaches often assume homogeneous robots, sparse workspaces, simplified geometry, offline computation, or handcrafted parameters to make the problem tractable, which limits their deployment in dense crowd scenarios. Toward this end, we propose Shape-Aware Reinforcement Learned Model Predictive Control (SRL-MPC), a method for safe, efficient, and adaptive navigation in crowds with heterogeneous shapes without geometry simplification. To encode shape-aware safety, we formulate high-order control barrier function (HOCBF) constraints from geometric separation features (GSFs) based on support function transformation. A reinforcement learning (RL) framework then learns a neural policy that reads GSFs and outputs real-time MPC parameter updates, enabling the MPC solver to adapt to neighboring crowd geometries. The key advantage of SRL-MPC is that it preserves the safety structure and generalizability of MPC while integrating the adaptability and intelligence of RL. Experiments in randomized crowd scenarios with arbitrary shaped robot fleets demonstrate the effectiveness, scalability, and robustness of SRL-MPC. The results show that SRL-MPC substantially outperforms representative baselines in safety and adaptability. Project website: https://hanruihua.github.io/srl_mpc_project/",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

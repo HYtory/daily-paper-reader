@@ -1,0 +1,98 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-25T20:26:20.572698+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.20126v1",
+      "source": "arxiv",
+      "title": "RMWorld: Task-Aware Radio World Models with Value-of-Information Guided Multi-Trial Learning for Multi-UAV Communication Control",
+      "abstract": "Reliable multi-UAV communication control depends on predicting which aerial links will serve traffic before measurements are available. Radio world models (radio WMs) make such planning tractable, but their errors are nonuniform: a globally accurate model may still fail along high-demand corridors or association boundaries where rate errors reverse control decisions. This mismatch creates a learning challenge. Link queries must reduce decision-relevant channel uncertainty, while counterfactual trials must be filtered so that biased rollouts do not corrupt the policy. Existing acquisition and model-based control treat these budgets separately, valuing uncertainty, coverage, or optimistic return rather than risk reduction. We present RMWorld, a task-aware radio-WM framework that couples value-of-information channel calibration with credibility-diversity multi-trial selection. A biased propagation formula is corrected by a Bayesian residual, and each link is valued by its exact one-label reduction in locally linearized task-integrated posterior rate variance. Counterfactual branches are selected by a task-gated log-determinant objective, followed by conflict projection and fixed-batch validation. We derive the variance-reduction identity, prove posterior task-risk equivalence and the submodular greedy guarantee, and establish a scoped first-order non-interference result. Across 100 paired 3GPP trials RMWorld reaches 0.949~bit/s/Hz task-weighted RMSE, and across 30 severe-load DeepMIMO trials it reduces median backlog by 0.967 versus Ensemble UCB at 37.5\\% more offline rollouts.",
+      "authors": [
+        "Xiucheng Wang",
+        "Nan Cheng",
+        "Junxi Huan"
+      ],
+      "primary_category": "cs.IT",
+      "categories": [
+        "cs.IT"
+      ],
+      "published": "2026-08-20T14:54:09+00:00",
+      "link": "https://arxiv.org/pdf/2608.20126v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "model-based reinforcement learning for multi-UAV cooperative communication control",
+      "llm_evidence_cn": "面向多无人机协作通信控制的基于模型强化学习",
+      "llm_evidence": "面向多无人机协作通信控制的基于模型强化学习",
+      "canonical_evidence": "面向多无人机协作通信控制的基于模型强化学习",
+      "llm_tldr_en": "This paper proposes RMWorld, a task-aware radio world model with value-of-information guided multi-trial learning, enabling reliable multi-UAV communication control by querying decision-relevant links and filtering biased rollouts.",
+      "llm_tldr_cn": "多无人机通信控制依赖对链路质量的预测，但全局准确的无线电信道模型在决策边界处仍可能产生错误。为此提出RMWorld，一种任务感知的无线电世界模型，并用信息价值引导的多试验学习来优化链路查询与回滚筛选。实验表明该方法能有效减少偏差回滚对策略的污染，提升通信控制的可靠性。这为多无人机系统的智能协同控制提供了新的思路。",
+      "llm_tldr": "多无人机通信控制依赖对链路质量的预测，但全局准确的无线电信道模型在决策边界处仍可能产生错误。为此提出RMWorld，一种任务感知的无线电世界模型，并用信息价值引导的多试验学习来优化链路查询与回滚筛选。实验表明该方法能有效减少偏差回滚对策略的污染，提升通信控制的可靠性。这为多无人机系统的智能协同控制提供了新的思路。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.21175v1",
+      "source": "arxiv",
+      "title": "SRL-MPC: Shape-Aware Reinforcement Learned Model Predictive Control",
+      "abstract": "Safe and efficient shape-aware navigation in heterogeneous crowds and robot fleets remains challenging. Traditional approaches often assume homogeneous robots, sparse workspaces, simplified geometry, offline computation, or handcrafted parameters to make the problem tractable, which limits their deployment in dense crowd scenarios. Toward this end, we propose Shape-Aware Reinforcement Learned Model Predictive Control (SRL-MPC), a method for safe, efficient, and adaptive navigation in crowds with heterogeneous shapes without geometry simplification. To encode shape-aware safety, we formulate high-order control barrier function (HOCBF) constraints from geometric separation features (GSFs) based on support function transformation. A reinforcement learning (RL) framework then learns a neural policy that reads GSFs and outputs real-time MPC parameter updates, enabling the MPC solver to adapt to neighboring crowd geometries. The key advantage of SRL-MPC is that it preserves the safety structure and generalizability of MPC while integrating the adaptability and intelligence of RL. Experiments in randomized crowd scenarios with arbitrary shaped robot fleets demonstrate the effectiveness, scalability, and robustness of SRL-MPC. The results show that SRL-MPC substantially outperforms representative baselines in safety and adaptability. Project website: https://hanruihua.github.io/srl_mpc_project/",
+      "authors": [
+        "Ruihua Han",
+        "Rui Gao",
+        "Zhe Liu",
+        "Xinyi Wang",
+        "Chang Chen",
+        "Shuai Wang",
+        "Qi Hao",
+        "Jia Pan",
+        "Hengshuang Zhao"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-08-21T14:46:06+00:00",
+      "link": "https://arxiv.org/pdf/2608.21175v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Reinforcement learning combined with MPC and safety barriers for navigation, transferable to UAV interception and encirclement.",
+      "llm_evidence_cn": "将强化学习与模型预测控制和安全屏障结合用于导航，可迁移到无人机拦截与围捕。",
+      "llm_evidence": "将强化学习与模型预测控制和安全屏障结合用于导航，可迁移到无人机拦截与围捕。",
+      "canonical_evidence": "将强化学习与模型预测控制和安全屏障结合用于导航，可迁移到无人机拦截与围捕。",
+      "llm_tldr_en": "The paper introduces SRL-MPC, a method that integrates reinforcement learning with model predictive control and control barrier functions for shape-aware safe navigation in dense crowds, providing a transferable RL-based control approach for mobile agents.",
+      "llm_tldr_cn": "针对异构人群和机器人群中的安全高效导航问题，提出SRL-MPC方法。它通过支持函数变换提取几何分离特征构造高阶控制屏障约束，并利用强化学习自适应调整控制策略，无需简化几何即可实现形状感知的安全导航。实验结果表明该方法在密集场景中具有高效性和适应性，其强化学习与安全控制结合的框架可迁移到无人机拦截和围捕任务。",
+      "llm_tldr": "针对异构人群和机器人群中的安全高效导航问题，提出SRL-MPC方法。它通过支持函数变换提取几何分离特征构造高阶控制屏障约束，并利用强化学习自适应调整控制策略，无需简化几何即可实现形状感知的安全导航。实验结果表明该方法在密集场景中具有高效性和适应性，其强化学习与安全控制结合的框架可迁移到无人机拦截和围捕任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
