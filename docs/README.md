@@ -6,27 +6,28 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-25
-- 运行时间：2026-08-25 20:27:31 UTC
+- 最新运行日期：2026-08-26
+- 运行时间：2026-08-26 20:59:31 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：1
 - 精读区：0
-- 速读区：2
+- 速读区：1
 
 ### 今日简报（AI）
-今日速读2篇论文，聚焦无人机通信控制与模型预测控制两大方向。其中《RMWorld》提出基于信息价值引导的多轮学习框架，《SRL-MPC》引入形状感知强化学习，均为6.0分，值得关注。建议后续可精读其中一篇，深入验证方法在真实场景中的迁移效果。
-- 详情：[/202608/25/README](/202608/25/README)
+今日速读1篇论文，聚焦多智能体强化学习在智慧校园覆盖场景的应用。
+
+值得关注的方向是“多智能体离线策略深度强化学习”，评分6.0/10，属于中等参考价值。
+
+建议普通读者可略读原文，重点了解多智能体协作与离线策略结合的思路。
+- 详情：[/202608/26/README](/202608/26/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [RMWorld: Task-Aware Radio World Models with Value-of-Information Guided Multi-Trial Learning for Multi-UAV Communication Control](/202608/25/2608.20126v1-rmworld-task-aware-radio-world-models-with-value-of-information-guided-multi-trial-learning-for-multi-uav-communication-control)  
+1. [Multi-Agent Off-Policy Deep Reinforcement Learning for Smart Campus Coverage](/202608/26/2608.19049v1-multi-agent-off-policy-deep-reinforcement-learning-for-smart-campus-coverage)  
    标签：评分：6.0/10、query:ui
-   evidence：面向多无人机协作通信控制的基于模型强化学习
-2. [SRL-MPC: Shape-Aware Reinforcement Learned Model Predictive Control](/202608/25/2608.21175v1-srl-mpc-shape-aware-reinforcement-learned-model-predictive-control)  
-   标签：评分：6.0/10、query:ui
-   evidence：将强化学习与模型预测控制和安全屏障结合用于导航，可迁移到无人机拦截与围捕。
+   evidence：多智能体离策略深度强化学习方法用于非凸部署优化，方法可迁移至多无人机协同围捕决策
 
 
 <div class="dpr-home-promo-card">

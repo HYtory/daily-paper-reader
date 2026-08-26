@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-26 <!--dpr-date:20260826-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/26/2608.19049v1-multi-agent-off-policy-deep-reinforcement-learning-for-smart-campus-coverage" data-sidebar-item="{&quot;title&quot;: &quot;Multi-Agent Off-Policy Deep Reinforcement Learning for Smart Campus Coverage&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.19049v1-multi-agent-off-policy-deep-reinforcement-learning-for-smart-campus-coverage&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;多智能体离策略深度强化学习方法用于非凸部署优化，方法可迁移至多无人机协同围捕决策&quot;}">Multi-Agent Off-Policy Deep Reinforcement Learning for Smart Campus Coverage</a>
   * 2026-08-25 <!--dpr-date:20260825-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/25/2608.20126v1-rmworld-task-aware-radio-world-models-with-value-of-information-guided-multi-trial-learning-for-multi-uav-communication-control" data-sidebar-item="{&quot;title&quot;: &quot;RMWorld: Task-Aware Radio World Models with Value-of-Information Guided Multi-Trial Learning for Multi-UAV Communication Control&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.20126v1-rmworld-task-aware-radio-world-models-with-value-of-information-guided-multi-trial-learning-for-multi-uav-communication-control&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;面向多无人机协作通信控制的基于模型强化学习&quot;}">RMWorld: Task-Aware Radio World Models with Value-of-Information Guided Multi-Trial Learning for Multi-UAV Communication Control</a>
