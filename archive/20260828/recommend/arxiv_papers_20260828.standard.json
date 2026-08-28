@@ -1,0 +1,289 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-28T04:02:54.968487+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2608.25419v1",
+      "source": "arxiv",
+      "title": "BVR Sim: An Open and High-Throughput Environment for Heterogeneous Air-Combat Reinforcement Learning",
+      "abstract": "Beyond-visual-range (BVR) air combat is a challenging reinforcement-learning domain characterized by partial observability, long-horizon decision making, energy management, and limited weapons. We present BVR Sim, an open-source Gymnasium-style environment designed for heterogeneous air-combat reinforcement learning. BVR Sim supports multiple JSBSim aircraft models, including the F-15, F-16, F/A-18, and F-22, with configurable weapons, sensors, controllers, and opponents. A unified tactical action interface specifies desired heading, altitude, speed, and weapon release above aircraft-specific inner-loop controllers, enabling policies to operate across heterogeneous platforms. The environment provides interchangeable Python and accelerated C++ backends, entity-oriented observations, compositional rewards, scripted opponents, replay and visualization, and adapters for multi-agent learning frameworks. At a 0.4-s decision interval, the C++ backend achieves 104 simulated seconds per wall-clock second in 1-vs-1 and remains practical through 10-vs-10 scenarios. A policy trained only on the F-16 transfers without retraining to four unseen aircraft, reaching a 45.5% mean win rate with aircraft-specific controller adaptation. MAPPO and HAPPO experiments further verify end-to-end compatibility with standard multi-agent reinforcement-learning pipelines.",
+      "authors": [
+        "Haocheng Sun",
+        "Mulai Tan"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.LG"
+      ],
+      "published": "2026-08-26T06:21:24+00:00",
+      "link": "https://arxiv.org/pdf/2608.25419v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "air-combat reinforcement learning environment; heterogeneous aircraft; pursuit/interception tasks",
+      "llm_evidence_cn": "空空作战强化学习环境；支持异构飞机模型；可用于追逐与拦截任务",
+      "llm_evidence": "空空作战强化学习环境；支持异构飞机模型；可用于追逐与拦截任务",
+      "canonical_evidence": "空空作战强化学习环境；支持异构飞机模型；可用于追逐与拦截任务",
+      "llm_tldr_en": "BVR Sim is an open-source Gymnasium-style environment for heterogeneous beyond-visual-range air-combat RL, supporting multiple aircraft models, configurable weapons, and a unified tactical action interface, enabling RL research on interception, pursuit-evasion, and multi-agent air combat.",
+      "llm_tldr_cn": "超视距空战是强化学习中的重要挑战，但现有仿真平台难以支持异构平台和多样化任务。为此我们提出BVR Sim，一个开源的Gymnasium风格环境，支持F-15/F-16/F/A-18/F-22等多种JSBSim飞机模型，并提供统一的战术动作接口。环境支持可配置武器、传感器和对手，便于策略跨平台迁移。通过实验验证，该环境具有高通量特性，可促进异构空战强化学习研究，为无人机拦截与围捕等任务提供训练与评估基础。",
+      "llm_tldr": "超视距空战是强化学习中的重要挑战，但现有仿真平台难以支持异构平台和多样化任务。为此我们提出BVR Sim，一个开源的Gymnasium风格环境，支持F-15/F-16/F/A-18/F-22等多种JSBSim飞机模型，并提供统一的战术动作接口。环境支持可配置武器、传感器和对手，便于策略跨平台迁移。通过实验验证，该环境具有高通量特性，可促进异构空战强化学习研究，为无人机拦截与围捕等任务提供训练与评估基础。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.25477v1",
+      "source": "arxiv",
+      "title": "AERIS: Offline Policy Improvement for Multi-UAV Integrated Sensing and Communication",
+      "abstract": "Unmanned aerial vehicle (UAV)-enabled integrated sensing and communication (ISAC) is a promising 6G paradigm, but dynamic multi-UAV ISAC control must jointly balance communication quality, sensing reliability, and flight safety under stochastic mobility. Existing optimization methods often require repeated global non-convex solving, while online reinforcement learning (RL) depends on risky trial-and-error flights that may cause sensing loss or collision-risk events.   This paper proposes AERIS, an offline policy improvement framework for multi-UAV ISAC. AERIS learns from fixed flight logs under centralized training and decentralized execution, so each UAV acts from local histories while training uses logged global information to assess team-level effects. We further design STAR-CRDT, an offline multi-agent RL algorithm that performs support-aware local action rectification and distills only trusted improvements into the decentralized actor. We prove an offline-support policy improvement guarantee. Experiments show that STAR-CRDT improves the main ISAC objective return by 29.3% over the strongest baseline. It further improves communication sum rate, sensing pass rate, and sensing margin by 3.4%, 4.8%, and 69.1%, while reducing collision-risk events by 54.2%. On unseen real-road maps built from OpenStreetMap data, STAR-CRDT still obtains the best return.",
+      "authors": [
+        "Ziyuan Wang",
+        "Yifan Sui",
+        "Wei Wei",
+        "Wenjie Xin",
+        "Zekai Zhang",
+        "Xiangwang Hou",
+        "Xiao-Ping",
+        "Zhang"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.LG"
+      ],
+      "published": "2026-08-26T07:47:38+00:00",
+      "link": "https://arxiv.org/pdf/2608.25477v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent reinforcement learning for UAV swarm via offline policy improvement with CTDE",
+      "llm_evidence_cn": "面向无人机集群的多智能体强化学习，采用集中训练分散执行的离线策略改进",
+      "llm_evidence": "面向无人机集群的多智能体强化学习，采用集中训练分散执行的离线策略改进",
+      "canonical_evidence": "面向无人机集群的多智能体强化学习，采用集中训练分散执行的离线策略改进",
+      "llm_tldr_en": "AERIS applies offline RL to multi-UAV ISAC, learning from fixed logs with centralized training and decentralized execution, avoiding risky online flights while balancing communication, sensing, and safety.",
+      "llm_tldr_cn": "多无人机通感一体化控制需在通信质量、感知可靠性和飞行安全间取得平衡，在线强化学习试错代价高。论文提出AERIS离线策略改进框架，从固定飞行日志中学习，采用集中训练与分散执行，使每个无人机基于局部历史进行决策，同时利用日志全局信息评估任务性能。实验表明该框架在动态随机场景下能有效提升策略，避免在线采样风险，为多无人机集群强化学习提供安全高效的解决思路。",
+      "llm_tldr": "多无人机通感一体化控制需在通信质量、感知可靠性和飞行安全间取得平衡，在线强化学习试错代价高。论文提出AERIS离线策略改进框架，从固定飞行日志中学习，采用集中训练与分散执行，使每个无人机基于局部历史进行决策，同时利用日志全局信息评估任务性能。实验表明该框架在动态随机场景下能有效提升策略，避免在线采样风险，为多无人机集群强化学习提供安全高效的解决思路。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.21926v1",
+      "source": "arxiv",
+      "title": "AirAlign: Geometry-Aware Relative Pose Alignment for UAV Last-Meter Navigation",
+      "abstract": "Unmanned aerial vehicle (UAV) navigation in modern low-altitude environments requires more accurate pose alignment in the final approach stage for target information acquisition or manipulation, making \"last-meter\" navigation increasingly important. However, severe viewpoint and appearance variations make this task challenging. To tackle this problem, we propose AirAlign, a framework for RGB-only image-pair relative pose alignment for UAVs. AirAlign uses a pretrained visual geometry reconstruction model as the backbone to extract geometry-aware features from source-target image pairs. In addition, to better utilize the limited training data, we split the training set into multiple scene-disjoint folds for unseen cross-validation and model selection. During inference, the predictions of the selected models are averaged to form the ensemble output of the overall framework. Experiments on the PairUAV challenge at the ACMMM 2026 Workshop on UAVs in Multimedia demonstrate the effectiveness and robustness of our method, while comprehensive ablation studies validate the contribution of each component.",
+      "authors": [
+        "Jinyi Zhou",
+        "Shuo Feng",
+        "Yufei Wu",
+        "Piji Li"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-22T11:32:41+00:00",
+      "link": "https://arxiv.org/pdf/2608.21926v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "UAV last-meter navigation and pose alignment toward targets; relevant to terminal interception guidance",
+      "llm_evidence_cn": "无人机最后一米导航与目标位姿对齐，与末端拦截引导相关",
+      "llm_evidence": "无人机最后一米导航与目标位姿对齐，与末端拦截引导相关",
+      "canonical_evidence": "无人机最后一米导航与目标位姿对齐，与末端拦截引导相关",
+      "llm_tldr_en": "AirAlign proposes a geometry-aware relative pose alignment framework for UAV last-meter navigation using a pretrained visual geometry model, addressing viewpoint and appearance variations.",
+      "llm_tldr_cn": "面向无人机低空环境中最后一米导航的位姿对齐难题，提出AirAlign框架，利用预训练视觉几何重建模型提取几何感知特征，实现RGB图像对的相对位姿估计。针对训练数据有限的问题，设计多场景不相交划分进行交叉验证与模型选择。实验验证了框架在较大视角和外观变化下的位姿对齐精度，为无人机终端接近目标提供关键技术支撑。",
+      "llm_tldr": "面向无人机低空环境中最后一米导航的位姿对齐难题，提出AirAlign框架，利用预训练视觉几何重建模型提取几何感知特征，实现RGB图像对的相对位姿估计。针对训练数据有限的问题，设计多场景不相交划分进行交叉验证与模型选择。实验验证了框架在较大视角和外观变化下的位姿对齐精度，为无人机终端接近目标提供关键技术支撑。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.25794v1",
+      "source": "arxiv",
+      "title": "Cooperative Multi-Agent Reinforcement Learning for Adaptive Aggregation in Semi-Supervised Federated Learning with non-IID Data",
+      "abstract": "Federated Learning (FL) enables distributed training of machine learning models while preserving data privacy. However, FL struggles with heterogeneous, non-IID client data distributions, resulting in sub-optimal and biased global models. In this paper, we propose pFedMARL, a novel approach leveraging Multi-Agent Reinforcement Learning (MARL) with Twin Delayed Deep Deterministic Policy Gradient (TD3) to dynamically adapt aggregation strategies in FL settings. Our method employs a server-side agent adjusting client contributions to optimize global model robustness and client-side agents balancing global and local updates to personalize models effectively without pre-training. We demonstrate superior performance of pFedMARL for training a semi-supervised audio spectrogram transformer, matching or outperforming FedAvg, Ditto, and local training approaches across multiple non-IID scenarios and in the presence of adversarial clients. Our results indicate that pFedMARL actively improves accuracy, robustness, and fairness, making it suitable for real-world deployments.",
+      "authors": [
+        "Rene Glitza",
+        "Luca Becker",
+        "Rainer Martin"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.DC",
+        "cs.SD",
+        "eess.AS",
+        "eess.SP"
+      ],
+      "published": "2026-08-26T13:46:43+00:00",
+      "link": "https://arxiv.org/pdf/2608.25794v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Cooperative MARL method, transferable to multi-UAV swarm coordination",
+      "llm_evidence_cn": "协作多智能体强化学习方法，可迁移至多无人机集群协同",
+      "llm_evidence": "协作多智能体强化学习方法，可迁移至多无人机集群协同",
+      "canonical_evidence": "协作多智能体强化学习方法，可迁移至多无人机集群协同",
+      "llm_tldr_en": "pFedMARL uses cooperative multi-agent reinforcement learning with TD3 to adapt aggregation in federated learning under non-IID data, improving global robustness and personalization. The MARL framework is transferable to multi-UAV swarm coordination for encirclement.",
+      "llm_tldr_cn": "论文针对联邦学习在非独立同分布数据下模型偏置的问题，提出pFedMARL方法，利用双子延迟深度确定性策略梯度（TD3）的多智能体强化学习动态调整服务器端与客户端的聚合权重。在多个非IID数据集上取得优于既有方法的全局鲁棒与个性化效果，其协作多智能体框架可迁移到多无人机协同围捕的分布式决策中。",
+      "llm_tldr": "论文针对联邦学习在非独立同分布数据下模型偏置的问题，提出pFedMARL方法，利用双子延迟深度确定性策略梯度（TD3）的多智能体强化学习动态调整服务器端与客户端的聚合权重。在多个非IID数据集上取得优于既有方法的全局鲁棒与个性化效果，其协作多智能体框架可迁移到多无人机协同围捕的分布式决策中。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.26571v1",
+      "source": "arxiv",
+      "title": "Arrive and Survive: Scaling Safe Goal-Conditioned Policy Learning from One-Bit Failure Signals",
+      "abstract": "Contrastive reinforcement learning (CRL) scales effectively in goal-conditioned tasks by casting policy learning into a self-supervised contrastive objective. However, in a failure-terminated Markov decision process, established CRL considers pre-failure future goals only when constructing positive samples, without accounting for the probability mass removed by failure termination. Our theoretical analysis shows that this omission induces a systematic overestimation bias in goal-reaching values. Consequently, near-failure trajectories provide disproportionately strong supervision of success despite retaining little future occupancy. Unsafe actions can thereby be reinforced through catastrophic failure bootstrapping, leading to failed policy learning and unsustainable goal-reaching behaviours. To address this problem, we introduce two minimal yet strong corrections: mass-weighted InfoNCE corrects the overweighting of short surviving futures in critic learning, and a log-survival-mass score restores the missing survival mass in policy optimization. The resulting method, Safe Contrastive Reinforcement Learning (Safe-CRL), requires only the one-bit signal provided by failure termination to scale safe goal-conditioned policy learning. Across twelve failure-prone robot navigation and locomotion tasks, Safe-CRL consistently improves survival and substantially outperforms the Scaling-CRL baseline in goal-reaching performance. Additionally, deep Safe-CRL policies exhibit complex failure-avoidance behaviours. This study completes the CRL theory under failure termination and provides a scalable safe RL framework. The code is available via https://github.com/RomainLITUD/safe-crl.",
+      "authors": [
+        "Guopeng Li",
+        "Yiyang Duan",
+        "Yiru Jiao",
+        "Chengcheng Xu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-08-27T03:24:56+00:00",
+      "link": "https://arxiv.org/pdf/2608.26571v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "safe goal-conditioned RL from failure signals; applicable to pursuit-evasion learning",
+      "llm_evidence_cn": "从失败信号进行安全目标条件强化学习，可应用于追逃博弈学习",
+      "llm_evidence": "从失败信号进行安全目标条件强化学习，可应用于追逃博弈学习",
+      "canonical_evidence": "从失败信号进行安全目标条件强化学习，可应用于追逃博弈学习",
+      "llm_tldr_en": "Identifies overestimation bias in contrastive RL for failure-terminated MDPs and proposes correction for safe goal-conditioned policy learning from one-bit failure signals.",
+      "llm_tldr_cn": "针对失败终止MDP中对比强化学习的价值高估问题，进行理论分析并指出接近失败轨迹会带来灾难性引导。提出一种修正方法，仅利用单比特失败信号扩展安全目标条件策略学习，矫正价值估计偏差。实验表明该方法提高了失败终止任务中的策略安全性与成功率，为拦截/追逃等安全关键RL任务提供更可靠的学习范式。",
+      "llm_tldr": "针对失败终止MDP中对比强化学习的价值高估问题，进行理论分析并指出接近失败轨迹会带来灾难性引导。提出一种修正方法，仅利用单比特失败信号扩展安全目标条件策略学习，矫正价值估计偏差。实验表明该方法提高了失败终止任务中的策略安全性与成功率，为拦截/追逃等安全关键RL任务提供更可靠的学习范式。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.26683v1",
+      "source": "arxiv",
+      "title": "SIGMA: Structured Noise-Effect-Aware Grouped Multi-Agent Aggregation",
+      "abstract": "Cooperative multi-agent reinforcement learning (MARL) faces significant challenges in maintaining robust coordination under noisy observations. Although observation disturbances are often introduced independently across agents, their downstream effects on cooperative decision-making can become structured through underlying cooperation structures. We characterize this phenomenon as structured noise effects, where noise-induced decision effects exhibit local correlation among agents with stronger task-related dependencies while remaining globally heterogeneous across different agents and local structures. Existing robust MARL methods, however, rarely explicitly characterize or exploit such structure-dependent noise effects. To address this limitation, we propose SIGMA, a hierarchical collaboration framework that exploits cooperation structures to learn robust representations under noisy observations. SIGMA first organizes agents into adaptive local structures through density-based grouping and performs intra-group consensus aggregation to preserve shared task-relevant information while smoothing agent-specific representation deviations. Inter-group attention then adaptively integrates information across different groups to preserve global coordination while accommodating their heterogeneous contributions. Experiments on noisy-observation tasks in StarCraft II empirically validate the structured noise effects and demonstrate that SIGMA consistently improves robustness under observation noise while maintaining competitive performance in noise-free environments.",
+      "authors": [
+        "Li Mingqian"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-08-27T06:40:42+00:00",
+      "link": "https://arxiv.org/pdf/2608.26683v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent reinforcement learning robustness method applicable to UAV swarm coordination",
+      "llm_evidence_cn": "多智能体强化学习鲁棒性方法，可用于无人机蜂群协同",
+      "llm_evidence": "多智能体强化学习鲁棒性方法，可用于无人机蜂群协同",
+      "canonical_evidence": "多智能体强化学习鲁棒性方法，可用于无人机蜂群协同",
+      "llm_tldr_en": "Presents SIGMA, a robust MARL method that models structured noise effects and uses grouped aggregation to improve cooperative coordination under noisy observations.",
+      "llm_tldr_cn": "该文针对合作式多智能体强化学习在观测噪声下难以保持鲁棒协调的问题，提出结构化噪声效应感知的分组多智能体聚合方法SIGMA。SIGMA显式刻画噪声影响的局部相关性与全局异质性，并据此设计分组聚合机制，以增强协同决策的鲁棒性。实验表明该方法在噪声环境下显著优于现有鲁棒MARL方法。该工作为UAV蜂群协同围捕等现实多智能体任务提供了可迁移的强化学习算法基础。",
+      "llm_tldr": "该文针对合作式多智能体强化学习在观测噪声下难以保持鲁棒协调的问题，提出结构化噪声效应感知的分组多智能体聚合方法SIGMA。SIGMA显式刻画噪声影响的局部相关性与全局异质性，并据此设计分组聚合机制，以增强协同决策的鲁棒性。实验表明该方法在噪声环境下显著优于现有鲁棒MARL方法。该工作为UAV蜂群协同围捕等现实多智能体任务提供了可迁移的强化学习算法基础。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.26852v1",
+      "source": "arxiv",
+      "title": "Towards Safe Reinforcement Learning with Reduced Conservativeness: A Case Study on Drone Flight Control",
+      "abstract": "Incorporating formal methods into reinforcement learning (RL) has the potential to result in the best of both worlds, combining the robustness of formal guarantees with the adaptability and learning capabilities of RL, though careful design is needed to balance safety and exploration. In this work, we propose a framework to mitigate this loss of exploration while still allowing for the safety of the system to be ensured. Specifically, we introduce a less restrictive method that can reduce the conservativeness of formal methods by refining a disturbance model using online collected data and it evaluates the safety of a learning-based controller, using computationally efficient zonotopic reachability analysis for the safety analysis to facilitate a real-time implementation. We validate the framework in a real-world drone flight through a canyon, where the drone is subjected to unknown external disturbances and the framework is tasked with learning those disturbances online and adjusting the safety guarantees accordingly. The results show that the framework enables a less restrictive online training of learning-based controllers without compromising the safety of the system.",
+      "authors": [
+        "Loizos Hadjiloizou",
+        "Michael C. Welle",
+        "Hang Yin",
+        "Danica Kragic"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-08-27T09:17:50+00:00",
+      "link": "https://arxiv.org/pdf/2608.26852v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "safe RL for drone flight control with reachability analysis; transferable to UAV interception tasks",
+      "llm_evidence_cn": "面向无人机飞控的安全强化学习框架，可迁移至UAV拦截任务",
+      "llm_evidence": "面向无人机飞控的安全强化学习框架，可迁移至UAV拦截任务",
+      "canonical_evidence": "面向无人机飞控的安全强化学习框架，可迁移至UAV拦截任务",
+      "llm_tldr_en": "A safe RL method for drone flight control reducing conservativeness via online disturbance refinement and zonotopic reachability, trading exploration for formal safety. Transferable to UAV interception and encirclement missions.",
+      "llm_tldr_cn": "针对强化学习控制器在实际部署中的安全性与探索性平衡问题，提出一种减少保守性的安全强化学习框架。通过在线数据细化扰动模型，并利用域形可达性分析评估安全，从而在保证形式化安全约束的同时提升探索能力。以无人机飞控为案例，验证了该方法能在不显著牺牲性能的前提下提供安全保障，为无人机拦截等任务提供可迁移的安全层。",
+      "llm_tldr": "针对强化学习控制器在实际部署中的安全性与探索性平衡问题，提出一种减少保守性的安全强化学习框架。通过在线数据细化扰动模型，并利用域形可达性分析评估安全，从而在保证形式化安全约束的同时提升探索能力。以无人机飞控为案例，验证了该方法能在不显著牺牲性能的前提下提供安全保障，为无人机拦截等任务提供可迁移的安全层。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "autonomous drone interception using deep reinforcement learning",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
