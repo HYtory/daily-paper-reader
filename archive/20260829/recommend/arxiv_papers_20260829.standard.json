@@ -1,0 +1,133 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-29T03:31:37.531893+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.23318v1",
+      "source": "arxiv",
+      "title": "Agent-G$^2$: Gaussian Guidance for Agentic Reinforcement Learning",
+      "abstract": "Hint-based reinforcement learning addresses reward sparsity in long-horizon agentic tasks by retaining a prefix of an expert trajectory before each rollout, letting the policy explore from a state closer to success. Its effectiveness hinges on the guidance depth: how much of the trajectory to keep. Existing methods treat this depth as a deterministic scalar. Scheduled approaches share one value across samples and ignore per-task heterogeneity; per-sample probing estimates it separately at the cost of extra rollouts. We find that useful guidance occupies a band of depths whose informativeness profile is approximately Gaussian around the band center, rather than concentrating at a single optimal point. We propose Agent-G$^2$, a Gaussian guidance framework that draws the depth per task from a Gaussian whose center and spread are estimated online from rollouts already collected for policy optimization, requiring no probe rollouts or learned depth predictor. The center combines a global baseline with per-cluster difficulty, and the spread tracks within-cluster variance. We evaluate Agent-G$^2$ on ALFWorld and WebShop on Qwen2.5-1.5B / 7B-Instruct. Agent-G$^2$ outperforms the strongest hint-based, hint-free, and Aux-RL baselines on ALFWorld by 2.3 / 3.9 / 7.4 points at under one-third the rollout cost of per-sample probing.",
+      "authors": [
+        "Zixuan Wang",
+        "Yanrui Miao",
+        "Zhengxi Lu",
+        "Teng Pan",
+        "Yiwen Qiu",
+        "Hongxing Li",
+        "Peng Qiu",
+        "Ruiqing Zhang",
+        "Yongliang Shen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-08-24T14:34:34+00:00",
+      "link": "https://arxiv.org/pdf/2608.23318v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Generic deep reinforcement learning improvement for long-horizon agentic tasks; transferable to autonomous drone interception policy training",
+      "llm_evidence_cn": "面向长时程智能体任务的深度强化学习通用改进，可迁移到自主无人机拦截策略训练",
+      "llm_evidence": "面向长时程智能体任务的深度强化学习通用改进，可迁移到自主无人机拦截策略训练",
+      "canonical_evidence": "面向长时程智能体任务的深度强化学习通用改进，可迁移到自主无人机拦截策略训练",
+      "llm_tldr_en": "Proposes Gaussian guidance for hint-based agentic RL, treating useful guidance depth as a band rather than a single scalar. The method adaptively selects trajectory-prefix lengths and reduces extra rollouts, improving long-horizon policy learning for tasks such as UAV interception.",
+      "llm_tldr_cn": "长时程智能体强化学习常因奖励稀疏而难以训练，基于专家轨迹前缀的提示方法虽能缓解，但将引导深度视为固定标量会忽略任务差异。作者提出高斯引导框架 Agent-G^2，将有效引导深度建模为近似高斯分布的区间并自适应选择提示长度。实验显示该方法优于统一调度和逐样本探测，能以更少的额外开销提升策略性能。作为一种通用强化学习改进，它可用于无人机拦截和围捕等复杂长时程决策任务。",
+      "llm_tldr": "长时程智能体强化学习常因奖励稀疏而难以训练，基于专家轨迹前缀的提示方法虽能缓解，但将引导深度视为固定标量会忽略任务差异。作者提出高斯引导框架 Agent-G^2，将有效引导深度建模为近似高斯分布的区间并自适应选择提示长度。实验显示该方法优于统一调度和逐样本探测，能以更少的额外开销提升策略性能。作为一种通用强化学习改进，它可用于无人机拦截和围捕等复杂长时程决策任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "autonomous drone interception using deep reinforcement learning",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.25163v1",
+      "source": "arxiv",
+      "title": "Bayesian Flow Networks for Offline Trajectory Planning",
+      "abstract": "Offline reinforcement learning (RL) leverages static datasets to learn decision policies without real-time environment interaction. While recent sequence-modeling approaches rely on continuous diffusion models for trajectory synthesis, applying these methods to discrete planning tasks requires a categorical formulation rather than the standard Gaussian construction. We present BFN-RL, a unified generative modeling framework for offline RL based on Bayesian Flow Networks (BFNs). By iteratively evolving distribution parameters rather than noisy data instances, BFN-RL natively models both discrete and continuous trajectory spaces within a single probabilistic formulation. The categorical planner generates future state sequences, and a learned inverse-dynamics model converts consecutive generated states into actions. Evaluations in discrete planning and continuous control show that BFN-RL can generate effective trajectories across both categorical and continuous state spaces. Our results establish BFNs as a versatile generative foundation for offline trajectory planning across data modalities.",
+      "authors": [
+        "Ludvig Killingberg",
+        "Helge Langseth"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-08-25T21:19:35+00:00",
+      "link": "https://arxiv.org/pdf/2608.25163v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Offline reinforcement learning for trajectory generation; transferable method to UAV interception/encirclement.",
+      "llm_evidence_cn": "面向轨迹生成的离线强化学习方法；可迁移至无人机拦截/围捕任务。",
+      "llm_evidence": "面向轨迹生成的离线强化学习方法；可迁移至无人机拦截/围捕任务。",
+      "canonical_evidence": "面向轨迹生成的离线强化学习方法；可迁移至无人机拦截/围捕任务。",
+      "llm_tldr_en": "Proposes BFN-RL, a Bayesian flow network framework for offline RL that models discrete and continuous trajectory spaces, generating future state sequences via a categorical planner; directly applicable to trajectory planning tasks.",
+      "llm_tldr_cn": "离线强化学习常依赖连续扩散模型生成轨迹，难以处理离散规划问题。该论文提出基于贝叶斯流网络的统一生成式框架BFN-RL，通过迭代演化分布参数而非噪声样本，同时建模离散和连续轨迹空间。分类规划器生成未来状态序列，并利用逆动力学模型完成轨迹规划。该方法为离线轨迹规划提供了新范式，可潜在应用于无人机拦截与围捕中的机动决策。",
+      "llm_tldr": "离线强化学习常依赖连续扩散模型生成轨迹，难以处理离散规划问题。该论文提出基于贝叶斯流网络的统一生成式框架BFN-RL，通过迭代演化分布参数而非噪声样本，同时建模离散和连续轨迹空间。分类规划器生成未来状态序列，并利用逆动力学模型完成轨迹规划。该方法为离线轨迹规划提供了新范式，可潜在应用于无人机拦截与围捕中的机动决策。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.26518v1",
+      "source": "arxiv",
+      "title": "Energy as a Concealable State in Adversarial UAV Patrolling: Formulation, an Energy-Security Threshold, and the Limits of Self-Play",
+      "abstract": "We study energy-constrained adversarial patrolling on a graph, in which a battery-limited UAV defends a cluster of high-value targets against a strategic attacker who chooses when and where to strike. Unlike prior adversarial patrolling, the patroller must periodically return to a base to recharge; unlike prior energy-aware patrolling, it faces a self-interested adversary. Our central observation is that the remaining energy is a hidden state: the attacker never observes the battery directly, but observes the patroller's trajectory and can infer when a recharge excursion, and thus a vulnerability window, is imminent. We formalize the interaction as a zero-sum partially observable stochastic game and report a negative result on the solver side: neither independent deep Q-learning nor Neural Fictitious Self-Play reaches a stable equilibrium at this scale; each improves transiently and then collapses, with the co-trained thwart rate falling from about 0.25 to about 0.09 over training. Using a structural analysis independent of the learning dynamics, we show that achievable security rises monotonically with the energy budget, from zero below a threshold to about 0.7 when the budget is ample, establishing the energy budget as the primary determinant of defensibility. We set out the program the model is built to answer: whether an inference-capable attacker concentrates its successful strikes in the recharge window, and whether the defender can learn deceptive recharge timing to keep that window closed.",
+      "authors": [
+        "Sai Krishna Reddy Mareddy"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-08-27T01:43:50+00:00",
+      "link": "https://arxiv.org/pdf/2608.26518v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Adversarial UAV patrolling modeled as zero-sum partially observable stochastic game with hidden energy state and strategic attacker; relevant to UAV pursuit-evasion formulations",
+      "llm_evidence_cn": "将对抗性无人机巡逻建模为零和部分可观测随机博弈，包含隐藏能量状态和战略攻击者，与无人机追击-逃避博弈相关",
+      "llm_evidence": "将对抗性无人机巡逻建模为零和部分可观测随机博弈，包含隐藏能量状态和战略攻击者，与无人机追击-逃避博弈相关",
+      "canonical_evidence": "将对抗性无人机巡逻建模为零和部分可观测随机博弈，包含隐藏能量状态和战略攻击者，与无人机追击-逃避博弈相关",
+      "llm_tldr_en": "Models battery-limited UAV patrolling against a strategic attacker as a zero-sum partially observable stochastic game, treating remaining energy as a hidden state. Derives an energy-security threshold and analyzes limits of self-play, informing adversarial UAV pursuit-evasion game design.",
+      "llm_tldr_cn": "针对电池受限无人机在对抗巡逻中需周期性充电的问题，作者将巡逻者与攻击者的交互形式化为零和部分可观测随机博弈，核心观察是剩余能量可被攻击者从轨迹中推断。文章推导出能量-安全阈值，并分析了自博弈求解此类隐藏状态对抗问题的局限性。该工作为无人机追击-逃避与拦截场景中的隐藏状态建模和自博弈方法提供了重要参考。",
+      "llm_tldr": "针对电池受限无人机在对抗巡逻中需周期性充电的问题，作者将巡逻者与攻击者的交互形式化为零和部分可观测随机博弈，核心观察是剩余能量可被攻击者从轨迹中推断。文章推导出能量-安全阈值，并分析了自博弈求解此类隐藏状态对抗问题的局限性。该工作为无人机追击-逃避与拦截场景中的隐藏状态建模和自博弈方法提供了重要参考。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

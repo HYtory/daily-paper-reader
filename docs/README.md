@@ -6,41 +6,34 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-28
-- 运行时间：2026-08-28 04:06:50 UTC
+- 最新运行日期：2026-08-29
+- 运行时间：2026-08-29 03:33:42 UTC
 - 运行状态：成功
-- 本次总论文数：7
-- 精读区：2
-- 速读区：5
+- 本次总论文数：3
+- 精读区：0
+- 速读区：3
 
 ### 今日简报（AI）
-今日聚焦7篇无人机与强化学习前沿论文，其中2篇精读、5篇速读。最值得关注的是异构空战强化学习环境BVR Sim（9分）与多无人机通感一体化离线优化AERIS（8分）。建议普通读者优先从高分开源仿真环境入手，快速理解空战AI训练逻辑。
-- 详情：[/202608/28/README](/202608/28/README)
+今日速读3篇论文，覆盖智能体强化学习、离线轨迹规划与对抗性无人机巡逻，均获6.0分。
+
+最值得关注：高斯引导的智能体强化学习方法，以及贝叶斯流网络用于离线轨迹规划，两者均指向更高效的决策与规划。
+
+若想延伸阅读，建议优先深耕强化学习与生成式建模结合的方向，并可在巡逻博弈中加入能量约束做对比实验。
+- 详情：[/202608/29/README](/202608/29/README)
 
 ### 精读区论文标签
-1. [BVR Sim: An Open and High-Throughput Environment for Heterogeneous Air-Combat Reinforcement Learning](/202608/28/2608.25419v1-bvr-sim-an-open-and-high-throughput-environment-for-heterogeneous-air-combat-reinforcement-learning)  
-   标签：评分：9.0/10、query:ui
-   evidence：空空作战强化学习环境；支持异构飞机模型；可用于追逐与拦截任务
-2. [AERIS: Offline Policy Improvement for Multi-UAV Integrated Sensing and Communication](/202608/28/2608.25477v1-aeris-offline-policy-improvement-for-multi-uav-integrated-sensing-and-communication)  
-   标签：评分：8.0/10、query:ui
-   evidence：面向无人机集群的多智能体强化学习，采用集中训练分散执行的离线策略改进
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [AirAlign: Geometry-Aware Relative Pose Alignment for UAV Last-Meter Navigation](/202608/28/2608.21926v1-airalign-geometry-aware-relative-pose-alignment-for-uav-last-meter-navigation)  
+1. [Agent-G$^2$: Gaussian Guidance for Agentic Reinforcement Learning](/202608/29/2608.23318v1-agent-g2-gaussian-guidance-for-agentic-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：无人机最后一米导航与目标位姿对齐，与末端拦截引导相关
-2. [Cooperative Multi-Agent Reinforcement Learning for Adaptive Aggregation in Semi-Supervised Federated Learning with non-IID Data](/202608/28/2608.25794v1-cooperative-multi-agent-reinforcement-learning-for-adaptive-aggregation-in-semi-supervised-federated-learning-with-non-iid-data)  
+   evidence：面向长时程智能体任务的深度强化学习通用改进，可迁移到自主无人机拦截策略训练
+2. [Bayesian Flow Networks for Offline Trajectory Planning](/202608/29/2608.25163v1-bayesian-flow-networks-for-offline-trajectory-planning)  
    标签：评分：6.0/10、query:ui
-   evidence：协作多智能体强化学习方法，可迁移至多无人机集群协同
-3. [Arrive and Survive: Scaling Safe Goal-Conditioned Policy Learning from One-Bit Failure Signals](/202608/28/2608.26571v1-arrive-and-survive-scaling-safe-goal-conditioned-policy-learning-from-one-bit-failure-signals)  
+   evidence：面向轨迹生成的离线强化学习方法；可迁移至无人机拦截/围捕任务。
+3. [Energy as a Concealable State in Adversarial UAV Patrolling: Formulation, an Energy-Security Threshold, and the Limits of Self-Play](/202608/29/2608.26518v1-energy-as-a-concealable-state-in-adversarial-uav-patrolling-formulation-an-energy-security-threshold-and-the-limits-of-self-play)  
    标签：评分：6.0/10、query:ui
-   evidence：从失败信号进行安全目标条件强化学习，可应用于追逃博弈学习
-4. [SIGMA: Structured Noise-Effect-Aware Grouped Multi-Agent Aggregation](/202608/28/2608.26683v1-sigma-structured-noise-effect-aware-grouped-multi-agent-aggregation)  
-   标签：评分：6.0/10、query:ui
-   evidence：多智能体强化学习鲁棒性方法，可用于无人机蜂群协同
-5. [Towards Safe Reinforcement Learning with Reduced Conservativeness: A Case Study on Drone Flight Control](/202608/28/2608.26852v1-towards-safe-reinforcement-learning-with-reduced-conservativeness-a-case-study-on-drone-flight-control)  
-   标签：评分：6.0/10、query:ui
-   evidence：面向无人机飞控的安全强化学习框架，可迁移至UAV拦截任务
+   evidence：将对抗性无人机巡逻建模为零和部分可观测随机博弈，包含隐藏能量状态和战略攻击者，与无人机追击-逃避博弈相关
 
 
 <div class="dpr-home-promo-card">
