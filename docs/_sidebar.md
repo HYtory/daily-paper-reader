@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-30 <!--dpr-date:20260830-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/30/2608.22840v1-equilibrium-in-multi-agent-reinforcement-learning" data-sidebar-item="{&quot;title&quot;: &quot;Equilibrium in Multi-Agent Reinforcement Learning&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.22840v1-equilibrium-in-multi-agent-reinforcement-learning&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;提出多智能体强化学习的新均衡概念，为无人机集群多智能体协同提供理论基础。&quot;}">Equilibrium in Multi-Agent Reinforcement Learning</a>
   * 2026-08-29 <!--dpr-date:20260829-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/29/2608.23318v1-agent-g2-gaussian-guidance-for-agentic-reinforcement-learning" data-sidebar-item="{&quot;title&quot;: &quot;Agent-G$^2$: Gaussian Guidance for Agentic Reinforcement Learning&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.23318v1-agent-g2-gaussian-guidance-for-agentic-reinforcement-learning&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;面向长时程智能体任务的深度强化学习通用改进，可迁移到自主无人机拦截策略训练&quot;}">Agent-G$^2$: Gaussian Guidance for Agentic Reinforcement Learning</a>
