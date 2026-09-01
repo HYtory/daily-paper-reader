@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-31",
+  "date": "2026-08-31",
+  "generated_at": "2026-09-01T00:23:10",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/31/2608.27909v1-low-altitude-fluid-antenna-network-with-multi-agent-reinforcement-learning",
+      "section": "deep",
+      "title_en": "Low-Altitude Fluid Antenna Network with Multi-Agent Reinforcement Learning",
+      "authors": "Tong Zhang, Yanfei Su, Shuai Wang, Wanli Ni, Chengzhong Xu, Huseyin Arslan",
+      "date": "2026-08-28",
+      "pdf": "https://arxiv.org/pdf/2608.27909v1",
+      "score": "8.0",
+      "evidence": "多智能体强化学习应用于无人机网络，直接匹配无人机集群MARL需求",
+      "tldr": "低空无线网络面临动态空-地和空-空信道、突发阻塞及异构干扰等挑战，流体天线（FA）通过可重构天线位置提供额外空间自由度，可有效克服上述难题。本文面向低空FA网络，提出电磁数字孪生（EM-DT）辅助的多智能体强化学习（MARL）框架，实现FA快速高性能重配置，并引入两阶段迁移学习弥补仿真-现实差距。实验表明，联合FA位置与波束成形优化相比固定位置基线可将系统总速率提升118.5%，增益源于毫秒级FA阵列动态重配置及对移动空中用户的波束自适应转向，从而验证了所提方案的有效性与实际部署潜力。",
+      "tags": "query:ui",
+      "abstract_en": "Low-altitude wireless networks (LAWNs) integrate terrestrial and aerial platforms to provide ubiquitous communication, sensing, and localization services for unmanned aerial vehicles (UAVs) and electric vertical takeoff and landing (eVTOL) aircraft. However, dynamic air-ground and air-air channels, abrupt blockages, and heterogeneous interference hinder the realization of this goal. Nevertheless, fluid antenna (FA), a cutting-edge multiple-input multiple-output (MIMO) technique, overcomes these challenges by reconfiguring antenna positions to unlock additional spatial degrees-of-freedom. In this paper, towards bringing low-altitude FA networks into reality, we study the fast and high-performance FA reconfiguration for low-altitude FA networks with multi-agent reinforcement learning (MARL). Specifically, we present an electromagnetic digital twin (EM-DT)-assisted MARL framework. To fill the sim-to-real gap, we introduce a two-stage transfer learning framework. Our case study shows that joint FA positions and beamforming optimization can enhance the system sum-rate by 118.5%, compared to the fixed position baseline. This gain comes from the dynamic millisecond timescale reconfiguration of FA arrays and the adaptive steering of beams toward aerial users with mobility.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/31/2608.23831v1-learning-to-act-while-waiting-rl-finetuning-of-generalist-robot-policies-under-inference-latency",
+      "section": "quick",
+      "title_en": "Learning to Act While Waiting: RL Finetuning of Generalist Robot Policies Under Inference Latency",
+      "authors": "Brian Zhu, Momen Khalil, E Harrison, Emanuele Poggi, Philipp Schmitt, Bernd Kast, Philine Meister, Pranav Atreya, Qiyang Li, Finn Ferchau, Cesar Colmenero, Yash Shahapurkar, Gokul Narayanan, Melih Erdogan, Kai Wurm, Georg von Wichert, Oier Mees, Eugen Solowjow, Andrew Wagenmaker, Sergey Levine",
+      "date": "2026-08-24",
+      "pdf": "https://arxiv.org/pdf/2608.23831v1",
+      "score": "6.0",
+      "evidence": "延迟感知的RL框架支持实时推理延迟下的策略微调，对单无人机拦截控制至关重要",
+      "tldr": "通用机器人策略推理延迟导致停顿或抖动，破坏马尔可夫假设，使标准RL在延迟环境下完全失效。本文提出异步RL框架ARLI，结合异步推理与低延迟策略设计，通过状态增强融入已执行动作和中期观测来恢复近马尔可夫性。在模拟和真实操作任务中，ARLI实现了有效微调，性能匹配甚至超越无延迟理想情况，为延迟条件下策略持续改进提供了可行方案。",
+      "tags": "query:ui",
+      "abstract_en": "While reinforcement learning (RL) allows generalist robot policies to continually improve during deployment, the large model size of modern generalist policies, such as VLAs, poses a fundamental obstacle to effective RL improvement. In particular, their severe inference latency---which can lead to pauses or jerky movements---can alter the effective environment dynamics and, if not correctly accounted for, break the Markov assumption that RL relies on, causing standard RL algorithms to fail completely. In this work, we introduce a latency-aware framework, Asynchronous RL with Intermediate Information (ARLI), that enables RL-based improvement of generalist policies under inference delays.   Our framework builds on asynchronous inference approaches, which interleave action generation with execution to hide latency, and addresses its incompatibility with RL by providing a low-latency RL policy design that maximizes reactivity within the inference window through two contributions: state augmentations that restore near-Markovian structure by incorporating committed actions and a mid-inference observation.   We evaluate our approach across simulated and real-world manipulation tasks, and find that it enables effective finetuning under inference delays where standard RL fails entirely, even matching or exceeding the performance of standard RL in idealized no-latency settings.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/31/2608.25163v1-bayesian-flow-networks-for-offline-trajectory-planning",
+      "section": "quick",
+      "title_en": "Bayesian Flow Networks for Offline Trajectory Planning",
+      "authors": "Ludvig Killingberg, Helge Langseth",
+      "date": "2026-08-25",
+      "pdf": "https://arxiv.org/pdf/2608.25163v1",
+      "score": "6.0",
+      "evidence": "离线RL轨迹规划方法，可迁移至无人机追逃与拦截任务",
+      "tldr": "离线强化学习利用静态数据集学习策略，而现有序列建模方法通常依赖连续扩散模型，难以处理离散规划。本文提出BFN-RL，基于贝叶斯流网络统一建模离散与连续轨迹，通过迭代更新分布参数而非噪声数据，分类规划器生成未来状态序列，逆动力学模型将连续状态映射为动作。实验表明，BFN-RL在离散规划与连续控制任务中均能生成有效轨迹，确立了其作为跨模态离线轨迹规划通用生成框架的潜力。",
+      "tags": "query:ui",
+      "abstract_en": "Offline reinforcement learning (RL) leverages static datasets to learn decision policies without real-time environment interaction. While recent sequence-modeling approaches rely on continuous diffusion models for trajectory synthesis, applying these methods to discrete planning tasks requires a categorical formulation rather than the standard Gaussian construction. We present BFN-RL, a unified generative modeling framework for offline RL based on Bayesian Flow Networks (BFNs). By iteratively evolving distribution parameters rather than noisy data instances, BFN-RL natively models both discrete and continuous trajectory spaces within a single probabilistic formulation. The categorical planner generates future state sequences, and a learned inverse-dynamics model converts consecutive generated states into actions. Evaluations in discrete planning and continuous control show that BFN-RL can generate effective trajectories across both categorical and continuous state spaces. Our results establish BFNs as a versatile generative foundation for offline trajectory planning across data modalities.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
