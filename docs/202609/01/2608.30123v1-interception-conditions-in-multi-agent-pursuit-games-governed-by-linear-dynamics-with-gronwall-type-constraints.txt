@@ -1,0 +1,968 @@
+Title: Interception Conditions in Multi-Agent Pursuit Games Governed by Linear Dynamics with Gronwall-type Constraints
+
+URL Source: https://arxiv.org/pdf/2608.30123v1
+
+Published Time: Tue, 01 Sep 2026 01:49:39 GMT
+
+Number of Pages: 13
+
+Markdown Content:
+# Interception Conditions in Multi-Agent Pursuit Games Governed by Linear Dynamics with Gronwall-type Constraints 
+
+David Terna. Gbande a∗ Abbas Ja’afaru Badakaya b† Mehdi Salimi c‡
+
+Aminu Sulaiman Halliru d§ Jamilu Adamu e ¶
+
+September 1, 2026  
+
+> a
+
+Department of Statistics, Federal Polytechnic Wannune, Benue State, Nigeria  
+
+> b,d
+
+Department of Mathematical Sciences, Bayero University, Kano, Nigeria  
+
+> c
+
+Mathematics Department, Kwantlen Polytechnic University, BC, Canada.  
+
+> e
+
+Mathematics Department, Federal University, Gashua, yobe State, Nigeria. 
+
+Abstract 
+
+This paper investigates a multi-agent pursuit problem in which a group of pursuers seeks to intercept one or more evaders within a fixed operational time horizon. The motion of both pursuers and evaders is described by first-order linear differential equations, and the control inputs available to the agents are subject to Gronwall-type constraints. Pursuit is considered successful when at least one pursuer reaches the position of each evader at a finite time within the prescribed duration. Within this framework, we construct permissible strategies for the pursuers and derive sufficient conditions under which interception is guaranteed despite the evaders’ counteractions. To support the theoretical results, we present numerical examples that demonstrate the effectiveness of the proposed strategies and confirm the analytical con-ditions for successful pursuit. 
+
+# 1 Introduction 
+
+Differential games provide a rigorous mathematical framework for analyzing strategic interactions among multiple decision makers whose actions jointly determine the evolution of a dynamical sys-tem over continuous time. The dynamics are described by differential equations, while each player 
+
+> ∗
+
+princedavison4@gmail.com 
+
+> †
+
+ajbadakaya.mth@buk.edu.ng 
+
+> ‡
+
+mehdi.salimi@kpu.ca (Corresponding author) 
+
+> §
+
+aminuhalliru1@gmail.com 
+
+> ¶
+
+jamiluadamu88@gmail.com 
+
+1arXiv:2608.30123v1 [math.OC] 31 Aug 2026 selects admissible control strategies to optimize an individual objective that may conflict with those of other players. As a natural extension of optimal control theory to multi-agent systems, differential games have become an indispensable tool for studying competitive and cooperative decision-making in engineering, economics, robotics, and military operations. Since the pioneering works of Isaacs [7] and Krasovskii [8], the theory has developed into a mature research area with pursuit-evasion differential games serving as one of its central applications. These foundational studies introduced fundamental concepts such as admissible strategies, value functions, and opti-mality principles, which continue to underpin modern developments in differential game theory. Pursuit-evasion games constitute one of the most extensively studied classes of differential games. In these games, one or more pursuers attempt to capture, intercept, or continuously track one or more evaders, whose objective is to avoid capture for as long as possible [11]. Owing to their strong mathematical foundations and broad practical relevance, pursuit-evasion models have found applications in robotics, cybersecurity, autonomous systems, biological processes, and artificial intelligence; see, for example, [9, 10]. Motivated by increasingly realistic applications, recent research has focused on multi-player formulations involving several pursuers and one or more evaders. For instance, Salimi and Ferrara [13] investigated pursuit strategies for one evader and multiple pursuers, deriving structural properties of optimal controls and sufficient conditions for capture. Ahmed [1] studied pursuit games involving finitely many players evolving in a closed convex subset of Rn under generalized integral constraints, while Badakaya et al. [2] analyzed multi-pursuer games in the Hilbert space l2, establishing sufficient conditions for l-capture and constructing piecewise pursuit strategies. Infinite-dimensional formulations have also attracted considerable attention. Umar et al. [16] investigated pursuit problems governed by infinite systems of binary differential equations in l2 under geometric constraints, deriving guaranteed capture-time estimates, whereas Ibragimov et al. [6] considered pursuit games with multiple pursuers and one evader under special classes of integral constraints. An important direction in the literature concerns the admissible constraints imposed on the play-ers’ control functions. One of the earliest contributions in this direction is due to Berkovitz [3], who generalized classical pursuit problems by introducing integral constraints on the controls. This formulation significantly broadened the class of admissible strategies and provided a realistic representation of systems with limited energy or fuel resources. Subsequently, Borodo et al. [4] studied a pursuit differential game in the sequence space l∞ with finitely many pursuers and one evader, where all controls satisfy component-wise integral constraints, and established sufficient conditions guaranteeing capture. Besides integral constraints, geometric constraints have been widely adopted to model bounded instantaneous control capabilities. More recently, Gronwall-type constraints have emerged as a flexible and powerful framework for modeling systems in which the admissible controls depend on accumulated effects or feedback dependent bounds. These con-straints have been investigated in both finite and infinite dimensional settings, revealing analytical properties that differ substantially from those associated with classical geometric and integral con-straints. In particular, Rilwan and co-authors [12] established the existence of admissible strategies, sufficient conditions for guaranteed pursuit, and characterizations of game values under Gronwall-type constraints, while emphasizing the additional analytical challenges involved in constructing coordinated pursuit strategies. More recently, Gbande et al. [5] considered pursuit games involv-ing many players under combined geometric and Gronwall-type constraints and obtained sufficient conditions for successful pursuit. Another important line of research concerns pursuit games whose dynamics are governed by first-2order linear differential equations. Such dynamics provide a more realistic representation of systems involving damping, decay, or linear feedback effects than the simple motion model commonly used in the literature. In this direction, Usman et al. [15] investigated a pursuit differential game with first-order linear dynamics in which the players’ controls satisfy both geometric and integral constraints. They established sufficient conditions guaranteeing successful pursuit in each considered scenario, thereby extending the classical theory to a broader class of dynamical systems. Although substantial progress has been made in the study of pursuit differential games, the com-bined treatment of multi-player systems governed by first-order linear differential dynamics under Gronwall-type control constraints remains largely unexplored. Existing studies have typically fo-cused either on first-order linear dynamics with geometric and integral constraints or on Gronwall-type constraints for different classes of dynamics. Consequently, explicit sufficient conditions for guaranteed pursuit in multi-player first-order linear systems subject to Gronwall-type constraints are still lacking. The present paper addresses this gap by investigating a pursuit differential game involving mul-tiple pursuers and multiple evaders whose motions are governed by first-order linear differential equations under Gronwall-type control constraints. We develop admissible pursuit strategies and establish explicit sufficient conditions guaranteeing successful pursuit. In this way, the paper extends previous results on pursuit-evasion differential games, unifies aspects of the existing litera-ture on first-order linear dynamics and Gronwall-type constraints, and contributes new theoretical results to the analysis of multi-player differential games. 
+
+# 2 Problem Statement 
+
+This Research work extends the theory of constrained differential games beyond the classical frame-work of simple motion player dynamics, motivated by the pursuit-evasion frameworks of Rilwan et al. [12] and Ahmed et al. [1] which studied fixed-duration and optimal-time pursuit games under Gronwall-type control constraints using simple linear dynamics, this research addresses the prob-lem of analyzing pursuit differential games involving multiple pursuers and many evaders governed by modified first-order linear differential equations, with the aim of establishing conditions for capture under Gronwall-type constrained controls. We consider a differential game problem in Rn
+
+with the pursuers pi and evaders ej move in accordance with the following differential equations: 
+
+ ˙pi(t) + βipi(t) = ci(t), pi(0) = pi0, i = 1 , 2, 3, ..., l, 
+
+˙ej (t) + βj ej (t) = fj (t), ej (0) = ej0, j = 1 , 2, 3, ..., m, (2.1) where ci(·), f j (·) are the control functions of the pursuers and evaders respectively, βi and βj , are non-zero constants and that l and m are natural numbers such that l > m .
+
+Definition 2.1. A measurable function ci(t) = ( ci1(t), c i2(t), . . . , c in (t)) that satisfy the inequality 
+
+|| ci(t)|| 2 ≤ ϱ2 
+
+> i
+
++ 2 k
+
+Z t
+
+> 0
+
+|| ci(s)|| 2ds t ≥ 0 i = 1 , 2, 3, ..., l (2.2) where ϱi and k are positive numbers, is called permissible control of the pursuers pi with respect to Gronwall-type constraint. 3Definition 2.2. A measurable function fj (t) = ( fj1(t), f j2(t), . . . , f jn (t)) that satisfy the inequality 
+
+|| fj (t)|| 2 ≤ ς2 
+
+> j
+
++ 2 k
+
+Z t
+
+> 0
+
+|| fj (s)|| 2ds t ≥ 0 j = 1 , 2, 3, ..., m (2.3) where ςj and k are positive numbers, is called permissible control of the evader ej with respect to Gronwall-type constraint. 
+
+Definition 2.3. A function Ci(·) is called strategy of the pursuers, if for any permissible control of the evaders the system 
+
+ ˙pi(t) + βipi(t) = Ci(t), pi(0) = pi0, i = 1 , 2, 3, ..., l 
+
+˙ej (t) + βj ej (t) = fj (t), ej (0) = ej0, j = 1 , 2, 3, ...m, (2.4) has a unique solution ( pi(t), e j (t)). 
+
+Definition 2.4. Pursuit is said to be completed at some finite time 0 < τ ≤ ϑ in the game (2.1)-(2.3) if there exist strategies ci(t) of the pursuers pi such that for any permissible control fj (·) of the evader ej the equation pi(τ ) = ej (τ ) is satisfied for some i ∈ { 1, 2, · · · l} and all j ∈ { 1, 2, 3, · · · m}
+
+Given the players permissible control ci(·) and fj (·), the corresponding paths pi(t), e j (t), at any time t > 0 of the players for any initial positions pi0, e j0, respectively are given by 
+
+pi(ϑ) = pi0e−βiϑ + e−βiϑ
+
+Z ϑ
+
+> 0
+
+ci(s)eβisds, (2.5) 
+
+ej (ϑ) = ej0e−βj ϑ + e−βj ϑ
+
+Z t
+
+> 0
+
+fj (s)eβj sds. (2.6) 
+
+Lemma 1. [12] Let w(t), t ≥ 0 be a measurable function, φ and k be non-negative real numbers then the inequality 
+
+|w(t)| ≤ φe kt , (2.7) 
+
+is true whenever 
+
+|w(t)|2 ≤ φ2 + 2 k
+
+Z t
+
+> 0
+
+|w(s)|2ds. (2.8) 
+
+Research question :What is (are) the sufficient condition(s) that can ensure completion of pursuit for a finite time in the game (2.1)- (2.3)? 
+
+# 3 Main Result 
+
+In this section, we present the main results of the research work in form of theorems and their proofs. Let the ith pursuer chases jth evader and uses the strategy 
+
+ci(t) = (eΛij ϑej0 − pi0)
+
+ϑ e−βit + eΛij (ϑ−t)fj (t), (3.1) 4where Λ ij = βi − βj , 0 ≤ t ≤ ϑ. 
+
+Before presenting the main results and theorems, we introduce several preliminary definitions that will be used: ς := max {ςj }. ϱ := min {ϱi}. γ := max  
+
+> i,j
+
+{∥eΛi,j ej0 − pi0∥
+
+ϑ }. Λ := max  
+
+> i,j
+
+{Λi,j }.β = max  
+
+> i
+
+{β}, ϕ = max {− β, k }.
+
+The subsequent theorems establish rigorous answers to the research question formulated in this work. 
+
+Theorem 2. Consider the game defined by (2.1)- (2.3) under the assumptions that Λ = 0 and 
+
+ϱ > γ . If the ith pursuer adopts the strategy given in (3.1), then pursuit is guaranteed whenever 
+
+ς ≤
+
+ e−kϑ (ϱ − γ) , β ≥ 0.ϱe −ϕϑ − γ, β < 0.
+
+Proof. When Λ = 0, we have βi = βj , and consequently the strategy(3.1) reduces to 
+
+ci(t) = (ej0 − pi0)
+
+ϑ e−βit + fj (t). (3.2) If the ith pursuer apply strategy (3.2) using (2.5) and (2.6), gives pi(ϑ) = ej (ϑ). Indeed, 
+
+pi(ϑ) = pi0e−βiϑ +
+
+Z ϑ
+
+> 0
+
+eβi(s−θ)ci(s)ds 
+
+= pi0e−βiϑ +
+
+Z ϑ
+
+> 0
+
+eβi(s−ϑ)
+
+(ej0 − pi0)
+
+ϑ e−βis + fj (s)
+
+
+
+ds 
+
+= pi0e−βiϑ +
+
+Z ϑ
+
+> 0
+
+(ej0 − pi0)
+
+ϑ e−βj ϑds +
+
+Z ϑ
+
+> 0
+
+eβi(s−ϑ)fj (s)ds 
+
+= pi0e−βiϑ + (ej0 − pi0)
+
+ϑ e−βj ϑ
+
+Z ϑ
+
+> 0
+
+ds +
+
+Z ϑ
+
+> 0
+
+eβi(s−ϑ)fj (s)ds 
+
+= ej0e−βj ϑ +
+
+Z ϑ
+
+> 0
+
+eβj (s−ϑ)fj (s)ds = ej (ϑ).
+
+The permissibility of the pursuer strategy (3.2) can be established using Lemma 1, as follows: 
+
+∥ci(t)∥2 = (ej0 − pi0)
+
+θ e−βit + fj (t)
+
+> 2
+
+= e−2βit∥ej0 − pi0∥2
+
+ϑ2 + 2 
+
+e−βit(ej0 − pi0)
+
+ϑ , f j (t)
+
+
+
++ ∥fj (t)∥2
+
+≤ e−2βit∥ej0 − pi0∥2
+
+ϑ2 + 2e−βit∥ej0 − pi0∥∥ fj (t)∥
+
+ϑ + ∥fj (t)∥2
+
+≤ e−2βt ∥ej0 − pi0∥2
+
+ϑ2 + 2e−βt ∥ej0 − pi0∥∥ fj (t)∥
+
+θ
+
++ ∥fj (t)∥2. (3.3) If β ≥ 0, then from (3.3) we have 5∥ci(t)∥2 ≤ ∥ej0 − pi0∥2
+
+ϑ2 + 2∥ej0 − pi0∥ςj ekt 
+
+ϑ + ς2 
+
+> j
+
+e2kt 
+
+≤ ∥ej0 − pi0∥2
+
+ϑ2 + 2∥ej0 − pi0∥ςj ekϑ 
+
+ϑ + ς2 
+
+> j
+
+e2kϑ 
+
+≤ ∥ej0 − pi0∥2
+
+ϑ2 + 2∥ej0 − pi0∥ςe kϑ 
+
+ϑ + ς2e2kϑ 
+
+≤ ∥ej0 − pi0∥2
+
+ϑ2 + 2∥ej0 − pi0∥ekϑ 
+
+ϑ (ϱ − γ) e−kϑ + e−2kϑ (ϱ − γ)2 e2kϑ 
+
+= ∥ej0 − pi0∥2
+
+ϑ2 + 2∥ej0 − pi0∥
+
+ϑ (ϱ − γ) + ( ϱ − γ)2
+
+= ∥ej0 − pi0∥2
+
+ϑ2 + 2ϱ∥ej0 − pi0∥
+
+ϑ − 2∥ej0 − pi0∥γϑ + ϱ2 − 2ϱγ + γ2
+
+≤ ∥ej0 − pi0∥2
+
+ϑ2 + 2ϱ∥ej0 − pi0∥
+
+ϑ − 2∥ej0 − pi0∥2
+
+ϑ2 + ϱ2 − 2ϱ∥ej0 − pi0∥
+
+ϑ + ∥ej0 − xi0∥2
+
+θ2
+
+= ϱ2 ≤ ϱ2 
+
+> i
+
++ 2 k
+
+Z ϑ
+
+> 0
+
+∥ci(t)∥2dt. 
+
+If β < 0, then from (3.3) we have 
+
+∥ci(t)∥2 = e2ϕt ∥ej0 − pi0∥2
+
+ϑ2 + 2eϕt ∥ej0 − pi0∥ςe ϕt 
+
+ϑ + ς2e2ϕt 
+
+≤ e2ϕϑ ∥ej0 − pi0∥2
+
+ϑ2 + 2e2ϕϑ ∥ej0 − pi0∥ςϑ + ς2e2ϕϑ 
+
+≤ e2ϕϑ ∥ej0 − pi0∥2
+
+ϑ2 + 2e2ϕϑ ∥ej0 − pi0∥
+
+ϑ
+
+ ϱe −ϕϑ − γ +  ϱe −ϕϑ − γ2 e2ϕϑ 
+
+= e2ϕϑ ∥ej0 − pi0∥2
+
+ϑ2 + 2eϕϑ ∥ej0 − pi0∥ϱϑ − 2e2ϕϑ ∥ej0 − pi0∥γϑ
+
++ ϱ2 − 2γϱe ϕϑ + γ2e2ϕϑ 
+
+≤ e2ϕϑ ∥ej0 − pi0∥2
+
+ϑ2 + 2eϕϑ ∥ej0 − pi0∥ϱϑ − 2e2ϕϑ ∥ej0 − pi0∥2
+
+ϑ2
+
++ ϱ2 − 2eϕϑ ∥ej0 − pi0∥ϱϑ + e2ϕϑ ∥ej0 − pi0∥2
+
+ϑ2
+
+= ϱ2 ≤ ϱ2 + 2 k
+
+Z ϑ
+
+> 0
+
+∥ci(t)∥2dt. 
+
+Therefore, the proof of Theorem 2 is complete. To validate the proof of Theorem 2, a numerical example is presented in the remark below. 
+
+Remark 3. It is possible to simultaneously satisfy the inequalities of the hypothesis of the Theorem 2. View the following example below: 
+
+Example 4. For β ≥ 0, we consider l = 2 and m = 1. Then Theorem 2 inequalities can be fulfilled by selecting β1 = 3 , β 2 = −4, ϱ 1 = 100 , ϱ 2 = 200 , ς 1 = 150 , ϑ = 2 , k = 3 and letting 
+
+e10 = ( e110 , e 210 , ..., e n
+
+> 10
+
+) = (1 , 0, ..., 0) , p 10 = ( p110 , p 210 , ..., p n
+
+> 10
+
+) = (2 , 0, ..., 0) 
+
+p20 = ( p120 , p 220 , ..., p n
+
+> 20
+
+) = (3 , 0, ..., 0) .
+
+This implies that β = 3 and ∥(e10 −p10 )∥ 
+
+> ϑ
+
+= (−12+0 2+... +0 2)
+
+12 
+
+> 2
+
+= 12 . Thus γ = max  
+
+> i,j
+
+{∥eΛi,j ej0 − pi0∥
+
+ϑ } =612. Therefore, we can see that, 150 ≤ e−6 (100 − 0.5) .
+
+That is 150 < 40141 .29 ,
+
+which means that 
+
+ς ≤ e−kϑ (ϱ − γ)With assumed values above, the inequality for β < 0 can also be satisfied. This means that 
+
+β = −4. and ϕ = max {− 4, 3} = 3 .
+
+Therefore, we can see that, 150 ≤ 100 e−6 − 0.5.
+
+That is 150 < 0.034 implies that, 
+
+ς ≤ ϱe −ϕϑ − γ. 
+
+Theorem 5. Suppose in the game (2.1)- (2.3) that Λ < 0 and γ < ϱ . If the ith pursuer uses the strategy (3.1)then pursuit can be completed whenever 
+
+ς ≤
+
+ e−kϑ (ϱ − γ) , β ≥ 0.ϱe −ϕϑ − γ, β < 0.
+
+Proof. If the ith pursuer apply strategy (3.1) then using (2.5) and (2.6), we can deduce that 
+
+pi(ϑ) = ej (ϑ). Indeed, 
+
+pi(ϑ) = pi0e−βiϑ +
+
+Z ϑ
+
+> 0
+
+eβi(s−ϑ)ci(s)ds 
+
+= pi0e−βiϑ +
+
+Z ϑ
+
+> 0
+
+eβi(s−ϑ)
+
+(eΛij ϑej0 − pi0)
+
+ϑ e−βis + eΛij (ϑ−s)fj (s)
+
+
+
+ds 
+
+= pi0e−βiϑ +
+
+Z ϑ
+
+> 0
+
+ej0eβi(s−θ) eΛij ϑe−βis
+
+ϑ ds −
+
+Z ϑ
+
+> 0
+
+pi0eβi(s−ϑ)e−βis
+
+ϑ ds 
+
++
+
+Z ϑ
+
+> 0
+
+eβi(s−ϑ)eΛij (ϑ−s)fj (s)ds 
+
+= pi0e−βiϑ +
+
+Z ϑ
+
+> 0
+
+ej0e−βj ϑ
+
+ϑ ds −
+
+Z ϑ
+
+> 0
+
+pi0e−βiϑ
+
+ϑ +
+
+Z ϑ
+
+> 0
+
+eβj (s−ϑ)fj (s)ds 
+
+= pi0e−βiϑ + ej0e−βj ϑ − pi0e−βiϑ +
+
+Z ϑ
+
+> 0
+
+eβj (s−ϑ)fj (s)ds 
+
+= ej0e−βj ϑ +
+
+Z ϑ
+
+> 0
+
+eβj (s−ϑ)fj (s)ds = ej (ϑ).
+
+7The permissibility of the pursuer strategy (3.1) is followed using lemma (1) as, 
+
+∥ci(t)∥2 = (eΛij ϑej0 − pi0)
+
+ϑ e−βit + eΛij (ϑ−t)fj (t)
+
+2
+
+= e−2βit∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2 
+
+(eΛij ϑej0 − pi0)e−βit
+
+ϑ , e Λij (ϑ−t)fj (t)
+
+
+
++ ∥eΛij (ϑ−t)fj (t)∥2
+
+≤ e−2βit∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2e−βit∥eΛr ϑej0 − pi0∥eΛij (ϑ−t)∥fj (t)∥
+
+ϑ
+
++ e2Λ ij (ϑ−t)∥fj (t)∥2
+
+≤ e−2βit∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2e−βit∥eΛr ϑej0 − pi0∥eΛ( ϑ−t)∥fj (t)∥
+
+ϑ
+
++ e2Λ( ϑ−t)∥fj (t)∥2
+
+≤ e−2βit∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2e−βit∥eΛij ϑej0 − pi0∥∥ fj (t)∥
+
+ϑ
+
++ ∥fj (t)∥2. (3.4) when β ≥ 0, then from (3.4), we have 
+
+∥ci(t)∥2 ≤ ∥eΛij ϑyj0 − xi0∥2
+
+ϑ2 + 2∥eΛij ϑej0 − pi0∥∥ fj (t)∥
+
+ϑ + ∥fj (t)∥2
+
+≤ ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2∥eΛij ϑej0 − pi0∥ςj ekϑ 
+
+ϑ + ς2
+
+j e2kϑ 
+
+≤ ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2∥eΛij ϑej0 − pi0∥ςe kϑ 
+
+ϑ + ς2e2kϑ 
+
+≤ ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2∥eΛij ϑej0 − pi0∥ekϑ 
+
+ϑ (ϱ − γ) e−kϑ 
+
++ e−2kϑ (ϱ − γ)2 e2kϑ 
+
+= ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2∥eΛij ϑej0 − pi0∥
+
+ϑ (ϱ − γ) + ( ϱ − γ)2
+
+= ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2ϱ∥eΛij ϑej0 − pi0∥
+
+ϑ − 2∥eΛr ϑej0 − pi0∥γϑ
+
++ ϱ2 − 2ϱγ + γ2
+
+≤ ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2ϱ∥eΛij ϑej0 − pi0∥
+
+ϑ − 2∥eΛij ϑej0 − pi0∥2
+
+ϑ2
+
++ ϱ2 − 2ϱ∥eΛij ϑej0 − pi0∥
+
+ϑ + ∥eΛij ϑej0 − pi0∥2
+
+ϑ2
+
+= ϱ2 ≤ ϱ2
+
+i + 2 k
+
+Z ϑ
+
+0
+
+∥ci(t)∥2dt. 
+
+8when β < 0, then from (3.4), we have 
+
+∥ci(t)∥2 = e−2βit∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2e−βit∥eΛij ϑej0 − pi0∥∥ fj (t)∥
+
+ϑ ∥fj (t)∥2
+
+≤ e2ϕt ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2eϕt ∥eΛij ϑej0 − pi0∥ςe ϕt 
+
+ϑ + ς2e2ϕt 
+
+≤ e2ϕϑ ∥ej0 − pi0∥2
+
+ϑ2 + 2e2ϕϑ ∥ej0 − pi0∥ςϑ + ς2e2ϕϑ 
+
+≤ e2ϕϑ ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2e2ϕϑ ∥eΛij ϑej0 − pi0∥
+
+ϑ
+
+ ϱe −ϕϑ − γ +  ϱe −ϕϑ − γ2 e2ϕϑ 
+
+= e2ϕϑ ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2eϕϑ ∥eΛij ϑej0 − pi0∥ϱϑ − 2e2ϕϑ ∥eΛij ϑeΛij ϑej0 − pi0∥γϑ
+
++ ϱ2 − 2γϱe ϕϑ + γ2e2ϕϑ 
+
+≤ e2ϕϑ ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2eϕϑ ∥eΛij ϑej0 − pi0∥ϱϑ − 2e2ϕϑ ∥eΛij ϑej0 − pi0∥2
+
+ϑ2
+
++ ϱ2 − 2eϕϑ ∥eΛij ϑej0 − pi0∥ϱϑ + e2ϕϑ ∥ej0 − pi0∥2
+
+ϑ2
+
+= ϱ2 ≤ ϱ2 
+
+> i
+
++ 2 k
+
+Z ϑ
+
+> 0
+
+∥ci(t)∥2dt. 
+
+Therefore, the proof of Theorem 5 is complete. To validate the proof of Theorem 5, a numerical example is presented in the remark below. 
+
+Remark 6. At the same time, the inequalities of the hypothesis of the Theorem 5 can be satisfied. Look at the following example: 
+
+Example 7. We take into consideration that l = 2 and m = 1 for β ≥ 0. Then Theorem 2 inequalities can be fulfilled if β1 = 3 , β 2 = −4, ϱ 1 = 250 , ϱ 2 = 200 , ς 1 = 120 , ϑ = 1 . and k = 3 Letting e10 = ( e110 , e 210 , ..., e n
+
+> 10
+
+) = (1 , 0, ..., 0) , p 10 = ( p110 , p 210 , ..., p n
+
+> 10
+
+) = (2 , 0, ..., 0) 
+
+p20 = ( p120 , p 220 , ..., p n
+
+> 20
+
+) = (3 , 0, ..., 0) .
+
+This means that β = 3, ϕ = max {3, 3} = 3 Λ 2,1 = −4 − 3 = −7. Λ = −7and ∥(e10 −p10 )∥ 
+
+> ϑ
+
+= (( −3) 2+0 2+... +0 2)
+
+12 
+
+> 1
+
+= 3 .0, thus γ = max  
+
+> i,j
+
+{∥eΛi,j ej0 − pi0∥
+
+ϑ } = 3 .0. Consequently, we may observe that, 120 ≤ e−3 (200 − 3.0) .
+
+That is 120 < 0.034 ,
+
+which means that 
+
+ς ≤ e−kϑ (ϱ − γ) .
+
+The inequality for β < 0 can also be satisfied with the above assumed values, meaning that β = −4.
+
+and ϕ = max {− 4, 3} = 4 Therefore we can see that, 120 ≤ 200 e−4 − 3.0.
+
+9That is 120 < 0.66 .
+
+This implies that, 
+
+ς ≤ ϱe −ϕϑ − γ. 
+
+Theorem 8. Suppose in the game (2.1)- (2.3) that Λ > 0 and ϱ > γ. If the ith pursuer uses the strategy (3.1)then pursuit can be completed whenever 
+
+ς ≤
+
+ e−ϑ(k+Λ) (ϱ − γ) , β ≥ 0. e−ϕϑ ϱ − γ e−Λϑ, β < 0.
+
+Proof. The proof that pi(ϑ) = ej (ϑ) is analogous to that presented in Theorem 5. To establish the permissibility of strategy (3.1), we proceed as follows: 
+
+∥ci(t)∥2 = (eΛij ϑej0 − pi0)
+
+ϑ e−βit + eΛij (ϑ−t)fj (t)
+
+> 2
+
+= e−2βit∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2 
+
+e−βit(eΛij ϑej0 − pi0)
+
+ϑ , e Λij (ϑ−t)fj (t)
+
+
+
++ ∥eΛij (ϑ−t)fj (t)∥2
+
+≤ e−2βit∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2e−βit∥eΛij ϑej0 − pi0∥eΛij (ϑ−t)∥fj (t)∥
+
+ϑ
+
++ eΛij (ϑ−t)∥fj (t)∥2
+
+≤ e−2βt ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2e−βt ∥eΛij ϑej0 − pi0∥eΛϑ∥fj (t)∥
+
+ϑ
+
++ eΛϑ∥fj (t)∥2. (3.5) when β ≥ 0, then from (3.5), we have 
+
+∥ci(t)∥2 ≤ ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2∥eΛij ϑej0 − pi0∥eΛϑ∥fj (t)∥
+
+ϑ + e2Λ ϑ∥fj (t)∥2
+
+≤ ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2∥eΛi,j ϑej0 − pi0∥ςj eϑ(Λ+ k)
+
+ϑ + ς2 
+
+> j
+
+e2ϑ(Λ+ k)
+
+10 ≤ ∥eΛi,j ϑej0 − pi0∥2
+
+ϑ2 + 2∥eΛϑej0 − pi0∥ςe ϑ(Λ+ k)
+
+ϑ + ς2e2ϑ(Λ+ k)
+
+≤ ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2∥eΛij ϑej0 − pi0∥eϑ(Λ+ k)
+
+ϑ (ϱ − γ) e−ϑ(Λ+ k)
+
++ e−2ϑ(Λ+ k) (ϱ − γ)2 e2ϑ(Λ+ k)
+
+= ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2∥eΛij ϑej0 − pi0∥
+
+ϑ (ϱ − γ) + ( ϱ − γ)2
+
+= ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2ϱ∥eΛij ϑej0 − pi0∥
+
+ϑ − 2∥eΛij ϑej0 − pi0∥γϑ
+
++ ϱ2 − 2ϱγ + γ2
+
+≤ ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2ϱ∥eΛij ϑej0 − pi0∥
+
+ϑ − 2∥eΛij ϑej0 − pi0∥2
+
+ϑ2
+
++ ϱ2 − 2ϱ∥eΛi,j ϑej0 − pi0∥
+
+ϑ + ∥eΛij ϑej0 − pi0∥2
+
+ϑ2
+
+= ϱ2 ≤ ϱ2 
+
+> i
+
++ 2 k
+
+Z ϑ
+
+> 0
+
+∥ci(t)∥2dt. 
+
+when β < 0, then from (3.5), we have 
+
+∥ci(t)∥2 = e2ϕϑ ∥eΛij ϑej0 − pi0∥2
+
+ϑ2 + 2e2ϕϑ ∥eΛij ϑej0 − pi0∥eΛϑ  e−ϕϑ ϱ − γ e−Λϑ
+
+ϑ
+
++ e2Λ ϑ  e−ϕϑ ϱ − γ2 e−2Λ ϑe2ϕϑ 
+
+≤ γ2e2ϕϑ + 2 γe 2ϕϑ  e−ϕϑ ϱ − γ +  e−ϕϑ ϱ − γ2 e2ϕϑ 
+
+≤ e2ϕϑ 
+
+
+
+γ2 + 2 γ  e−ϕϑ ϱ − γ +  e−ϕϑ ϱ − γ2
+
+= e2ϕϑ  γ2 + 2 γe −ϕϑ ϱ − 2γ2 + e−2ϕϑ ϱ2 − 2γϱe −ϕϑ + γ2
+
+= ϱ2 ≤ ϱ2 
+
+> i
+
++ 2 k
+
+Z ϑ
+
+> 0
+
+∥ci(t)∥2dt. 
+
+Therefore, the proof of Theorem 8 is complete. To validate the proof of Theorem 8, a numerical example is presented in the remark below. 
+
+Remark 9. The inequality in Theorem 8 can be satisfied concurrently. Here is an example: 
+
+Example 10. For β ≥ 0 ,we consider l = 2 and m = 1. Then the inequalities in Theorem 2 can be satisfied by choosing β1 = 3 , β 2 = −4, ϱ 1 = 2050000 , ϱ 2 = 100000 , ς 1 = 120 , ϑ = 1 , k = 3 and allowing e10 = ( e110 , e 210 , ..., e n
+
+> 10
+
+) = (1 , 0, ..., 0) , p 10 = ( p110 , p 210 , ..., p n
+
+> 10
+
+) = (2 , 0, ..., 0) 
+
+p20 = ( p120 , p 220 , ..., p n
+
+> 20
+
+) = (3 , 0, ..., 0) .
+
+This means that β = 3, Λ 1,2 = 3 + 4 = 7 . Λ = 7 and ∥(e10 −p10 )∥ 
+
+> ϑ
+
+= (( −3) 2+0 2+... +0 2)
+
+12 
+
+> 1
+
+1094, thus γ = max  
+
+> i,j
+
+{∥eΛi,j ej0 − pi0∥
+
+ϑ } = 1094 . Therefore we can see that, 120 ≤ e−1(10) (100000 − 1094) .
+
+That is 120 < 1811 .53 ,
+
+11 which means that 
+
+ς ≤ e−ϑ(k+Λ) (ϱ − γ)With assumed values above, the inequality for β < 0 can also be satisfied, this means that β = −4.
+
+and ϕ = max {− 4, 3} = 3 Therefore, we can see that, 120 ≤  e−3100000 − 1094  e−7.
+
+That is 120 < 0.67 , which means that ς ≤  e−ϕϑ ϱ − γ e−Λϑ.
+
+# 4 Conclusion 
+
+We investigated a class of multi-agent pursuit problems over a fixed operational time horizon in the space Rn. The motion of each agent is governed by a first-order linear differential equation. We established Theorems 2, 5, and 8 under different operational conditions characterized by the parameter Λ (defined as the maximum of βi − βj ). These results provide explicit criteria under which successful interception is guaranteed. In Theorem 2, we showed that when Λ = 0 and the maximum speed of the pursuers exceeds γ,interception is ensured. In Theorem 5, we proved that if Λ < 0 and γ is less than the maximum speed of the pursuers, pursuit is also completed. Finally, Theorem 8 demonstrates that when Λ > 0and the pursuers’ maximum speed exceeds γ, successful interception still occurs. To illustrate the practical relevance of the theoretical findings, we presented numerical examples that confirm the analytical conditions for successful pursuit. This work extends and generalizes earlier results by Ahmed [1] and Gbande et al. [5]. The the-oretical framework developed here has potential applications in engineering systems, economic competition models, missile guidance, autonomous vehicles, robotics, and related multi-agent con-trol problems. 
+
+# 5 Declarations 
+
+Competing Interest : The authors declare no conflicts of interest. 
+
+Funding : This research received no funding. 
+
+Availability of data and material : No data is associated with this work. 
+
+# References 
+
+[1] Ahmed, I., Wiyada, K. W., Ibragimov, G. I. and Rilwan, J. ”Pursuit Differential Game Prob-lem with Multiple Players on a Closed Convex Set with More General Integral Constraints”, Thai Journal of Mathematics, 18 (2) 551-561. http://thaijmath.in.cmu.ac.th., (2020). [2] Badakaya, A. J., Tsoho, S. M. and Salmi, M. ”On Some l−Catch Pursuit Differential Games with Different Players” Dynamic Equations, Differential Equations and Dynamical Systems https://doi.org/10.1007/s12591-023-00673-8, (2024). 12 [3] Berkovitz, L. D. ”Differential game of generalized pursuit and evasion”. SIAM J. Control Optim. Vol. 24, No. 3, P. 361-373. DOI: 10.1137/0324021, (1986). [4] Borodo, B. B., Minjibir, M. S. and Badakaya, A. J. ”Pursuit Differential Game Problem with Component-wise Constraints in l∞” Journal of Optimization Theory and Applications, 207:31 https://doi.org/10.1007/s10957-025-02785-3 (2025). [5] Gbande, D. T., Cheme, D. T., Nyimkor, B. and Adamu, R. A. ”Pursuit Problem of a Linear Differential Game for Many Numbers of Players With Geometric and Gronwall Type Con-straints on Players Controls”. Journal of Advances in Mathematics and Computer Science 40 (4):57-66. https://doi.org/10.9734/jamcs/2025/v40i41988, (2025). [6] Ibragimov, G. Inomiddinov S., Kurbonbekova O., Pansera B. A., and Khodjimet A. ” Differ-ential Game of Mutltiple Pursuers and one Evader with Integral Constraint of Special form” Journal of Dynamics and Games Vol. 14, 2026, pp. 72-82 doi:10.3934/jdg.2025023. [7] Isaacs R. ”Differential Games” New York: John Wiley and Sons, 1965. 385 p. [8] Krasovskii, N. N. and Subbotin, A. I. ”Game-Theoretical Control Problems”. New York: Springer, 517 , (2011). [9] Nash, J. F. ”Equilibrium points in n-person games”, Proceedings of the National Academy of the USA, vol. 36, n. 1, pp. 48-49. (1950). [10] Nowakowski, R. and Winkler, P. ”Vertex-to-vertex pursuit in a graph”. Theoretical Computer Science Vol. 839, 143-163, (2020). [11] Pierre, C. ”Introduction to Differential Games”. Univerite de Brest, (2010). [12] Rilwan, J., Ferrara, M. and Badakaya, A. J. ”On Pursuit and Evasion Game problems with Gronwall-type Constraints” Quality and Quantity 57:5551–5562, https://doi.org/10.1007/s11135-023-01616-9, (2023). [13] Salimi, M. and Ferrara, M. ”Differential game of optimal pursuit of one evader by many pur-suers” Int J Game Theory 48, 481-490 . https:doi.org//10.1007// s00182-018-0638-6, (2019). [14] Samatov, B. T., Ulmasjon, S. and Adhambek, A. ”A linear differential game with Gronwall-type constraints on controls” Ural mathematical journal, 6, 4, 95-107, (2020). [15] Usman, W., Gafurjan, I., Idham, A. A. and Zarina, B. I. ”pursuit game problem of an infinite system of differential equations with geometric and integral constraints”. Journal of Physics Conference 1132 D12054, (2019). [16] Umar, B. M., Rilwan J., Danyaro, L. M., Muhammad, A. B. and Bagare, S. A. ”Guaranteed Pursuit Time for an Infinite System in l2 with Geometric Constraints”. Bangmod Int. J. Math. and Comp. Sci., Vol. 11 (2025), 63–74. https://doi.org/10.58715/bangmodjmcs, 11, 4, (2025). 13

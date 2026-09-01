@@ -1,0 +1,612 @@
+Title: Phantom Navigator: Stealthy and Precise Unmanned Aerial Vehicle Redirection with Real-Time Tracking and GPS Spoofing
+
+URL Source: https://arxiv.org/pdf/2608.26011v1
+
+Published Time: Thu, 27 Aug 2026 01:25:05 GMT
+
+Number of Pages: 15
+
+Markdown Content:
+# Phantom Navigator: Stealthy and Precise Unmanned Aerial Vehicle Redirection with Real-Time Tracking and GPS Spoofing 
+
+# Haocheng Meng 
+
+Duke University Durham, North Carolina, USA 
+
+# Shaocheng Luo 
+
+Duke University Durham, North Carolina, USA 
+
+# Songqiao Xie 
+
+Duke University Durham, North Carolina, USA 
+
+# Miroslav Pajic 
+
+Duke University Durham, North Carolina, USA 
+
+## Abstract 
+
+Redirecting unmanned aerial vehicles (UAVs) from their intended mission trajectories has been an active area of research. How-ever, existing UAV redirection attacks lack reliability, precision, and covertness for a targeted diversion. They primarily rely on physical capture, communication hijacking, or sensor spoofing. Yet, physical interception is costly, offers only a single opportunity for success, and poses a high risk of collateral damage; network-based attacks demand deep technical expertise and access to encrypted communication channels; and sensor spoofing techniques typically fall short in achieving the accuracy and robustness required to steer a UAV toward a specified target. Consequently, we propose Phantom Navigator, a UAV redirection attack to mislead drones to a designated spoofing target, covertly and precisely. Our approach combines offline pre-redirection reachability analysis, which pro-vides high-fidelity estimates of achievable redirect ranges, with an online closed-loop, stealthy execution layer that ensures successful redirection in practice. Based on this approach, we build a physical attack platform equipped with a LiDAR–camera detection, tracking, and spoofing stack that performs real-time identification, pose esti-mation, and computation of targeted spoofing signals to covertly and accurately redirect victim UAVs to a designated location. We demonstrate the effectiveness of our redirection methodology and the attack implementation in real-world case studies. 
+
+## Keywords 
+
+UAV Redirection, GPS Spoofing, Stealthy Attack 
+
+## 1 Introduction 
+
+Unmanned aerial vehicles (UAVs) have become integral to modern cyber-physical systems, in applications such as aerial mapping, package delivery, and infrastructure inspection. These platforms heavily rely on onboard navigation, particularly the Global Posi-tioning System (GPS), to localize, plan, and execute autonomous missions [25, 31]. Consequently, security of the navigation stack is critical to ensuring the success of UAVs’ missions. Yet, recently it was shown that the integrity of the navigation systems can be compromised, forcing a UAV from the expected mission/trajectory (e.g., see [21] and references therein). From the UAV navigation’s perspective, two components are critical for mission integrity: ( 𝑖 ) the reference state, which encodes mission-level commands and trajectories, and ( 𝑖𝑖 ) the estimated state, reflecting the UAV’s (self) perceived position and orientation. Adversarial manipulation of either can redirect the vehicle from 
+
+Figure 1: Existing UAV redirection attack approaches: (𝑖 ) Wireless hijacking; ( 𝑖𝑖 ) Redirection using GPS spoofing. 
+
+its intended trajectory. Correspondingly, as is depicted in Fig. 1, existing attack methodologies can be broadly categorized into two classes: ( 𝑖 ) wireless hijacking and ( 𝑖𝑖 ) sensor spoofing. Wireless hijacking seeks to compromise the communication or control interface, gaining unauthorized access to the navigation stack to alter mission commands directly [32, 33, 50]. In contrast, sensor spoofing perturbs the perception or sensor-fusion pipeline to induce erroneous state estimates, misleading the UAV’s control and decision-making [51]. While former offers complete UAV control once successful, it is difficult to execute as it demands knowledge of proprietary protocols, cryptographic keys, or system vulnerabilities. Sensor spoofing, by comparison, presents a more practical and scalable attack surface that is cost-effective, hardware-agnostic, and physically deployable without prior access to the victim UAVs. Sensor spoofing attacks manipulate a target drone’s state estima-tion process by disrupting sensing and perception through various physical attack vectors [24]. Prior research has exposed vulnerabil-ities of UAV onboard sensors including GPS spoofing [3, 4, 30, 35], IMU acoustic injection [19, 42, 48], magnetic interference [18], and visual deception against optical flow sensors [11, 53]. Depending 
+
+> 1arXiv:2608.26011v1 [cs.RO] 26 Aug 2026 Haocheng Meng, Shaocheng Luo, Songqiao Xie, and Miroslav Pajic
+
+on the sensing modality, different attacks target distinct compo-nents of the UAV sensor fusion pipeline, and have different effects in diverting UAVs from their original trajectories. Inertial sensor attacks (e.g., [19, 42, 48]) corrupt the attitude estimation by inject-ing errors into body-frame angular rate measurements, causing severe degradation of the local inertial navigation system and im-mediate crashes. Although effective at destabilizing flight control, such attacks lack the precision required to steer the victim toward a specific location. Similarly, magnetic interference attacks affect the circuitry of onboard magnetometers and other sensors, leading to data corruption, signal saturation, and communication loss, making the attack outcome unpredictable, mostly resulting in crashes [18]. Optical and vision-based attacks compromise the visual percep-tion pipeline by injecting or distorting light signals, producing false or missing visual cues in the UAV’s environment [11, 53]; however, their impact is highly environment dependent and thus, difficult to control. In contrast, GPS spoofing attacks offer a uniquely control-lable and targeted means of manipulation, by directly altering the localization and navigation estimates and enabling adversaries to systematically reroute victim drones toward designated targets. Nevertheless, the existing GPS spoofing attacks leave a question unanswered: Can a UAV be diverted, not only away from its course, but to an attacker-chosen destination without triggering anomaly detection? UAVs, as most safety-critical systems, have anomaly de-tectors that revert system to safe operation in case of an anomaly. Therefore, stealthiness (i.e., covertness) is key to successful attacks because an overt, brutal force attack can be detected by UAV intru-sion detection systems and the affected sensing modality could be filtered or removed, resulting in attack failure [16, 52]. In practice, prior approaches fall short of achieving a targeted redirection at-tack with both the precision and stealthiness required for a truly controlled attack. Leveraging spoofed GPS receivers, rule-based algorithms have been used to deviate UAVs from their paths [30, 35]. However, these methods rely on open-loop control or human supervision, which makes them unreliable for accurate redirection to spoofing targets as the feedback to attack system is only dependent on human obser-vations. Closed-loop approaches (i.e., where the inserted ‘spoofed’ signal depends on the state of the UAV) have been explored for fixed-wing UAVs, aided by radars, to reroute the drones toward the target positions [3, 4]. However, such attacks are easily de-tectable by anomaly/intrusion detection systems as they introduce out-of-distribution sensing errors, triggering statistical detectors (e.g., 𝜒 2 detector). While [13] proposes a stealthy spoofing method, it assumes complete knowledge of the victim UAV’s dynamics and parameters, which are often inaccessible and may vary with mis-sion configurations – thus, resulting in attacks being detected due to parameter changes that occur during every mission (e.g., battery level changes, wind, payload weight). Consequently, prior research on GPS redirection attacks remains constrained in two aspects: (i) the inability to precisely control the spoofing outcome, and (ii) the lack of strategies to evade onboard anomaly detection mechanisms. These limitations significantly re-duce the practicality, scalability, and reliability of existing GPS spoofing–based redirection attacks. In this work, we address these limitations and show that it is possible to launch stealthy GPS-spoofing attacks on UAVs that force the vehicles into the desired location. To achieve this, we introduce Phantom Navigator , a real-time UAV redirection attack framework designed to precisely and covertly redirect victim drones to designated areas, regardless of their ongoing missions or onboard anomaly detection mechanisms. Building upon a formulation of GPS spoofing within UAV dynamics, we first conduct an efficient pre-attack redirection range analysis that estimates the achievable spoofing outcomes under black-box settings and varying levels of attacker knowledge. We then develop a lightweight, model-free redirection controller that computes GPS attack signals in real time based on the estimated victim pose and the spoofing target. To validate the framework, we implement an attacker platform prototype equipped with a real-time attack pipeline that performs identification and tracking through LiDAR–camera fusion, attack outcome estimation, and closed-loop spoofing signal generation. Our main contributions are summarized as follows. 
+
+• We introduce a novel UAV redirection attack featuring both offline attack range estimation and online closed-loop at-tack execution. Our framework provides both attack stealth-iness and precision without assumption on the internal parameters or the employed sensor fusion pipeline. 
+
+• We build an experimental attacker platform that incorpo-rates LiDAR–camera real-time onboard tracking and spoof-ing capabilities against victims equipped with GPS system to achieve redirection to desired target areas. 
+
+• We evaluate our redirection attacks methodology and the attacker platform prototype on a victim drone in physical case studies, in both indoor controlled environments and outdoor real-world scenarios. The paper is organized as follows. Sec. 2 provides related work on UAV detection and tracking and the physical GPS attacks; Sec. 3 introduces the threat model, including attacker knowledge, capabil-ity, goal and implementation; Sec. 4 presents Phantom Navigator methodology, with the redirection model, pre-attack redirection range estimation and in-attack controller design; Sec. 5 demon-strates the physical design of Phantom Navigator and the real-world case studies both indoors and outdoors. 
+
+## 2 Related Work 2.1 UAV Detection and Tracking 
+
+Accurate detection, identification, and tracking are essential pre-requisites for reliable UAV redirection attacks. A variety of sens-ing modalities have been explored to detect UAVs across different ranges. Radar-based detection leverages RF reflections and offers the advantage of long-range operation (e.g., up to 2 𝑘𝑚 [7]) under diverse weather conditions [6, 28, 38, 41]. Conventional radar sys-tems are effective for large aerial targets but often struggle with small drones due to their low speeds and weak radar signatures. To address this, mmWave radars have been employed, providing higher resolution and improved performance on smaller targets. Vision-based detection has become a common practice with the rise of deep learning techniques [12, 26, 37, 39, 49]. Camera systems can provide both detection and identification of drones, enabling classification and recognition. However, their performance signifi-cantly degrades under poor lighting, fog, or occlusion, making them less reliable in unstructured environments. LiDAR-based detection 
+
+> 2Phantom Navigator: Stealthy and Precise Unmanned Aerial Vehicle Redirection with Real-Time Tracking and GPS Spoofing
+
+enables accurate three-dimensional localization and tracking, while being resilient to lighting conditions [1, 9, 14, 15]. Similarly, acoustic detection methods have been studied to identify the unique noise signatures produced by UAV propellers, although these approaches face challenges in noisy urban environments [2, 10, 36, 40]. Re-cent state-of-the-art approaches integrate these modalities through multi-sensor fusion and leverage machine learning models to en-hance robustness, reliability, and coverage [8, 44–46]. 
+
+## 2.2 Physical GPS Take-over Attacks 
+
+GPS spoofing manipulates vehicle localization by forging satellite signals, making the receiver compute false positions or time. As civilian GPS signals lack authentication, attackers can generate counterfeit signals using software-defined radios (SDRs) to mis-lead receivers into arbitrary trajectories [47]. A typical research setup (e.g., [35]) employs an SDR-based GPS signal generator, an RF amplifier, and an omnidirectional transmit antenna, operated in a shielded anechoic chamber with a motion capture system used for ground truth tracking; the anechoic chambers are used because transmitting spoofed GPS signals over the air is illegal except in government-approved setups [27]. In general, GPS spoofing differentiates between overshadow (i.e., overpower) and take-over attacks [35]. The overshadow attack transmits counterfeit GPS signals at a much higher power trying to bury legitimate signals, which is easy to detect due to the abrupt changes at the GPS receiver, resulting in a sudden loss of satellite lock. To bypass the potential integrity checks at GPS receivers, with the take-over attacks, the spoofed signals are synchronized with legitimate ones first; the power is then gradually increased to induce false position estimates. Finally, this is followed by sophisticated post-takeover (spoofed) signal design to evade innovation checks in sensor fusion (e.g., with IMU). 
+
+## 3 Threat Model 
+
+In this work, we focus on GPS spoofing attacks that redirect a UAV from its intended trajectory to an (attacker) selected target zone. Specifically, we consider the threat model where the attacker’s objective is to precisely detour the UAV to a desired location, while remaining covert (i.e., stealthy) to a potential onboard anomaly detec-tion mechanism . Since prior work fully demonstrated successful real-world GPS takeover attacks [35], and we lack access to a shielded anechoic chamber or government-authorized testing fields [27], we restrict our study to cyber-level GPS spoofing emulation , rather than over-the-air signal transmission; in particular, we effectively insert the spoofed signals with characteristics described in [35]. Existing research primarily focuses on fixed-position ground-to-air tracking and spoofing [3, 4]. In this work, we consider a stationary attacker model realized by a lightweight sensing and computation device that supports real-time victim tracking, spoof-ing signal generation, and closed-loop redirection. The proposed 
+
+Phantom Navigator therefore departs from heavy fixed ground-station assumptions and instead captures a more practical attacker setup with compact perception and computation, while retaining the key challenge of continuously steering the victim based on attacker-side observations. 
+
+Attacker Knowledge and Capability. The adversary operates a lightweight stationary attacker platform equipped with onboard perception and computation. This platform can: (𝑖 ) detect, iden-tify, and track the victim UAV in real time using LiDAR–camera fusion ; (𝑖𝑖 ) estimate the victim UAV’s GPS noise characteristics; and 
+
+(𝑖𝑖𝑖 ) emulate GPS spoofing effects at the cyber level. Note that the GPS specifications of commercial UAVs are typically publicly avail-able through manufacturer websites, user manuals, or datasheets (e.g., [17]), from which the attacker can estimate the victim’s GPS noise range. The adversary is NOT assumed to know the victim UAV’s internal sensor-fusion parameters, communication protocols, or mission details beyond its GPS profile. However, any additional knowledge of the victim mission or operating region can further help the attacker select effective redirection targets. 
+
+Attack Objective. The goal is not to crash or disable the victim UAV, but to redirect it precisely and covertly to a controlled area. As we consider black-box attacks, where the attacker has no knowl-edge about the victim’s autonomy stack (including which anomaly detector might be employed), it is required that the attack is stealthy to any anomaly detection mechanisms. 
+
+Attack Implementation. The attack proceeds in three stages: (𝑖 )
+
+Takeover Assumption: We assume the victim UAV’s GPS receiver has been taken over by spoofed signals (e.g., synchronized counter-feit signals). (𝑖𝑖 ) Redirection Emulation: Our framework emulates the effects of spoofed GPS positions on the victim, generating con-trolled trajectory deviations that steer it away from its original mission path. (𝑖𝑖𝑖 ) Termination: The spoofed trajectory is designed to precisely and covertly bring the victim to a designated target zone, avoiding fail-safe triggers or detection mechanisms. 
+
+## 4 UAV Redirection Methodology 
+
+In summary, Phantom Navigator (shown in Fig. 2) consists of three main components: (𝑖 ) attacker-side detection and tracking of the victim UAV; (𝑖𝑖 ) redirection range estimation for identifying feasible target regions; and (𝑖𝑖𝑖 ) closed-loop UAV redirection algorithm to achieve both precision (being able to steer the UAV into the desired location) and stealthiness against any potential anomaly detector. Specifically, our methodology focuses on estimating reliable victim redirection range before attack, and then performing real-time GPS-only redirection while preserving stealthiness. This section presents the methodology as follows: We first for-mulate GPS-only stealthy redirection, then introduce reachability-based redirection range estimation under black-box settings and the improvement using different levels of mission knowledge, and finally describe the real-time closed-loop redirection controller. 
+
+## 4.1 Stealthy Redirection Formulations 
+
+In this work, a successful stealthy redirection is defined as redirecting the victim UAV while remaining undetected by anomaly detectors that assess whether the observed system evolution is nominal. Since any practical detector must tolerate a nonzero false-alarm rate to remain robust to sensor noise, modeling inaccuracies, and environ-mental disturbances, an attacker can exploit this inherent tolerance by ensuring that the victim’s believed navigation dynamics remain statistically close to attack-free operation. In particular, by perturb-ing only the GPS readings within the nominal GPS uncertainty 
+
+> 3Haocheng Meng, Shaocheng Luo, Songqiao Xie, and Miroslav Pajic
+
+Figure 2: Overview of the proposed UAV redirection framework. The offline stage estimates feasible redirection range, while the online stage performs closed-loop stealthy GPS manipulation using real-time victim pose estimation. 
+
+envelope, the attacker can induce a biased trajectory whose effect accumulates over time into controlled redirection. This intuition is consistent with existing research on black-box stealthy GPS attack analysis [22]. Accordingly, we formulate stealthy UAV redirection by answering three questions: (𝑖 ) How redirection is achieved by manipulating GPS only; (𝑖𝑖 ) Why this GPS manipulation is stealthy; 
+
+(𝑖𝑖𝑖 ) How this stealthiness is achieved in practice. 
+
+4.1.1 GPS-Only Redirection Mechanism. In standard UAV naviga-tion stacks, GPS provides direct measurements of earth-frame posi-tion and velocity, which are fused with IMU readings to produce the navigation state used by the autopilot. Importantly, GPS (or other GNSS) is typically the only onboard sensor that provides absolute global positioning information, making it a unique attack surface because this global reference cannot be directly cross-validated by other standard onboard sensors. Even if alternative signals of op-portunity (SOPs) provide contradictory positioning cues, the UAV cannot readily determine whether GPS or the auxiliary signal is at fault. This ambiguity in trust assignment makes stealthy attacks on the global reference particularly challenging to detect. Under a GPS takeover attack, the adversary perturbs only the GPS channel by adding spoofing offsets to the reported position and velocity [3, 4, 30, 35]. As a result, the victim’s sensor-fusion module reconstructs a corrupted but internally consistent navigation state from spoofed GPS and nominal IMU measurements, and the autopi-lot closes the loop on this biased state. Therefore, manipulating GPS alone is sufficient to alter the victim’s believed motion and induce controlled redirection, without attacking other sensors. 
+
+To capture this effect, we isolate the translational component of the motion and use a linearized discrete-time state-space model: 
+
+x𝑘 = 𝐴 x𝑘 −1 + 𝐵 u𝑘 −1 + w𝑘 −1, y𝑘 = 𝐶 x𝑘 −1 + v𝑘 −1, (1) where x𝑘 denotes the true translational state, u𝑘 is the equivalent spoofing-induced redirection input, and w𝑘 , v𝑘 capture process and measurement noise. In particular, we consider 
+
+x𝑘 = p𝑘 , v𝑘 , s𝑝,𝑘 , s𝑣,𝑘 
+
+ , u𝑘 = s𝑎,𝑘 , (2) where p𝑘 , v𝑘 are the true position and velocity, and s𝑝,𝑘 , s𝑣,𝑘 denote the spoofing-induced offsets in GPS-reported motion. This reduced model captures how persistent GPS perturbations produce accumu-lated translational drift over time; the detailed UAV modeling and GPS spoofing formulations are provided in App. A.1 and App. A.2. 
+
+4.1.2 Stealthiness Guarantees for Redirection. Under GPS spoofing, the victim UAV closes the loop not on its true translational state x𝑘 ,but on a believed state ˜ x𝑘 reconstructed from spoofed navigation measurements. Let 𝜋 (·) denote the victim autopilot control law. The believed dynamics evolve as ˜x𝑘 = 𝐴 ˜x𝑘 −1 + 𝐵 𝜋 ( ˜x𝑘 −1), (3) while the true dynamics satisfy 
+
+x𝑘 = 𝐴 x𝑘 −1 + 𝐵 (𝜋 ( ˜x𝑘 −1) + u𝑘 −1) , (4) where u𝑘 −1 denotes the equivalent spoofing-induced redirection input. Defining the deviation 
+
+d𝑘 = x𝑘 − ˜x𝑘 , (5) we obtain 
+
+d𝑘 = 𝐴 d𝑘 −1 + 𝐵 u𝑘 −1, d0 = 0. (6) Hence, the separation between the true and believed trajectories is governed by a linear deviation dynamics driven by the spoofing input. This allows for gradual accumulation of controlled displace-ment while preserving a physically consistent believed motion. To formalize stealthiness, let z00: 𝑘 and z𝑎  
+
+> 0: 𝑘
+
+denote the detector-visible observation sequences under nominal and attacked execu-tion, respectively. We define the redirection to be 𝜖 -stealthy if 
+
+𝐷 KL 
+
+ P(z𝑎  
+
+> 0: 𝑘
+
+) P(z00: 𝑘 ) ≤ 𝜖, ∀𝑘, (7) where 𝐷 KL is the Kullback–Leibler divergence and 𝜖 is the maxi-mum admissible discrepancy between the attacked and nominal observation distributions. This condition captures detector-agnostic stealthiness: if the attacked observation process remains statisti-cally close to the nominal one, no anomaly detector can reliably distinguish the attack beyond its tolerated false-alarm behavior [22]. The key connection between Eqs. 6 and 7 is that the detector does not observe the spoofing input directly; instead, it only observes the mismatch induced by the state deviation d𝑘 . Therefore, controlling the linear deviation dynamics directly limits the discrepancy be-tween z𝑎  
+
+> 0: 𝑘
+
+and z00: 𝑘 , thereby bounding the statistical footprint of the 
+
+> 4Phantom Navigator: Stealthy and Precise Unmanned Aerial Vehicle Redirection with Real-Time Tracking and GPS Spoofing
+
+attack on detector-visible observations. As a result, if the spoofing input is chosen such that the induced deviation remains within the nominal GPS uncertainty envelope, the KL divergence stays bounded and the redirection retains a strong stealthiness guarantee. 
+
+4.1.3 Practical Stealthiness Calibration. While Eq. 7 provides a detector-agnostic formulation of stealthiness, practical attack syn-thesis requires an operational condition that can be directly en-forced online. To this end, we translate the statistical stealthiness objective into a bound on the spoofing input magnitude. This cali-bration links the theoretical KL-based guarantee to a measurable attack parameter that can be tuned from victim’s GPS noise profile. 
+
+Realistic bound on spoofing input. In practice, we enforce stealthiness through a bounded spoofing-input constraint: 
+
+∥u𝑘 ∥ ≤ 𝜆 𝑎 , u𝑘 ∈ A , (8) where 𝜆 𝑎 denotes the maximum admissible spoofing-induced accel-eration. This bound serves as a practical surrogate for the KL-based stealthiness condition in Eq. 7: bounding ∥u𝑘 ∥ controls the devia-tion dynamics in Eq. 6, which in turn limits the observable mismatch between attacked and nominal executions. Importantly, 𝜆 𝑎 depends only on the victim’s GPS noise profile: the admissible spoofing magni-tude must remain masked by the nominal GPS uncertainty envelope, so noisier GPS measurements allow larger stealthy perturbations. 
+
+Estimating the spoofing bound 𝜆 𝑎 . To estimate 𝜆 𝑎 , we calibrate the largest spoofing magnitude whose detector response remains statistically indistinguishable from nominal operation. Let 𝛼 denote the false-alarm rate under benign conditions. For a fixed spoofing magnitude 𝜆 , we run 𝑁 Monte Carlo trials using the identified GPS noise profile 𝚺 gps . Each trial records whether the detector raises at least one alarm over the evaluation horizon. From these trials, we compute a (1 − 𝛿 ) confidence interval for the induced detection probability using the Clopper–Pearson method [5]. We then define 
+
+𝜆 𝑎 (𝛿 ; 𝚺 gps ) ≜ sup 𝜆 ≥ 0 : 𝛼 ∈ CI 1−𝛿 (𝜆 ; 𝚺 gps ) , (9) i.e., the largest spoofing bound whose detection probability remains statistically consistent with the nominal false-alarm rate. Thus, 𝜆 𝑎 
+
+provides an implementation-ready approximation of the maximum GPS-only spoofing strength that preserves stealthy redirection. 
+
+## 4.2 Redirection Range Estimation 
+
+Before launching the attack, the attacker must estimate the effective redirection attack range, i.e., the farthest range to which the victim can be reliably deviated . This range defines the feasible redirection region under stealthy spoofing inputs and enables the attacker to select targets that are both achievable and covert. In our frame-work, we estimate this range through reachability analysis of the redirection model under the calibrated spoofing bound 𝜆 𝑎 .
+
+4.2.1 Reachability of Redirection System. Given the redirection dynamics in Eq. 1, we characterize the attacker’s achievable redi-rection range through the reachable set of the system. At time step 
+
+𝑘 , the reachable set is defined as 
+
+R𝑘 = {x𝑘 | x𝑖 +1 = 𝐴 x𝑖 + 𝐵 u𝑖 , u𝑖 ∈ U , 𝑖 = 0, . . . , 𝑘 − 1} , (10) where R𝑘 contains all states that can be reached from the initial con-dition under admissible spoofing inputs. The input set is determined by the stealthiness-constrained spoofing bound 𝜆 𝑎 :
+
+U = {u ∈ R𝑚 | ∥ u∥ ≤ 𝜆 𝑎 } . (11) Since the attack objective is to redirect the victim to a desired physical location, we are primarily interested in the position compo-nent of the reachable set. We therefore project R𝑘 onto the position states and obtain 
+
+P𝑘 = p𝑘 ∈ R3 ∃ x𝑘 ∈ R 𝑘 , (12) where P𝑘 represents the set of all victim positions that can be reached by time 𝑘 under stealthy redirection. Thus, P𝑘 directly characterizes the feasible redirection region where the victim can be reliably steered at a given time. 
+
+4.2.2 Computational Solution to Reachability Analysis. Direct com-putation of the exact reachable set can become expensive as the horizon grows. We therefore adopt a lightweight convex-hull ap-proximation to efficiently estimate the stealthiness-constrained reachable set of the redirection system. Given the discrete-time LTI dynamics in Eq. 1, a compact convex input set U, and initial condition x0, the reachable set at time 𝑘 can be approximated as 
+
+R𝑘 ≈ 𝐴 𝑘 x0 ⊕ conv ©«(𝑘 −1∑︁ 
+
+> 𝑖 =0
+
+𝐴 𝑘 −1−𝑖 𝐵 u( 𝑗 ) 
+
+> 𝑖
+
+u( 𝑗 ) 
+
+> 𝑖
+
+∈ U 
+
+)𝑁 𝑗 =1
+
+ª®¬
+
+, (13) where ⊕ denotes the Minkowski sum, conv (·) denotes the convex hull, and 𝑁 is the number of sampled input sequences. Intuitively, each sampled sequence generates one candidate redirection path, and the convex hull of them provides an efficient outer approxima-tion of the states reachable under stealthy spoofing inputs. As 𝑁 increases, the approximation becomes tighter and better captures the feasible region. This convex-hull formulation provides a computationally efficient way to estimate the achievable redirection range without repeatedly solving the full nonlinear UAV dynamics. 
+
+4.2.3 Partial Information Refinement in Redirection. The redirec-tion attack fundamentally operates in the black-box setting: the attacker has no knowledge of the victim’s mission beyond observ-able motion and the GPS profile. In this baseline case, the reachable set in Eq. 13 provides a conservative estimate of the successful redi-rection range under stealthy attacks. Thus, victim mission knowledge is NOT required for the attack; instead, it expands the range over which the attacker can confidently achieve successful redirection. 
+
+When partial mission information is available, the attacker can refine the range estimate without performing the actual redirection. Under GPS spoofing, the victim UAV closes the loop on its believed 
+
+state ˜ x𝑘 while the true state x𝑘 is manipulated by the redirection algorithm, as described in Eqs. 3 and 4. We encode available mission knowledge as a belief-consistency constraint ˜x𝑘 ∈ ˜Xmission  
+
+> 𝑘
+
+, ∀𝑘, (14) where ˜Xmission  
+
+> 𝑘
+
+denotes the set of believed states consistent with the revealed mission information. The refined reachable set is 
+
+Rpart  
+
+> 𝑘
+
+= x𝑘 ∃ ˜x𝑖 ∈ ˜Xmission  
+
+> 𝑖
+
+, u𝑖 ∈ U , ∀𝑖 < 𝑘 , (15) which restricts the analysis to trajectories that remain consistent with both stealthy attacks and available mission knowledge. This re-finement removes implausible worst-case mission evolutions from 
+
+> 5Haocheng Meng, Shaocheng Luo, Songqiao Xie, and Miroslav Pajic
+
+Table 1: Mission knowledge levels and their impact on redirection range estimation. Knowledge Mission Assumption Worst-case Prediction Effect on Redirection Range 
+
+0–Black-box No victim mission informa-tion is known. Victim may follow any fea-sible nominal evolution. Produces the most conservative baseline estimate; no prior knowledge is required for attack. 1–Destination Only the final destination is known. Victim heads directly to-ward the destination at max-imum speed. Removes missions inconsistent with the known destination, expanding the range where redirec-tion can be achieved with higher confidence. 2–Mission trajectory The geometric route is known, but not its precise timing. Victim traverses the known route at maximum speed. Further removes path-inconsistent evolutions, yielding a less conservative and more informative range estimate. 3–Motion planning Both the route and timing are known. Worst-case and nominal evo-lution coincide. Provides the least conservative estimate, with the smallest uncertainty in achievable rerouting. 
+
+Figure 3: Redirection range estimation compared with Monte-Carlo verification under different knowledge levels. Left to right: destination-only, mission trajectory and motion planning, with increased overlap with Monte-Carlo results. 
+
+the black-box estimate, allowing the attacker to certify a less con-servative and potentially larger guaranteed redirection range. Specifically, we consider four knowledge levels: (0) Black-box ,where no mission information is available; (1) Destination , where only the final target is known; (2) Mission trajectory , where the geometric route is known but not its precise timing; and (3) Motion planning , where both the route and timing are known. As the at-tacker gains more mission information, the range estimate becomes less conservative, enabling the attacker to select farther targets with higher confidence. A detailed summary is given in Table 1. 
+
+4.2.4 Redirection Range Verification. To validate the estimated redi-rection range, we perform offline Monte-Carlo simulations without executing the attack on a physical UAV. At selected timestamps during the victim mission, we first compute the redirection range using the convex-hull reachability approximation, and then run Monte-Carlo rollouts from the same initial conditions with simu-lated spoofing targets. These rollouts provide an empirical outer boundary of achievable redirection outcomes for comparison. An illustrative example is shown in Fig. 3. We load the quad-copter dynamics (details in App. A.1) and the redirection model into MATLAB/Simulink (details in App. A.3) and evaluate three mission stages during a 400 s waypoint mission. Since the black-box case (Level 0) already provides the baseline range estimate without requiring any mission knowledge, we focus on verifying Levels 1– 3, where partial mission information refines the predicted range. For each of these levels, we adopt the corresponding worst-case assumptions in Table 1, yielding conservative redirection range es-timates. As shown in Fig. 3, the Monte-Carlo results form a broader empirical boundary, while the reachability-based estimates remain tighter and conservative, with increasing precision as more mis-sion information becomes available. Thus, the verification confirms that our method identifies a guaranteed redirection region: any target chosen inside the estimated boundary can be reliably reached under the assumed stealthiness and mission-consistency constraints. 
+
+## 4.3 Real-time Closed-loop UAV Redirection 
+
+After estimating the feasible redirection range, the attacker needs an online mechanism to steer the victim UAV toward a chosen target. We therefore develop a real-time closed-loop redirection algorithm that updates spoofed GPS position and velocity signals based on the tracked victim state and the desired target. This controller is 
+
+> 6Phantom Navigator: Stealthy and Precise Unmanned Aerial Vehicle Redirection with Real-Time Tracking and GPS Spoofing
+
+Figure 4: Redirection control results and stealthiness statistics of three different victim mission trajectories. Left to right: single line, zig-zag and circle trajectory. The statistics include redirection acceleration norm, CUSUM and 𝜒 2 anomaly detector scores. Algorithm 1 Stealthiness-Guaranteed Closed-loop Redirection  
+
+> 1:
+
+Input: redirection target 𝑝 𝑑 , desired terminal velocity 𝑣 𝑑 , spoof-ing bound 𝜆 𝑎  
+
+> 2:
+
+Output: spoofed GPS signals 𝑌 𝑎 𝑝, GPS , 𝑌 𝑎 𝑣, GPS  
+
+> 3:
+
+Initialize: spoofing states 𝑝 𝑠, 0 = 0, 𝑣 𝑠, 0 = 0 
+
+> 4:
+
+while GPS takeover remains effective do  
+
+> 5:
+
+Update victim state estimates ( ˆ𝑝 𝑘 , ˆ𝑣 𝑘 ) from attacker-side tracker  
+
+> 6:
+
+Compute target-tracking errors (Δ𝑝 𝑘 , Δ𝑣 𝑘 ) 
+
+> 7:
+
+Generate target-oriented spoofing acceleration candidate 
+
+𝑎 𝑠,𝑘 = 𝑓 𝑠 (Δ𝑝 𝑘 , Δ𝑣 𝑘 ) 
+
+> 8:
+
+Enforce stealthiness by clipping 𝑎 𝑠,𝑘 to satisfy ∥𝑎 𝑠,𝑘 ∥ ≤ 𝜆 𝑎  
+
+> 9:
+
+Update spoofing states (𝑣 𝑠,𝑘 , 𝑝 𝑠,𝑘 ) by discrete integration  
+
+> 10:
+
+Construct and inject spoofed GPS outputs (𝑌 𝑎 𝑝, GPS , 𝑌 𝑎 𝑣, GPS ) 
+
+> 11:
+
+end while 
+
+designed to achieve target-oriented redirection while remaining within the stealthiness constraints derived earlier. We next present the controller design and verify its effectiveness in simulation. 
+
+4.3.1 Redirection Controller Design. To remain compatible with the black-box GPS-only threat model, we design a lightweight feedback controller that operates directly in the GPS measurement space, without requiring access to the victim’s internal control stack. Algorithm 1 summarizes this execution flow. The controller takes as input a desired redirection target 𝑝 𝑑 and the calibrated spoofing bound 𝜆 𝑎 . At each control step, the attacker updates the victim’s current position and velocity estimates, de-noted by ˆ 𝑝 𝑘 and ˆ 𝑣 𝑘 , from the onboard tracker, and computes the position and velocity errors relative to the target: 
+
+Δ𝑝 𝑘 = 𝑝 𝑑 − ˆ𝑝 𝑘 , Δ𝑣 𝑘 = 𝑣 𝑑 − ˆ𝑣 𝑘 . (16) These errors are mapped to a target-oriented spoofing acceleration 
+
+𝑎 𝑠,𝑘 = 𝑓 𝑠 (Δ𝑝 𝑘 , Δ𝑣 𝑘 ), (17) where 𝑓 𝑠 (·) is a lightweight proportional-derivative feedback law. The key design choice is not the feedback law itself, but the explicit enforcement of stealthiness in the spoofing space. To preserve stealthiness, the spoofing acceleration is clipped to the admissible bound 𝜆 𝑎 while preserving its direction: 
+
+𝑎 𝑠,𝑘 =
+
+
+
+𝜆 𝑎 
+
+∥𝑎 𝑠,𝑘 ∥ 𝑎 𝑠,𝑘 , if ∥𝑎 𝑠,𝑘 ∥ > 𝜆 𝑎 ,𝑎 𝑠,𝑘 , otherwise .
+
+(18) The clipped acceleration is then integrated to update the spoofed velocity and position states, 
+
+𝑣 𝑠,𝑘 = 𝑣 𝑠,𝑘 −1 + 𝑎 𝑠,𝑘 Δ𝑇 , 𝑝 𝑠,𝑘 = 𝑝 𝑠,𝑘 −1 + 𝑣 𝑠,𝑘 Δ𝑇 , (19) which are finally injected into the victim’s GPS outputs: 
+
+𝑌 𝑎 𝑝, GPS = 𝑌 𝑝, GPS − 𝑝 𝑠,𝑘 , 𝑌 𝑎 𝑣, GPS = 𝑌 𝑣, GPS − 𝑣 𝑠,𝑘 . (20) Thus, the controller realizes target-oriented UAV redirection by continuously biasing the victim’s GPS position and velocity, while the stealthiness bound 𝜆 𝑎 ensures that the injected perturbations remain within the admissible GPS uncertainty envelope. 
+
+> 7Haocheng Meng, Shaocheng Luo, Songqiao Xie, and Miroslav Pajic
+
+Figure 5: Full-stack attacker platform for stealthy UAV redirection, with LiDAR-camera detection, tracking and spoofing. 
+
+4.3.2 Redirection Control Verification. We verify the proposed closed-loop redirection controller through simulation on three rep-resentative victim mission trajectories: single-line, zig-zag, and circular motion. For each case, the attacker applies Algorithm 1 to steer the victim toward a designated redirection target while enforcing the calibrated spoofing bound 𝜆 𝑎 . As shown in Fig. 4, the controller drives the victim’s true trajectory toward the target, while the victim’s believed trajectory remains close to its nominal mission path. This confirms the key objective of the controller: achieving target-oriented redirection in the physical world while preserving nominal-looking GPS evolution from the victim’s perspective. 
+
+Controlled redirection performance. Across all three mission types, the controller achieves effective target-oriented rerouting de-spite the very different nominal motion patterns. In the single-line case, the victim is redirected away from its straight path toward a distant target; in the zig-zag case, the controller induces a substan-tial downward deviation while maintaining the victim’s believed motion near the original path; and in the circular case, the victim is steered away from the orbit toward the designated destination. These results show that the controller is not tied to a specific nomi-nal trajectory, but can adapt to different mission geometries using only attacker-side tracking feedback and GPS-space spoofing. 
+
+Stealthiness against detectors. Fig. 4 also reports the spoofing acceleration with the victim-side CUSUM and 𝜒 2 detector statistics. In all three cases, the spoofing signal remains clipped by the stealthi-ness bound, and both detector statistics stay near nominal operating region without sustained threshold crossings during redirection. This shows that the controller not only achieves controllable de-viation, but also keeps the induced observation mismatch within the admissible stealthiness envelope. Overall, the simulation results verify that the proposed controller can realize effective closed-loop UAV redirection while maintaining strong practical covertness. 
+
+## 5 Real-world Redirection Study 
+
+To implement the complete UAV redirection framework, we design an attacker platform with an onboard redirection station with a de-tection and tracking sensor hub. The full-stack implementation for this platform is illustrated in Fig. 5, targeting the victims. Deployed on the onboard computer of attacker platform, a LiDAR–camera tracking hub captures the 2 𝐷 image and 3 𝐷 point cloud of any potential victim UAV, and conducts both object detection and pose estimation . Then, a spoofing module computes the desired GPS spoofing signal based on the spoofing target and the estimated pose of the victim. Utilizing this platform, we design real-world redirection case studies and demonstrate the effectiveness of the framework. Next, we provide the implementation details and the evaluation of the real-world case studies, both indoors and outdoors. 
+
+## 5.1 Experimental Design 
+
+5.1.1 Attacker Platform and Victim UAV. We built the attacker plat-form on a Holybro X500 V2 airframe and an Intel NUC for onboard processing. To enable redirection, we equipped it with an Intel RealSense D435i camera and a Livox Mid-360 LiDAR, mounted in forward and downward-facing orientations, respectively. While this tracking hub remained stationary during all experiments and operated as a fixed tracking platform, its airframe-based installation lays the foundation for future moving-attacker deployments. The victim UAV used a Pixhawk 6X flight controller on Holybro X500 V2 airframe, and relied on a lightweight GMKtec onboard computer for mission execution. Except for the GPS noise profile, all other victim-side parameters are unknown to the attacker, ensuring a black-box attack setting. This setup is illustrated in Fig. 6. 
+
+5.1.2 LiDAR–Camera Detection and Tracking Pipeline. To both identify and track the victim drone, we leverage a LiDAR–camera combined detection and tracking pipeline as shown in Fig. 5, which features 4 different modes according to the availability of the track-ing sources in real-time. Camera image is processed by YOLOv5 real-time 2 𝐷 object detection to provide bounding box; LiDAR 3 𝐷 
+
+point cloud is filtered, clustered and matched in the frustum defined by the camera bounding box or processed alone. Then, a Kalman-filter based tracker is implemented to estimate the real-time position and velocity of the drone. By accounting for temporary detection and tracking losses due to obstacles or weather changes in the 4 different modes, our tracker provides a consistent and reliable pose estimation of the victim drone. 
+
+> 8Phantom Navigator: Stealthy and Precise Unmanned Aerial Vehicle Redirection with Real-Time Tracking and GPS Spoofing
+
+Figure 6: Experimental setup and sensing pipeline. Left: attacker-side tracking platform equipped with an Intel NUC, RealSense D435i, and Livox Mid-360. Middle-left: victim UAV with onboard mission computer. Middle-right and right: LiDAR–camera victim detection and pose estimation in indoor VICON and outdoor GPS-enabled environments. 
+
+Figure 7: Physical pipeline latency of tracker, attacker to victim transmission and asynchronous UAV identification. 
+
+5.1.3 GPS Spoofing Emulation. Our study assumes a successful GPS takeover and focuses on the post-takeover redirection phase. As physical GPS spoofing is outside the scope of this work, we emu-late the spoofing mechanism in software and inject false navigation data directly into the victim UAV. The spoofing signals are com-puted online by the attacker tracking platform using the victim’s estimated pose and the designated redirection target, and are then transmitted to the victim for false data injection. The difference between indoor and outdoor experiments lies in the navigation source used for emulation. Indoors, GPS measure-ments are emulated from VICON; outdoors, the attack is applied to the victim’s North-East-Down (NED) navigation frame derived from real GPS measurements in Latitude-Longitude-Altitude (LLA) coordinates. This enables consistent evaluation of the proposed redirection framework across both indoor and outdoor settings. 
+
+5.1.4 Computation Overhead. The computation is measured on the Intel NUC onboard computer, where the tracker uses 73 .9% of the CPU and 4 .7% of the RAM, and is GPU-free. Fig. 7 shows the latency breakdown: The end-to-end tracking and attack path has an average latency of 265.9 ms and a 95th-percentile latency of 613.4 ms, including the tracker main process and attacker-to-victim transmission. The UAV identification module based on YOLO runs asynchronously, with an average latency of 288.6 ms, but it does not block the main tracking or attack pipeline and therefore does not directly contribute to the redirection delay. The dominant cost in the online path comes from the tracker main process (235.5 ms on average), while transmission remains lightweight (30.4 ms). Despite this overhead, our experimental results show that the latency is sufficient for effective redirection in practice, and the framework remains robust even under temporary tracker losses, which will be discussed in Sec. 5.2.2. 
+
+## 5.2 Redirection in Controlled Environments 
+
+To verify the effectiveness of the spoofing capability enabled by the tracking pipeline, we first conducted indoor experiments in a closed arena using VICON motion capture system. The key metrics in this evaluation are: (1) redirection accuracy; (2) redirection covertness. 
+
+5.2.1 Targeted Redirection Case Study. We first emulated a sce-nario where a victim drone is traveling along a certain trajectory toward a destination. The setup is designed such that: (1) The at-tacker tracks the real-time position of the victim; (2) The attacker computes the spoofing signal needed to redirect the victim to a designated area of attack, within a given acceptance radius; (3) The victim drone, with its GPS (emulated from VICON) spoofed, deviates from its original trajectory. As is shown in the left figure of Fig. 8, the victim is rerouted toward the redirection target while its onboard sensor fusion estimating itself still moving towards its original destination. The redirection algorithms managed to hold the victim drone at target and made it to land under the deception that its own destination had been achieved. To ensure covertness and strengthen the belief the victim is still moving towards the target, the redirection controller kept the victim drone in motion when: (1) The actual position has entered redirection area; (2) The estimated (deceived) position of the victim itself is still en-route to its original target. The final landing place is within the 0 .3 𝑚 
+
+pre-defined acceptance radius for redirection. 
+
+5.2.2 Redirection Accuracy. To further showcase the effectiveness of the redirection, we randomly sampled 10 redirection destinations and conducted rerouting runs toward them. The right figure of Fig. 8 demonstrates the targets (with their acceptance ranges), and the victim positions hitting the target. The redirection accuracy is shown in Table 2a, and the mean redirection error is 0 .125 𝑚 with the standard deviation at 0 .107 𝑚 . The fluctuation in the redirection accuracy is due to the tracking precision between varying tracker modes, where the availability of sensing sources is different. 
+
+Redirection under Intermittent Tracker Loss. While our tracker pipeline considers four different modes in response to different availability of the sensing sources, as discussed in Sec. 5.1.2, inter-mittent tracker losses could still happen because of false positive detections, obstacle occlusion, or temporary loss of connection. 
+
+> 9Haocheng Meng, Shaocheng Luo, Songqiao Xie, and Miroslav Pajic
+
+Figure 8: Real-time UAV redirection results indoors. Left: the actual and estimated position comparison of the victim drone in a targeted redirection; Middle: tracker performance in 3D positions; Right: redirection visualizations on 10 randomized targets. Attack 
+
+> success time
+
+Figure 9: Anomaly detection results for indoor redirection attacks. Left: nominal flight with tuned detector thresholds. Middle: attack-aligned time-series response in the attack window with raw detector statistics in the case study. Right: aggregate detector statistics (threshold-normalized for comparing 𝜒 2 and CUSUM) over ten hovering attack trials. Table 2: Redirection accuracy for indoor and outdoor attacks. 
+
+> (a) Indoor Redirection Position Error (m).
+
+Case 1 Case 2 Case 3 Case 4 Case 5 
+
+0.057 0.007 0.003 0.165 0.295 
+
+Case 6 Case 7 Case 8 Case 9 Case 10 
+
+0.161 0.282 0.008 0.211 0.057 
+
+> (b) Outdoor Redirection Position Error (m).
+
+Case Hover Move I Move II Move III 1 0.658 0.044 0.351 0.382 
+
+2 1.241 0.483 0.091 0.554 However, despite the loss in tracker, the redirection controller still reserves the capability to produce estimated spoofing signals to ensure the continuity of redirection. More details are in App. A.4. 
+
+5.2.3 Attack Stealthiness Analysis. As a key contribution of our paper, we focus on the anomaly detection on the real-world data. 
+
+Tuning Anomaly Detectors. First, we implement the two bench-mark anomaly detectors used in simulation, namely 𝜒 2 and CUSUM. As in the simulation setup, we tune their parameters to maintain a 
+
+0.1% false positive rate under nominal, non-attack operation. 
+
+Real-world Stealthiness. Fig. 9 presents the detector responses in indoor experiments. In nominal flights, both detectors are operating normally at the designed false positive rate. Under attack, the case study exhibits negligible deviation during the redirection window, and neither detector shows a consistent increase strong enough to flag the attack (0 .025% and 0 .000%). Across ten attack trials, the threshold-normalized detector statistics remain well below the alarm boundary, with 𝜒 2 reaching a mean normalized score of 0 .6and CUSUM only 0 .1. Correspondingly, the observed detection rates remain low, at 0 .005% for 𝜒 2 and zero detection for CUSUM. These results show that the proposed redirection attack remains highly stealthy against anomaly detectors even on the physical UAV. 
+
+> 10 Phantom Navigator: Stealthy and Precise Unmanned Aerial Vehicle Redirection with Real-Time Tracking and GPS Spoofing
+
+Figure 10: Outdoor redirection case study. Left: spoofed vic-tim trajectory. Right: attacker side signal generation. 
+
+## 5.3 Outdoor Redirection Verifications 
+
+We also tested the redirection framework with the same devices out-doors, using data from real GPS receivers. Fig. 6 depicts the outdoor experimental setup for the tracking and spoofing analysis, with attacker and victim both having Holybro M-10 GPS installed [17]. 
+
+5.3.1 Outdoor Redirection Case Study. We first conduct an out-door hovering displacement experiment to demonstrate real-time UAV redirection in a GPS-enabled setting. As shown in Fig. 10, the attacker estimates the victim’s motion using the LiDAR-camera pipeline, and then computes spoofing commands using the tracked victim motion. These commands are transmitted to the victim and injected into its navigation pipeline, gradually biasing its position estimate and causing the UAV to drift from its original position to a displaced point without explicit awareness of the manipulation. 
+
+5.3.2 Multi-Purpose Targeted Redirection. We next evaluate out-door targeted redirection in moving-flight missions. Using the same online redirection framework, the attacker can induce different victim behaviors simply by selecting different spoofing targets. Specifically, we consider three representative goals: Type I (Lateral Redirection) , where the target is placed laterally to drive the victim away from its nominal path; Type II (Halting Redirection) , where the target is chosen to arrest forward progress and hold the victim near the attack location; and Type III (Turn-back Redirection) , where the target is placed behind the victim trajectory to induce a reversal of motion. Fig. 11 shows these three qualitatively different outcomes are all achieved under the same attack pipeline. The trajectories also show occasional irregularities caused by tracker mode switching, temporary tracking losses, and brief trans-mission drops. Nevertheless, the attack remains effective: once perception recovers, the framework resumes online target guidance and continues steering the victim toward the intended spoofing objective. Moreover, after reaching the redirected target, the victim proceeds on its own mission logic based on the corrupted naviga-tion state, such as holding position or initiating mission completion behavior. Overall, these results show that the attacker can flexibly realize different goals by properly choosing spoofing targets, while remaining robust to perception and communication imperfections. 
+
+5.3.3 Outdoor Redirection Accuracy and Stealthiness. Table 2b re-ports the redirection error as the distance between the victim posi-tion estimated by the LiDAR–camera tracking pipeline and the des-ignated spoofing target. The mean redirection error is 0 .476 m with a standard deviation of 0 .351 m, which are approximately 3 .8× and 3.2× those of the indoor experiments, respectively. Nevertheless, this error remains small relative to the noise level of standard GPS measurements, indicating that the proposed attack still achieves high practical precision in outdoor GPS-enabled flight. 
+
+Stealthiness of Outdoor Attacks. We deploy the same 𝜒 2 and CUSUM detectors, tuned under nominal outdoor flight for a 0 .1% false positive rate. Fig. 12 shows both detectors are efficient under nominal conditions, with observed false positive rates of 0 .105%. For the attack case study, the detector statistics do not reliably cross the alarm thresholds, leading to zero detections. Across all outdoor attacks, the aggregate detection rates are only 0 .08% and 0 .00%, for 
+
+𝜒 2 and CUSUM respectively. These results show that the attack remains both precise and stealthy outdoors despite the increased sensing and environmental variability using real-world GPS. 
+
+## 6 Discussion and Conclusion 
+
+This paper presents Phantom Navigator, a stealthy UAV redirection attack that exploits attacker-side tracking and GPS spoofing capabil-ities to redirect a victim UAV’s trajectory. The achievable redirection capacity is characterized by the strength of GPS spoofing, which can be efficiently estimated through pre-attack analysis. A real-time, lightweight redirection controller then generates spoofing signals based on the designated target and the estimated position of the victim drone, maintaining robustness against intermittent tracking degradation. Experimental evaluations on physical plat-forms validate the effectiveness of Phantom Navigator in achieving precise and reliable redirection in both indoor and outdoor environ-ments. Next, we discuss the limitations, potential improvements, and defenses for our proposed UAV redirection attack framework: 
+
+Stealthiness of Redirection Attacks. In our work, the stealthi-ness of redirection is ensured by designing the attack signals satisfy-ing the stealthiness constraints discussed in Sec. 4.1. However, our stealthiness considers the worst-case scenario for the attacker: the victim is equipped with a highly efficient intrusion detection system that balances high detection accuracy with low time-to-detection, and is robust to mission and environment induced variations. Such detectors are not seen in commercial autopilots. Instead, they rely on static fail-safe strategies with overly conservative thresholds, leaving significant opportunities for stealthy spoofing. Therefore, the attacker can leverage the proposed stealthy redirection attack to induce substantial trajectory deviations while remaining below the detection threshold and satisfying the intended attack objectives. 
+
+Toward a Moving Aerial Attacker Platform. In this work, we consider a stationary attacker platform. Extending the attack to a moving aerial platform is an important future direction, but it introduces additional challenges for the attacker. A key issue is self-spoofing : when transmitting GPS spoofing signals, the attacker may corrupt its own GPS measurements. To mitigate this effect, a moving attacker could rely on independent localization sources, including 
+
+(𝑖 ) multi-GNSS fusion across constellations [29, 34], (𝑖𝑖 ) onboard LiDAR- and camera-based SLAM [54], and (𝑖𝑖𝑖 ) other signals of 
+
+> 11 Haocheng Meng, Shaocheng Luo, Songqiao Xie, and Miroslav Pajic
+
+Figure 11: Outdoor targeted redirection against a moving victim UAV in the NED frame. Left: Type I—lateral redirection. Middle: Type II—halting redirection. Right: Type III—turn-back redirection. Each type is shown with two trials. 
+
+Figure 12: Anomaly detection results outdoors. Left: nominal response; Middle: attack case study; Right: aggregate statistics. 
+
+opportunity (SOP) [20]. In contrast, under a stealthy attack, the victim cannot reliably leverage such cross-checks, as the induced deviations remain within nominal noise bounds, making it difficult to identify which localization source has been compromised. 
+
+Improving Tracking and Redirection Range. While this paper presents a LiDAR-camera tracking pipeline that is computationally lightweight, and robust under various levels of sensor degradation, its performance remains inherently constrained by the sensing range and resolution of the camera and LiDAR. In scenarios of prolonged sensory loss, the filter operating in prediction-only mode may gradually drift due to the absence of measurement updates. A potential extension is to integrate RADAR into the pipeline, offering long-range perception that complements the mid-range coverage of LiDAR and the high-resolution but short-range nature of cameras. 
+
+Defenses against Malicious Redirection. Potential defenses in-clude two directions. First, higher-accuracy positioning systems, such as RTK-GPS, can reduce the localization uncertainty and limit the magnitude of stealthy spoofing signals. Second, incorporating environmental semantics or leveraging collaborative sensing from trusted agents and infrastructure can establish trust across differ-ent onboard perception modules and help identify compromised localization sources under malicious redirection attacks. 
+
+> 12
+
+Phantom Navigator: Stealthy and Precise Unmanned Aerial Vehicle Redirection with Real-Time Tracking and GPS Spoofing 
+
+## Acknowledgments 
+
+This work is sponsored in part by the ONR under agreement N00014-23-1-2206, AFOSR under the award number FA9550-19-1-0169, and by the NSF under NAIAD Award 2332744 as well as the National AI Institute for Edge Computing Leveraging Next Generation Wireless Networks, Grant CNS-2112562. Moreover, the research was spon-sored by the Army Research Office and was accomplished under Cooperative Agreement Number W911NF-26-2-A165. The views and conclusions contained in this document are those of the authors and should not be interpreted as representing the official policies, either expressed or implied, of the Army Research Office or the U.S. Government. The U.S. Government is authorized to reproduce and distribute reprints for Government purposes notwithstanding any copyright notation herein. 
+
+## References 
+
+[1] Tasnim Azad Abir, Endrowednes Kuantama, Richard Han, Judith Dawes, Rich Mildren, and Phuc Nguyen. 2023. Towards robust lidar-based 3D detection and tracking of UAVs. In Proceedings of the Ninth Workshop on Micro Aerial Vehicle Networks, Systems, and Applications . 1–7. [2] Joël Busset, Florian Perrodin, Peter Wellig, Beat Ott, Kurt Heutschi, Torben Rühl, and Thomas Nussbaumer. 2015. Detection and tracking of drones using advanced acoustic cameras. In Unmanned/Unattended Sensors and Sensor Networks XI; and Advanced Free-Space Optical Communication Techniques and Applications ,Vol. 9647. SPIE, 53–60. [3] Myoung-Ho Chae, Seong-Ook Park, Seung-Ho Choi, and Chae-Taek Choi. 2023. Commercial fixed-wing drone redirection system using GNSS deception. IEEE Trans. Aerospace Electron. Systems 59, 5 (2023), 5699–5713. [4] Myoung-Ho Chae, Seong-Ook Park, Seung-Ho Choi, and Chae-Taek Choi. 2024. Reinforcement learning-based counter fixed-wing drone system using GNSS deception. IEEE Access 12 (2024), 16549–16558. [5] C. J. Clopper and E. S. Pearson. 1934. The use of confidence or fiducial limits illustrated in the case of the binomial. Biometrika 26, 4 (1934), 404–413. [6] Angelo Coluccia, Gianluca Parisi, and Alessio Fascista. 2020. Detection and classification of multirotor drones in radar sensor networks: A review. Sensors 
+
+20, 15 (2020), 4172. [7] Álvaro Duque De Quevedo, Fernando Ibañez Urzaiz, Javier Gismero Menoyo, and Alberto Asensio López. 2018. Drone detection with X-band ubiquitous radar. In 2018 19th International Radar Symposium (IRS) . IEEE, 1–10. [8] Siyi Ding, Xiao Guo, Ti Peng, Xiao Huang, and Xiaoping Hong. 2023. Drone detection and tracking system based on fused acoustical and optical approaches. 
+
+Advanced Intelligent Systems 5, 10 (2023), 2300251. [9] Sedat Dogru and Lino Marques. 2022. Drone detection using sparse lidar mea-surements. IEEE Robotics and Automation Letters 7, 2 (2022), 3062–3069. [10] Jian Fang, Yaowen Li, Philip N Ji, and Ting Wang. 2022. Drone detection and localization using enhanced fiber-optic acoustic sensor and distributed acoustic sensing technology. Journal of Lightwave Technology 41, 3 (2022), 822–831. [11] Zhangjie Fu, Yueyan Zhi, Shouling Ji, and Xingming Sun. 2022. Remote Attacks on Drones Vision Sensors: An Empirical Study. IEEE Transactions on Dependable and Secure Computing 19, 5 (2022), 3125–3135. doi:10.1109/TDSC.2021.3085412 [12] Zheng Ge, Songtao Liu, Feng Wang, Zeming Li, and Jian Sun. 2021. Yolox: Exceeding yolo series in 2021. arXiv preprint arXiv:2107.08430 (2021). [13] Yan Guo, Meiping Wu, Kanghua Tang, Junbo Tie, and Xian Li. 2019. Covert spoof-ing algorithm of UAV based on GPS/INS-integrated navigation. IEEE Transactions on Vehicular Technology 68, 7 (2019), 6557–6564. [14] Marcus Hammer, Björn Borgmann, Marcus Hebel, and Michael Arens. 2019. UAV detection, tracking, and classification by sensor fusion of a 360 lidar system and an alignable classification sensor. In Laser Radar Technology and Applications XXIV , Vol. 11005. SPIE, 99–108. [15] Marcus Hammer, Marcus Hebel, Martin Laurenzis, and Michael Arens. 2018. Lidar-based detection and tracking of small UAVs. In Emerging Imaging and Sensing Technologies for Security and Defence III; and Unmanned Sensors, Systems, and Countermeasures , Vol. 10799. SPIE, 177–185. [16] Yongfu He, Yu Peng, Shaojun Wang, and Datong Liu. 2019. ADMOST: UAV Flight Data Anomaly Detection and Mitigation via Online Subspace Tracking. 
+
+IEEE Transactions on Instrumentation and Measurement 68, 4 (2019), 1035–1044. doi:10.1109/TIM.2018.2863499 [17] Holybro. [n. d.]. M10 GPS. https://holybro.com/collections/gps/products/m10-gps. Accessed: Nov. 13, 2025. [18] Joon-Ha Jang, Mangi Cho, Jaehoon Kim, Dongkwan Kim, and Yongdae Kim. 2023. Paralyzing Drones via EMI Signal Injection on Sensory Communication Channels.. In Netw. and Distributed Syst. Security Symp. (NDSS) .[19] Jinseob Jeong, Dongkwan Kim, Joon-Ha Jang, Juhwan Noh, Changhun Song, and Yongdae Kim. 2023. Un-Rocking Drones: Foundations of Acoustic Injection Attacks and Recovery Thereof.. In Netw. and Distributed Syst. Security Symp. (NDSS) .[20] Zaher M. Kassas, Joe Khalife, Ali A. Abdallah, and Chiawei Lee. 2022. I Am Not Afraid of the GPS Jammer: Resilient Navigation Via Signals of Opportunity in GPS-Denied Environments. IEEE Aerospace and Electronic Systems Magazine 37, 7 (2022), 4–19. doi:10.1109/MAES.2022.3154110 [21] Shah Zahid Khan, Mujahid Mohsin, and Waseem Iqbal. 2021. On GPS spoofing of aerial platforms: a review of threats, challenges, methodologies, and future research directions. PeerJ Computer Science 7 (2021), e507. [22] Amir Khazraei, Haocheng Meng, and Miroslav Pajic. 2024. Black-box Stealthy GPS Attacks on Unmanned Aerial Vehicles. In 2024 IEEE 63rd Conference on Decision and Control (CDC) . 2857–2862. doi:10.1109/CDC56724.2024.10885819 [23] Amir Khazraei and Miroslav Pajic. 2022. Resiliency of Nonlinear Control Systems to Stealthy Sensor Attacks. In 2022 IEEE 61st Conference on Decision and Control (CDC) . 7109–7114. doi:10.1109/CDC51059.2022.9992988 [24] Hyungsub Kim, Rwitam Bandyopadhyay, Muslum Ozgur Ozmen, Z Berkay Celik, Antonio Bianchi, Yongdae Kim, and Dongyan Xu. 2024. A Systematic Study of Physical Sensor Attack Hardness. In 2024 IEEE Symposium on Security and Privacy (SP) . IEEE Computer Society, 143–143. [25] Victor RF Miranda, Adriano MC Rezende, Thiago L Rocha, Héctor Azpúrua, Luciano CA Pimenta, and Gustavo M Freitas. 2022. Autonomous navigation system for a delivery drone. Journal of Control, Automation and Electrical Systems 
+
+33, 1 (2022), 141–155. [26] Thomas Müller. 2017. Robust drone detection for day/night counter-UAV with static VIS and SWIR cameras. In Ground/Air Multisensor Interoperability, Integra-tion, and Networking for Persistent ISR VIII , Vol. 10190. SPIE, 302–313. [27] Victor C. Murray. 2019. Legal Over-the-Air Spoofing of GPS and the Resulting Effects on Autonomous Vehicles. Black Hat USA 2019 (Whitepaper). Southwest Research Institute (SwRI). [28] S Alhaji Musa, RSAR Abdullah, Aduwati Sali, Alyani Ismail, Nur Emileen Abdul Rashid, Idnin Pasya Ibrahim, and Asem Ahmad Salah. 2019. A review of copter drone detection using radar systems. Def. S&T Tech. Bull 12, 1 (2019), 16–38. [29] Shaojie Ni, Binbin Ren, Feiqiang Chen, Zukun Lu, Jie Wang, Pengcheng Ma, and Yifan Sun. 2022. GNSS spoofing suppression based on multi-satellite and multi-channel array processing. Frontiers in Physics 10 (2022), 905918. [30] Juhwan Noh, Yujin Kwon, Yunmok Son, Hocheol Shin, Dohyun Kim, Jaeyeong Choi, and Yongdae Kim. 2019. Tractor beam: Safe-hijacking of consumer drones with adaptive GPS spoofing. ACM Transactions on Privacy and Security (TOPS) 
+
+22, 2 (2019), 1–26. [31] Aurello Patrik, Gaudi Utama, Alexander Agung Santoso Gunawan, Andry Chowanda, Jarot S Suroso, Rizatus Shofiyanti, and Widodo Budiharto. 2019. GNSS-based navigation systems of autonomous drone for delivering items. Jour-nal of Big Data 6, 1 (2019), 53. [32] Derry Pratama, Jaegeun Moon, Agus Mahardika Ari Laksmono, Dongwook Yun, Muhammad Iqbal, Byeonguk Jeong, Jang Hyun Ji, and Howon Kim. 2024. Behind the wings: the case of reverse engineering and drone hijacking in DJI enhanced wi-Fi protocol. In 2024 International Conference on Platform Technology and Service (PlatCon) . IEEE, 127–132. [33] Gustav Rubbestad and William Söderqvist. 2021. Hacking a Wi-Fi based drone. [34] SELÇUK ŞAHİN, ABEDALLATIF BABA, and Tolga Sönmez. 2017. Optimal fusion of multiple GNSS signals against spoofing sources. Turkish Journal of Electrical Engineering and Computer Sciences 25, 4 (2017), 3289–3299. [35] Harshad Sathaye, Martin Strohmeier, Vincent Lenders, and Aanjhan Ran-ganathan. 2022. An experimental study of {GPS } spoofing and takeover attacks on {UAVs }. In 31st USENIX security symposium (USENIX security 22) . 3503–3520. [36] Alexander Sedunov, Darren Haddad, Hady Salloum, Alexander Sutin, Nikolay Sedunov, and Alexander Yakubovskiy. 2019. Stevens drone detection acoustic system and experiments in acoustics UAV tracking. In 2019 IEEE International Symposium on Technologies for Homeland Security (HST) . IEEE, 1–7. [37] Ulzhalgas Seidaliyeva, Daryn Akhmetov, Lyazzat Ilipbayeva, and Eric T Matson. 2020. Real-time and accurate drone detection in a video with a static background. 
+
+Sensors 20, 14 (2020), 3856. [38] Vasilii Semkin, Mingsheng Yin, Yaqi Hu, Marco Mezzavilla, and Sundeep Rangan. 2021. Drone detection and classification based on radar cross section signatures. In 2020 International Symposium on Antennas and Propagation (ISAP) . IEEE, 223– 224. [39] Aamish Sharjeel, Syed Abbas Zilqurnain Naqvi, and Muhammad Ahsan. 2021. Real time drone detection by moving camera using COROLA and CNN algorithm. 
+
+Journal of the Chinese Institute of Engineers 44, 2 (2021), 128–137. [40] Zhiguo Shi, Xianyu Chang, Chaoqun Yang, Zexian Wu, and Junfeng Wu. 2020. An acoustic-based surveillance system for amateur drones detection and localization. 
+
+IEEE transactions on vehicular technology 69, 3 (2020), 2731–2739. [41] Dong-Hun Shin, Dae-Hwan Jung, Dong-Chan Kim, Jong-Wook Ham, and Seong-Ook Park. 2016. A distributed FMCW radar system based on fiber-optic links for 13 Haocheng Meng, Shaocheng Luo, Songqiao Xie, and Miroslav Pajic 
+
+small drone detection. IEEE Transactions on Instrumentation and Measurement 
+
+66, 2 (2016), 340–347. [42] Yunmok Son, Hocheol Shin, Dongkwan Kim, Youngseok Park, Juhwan Noh, Kibum Choi, Jungwoo Choi, and Yongdae Kim. 2015. Rocking drones with inten-tional sound noise on gyroscopic sensors. In 24th USENIX Security Symposium .881–896. [43] Sihao Sun, Angel Romero, Philipp Foehn, Elia Kaufmann, and Davide Scaramuzza. 2022. A comparative study of nonlinear mpc and differential-flatness-based control for quadrotor agile flight. IEEE Transactions on Robotics 38, 6 (2022), 3357–3373. [44] Fredrik Svanström, Fernando Alonso-Fernandez, and Cristofer Englund. 2021. A dataset for multi-sensor drone detection. Data in Brief 39 (2021), 107521. [45] Fredrik Svanström, Fernando Alonso-Fernandez, and Cristofer Englund. 2022. Drone detection and tracking in real-time by fusion of different sensing modali-ties. Drones 6, 11 (2022), 317. [46] Fredrik Svanström, Cristofer Englund, and Fernando Alonso-Fernandez. 2021. Real-time drone detection and tracking with visible, thermal and acoustic sensors. In 2020 25th International Conference on Pattern Recognition (ICPR) . IEEE, 7265– 7272. [47] Nils Ole Tippenhauer, Christina Pöpper, Kasper Bonne Rasmussen, and Srdjan Capkun. 2011. On the requirements for successful GPS spoofing attacks. In 
+
+Proceedings of the 18th ACM conference on Computer and communications security .75–86. [48] Yazhou Tu, Zhiqiang Lin, Insup Lee, and Xiali Hei. 2018. Injected and delivered: Fabricating implicit control over actuation systems by spoofing inertial sensors. In 27th USENIX Security Symposium . 1545–1562. [49] Eren Unlu, Emmanuel Zenou, Nicolas Riviere, and Paul-Edouard Dupouy. 2019. Deep learning-based strategies for the detection and tracking of drones using several cameras. IPSJ Transactions on Computer Vision and Applications 11, 1 (2019), 7. [50] Ottilia Westerlund and Rameez Asif. 2019. Drone Hacking with Raspberry-Pi 3 and WiFi Pineapple: Security and Privacy Threats for the Internet-of-Things. In 2019 1st International Conference on Unmanned Vehicle Systems-Oman (UVS) .1–10. doi:10.1109/UVS.2019.8658279 [51] Yuan Xu, Xingshuo Han, Gelei Deng, Jiwei Li, Yang Liu, and Tianwei Zhang. 2023. SoK: Rethinking sensor spoofing attacks against robotic vehicles from a systematic view. In IEEE 8th European Symp. on Security and Privacy (EuroS&P) .1082–1100. [52] Jie Zhong, Yujie Zhang, Jianyu Wang, Chong Luo, and Qiang Miao. 2021. Un-manned aerial vehicle flight data anomaly detection and recovery prediction based on spatio-temporal correlation. IEEE Transactions on Reliability 71, 1 (2021), 457–468. [53] Ce Zhou, Qiben Yan, Yan Shi, and Lichao Sun. 2022. DoubleStar:Long-Range at-tack towards depth estimation based obstacle avoidance in autonomous systems. In 31st USENIX Security Symp. 1885–1902. [54] Jun Zhu, Hongyi Li, and Tao Zhang. 2023. Camera, LiDAR, and IMU based multi-sensor fusion SLAM: A survey. Tsinghua Science and Technology 29, 2 (2023), 415–429. 
+
+## A Appendix A.1 Modeling Vehicle Physical Dynamics 
+
+To better illustrate the effect of GPS spoofing to achieve redirection, we discuss the vehicle dynamical model used in our formulations. The UAV physical dynamics can be captured with a standard non-linear quadcopter model [43]. The translational motion is described by a standard Euler-Newton equation [43]: 
+
+¥𝜉 = (Rf B + f𝑎 )/ 𝑚 + g, (21) where 𝜉 = 𝑥, 𝑦, 𝑧 𝑇 captures the coordinates of the UAV, 𝑚 de-notes the total mass of the vehicle, and g = 0, 0, 𝑔 𝑇 is the grav-ity acceleration vector; f B = 0, 0,𝑇 𝑇 is the force vector in the body frame for the collective thrust 𝑇 applied at the center of mass; f𝑎 is the aerodynamic drag force in the Earth frame f𝑎 =
+
+ −𝑘 𝑑,𝑥 𝑣 𝑥 ,−𝑘 𝑑,𝑦 𝑣 𝑦 ,−𝑘 𝑑,𝑧 𝑣 𝑧 +𝑘 ℎ  
+
+> 
+> 𝑣 2
+> 𝑥 +𝑣 2
+> 𝑦
+> 
+
+𝑇 ; here, 𝑘 𝑑,𝑥 , 𝑘 𝑑,𝑦 , 𝑘 𝑑,𝑧 , 𝑘 ℎ are drag force coefficients and 𝑣 𝑥 , 𝑣 𝑦 , 𝑣 𝑧 are the earth-frame velocities. The rotational motion can be captured as 
+
+¤R = R ˆ𝛀 B, I ¤𝛀 B = −𝛀 B × I𝛀 B + 𝝉 B, (22) where 𝛀 B = Ω𝑥 , Ω𝑦 , Ω𝑧 
+
+𝑇 is the angular velocity in the body frame, ˆ . denotes the operator that maps a vector in R3 to a skew-symmetric matrix, I ∈ R3×3 is the inertia matrix, and 𝝉 B = 𝜏 𝑥 , 𝜏 𝑦 , 𝜏 𝑧 
+
+𝑇 
+
+is the total torque vector in the body frame. 
+
+## A.2 GPS Spoofing Effect Formulation 
+
+In a standard UAV sensor fusion configuration, for which the model of the physical dynamics is provided in App. A.1, GPS provides direct measurements of the earth-frame position and velocity: 
+
+yGPS  
+
+> 𝑘
+
+=
+
+"p𝑘 
+
+v𝑘 
+
+#
+
++
+
+"npos 
+
+> 𝑘
+
+nvel 
+
+> 𝑘
+
+#
+
+, npos  
+
+> 𝑘
+
+∼ N ( 0, Σ𝑝 ), nvel  
+
+> 𝑘
+
+∼ N ( 0, Σ𝑣 ); (23) here yGPS  
+
+> 𝑘
+
+captures GPS sensor readings, modeled as the true posi-tion and velocity p𝑘 , v𝑘 , and the zero-mean Gaussian noise npos  
+
+> 𝑘
+
+, nvel  
+
+> 𝑘
+
+.As discussed in GPS takeover attacks, GPS receivers lock onto coun-terfeit GPS signals with offsets added to the original sensor readings: 
+
+yGPS,s  
+
+> 𝑘
+
+=
+
+"p𝑘 
+
+v𝑘 
+
+#
+
++
+
+"npos 
+
+> 𝑘
+
+nvel 
+
+> 𝑘
+
+#
+
++
+
+"spos 
+
+> 𝑘
+
+svel 
+
+> 𝑘
+
+#
+
+, (24) where yGPS,s  
+
+> 𝑘
+
+denotes the spoofed GPS readings received by the UAV controller; and spos  
+
+> 𝑘
+
+, svel  
+
+> 𝑘
+
+correspond to the spoofing signals added to position and velocity, respectively. These spoofed terms effectively bias the GPS output, thus leading to incorrect state estimation in the sensor fusion process: ˆx𝑠 𝑘 = 𝑔 ( ˆx𝑘 −1, u𝑘 −1, y𝑠 𝑘 ) (25) where ˆ x𝑠 𝑘 stands for the corrupted state estimate from sensor fusion process 𝑔 due to spoofed sensor measurements y𝑠 𝑘 = yGPS,s  
+
+> 𝑘
+
+, yIMU 
+
+> 𝑘
+
+.Note that the IMU measurements are assumed to be uncompro-mised in this work. Previously, it was shown that attacking GPS measurements only is sufficient to spoof the position of the UAV in a stealthy way, even without accessing the IMU readings of the drone [22, 23]. 
+
+## A.3 Simulation Setup 
+
+The simulation parameters of MATLAB/Simulink are provided in Table 3, including the simulator configurations, redirection com-mands setup, drone physical model, and noise profiles. 
+
+## A.4 Redirection under Tracker Loss 
+
+We evaluated the performance of our LiDAR-camera tracker when intermittent target loss takes place. As is shown in Fig. 13, tracker loss happens both before and after the beginning of redirection operation, with very large tracking errors in place. Nevertheless, the redirection controller is not significantly impacted and diverts the victim drone coherently, proving its robustness to these errors. 
+
+14 Phantom Navigator: Stealthy and Precise Unmanned Aerial Vehicle Redirection with Real-Time Tracking and GPS Spoofing 
+
+Table 3: Simulation and drone parameters used in MAT-LAB/Simulink for offline verification. 
+
+Parameter Groups Value Simulator 
+
+Simulation duration 400 s Sample time 0.01 s 
+
+Redirection Command Station 
+
+Position tracking noise 0.5 m (std. dev.) Velocity tracking noise 0.1 m/s (std. dev.) Redirection strength (acceleration) 1.0 m/s 2
+
+Drone Physical Model 
+
+Moments of inertia ( 𝐼 𝑥𝑥 , 𝐼 𝑦𝑦 , 𝐼 𝑧𝑧 ) 0.016, 0.016, 0.0274 kg·m 2
+
+Rotor inertia 3.789 × 10 −6 kg·m 2
+
+Mass 1 kg Gravity 9.8 m/s 2
+
+Sensor and System Noise 
+
+GPS position noise 0.5 m (std. dev.) GPS velocity noise 0.01 m/s (std. dev.) IMU accelerometer noise 0.035 m/s 2
+
+IMU gyro noise 0.021 rad/s IMU magnetometer noise 0.206 (normalized) 
+
+Figure 13: Redirection result in X-axis under intermittent tracker loss with recovered redirection command.
