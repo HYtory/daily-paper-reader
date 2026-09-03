@@ -1,0 +1,69 @@
+{
+  "label": "2026-09-03",
+  "date": "2026-09-03",
+  "generated_at": "2026-09-03T23:06:59",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202609/03/2608.27685v1-distributed-model-based-diffusion-finite-horizon-contraction-under-bounded-delay",
+      "section": "quick",
+      "title_en": "Distributed Model-Based Diffusion: Finite Horizon Contraction under Bounded Delay",
+      "authors": "Seth Golembeski, Keith L. Gibson, Alexander Gross, Shreyas Kousik, Anirban Mazumdar",
+      "date": "2026-08-27",
+      "pdf": "https://arxiv.org/pdf/2608.27685v1",
+      "score": "6.0",
+      "evidence": "研究多智能体分布式轨迹优化，包含空中飞行器等示例，可应用于多无人机协同围捕的规划问题。",
+      "tldr": "多智能体轨迹优化面临非凸非光滑与高维挑战，通信延迟进一步恶化求解难度。本文提出分布式基于模型的扩散方法，将采样型预测控制与分布协作结合，证明了有限时域下的收缩性以及对延迟的鲁棒性。在圆圈交换、协作驾驶和空战场景中，该方法在存在延迟时较集中式基线分别提升31%完工时间和25%胜率。为实际多智能体控制提供了理论支撑与高效求解路径。",
+      "tags": "query:ui",
+      "abstract_en": "Simultaneously optimizing the trajectories of multiple agents is a challenging problem plagued by nonlinearity, nonconvexity, and the curse of dimensionality. A collection of interacting aerial vehicles or self-driving cars in an intersection are examples of complex multi-agent systems that remain difficult to solve without many simplifying assumptions. The presence of communication latency between agents further increases the difficulty. In this paper, we analyze Distributed Model-Based Diffusion: a sampling-based Model-Predictive Control method suitable for highly nonlinear, nonconvex, nonsmooth, multi-agent systems. We prove contraction and robustness to latency for multi-agent, nonconvex problems, showing applicability to real-world constraints. We test the algorithm on a circleswap task, a cooperative medium-fidelity driving task, and in an aerial combat scenario. Despite the addition of latency, our algorithm improves circleswap makespan by 31% and increases aerial combat win rate by 25% compared to centralized Model-Based Diffusion.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/03/2609.00504v1-independent-reinforcement-learning-in-discounted-markov-games",
+      "section": "quick",
+      "title_en": "Independent Reinforcement Learning in Discounted Markov Games",
+      "authors": "Asrin Efe Yorulmaz, Ugur Aydin, Tamer Basar",
+      "date": "2026-09-01",
+      "pdf": "https://arxiv.org/pdf/2609.00504v1",
+      "score": "6.0",
+      "evidence": "研究折扣马尔可夫博弈中的独立学习，与无人机集群去中心化MARL具有理论相关性。",
+      "tldr": "折扣一般和马尔可夫博弈中，独立学习计算粗相关均衡存在计算困难。假设ETH for PPAD，不存在多项式时间算法达到逆多项式精度。本文提出首个无结构限制的激进解耦算法，采用分层乐观镜像下降与递增步长，实现次指数收敛。算法覆盖全反馈与部分反馈，提供理论保障。",
+      "tags": "query:ui",
+      "abstract_en": "In this work, we study radically uncoupled learning in discounted general-sum Markov games. Assuming ``$\\mathsf{ETH}$ for $\\mathsf{PPAD}$\", we show that, for every fixed discount factor, there is no polynomial-time algorithm for computing inverse-polynomially accurate coarse correlated equilibria in discounted general-sum Markov games when players learn independently in decentralized settings. Complementing this hardness result, we provide what appears to be the first \\emph{radically uncoupled} algorithm with sub-exponential convergence guarantees to coarse correlated equilibria in discounted general-sum Markov games without imposing any structural restrictions on the game. Our algorithm is a \\emph{layered} variant of optimistic mirror descent with an increasing step-size schedule tailored to the multi-agent setting. Finally, we develop both full-feedback and partial feedback versions of the aforementioned algorithm and establish sub-exponential convergence guarantees for each case.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/03/2609.00577v1-geopar-large-scale-multi-agent-combinatorial-optimization-with-geometry-guided-parallel-autoregressive-learning",
+      "section": "quick",
+      "title_en": "GeoPAR: Large-Scale Multi-Agent Combinatorial Optimization with Geometry-Guided Parallel Autoregressive Learning",
+      "authors": "Wenjian Wu, Zesheng Jia, Jiaying Tang, Benyuan Yang, Jin Wang",
+      "date": "2026-09-01",
+      "pdf": "https://arxiv.org/pdf/2609.00577v1",
+      "score": "6.0",
+      "evidence": "几何引导的并行自回归多智能体RL用于组合优化；可迁移至多UAV协同围捕分配",
+      "tldr": "多智能体组合优化问题NP-hard，现有并行自回归神经求解器在大规模场景下因几何结构建模弱和冲突处理滞后而性能下降。为此提出GeoPAR框架，通过投影窗口稀疏几何机制、稀疏边偏置注意力与缓存引导冲突感知分配，在解码时抑制重复选择。在异构车辆路径与开放多仓取送货问题中，GeoPAR显著提升大规模零样本泛化，同时减少rollout步骤并保持高效推理。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-agent combinatorial optimization problems are notoriously challenging due to their NP-hard nature. Recent parallel autoregressive neural solvers improve inference efficiency by allowing agents to make decisions simultaneously, but their performance often degrades on large-scale instances. This is largely attributable to weak modeling of local geometric structures and the fact that conflicting task selections are handled only after action generation. To address these limitations, we propose GeoPAR, a geometry-guided parallel autoregressive reinforcement learning framework for scalable multi-agent combinatorial optimization. GeoPAR integrates three key components: (1) a projection-window sparse geometry mechanism that builds lightweight local candidate neighborhoods through multi-directional projections, (2) sparse edge-biased attention that injects these geometric relations into node representations, and (3) cache-guided conflict-aware assignment that reuses the geometric cache during decoding to suppress duplicate selections of exclusive tasks. Experiments on heterogeneous vehicle routing and open multi-depot pickup-and-delivery problems show that GeoPAR improves large-scale zero-shot generalization while substantially reducing rollout steps and maintaining efficient inference.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/03/2609.01764v1-curriculum-guided-reinforcement-learning-for-energy-efficient-uav-isac-in-post-disaster-search-and-rescue-operations",
+      "section": "quick",
+      "title_en": "Curriculum-Guided Reinforcement Learning for Energy-Efficient UAV-ISAC in Post-Disaster Search-and-Rescue Operations",
+      "authors": "Tai-You Guo, Chuan-Chi Lai",
+      "date": "2026-09-01",
+      "pdf": "https://arxiv.org/pdf/2609.01764v1",
+      "score": "6.0",
+      "evidence": "课程引导SAC优化单UAV三维航迹；基于RL的航迹控制可迁移至单无人机拦截",
+      "tldr": "灾后搜索救援中，无人机集成感知与通信（ISAC）面临机载能量严重受限，感知精度、通信质量与推进能耗强耦合，难以协同优化。对此，提出课程引导的软演员-评论家（CG-SAC）框架，通过推进感知奖励整形、归一化复合奖励与对数线性课程，联合优化三维轨迹、感知通信功率分配及每用户功率。在2000个随机场景中，平均能效达0.72 Mbits/J，显著优于DRL基线；成功任务所需飞行步数减少66%~82%，服务时刻通信速率满意度达99.6%。学习到的策略表现出任务感知的速度自适应，消融验证了各奖励项互补，为灾后场景提供了高效节能的无人机ISAC方案。",
+      "tags": "query:ui",
+      "abstract_en": "Uncrewed aerial vehicles (UAVs) are promising platforms for integrated sensing and communication (ISAC), but their limited onboard energy creates a strong coupling among sensing accuracy, communication quality, and propulsion cost. This paper proposes a curriculum-guided soft actor-critic (CG-SAC) framework with propulsion-aware reward shaping for energy-efficient UAV-ISAC, jointly optimizing the 3D trajectory, communication-sensing power split, and per-user power allocation. A rotary-wing propulsion model is incorporated to derive a closed-form propulsion-economic cruising speed, which is used to construct a propulsion-aware speed-shaping term within a normalized composite reward together with navigation, node-visiting, energy-efficiency, and constraint-penalty terms. A log-linear curriculum progressively tightens the communication, sensing, and proximity requirements during training. Across 2000 randomized scenarios, CG-SAC achieves an average energy efficiency of 0.72 Mbits/J, substantially outperforming the evaluated DRL baselines. Among successfully completed missions, it requires 107.6 steps on average, corresponding to a 66%--82% reduction in flight steps relative to the baselines. Crucially, the learned policy exhibits mission-aware speed adaptation by decelerating near service points and accelerating during transit, while achieving a 99.6% communication-rate satisfaction ratio at service instants. Ablation results further demonstrate the complementary roles of the reward components in balancing mission feasibility and energy efficiency.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

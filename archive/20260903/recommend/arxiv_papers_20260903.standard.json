@@ -1,0 +1,175 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-03T23:04:27.578230+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.27685v1",
+      "source": "arxiv",
+      "title": "Distributed Model-Based Diffusion: Finite Horizon Contraction under Bounded Delay",
+      "abstract": "Simultaneously optimizing the trajectories of multiple agents is a challenging problem plagued by nonlinearity, nonconvexity, and the curse of dimensionality. A collection of interacting aerial vehicles or self-driving cars in an intersection are examples of complex multi-agent systems that remain difficult to solve without many simplifying assumptions. The presence of communication latency between agents further increases the difficulty. In this paper, we analyze Distributed Model-Based Diffusion: a sampling-based Model-Predictive Control method suitable for highly nonlinear, nonconvex, nonsmooth, multi-agent systems. We prove contraction and robustness to latency for multi-agent, nonconvex problems, showing applicability to real-world constraints. We test the algorithm on a circleswap task, a cooperative medium-fidelity driving task, and in an aerial combat scenario. Despite the addition of latency, our algorithm improves circleswap makespan by 31% and increases aerial combat win rate by 25% compared to centralized Model-Based Diffusion.",
+      "authors": [
+        "Seth Golembeski",
+        "Keith L. Gibson",
+        "Alexander Gross",
+        "Shreyas Kousik",
+        "Anirban Mazumdar"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-08-27T20:16:41+00:00",
+      "link": "https://arxiv.org/pdf/2608.27685v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Distributed trajectory optimization for multi-agent systems with aerial vehicle examples, directly relevant to cooperative UAV encirclement planning.",
+      "llm_evidence_cn": "研究多智能体分布式轨迹优化，包含空中飞行器等示例，可应用于多无人机协同围捕的规划问题。",
+      "llm_evidence": "研究多智能体分布式轨迹优化，包含空中飞行器等示例，可应用于多无人机协同围捕的规划问题。",
+      "canonical_evidence": "研究多智能体分布式轨迹优化，包含空中飞行器等示例，可应用于多无人机协同围捕的规划问题。",
+      "llm_tldr_en": "Addressing multi-agent trajectory optimization with communication delay, this paper analyzes Distributed Model-Based Diffusion, a sampling MPC approach for nonlinear nonconvex nonsmooth systems, and proves finite-horizon contraction and robustness to bounded latency.",
+      "llm_tldr_cn": "多智能体同时优化轨迹受非线性、非凸与通信延迟等因素影响，是多种实际系统的共同难题。论文分析分布式基于模型的扩散算法，采用采样扩展的模型预测控制框架求解多智能体分布式非凸问题，并在理论上给出有界时延下的有限时域收缩与抗延迟的鲁棒性证明。该方法对空中飞行器集群等复杂系统具有现实适用性，可视为协同围捕或拦截轨迹规划的潜在技术基础。",
+      "llm_tldr": "多智能体同时优化轨迹受非线性、非凸与通信延迟等因素影响，是多种实际系统的共同难题。论文分析分布式基于模型的扩散算法，采用采样扩展的模型预测控制框架求解多智能体分布式非凸问题，并在理论上给出有界时延下的有限时域收缩与抗延迟的鲁棒性证明。该方法对空中飞行器集群等复杂系统具有现实适用性，可视为协同围捕或拦截轨迹规划的潜在技术基础。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.00504v1",
+      "source": "arxiv",
+      "title": "Independent Reinforcement Learning in Discounted Markov Games",
+      "abstract": "In this work, we study radically uncoupled learning in discounted general-sum Markov games. Assuming ``$\\mathsf{ETH}$ for $\\mathsf{PPAD}$\", we show that, for every fixed discount factor, there is no polynomial-time algorithm for computing inverse-polynomially accurate coarse correlated equilibria in discounted general-sum Markov games when players learn independently in decentralized settings. Complementing this hardness result, we provide what appears to be the first \\emph{radically uncoupled} algorithm with sub-exponential convergence guarantees to coarse correlated equilibria in discounted general-sum Markov games without imposing any structural restrictions on the game. Our algorithm is a \\emph{layered} variant of optimistic mirror descent with an increasing step-size schedule tailored to the multi-agent setting. Finally, we develop both full-feedback and partial feedback versions of the aforementioned algorithm and establish sub-exponential convergence guarantees for each case.",
+      "authors": [
+        "Asrin Efe Yorulmaz",
+        "Ugur Aydin",
+        "Tamer Basar"
+      ],
+      "primary_category": "cs.GT",
+      "categories": [
+        "cs.GT",
+        "cs.AI",
+        "cs.LG",
+        "eess.SY",
+        "math.OC"
+      ],
+      "published": "2026-09-01T00:07:45+00:00",
+      "link": "https://arxiv.org/pdf/2609.00504v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Theoretical study of independent learners in discounted Markov games, relevant to decentralized multi-agent RL for UAV swarm coordination.",
+      "llm_evidence_cn": "研究折扣马尔可夫博弈中的独立学习，与无人机集群去中心化MARL具有理论相关性。",
+      "llm_evidence": "研究折扣马尔可夫博弈中的独立学习，与无人机集群去中心化MARL具有理论相关性。",
+      "canonical_evidence": "研究折扣马尔可夫博弈中的独立学习，与无人机集群去中心化MARL具有理论相关性。",
+      "llm_tldr_en": "Concerning independent learning in general-sum discounted Markov games, the paper proves hardness of computing coarse correlated equilibria under ETH and provides the first radically uncoupled algorithm with sub-exponential convergence guarantees without structural assumptions.",
+      "llm_tldr_cn": "在去中心化设置下，独立学习多智能体在一般和折扣马尔可夫博弈中的收敛问题长期困扰理论界。该文基于ETH给出计算粗相关均衡的难度下限，并进一步设计分层乐观镜像下降的变体，作为首个不需要博弈结构限制的激进解耦算法，以亚指数时间收敛到粗相关均衡。结果表明去中心化学习在通用场景下也有可用的理论保证，可为无人机集群独立决策提供算法启示。",
+      "llm_tldr": "在去中心化设置下，独立学习多智能体在一般和折扣马尔可夫博弈中的收敛问题长期困扰理论界。该文基于ETH给出计算粗相关均衡的难度下限，并进一步设计分层乐观镜像下降的变体，作为首个不需要博弈结构限制的激进解耦算法，以亚指数时间收敛到粗相关均衡。结果表明去中心化学习在通用场景下也有可用的理论保证，可为无人机集群独立决策提供算法启示。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.00577v1",
+      "source": "arxiv",
+      "title": "GeoPAR: Large-Scale Multi-Agent Combinatorial Optimization with Geometry-Guided Parallel Autoregressive Learning",
+      "abstract": "Multi-agent combinatorial optimization problems are notoriously challenging due to their NP-hard nature. Recent parallel autoregressive neural solvers improve inference efficiency by allowing agents to make decisions simultaneously, but their performance often degrades on large-scale instances. This is largely attributable to weak modeling of local geometric structures and the fact that conflicting task selections are handled only after action generation. To address these limitations, we propose GeoPAR, a geometry-guided parallel autoregressive reinforcement learning framework for scalable multi-agent combinatorial optimization. GeoPAR integrates three key components: (1) a projection-window sparse geometry mechanism that builds lightweight local candidate neighborhoods through multi-directional projections, (2) sparse edge-biased attention that injects these geometric relations into node representations, and (3) cache-guided conflict-aware assignment that reuses the geometric cache during decoding to suppress duplicate selections of exclusive tasks. Experiments on heterogeneous vehicle routing and open multi-depot pickup-and-delivery problems show that GeoPAR improves large-scale zero-shot generalization while substantially reducing rollout steps and maintaining efficient inference.",
+      "authors": [
+        "Wenjian Wu",
+        "Zesheng Jia",
+        "Jiaying Tang",
+        "Benyuan Yang",
+        "Jin Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.NE"
+      ],
+      "published": "2026-09-01T02:14:05+00:00",
+      "link": "https://arxiv.org/pdf/2609.00577v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Geometry-guided parallel autoregressive multi-agent RL for combinatorial optimization; transferable to cooperative multi-UAV encirclement allocation",
+      "llm_evidence_cn": "几何引导的并行自回归多智能体RL用于组合优化；可迁移至多UAV协同围捕分配",
+      "llm_evidence": "几何引导的并行自回归多智能体RL用于组合优化；可迁移至多UAV协同围捕分配",
+      "canonical_evidence": "几何引导的并行自回归多智能体RL用于组合优化；可迁移至多UAV协同围捕分配",
+      "llm_tldr_en": "GeoPAR embeds projection-window sparse geometry encoding and pre-action conflict resolution into parallel autoregressive RL, improving multi-agent combinatorial optimization at large scales while retaining inference efficiency.",
+      "llm_tldr_cn": "该文针对大规模多智能体组合优化问题，提出GeoPAR框架，将投影窗口稀疏几何机制与并行自回归强化学习结合，使多个智能体在动作生成前感知局部几何结构并缓解冲突任务选择。与现有并行自回归求解器相比，GeoPAR在大规模实例上提升了求解性能与推理效率。对于多UAV协同围捕或任务分配，其几何引导与并行决策机制可作为一种可迁移的MARL方法，用于分布式包围策略的学习。",
+      "llm_tldr": "该文针对大规模多智能体组合优化问题，提出GeoPAR框架，将投影窗口稀疏几何机制与并行自回归强化学习结合，使多个智能体在动作生成前感知局部几何结构并缓解冲突任务选择。与现有并行自回归求解器相比，GeoPAR在大规模实例上提升了求解性能与推理效率。对于多UAV协同围捕或任务分配，其几何引导与并行决策机制可作为一种可迁移的MARL方法，用于分布式包围策略的学习。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.01764v1",
+      "source": "arxiv",
+      "title": "Curriculum-Guided Reinforcement Learning for Energy-Efficient UAV-ISAC in Post-Disaster Search-and-Rescue Operations",
+      "abstract": "Uncrewed aerial vehicles (UAVs) are promising platforms for integrated sensing and communication (ISAC), but their limited onboard energy creates a strong coupling among sensing accuracy, communication quality, and propulsion cost. This paper proposes a curriculum-guided soft actor-critic (CG-SAC) framework with propulsion-aware reward shaping for energy-efficient UAV-ISAC, jointly optimizing the 3D trajectory, communication-sensing power split, and per-user power allocation. A rotary-wing propulsion model is incorporated to derive a closed-form propulsion-economic cruising speed, which is used to construct a propulsion-aware speed-shaping term within a normalized composite reward together with navigation, node-visiting, energy-efficiency, and constraint-penalty terms. A log-linear curriculum progressively tightens the communication, sensing, and proximity requirements during training. Across 2000 randomized scenarios, CG-SAC achieves an average energy efficiency of 0.72 Mbits/J, substantially outperforming the evaluated DRL baselines. Among successfully completed missions, it requires 107.6 steps on average, corresponding to a 66%--82% reduction in flight steps relative to the baselines. Crucially, the learned policy exhibits mission-aware speed adaptation by decelerating near service points and accelerating during transit, while achieving a 99.6% communication-rate satisfaction ratio at service instants. Ablation results further demonstrate the complementary roles of the reward components in balancing mission feasibility and energy efficiency.",
+      "authors": [
+        "Tai-You Guo",
+        "Chuan-Chi Lai"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "eess.SY"
+      ],
+      "published": "2026-09-01T18:31:14+00:00",
+      "link": "https://arxiv.org/pdf/2609.01764v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Curriculum-guided SAC for single-UAV 3D trajectory optimization; RL-based trajectory control transferable to single-UAV interception",
+      "llm_evidence_cn": "课程引导SAC优化单UAV三维航迹；基于RL的航迹控制可迁移至单无人机拦截",
+      "llm_evidence": "课程引导SAC优化单UAV三维航迹；基于RL的航迹控制可迁移至单无人机拦截",
+      "canonical_evidence": "课程引导SAC优化单UAV三维航迹；基于RL的航迹控制可迁移至单无人机拦截",
+      "llm_tldr_en": "CG-SAC combines curriculum learning and propulsion-aware reward shaping to jointly optimize trajectory, sensing-communication power split, and user allocation for energy-efficient UAV-ISAC, improving search-and-rescue performance under energy constraints.",
+      "llm_tldr_cn": "该文面向灾后搜救UAV-ISAC场景，提出课程引导的软演员-批评家(CG-SAC)框架，通过推进感知奖励塑造将旋翼推进模型与通信感知功率分配、用户分配联合优化。课程学习缓解了多目标联合优化的训练难度，使单UAV能够在能量约束下兼顾感知精度与通信质量。数值实验验证了该框架能降低推进能耗并提升任务效能。其RL驱动单UAV航迹优化与奖励设计方法，可为单无人机拦截问题提供可借鉴的建模与训练思路。",
+      "llm_tldr": "该文面向灾后搜救UAV-ISAC场景，提出课程引导的软演员-批评家(CG-SAC)框架，通过推进感知奖励塑造将旋翼推进模型与通信感知功率分配、用户分配联合优化。课程学习缓解了多目标联合优化的训练难度，使单UAV能够在能量约束下兼顾感知精度与通信质量。数值实验验证了该框架能降低推进能耗并提升任务效能。其RL驱动单UAV航迹优化与奖励设计方法，可为单无人机拦截问题提供可借鉴的建模与训练思路。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for single UAV interception",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
