@@ -6,35 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-09-03
-- 运行时间：2026-09-03 23:06:54 UTC
+- 最新运行日期：2026-09-04
+- 运行时间：2026-09-04 22:35:12 UTC
 - 运行状态：成功
-- 本次总论文数：4
-- 精读区：0
-- 速读区：4
+- 本次总论文数：2
+- 精读区：1
+- 速读区：1
 
 ### 今日简报（AI）
-今日完成4篇论文速读，覆盖分布式模型、强化学习与组合优化方向。  
-最值得关注的是多智能体马尔可夫博弈中的独立强化学习，以及几何引导的并行自回归组合优化方法，两者均为6.0分。  
-建议优先精读这两篇，重点考察其在时延与大规模场景下的适用性。
-- 详情：[/202609/03/README](/202609/03/README)
+今日精读1篇、速读1篇，聚焦不完美信息游戏与无人机协同控制；最值得关注的是测试时强化学习在博弈中的8.0分高价值研究，视觉引导编队控制亦具参考性；建议普通读者优先浏览精读论文的核心方法，再快速扫描无人机的视觉方案作拓展。
+- 详情：[/202609/04/README](/202609/04/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Test-time Reinforcement Learning in Imperfect Information Games](/202609/04/2608.30635v1-test-time-reinforcement-learning-in-imperfect-information-games)  
+   标签：评分：8.0/10、query:ui
+   evidence：面向双人零和不完全信息博弈的测试时强化学习，可迁移到无人机追逃策略中。
 
 ### 速读区论文标签
-1. [Distributed Model-Based Diffusion: Finite Horizon Contraction under Bounded Delay](/202609/03/2608.27685v1-distributed-model-based-diffusion-finite-horizon-contraction-under-bounded-delay)  
-   标签：评分：6.0/10、query:ui
-   evidence：研究多智能体分布式轨迹优化，包含空中飞行器等示例，可应用于多无人机协同围捕的规划问题。
-2. [Independent Reinforcement Learning in Discounted Markov Games](/202609/03/2609.00504v1-independent-reinforcement-learning-in-discounted-markov-games)  
-   标签：评分：6.0/10、query:ui
-   evidence：研究折扣马尔可夫博弈中的独立学习，与无人机集群去中心化MARL具有理论相关性。
-3. [GeoPAR: Large-Scale Multi-Agent Combinatorial Optimization with Geometry-Guided Parallel Autoregressive Learning](/202609/03/2609.00577v1-geopar-large-scale-multi-agent-combinatorial-optimization-with-geometry-guided-parallel-autoregressive-learning)  
-   标签：评分：6.0/10、query:ui
-   evidence：几何引导的并行自回归多智能体RL用于组合优化；可迁移至多UAV协同围捕分配
-4. [Curriculum-Guided Reinforcement Learning for Energy-Efficient UAV-ISAC in Post-Disaster Search-and-Rescue Operations](/202609/03/2609.01764v1-curriculum-guided-reinforcement-learning-for-energy-efficient-uav-isac-in-post-disaster-search-and-rescue-operations)  
-   标签：评分：6.0/10、query:ui
-   evidence：课程引导SAC优化单UAV三维航迹；基于RL的航迹控制可迁移至单无人机拦截
+1. [Vision-Based Leader-Follower Formation Control for Cooperative UAVs in GPS-Degraded Environments](/202609/04/2609.01420v1-vision-based-leader-follower-formation-control-for-cooperative-uavs-in-gps-degraded-environments)  
+   标签：评分：7.0/10、query:ui
+   evidence：基于视觉的领航-跟随编队控制，是多机围捕中目标包围队形保持的关键技术。
 
 
 <div class="dpr-home-promo-card">

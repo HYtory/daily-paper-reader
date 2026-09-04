@@ -1,0 +1,95 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-04T22:32:16.513291+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2608.30635v1",
+      "source": "arxiv",
+      "title": "Test-time Reinforcement Learning in Imperfect Information Games",
+      "abstract": "Test-time reasoning has significantly improved performance in domains ranging from games to language models. However, test-time policy changes with formal guarantees on the performance of the resulting strategy remain a challenge in two-player zero-sum imperfect-information games. Existing solutions are limited to tabular methods or single gradient step updates. In this work, we investigate policy-gradient algorithms as a method for scalable test-time reasoning. We extend the concept of gadget game, tabular technique for test-time search, to the reinforcement learning setting. Unlike prior approaches, we represent the gadget game implicitly by modified sampling and neural policy rather then explicitly by constructing it, thereby removing constraints on subgame size. Furthermore, we formally prove that, unlike prior tabular algorithms, regularized policy-gradient algorithms limit possible strategy degradation caused by test-time reasoning, even without the gadget games. Our evaluation across small- and large-scale games confirms that additional test-time training often substantially improves performance relative to the blueprint strategy.",
+      "authors": [
+        "Ondrej Kubicek",
+        "Viliam Lisy",
+        "Tuomas Sandholm"
+      ],
+      "primary_category": "cs.GT",
+      "categories": [
+        "cs.GT"
+      ],
+      "published": "2026-08-31T11:44:15+00:00",
+      "link": "https://arxiv.org/pdf/2608.30635v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "RL-based test-time reasoning for two-player zero-sum imperfect-information games, directly transferable to UAV pursuit-evasion strategy.",
+      "llm_evidence_cn": "面向双人零和不完全信息博弈的测试时强化学习，可迁移到无人机追逃策略中。",
+      "llm_evidence": "面向双人零和不完全信息博弈的测试时强化学习，可迁移到无人机追逃策略中。",
+      "canonical_evidence": "面向双人零和不完全信息博弈的测试时强化学习，可迁移到无人机追逃策略中。",
+      "llm_tldr_en": "Proposes a scalable policy-gradient test-time RL method that extends gadget-game search to imperfect-information games, using implicit neural policy representation to remove subgame construction constraints.",
+      "llm_tldr_cn": "该文研究在不完全信息双人零和博弈中如何在不改变模型参数的前提下利用测试时计算提升策略。针对传统表格化方法和单步更新在规模和泛化上的局限，提出基于策略梯度的测试时强化学习：将gadget game扩展为隐式神经策略与修改后的采样，避免构造子博弈树。实验表明该方法具备更好的可扩展性和策略改进能力，能够为无人机追逃等对抗任务提供实时决策优化的技术基础。",
+      "llm_tldr": "该文研究在不完全信息双人零和博弈中如何在不改变模型参数的前提下利用测试时计算提升策略。针对传统表格化方法和单步更新在规模和泛化上的局限，提出基于策略梯度的测试时强化学习：将gadget game扩展为隐式神经策略与修改后的采样，避免构造子博弈树。实验表明该方法具备更好的可扩展性和策略改进能力，能够为无人机追逃等对抗任务提供实时决策优化的技术基础。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit evasion strategies using deep reinforcement learning",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2609.01420v1",
+      "source": "arxiv",
+      "title": "Vision-Based Leader-Follower Formation Control for Cooperative UAVs in GPS-Degraded Environments",
+      "abstract": "Cooperation in multi-UAV systems requires reliable relative perception so that follower vehicles can maintain formation and continue their mission safely even when absolute positioning sensors degrade or fail. This paper presents a vision-based cooperative formation framework running on a follower UAV that uses a front-facing RGB-D camera to detect, track, and localize a leader UAV in real-time. A lightweight YOLO-based detector is trained on a dedicated drone dataset and deployed onboard to predict leader bounding boxes, which are then fused with depth information via a pinhole camera model to estimate the leader's relative pose. These estimates provide a leader-follower position controller and can also be used as a backup when GPS or external localization is unavailable. This framework is implemented as a set of ROS nodes and evaluated in a physics-based multi-UAV simulation built on XTDrone, with sensor noise and communication dropouts. We evaluate detection accuracy, runtime, and formation-keeping error under nominal conditions and under simulated failures of the positioning sensors. The results show that the proposed framework maintains stable leader-follower formations with reasonable computational cost and provides a practical basis for extending vision-based cooperative formation control to real-world multi-UAV systems.",
+      "authors": [
+        "Deekshitha Angadi",
+        "Naveena Budda",
+        "Vikas Agarwal",
+        "Rojesh Arunkumar Mulasa",
+        "Ravi Killamsetty",
+        "Mohamed Samshad",
+        "Narsimlu Kemsaram"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-09-01T15:35:38+00:00",
+      "link": "https://arxiv.org/pdf/2609.01420v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Cooperative leader-follower vision-based formation control for multi-UAV; directly relevant to multi-UAV encirclement formation maintenance.",
+      "llm_evidence_cn": "基于视觉的领航-跟随编队控制，是多机围捕中目标包围队形保持的关键技术。",
+      "llm_evidence": "基于视觉的领航-跟随编队控制，是多机围捕中目标包围队形保持的关键技术。",
+      "canonical_evidence": "基于视觉的领航-跟随编队控制，是多机围捕中目标包围队形保持的关键技术。",
+      "llm_tldr_en": "Presents a vision-based leader-follower formation framework for UAVs using RGB-D camera and lightweight YOLO detector to localize the leader in GPS-denied environments, enabling position control for cooperative formation.",
+      "llm_tldr_cn": "针对GPS退化环境下多无人机协同编队困难的问题，提出一种基于机载RGB-D视觉的领导者-跟随者编队方法。跟随UAV用轻量YOLO实时检测领机，融合深度估计相对位姿，并通过位置控制器维持编队。在专用数据集上的机载部署验证了该方法的可用性和抗GPS失效能力，为多UAV协同包围目标提供有效的队形保持手段。",
+      "llm_tldr": "针对GPS退化环境下多无人机协同编队困难的问题，提出一种基于机载RGB-D视觉的领导者-跟随者编队方法。跟随UAV用轻量YOLO实时检测领机，融合深度估计相对位姿，并通过位置控制器维持编队。在专用数据集上的机载部署验证了该方法的可用性和抗GPS失效能力，为多UAV协同包围目标提供有效的队形保持手段。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

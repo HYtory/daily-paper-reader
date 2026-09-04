@@ -1,0 +1,39 @@
+{
+  "label": "2026-09-04",
+  "date": "2026-09-04",
+  "generated_at": "2026-09-04T22:35:17",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202609/04/2608.30635v1-test-time-reinforcement-learning-in-imperfect-information-games",
+      "section": "deep",
+      "title_en": "Test-time Reinforcement Learning in Imperfect Information Games",
+      "authors": "Ondrej Kubicek, Viliam Lisy, Tuomas Sandholm",
+      "date": "2026-08-31",
+      "pdf": "https://arxiv.org/pdf/2608.30635v1",
+      "score": "8.0",
+      "evidence": "面向双人零和不完全信息博弈的测试时强化学习，可迁移到无人机追逃策略中。",
+      "tldr": "测试时推理在游戏和语言模型中虽有提升，但在两人零和帝国信息博弈中缺乏有保证的策略修改手段，且已有方法限于表格化或单步梯度。本文把策略梯度算法引入测试时推理，隐式表示gadget game，规避了子博弈规模约束，并证明了正则化策略梯度能控制策略退化。多种规模的博弈表明，额外测试时训练显著优于蓝图策略，展示了可扩展应用前景。",
+      "tags": "query:ui",
+      "abstract_en": "Test-time reasoning has significantly improved performance in domains ranging from games to language models. However, test-time policy changes with formal guarantees on the performance of the resulting strategy remain a challenge in two-player zero-sum imperfect-information games. Existing solutions are limited to tabular methods or single gradient step updates. In this work, we investigate policy-gradient algorithms as a method for scalable test-time reasoning. We extend the concept of gadget game, tabular technique for test-time search, to the reinforcement learning setting. Unlike prior approaches, we represent the gadget game implicitly by modified sampling and neural policy rather then explicitly by constructing it, thereby removing constraints on subgame size. Furthermore, we formally prove that, unlike prior tabular algorithms, regularized policy-gradient algorithms limit possible strategy degradation caused by test-time reasoning, even without the gadget games. Our evaluation across small- and large-scale games confirms that additional test-time training often substantially improves performance relative to the blueprint strategy.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/04/2609.01420v1-vision-based-leader-follower-formation-control-for-cooperative-uavs-in-gps-degraded-environments",
+      "section": "quick",
+      "title_en": "Vision-Based Leader-Follower Formation Control for Cooperative UAVs in GPS-Degraded Environments",
+      "authors": "Deekshitha Angadi, Naveena Budda, Vikas Agarwal, Rojesh Arunkumar Mulasa, Ravi Killamsetty, Mohamed Samshad, Narsimlu Kemsaram",
+      "date": "2026-09-01",
+      "pdf": "https://arxiv.org/pdf/2609.01420v1",
+      "score": "7.0",
+      "evidence": "基于视觉的领航-跟随编队控制，是多机围捕中目标包围队形保持的关键技术。",
+      "tldr": "在GPS退化环境下，多无人机协同需要可靠的相对感知。本文提出一种基于视觉的领航-跟随编队框架，跟随无人机使用前视RGB-D相机，通过轻量YOLO检测器识别领航无人机，并结合深度信息估计相对位姿。该框架在XTDrone物理仿真中验证，在定位传感器故障下仍能保持稳定编队，计算开销合理，为真实系统提供基础。",
+      "tags": "query:ui",
+      "abstract_en": "Cooperation in multi-UAV systems requires reliable relative perception so that follower vehicles can maintain formation and continue their mission safely even when absolute positioning sensors degrade or fail. This paper presents a vision-based cooperative formation framework running on a follower UAV that uses a front-facing RGB-D camera to detect, track, and localize a leader UAV in real-time. A lightweight YOLO-based detector is trained on a dedicated drone dataset and deployed onboard to predict leader bounding boxes, which are then fused with depth information via a pinhole camera model to estimate the leader's relative pose. These estimates provide a leader-follower position controller and can also be used as a backup when GPS or external localization is unavailable. This framework is implemented as a set of ROS nodes and evaluated in a physics-based multi-UAV simulation built on XTDrone, with sensor noise and communication dropouts. We evaluate detection accuracy, runtime, and formation-keeping error under nominal conditions and under simulated failures of the positioning sensors. The results show that the proposed framework maintains stable leader-follower formations with reasonable computational cost and provides a practical basis for extending vision-based cooperative formation control to real-world multi-UAV systems.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
