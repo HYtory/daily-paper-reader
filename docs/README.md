@@ -6,26 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-09-04
-- 运行时间：2026-09-04 22:35:12 UTC
+- 最新运行日期：2026-09-05
+- 运行时间：2026-09-05 21:41:23 UTC
 - 运行状态：成功
 - 本次总论文数：2
-- 精读区：1
-- 速读区：1
+- 精读区：0
+- 速读区：2
 
 ### 今日简报（AI）
-今日精读1篇、速读1篇，聚焦不完美信息游戏与无人机协同控制；最值得关注的是测试时强化学习在博弈中的8.0分高价值研究，视觉引导编队控制亦具参考性；建议普通读者优先浏览精读论文的核心方法，再快速扫描无人机的视觉方案作拓展。
-- 详情：[/202609/04/README](/202609/04/README)
+今日速读2篇论文，聚焦多智能体规划与强化学习记忆机制。  
+值得关注：信号时序逻辑驱动的扩散模型实现多智能体任务规划；不确定性引导回放记忆提升强化学习效率。  
+建议优先浏览前者，了解时序逻辑与扩散模型的结合思路。
+- 详情：[/202609/05/README](/202609/05/README)
 
 ### 精读区论文标签
-1. [Test-time Reinforcement Learning in Imperfect Information Games](/202609/04/2608.30635v1-test-time-reinforcement-learning-in-imperfect-information-games)  
-   标签：评分：8.0/10、query:ui
-   evidence：面向双人零和不完全信息博弈的测试时强化学习，可迁移到无人机追逃策略中。
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Vision-Based Leader-Follower Formation Control for Cooperative UAVs in GPS-Degraded Environments](/202609/04/2609.01420v1-vision-based-leader-follower-formation-control-for-cooperative-uavs-in-gps-degraded-environments)  
-   标签：评分：7.0/10、query:ui
-   evidence：基于视觉的领航-跟随编队控制，是多机围捕中目标包围队形保持的关键技术。
+1. [Generalizable Multi-Agent Planning from Signal Temporal Logic Specifications via Diffusion](/202609/05/2608.29490v1-generalizable-multi-agent-planning-from-signal-temporal-logic-specifications-via-diffusion)  
+   标签：评分：6.0/10、query:ui
+   evidence：基于扩散的多智能体规划虽面向无人机蜂群且可表达类围捕时序任务，但非强化学习
+2. [Uncertainty-Driven Replay Memory for Reinforcement Learning](/202609/05/2608.29860v1-uncertainty-driven-replay-memory-for-reinforcement-learning)  
+   标签：评分：6.0/10、query:ui
+   evidence：面向RL的通用不确定性回放记忆机制，可集成到单机拦截或多机围捕的DRL训练流程
 
 
 <div class="dpr-home-promo-card">
