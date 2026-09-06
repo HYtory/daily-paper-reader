@@ -1,0 +1,142 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-06T21:26:53.042337+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.30134v1",
+      "source": "arxiv",
+      "title": "Solution and Optimal Strategies for a Differential Game of Pursuit-Evasion with Point-Wise Constraints",
+      "abstract": "This work study a differential game of pursuit-evasion involving countably many pursuers $p_{1},p_{2},\\cdots,p_{m}$ and a single evader $e$ under point-wise (geometric) constraints in the sequence space $l_{2}.$ The pursuers evolve according to specified differential equations of $1^{st}$ order while the evader follows a $2^{nd}$ order differential equation. The game period is a fixed time interval of length $θ$ unit of time. The minimum distance between evader and the pursuer at the terminal time denotes the game payoff. The pursuers aim is to minimize the payoff, whereas the evader seeks to maximize it. We obtain the solution of the game, including optimal strategies of the players construction, as well as game value estimation.",
+      "authors": [
+        "Jamilu Adamu",
+        "Abbas Ja'afaru Badakaya",
+        "Felix Wallace Tarry",
+        "Mehdi Salimi"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC"
+      ],
+      "published": "2026-08-31T01:32:55+00:00",
+      "link": "https://arxiv.org/pdf/2608.30134v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Differential pursuit-evasion game with countably many pursuers versus one evader; conceptually applicable to UAV pursuit-evasion and multi-UAV encirclement",
+      "llm_evidence_cn": "可数多个追捕者对一个逃逸者的追逃微分博弈，概念上适用于无人机追逃与多机围捕",
+      "llm_evidence": "可数多个追捕者对一个逃逸者的追逃微分博弈，概念上适用于无人机追逃与多机围捕",
+      "canonical_evidence": "可数多个追捕者对一个逃逸者的追逃微分博弈，概念上适用于无人机追逃与多机围捕",
+      "llm_tldr_en": "Studies a differential pursuit-evasion game with many pursuers and one evader under point-wise geometric constraints, using terminal distance as payoff. Constructs optimal strategies and derives the game value, offering a mathematical foundation applicable to multi-agent UAV capture and encirclement.",
+      "llm_tldr_cn": "本文研究在序列空间l2中带有逐点几何约束的追逃微分博弈：多个一阶动力学追捕者共同对付一个二阶动力学逃逸者，博弈时长为固定长度θ，支付取终端时刻的最近距离。通过构造最优策略组并求解博弈值，论文给出了该追逃问题的完备解，避免了数值搜索且不依赖特定结构。该数学框架可直接支撑无人机多对一协同拦截和围捕的策略分析与算法设计。",
+      "llm_tldr": "本文研究在序列空间l2中带有逐点几何约束的追逃微分博弈：多个一阶动力学追捕者共同对付一个二阶动力学逃逸者，博弈时长为固定长度θ，支付取终端时刻的最近距离。通过构造最优策略组并求解博弈值，论文给出了该追逃问题的完备解，避免了数值搜索且不依赖特定结构。该数学框架可直接支撑无人机多对一协同拦截和围捕的策略分析与算法设计。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2609.01922v1",
+      "source": "arxiv",
+      "title": "New strategies for some pursuit-evasion differential games with Gronwall-type constraints",
+      "abstract": "This paper studies a class of non-cooperative pursuit-evasion differential games in the sequence space $l_{2}.$ The motions of the pursuer and the evader are described by certain first-order differential equations while their control functions are subject to Gronwall-type constraints which impose history-dependent bounds on their control resources. Two fundamental problems are investigated. For the pursuit problem, new strategy for the pursuer is constructed and sufficient conditions guaranteeing the completion of pursuit are established. For evasion problem, an admissible strategy of the evader ensuring avoidance of capture is obtained, and corresponding sufficient conditions for successful evasion are derived. The proposed approached extends existing results on differential games with classical geometric and integral constraints to a broader class of systems governed by Gronwall-type restrictions.",
+      "authors": [
+        "Jamilu Adamu",
+        "Mehdi Salimi",
+        "Farouq Abba Wabi",
+        "Jewaidu Rilwan"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC"
+      ],
+      "published": "2026-09-01T22:45:56+00:00",
+      "link": "https://arxiv.org/pdf/2609.01922v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Develops new strategies for pursuit-evasion differential games under Gronwall-type history-dependent constraints, matching pursuit-evasion game concept though not UAV or RL",
+      "llm_evidence_cn": "研究Gronwall型约束下的追逃微分博弈新策略，对应追逃博弈需求但未涉及UAV或RL",
+      "llm_evidence": "研究Gronwall型约束下的追逃微分博弈新策略，对应追逃博弈需求但未涉及UAV或RL",
+      "canonical_evidence": "研究Gronwall型约束下的追逃微分博弈新策略，对应追逃博弈需求但未涉及UAV或RL",
+      "llm_tldr_en": "Proposes new pursuer and evader strategies for non-cooperative pursuit-evasion differential games with Gronwall-type history-dependent control constraints. Gives sufficient conditions for completing pursuit and for evading, useful for resource-limited pursuit-evasion control.",
+      "llm_tldr_cn": "论文针对控制函数受到Gronwall型历史相关约束的追逃微分博弈，在序列空间l2中研究两个一阶动力学对手的追击与逃逸问题。追捕方侧重新构造追击策略，证明在给定充分条件下能够完成抓捕；逃逸方则构造逃逸策略，给出避免被捕获的条件。与固定控制界不同，该约束形式刻画控制资源的逐渐消耗，更贴近实际对抗中的能量限制。结果为无人机等平台在能耗受限时的追逃策略提供了理论参考。",
+      "llm_tldr": "论文针对控制函数受到Gronwall型历史相关约束的追逃微分博弈，在序列空间l2中研究两个一阶动力学对手的追击与逃逸问题。追捕方侧重新构造追击策略，证明在给定充分条件下能够完成抓捕；逃逸方则构造逃逸策略，给出避免被捕获的条件。与固定控制界不同，该约束形式刻画控制资源的逐渐消耗，更贴近实际对抗中的能量限制。结果为无人机等平台在能耗受限时的追逃策略提供了理论参考。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.02987v1",
+      "source": "arxiv",
+      "title": "Tail-Likelihood Reinforcement Learning",
+      "abstract": "Reinforcement learning typically optimizes average reward. For generative policies, the average can hide an important distinction: two policies can achieve the same mean reward while having very different chances of producing a rare but high-reward rollout. This matters as sampling increases during training and inference, since its benefit depends on retaining probability mass on high-reward outcomes. We propose to optimize this coverage directly. Rather than considering only expected reward, we consider all of its upper tails: for each reward threshold, how likely is the policy to exceed it? This turns a continuous reward into a family of binary success events. We introduce Tail-Likelihood Reinforcement Learning (TailRL), which maximizes the log-probability of exceeding a randomly chosen reward threshold. Its gradient gives more weight to rare, high-reward rollouts and can be interpreted as a mixture of Best-of-(k) gradients. TailRL requires only a simple modification to the advantage function, making it compatible with existing reinforcement learning pipelines. Across object localization, maze navigation, GUI grounding, and code optimization, TailRL leverages rare high-reward training samples to avoid suboptimal solutions and yields models that benefit more from additional samples at inference time.",
+      "authors": [
+        "Shrinivas Ramasubramanian",
+        "Daman Arora",
+        "Fahim Tajwar",
+        "Guanning Zeng",
+        "Qingyang Wu",
+        "Zhongzhu Zhou",
+        "Chenfeng Xu",
+        "Haiwen Feng",
+        "Yuda Song",
+        "Aarti Singh",
+        "Ruslan Salakhutdinov",
+        "J. Andrew Bagnell",
+        "Jeff Schneider",
+        "Andrea Zanette"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "published": "2026-09-02T14:54:45+00:00",
+      "link": "https://arxiv.org/pdf/2609.02987v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "A general RL objective that maximizes the probability of exceeding reward thresholds is well suited for success-critical UAV interception and encirclement policies",
+      "llm_evidence_cn": "面向高成功率的通用RL目标可应用于拦截/围捕策略学习，但未结合具体UAV任务",
+      "llm_evidence": "面向高成功率的通用RL目标可应用于拦截/围捕策略学习，但未结合具体UAV任务",
+      "canonical_evidence": "面向高成功率的通用RL目标可应用于拦截/围捕策略学习，但未结合具体UAV任务",
+      "llm_tldr_en": "TailRL optimizes the log-probability that a policy exceeds a random reward threshold, retaining probability mass on rare high-reward rollouts instead of only maximizing expected reward.",
+      "llm_tldr_cn": "针对期望回报优化容易忽略少量高奖励样本的问题，本文提出尾部似然强化学习(TailRL)，将连续奖励转换为一族阈值成功事件并最大化超阈值概率。该方法在生成式策略下能保留高回报轨迹的概率质量，实验表明其比平均奖励优化更有利于高风险高回报场景训练。对UAV拦截与围捕等以成功率为核心目标的任务具有通用的算法借鉴价值。",
+      "llm_tldr": "针对期望回报优化容易忽略少量高奖励样本的问题，本文提出尾部似然强化学习(TailRL)，将连续奖励转换为一族阈值成功事件并最大化超阈值概率。该方法在生成式策略下能保留高回报轨迹的概率质量，实验表明其比平均奖励优化更有利于高风险高回报场景训练。对UAV拦截与围捕等以成功率为核心目标的任务具有通用的算法借鉴价值。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

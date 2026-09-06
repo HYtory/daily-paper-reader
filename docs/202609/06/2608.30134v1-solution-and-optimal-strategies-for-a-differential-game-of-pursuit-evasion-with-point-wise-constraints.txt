@@ -1,0 +1,912 @@
+Title: Solution and Optimal Strategies for a Differential Game of Pursuit-Evasion with Point-Wise Constraints
+
+URL Source: https://arxiv.org/pdf/2608.30134v1
+
+Published Time: Tue, 01 Sep 2026 01:50:24 GMT
+
+Number of Pages: 13
+
+Markdown Content:
+Noname manuscript No. 
+
+(will be inserted by the editor) 
+
+## Solution and Optimal Strategies for a Differential Game of Pursuit-Evasion with Point-Wise Constraints. 
+
+Jamilu Adamu 1,2. Abbas Ja’afaru Badakaya 2. Felix Wallace Tarry 3. Mehdi Salimi 3
+
+Received: date / Accepted: date 
+
+Abstract This work study a differential game of pursuit-evasion involving countably many pursuers p1, p 2, · · · , p m and a single evader e under point-wise (geometric) constraints in the sequence space l2. The pursuers evolve according to specified differential equations of 1 st order while the evader follows a 2 nd 
+
+order differential equation. The game period is a fixed time interval of length 
+
+θ unit of time. The minimum distance between evader and the pursuer at the terminal time denotes the game payoff. The pursuers aim is to minimize the payoff, whereas the evader seeks to maximize it. We obtain the solution of the game, including optimal strategies of the players construction, as well as game value estimation. 
+
+Keywords Pursuer · Evader · Pursuit-Evasion · Geometric constraints 
+
+Jamilu Adamu jamiluadamu88@gmail.com Abbas Ja’afaru Badakaya ajbadakaya.mth@buk.edu.ng Felix Wallace Tarry felixw-t2004@hotmail.ca Mehdi Salimi, Corresponding author mehdi.salimi@kpu.ca 1 Department of Mathematics, Federal University Gashua, P.M.B. 1005, Gashua, Yobe State, Nigeria. 2 Department of Mathematical Sciences, Bayero University Kano, P.M.B. 3011, Kano State, Nigeria. 3 Mathematics Department, Kwantlen Polytechnics University, BC, Canada. arXiv:2608.30134v1 [math.OC] 31 Aug 2026 2 Jamilu, A. et al. 
+
+1 Introduction 
+
+Differential games of pursuit-evasion constitute a special class of problems in dynamical systems that examine strategic interactions between two or more agents with conflicting objectives, each striving to achieve its own goal. The concept was introduced by Isaacs [10], and numerous fundamental results have since been developed and documented in classical works, including Petrosyan’s monographs, which occupy a central place in the development of pursuit-evasion differential games. In his seminal work Differential Games of Pursuit, later expanded and published in [16], he provided one of the earliest system-atic and rigorous treatments of pursuit differential games as an independent class within differential game theory. These contributions established a unified mathematical framework for games governed by systems of ordinary differen-tial equations, formalizing key concepts such as capture conditions, admissible controls, strategies, and payoff functionals. Other notable contributions include those of Samatov [19,20], Petrov [17,18], Lewin [12], Ibragimov et al. [6–9], Badakaya et al. [3–5] and Krasovskii and Subbotin[14,15,22], among others. Differential game provides valuable insights into the behavior of agents in con-flict situations arising in real-world applications, including reach-avoid games, surveillance and security, economic processes, ecological equilibrium, labor em-ployer relations, disease control in medicine, and counter insurgency problems. Pursuit-evasion differential games, which involve estimating game value along with constructing best strategies for the players, are the main focus of this pa-per. Papers [1–4,6–8,13] and the references therein provide examples of works addressing these types of problems. In these studies, the dynamics of the two parties are denoted by systems of ordinary differential equations of several order. For instance, in Badakaya et al. [3,4], the agents’ (pursuer and evader) dy-namics obey nth order differential equations, thereby generalizing the work of Ibragimov and Salimi [8,21], which considers problems where the agents’ motion are considered by 1 st order differential equations. In contrast, the stud-ies in [6,7] examine cases in which the players’ move according to 2 nd order differential equations. In other works (see, for example, [2]), the dynamics of each pursuer are governed by 1 st order differential equations, while that of the evader obey 2 nd differential equation. Players employ admissible control strategies to drive the system from its ini-tial state toward desired terminal outcomes (capture or escape) while satisfy-ing prescribed control constraints. In pursuit-evasion differential games, these constraints are commonly modeled as geometric constraints, which impose pointwise bounds on the instantaneous control magnitude or direction (e.g., 
+
+|a(t)| ≤ ρ for all t) [6,8], and integral constraints, which reflect limitations on the total control effort or energy resources over the game horizon (e.g., 
+
+R T 
+
+> 0
+
+|b(t)|2dt ≤ σ2). Such constraints determine the feasible maneuvering ca-Solution and Optimal Strategies for a Differential Game 3
+
+pabilities of each player and strongly influence optimal pursuit and evasion strategies [7,11]. The papers by Salimi [21] investigate a differential game involving multiple pursuers and a single evader in the sequence space l2. The dynamics of all players are governed by first-order differential equations, while their control functions are subject to integral constraints. The authors established sufficient conditions for the existence of the value of the game and constructed optimal strategies for the players. A related problem, in which the players’ controls are subject to geometric constraints, was studied in [8]. In contrast, the work in [7] investigates a fixed-duration pursuit-evasion dif-ferential game involving infinitely many pursuers and a single evader in the space l2. The dynamics of the players are described by second-order differen-tial equations, and the control functions of all players are subject to integral constraints. The authors established sufficient conditions for the existence of the value of the game and constructed optimal strategies for the players. A related problem, in which the integral constraints are replaced by geometric constraints, was studied in [6], where analogous results were obtained. Adamu et al. [2] check a fixed-horizon pursuit-evasion differential game in the sequence space l2 under integral constraints. Each pursuer moves according to certain 1 st order differential equations, whereas the trajectory path followed by evader is governed by a 2 nd order differential equation. The payoff func-tional is defined as the minimum distance between the evader and the pursuer at the terminal time. The authors determined the game value and formulate the best strategies for the players. Motivated by these developments, this paper investigates a pursuit-evasion differential game with geometric constraints on the players’ control functions. The objectives are to derive sufficient conditions for capture, construct opti-mal admissible strategies that ensure success under resource limitations, and determine the value of the game. By extending and complementing existing results, this study contributes to the theoretical understanding of pursuit-evasion dynamics under geometric constraints and provides insights relevant to practical applications involving motion-related quantities such as speed and acceleration. 
+
+2 Statement of the Problem 
+
+We consider a differential game problem of pursuit-evasion in which pursuers (pj ), j ∈ J = {1, 2, . . . , n, . . . } and evader ( e) move according to the following initial value problem: ˙pj = aj (t), p j (0) = pj0, j ∈ J, 
+
+¨e = b(t), ˙e(0) = e1, e (0) = e0, (1) 4 Jamilu, A. et al. 
+
+where pj , p j0, a j , e, e 0, e 1, b ∈ l2, a j = ( a1, a 2, · · · ) stand for the control strate-gies (functions) of the pursuers pj and b(t) is that of the evader e. The space 
+
+l2 consists of elements of the form g = ( g1, g 2, . . . ) such that P∞ 
+
+> m=1
+
+g2 
+
+> m
+
+< ∞,
+
+with scalar product and norm defined by 
+
+⟨ρ, σ ⟩ =
+
+> ∞
+
+X
+
+> m=1
+
+ρmσm, || g|| =
+
+> ∞
+
+X
+
+> m=1
+
+g2
+
+> m
+
+!1/2
+
+,
+
+where ρ, σ, g ∈ l2, respectively. Let H(υ, r ) := {p ∈ l2 : || p − υ|| ≤ r} be a closed ball centered at υ ∈ ℓ2 of radius r. We also define a sphere having center at υ with radius r by S(υ, r ) = {p ∈ l2 : || p − υ|| = r}.
+
+Definition 2.1 A function aj (t) = ( a1(t), a 2(t), . . . ) with measurable coordi-nates such that 
+
+|| aj (t)|| ≤ αj , 0 ≤ t ≤ θ, (2) is called admissible control of the pursuer pj , where αj > 0 defines the maximal speed of the pursuers. 
+
+Definition 2.2 A function b(t) = ( b1(t), b 2(t), . . . ) with measurable coordi-nates such that 
+
+|| b(t)|| ≤ β, 0 ≤ t ≤ θ, (3) is called admissible control of the evader e, where β > 0 defines the maximal acceleration of the evader. 
+
+Definition 2.3 A function Aj (t, a 0, e 0, b (t)), Aj : [0 , θ ] × l2 × l2 × l2 → l2, is called the pursuers’ strategies if the following conditions hold true. (i) Aj (t, a 0, e 0, b (t)) is measurable. (ii) || Aj (t, a 0, e 0, b (t)) || ≤ αj , 0 ≤ t ≤ θ
+
+(iii) The system (1) with aj (t) = Aj (t, a 0, e 0, b (t)) has a unique solution ( pj (·), e (·)) for any admissible control b = b(t).
+
+Definition 2.4 A pursuers strategies ¯Aj , j ∈ J are called optimal if the fol-lowing condition holds 
+
+Ψ1( ¯A1, ¯A2, . . . , ¯An, . . . ) = inf  
+
+> A1,A 2,...,A n,...
+
+Ψ1(A1, A 2, . . . , A n, . . . )where 
+
+Ψ1(A1, A 2, . . . , A n, . . . , ) = sup 
+
+> A(·)
+
+inf  
+
+> j∈J
+
+|| pj (θ) − e(θ)|| ,Aj , j ∈ J are pursuers admissible strategies and b(·) is an admissible control of the evader e.
+
+Definition 2.5 A function B(t, p 1, p 2, . . . , e ), B : [0 , θ ] × l2 × l2×, . . . , ×l2 →
+
+l2, is called evader’s strategy if the following conditions hold true. (i) B(t, p 1, p 2, . . . , e ) is measurable. (ii) || B(t, p 1, p 2, . . . , e )|| ≤ β, 0 ≤ t ≤ θSolution and Optimal Strategies for a Differential Game 5
+
+(iii) The system (1) with b(t) = B(t, p 1, p 2, . . . , e ) has a unique solution ( pj (·), e (·)) for any admissible control a(t).
+
+Definition 2.6 The evader’s strategy ¯B is called optimal if it satisfies the following 
+
+Ψ2( ¯B) = sup 
+
+> B
+
+Ψ2(B), (4) where 
+
+Ψ2(B) = inf  
+
+> a1(·),...,a n(·),...
+
+inf  
+
+> j∈J
+
+|| pj (θ) − e(θ)|| , (5) 
+
+aj (·) are pursuers admissible control and B is any admissible strategy of the evader. One should be wary that the optimal strategy condition is dependent only on the final state of the players, that being their positions at time θ. Therefore there should be no confusion in that a pursuer catching the evader earlier than time θ does not end the game, and does not change optimality. It is reported in [22] that if Ψ1( ¯A1, ¯A2, . . . , ¯An, . . . ) = φ = Ψ2( ¯B) then the game has a value 
+
+φ. 
+
+It can be shown that the state equation of the evader in (1) can be mapped to the following first-order differential equation ˙e = ( θ − t)b(t), e (0) = e0 = e1θ + e0. (6) Solving (6) results in 
+
+e(θ) = e0 + θe 1 +
+
+Z θ
+
+> 0
+
+(θ − t)b(t)dt (7) Now consider the state equation of the evader in (1) ¨e = e(t), ˙e(0) = e1, e (0) = e0
+
+Solving for e(θ), we have 
+
+e(θ) = e0 + θe 1 +
+
+Z θ
+
+> 0
+
+Z t
+
+> 0
+
+b(s)dsdt 
+
+Which, by Cauchy’s formula for repeated integration, is 
+
+e(θ) = e0 + θe 1 +
+
+Z θ
+
+> 0
+
+(θ − t)b(t)dt (8) The position of the evader in (7) and (8) is the same at time θ. Therefore any proof on the optimal strategy of one state equation is valid for the other. 
+
+Game Description: Here and below, we will call the game in which the players’ motion given by equation (1) where the control functions aj (·) and 
+
+b(·) satisfies the inequalities (2) and (3) respectively, as game G∗.6 Jamilu, A. et al. 
+
+Research problem: For the game G∗, find the value and construct optimal strategies of the players. If the evader e and the pursuers pj , j ∈ J apply their admissible controls b(t) = (b1(t), b 2(t), . . . ) and aj (t) = ( aj1(t), a j2(t), . . . ) respectively, then, according to (1), their corresponding dynamics are given by 
+
+pj (t) = ( pj1(t), p j2(t), . . . ), e(t) = ( e1(t), e 2(t), . . . ). (9) where 
+
+pj (t) = pj0 +
+
+Z t
+
+> 0
+
+aj (s)ds, (10) and 
+
+e(t) = e0 +
+
+Z t
+
+> 0
+
+(t − s)b(s)ds. (11) The attainability domain of the pursuer pj from initial position pj0 and until the time θ is the closed ball HPj (pj0, α j θ). Indeed, using (9) and (2), we obtain 
+
+|| pj (θ) − pj0|| = pj0 +
+
+Z θ
+
+> 0
+
+aj (t)dt − pj0
+
+≤
+
+Z θ
+
+> 0
+
+∥aj (t)∥dt ≤ αj θ. 
+
+On the other hand, if ¯ p ∈ HPj (pj0, α j θ) and aj (t) := ¯p−pj0 
+
+> θ
+
+, (where aj (t) can be shown to be admissible), then we have 
+
+pj (θ) = pj0 +
+
+Z θ
+
+> 0
+
+¯p − pj0
+
+θ dt = ¯ p. 
+
+In a similar way with b(t) := 2(¯ e−e0) 
+
+> θ2
+
+, we can show that the ball HE (e0, β θ2 
+
+> 2
+
+)is the attainability domain of the evader e. 
+
+3 Auxiliary Game 
+
+This section is concerned with the study of game G∗ but with one pursuer p
+
+and one evader e. In this version of the game the players move according to the following equations: ˙p(t) = a(t), p(0) = p0
+
+˙e(t) = ( θ − t)b(t), e (0) = e0 = e1θ + e0. (12) The goal of the pursuer is to attain the equality p(θ) = e(θ) and that of the evader is contrary. The question here is, under what conditions can the pursuer achieve its target? To answer this question we define the following set in the Solution and Optimal Strategies for a Differential Game 7
+
+space l2
+
+Let 
+
+∆ =
+
+
+
+γ ∈ l2 : 2 ⟨e0 − p0, γ ⟩ ≤ θ2
+
+
+
+α2 − β2θ2
+
+4
+
+
+
++ || e0|| 2 − || p0|| 2
+
+
+
+. (13) 
+
+Construction of the pursuer’s strategy 
+
+Let θ > 0 be a fixed constant, and assume that at the initial time t = 0 , the pursuer is aware of the initial parameters p0, e 0 and b(t).
+
+Let the pursuers’ strategy be defined as follows; 
+
+a(t) = e0 − p0
+
+θ +
+
+Z θ
+
+> 0
+
+(θ − t)b(t)
+
+θ dt, 0 ≤ t ≤ θ (14) The following statement provide sufficient condition for the pursuer to achieve its aim: 
+
+Lemma 3.1 Let e(θ) ∈ ∆, then the strategy (14) guarantees both the inequal-ity ∥a(t)∥ ≤ α for all t ∈ [0 , θ ] and the achievement of the equality p(θ) = e(θ)
+
+on the time interval [0 , θ ], in the game G∗.Proof Suppose the assumption of the lemma holds, that is e(θ) ∈ ∆, then we have 2⟨e0 − p0, e (θ)⟩ ≤ θ2
+
+
+
+α2 − β2θ2
+
+4
+
+
+
++ || e0|| 2 − || p0|| 2. (15) According to the inequality (15) and using equation (11), yield 2
+
+*
+
+e0 − p0,
+
+Z θ
+
+> 0
+
+(θ − t)b(t)dt 
+
++
+
+≤ θ2
+
+
+
+α2 − β2θ2
+
+4
+
+
+
+− || e0 − p0|| 2. (16) If the pursuer p applies the strategy (14), and using (16), we have 
+
+|| a(t)|| 2 = e0 − p0
+
+θ +
+
+Z θ
+
+> 0
+
+(θ − r)b(r)
+
+θ dr 
+
+> 2
+
+= e0 − p0
+
+θ
+
+> 2
+
++ 2 
+
+*
+
+e0 − p0
+
+θ ,
+
+Z θ
+
+> 0
+
+(θ − r)b(r)
+
+θ dr 
+
++
+
++
+
+Z θ
+
+> 0
+
+(θ − r)b(r)
+
+θ dr 
+
+> 2
+
+= || e0 − p0|| 2
+
+θ2 + 2
+
+θ2
+
+*
+
+e0 − p0,
+
+Z θ
+
+> 0
+
+(θ − r)b(r)dr 
+
++
+
++ 1
+
+θ2
+
+Z θ
+
+> 0
+
+(θ − r)|| b(r)|| dr 
+
+!2
+
+≤ || e0 − p0|| 2
+
+θ2 + 1
+
+θ2
+
+
+
+θ2
+
+
+
+α2 − β2θ2
+
+4
+
+
+
+− || e0 − p0|| 2
+
+
+
++ β2θ2
+
+4
+
+≤ α2.8 Jamilu, A. et al. 
+
+Thus, the strategy (14) is admissible. Next we show that p(θ) = e(θ). Indeed, using (14), we have 
+
+p(θ) = p0 +
+
+Z θ
+
+> 0
+
+e0 − p0
+
+θ +
+
+Z θ
+
+> 0
+
+(θ − r)b(r)
+
+θ dr 
+
+!
+
+dr 
+
+= p0 +
+
+Z θ
+
+> 0
+
+ e0 − p0
+
+θ
+
+
+
+dr + 1
+
+θ
+
+Z θ
+
+> 0
+
+Z θ
+
+> 0
+
+(θ − r)b(r)dr 
+
+!
+
+dr 
+
+= e0 + 1
+
+θ
+
+Z θ
+
+> 0
+
+(e(θ) − e0) dr 
+
+= e(θ).
+
+4 Solution of the game G∗
+
+Here, we provide the solutions to the research questions. Firstly, we cite a useful lemma. 
+
+Lemma 4.1 [8, 9] Let H(e0, r ), H(pj0, R j ), e 0̸ = pj0, j ∈ J, be infinitely many balls. Let q0̸ = 0 ∈ l2 such that ⟨e0 − pj0, q 0⟩ ≥ 0, for all j ∈ J. Define the set 
+
+Xj =
+
+n
+
+z ∈ l2 : 2 ⟨e0 − pj0, z ⟩ ≤ R2 
+
+> j
+
+− r2 + ∥e0∥2 − ∥ pj0∥2o
+
+, (17) 
+
+then we have the following 1. If H(e0, r ) ⊂ [
+
+> j∈J
+
+H(pj0, R j ), then H(e0, r ) ⊂ [
+
+> j∈J
+
+Xj .
+
+2. If ε ∈ (0 , R 0) and inf j∈J Rj = R0 > 0, then the set S 
+
+> j∈J
+
+H(pj0, R j − ε)
+
+does not contain the ball H(e0, r ) and there exist a point ¯e ∈ S(e0, r ) such that || ¯e − pj0|| ≥ Rj for all j ∈ J.
+
+Theorem 4.1 Let γ̸ = 0 ∈ l2 such that ⟨e0 − pj0, γ ⟩ ≥ 0, for all j ∈ J, then the number 
+
+φ = inf 
+
+ϵ ≥ 0 : H
+
+
+
+e0, β θ2
+
+2
+
+
+
+⊂ [
+
+> j∈J
+
+H (pj0, α j θ + ϵ)
+
+ (18) 
+
+is the value of the game G∗.Proof Let gj , j ∈ J be dummy pursuers whose motion described by ˙gj (t) = ¯ aj (t), gj (0) = pj0, j ∈ J, (19) and the control function ¯ aj (·) is such that 
+
+|| ¯aj (t)|| ≤ ¯αj = αj + φθ , 0 ≤ t ≤ θ. (20) Solution and Optimal Strategies for a Differential Game 9
+
+It can easily be shown that the set of all points reachable by gj from the initial state pj0 until the time θ is the ball H(pj0, ¯αj θ).
+
+Let gj uses the strategy defined by ¯aj (t) = e0 − pj0
+
+θ +
+
+Z θ
+
+> 0
+
+(θ − t)
+
+θ b(t)dt, 0 ≤ t ≤ θ (21) Using (21), we construct the functions Aj (·) to be the strategies of the pursuers 
+
+pj , j ∈ J as follows: 
+
+Aj (t) = αj
+
+¯αj
+
+¯aj (t). (22) Thus, the strategy (22) is admissibility. Indeed, using (20), we get 
+
+∥Aj (t)∥ = αj
+
+¯αj
+
+¯aj (t)
+
+= αj
+
+¯αj
+
+∥¯aj (t)∥ ≤ αj . (23) In accordance with what is presented for the proof we claim that the number φ
+
+defined in (18) is the value of G∗. To prove this claim we show that following: sup 
+
+> v(·)
+
+inf  
+
+> j∈J
+
+|| e(θ) − pj (θ)|| ≤ φ ≤ inf  
+
+> a1(·),...,a m(·),...
+
+inf  
+
+> j∈J
+
+|| e(θ) − pj (θ)|| . (24) Firstly, we prove the left hand side of the inequality (24). Indeed, by definition of φ in (18), we have 
+
+H
+
+
+
+e0, β θ2
+
+2
+
+
+
+⊂ [
+
+> j∈J
+
+H (pj0, α j θ + φ) .
+
+Employing lemma (4.1) with r = β θ2 
+
+> 2
+
+and Rj = αj θ + φ, we have 
+
+H
+
+
+
+e0, β θ2
+
+2
+
+
+
+⊂ [ 
+
+> j∈¯J
+
+Xj ,
+
+where ¯J =
+
+
+
+j ∈ J : S
+
+
+
+e0, β θ2
+
+2
+
+
+
+∩ Bpj (pj0, α j θ + φ)̸ = ∅
+
+
+
+;
+
+Xj =
+
+(
+
+z ∈ l2 : 2 ⟨e0 − pj0, z ⟩ ≤ (αj θ + φ)2 −
+
+
+
+β θ2
+
+2
+
+2
+
++ || e0|| 2 − || pj0|| 2
+
+)
+
+In view of this, the point e(θ) ∈ H
+
+
+
+e0, β θ2
+
+> 2
+
+
+
+⊂ Xk, k ∈ ¯J. Then according to lemma (3.1) and for the strategy (21), we have gk(θ) = e(θ) with the control 10 Jamilu, A. et al. 
+
+¯aj (·) satisfying the constraint || ¯aj (t)|| ≤ ¯α. In line with this and if pj use (22), we show that || e(θ) − pk(θ)|| ≤ φ. Indeed, 
+
+|| e(θ) − pk(θ)|| = || gk(θ) − pk(θ)|| 
+
+= pk0 +
+
+Z θ
+
+> 0
+
+¯ak(t)dt − pk0 −
+
+Z θ
+
+> 0
+
+ak(t)dt 
+
+=
+
+Z θ
+
+> 0
+
+¯ak(t)dt −
+
+Z θ
+
+> 0
+
+αk
+
+¯αk
+
+¯ak(t)dt 
+
+≤
+
+Z θ
+
+> 0
+
+
+
+1 − αk
+
+¯αk
+
+
+
+¯ak(t) dt =
+
+ ¯αk − αk
+
+¯αk
+
+ Z θ
+
+> 0
+
+|| ¯ak(t)|| dt 
+
+≤
+
+ ¯αk − αk
+
+¯αk
+
+
+
+¯αkθ = φ. 
+
+Then it follows that inf  
+
+> j∈J
+
+∥e(θ) − pj (θ)∥ ≤ φ, 
+
+as such sup 
+
+> b(·)
+
+inf  
+
+> j∈J
+
+∥e(θ) − pj (θ)∥ ≤ φ. 
+
+This prove the left hand of (24). Secondly, we prove the right hand of (24). Indeed, this follows trivially If 
+
+φ = 0 , for any admissible control of the evader. Let φ > 0 and by (18) and for any 0 < ε < φ, the ball H
+
+
+
+e0, β θ2
+
+> 2
+
+
+
+is not contained in the set 
+
+S 
+
+> j∈J
+
+H (pj0, α j θ + φ − ε) .
+
+Thus, by lemma (4.1), there exist ¯ e ∈ S
+
+
+
+e0, β θ2
+
+> 2
+
+
+
+, such that 
+
+|| ¯e − pj0|| ≥ αj θ + φ. (25) Moreover, from the fact that the ball H(pj0, α j θ) is the set of all points reach-able by pj ,, we have 
+
+|| pj (θ) − pj0|| ≤ αj θ. (26) In view of (25) and (26), we have for all j ∈ J
+
+|| ¯e − pj (θ)|| ≥ || ¯e − pj0|| − || pj0 − pj (θ)|| ≥ αj θ + φ − αj θ
+
+= φ. (27) The control of the evader defined by 
+
+b(t) = 2
+
+θ2 (¯ e − e0), 0 ≤ t ≤ θ, Solution and Optimal Strategies for a Differential Game 11 
+
+takes the evader to the point e at the time θ. The proof of this claim is as follows: 
+
+e(θ) = e0 +
+
+Z θ
+
+> 0
+
+(θ − s)b(s)ds 
+
+= e0 +
+
+Z θ
+
+> 0
+
+(θ − s) 2
+
+θ2 (¯ e − e0)ds 
+
+= e0 + 2(¯ e − e0)
+
+θ2
+
+Z θ
+
+> 0
+
+(θ − s)ds 
+
+= ¯ e. 
+
+Consequently, we have 
+
+|| e(θ) − pk(θ)|| ≥ φ. 
+
+As such inf  
+
+> j∈J
+
+∥e(θ) − pj (θ)∥ ≥ φ. 
+
+Hence for any aj (t) = ( a1(t), a 2(t), . . . ) admissible, we get inf   
+
+> aj(·)
+
+inf  
+
+> j∈J
+
+∥e(θ) − pj (θ)∥ ≥ φ. 
+
+This proves the right hand of (24). Hence, the proof the theorem is complete. 
+
+5 Conclusion 
+
+The work considered in this research represent a dynamics game involving agents with different dynamics possibilities under point-wise constraints. This paper is devoted to characterizing sufficient conditions for capture, and to con-structing optimal player’s strategies that guarantee success despite resource limitations. The main results consists of the solution to an auxiliary game and Theorem (4.1). In the auxiliary game, it is shown that pursuer can achieve the terminal condition p(θ) = e(θ) by employing a strategy different from the parallel approach. Theorem (4.1) provides sufficient conditions under which the game value φ exist and can be determined. The principal contributions of this paper can be summarized as follows: (i) Pursuit strategy (14) for the pursuer is constructed that ensure the suc-cessful completion of the pursuit. (ii) A closed-form expression (18) for the game G∗ is obtained and it is guar-anteed for both players. 
+
+Availability of data and materials 
+
+No data are associated with this manuscript. 12 Jamilu, A. et al. 
+
+Conflict of interest 
+
+The authors declare that they have no competing interest. 
+
+References 
+
+1. Ahmad, I., Kumam, P., Ibragimov, G. I., Rilwan, J. Kumam W.: An optimal Pursuit differential game problem with one evader and many pursuers. Mathematics, 17(482) ,doi:10.3390/math7090842, (2019). 2. Adamu, J., Muangchoo, K., Badakaya, A. J., Rilwan, J.: On pursuit-evasion dif-ferential game problem in a Hilbert space. AIMS Mathematics, 5(6), 7467-7479. Doi.10/3934/math.2020478, (2020). 3. Badakaya, A. J., Halliru, A. S., Adamu, J.: Game value for a pursuit-evasion differential in a Hilbert space. Journal of Dynamic and games. Doi:10:3934/jdg.2021019, (2021). 4. Badakaya, A.,Halliru, A., Adamu, J.: A game problem of Pursuit-Evasion Differential with nth order differential equation describing players’ dynamic. J. control decision. 9, 193-201 (2022). 5. Badakaya, A. J., Tsoho, S. M., Salimi, M.: On Some L-Catch Pursuit Differential Games With Differential Players’ Dynamic Equation. Differential Equation and Dynamical Sys-tem. Doi:10:1007/s12591-023-00673-8, (2024). 6. Ibragimov G., and Hussin, N. A. ”A Pursuit-Evasion Differential Game with Many Pursuers and One Evader”, Malaysian Journal of Mathematical Sciences, 4(2), pp. 183-194, (2010). 7. Ibragimov, G. I and Salimi, M. ”Pursuit-Evasion Differential Game with Many Inertial Players”, Mathematical Problems in Engineering, doi:10.1155/2009/653723, (2009). 8. Ibragimov, G. I. ”Optimal pursuit with Countably Many Pursuers and one Evader”, Differential Equations, 41 (5) pp. 627-635, (2005). 9. Ibragimov, G. I., Abd Rashid, N., Kuchkarov A., and Ismail, F. ”Multi Pursuer Differ-ential Game of Optimal Approach with Integral Constraints on Controls of the Players ,” Taiwanese Journal of Mathematics 19 (3) , pp. 963-976, (2015). 10. Isaacs, R.: Differential Games. John Wiley & Sons, New York, NY, USA, (1965). 11. Kazimirova, R., Ibragimov, G. I., Pansera, B. A., Ibragimov, A.: Multi-pursuer and one evader evasion differential games with integral constraints for an infinite system of Binary differential equation. Mathematics, 12, 1183, doi:10.3390/math/2081183, (2024). 12. Lewin, J. : Differential Games. Germany. in Russian, Springer, Berlin. (1994). 13. Rilwan, J., Fotia, P., Farrara, M.: On Game Value of a Differential Game Problem With Gronwall-type Constraints on Players Controls. Decision in Economics and Finance, doi:10.1007/s10203-023-00389-y, (2023). 14. Krasovskii, N., Subbotin, A.: Positional Differential games. Nauka, Moscow, in Russian, (1974). 15. Krasovskii, N., Subbotin, A.: Game Theoretic Control Problems. Springer-verlag, New york, (1988). 16. Petrosyan, L. A.: Differential Games of Pursuit. World Scientific, Singapore, (1993). 17. Petrov, N. N.: Multiple capture of a Given Number of Evaders in the Problem of Simple Pursuit With Phase Restrictions on Time scales. Dyn Games Appl, 12(2): 632-742, (2022). 18. Petrov, N. N.: Twofold Capture of Coordinated Evaders in the Problem of Simple Group Pursuit. Compt Math Model, doi.10.1007/s10598-025-09646-8, (2025). 19. Samatov, B. T., Ibragimov, G. I., Juraev, B., Ferrara, M.: On the Lifeline Game of the Inertial Players with Integral and Geometric Constraints. Mathematics, 11, 4209. doi.10.3390/math11194209, (2023). 20. Samatov, B. T., Ibragimov, G. I., Khodijibayewa, I. V.: Pursuit-evasion differential game with Gronwall type constraints on controls. Ural Math. Journal. 6, 95-107. Doi:10:15826/umj.2020.2.010, (2020). 21. Salimi, M. and Ferrara, M.: Differential Game of Optimal Pursuit of one Evader by Many Pursuers”, International Journal of Game Theory, 48, 481-491, doi:10.1007/s00182-018-0638-6, (2019). Solution and Optimal Strategies for a Differential Game 13 22. Subbotin, A. I., Chentsov,A. G. ”Optimazition of Guaranteed Result in Control Prob-lem”, Moscow, Rsussia, (1981)

@@ -1,0 +1,887 @@
+Title: New strategies for some pursuit-evasion differential games with Gronwall-type constraints
+
+URL Source: https://arxiv.org/pdf/2609.01922v1
+
+Published Time: Thu, 03 Sep 2026 00:18:49 GMT
+
+Number of Pages: 13
+
+Markdown Content:
+Noname manuscript No. 
+
+(will be inserted by the editor) 
+
+## New strategies for some pursuit-evasion differential games with Gronwall-type constraints 
+
+Jamilu Adamu 1,4. Mehdi Salimi 2,♣.Farouq Abba Wabi 3. Jewaidu Rilwan 4
+
+Received: date / Accepted: date 
+
+Abstract This paper studies a class of non-cooperative pursuit-evasion dif-ferential games in the sequence space l2. The motions of the pursuer and the evader are described by certain first-order differential equations while their control functions are subject to Gronwall-type constraints which impose history-dependent bounds on their control resources. Two fundamental prob-lems are investigated. For the pursuit problem, new strategy for the pursuer is constructed and sufficient conditions guaranteeing the completion of pursuit are established. For evasion problem, an admissible strategy of the evader en-suring avoidance of capture is obtained, and corresponding sufficient conditions for successful evasion are derived. The proposed approached extends existing results on differential games with classical geometric and integral constraints to a broader class of systems governed by Gronwall-type restrictions. 
+
+Keywords Pursuer · Evader · Strategy · Gronwall-type constraints 
+
+Jamilu Adamu jamiluadamu88@fugashua.edu.ng Mehdi Salimi mehdi.salimi@kpu.ca Farouq Abba Wabi farouq.wabi@fuhsa.edu.ng Jewaidu Rilwan jrilwan.mth@buk.edu.ng 1 Department of Mathematics, Federal University Gashua, P.M.B. 1005, Gashua, Yobe State, Nigeria. 2 Mathematics Department, Kwantlen Polytechnics University, BC, Canada. 3 Department of Mathematics, Federal University of Health Sciences, Azare, Bauchi State, Nigeria. 4 Department of Mathematical Sciences, Bayero University Kano, P.M.B. 3011, Kano State, Nigeria. 
+
+♣ Corresponding author. arXiv:2609.01922v1 [math.OC] 1 Sep 2026 2 Jamilu, A. et al. 
+
+1 Introduction 
+
+Differential games represent an important area of modern control theory deal-ing with dynamical systems involving several decision makers whose objectives are mutually conflicting. The foundations of the theory were established by Isaacs in his pioneering monograph on differential games [14] where the con-cepts of pursuit, evasion, and optimal strategies were systematically developed. Since then, pursuit-evasion differential games have become one of the most extensively studied classes of conflict-controlled processes because of their nu-merous applications in military operations, missile guidance, cyber-security, robotics, air traffic control, surveillance systems, and autonomous multi-agent systems. The theory of pursuit and evasion differential games has undergone substantial development over the last several decades. Significant contributions were made by Petrosyan [21], Lewin [16], Krasovskii and Subbotin [19,20,26], Azimov [1], Chodun [7] who investigated various classes of differential games and estab-lished fundamental results concerning solvability conditions, value functions, and strategy constructions. Their works laid the theoretical foundations for the study of pursuit-evasion problems in both finite-dimensional and infinite-dimensional spaces. A considerable amount of research has been devoted to pursuit-evasion differ-ential games in Hilbert spaces under different classes of control constraints. One of the earliest and most important directions concerns geometric con-straints where the admissible controls satisfy point-wise bounds. Another im-portant class involves integral constraints in which the total energy expen-diture of each player is bounded. These two classes of constraints have been extensively investigated by many researchers, leading to numerous solvability results and explicit constructions of optimal and admissible strategies. (See for examples [3–6,8,9,11,13,15,22,23,25]). Modern differential game problems in areas such as robotics and medicine in-corporate numerous practical considerations into their formulations, necessi-tating the introduction of additional types of constraints, including mixed con-straints [2,11,23], Gronwall-type constraints [12,17,18,24] and so on. More re-cently, pursuit-evasion games in infinite-dimensional spaces have been studied under mixed constraints and different types of player dynamics [2,6]. Badakaya and co-authors [4,5] considered differential games described by higher-order equations and obtained solvability conditions depending on the distribution of control resources among the players. These investigations substantially en-riched the theory of differential games and demonstrated the importance of control constraints in determining the outcome of conflic-controlled processes. Despite these developments, most of the existing literature is devoted to con-trol functions subject to classical geometric, integral, or mixed constraints. In New strategies for some pursuit-evasion differential games 3
+
+many practical situations, however, the admissible control resources depend not only on the current state of the system but also on the cumulative history of previous actions. Such situations naturally arise in systems with memory, fatigue effects, resource depletion, adaptive feedback mechanisms, and accu-mulated energy consumption. Classical control constraints are generally in-sufficient for accurately describing these phenomena because they neglect the influence of past control actions. To incorporate memory effects into the mathematical model, it is natural to consider controls satisfying Gronwall-type constraints. Such constraints involve integral inequalities and provide history-dependent bounds on admissible con-trols. Consequently, they constitute a substantially broader class of restrictions than the standard geometric and integral constraints and allow the modelling of systems whose available resources evolve according to cumulative past be-haviour. Motivated by these considerations, this paper investigates a class of non-cooperative pursuit-evasion differential games in the Hilbert space l2, where both players are subject to Gronwall-type constraints. The motions of the pur-suer and the evader are governed by specified first-order differential equations. The study focuses on two fundamental problems of differential game theory: the pursuit problem and the evasion problem. For the pursuit problem, we construct a new admissible strategy for the pur-suer and derive sufficient conditions guaranteeing that capture occurs in finite time. For the evasion problem, an admissible strategy of the evader is pro-posed, and corresponding sufficient conditions ensuring avoidance of capture are established. The obtained strategies explicitly exploit the structure of the Gronwall-type constraints and reveal the influence of memory-dependent con-trol resources on the outcome of the game. The novelty of the present work lies in the introduction of new strategy constructions for pursuit and evasion under Gronwall-type restrictions and in establishing corresponding solvability conditions in the sequence space l2.The obtained results significantly extend several known results on differential games with geometric, integral, and mixed constraints to a more general frame-work involving history-dependent admissible controls. Therefore, this study contributes to the further development of infinite-dimensional differential game theory and provides new tools for analyzing conflict-controlled systems with memory effects. The remainder of this paper is organized as follows. Section 2 presents the for-mulation of the game and some preliminary results. In Section 3, new pursuit strategies are constructed and sufficient conditions for the completion of pur-suit are established. Section 4 is devoted to the evasion problem, where admis-sible evasion strategies and corresponding solvability conditions are derived. 4 Jamilu, A. et al. 
+
+Finally, concluding remarks and possible directions for future investigations are given in the last section. 
+
+2 Problem Formulation 
+
+Let the players pj , j ∈ J = {1, 2, . . . , m } and e denote m pursuers and one evader, respectively, whose dynamics obey the following system differential equations:  
+
+> dp j
+> dξ
+
+= λ(ξ)aj (ξ), p j (0) = pj0, 
+
+> de dξ
+
+= λ(ξ)b(ξ), e(0) = e0,
+
+(1) where pj (ξ), e (ξ), p j0, e 0, a j (ξ), b (ξ) ∈ l2; aj (·) and b(·) stand for measurable control functions of the players pj and e, respectively, and that λ(·) ≥ 0 be scalar measurable function define on the time interval [0 , θ ] which denotes the duration of the game. 
+
+Definition 2.1 A function aj (ξ) = ( aj1(ξ), a j2(ξ), . . . ) whose coordinates aji :[0 , θ ] → R1 are Borel measurable real-valued functions satisfying the con-straints: 
+
+|| aj (ξ)|| 2 ≤ α2 
+
+> j
+
++ 2 c
+
+Z ξ
+
+> 0
+
+λ(s)|| aj (s)|| 2ds, ξ ∈ [0 , θ ], (2) is called an admissible control of the player pj , where c and αj are given positive constants. 
+
+Definition 2.2 A function b(ξ) = ( b1(ξ), b 2(ξ), . . . ) whose coordinates bj :[0 , θ ] → R1 are Borel measurable real-valued functions that satisfy the con-straints: 
+
+|| b(ξ)|| 2 ≤ β2 + 2 c
+
+Z ξ
+
+> 0
+
+λ(s)|| b(s)|| 2ds, ξ ∈ [0 , θ ], (3) is called an admissible control of the player e, where c and β are positive constants. 
+
+Remark 2.1 It can be shown that the inequalities (2) and (3) imply, respec-tively, that 
+
+∥a(ξ)∥ ≤ αj ec
+
+R ξ 
+
+> 0λ(s)ds
+
+, ∥b(ξ)∥ ≤ βe c
+
+R ξ 
+
+> 0λ(s)ds
+
+. (4) Also, note that if ∥aj (ξ)∥ = αj ec
+
+R ξ  
+
+> 0λ(s)ds
+
+and ∥b(ξ)∥ = βe c
+
+R ξ 
+
+> 0λ(s)ds
+
+, then, the inequalities (2) and (3) are respectively satisfied. It is also important to note that (4) does not imply the inequalities (2) and (3). Define the sets: 
+
+Aj (α) = 
+
+(
+
+aj = ( aj1, a j2, . . . ) ∈ l2 : || aj (ξ)|| 2 ≤ α2 
+
+> j
+
++ 2 c
+
+Z ξ
+
+> 0
+
+λ(s)|| aj (s)|| 2ds, ξ ∈ [0 , θ ]
+
+)
+
+,New strategies for some pursuit-evasion differential games 5
+
+and 
+
+B(β) = 
+
+(
+
+b = ( b1, b 2, . . . ) ∈ l2 : || b(ξ)|| 2 ≤ β2 + 2 c
+
+Z ξ
+
+> 0
+
+λ(s)|| b(s)|| 2ds, ξ ∈ [0 , θ ]
+
+)
+
+.
+
+Remark 2.2 The sets Aj (α) and B(β) denote all admissible controls of play-ers pj and e, respectively. The constraints (2) and (3) are respectively called Gronwall-type constraints. Such constraints involve integral inequalities and provide history-dependent bounds on admissible controls. Suppose that the players pj and e select admissible controls aj (·) ∈ Aj (α) and 
+
+b(·) ∈ B(β), respectively. Then, according to equation (1), the correspond-ing state variables pj (ξ), e (ξ) ∈ l2 generate the trajectories of the players as follows: 
+
+pj (ξ) = pj0 +
+
+Z ξ
+
+> 0
+
+λ(s)aj (s)ds, (5) 
+
+e(ξ) = e0 +
+
+Z ξ
+
+> 0
+
+λ(s)b(s)ds. (6) Let D(y0, ¯r) = {y ∈ l2 : ∥y − y0∥ ≤ ¯r} and S(y0, ¯r) = {y ∈ l2 : ∥y − y0∥ = ¯ r}
+
+denote, respectively, the closed ball and the sphere in l2 with center y0 and radius ¯ r. We now give some useful definitions. Let 
+
+Rj (θ) := α2 
+
+> j
+
++ 2 c
+
+Z θ
+
+> 0
+
+λ(s)|| aj (s)|| 2ds 
+
+! 12
+
+π(θ),
+
+and 
+
+r(θ) := β2 + 2 c
+
+Z θ
+
+> 0
+
+λ(s)|| b(s)|| 2ds 
+
+! 12
+
+π(θ),
+
+where π(θ) = R θ 
+
+> 0
+
+λ(s)ds. 
+
+Definition 2.3 A closed ball Dj (pj0, R j (θ)) is called the attainability domain of the jth player pj from the initial state pj0 at the time ξ = 0 to the terminal time θ, if the following conditions are satisfied. (a) ∥pj (θ) − pj0∥ ≤ Rj (θ).
+
+(b) For every ˜ p ∈ Dj (pj0, R j (θ)), there exists an admissible control aj (·) ∈
+
+Aj (α) such that pj (θ) = ˜ p. 
+
+This is due to the estimate: 
+
+∥pj (θ) − pj0∥ =
+
+Z θ
+
+> 0
+
+λ(r)aj (r)dr ≤
+
+Z θ
+
+> 0
+
+λ(r)∥aj (r)∥dr 
+
+≤
+
+Z θ
+
+> 0
+
+λ(r)
+
+
+
+α2 
+
+> j
+
++ 2 c
+
+Z r
+
+> 0
+
+λ(s)|| aj (s)|| 2ds 
+
+ 12
+
+dr. 6 Jamilu, A. et al. 
+
+Now define 
+
+F (r) = 
+
+
+
+α2 
+
+> j
+
++ 2 c
+
+Z r
+
+> 0
+
+λ(s)|| aj (s)|| 2ds 
+
+ 12
+
+.
+
+Since Z r
+
+> 0
+
+λ(s)|| aj (s)|| 2ds ≤
+
+Z θ
+
+> 0
+
+λ(s)|| aj (s)|| 2ds, 0 ≤ r ≤ θ, 
+
+it follows that F (r) is non-decreasing and F (r) ≤ F (θ). Hence, 
+
+∥pj (θ) − pj0∥ ≤ F (θ)
+
+Z θ
+
+> 0
+
+λ(r)dr 
+
+= α2 
+
+> j
+
++ 2 c
+
+Z θ
+
+> 0
+
+λ(s)|| aj (s)|| 2ds 
+
+! 12
+
+π(θ).
+
+On the other hand, for each j ∈ J, the player pj can reach any point ˜ p ∈
+
+Dj (pj0, R j (θ)) using admissible control defined by 
+
+aj (ξ) = ˜p − pj0
+
+π(θ) , 0 ≤ ξ ≤ θ. (7) Indeed, 
+
+pj (θ) = pj0 +
+
+Z θ
+
+> 0
+
+λ(ξ)a(ξ)dξ 
+
+= pj0 +
+
+Z θ
+
+> 0
+
+λ(ξ) ˜p − pj0
+
+π(θ) dξ 
+
+= ˜ p. 
+
+Hence pj (θ) = ˜ p. Moreover, the admissibility of (7) follows easily from the fact that ˜ p ∈ Dj (pj0, R j (θ)), that is ∥˜p − pj0∥ ≤ Rj (θ). Therefore, 
+
+∥aj (ξ)∥2 = ∥˜p − pj0∥2
+
+π2(θ) ≤ α2 
+
+> j
+
++ 2 c
+
+Z θ
+
+> 0
+
+λ(s)|| aj (s)|| 2ds. 
+
+Definition 2.4 A closed ball D (e0, r (θ)) is called the attainability domain of the player e from the initial state e0 at the time ξ = 0 to the terminal time θ, 
+
+if the following conditions are satisfied. (a) ∥e(θ) − e0∥ ≤ r(θ).
+
+(b) For every ˜ e ∈ D (e0, r (θ)), there exists an admissible control b(·) ∈ B(β)such that e(θ) = ˜ e. 
+
+Game Description: Throughout this paper, the differential game determined by the dynamics (1), together with the control constraints (2) and (3) imposed on the pursuers’ controls aj (·) and the evader’s control b(·), respectively, will be denoted by G∗. The main objective of this paper is to investigate the following problems: New strategies for some pursuit-evasion differential games 7
+
+Problem 1. Construct an admissible winning strategy for the pursuer and es-tablish sufficient conditions under which the pursuer can guarantee the capture of the evader within the time interval [0 , θ ]. 
+
+Problem 2. Construct an admissible winning strategy for the evader and establish sufficient conditions under which the evader can guarantee successful evasion for all ξ ≥ 0. 
+
+3 Pursuit Problem 
+
+Here we consider the game G∗ with J = {1}. The objective of the player p is to guarantee the completion of pursuit by reaching the state of the player e,namely, 
+
+p(ξ) = e(ξ),
+
+for some time ξ ∈ [0 , θ ]. In contrast, the player e aims to prevent this equality from occurring throughout the game. The principal question here is to answer Problem 1 above. To address this problem, we introduce the following subset of the Hilbert space l2:
+
+H =
+
+n
+
+z ∈ l2 : 2 ⟨e0 − p0, z ⟩ ≤  R2(θ) − r2(θ) + || e0|| 2 − || p0|| 2o
+
+.
+
+The set H is a closed half-space in l2 and will play a crucial role in establishing sufficient conditions for the solvability of the pursuit problem in the game G∗.
+
+Construction of the pursuer’s strategy: 
+
+Let θ > 0 be an arbitrary fixed number, and consider the finite time interval [0 , θ ] ⊂ R. Suppose that, at the current time ξ, the player p has complete information about the initial positions p0 and e0, as well as the control function 
+
+b(·) ∈ B(β) employed by the player e. We consider a pursuit problem in which the player p adopts a strategy, while the player e employs an arbitrary admissible control b(·) ∈ B(β). We now introduce the strategy of the player p.
+
+Definition 3.1 A function ˜ a(ξ, p 0, e 0, b (·)), ˜ a : [0 , θ ] × l2 × l2 × l2 → l2, is called a strategy of the player p if the following conditions are satisfied: (a) For every b(·) ∈ B(β), the function ˜ a(ξ, p 0, e 0, b (·)) is Borel measurable for all ξ ∈ [0 , θ ] . (b) For every b(·) ∈ B(β), ˜ a(ξ, p 0, e 0, b (·)) ∈ A(α) on the time interval [0 , θ ]. (c) The system (1) with a = ˜ a(ξ, p 0, e 0, b (·)) admits a unique solution ( p(·), e (·)). Let the strategy of the player p be defined by: 
+
+a(ξ) = e0 − p0
+
+π(θ) +
+
+Z θ
+
+> 0
+
+λ(s)b(s)
+
+π(θ) ds, 0 ≤ ξ ≤ θ, (8) where π(θ) = R θ 
+
+> 0
+
+λ(s)ds. 8 Jamilu, A. et al. 
+
+Lemma 3.1 If e(θ) ∈ H, then the strategy (8) is admissible for every b(·) ∈
+
+B(β) and for all ξ ∈ [0 , θ ].Proof For the strategy (8), we have 
+
+|| a(ξ)|| 2 = e0 − p0
+
+π(θ) +
+
+Z θ
+
+> 0
+
+λ(s)b(s)
+
+π(θ) ds 
+
+> 2
+
+= e0 − p0
+
+π(θ)
+
+> 2
+
++
+
+Z θ
+
+> 0
+
+λ(s)b(s)
+
+π(θ) ds 
+
+> 2
+
++ 2 
+
+*
+
+e0 − p0
+
+π(θ) ,
+
+Z θ
+
+> 0
+
+λ(s)b(s)
+
+π(θ) ds 
+
++
+
+≤ || e0 − p0|| 2
+
+π2(θ) + 1
+
+π2(θ)
+
+Z θ
+
+> 0
+
+λ(s) || b(s)|| ds 
+
+!2
+
++ 2
+
+π2(θ)
+
+*
+
+e0 − p0,
+
+Z θ
+
+> 0
+
+λ(s)b(s)ds 
+
++
+
+. (9) Now we estimate second and third term of (9). We begin with the second term and use the fact that b(·) ∈ B(β), that is 
+
+|| b(s)|| ≤ 
+
+
+
+β2 + 2 c
+
+Z s
+
+> 0
+
+λ(r)|| b(r)|| 2dr 
+
+ 12
+
+, s ∈ [0 , θ ],
+
+by this therefore, we have 
+
+Z θ
+
+> 0
+
+λ(s)∥b(s)∥ds ≤
+
+Z θ
+
+> 0
+
+λ(s)
+
+
+
+β2 + 2 c
+
+Z s
+
+> 0
+
+λ(r)|| b(r)|| 2dr 
+
+ 12
+
+ds 
+
+≤
+
+Z θ
+
+> 0
+
+λ(s) β2 + 2 c
+
+Z θ
+
+> 0
+
+λ(r)|| b(r)|| 2dr 
+
+! 12
+
+ds 
+
+= β2 + 2 c
+
+Z θ
+
+> 0
+
+λ(r)|| b(r)|| 2dr 
+
+! 12 Z θ
+
+> 0
+
+λ(s)ds 
+
+= r(θ). (10) This estimates second term of (9). To estimates third term, we use the fact that e(θ) ∈ H. That is 2⟨e0 − p0, e (θ)⟩ ≤  R2(θ) − r2(θ) + || e0|| 2 − || p0|| 2. (11) In view of (6) and (11), we obtain the following estimation 2
+
+*
+
+e0 − p0,
+
+Z θ
+
+> 0
+
+λ(s)b(s)ds 
+
++
+
+= 2 ⟨e0 − p0, e (θ) − e0⟩
+
+= 2 ⟨e0 − p0, e (θ)⟩ − 2⟨e0 − p0, e 0⟩
+
+= 2 ⟨e0 − p0, e (θ)⟩ + 2 ⟨e0, p 0⟩ − 2|| e0|| 2
+
+≤ R2(θ) − r2(θ) − || e0 − p0|| 2. (12) New strategies for some pursuit-evasion differential games 9
+
+We use the inequalities (10) and (12) in (9) and then we have 
+
+|| a(ξ)|| 2 ≤ || e0 − p0|| 2
+
+π2(θ) + 1
+
+π2(θ) r2(θ) + 1
+
+π2(θ)
+
+ R2(θ) − r2(θ) − || e0 − p0|| 2
+
+= 1
+
+π2(θ)
+
+ α2 + 2 c
+
+Z θ
+
+> 0
+
+λ(s)|| a(s)|| 2ds 
+
+! 12
+
+π(θ)
+
+
+
+> 2
+
+= α2 + 2 c
+
+Z θ
+
+> 0
+
+λ(s)|| a(s)|| 2ds. 
+
+Hence the strategy (8) is admissible. 
+
+Definition 3.2 We say that pursuit can be completed in the game G∗ at the time θ, if there exists a strategy ˜ a(ξ, p 0, e 0, b (·)) of the pursuer such that 
+
+p(θ) = e(θ) for every admissible control b(·) ∈ B(β) of the evader. The following theorem provides a sufficient condition for completion of pursuit. 
+
+Theorem 3.1 Let e(θ) ∈ H in the game G∗. Then the strategy (8) guarantees catching the evader on the time interval [0 , θ ].Proof Let the pursuer applies the strategy (8), clearly by lemma (3.1) the strategy (8) is admissible. Next we show that p(θ) = e(θ). 
+
+p(θ) = p0 +
+
+Z θ
+
+> 0
+
+λ(ξ) e0 − p0
+
+π(θ) +
+
+Z θ
+
+> 0
+
+λ(s)b(s)
+
+π(θ) ds 
+
+!
+
+dξ 
+
+= p0 + e0 − p0
+
+π(θ)
+
+Z θ
+
+> 0
+
+λ(ξ)dξ +
+
+Z θ
+
+> 0
+
+Z θ
+
+> 0
+
+λ(ξ) λ(s)b(s)
+
+π(θ) dsdξ 
+
+= e0 + 1
+
+π(θ)
+
+Z θ
+
+> 0
+
+Z θ
+
+> 0
+
+λ(ξ)λ(s)b(s)dsdξ 
+
+= e0 + 1
+
+π(θ)
+
+Z θ
+
+> 0
+
+λ(ξ)dξ 
+
+Z θ
+
+> 0
+
+λ(s)b(s)ds 
+
+= e(θ)Hence the proof of the theorem is completed. 
+
+4 Evasion Problem Definition 4.1 We say that evasion is successful in the game G∗ on the time interval [0 , ∞) if there exists an admissible strategy b(ξ) for the evader such that p(ξ)̸ = e(ξ), ∀, ξ ≥ 0, for every admissible control a(·) ∈ A(α) of the pursuer. 
+
+Definition 4.2 A function ˜b(ξ, p 0, e 0, a (·)), ˜b : [0 , ∞) × l2 × l2 × l2 → l2, is called the evader’s winning strategy if the following conditions hold true. 10 Jamilu, A. et al. 
+
+(a) For every a(·) ∈ A(α), the function ˜b(ξ, p 0, e 0, a (·)) is Borel measurable for all ξ ≥ 0 . (b) For every a(·) ∈ A(α), ˜b(ξ, p 0, e 0, a (·)) ∈ B(β) for all ξ ≥ 0 . (c) The system (1) with b = ˜b(ξ, p 0, e 0, a (·)) has a unique solution ( p(·), e (·)). 
+
+Construction of the evader’s strategy: 
+
+Let p0̸ = e0, ϱ = p0−e0 
+
+> || p0−e0||
+
+, π(ξ) = R ξ 
+
+> 0
+
+λ(s)ds and τ = β2 − α2 ≥ 0. It is not difficult to show that 
+
+e2cπ (ξ) = 1 + 2 c
+
+Z ξ
+
+> 0
+
+λ(s)e2cπ (s)ds. (13) Defined a resolving function as follows: 
+
+Λ(ξ) = ⟨a(ξ), ϱ ⟩ +
+
+q
+
+τ e 2cπ (ξ) + ⟨a(ξ), ϱ ⟩2, (14) where ⟨a(ξ), ϱ ⟩ is the scalar product of the vectors a(ξ) and ϱ in l2. We can easily see that the function (14) is well-defined, continuous and non-negative for all a(·) ∈ A(α). With this and using the condition λ(ξ) ≥ 0 for all ξ ≥ 0, we have Z ξ
+
+> 0
+
+λ(s)Λ(s)ds ≥ 0. (15) We define strategy of the evader as follows: 
+
+b(ξ) = 
+
+ a(ξ) − Λ(ξ)ϱ, 0 ≤ ξ ≤ θ
+
+0, ξ > θ (16) The following theorem address problem 2 above. 
+
+Theorem 4.1 Let e0̸ = p0, then the evader’s strategy (16) ensures p(ξ)̸ = e(ξ)
+
+for all ξ ≥ 0 in the game G∗.Proof Firstly, we show that the strategy (16) is admissible for every a(ξ) ∈
+
+A(α), ξ ≥ 0. Indeed 
+
+|| b(ξ)|| 2 = a(ξ) − ⟨ a(ξ), ϱ ⟩ϱ − ϱ
+
+q
+
+τ e 2cπ (ξ) + ⟨a(ξ), ϱ ⟩2
+
+> 2
+
+= || a(ξ) − ⟨ a(ξ), ϱ ⟩ϱ|| 2 + τ e 2cπ (ξ) + ⟨a(ξ), ϱ ⟩2
+
+− 2
+
+
+
+a(ξ) − ⟨ a(ξ), ϱ ⟩ϱ, ϱ 
+
+q
+
+τ e 2cπ (ξ) + ⟨a(ξ), ϱ ⟩2
+
+
+
+= || a(ξ)|| 2 − ⟨ a(ξ), ϱ ⟩2 + τ e 2cπ (ξ) + ⟨a(ξ), ϱ ⟩2
+
+= || a(ξ)|| 2 + τ e 2cπ (ξ). (17) New strategies for some pursuit-evasion differential games 11 
+
+Since a(ξ) ∈ A(α), then using (13), equation (17) becomes 
+
+|| b(ξ)|| 2 ≤ α2 + 2 c
+
+Z ξ
+
+> 0
+
+λ(s)∥a(s)∥2ds + τ e 2cπ (ξ)
+
+= α2 + 2 c
+
+Z ξ
+
+> 0
+
+λ(s)∥a(s)∥2ds + τ 1 + 2 c
+
+Z ξ
+
+> 0
+
+λ(s)e2cπ (ξ)ds 
+
+!
+
+= α2 + τ + 2 c
+
+Z ξ
+
+> 0
+
+λ(s)
+
+
+
+|| a(s)|| 2 + τ e 2cπ (ξ)
+
+ds 
+
+= β2 + 2 c
+
+Z ξ
+
+> 0
+
+λ(s)∥b(s)∥2ds (18) Hence, strategy (16) is admissible. Next, we show that p(ξ)̸ = e(ξ), for all 
+
+ξ ≥ 0. This is as follows: 
+
+p(ξ) − e(ξ) = p0 − e0 +
+
+Z ξ
+
+> 0
+
+λ(s)a(s)ds −
+
+Z ξ
+
+> 0
+
+λ(s)b(s)ds 
+
+= p0 − e0 +
+
+Z ξ
+
+> 0
+
+λ(s)Λ(s)ϱds 
+
+= ϱμ (ξ), (19) where 
+
+μ(ξ) := ∥p0 − e0∥ +
+
+Z ξ
+
+> 0
+
+λ(s)Λ(s)ds. 
+
+Clearly, μ(0) = ∥p0 − e0∥ > 0, then the conclusion of the Theorem (4.1) can be established if we show that μ(ξ) > 0 for all ξ > 0. This follows from (15) and hence the proof is completed. 
+
+5 Conclusion 
+
+This paper considered a class of non-cooperative pursuit-evasion differential games in the sequence space l2, where the players’ motions are described by first-order differential equations and their controls are constrained by Gronwall-type conditions. These constraints generalize the classical geometric and in-tegral restrictions by incorporating history-dependent bounds on the control resources of the players. For the pursuit problem, a new admissible strategy for the pursuer was con-structed, and sufficient conditions guaranteeing the completion of pursuit were established. It was shown that whenever e(θ) ∈ H in the game G∗, then the strategy (8) guarantees catching the evader within a finite time. For the eva-sion problem, an admissible strategy of the evader was proposed, and sufficient conditions ensuring the impossibility of capture were derived. Under these con-ditions, the evader is able to avoid interception for all admissible actions of 12 Jamilu, A. et al. 
+
+the pursuer. Therefore, the obtained results provide a characterization of the solvability of both pursuit and evasion problems under Gronwall-type constraints and ex-tend several known results in the literature concerning differential games with geometric, integral, and mixed constraints. The developed approach demon-strates that memory-dependent restrictions can be effectively incorporated into the analysis of differential games in infinite-dimensional spaces. Future investigations may focus on the study of multi-player pursuit-evasion games, higher-order and fractional dynamical systems, stochastic differential games, and the determination of optimal strategies and the value of the game under Gronwall-type constraints. 
+
+Availability of data and materials 
+
+No data are associated with this manuscript. 
+
+Conflict of interest 
+
+The authors declare that they have no competing interest. 
+
+References 
+
+1. Azimov, A.: A linear differential evasion game with integral constraints on the controls. Differ. Uravneniya, 11(10), 1723-1731, (1975). 2. Adamu, J., Halliru, A. S., Abdulhamid, B. M.: On some pursuit differential game in a Hilbert space. J. Nig. Soc. Phys. Sci. 4, 83-87. Doi:10:46481/jnsps.2022.379. (2022). 3. Adamu, J., Muangchoo, K., Badakaya, A. J., Rilwan, J.: On pursuit-evasion dif-ferential game problem in a Hilbert space. AIMS Mathematics, 5(6), 7467-7479. Doi.10/3934/math.2020478, (2020). 4. Badakaya, A.,Halliru, A., Adamu, J.: A game problem of Pursuit-Evasion Differential with nth order differential equation describing players’ dynamic. J. control decision. 9, 193-201 (2022). 5. Badakaya, A. J., Halliru, A. S., Adamu, J., Kiri, A.: A differential game of pursuit-evasion with constrained players’ energy. Data Analytic and Applied Mathematics. 3(1), 042-051. Doi:10:15282/daam.v3i1.7617, (2022). 6. Badakaya, A. J., Tsoho, S. M., Salimi, M.: On Some L-Catch Pursuit Differential Games With Differential Players’ Dynamic Equation. Differential Equation and Dynamical Sys-tem. Doi:10:1007/s12591-023-00673-8, (2024). 7. Chodun, W.: Avoidance of many pursuers in differential games described by differential inclusions. J. Math. Anal. Appl. 135(2), 581-590, (1988). 8. Garcia, E., Casbeer, D. W., Pochter, M.: Optimal strategies for a class of multi-player reach-avoid differential game in 3D space. IEEE Robotics Autom. Leff. 5, 4257-4264. Doi:10:1109/ira.2020.2994023, (2020). 9. Ibragimov, G. I., Salleh, Y., Alias, I. A.: Evasion from several pursuer in the game with coordinates-wise Integral Constraints. Dyn. Games Appl. 13 , 819-842. Doi:10:1007/s13235-022-00475-7, (2023). New strategies for some pursuit-evasion differential games 13 10. Ibragimov, G. I., Tursunaliev, T. G.: Differential Game of One Evader and Multiple Pursuers with Exponential Constraints. Uzbek Mathematical Journal, 69(4), 113-127, Doi:10:29229/uzmj-4-12, (2025). 11. Ibragimov, G. I. Kuchkanova, S., Ibragimov, A., Pansera, B. A.: Multiple capture in a differential game with mixed constraints on controls of players. Quality and Quantity. Doi:10:1007/s11135-025-02198-4, (2025). 12. Ibragimov, G., Gulomov, S., Pansera, B. A.: Fixed-time pursuit-evasion differential game with Gronwall constraints in Hilbert space l2. Games, 17, 35, doi:10:3390/g17040035, (2026). 13. Ibragimov, G. I., Inomiddinov, S., Kurbonbekova, O., Pansera, B. A., Khodjime-tov, A.: Differential Game of Multiple Pursuers and One Evader With Integral Con-straints of Special Form. Journal of Dynamics and Games, Vol. 14, 2026, 72-82, doi.10.3934/jdg.2025023, (2025). 14. Isaacs, R.: Differential Games. John Wiley & Sons, New York, NY, USA, (1965). 15. Kazimirova, R., Ibragimov, G. I., Pansera, B. A., Ibragimov, A.: Multi-pursuer and one evader evasion differential games with integral constraints for an infinite system of Binary differential equation. Mathematics, 12, 1183, doi:10.3390/math/2081183, (2024). 16. Lewin, J. : Differential Games. Germany. in Russian, Springer, Berlin. (1994). 17. Rilwan, J., Farrara, M., Badakaya, A. J., Pansera, B. A.: On Pursuit and Evasion Game Problem With Gronwall-type Constraints. Quality and Quantity, doi:10.1007/s11135-023-01616-9, (2023). 18. Rilwan, J., Fotia, P., Farrara, M.: On Game Value of a Differential Game Problem With Gronwall-type Constraints on Players Controls. Decision in Economics and Finance, doi:10.1007/s10203-023-00389-y, (2023). 19. Krasovskii, N., Subbotin, A.: Positional Differential games. Nauka, Moscow, in Russian, (1974). 20. Krasovskii, N., Subbotin, A.: Game Theoretic Control Problems. Springer-verlag, New york, (1988). 21. Petrosyan, L. A.: Differential Games of Pursuit. World Scientific, Singapore, (1993). 22. Petrov, N. N.: Twofold Capture of Coordinated Evaders in the Problem of Simple Group Pursuit. Compt Math Model, doi.10.1007/s10598-025-09646-8, (2025). 23. Samatov, B. T., Ibragimov, G. I., Juraev, B., Ferrara, M.: On the Lifeline Game of the Inertial Players with Integral and Geometric Constraints. Mathematics, 11, 4209. doi.10.3390/math11194209, (2023). 24. Samatov, B. T., Ibragimov, G. I., Khodijibayewa, I. V.: Pursuit-evasion differential game with Gronwall type constraints on controls. Ural Math. Journal. 6, 95-107. Doi:10:15826/umj.2020.2.010, (2020). 25. Salimi, M. and Ferrara, M.: Differential Game of Optimal Pursuit of one Evader by Many Pursuers”, International Journal of Game Theory, 48, 481-491, doi:10.1007/s00182-018-0638-6, (2019). 26. Subbotin, A. I., Chentsov,A. G. ”Optimazition of Guaranteed Result in Control Prob-lem”, Moscow, Rsussia, (1981)

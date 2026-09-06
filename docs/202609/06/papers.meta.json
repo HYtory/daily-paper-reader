@@ -1,0 +1,54 @@
+{
+  "label": "2026-09-06",
+  "date": "2026-09-06",
+  "generated_at": "2026-09-06T21:29:44",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202609/06/2608.30134v1-solution-and-optimal-strategies-for-a-differential-game-of-pursuit-evasion-with-point-wise-constraints",
+      "section": "quick",
+      "title_en": "Solution and Optimal Strategies for a Differential Game of Pursuit-Evasion with Point-Wise Constraints",
+      "authors": "Jamilu Adamu, Abbas Ja'afaru Badakaya, Felix Wallace Tarry, Mehdi Salimi",
+      "date": "2026-08-31",
+      "pdf": "https://arxiv.org/pdf/2608.30134v1",
+      "score": "7.0",
+      "evidence": "可数多个追捕者对一个逃逸者的追逃微分博弈，概念上适用于无人机追逃与多机围捕",
+      "tldr": "该文研究在序列空间 l2 中具有逐点几何约束的追逃微分博弈，其中可数多个追捕者按一阶微分方程运动，单个逃逸者按二阶微分方程运动，在固定时间区间内展开。以终端时刻逃逸者与所有追捕者间最小距离作为支付，追捕者最小化、逃逸者最大化。作者通过构造玩家的最优策略，得到了博弈的解并估计了博弈值，为无穷维约束追逃问题提供了求解框架。",
+      "tags": "query:ui",
+      "abstract_en": "This work study a differential game of pursuit-evasion involving countably many pursuers $p_{1},p_{2},\\cdots,p_{m}$ and a single evader $e$ under point-wise (geometric) constraints in the sequence space $l_{2}.$ The pursuers evolve according to specified differential equations of $1^{st}$ order while the evader follows a $2^{nd}$ order differential equation. The game period is a fixed time interval of length $θ$ unit of time. The minimum distance between evader and the pursuer at the terminal time denotes the game payoff. The pursuers aim is to minimize the payoff, whereas the evader seeks to maximize it. We obtain the solution of the game, including optimal strategies of the players construction, as well as game value estimation.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/06/2609.02987v1-tail-likelihood-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Tail-Likelihood Reinforcement Learning",
+      "authors": "Shrinivas Ramasubramanian, Daman Arora, Fahim Tajwar, Guanning Zeng, Qingyang Wu, Zhongzhu Zhou, Chenfeng Xu, Haiwen Feng, Yuda Song, Aarti Singh, Ruslan Salakhutdinov, J. Andrew Bagnell, Jeff Schneider, Andrea Zanette",
+      "date": "2026-09-02",
+      "pdf": "https://arxiv.org/pdf/2609.02987v1",
+      "score": "7.0",
+      "evidence": "面向高成功率的通用RL目标可应用于拦截/围捕策略学习，但未结合具体UAV任务",
+      "tldr": "强化学习常优化平均奖励，但两个策略可能均值相同却在稀有高奖励轨迹的覆盖上差异显著，采样增多时其收益取决于保留高质量结果的概率。为此提出Tail-Likelihood Reinforcement Learning (TailRL)，直接最大化超出随机奖励阈值的对数概率，将连续奖励转为二值成功事件族。其梯度侧重稀有高奖励样本，可视为Best-of-(k)梯度的混合，仅需改动优势函数即可融入现有流程。在目标定位、迷宫导航、GUI定位和代码优化中，TailRL利用稀有高奖励样本避免次优解，并使模型在推理时从更多采样中获益更多。",
+      "tags": "query:ui",
+      "abstract_en": "Reinforcement learning typically optimizes average reward. For generative policies, the average can hide an important distinction: two policies can achieve the same mean reward while having very different chances of producing a rare but high-reward rollout. This matters as sampling increases during training and inference, since its benefit depends on retaining probability mass on high-reward outcomes. We propose to optimize this coverage directly. Rather than considering only expected reward, we consider all of its upper tails: for each reward threshold, how likely is the policy to exceed it? This turns a continuous reward into a family of binary success events. We introduce Tail-Likelihood Reinforcement Learning (TailRL), which maximizes the log-probability of exceeding a randomly chosen reward threshold. Its gradient gives more weight to rare, high-reward rollouts and can be interpreted as a mixture of Best-of-(k) gradients. TailRL requires only a simple modification to the advantage function, making it compatible with existing reinforcement learning pipelines. Across object localization, maze navigation, GUI grounding, and code optimization, TailRL leverages rare high-reward training samples to avoid suboptimal solutions and yields models that benefit more from additional samples at inference time.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/06/2609.01922v1-new-strategies-for-some-pursuit-evasion-differential-games-with-gronwall-type-constraints",
+      "section": "quick",
+      "title_en": "New strategies for some pursuit-evasion differential games with Gronwall-type constraints",
+      "authors": "Jamilu Adamu, Mehdi Salimi, Farouq Abba Wabi, Jewaidu Rilwan",
+      "date": "2026-09-01",
+      "pdf": "https://arxiv.org/pdf/2609.01922v1",
+      "score": "6.0",
+      "evidence": "研究Gronwall型约束下的追逃微分博弈新策略，对应追逃博弈需求但未涉及UAV或RL",
+      "tldr": "本文在l2序列空间中研究一类由一阶微分方程描述的非合作追逃博弈，双方的控制函数受Gronwall型历史依赖约束，使得可用控制随过去消耗而改变。针对追捕问题构造了一种新策略，能够在满足相应条件时实现捕获；针对躲避问题设计了可容许的规避策略以保持不被捕获。随后分别建立了追捕成功和躲避成功的显式充分条件。该工作将经典几何约束与积分约束框架下的追逃博弈结果，推广到更广泛的Gronwall型限制系统，从而扩大了微分博弈的处理范畴。",
+      "tags": "query:ui",
+      "abstract_en": "This paper studies a class of non-cooperative pursuit-evasion differential games in the sequence space $l_{2}.$ The motions of the pursuer and the evader are described by certain first-order differential equations while their control functions are subject to Gronwall-type constraints which impose history-dependent bounds on their control resources. Two fundamental problems are investigated. For the pursuit problem, new strategy for the pursuer is constructed and sufficient conditions guaranteeing the completion of pursuit are established. For evasion problem, an admissible strategy of the evader ensuring avoidance of capture is obtained, and corresponding sufficient conditions for successful evasion are derived. The proposed approached extends existing results on differential games with classical geometric and integral constraints to a broader class of systems governed by Gronwall-type restrictions.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
