@@ -1,0 +1,212 @@
+Title: On the problem of assigning multiple interceptors over multiple aerial threats
+
+URL Source: https://arxiv.org/pdf/2608.31143v1
+
+Published Time: Tue, 01 Sep 2026 03:08:30 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+# On the problem of assigning multiple interceptors over multiple aerial threats 
+
+## Liang Hong ∗
+
+## September 1, 2026 
+
+Abstract 
+
+This article investigates the problem of assigning multiple identical interceptors over multiple identical aerial threats, where all interceptors are launched in a single salvo. For this problem, two strategies have been studied in the literature: (A) to spread all interceptors as evenly as possible over all threats, and (B) to randomly assign all interceptors over the threats. The main contributions of this article are as follows. First, the literature contains empirical evidence that Strategy A is more efficient than Strategy B in terms of the mean number of missed threats, when the number of interceptors is no less than the number of threats. This article gives a rigorous proof of this fact. Secondly, it demonstrates numerically that Strategy A can be significantly more efficient than Strategy B. Thirdly, it shows that Strategy A is not only superior to Strategy B, but also the bona fide optimal strategy. Finally, this article establishes that these conclusions also hold when the number of interceptors is less than the number of threats. 
+
+Keywords and phrases: Drone/missile defense; multiple identical shots; multiple identical targets; optimal shooting strategy; shooting without feedback; weapon assign-ment. 
+
+# 1 Introduction 
+
+The last few years have witnessed an increasing number of military conflicts around the world. A conspicuous feature in these conflicts is the heavy use of drones and missiles. As a result, a country must increase its capability to neutralize aerial threats. To this end, a country can make efforts in two directions: (i) to improve the quality of its interceptors, and (ii) to optimize its assignment of interceptors during a combat. The former falls within the domain of weapon engineering; the latter is the business of operations research analysts. The article is exclusively concerned with the latter. 
+
+> ∗
+
+Department of Mathematical Sciences, The University of Texas at Dallas, 800 West Campbell Road, Richardson, TX 75080, USA. Tel.: +1 (972) 883-2161. Email address: liang.hong@utdallas.edu. 
+
+1arXiv:2608.31143v1 [math.OC] 31 Aug 2026 In this article, we investigate the problem of assigning m identical interceptors over n
+
+aerial threats where m ≥ 2, n ≥ 2, and each interceptor hits an aerial threat with probability 
+
+0 < p < 1. We assume that all interceptors are fired independently but in a single salvo (so that no feedback is available between the firing of any two interceptors). We are interested in two strategies: (A) spread all interceptors as evenly as possible over all threats; (B) randomly assign all interceptors over the threats. We will use the mean number of missed threats to assess the efficiency of a given strategy. This is a classical problem in the context of assigning identical shots to identical targets, and it is well-documented in the literature (e.g., Sections 2.4.1 and 2.4.4 of Washburn and Kress 2009). Though research in the past three decades has been focusing on more general cases where decoys are present, weapons or targets are not identical, or feedback is available (e.g., Aviv and Kress 1997; Yost and Washburn 2000; Glazebrook and Washburn 2004; Washburn 2005; Pryluk and Shima 2014; Kline et al. 2019; Kalyanam and Clarkson 2021; Atkinson and Kress 2025), this classical problem has not been completed settled yet. Let XA and XB be the numbers of missed threats when the interceptors are fired using Strategy A and Strategy B, respectively. In combat, the number of interceptors can be either less than the number of threats (i.e., m < n ) or the other way around (i.e., m ≥ n). Therefore, we need to examine both cases. To my knowledge, the case m < n has not been investigated. The case m ≥ n has been studied, and the key results are summarized in Section 2.4.1 and Section 2.4.4 of Washburn and Kress (2009). In particular, it is known that 
+
+E[XA] = (n − r)(1 − p)k + r(1 − p)k+1 ,
+
+E[XB ] = n(1 − p/n )m, (1) where m = nk + r, k is a positive integer, r is an integer such that 0 ≤ r < n . It has also been demonstrated empirically that Strategy A is more efficient than Strategy B, i.e., 
+
+E[XA] ≤ E[XB ]. However, several important questions remain open. (1) Does E[XA] ≤ E[XB ] always hold? (2) Is Strategy A only slightly more efficient than Strategy B or it can be significantly more efficient than Strategy B? (3) Is Strategy A the optimal strategy in terms of the mean number of missed threats? (4) How about the case m < n ?This article answers these questions by establishing the following facts. 
+
+• E[XA] ≤ E[XB ] always holds. 
+
+• Strategy A can be significantly more efficient than Strategy B. 2• Strategy A is the optimal strategy in terms of the mean number of missed threats. 
+
+• The above three facts hold for the case m < n .These results complement the extant results. Together, they give a fairly complete treatment of the problem of assigning multiple identical shots to multiple identical targets without feedback. 
+
+# 2 Main results 
+
+Throughout, we will apply the following inequality a few times. 
+
+Lemma 1 (Bernoulli’s inequality) . Let x ∈ R and b ∈ N. For all x ≥ − 1, x̸ = 0 , and b ≥ 1,
+
+(1 + x)b ≥ 1 + bx. 
+
+Proof. See, for instance, Page 26 of Stromberg (1981) or Page 31 of Steele (2008). 
+
+## 2.1 When m ≥ n
+
+Theorem 2.1. If m ≥ n ≥ 2 and 0 < p < 1, then E[XA] ≤ E[XB ].Proof. In this case, we have m = nk + r, where k is a positive integer and r is an integer such that 0 ≤ r < n . It follows from (1) that 
+
+E[XB ]
+
+E[XA] = n(1 − p/n )m
+
+(n − r)(1 − p)k + r(1 − p)k+1 
+
+= (1 − p/n )nk +r
+
+(1 − p)k(1 − rp/n )=
+
+ (1 − p/n )r
+
+(1 − rp/n )
+
+  (1 − p/n )n
+
+(1 − p)
+
+k
+
+.
+
+Beroulli’s inequality implies (1 − p/n )r ≥ 1 − rp/n and (1 − p/n )n ≥ 1 − p. Therefore, 
+
+E[XB ]
+
+E[XA] ≥
+
+(1 − rp/n )(1 − rp/n )
+
+  (1 − p)(1 − p)
+
+k
+
+= 1 .
+
+Since E[XA] and E[XB ] are both positive., we have E[XA] ≤ E[XB ].Define 
+
+D = E[XB ]/n − E[XA]/n. 
+
+That is, D is the difference between the mean numbers of missed threats per threat using Strategy A and Strategy B. Since E[XA]/n and E[XB ]/n are both between 0 and 1, The-orem 2.1 implies that 0 ≤ D ≤ 1. Intuitively, D measures the efficiency we gain in using 3Strategy A over Strategy B. When p = 0 .4 and n ≥ 100 , Washburn and Kress (2009) find that D is fairly small for all k ≥ 1, i.e., using Strategy A does not gain much more than using Strategy B. This begs the question: Can D be significant in some cases? The next example shows that the answer is affirmative. 
+
+Example 1. Suppose p = 0 .8, n = 10 , k = 2 and r = 1 . Then E[XA]/n = 0 .0368 ,
+
+E[XB ]/n = 0 .1736 , E[XA]/E[XB ] = 21 .20% , and D = 0 .137 . In this case, Strategy A is nearly 5 times more efficient than Strategy B. In view of the range and interpretation of D,the value of D is significant. Panel (a) of Figure 1 provides plots of E[X]/n for Strategy A (circle) and Strategy B (bullet) when k ranges from 1 to 10 . It shows that the advantage of Strategy A over Strategy B becomes less pronounced when k increases. Intuitively, as k
+
+increases, more interceptors are likely to be assigned to a threat even if we randomly assign all interceptors; hence, that threat is likely to be neutralized. Panel (b) gives the plot of D
+
+as p increases, and it suggests that when the quality of the interceptor is relatively high (i.e., the success probability p is relatively large), the difference between the two strategies tends to be significant. 2 4 6 8 10 0.0  0.1  0.2  0.3  0.4 kE[X]/n        
+
+> (a) Mean number of missed threats per threat 0.2 0.4 0.6 0.8 0.02  0.04  0.06  0.08  0.10  0.12  0.14 pD(b) Values of Dfor various values of p
+
+Figure 1: Plots of the mean number of missed threats per threat for Strategy A (circle) and Strategy B (bullet) at various values of k when p = 0 .8, n = 10 , and r = 1 & plot of D for various values of p when n = 10 , k = 2 , and r = 1 in Example 1. 
+
+Theorem 2.2. If m ≥ n ≥ 2 and 0 < p < 1, then Strategy A is optimal in terms of the mean number of missed threats. 
+
+4Proof. Let XS be the number of missed threats when the interceptors are fired using Strat-egy S, where S is an arbitrary strategy. ( S may or may not equal A or B.) Without loss of generality, we may number the n threats as Threat 1, Threat 2, . . . , Threat n. For 
+
+1 ≤ i ≤ n, let mi denote the number of interceptors fired at Threat i. Then 0 ≤ mi ≤ n and 
+
+m1 + . . . + mn = m. We can write XS as 
+
+XS = X1 + . . . + Xn,
+
+where 
+
+Xi =
+
+ 1, if mi = 0 ,
+
+∼ Ber ((1 − p)mi ) if mi ≥ 1,and Xi ∼ Ber ((1 − p)mi ) means Xi is a Bernoulli random variable that takes value 1 with probability (1 −p)mi and value 0 with probability 1−(1 −p)mi . Intuitively, the binary random variable Xi denotes whether Threat i has penetrated the defense layer of the interceptors: when Xi = 1 , Threat i is missed; when Xi = 0 , Threat i is neutralized. Our goal is to choose (m1, . . . , m n) so that E[XS ] is minimized. Suppose mi = 0 for some i. Since m > n , the pigeonhole principle (e.g., Section 28 of Aigner and Ziegler 2018) implies that there is a j̸ = i such that mj ≥ 2. Now keep mk intact for all k̸ = i and k̸ = j, increase mi by 1, and decrease mj by 1. The net change of E[XS ] is 
+
+[(1 − p)mi+1 − (1 − p)mi ] + [(1 − p)mj −1 − (1 − p)mj ]= ([1 − p) − 1] + (1 − p)mj −1[1 − (1 − p)] = p[(1 − p)mj −1 − 1] 
+
+< 0.
+
+This shows that it is never optimal to have mi = 0 for any 1 ≤ i ≤ n. That is, the optimal strategy must fire at least one interceptor at each of the n threats. Next, assume that there are 1 ≤ i, j ≤ n such that mj ≥ 1 and mi − mj ≥ 2. If we decrease mi by 1, increase mj by 1, and keep everything else unchanged, then the net change of E[XS ] will be 
+
+[(1 − p)mi−1 − (1 − p)mi ] + [(1 − p)mj +1 − (1 − p)mj ]= p(1 − p)mi−1 − p(1 − p)mj
+
+= p[(1 − p)mi−1 − (1 − p)mj ]
+
+< 0.
+
+Thus, it is never optimal to have mi and mi such that mj ≥ 1 and mi − mj ≥ 2. That is, the optimal strategy never fires more than 2 interceptors at any of the n threats. The above two observations, when taken together, imply that the optimal strategy is to fire k + 1 interceptors at each of r threats and k interceptors at each of the remaining n − r
+
+threats. Therefore, Strategy A is the optimal strategy. 52.2 When m < n 
+
+The formulas for E[XA] and E[XB ] when m < n have not been documented in the literature. Therefore, we first derive them first. 
+
+Theorem 2.3. If 2 ≤ m < n and 0 < p < 1, then 
+
+E[XA] = n − mp, 
+
+E[XB ] = n(1 − p/n )m. (2) 
+
+Proof. Similar to the proof of Theorem 2.2, we number the n aerial threats as Threat 1, Threat 2, . . . , Threat n. Since m < n , at least n − m threats will not be neutralized. Without loss of generality, we may assume that we fire m interceptors over Threat 1, . . . , Threat m. For 1 ≤ i ≤ m, let mi be the number of interceptors fired at Threat i. Then we can write XA as 
+
+XA = X1 + . . . + Xn,
+
+where Xi ∼ Ber ((1 − p)) and Xm+1 = . . . X n = 1 . Taking expectation on both sides of the last equation, we obtain 
+
+E[XA] = m(1 − p) + ( n − m) = n − mp. 
+
+The derivation of E[XB ] follows from the same line of reasoning as in the case m ≥ n;see, for example, Section 2.4.4 of Washburn and Kress (2009). 
+
+Theorem 2.4. If 2 ≤ m < n and 0 < p < 1, then E[XA] ≤ E[XB ].Proof. Bernoulli’s inequality implies that 
+
+E[XB ] = n(1 − p/n )m ≥ n(1 − mp/n ) = n − mp = E[XA].
+
+Example 2. Suppose p = 0 .9, m = 18 , and n = 20 . Then E[XA]/n = 0 .190 , E[XB ]/n =0.437 , E[XA]/E[XB ] = 43 .53% , and D = 0 .247 . Here Strategy A is nearly twice as efficient as Strategy B. Again, the value of D is significant. Panel (a) of Figure 2 provides plots of 
+
+E[X]/n for Strategy A (circle) and Strategy B (bullet) when m ranges from 1 to 19 ; Panel (b) gives the plot of D as p increases. Similar to Example 1, when the success probability p is relatively large, the difference between the two strategies tends to be significant. 
+
+Theorem 2.5. If 2 ≤ m < n and 0 < p < 1, then Strategy A is optimal in terms of the mean number of missed threats. Proof. As in the proof of Theorem 2.2, we let XS be the number of missed threats when the interceptors are fired using Strategy S, where S is an arbitrary strategy. We number the n aerial threats as Threat 1, Threat 2, . . . , Threat n, and let mi denote the number of interceptors fired at Threat i for 1 ≤ i ≤ n. We still write XS as 
+
+XS = X1 + . . . + Xn,
+
+65 10 15 0.2  0.4  0.6  0.8 mE[X]/n (a) Mean number of missed threats per threat 0.2 0.4 0.6 0.8 0.00  0.05  0.10  0.15  0.20  0.25 pD (b) Values of D for various values of p
+
+Figure 2: Plots of the mean number of missed threats per threat for Strategy A (circle) and Strategy B (bullet) at various values of m when p = 0 .9 and n = 20 & plot of D for various values of p when n = 20 and m = 18 in Example 2. where 
+
+Xi =
+
+ 1, if mi = 0 ,
+
+∼ Ber ((1 − p)mi ) if mi ≥ 1,Since m < n , at least n − m threats will not be neutralized, regardless of the strategy employed. Thus, we may assume without loss of generality that Xm+1 = Xm+2 = . . . =
+
+Xn = 1 . By the arithmetic-geometric mean inequality (e.g., Chapter 2 of Steele 2008 or Theorem 20.II of Aigner and Ziegler 2018), we have 
+
+E[XS ] = E[X1] + . . . + E[Xm] + ( n − m)
+
+≥ E[X1] × . . . × E[Xm] + ( n − m),
+
+where the last inequality is an equality if and only if E[X1] = E[X2] = . . . E[Xm], i.e., 
+
+(1 − p)m1 = (1 − p)m2 = . . . (1 − p)mm . Since 0 < p < 1 and m1 + . . . + mm = m,
+
+(1 − p)m1 = (1 − p)m2 = . . . (1 − p)mm holds if and only if m1 = . . . = mm = 1 . Thus, E[XS ]
+
+attains its minimum value when we fire exactly one interceptor at a different aerial threat. This proves that Strategy A is optimal. 
+
+# Conflict of interest 
+
+The author has no conflict of interest to declare. 7References 
+
+Aigner, M. and Ziegler, G.M. (2018). Proofs from THE BOOK . Springer: New York. Atkinson and Kress (2025). Hard and soft defense against a sequence of aerial threats. 
+
+Operations Research 73(4), 1767–1784. Avid, Y. and Kress, M. (1997). Evaluating the effectiveness of shoot-look-shoot tactics in the presence of incomplete damage information. Military Operations Research 3(1), 79–89. Glazebrook, K. and Washburn, A. (2004). Shoot-look-shoot: a review and extension. Op-erations Research 52(3), 454–463. Kalyanam, K. and Clarkson J. (2021). Sequential attack salvo size is monotonic nonde-creasing in both time and inventory level. Naval Research Logistics 58(3), 304–321. Kline, A., Darryl, A. and Raymond H. (2019). The weapon-target assignment problem. 
+
+Computers and Operations Research 105, 226–236. Pryluk, R. and Shima, T. (2016). Shoot-shoot-look for an air-defense system. IEEE Systems Journal 10(1), 151–161. Steele, J.M. (2008). The Cauchy-Schwarz Master Class: An Introduction to the Art of Mathematical Inequalities . Cambridge University Press: Cambridge, UK. Stromberg, K.R. (1981). An Introduction to Classical Real Analysis . AMS Chelsha Pub-lishing: Providemce, Rhode Island. Washburn, A. and Kress, M. (2009). Combat Modeling . Springer: New York. Washburn, A. (2005). The Bang-soak theory of missile attack and terminal defense. Mili-tary Operations Research 10(1), 15–23. Yost, K.A. and Washburn, A. (2000).Optimizing assignment of air-to-ground assets and BDA sensors. Military Operations Research 5(2), 77–91. 8

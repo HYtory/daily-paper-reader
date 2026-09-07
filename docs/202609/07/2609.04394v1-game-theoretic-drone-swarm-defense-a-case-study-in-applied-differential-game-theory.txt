@@ -1,0 +1,806 @@
+Title: Game-Theoretic Drone Swarm Defense: A Case Study in Applied Differential Game Theory
+
+URL Source: https://arxiv.org/pdf/2609.04394v1
+
+Published Time: Mon, 07 Sep 2026 00:09:02 GMT
+
+Number of Pages: 19
+
+Markdown Content:
+# Game-Theoretic Drone Swarm Defense 
+
+## A Case Study in Applied Differential Game Theory Ross E. Allen 
+
+MIT Lincoln Laboratory 
+
+## August 2026 
+
+# Executive Summary 
+
+This technical report is a study of the use of differential game (DG) theory to solve the target-assignment and midcourse guidance problems of drone swarms tasked with intercepting opposing swarms in defense of high-value assets. The game-theoretic tactics—which treat the intruder swarm as a rational agent and seek a Nash equilibrium between defenders and intruders—are compared against baseline tactics that model the defense problem as a unilateral optimization of the defenders’ maneuvers. Monte Carlo simulation and Bayesian analysis show that the game-theoretic approach has a higher probability of successfully intercepting all intruders than the baseline techniques. This improvement in successful defense probability is most pro-nounced when the intruder swarm is capable of evasive maneuvers: relative to baseline optimization tactics, differential-game tactics increase estimated defense success from 94.6% to 96.8%, closing approximately 41% of the remaining gap to perfect defense. To add statistical credibility to this result, a paired-trial Bayesian analysis assigns a 99.9% posterior probability that differential-game tactics have a higher probability of successful asset defense than baseline tactics in this scenario. 
+
+DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited. This material is based upon work supported by the Under Secretary of War for Research and Engineering under Air Force Contract No. FA8702-15-D-0001 or FA8702-25-D-B002. Any opinions, findings, conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the Under Secretary of War for Research and Engineering. 
+
+© 2026 Massachusetts Institute of Technology. Delivered to the U.S. Government with Unlimited Rights, as defined in DFARS Part 252.227-7013 or 7014 (Feb 2014). Notwith-standing any copyright notice, U.S. Government rights in this work are defined by DFARS 252.227-7013 or DFARS 252.227-7014 as detailed above. Use of this work other than as specifically authorized by the U.S. Government may violate any copyrights that exist in this work. 
+
+1arXiv:2609.04394v1 [cs.GT] 3 Sep 2026 Contents 
+
+1 Problem Formulation 3
+
+1.1 Teams, State, and Information . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31.2 Objectives and Solution Concepts . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+
+2 Guard/Defender Tactics 4
+
+2.1 Baseline Tactics . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52.1.1 Heading Error Midcourse Guidance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 62.2 Differential Game Tactics . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 62.2.1 Dynamic Target Soft-Assignment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 62.2.2 Game Theoretic Midcourse Guidance . . . . . . . . . . . . . . . . . . . . . . . . . . . . 82.2.3 Terminal Guidance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+
+3 Simulation Environment 10 
+
+3.1 Interception Adjudication . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10 3.2 Bandit/Intruder Tactics . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10 
+
+4 Experiment Design 11 
+
+4.1 Monte Carlo Trials . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11 4.2 Performance Metrics & Bayesian Analysis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11 
+
+5 Results & Discussion 13 6 Limitations & Future Work 18 A Appendices 19 
+
+A.1 Discounted-Redundancy Assignment Reformulation . . . . . . . . . . . . . . . . . . . . . . . . 19 2Gi
+
+Bj
+
+Lℓ
+
+Figure 1: Conceptual drone swarm defense problem posed as a many-agent Lady-Bandit-Guard problem [7]. The guard drone Gi, which is one of a large set of guard drones, attempts to intercept a particular bandit drone Bj before it reaches a high-value asset Lℓ, while considering the trade-offs of potentially pursuing different bandits. 
+
+# 1 Problem Formulation 
+
+The drone swarm defense problem is posed as a many-agent variant of the Lady-Bandit-Guard problem described by Rusnak [7]. A team of NG guard drones (also referred to as defenders or interceptors ) is tasked with intercepting an incoming swarm of NB bandit drones (also referred to as intruders or threats ) before any of them reach the set of NL high-value assets (HVAs, called “ladies” in Rusnak’s terminology [7]). The problem is multi-faceted, generally requiring optimization of both the assignment of specific guards to intercept specific bandits and guidance laws that generate dynamically-feasible trajectories that achieve those interceptions. Fig. 1 gives a conceptual illustration of an engagement with a small number of drones. 
+
+## 1.1 Teams, State, and Information 
+
+Let G ≜ {0, . . . , N G − 1}, B ≜ {0, . . . , N B − 1}, and L ≜ {0, . . . , N L − 1} index the guards, bandits, and high-value assets (HVAs), respectively. The total population sizes NG, NB , and NL are fixed for an episode. At any time, GA ⊆ G and BA ⊆ B denote the active guard and bandit index sets, with NGA ≜ |GA|
+
+and NBA ≜ |BA|. Inactive vehicles remain represented in the full environment state but are omitted from active-roster planning problems. Guards are modeled as fixed-speed, planar Dubins vehicles. For guard i ∈ G, the state, control, and equations of motion are 
+
+pG,i = px,G,i py,G,i 
+
+T , xG,i = pT 
+
+> G,i
+
+ψG,i 
+
+T ,uG,i = ωG,i ∈ U G, UG ≜ [−¯ωG, ¯ωG],
+
+˙xG,i =
+
+
+
+VG cos ψG,i 
+
+VG sin ψG,i 
+
+ωG,i 
+
+ .
+
+(1) Here pG,i is planar position, ψG,i is heading, VG is the guard-team constant forward speed, and ¯ ωG is the maximum turn rate. The corresponding inertial velocity is vG,i = VG[cos ψG,i , sin ψG,i ]T. Bandits are defined analogously by replacing ( G, i ) with ( B, j ) and using VB , ¯ ωB , and uB,j . Thus each vehicle state is three-dimensional and each control is a scalar heading rate. Stacking the dynamics over both teams defines ˙x = f (x, uG, uB ). We ignore altitude changes and assume VG > V B ; the rationale for excluding faster-bandit cases is discussed in Sec. 6. 3The full-team and active-roster guard stacks are 
+
+xG(t) ≜ xG, 0(t)T · · · xG,i (t)T · · · xG,N G−1(t)TT ,
+
+uG(t) ≜ uG, 0(t) · · · uG,i (t) · · · uG,N G−1(t)T ,
+
+xGA (t) ≜ xG,i (t)
+
+> i∈GA
+
+,
+
+uGA (t) ≜ uG,i (t)
+
+> i∈GA
+
+.
+
+(2) with analogous definitions for xB , uB , xBA , and uBA . Brackets indexed by a set indicate a stack over that set in ascending index order. Thus xG and xB have fixed dimensions 3 NG and 3 NB , whereas xGA and xBA
+
+are compact active-roster stacks. The joint propagated vehicle state is x(t) = [ xG(t)T, xB (t)T]T; the active state and control used by a game solve are xA = [ xT 
+
+> GA
+
+, xT 
+
+> BA
+
+]T and uA = [ uT 
+
+> GA
+
+, uT 
+
+> BA
+
+]T. Superscripts 0 : T and 0 : T − 1 denote planning-horizon state and control sequences; for example, x0: TGA = ( xGA,0, . . . , xGA,T ) and 
+
+u0: T −1 
+
+> GA
+
+= ( uGA,0, . . . , uGA,T −1). The HVAs are fixed at positions collected in PL ∈ RNL×2 and are scenario context rather than dynamic-state components. Every guard receives the common global observation 
+
+OG ≜ (xG, xB , PL, VG, VB , σG, σB , σL, t ), (3) where VG and VB are fixed vehicle-speed vectors and the status vectors preserve fixed observation dimensions after entities become inactive. The implemented bandit behavior uses the guard-blind projection OB ≜
+
+(xB , PL, VB , σB , σL, t ); its actions do not respond to guard state. 
+
+## 1.2 Objectives and Solution Concepts 
+
+Guards are modeled as a cooperative team with common cost JG, while bandits share cost JB . The detailed terminal-handoff and control-effort costs are specified in Sec. 2.2.2. Let γG : OG → U NG 
+
+> G
+
+and γB : OB →UNB 
+
+> B
+
+denote guard and bandit feedback policies—also called “strategies” in game-theory literature [2] and colloquially as “tactics” in this report. A unilateral formulation of the swarm defense problem selects the guard tactics that minimize JG:
+
+γ⋆G = arg min 
+
+> γG
+
+JG(γG; γB ) ,
+
+such that ˙x = f (x, γ G(OG), γ B (OB )) , x(0) = x0.
+
+(4) where f (x, γ G(OG), γ B (OB )) describes the physical dynamics of the drone swarm. Equation 4 is the unilateral formulation used by the baseline tactics in Sec. 2.1: it optimizes the guard policy for a prescribed bandit policy. The differential-game formulation instead solves for mutually responsive strategies. 
+
+JG(γ⋆G, γ ⋆B ) ≤ JG(γG, γ ⋆B ) ,JB (γ⋆G, γ ⋆B ) ≤ JB (γ⋆G, γ B ) , (5) Equation 5 defines a Nash equilibrium , from which neither team benefits by unilaterally changing its strategy [2, Chapter 6]. The planned bandit strategy is an adversarial model rather than a prediction of the simulated guard-blind bandit behavior. Receding-horizon replanning lets the guard team respond as observed behavior departs from that model. 
+
+# 2 Guard/Defender Tactics 
+
+In this section we develop 3-phase tactics used by the team of guard drones; the phases being target as-signment, midcourse guidance (MG), and terminal guidance (TG). Fig. 2 provides an illustrative diagram of the control flow between these phases. Generally speaking, the target assignment phase is responsible for assigning to each guard drone a bandit that it is nominally intended to intercept. This phase is generally executed by a centralized planner—mimicking how a command and control node in the real-world would be 4Target Assignment Midcourse Guidance Terminal Guidance Launch Interception missed interception target status update Figure 2: High-level control flow for guard/defender tactics. responsible for sensing incoming threats and tasking interceptors to meet those threats—and may be run multiple times throughout the engagement, leading to dynamic reassignment of targets (Sec. 2.2.1). The midcourse guidance phase is generally responsible for planning the flyout trajectory of the guards from their current state to a state that best establishes the conditions for an interception. This phase receives much of the attention in the subsequent sections as we develop novel tactics based upon differential game theory (DG) that blend the midcourse guidance and target assignment phases. Terminal guidance is generally responsible for control of a guard drone in the final moments before interception of a bandit. We employ the widely-used, highly-robust technique of proportional navigation (PN) for all of our terminal guidance algorithms; see Sec. 2.2.3 for more discussion of this guidance law. Not only do we develop the novel game-theoretic tactics (Sec. 2.2) that are the subject of investigation in this report, but also a set of baseline tactics (Sec. 2.1) against which the differential game tactics are compared. All guard tactics, both game-theoretic and baselines, are based upon the same 3-phase architec-ture given in Fig. 2. They differ in the algorithms that underpin the various phases; most importantly, the midcourse guidance phase. 
+
+## 2.1 Baseline Tactics 
+
+To evaluate the effectiveness of the differential game tactics described in Sec. 2.2, it is essential that opera-tionally realistic baseline tactics are developed for comparison. Two baseline tactics are developed: nearest-bandit (NB) and coverage-aware (CA). Both of these tactics are based upon an optimization model of the swarm defense problem—i.e. Eq. 4, in contrast to the game-theoretic model of Eq. (5)—and share the same general solution algorithm, presented in Alg. 1. This algorithm is an instantiation of the 3-phase tactics presented in Fig. 2. The nearest-bandit (NB) and coverage-aware (CA) tactics differ only in their target assignment phase (Alg. 1, Line 2). As the name implies, the nearest-bandit tactics simply assign to each guard drone the bandit nearest them for interception. The coverage-aware tactics use a more sophisticated target assignment subroutine that balances between 
+
+ease of interception (e.g. distance from target at assignment) and coverage of all bandits (i.e. incentivizes at least one guard to be assigned to each bandit). This target assignment algorithm is based upon the discounted-redundancy linear assignment optimization described in Sec. 2.2.1. Algorithm 1 works in an iterative, receding-horizon fashion. At the start of each iteration, a central-ized control node checks if there are still active guard and bandit drones. Line 2 represents the target assignment phase previously described. The rest of the algorithm describes how the midcourse guidance (Line 9) and terminal guidance (Line 7) phases are employed in a receding-horizon fashion with updates to the target assignments every Treplan seconds (Line 3) or when guards or bandits become inactive due to interceptions (Line 13). The HeadingErrorGuidance midcourse guidance subroutine is described in Sec. 2.1.1. The ExecuteControls subroutine (Line 12) is where the selected controls are employed and the state of the drone swarms are updated. 5Algorithm 1 Swarm Defense Baseline Tactics  
+
+> 1:
+
+while GA̸ = ∅ and BA̸ = ∅ do 
+
+> 2:
+
+ pij 
+
+ ← AssignTargets (GA, B A) 
+
+> 3:
+
+for t ← 0 to Treplan do  
+
+> 4:
+
+for all i ∈ GA do  
+
+> 5:
+
+j ← arg max j′∈BA pij ′ 
+
+> 6:
+
+if TerminalHandoffAllowed (xG,i , xB,j ) then  
+
+> 7:
+
+uG,i ← ProportionalNavigation (xG,i , xB,j ) 
+
+> 8:
+
+else  
+
+> 9:
+
+uG,i ← HeadingErrorGuidance (xG,i , xB,j ) 
+
+> 10:
+
+end if  
+
+> 11:
+
+end for  
+
+> 12:
+
+(xG, xB , G A, B A) ← ExecuteControls (uG) 
+
+> 13:
+
+if GA or BA has changed then  
+
+> 14:
+
+break  
+
+> 15:
+
+end if  
+
+> 16:
+
+end for  
+
+> 17:
+
+end while 2.1.1 Heading Error Midcourse Guidance 
+
+With the HeadingErrorGuidance controller, the guard seeks to align its heading angle with the line-of-sight (LOS) to the assigned bandit as described in the following equations: 
+
+ψLOS ,j/i = atan2( py,B,j − py,G,i , p x,B,j − px,G,i ) ,eψ,i = atan2  sin  ψLOS ,j/i − ψG,i 
+
+ , cos  ψLOS ,j/i − ψG,i 
+
+ ,uG,i = kg eψ,i .
+
+(6) where uG,i is the commanded turn rate of guard i, kg is a positive heading-error gain, ψLOS ,j/i is the line-of-sight angle from guard i to bandit j, and eψ,i is the heading error wrapped to [ −π, π ]. The state-component notation is defined in Sec. 1.1. 
+
+## 2.2 Differential Game Tactics 
+
+Algorithm 2 provides pseudocode for implementing the differential game (DG) tactics. Similar to Alg. 1, the DG tactics represent an instantiation of the 3-phase tactics presented in Fig. 2. Algorithm 2 also works in an iterative, receding-horizon fashion. At the start of each iteration, a centralized control node checks if there are still active guard and bandit drones. Line 2 represents the target assignment phase, which for the DG tactics, is actually a soft-assignment; i.e. a first-guess at which bandits each guard should pursue. Sec. 2.2.1 describes the AssignTargets subroutine for this soft-assignment. Lines 3–6 represent the game-theoretic components of the midcourse guidance law which are described more thoroughly in Sec. 2.2.2. These components are based upon the Nash equilibrium (Eq. 5) of a linear-quadratic approximation of the swarm defense differential game. The rest of the algorithm describes how the differential game strategy is employed in a receding-horizon fashion with updates to the target soft-assignments every Treplan seconds (Line 7) or when guards or bandits become inactive due to interceptions (Line 16). Lines 9 and 10 represent the terminal guidance handoff to the proportional navigation controller described in Sec. 2.2.3. 
+
+2.2.1 Dynamic Target Soft-Assignment 
+
+In the AssignTargets subroutine of Alg. 2 (Line 2), a shared coordinator, akin to a centralized command and control node, provides soft-assignments between active guards and incoming bandits to be intercepted. The assignment is “soft” in the sense that it is only an initial guess as to which bandit a guard will intercept; however, the midcourse guidance phase (Sec. 2.2.2) may ultimately result in a different interception. 6Algorithm 2 Swarm Defense Differential Game Tactics  
+
+> 1:
+
+while GA̸ = ∅ and BA̸ = ∅ do 
+
+> 2:
+
+ pij 
+
+ ← AssignTargets (GA, B A) 
+
+> 3:
+
+(¯ x0: TA , ¯u0: T −1 
+
+> A
+
+) ← FormReferenceTrajectories  (pij ), xGA , xBA
+
+ 
+
+> 4:
+
+(JG, J B ) ← DefineGameCosts (GA, B A) 
+
+> 5:
+
+lqgame ← ApproxLQGame (¯ x0: TA , ¯u0: T −1 
+
+> A
+
+, J G, J B ) 
+
+> 6:
+
+γG ← SolveFeedbackNash (lqgame ) 
+
+> 7:
+
+for t ← 0 to Treplan do  
+
+> 8:
+
+for all i ∈ GA do  
+
+> 9:
+
+if TerminalHandoffAllowed (i, xG, xB ) then  
+
+> 10:
+
+uG,i ← ProportionalNavigation (i, xG, xB ) 
+
+> 11:
+
+else  
+
+> 12:
+
+uG,i ← γG,i (t, xGA , xBA ) 
+
+> 13:
+
+end if  
+
+> 14:
+
+end for  
+
+> 15:
+
+(xG, xB , G A, B A) ← ExecuteControls (uG) 
+
+> 16:
+
+if GA or BA has changed then  
+
+> 17:
+
+break  
+
+> 18:
+
+end if  
+
+> 19:
+
+end for  
+
+> 20:
+
+end while 
+
+Assigning to each guard a bandit to be pursued requires an algorithm that accounts for the relative 
+
+difficulty of all possible guard-bandit pairings and balances this against the desire to intercept each and every bandit, with the constraint that each guard may only target one bandit at a time. In order to handle all cases of relative guard/bandit swarm sizes, the soft-assignment algorithm must be—in general—a many-to-one, potentially non-surjective function; i.e. multiple elements of the guard set may target the same bandit in the bandit set, and some bandits may have no guard assigned to them. Using the total and active-roster notation of Sec. 1.1, let pij ∈ { 0, 1} indicate whether guard i ∈ GA is assigned to bandit j ∈ BA. Let the number of guards assigned to bandit j be 
+
+Pj = X
+
+> i∈GA
+
+pij . (7) To model the assignment problem, we assume that there is both a cost , cTA  
+
+> ij
+
+≥ 0, associated with pairing 
+
+pij , as well as a reward, vj ≥ 0, for having had some guard assigned to bandit j (i.e. the assignment reward is agnostic to which guard is assigned). We then apply a redundancy discount factor, β ∈ [0 , 1], that reduces the marginal reward of assigning more than one guard to a bandit. Therefore, we have the total payoff of assignments to bandit j given as 
+
+Vj (Pj ) = vjPj −1
+
+X
+
+> k=0
+
+βk, Vj (0) = 0 . (8) Thus, the first assigned guard contributes reward vj , the second adds βv j , and each additional guard has weakly smaller marginal reward. Therefore, we can define the target (soft) assignment problem as max 
+
+> pij
+
+X
+
+> j∈BA
+
+Vj (Pj ) − X
+
+> i∈GA
+
+X
+
+> j∈BA
+
+cTA  
+
+> ij
+
+pij , (9) subject to X
+
+> j∈BA
+
+pij = 1 , ∀i ∈ GA, (10) 
+
+pij ∈ { 0, 1}, ∀i ∈ GA, j ∈ BA. (11) 7Each guard must be assigned to one-and-only-one bandit, while a bandit may receive zero, one, or multiple guards. The case β = 0 values only first coverage of each bandit; values 0 < β < 1 reward redundancy with diminishing returns; and β = 1 assigns full value to every additional guard. In our experiments, the cost, bandit reward, and redundancy discount are 
+
+cTA  
+
+> ij
+
+= wTA 
+
+∥pB,j − pG,i ∥
+
+max 
+
+> i′∈GA, j ′∈BA
+
+∥pB,j ′ − pG,i ′ ∥ , vj = 1 , β = 0 .1, wTA = 0 .25 , (12) where cTA  
+
+> ij
+
+= 0 when the normalizing maximum is zero. The discounted-redundancy objective is solved by expanding each active bandit into NGA virtual as-signment slots with successively discounted marginal rewards, then applying a rectangular linear-assignment solver. The selected slot for each guard maps directly to its associated physical bandit. The full linear reformulation is given in Appendix A.1. 
+
+2.2.2 Game Theoretic Midcourse Guidance 
+
+The differential-game (DG) midcourse guidance in lines 3–6 of Alg. 2 repeatedly constructs and solves a two-player, finite-horizon approximation of the swarm-defense game whose high-level definition is given in Eq. (5). The bandit player is an adversarial planning model, rather than a prediction of the simulated bandits’ guard-blind behavior (Sec. 1.1). At each replan, ( pij ) supplies one provisional bandit target for each active guard. These assignments seed the nominal active-roster trajectories (¯ x0: TA , ¯u0: T −1 
+
+> A
+
+): guards use heading-error guidance toward their provisionally assigned bandits, while bandits use zero nominal turn rate. Propagation under the nonlinear Dubins dynamics produces a dynamically feasible operating trajectory. The provisional assignment is used only for this initialization; the terminal objective—later summarized in Eq. (14)—evaluates every pair in 
+
+GA × BA and can therefore favor a different pairing. At its core, the DG guidance law encodes the guard team’s desire for optimal conditions at the end of midcourse guidance to handoff to terminal guidance. More specifically, guards favor terminal-handoff pairs that are close in distance and require little PN maneuvering (Sec. 2.2.3). Therefore, at the terminal handoff time tf , each active guard–bandit pair is evaluated by the differentiable terminal-handoff kernel cTH  
+
+> ij
+
+. Let 
+
+rj/i = pB,j − pG,i and vj/i = vB,j − vG,i denote the relative position and velocity from guard i to bandit j.
+
+Rϵ,ij =
+
+q
+
+rT
+
+> j/i
+
+rj/i + ϵ2
+
+> R
+
+,dϵ,ij = Rϵ,ij − ϵR,Vc,ij = − rT
+
+> j/i
+
+vj/i 
+
+Rϵ,ij 
+
+,
+
+˙λij = rx,j/i vy,j/i − ry,j/i vx,j/i 
+
+R2
+
+> ϵ,ij
+
+,aPN ,ij = αGVc,ij ˙λij ,cTH  
+
+> ij
+
+= wgb dϵ,ij + wPN 
+
+q 
+
+a2PN ,ij + ϵ2 
+
+> a
+
+− ϵa
+
+
+
+.
+
+(13) Here αG is the guard PN navigation constant (typically set to 3 .0; see Sec. 2.2.3) and Vc,ij > 0 denotes a closing engagement. The two positive regularization parameters make the range and acceleration-magnitude terms differentiable at zero range and zero lateral acceleration; away from these geometries, they approach 
+
+∥rj/i ∥ and |aPN ,ij |, respectively. The guard and bandit swarms are each controlled by one team coordinator. Rather than fixing the provisional assignment in the terminal objective, the guard team takes a differentiable soft minimum (i.e. LogSumExp) over every active bandit for each active guard: 
+
+gTH  
+
+> f,G
+
+=
+
+X
+
+> i∈GA
+
+−τ log 
+
+ X
+
+> j∈BA
+
+exp − cTH 
+
+> ij
+
+τ
+
+! , BA̸ = ∅,
+
+0, BA = ∅,
+
+(14) 8where τ > 0 is the soft-assignment temperature. As τ approaches zero, the LogSumExp soft minimum approaches the hard minimum, but becomes less numerically well conditioned under differentiation. The terminal bandit objective is its negative, gTH  
+
+> f,B
+
+= −gTH 
+
+> f,G
+
+.Turn-rate limits are represented in the game by normalized quadratic effort penalties: 
+
+gt,G (uGA ) = wu,G 
+
+X
+
+> i∈GA
+
+ uG,i 
+
+¯ωG
+
+2
+
+,gt,B (uBA ) = wu,B 
+
+X
+
+> j∈BA
+
+ uB,j 
+
+¯ωB
+
+2
+
+.
+
+(15) where ¯ ωG and ¯ ωB are the maximum turn rates and wu,G and wu,B are effort weights. The complete team costs are 
+
+JG = gTH 
+
+> f,G
+
+ xA(tf ) +
+
+Z tf
+
+> t0
+
+gt,G 
+
+ uGA (t) dt, JB = gTH 
+
+> f,B
+
+ xA(tf ) +
+
+Z tf
+
+> t0
+
+gt,B 
+
+ uBA (t) dt, gTH  
+
+> f,B
+
+= −gTH 
+
+> f,G
+
+.
+
+(16) The nonlinear dynamics and costs in Eqs. (1) and (16) are locally approximated about the nominal trajectory. With δxk = xA,k − ¯xA,k and δuk = uA,k − ¯uA,k , the discrete-time dynamics and each team cost are approximated as 
+
+δxk+1 ≈ Akδxk + Bkδuk,Jq ≈ Jq (¯ x0: TA , ¯u0: T −1 
+
+> A
+
+) + hT 
+
+> q
+
+δz + 12 δzTHq δz, q ∈ { G, B }, (17) where Ak and Bk are the dynamics Jacobians and δz stacks the state and control deviations over the planning horizon. The gradients and Hessians defining hq and Hq are obtained by automatic differentiation. These linear dynamics and quadratic costs form an LQ game, whose feedback Nash equilibrium is computed by Riccati recursion [2, 3] to obtain the guard policy γG. In practice, the PYDGENS library [1] is used for both the LQ approximation (ApproxLQGame) and Riccati recursion (SolveFeedbackNash). The guards execute γG during midcourse guidance until a guard transitions to PN terminal guidance. Only a short prefix of the planned policy is used: the cycle repeats after Treplan or whenever GA or BA
+
+changes, rebuilding the assignment, nominal trajectory, and local game from the new state. 
+
+2.2.3 Terminal Guidance 
+
+Proportional navigation (PN) is a terminal homing law that commands lateral acceleration in proportion to the line-of-sight (LOS) angular rate. It is widely used because it is comparatively simple while directly responding to the relative geometry that determines miss distance [6]. For guard i ∈ GA and bandit j ∈ BA, use the relative position and velocity introduced for the terminal-handoff cost in Eq. (13): rj/i = pB,j − pG,i and vj/i = vB,j − vG,i . Let Rij = ∥rj/i ∥ and 
+
+λij = atan2( ry,j/i , r x,j/i ). The planar LOS rate and closing speed are ˙λij = rx,j/i vy,j/i − ry,j/i vx,j/i 
+
+R2
+
+> ij
+
+, Vc,ij = − rT
+
+> j/i
+
+vj/i 
+
+Rij 
+
+, (18) where Vc,ij > 0 denotes decreasing range. The scalar PN normal-acceleration command for guard Gi against bandit Bj is 
+
+aPN ,ij = αGVc,ij ˙λij , (19) where αG > 0 is the guard’s dimensionless navigation constant. The sign of aPN ,ij selects the turn direction. For a fixed-speed planar Dubins guard with speed VG, this lateral-acceleration command corresponds to the heading-rate command ωPN ,ij = aPN ,ij /V G.The scalar law in Eq. (19) does not by itself specify the direction in which guard Gi realizes the com-manded acceleration. In true PN , the commanded acceleration is normal to the LOS; in pure PN , it is 9normal to the guard velocity (equivalently, normal to its body axis in this planar fixed-speed model). The terminal guard policy implements pure PN by converting the scalar command to a Dubins turn rate. The differential-game cost in Eq. (13) uses the magnitude of that same scalar command only as a measure of terminal-handoff maneuvering demand; it does not propagate a PN controller during the midcourse game solve. 
+
+# 3 Simulation Environment 
+
+The guard tactics (Sec. 2) are evaluated within a simulation environment built in Python using the PettingZoo API to model multi-agent decision processes [8]. The linear-quadratic game in the DG tactics (Alg. 2, Line 6) is solved with the PYDGENS library [1]. The system dynamics (Eq. (1)) are integrated over fixed time steps, typically of 1.0 seconds. The information and action structure of the simulated teams is defined in Sec. 1.1; the remainder of this section describes its implementation and engagement-specific assumptions. Section 3.1 describes how interceptions of bandits and assets are adjudicated. In contrast to the guard team which is modeled as an agent —i.e. whose tactics are separable from the simulation environment—the bandit team is modeled as a bot whose tactics are part of the environment. Section 3.2 describes two different scenarios for the simulation based upon differing bandit behaviors: non-evasive bandits (B1) and evasive bandits (B2). Section 4 then describes how the simulation environment is used in a set of Monte Carlo experiments, along with the performance metrics and Bayesian statistics used for evaluation of tactics performance. 
+
+## 3.1 Interception Adjudication 
+
+The determination of whether a simulated guard intercepts a bandit and whether a simulated bandit reaches a HVA is key to the evaluation of the “success” of either team. When a guard successfully intercepts a bandit, both vehicles are eliminated; the bandit then poses no threat to assets and the guard is not able to intercept any further bandits. However, due to large simulation time steps (e.g. 1.0 seconds) used to accelerate computation in large Monte Carlo campaigns, we cannot simply implement a narrow interception range as it would often be passed through, unrecorded, from one time step to the next. Instead, we use a dynamically-scaled effective interception range (Eq. (20)) that increases in size when guard and bandit headings are aligned with a small relative velocity. This tends to bias the interception adjudication toward approach-from-behind configurations, which is a common technique for real-world interceptors. For each active guard–bandit pair ( i, j ) ∈ GA × BA, reuse the relative position rj/i and velocity vj/i 
+
+defined for the terminal-handoff kernel in Eq. (13). Let Rij = ∥rj/i ∥ and ˆℓj/i = rj/i /R ij denote the corresponding range and guard-to-bandit line-of-sight unit vector. The environment declares an interception when intercept ij ⇐⇒ Rij ≤ Reff ,ij ,Reff ,ij = Rgb + ( Radj − Rgb ) clip [0 ,1] 
+
+− ˆℓT
+
+> j/i
+
+vj/i 
+
+∥vj/i ∥
+
+!| {z }
+
+> closing alignment
+
+clip [0 ,1] 
+
+
+
+1 − ∥vj/i ∥
+
+Vrel 
+
+| {z }
+
+> relative-speed factor
+
+. (20) Here Rgb is the physical guard–bandit interception radius, Radj is the maximum adjudication range, and 
+
+Vrel is the relative-speed scale. Thus, the envelope expands beyond the physical radius only for a closing, nearly collinear, low-relative-speed encounter; it reduces to Rgb for non-closing geometry or relative speed at or above Vrel . The implementation assigns zero closing alignment when either range or relative speed is zero. 
+
+## 3.2 Bandit/Intruder Tactics 
+
+The swarm of bandit drones also employs 3-phase tactics, as depicted in Fig. 2, with target assignment, midcourse guidance, and terminal guidance phases. The bandit tactics differ from the baseline guard tactics (Sec. 2.1) in that they employ static target assignment (i.e. HVA targets are assigned to each bandit at launch and do not change throughout the engagement), and that they cannot observe—and, therefore, are not reactive to—the state of the guard drones (see Sec. 1.1). 10 Two different behavior models for the bandits are studied. First is that of non-evasive midcourse guidance—labeled simply as Behavior 1 or B1—whereby bandits navigate to their assigned HVA targets using heading-error midcourse guidance described in Sec. 2.1.1. The second behavior—labeled Behavior 2, B2—uses sporadic evasive maneuvers during midcourse guidance. In the B2 version of the simulation environment, each bandit receives an immutable, open-loop “jink” schedule at initialization. The schedule is constructed based upon the bandit’s initial time-to-go to its fixed target, assuming a straight-line trajectory; jinks are placed in non-overlapping intervals spanning the middle portion of that nominal engagement. For each scheduled jink, the start time and turn direction are sampled, while the turn-rate magnitude and jink duration are pre-specified parameters of the environment. During the jink interval, the nominal heading-error command is replaced with the sampled turn-rate command, temporarily deviating the bandit from its nominal target track. At the end of the interval, the bandit resumes the heading-error midcourse guidance control described in Sec. 2.1.1. It is worth noting that, in spite of the use of game-theoretic techniques described in Sec. 2.2 that compute an equilibrium strategy for the bandit swarm, this strategy is not actually in use by the bandits. 
+
+# 4 Experiment Design 
+
+In order to evaluate the effectiveness of the differential game (DG) tactics (Sec. 2.2) compared to baseline tactics (Sec. 2.1), we use the simulation environment (Sec. 3) to conduct a Monte Carlo campaign of ran-domized trials, measure performance metrics, and perform Bayesian analysis of the performance metrics to estimate the probability that differential game tactics outperform the baselines. 
+
+## 4.1 Monte Carlo Trials 
+
+Two separate Monte Carlo campaigns are conducted: one with the non-evasive bandit behaviors (B1) and one with evasive bandits (B2). Table 1 summarizes the parameters that are randomized between Monte Carlo trials. Unless otherwise indicated, numerical intervals in Table 1 are uniform sampling ranges; initial positions are sampled independently and uniformly within their stated rectangles. The B2 sampler shares every B1 parameter and adds the open-loop jink (i.e. evasive maneuver) parameters marked with an asterisk. The same random number seed for randomizing trial parameters is used across the coverage-aware (CA) and differential game (DG) experiment campaigns. Therefore, the CA and DG tactics are evaluated with trials of identical parameters. This enables a more direct comparison of Bayesian posterior distributions of performance metrics; discussed in the next section. 
+
+## 4.2 Performance Metrics & Bayesian Analysis 
+
+The effectiveness of guard tactics is evaluated based upon performance metrics described in Table 2. These attempt to measure how effectively the guards have defended the high-value assets (HVAs or “ladies” in Rusnak’s terminology [7]) and how much control effort was required on the part of the guards. The boolean defense-success outcome is of primary concern for our performance analysis. For a given Monte Carlo trial episode, defense-success Ysd is True if and only if all bandits are intercepted and no HVAs are reached. For statistical analysis, a Beta-Binomial model [4, Ch. 2] is applied whereby defense-success is treated as a Bernoulli trial and we seek to estimate the probability of successful defense for a particular set of guard tactics. We use a Beta distribution to model the success probability parameter, θsd , and a noninformative (uniform) prior on the distribution. The HVAs-reached (Slr ∈ [0 , 1]) and bandits-intercepted (Sbi ∈ [0 , 1]) trial outcomes are real-valued scalars that measure, respectively, the percent of assets reached by bandits and percent of bandits intercepted by guards within a simulated episode. For statistical analysis, a Dirichlet-Multinomial model [4, Ch. 3] is applied to these outcomes whereby the real-valued outcomes, Slr and Sbi , are binned into K-bins evenly distributed in range [0 , 1]. Then Monte Carlo trial data is used to estimate the posterior distribution of the probability mass across the bins. A weak, symmetric Dirichlet prior is used. Note that, while defense-success and bandits-intercepted outcomes are related, there are salient differences between the two. Beyond the fact that one is a boolean while the other is a real-valued scalar, you can get a very different perception of guard tactics effectiveness from these two values. For example, if there were 11 Table 1: Monte Carlo trial parameters for non-evasive (B1) and evasive (B2) bandit scenarios. Parameters marked with ∗ apply only to the B2 evasive-bandit scenario. 
+
+Category Parameter Value or sampling range Scenario 
+
+Campaign Integration time step, maximum steps 1 s, 500 (500 s maximum du-ration) B1, B2 Team size Assets NL UnifInt {4, . . . , 8} B1, B2 Bandits NB UnifInt {8, . . . , 12 } B1, B2 Guards NG UnifInt {max(10 , N B ), . . . , 16 } B1, B2 Vehicle Guard speed [70 , 80] m /s B1, B2 Bandit speed [45 , 55] m /s B1, B2 Guard maximum turn rate [0 .8, 1.2] rad /s B1, B2 Bandit maximum turn rate [0 .45 , 0.55] rad /s B1, B2 Adjudication Guard–bandit physical radius [2 .5, 3.5] m B1, B2 Guard–bandit maximum adjudication range [95 , 105] m B1, B2 Guard–bandit relative-speed scale [95 , 105] m /s B1, B2 Bandit–asset physical radius [9 .9, 10 .1] m B1, B2 Bandit–asset adjudication range [95 , 105] m B1, B2 Initial state Guard and asset position x, y ∈ [−5,000 , 5,000] m B1, B2 Bandit position x ∈ [−20 ,000 , 20 ,000] m; 
+
+y ∈ [10 ,000 , 15 ,000] m B1, B2 Initial-heading noise half-width [0 .2, 0.3] rad B1, B2 Bandit guidance PN navigation constant [2 .5, 3.5] B1, B2 Midcourse heading-error gain [0 .4, 0.6] s −1 B1, B2 Terminal-handoff range [80 , 120] m B1, B2 Terminal LOS-error threshold [π/ 3, 2π/ 3] rad B1, B2 Open-loop jink Number of jinks ∗ UnifInt {1, . . . , 3} B2 ∗
+
+Jink duration ∗ [3 , 8] s B2 ∗
+
+Jink turn-rate fraction ∗ [0 .5, 0.9] of bandit maxi-mum turn rate B2 ∗
+
+a set of guard tactics that always intercepted 99 out of 100 bandits within an engagement, then you would have bandit-intercepted rate of 99% but a defense-success rate of 0% because in no trial do you ever catch all of the bandits. The mean-control-saturation (Ssat ∈ [0 , 1]) trial outcome measures the proportion of time steps in which any guard agent’s control is saturated (i.e. the control command exceeds the actuator limits of the guard vehicle and must be clipped to the bounds), averaged across all guard agents using the same tactics. ADirichlet-Multinomial with a weak, symmetric prior is similarly applied to estimate the posterior distribution of mean-control-saturation. As previously mentioned, the differential game (DG) and coverage-aware (CA) experiment campaigns use identical ordered trial realizations, i.e. the same random number seed. We can use this information to more directly answer questions such as: what is the probability that the differential game tactics have a higher defense-success probability than coverage-aware tactics? To do so, we define the four possible defense-success outcomes of a paired trial: both DG and CA are successful (1,1), only DG succeeds (1,0), only CA succeeds (0,1), and both fail (0,0). By counting the paired outcomes across DG and CA campaigns, we form the Dirichlet posterior distribution as (π11 , π 10 , π 01 , π 00 ) | D ∼ Dirichlet  n11 + 12 , n 10 + 12 , n 01 + 12 , n 00 + 12
+
+ (21) where nab is the paired-trial count and πab is the joint probability of DG outcome a and CA outcome b. By recognizing that θDG sd = π11 + π10 and θCA sd = π11 + π01 , we can sample the distribution in Eq. 21 to estimate Pr( θDG sd > θ CA sd | DDG , D CA ). 12 Table 2: Per-trial performance metrics and Bayesian analyses. The reported posterior intervals are central 95% credible intervals. 
+
+Metric Per-trial observation Bayesian model and prior Posterior quantities re-ported 
+
+defense-success Ysd ∈ { 0, 1}, equal to one only if no asset is reached and ev-ery bandit is intercepted; zero otherwise Bernoulli likelihood with 
+
+θsd ∼ Beta(1 , 1) 
+
+E[θsd | D] and its 95% cred-ible interval estimated from 100 ,000 posterior samples; higher is better HVAs-reached Slr ∈ [0 , 1], the fraction of as-sets reached in one trial One hundred equal-width bins on [0 , 1]; multinomial likeli-hood with symmetric Dirichlet(1 /K, . . . , 1/K )prior for K = 100 bins (total concentration one) 
+
+E[μlr | D] and its 95% cred-ible interval estimated from 100 ,000 posterior samples; lower is better Bandits inter-cepted 
+
+Sbi ∈ [0 , 1], the fraction of bandits intercepted in one trial One hundred equal-width bins on [0 , 1]; multinomial likeli-hood with symmetric Dirichlet(1 /K, . . . , 1/K )prior for K = 100 bins (total concentration one) 
+
+E[μbi | D] and its 95% cred-ible interval estimated from 100 ,000 posterior samples; higher is better mean-control-saturation 
+
+Ssat ∈ [0 , 1], the mean across guards of the fraction of recorded active control steps on which the requested action is clipped One hundred equal-width bins on [0 , 1]; multinomial likeli-hood with symmetric Dirichlet(1 /K, . . . , 1/K )prior for K = 100 bins (total concentration one) 
+
+E[μsat | D] and its 95% cred-ible interval estimated from 100 ,000 posterior samples; lower is better 
+
+# 5 Results & Discussion 
+
+Tables 3 and 4 report the Bayesian posteriors of performance metrics (Table 2) for the non-evasive (B1) and evasive (B2) intruder environments, respectively. Generally speaking, we seek high expected values for defense-success and bandits-intercepted ( θsd and μbi ) and low expected values for HVAs-reached and control saturation ( μlr and μsat ). The key result from Tables 3 and 4 is that the differential game tactics produce the highest probability of successful defense of high-value assets ( E[θsd | D]); higher than both the naive nearest-bandit (NB) and more sophisticated coverage-aware (CA) baseline tactics that ignore the game-theoretic modeling of the problem, instead treating it as a unilateral optimization (Eq. (4)). The importance of the game modeling is further emphasized when comparing results between Tables 3, where the bandits were non-evasive, and 4, where bandits performed evasive maneuvers: we see a modest drop in successful defense when bandits employ evasive maneuvers for the non-game-theoretic baseline tactics (NB and CA); whereas the differential game (DG) tactics are able to maintain their performance. Tables 3 and 4 also help illustrate the importance of intercepting all bandits within an engagement, versus simply intercepting a large majority per engagement. In the case of evasive bandits, we see that the nearest-bandit (NB) guard tactics are capable of intercepting an average of 80.2% of bandits; however, this only results in a 14.6% percent chance that all bandits are intercepted during a particular engagement. In the real world, it would be unacceptable to have such a low chance of defending all high-value assets. We see how the coverage-aware (CA) guard tactics significantly improve upon this key metric, raising the probability of successfully defending all HVAs to 94.6%. However, the differential game (DG) tactics further improve on this key metric, raising the defense success probability to 96.8% in the presence of evasive bandits. Another way to frame this is that the non-game-theoretic CA tactics have a 5.4% gap to perfect defense , and by employing game-theoretic tactics, 40.7% of this gap may be closed. 13 Table 3: Bayesian performance summary for non-evasive bandit tactics . Each entry gives the posterior mean and central 95% credible interval (in brackets). The nearest-bandit baseline uses 1,000 Monte Carlo trials; the coverage-aware baseline and differential-game tactics each use 500. Posterior summaries use 100,000 samples. Guard tactic Defense success 
+
+E[θsd | D]HVAs reached 
+
+E[μlr | D]Bandits intercepted 
+
+E[μbi | D]Control saturation 
+
+E[μsat | D]Nearest-bandit (NB) 0.157 [0 .135 , 0.180] 0.182 [0 .172 , 0.194] 0.828 [0 .821 , 0.835] 0.007 [0 .007 , 0.009] Coverage-aware (CA) 0.958 [0 .939 , 0.974] 0.013 [0 .010 , 0.018] 0.990 [0 .987 , 0.992] 0.008 [0 .007 , 0.011] Differential-game (DG) 
+
+0.966 
+
+[0.949 , 0.980 ]0.011 [0 .008 , 0.016] 0.991 [0 .988 , 0.993] 0.006 [0 .005 , 0.009] 
+
+Paired DG–coverage-aware comparison (500 trials): Pr( θDG sd > θ CA sd | DDG , D CA ) = 0 .858 Table 4: Bayesian performance summary for evasive bandit tactics . Each entry gives the posterior mean and central 95% credible interval (in brackets). The nearest-bandit baseline uses 1,000 Monte Carlo trials; the coverage-aware baseline and differential-game tactics each use 500. Posterior summaries use 100,000 samples. Guard tactic Defense success 
+
+E[θsd | D]HVAs reached 
+
+E[μlr | D]Bandits intercepted 
+
+E[μbi | D]Control saturation 
+
+E[μsat | D]Nearest-bandit (NB) 0.146 [0 .125 , 0.168] 0.192 [0 .181 , 0.203] 0.802 [0 .794 , 0.810] 0.009 [0 .008 , 0.010] Coverage-aware (CA) 0.946 [0 .925 , 0.964] 0.015 [0 .011 , 0.019] 0.990 [0 .986 , 0.992] 0.009 [0 .008 , 0.013] Differential-game (DG) 
+
+0.968 
+
+[0.951 , 0.982 ]0.011 [0 .009 , 0.016] 0.991 [0 .988 , 0.993] 0.006 [0 .005 , 0.009] 
+
+Paired DG–coverage-aware comparison (500 trials): Pr( θDG sd > θ CA sd | DDG , D CA ) = 0 .999 14 Given the relatively high success rate of both the DG and CA guard tactics, it may be asked if differential game tactics are probabilistically “better” than the non-game-theoretic baselines, or if these differences may be statistically insignificant. To answer this question, Tables 3 and 4 also provide results for the paired-trial posterior analysis described in Sec. 4.2 and show that the probability that DG tactics have a higher probability of successful defense than CA tactics is 85.8% for non-evasive bandits, rising to 99.9% for evasive bandits. Figures 3 and 4 illustrate the vehicle trajectories for a selection of evasive-bandit (B2) episodes with the nearest-bandit (NB), coverage-aware (CA), and differential-game (DG) guard tactics. Figure 3 represents a median trial in each of the three campaigns as measured by the percentage of HVAs-reached by bandits; Figure 4 represents the worst trial from each campaign. These figures are presented, mostly, to give intuition of what an episode rollout would look like and how guards distribute themselves across bandits. It is difficult to discern meaningful differences in the behavior of the CA and DG tactics within these individual trials, which is why the statistical results in Tables 3 and 4 are the more salient for our analysis. 15 (a) Nearest-bandit baseline (b) Coverage-aware baseline 
+
+(c) Differential-game tactics Figure 3: Median evasive-bandit (B2) episode selected independently for each tactic by HVA-reached per-centage: (a) nearest-bandit baseline (0.167), (b) coverage-aware baseline (0.000), and (c) differential-game tactics (0.000). 16 (a) Nearest-bandit baseline (b) Coverage-aware baseline 
+
+(c) Differential-game tactics Figure 4: Worst observed evasive-bandit (B2) episode selected independently for each tactic by HVA-reached percentage: (a) nearest-bandit baseline (0.800), (b) coverage-aware baseline (0.250), and (c) differential-game tactics (0.250). 17 6 Limitations & Future Work 
+
+There are a number of limitations to this current work that need addressing in future work in order to mature game-theoretic algorithms for use in real-world swarm defense. It has been assumed that all guard drones— or at least a centralized guard coordinator—may observe the state of all drones and assets at all times. It has been assumed that a centralized guard coordinator may communicate with all guard drones at all times, with no bandwidth limitations. A highly simplified aircraft model has been employed; neglecting even variations in altitude, let alone high-fidelity aerodynamics and flight control. The interception adjudication model is also highly simplified. Sensor models, such as cameras and accelerometers, would be needed to improve simulation of interception dynamics. While we have modeled both non-evasive and evasive (i.e. pre-scripted, open-loop) bandits, we have not yet simulated truly reactive bandits which are able to perceive the state of guard drones and maneuver accordingly to better evade interception. We have also limited our experiments to those in which guard drones are faster than bandits; situations with faster bandits have been left out of the scope of this paper for several reasons. First, bandits do not perceive or react to guards; therefore, guards are incapable of any kind of “shepherding” of bandits, regardless of relative speeds. This means that all interceptions of faster-bandits must be done head-on or cross-range so as to achieve a positive closure speed; however, these geometries will lead to very high relative velocities (e.g. 100s of meters per second). For extremely high relative velocities, the current modeling of interception adjudication is unrealistic and any simulation results produced would just be artifacts of these unrealistic simulation assumptions; not reflections of real-world performance. Extensive, high-fidelity platform and sensor models would be needed to make them realistic. In other words, the only thing an overmatched guard team could do is throw many interceptors head-first at a fast bandit until one of them happens to achieve an “interception”, but that simulated interception would not be based on any realistic physics; and thus there is nothing to be learned from this exercise. 
+
+# Acknowledgements 
+
+The authors thank David Fridovich-Keil and Kushagra Gupta at The University of Texas at Austin for helpful discussions and feedback on this work. 18 A Appendices 
+
+## A.1 Discounted-Redundancy Assignment Reformulation 
+
+The discounted-redundancy objective in Sec. 2.2.1 can be represented as a rectangular linear assignment problem. For every active bandit j, create NGA virtual assignment slots ( j, k ), with k ∈ { 1, . . . , N GA }. The 
+
+kth slot represents the kth guard assigned to bandit j and has marginal value vj βk−1. Let yi,j,k ∈ { 0, 1}
+
+indicate whether guard i is assigned to slot ( j, k ), and define the corresponding linear cost as 
+
+dTA  
+
+> i,j,k
+
+= cTA  
+
+> ij
+
+− vj βk−1. (22) The resulting assignment problem is min 
+
+> yi,j,k
+
+X
+
+> i∈GA
+
+X
+
+> j∈BA
+> NGA
+
+X
+
+> k=1
+
+dTA 
+
+> i,j,k
+
+yi,j,k , (23) subject to X
+
+> j∈BA
+> NGA
+
+X
+
+> k=1
+
+yi,j,k = 1 , ∀i ∈ GA, (24) 
+
+X
+
+> i∈GA
+
+yi,j,k ≤ 1, ∀j ∈ BA, k ∈ { 1, . . . , N GA }, (25) 
+
+yi,j,k ∈ { 0, 1}. (26) There are NGA guard rows and NBA NGA virtual bandit-slot columns. Although stated with binary vari-ables, the linear-program relaxation is integral because the bipartite assignment constraint matrix is totally unimodular. Since slot values weakly decrease with k, an optimal solution can always be interpreted as filling earlier slots for a bandit before later slots. The cost matrix can be solved directly using SciPy’s 
+
+scipy.optimize.linear sum assignment routine. 
+
+# References 
+
+[1] Ross E. Allen. PYDGENS: Python/JAX differential game equilibria numerical solvers. https://github. com/mit-ll/pydgens , 2026. Accessed: 2026-09-01. [2] Tamer Ba¸ sar and Geert Jan Olsder. Dynamic Noncooperative Game Theory , volume 23 of Classics in Applied Mathematics . Society for Industrial and Applied Mathematics, Philadelphia, PA, 2 edition, 1999. [3] David Fridovich-Keil, Ellis Ratner, Lasse Peters, Anca D. Dragan, and Claire J. Tomlin. Efficient iterative linear-quadratic approximations for nonlinear multi-player general-sum differential games. In 2020 IEEE International Conference on Robotics and Automation (ICRA) , pages 1475–1481. IEEE, 2020. [4] Andrew Gelman, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 
+
+Bayesian Data Analysis . Chapman and Hall/CRC, Boca Raton, FL, 3 edition, 2013. [5] Simon Le Cleac’h, Mac Schwager, and Zachary Manchester. ALGAMES: A fast augmented lagrangian solver for constrained dynamic games. Autonomous Robots , 46(1):201–215, 2022. [6] Neil F. Palumbo, Ross A. Blauwkamp, and Justin M. Lloyd. Basic principles of homing guidance. Johns Hopkins APL Technical Digest , 29(1):25–41, 2010. [7] Ilan Rusnak. The lady, the bandits and the body guards—a two team dynamic game. IFAC Proceedings Volumes , 38(1):441–446, 2005. [8] J. K. Terry, Benjamin Black, Nathaniel Grammel, Mario Jayakumar, Ananth Hari, Ryan Sullivan, Luis S. Santos, et al. PettingZoo: Gym for multi-agent reinforcement learning. Advances in Neural Information Processing Systems , 34:15032–15043, 2021. 19

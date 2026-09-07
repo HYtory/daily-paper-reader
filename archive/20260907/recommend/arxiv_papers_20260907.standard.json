@@ -1,0 +1,216 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-07T23:11:09.852814+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2609.04394v1",
+      "source": "arxiv",
+      "title": "Game-Theoretic Drone Swarm Defense: A Case Study in Applied Differential Game Theory",
+      "abstract": "This technical report is a study of the use of differential game (DG) theory to solve the target-assignment and midcourse guidance problems of drone swarms tasked with intercepting opposing swarms in defense of high-value assets. The game-theoretic tactics---which treat the intruder swarm as a rational agent and seek a Nash equilibrium between defenders and intruders---are compared against baseline tactics that model the defense problem as a unilateral optimization of the defenders' maneuvers. Monte Carlo simulation and Bayesian analysis show that the game-theoretic approach has a higher probability of successfully intercepting all intruders than the baseline techniques. This improvement in successful defense probability is most pronounced when the intruder swarm is capable of evasive maneuvers: relative to baseline optimization tactics, differential-game tactics increase estimated defense success from 94.6% to 96.8%, closing approximately 41% of the remaining gap to perfect defense. To add statistical credibility to this result, a paired-trial Bayesian analysis assigns a 99.9% posterior probability that differential-game tactics have a higher probability of successful asset defense than baseline tactics in this scenario.",
+      "authors": [
+        "Ross E. Allen"
+      ],
+      "primary_category": "cs.GT",
+      "categories": [
+        "cs.GT",
+        "cs.MA",
+        "cs.RO"
+      ],
+      "published": "2026-09-03T19:04:35+00:00",
+      "link": "https://arxiv.org/pdf/2609.04394v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "game-theoretic swarm defense intercepting intruder swarms, pursuit-evasion",
+      "llm_evidence_cn": "博弈论无人机群防御，拦截入侵机群，属于追逃博弈",
+      "llm_evidence": "博弈论无人机群防御，拦截入侵机群，属于追逃博弈",
+      "canonical_evidence": "博弈论无人机群防御，拦截入侵机群，属于追逃博弈",
+      "llm_tldr_en": "Applies differential game theory and Nash equilibrium to drone-swarm interception of intruders, showing higher interception probability than unilateral optimization in Monte Carlo and Bayesian analysis.",
+      "llm_tldr_cn": "针对无人机群保护高价值资产并拦截入侵机群的防御问题，本文应用微分博弈理论同时求解目标分配与中段制导，把入侵机群视为理性参与者并寻找纳什均衡。相比将防御视为单边优化的基准，博弈策略在蒙特卡洛仿真与贝叶斯分析中表现出更高的全拦截概率，且双方规模接近时优势更明显。该案例展示了博弈论在机群追逃场景中的有效性，为实际无人机防御系统的战术决策提供了借鉴。",
+      "llm_tldr": "针对无人机群保护高价值资产并拦截入侵机群的防御问题，本文应用微分博弈理论同时求解目标分配与中段制导，把入侵机群视为理性参与者并寻找纳什均衡。相比将防御视为单边优化的基准，博弈策略在蒙特卡洛仿真与贝叶斯分析中表现出更高的全拦截概率，且双方规模接近时优势更明显。该案例展示了博弈论在机群追逃场景中的有效性，为实际无人机防御系统的战术决策提供了借鉴。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.31143v1",
+      "source": "arxiv",
+      "title": "On the problem of assigning multiple interceptors over multiple aerial threats",
+      "abstract": "This article investigates the problem of assigning multiple identical interceptors over multiple identical aerial threats, where all interceptors are launched in a single salvo. For this problem, two strategies have been studied in the literature: (A) to spread all interceptors as evenly as possible over all threats, and (B) to randomly assign all interceptors over the threats. The main contributions of this article are as follows. First, the literature contains empirical evidence that Strategy A is more efficient than Strategy B in terms of the mean number of missed threats, when the number of interceptors is no less than the number of threats. This article gives a rigorous proof of this fact. Secondly, it demonstrates numerically that Strategy~A can be significantly more efficient than Strategy B. Thirdly, it shows that Strategy~A is not only superior to Strategy B, but also the bona fide optimal strategy. Finally, this article establishes that these conclusions also hold when the number of interceptors is less than the number of threats.",
+      "authors": [
+        "Liang Hong"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC"
+      ],
+      "published": "2026-08-31T17:48:44+00:00",
+      "link": "https://arxiv.org/pdf/2608.31143v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-interceptor to multi-threat assignment for aerial interception",
+      "llm_evidence_cn": "多拦截器对多空中威胁的分配问题",
+      "llm_evidence": "多拦截器对多空中威胁的分配问题",
+      "canonical_evidence": "多拦截器对多空中威胁的分配问题",
+      "llm_tldr_en": "Rigorous proof plus numerical evidence that evenly spreading multiple interceptors over aerial threats yields fewer mean missed threats than random assignment, guiding multi-interceptor allocation.",
+      "llm_tldr_cn": "在单次齐射中多枚拦截器对阵多个相同空中威胁的分配问题，历来只有经验证据显示均匀分配比随机分配高效。本文严格证明了在拦截器数量不少于威胁数时，均匀分配在所有分配策略中使平均漏网威胁数最小（优于随机分配），并用数值实验展示了策略差异随威胁规模的变化。该结果为多拦截器对付多目标提供了理论基石，也启发多无人机围捕如何分配各自目标。",
+      "llm_tldr": "在单次齐射中多枚拦截器对阵多个相同空中威胁的分配问题，历来只有经验证据显示均匀分配比随机分配高效。本文严格证明了在拦截器数量不少于威胁数时，均匀分配在所有分配策略中使平均漏网威胁数最小（优于随机分配），并用数值实验展示了策略差异随威胁规模的变化。该结果为多拦截器对付多目标提供了理论基石，也启发多无人机围捕如何分配各自目标。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multiple UAV cooperative encirclement",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.29860v1",
+      "source": "arxiv",
+      "title": "Uncertainty-Driven Replay Memory for Reinforcement Learning",
+      "abstract": "Uncertainty estimation provides promising capabilities for reinforcement learning (RL) agents. Notably, estimating uncertainty can reduce the training time and enable agents to obtain greater rewards over time by exploiting information related to whether an action would facilitate exploration of portions of an environment that are well-known versus those that are relatively unknown. In this work, we propose a novel formulation of the experience replay buffer commonly used in RL that we call uncertainty-driven replay memory (UDRM), which entails an update scheme for internally stored memories based on uncertainty estimates obtained by an RL model during training. In contrast to existing forms of RL, which typically use temporal difference error or the distribution of transitions to update the replay memory buffer and train RL controllers, our scheme biases the memory buffer to store more uncertain transitions that will improve an RL agent's generalization throughout training. Experimental results demonstrate that our proposed uncertainty-aware replay buffer enables an RL agent to obtain higher rewards during training compared to other existing uncertainty-aware RL frameworks.",
+      "authors": [
+        "Sheeraja Rajakrishnan",
+        "Alexander G. Ororbia",
+        "Travis Desell",
+        "Daniel E. Krutz"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-30T15:41:57+00:00",
+      "link": "https://arxiv.org/pdf/2608.29860v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "generic RL replay technique applicable to UAV interception RL",
+      "llm_evidence_cn": "通用RL经验回放技术，适用于无人机拦截RL",
+      "llm_evidence": "通用RL经验回放技术，适用于无人机拦截RL",
+      "canonical_evidence": "通用RL经验回放技术，适用于无人机拦截RL",
+      "llm_tldr_en": "Presents UDRM, an experience replay scheme for RL that exploits uncertainty estimates to store and sample memories, cutting training time and increasing reward in exploration scenarios.",
+      "llm_tldr_cn": "现有强化学习经验回放多关注TD误差或优先级，较少从不确定性角度决定哪些经验值得保留和重放。本文提出不确定性驱动的回放记忆UDRM，在训练中用模型对动作价值的估计更新回放缓冲的记忆保存与采样，借此引导智能体优先探索不确定区域并更高效利用已知经验。该方法可作为标准经验回放的插件，减少训练时间并提高累积奖励，是一种通用的RL加速方法，可为无人机拦截等需要高效探索的RL任务提供直接支撑。",
+      "llm_tldr": "现有强化学习经验回放多关注TD误差或优先级，较少从不确定性角度决定哪些经验值得保留和重放。本文提出不确定性驱动的回放记忆UDRM，在训练中用模型对动作价值的估计更新回放缓冲的记忆保存与采样，借此引导智能体优先探索不确定区域并更高效利用已知经验。该方法可作为标准经验回放的插件，减少训练时间并提高累积奖励，是一种通用的RL加速方法，可为无人机拦截等需要高效探索的RL任务提供直接支撑。",
+      "llm_tags": [
+        "query:ui:composite"
+      ],
+      "matched_query_tag": "query:ui:composite",
+      "matched_query_text": "Papers central to 请帮我查找强化学习和单无人机拦截和多无人机围捕的论文, especially work that connects or combines: reinforcement learning for UAV interception and encirclement; single unmanned aerial vehicle interception; multiple UAV cooperative encirclement; UAV pursuit-evasion game; multi-agent reinforcement learning for UAV swarm; autonomous drone interception using deep reinforcement learning; reinforcement learning for single UAV interception; multi UAV encirclement with reinforcement learning; UAV pursuit evasion strategies using deep reinforcement learning.",
+      "matched_requirement_id": "req-composite-ui",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.03667v1",
+      "source": "arxiv",
+      "title": "Out-of-Distribution Generalisation with Sequence Models in Offline Multi-Agent Reinforcement Learning",
+      "abstract": "Generalising to unseen tasks remains a fundamental challenge in offline multi-agent reinforcement learning (MARL). In this work, we present a principled analysis of zero-shot task generalisation in the offline setting and conduct an extensive empirical investigation into the scaling behaviour governing task diversity, dataset size, and network capacity. To facilitate this study, we extend offline sequence modelling architectures to handle multi-task observation and action spaces alongside variable agent counts across tasks. Our primary finding is that scaling task diversity---rather than sheer dataset size is the dominant factor in achieving robust zero-shot transfer. Through large-scale experiments across four challenging environments (Connector, RWARE, SMAX, and LBF), we demonstrate that our multi-task approach achieves a mean improvement of 3.2x on held-out test tasks compared to single-task models and consistently outperforms strong behaviour cloning baselines. These results suggest that the development of generalisable MARL agents should prioritise the diversity of the training distribution with varying numbers of agents, providing a roadmap for scaling offline MARL effectively.",
+      "authors": [
+        "Oussama Hidaoui",
+        "Omer Ebead",
+        "Ulrich Armel Mbou Sob",
+        "Siddarth Singh",
+        "Juan Claude Formanek",
+        "Felix Chalumeau",
+        "Omayma Mahjoub",
+        "Sasha Abramowitz",
+        "Ruan John de Kock",
+        "Wiem Khlifi",
+        "Louay Ben Nessir",
+        "Simon Verster Du Toit",
+        "Daniel Rajaonarivonivelomanantsoa",
+        "Asim Awad Osman",
+        "Arnol Manuel Fokam",
+        "Refiloe Shabe",
+        "Arnu Pretorius"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-09-03T11:04:23+00:00",
+      "link": "https://arxiv.org/pdf/2609.03667v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "offline MARL architecture with variable agent counts and task generalization; relevant to multi-UAV swarm and cooperative encirclement",
+      "llm_evidence_cn": "面向可变智能体数量与任务泛化的离线MARL，关联多无人机蜂群协同围捕",
+      "llm_evidence": "面向可变智能体数量与任务泛化的离线MARL，关联多无人机蜂群协同围捕",
+      "canonical_evidence": "面向可变智能体数量与任务泛化的离线MARL，关联多无人机蜂群协同围捕",
+      "llm_tldr_en": "This offline multi-agent RL paper shows task diversity dominates dataset size for zero-shot OOD generalization and supports variable agent counts via sequence models, which is valuable for scalable multi-UAV encirclement policies across changing formations.",
+      "llm_tldr_cn": "零样本泛化是离线多智能体强化学习（MARL）的挑战。该工作将离线序列建模扩展到多任务观测/动作空间，并支持任务间智能体数量变化，借此研究任务多样性、数据集规模和网络容量的缩放规律。大规模实验发现任务多样性比单纯数据量更能决定零样本迁移表现。该结论与模型设计对多无人机围捕中编队数量变化、任务迁移的策略训练具有直接参考价值。",
+      "llm_tldr": "零样本泛化是离线多智能体强化学习（MARL）的挑战。该工作将离线序列建模扩展到多任务观测/动作空间，并支持任务间智能体数量变化，借此研究任务多样性、数据集规模和网络容量的缩放规律。大规模实验发现任务多样性比单纯数据量更能决定零样本迁移表现。该结论与模型设计对多无人机围捕中编队数量变化、任务迁移的策略训练具有直接参考价值。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2609.05298v1",
+      "source": "arxiv",
+      "title": "Online Change-point Detection for Cooperative Multi-Agent Reinforcement Learning",
+      "abstract": "Cooperative multi-agent reinforcement learning (MARL) systems rely on past experience for learning coordinated behaviour, but this experience may become unreliable if the environment or task objective changes during training. In such cases, agents first need a way to recognize that the situation has changed before deciding how to adapt. This paper studies online change-point detection for cooperative MARL using reward-derived signals. We propose \\emph{Patterns of Past Rewards} (PPR), a lightweight algorithm-agnostic detector that smooths agents' return streams, highlights recent changes, and applies a statistical drift detector to flag significant shifts. We evaluate PPR in a custom Speaker-Listener environment based on the Multi-Agent Particle Environment under two controlled non-stationarity scenarios. Our results show a trade-off between detection speed and alarm stability. A smoothed-return baseline detects earlier but produces many repeated alarms. In contrast, applying the detector directly to raw returns often misses the shift. PPR offers a more balanced approach by limiting redundant detections while still identifying the controlled shifts. These findings highlight PPR as a lightweight, reward-based monitoring tool that enables cooperative MARL systems to reliably identify major changes during training.",
+      "authors": [
+        "Fatemeh Saberi Khomami",
+        "Julita Vassileva"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.LG"
+      ],
+      "published": "2026-09-04T15:49:42+00:00",
+      "link": "https://arxiv.org/pdf/2609.05298v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Cooperative MARL reward drift detection transferable to multi-UAV swarm reinforcement learning",
+      "llm_evidence_cn": "协作多智能体强化学习的奖励流变点检测方法可迁移至无人机集群强化学习",
+      "llm_evidence": "协作多智能体强化学习的奖励流变点检测方法可迁移至无人机集群强化学习",
+      "canonical_evidence": "协作多智能体强化学习的奖励流变点检测方法可迁移至无人机集群强化学习",
+      "llm_tldr_en": "Cooperative MARL experience can become stale when objectives change. PPR is a lightweight online detector that smooths reward streams and flags drift. Evaluated in a Speaker-Listener environment, it helps UAV swarm RL adapt.",
+      "llm_tldr_cn": "协作式多智能体强化学习依赖过往经验，当环境或任务目标变化时旧经验会失效。论文提出轻量且与算法无关的在线变点检测器PPR，平滑智能体回报流并施加统计漂移检测以标记显著环境变化。在多智能体粒子环境Speaker-Listener任务上，PPR能及时识别奖励结构变化。该方法可集成到无人机集群的MARL训练流程，增强动态任务下的适应能力。",
+      "llm_tldr": "协作式多智能体强化学习依赖过往经验，当环境或任务目标变化时旧经验会失效。论文提出轻量且与算法无关的在线变点检测器PPR，平滑智能体回报流并施加统计漂移检测以标记显著环境变化。在多智能体粒子环境Speaker-Listener任务上，PPR能及时识别奖励结构变化。该方法可集成到无人机集群的MARL训练流程，增强动态任务下的适应能力。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
