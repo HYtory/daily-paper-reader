@@ -1,0 +1,39 @@
+{
+  "label": "2026-09-09",
+  "date": "2026-09-09",
+  "generated_at": "2026-09-09T21:36:53",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202609/09/2609.08802v1-graph-based-safe-reinforcement-learning-for-multi-agent-systems-with-time-varying-topology",
+      "section": "quick",
+      "title_en": "Graph-Based Safe Reinforcement Learning for Multi-Agent Systems with Time-Varying Topology",
+      "authors": "Xiao Sizhe, Dong Lijing, Bai Rui, Tan Xin",
+      "date": "2026-09-08",
+      "pdf": "https://arxiv.org/pdf/2609.08802v1",
+      "score": "7.0",
+      "evidence": "基于图的时变拓扑安全多智能体强化学习，可迁移至多无人机集群协同围捕。",
+      "tldr": "多智能体系统在时变拓扑与有限视野下协作导航面临安全隐患。本文提出基于图的安全强化学习框架，利用CBLF动作筛选层弥合离散LiDAR感知与连续安全约束，确保安全约束始终严格成立；结合注意力actor与GAT集中式critic，通过协同误差矩阵编码相对几何关系，实现尺度不敏感学习。在真实差速机器人上验证，该方法在动态场景中表现出优越的稳定性和安全性，为多智能体安全决策提供了有效方案。",
+      "tags": "query:ui",
+      "abstract_en": "This paper presents a graph-based safe multi-agent reinforcement learning (MARL) framework for cooperative navigation with time-varying topology. To address the critical challenge of ensuring safety in environments with sensing constraints, a safety-decoupled mechanism is introduced through a Control Barrier-Like Function (CBLF) action screening layer. This mechanism bridges the gap between discrete LiDAR perception and continuous safety constraints, ensuring that physical safety constraints are strictly satisfied regardless of the learning progress. Building upon this safety foundation, a unified structural architecture is proposed, integrating a attention-based actor and a Graph Attention Network (GAT) centralized critic. The actor utilizes a value vector reconstruction mechanism that explicitly encodes relative geometric relations through a collaborative tracking error matrix, enabling scale-insensitive policy learning under time-varying communication topologies. Meanwhile, the GAT-based critic models evolving interaction structures for accurate global value estimation. The proposed framework is validated on real differential-drive robot platforms, and experimental results demonstrate superior stability and safety in dynamic scenarios with limited fields-of-view.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/09/2609.07618v1-decentralized-safe-multi-agent-reinforcement-learning-via-predictive-shielding",
+      "section": "quick",
+      "title_en": "Decentralized Safe Multi-Agent Reinforcement Learning via Predictive Shielding",
+      "authors": "Yacine El Yamani, Hanna Krasowski, Elena Vanneaux",
+      "date": "2026-09-07",
+      "pdf": "https://arxiv.org/pdf/2609.07618v1",
+      "score": "6.0",
+      "evidence": "分布式预测屏蔽的多智能体强化学习可支持无人机集群策略的安全部署与自适应。",
+      "tldr": "多机器人独立运行且彼此先验有限时，训练与部署状态偏移会导致策略失效和安全隐患。现有盾牌多为反应式且集中式，接近未知障碍时性能下降、扩展受限。本文提出去中心化预测屏蔽框架，结合基于模型的有限时域Q学习，使各智能体可独立在线安全调整预训练策略；同时设计无通信冲突消除协议应对对称场景中的活锁。该方法兼顾安全性与可扩展性，为多智能体部署提供实用支持。",
+      "tags": "query:ui",
+      "abstract_en": "Environments are increasingly populated by multiple robots performing independent tasks with limited prior knowledge of each other. Deploying such multi-agent systems presents significant challenges. Specifically, shifts in deployment states compared to training data can lead to poor policy performance and compromised safety. While safety shields exist to mitigate these risks, they are typically reactive, which degrades performance near unseen obstacles,and centralized, limiting their scalability. To address this, we propose a decentralized framework that integrates predictive shielding with model-based finite horizon Q-learning. This approach allows agents to safely adapt their pre-trained policies during deployment. Furthermore, to mitigate livelocks in symmetric scenarios, we introduce a communication- free protocol for conflict resolution",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
