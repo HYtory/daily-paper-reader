@@ -1,0 +1,39 @@
+{
+  "label": "2026-09-14",
+  "date": "2026-09-14",
+  "generated_at": "2026-09-14T22:25:40",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202609/14/2609.11155v1-drg-mappo-hierarchical-dynamic-role-graph-multi-agent-reinforcement-learning-for-cooperative-air-combat",
+      "section": "quick",
+      "title_en": "DRG-MAPPO: Hierarchical Dynamic Role-Graph Multi-Agent Reinforcement Learning for Cooperative Air Combat",
+      "authors": "Junlin Liu, Chengwei Li, Yang Gao, Hui Chang, Xinchen Zhang, Zhijun Zhao, Hao Zhao",
+      "date": "2026-09-10",
+      "pdf": "https://arxiv.org/pdf/2609.11155v1",
+      "score": "7.0",
+      "evidence": "面向协同空战的多智能体强化学习",
+      "tldr": "针对多智能体空战中结构化关系建模缺失、扁平架构难以显式表达战术角色的问题，提出分层动态角色图多智能体PPO框架DRG-MAPPO。该框架用图注意力编码友军、敌军与威胁的交互关系，并由高层策略动态分配“长机/僚机”等战术角色。低层策略在角色与图关系特征条件下执行离散机动动作，辅以目标优先级辅助任务促进集火行为。实验取得87%最优胜率，表明其能兼顾关系建模、可解释性与优化稳定性。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-Agent Reinforcement Learning (MARL) has emerged as a pivotal paradigm for complex decision-making in autonomous systems and air combat. While MARL has demonstrated significant potential in air combat, achieving sophisticated tactical coordination remains a non-trivial challenge. This difficulty is largely attributed to two primary limitations: (1) the absence of structured relational modeling hinders agents from capturing complex, time-varying interactions among battlefield entities; and (2) conventional flat architectures often lack the capability to explicitly model tactical roles, leading to ambiguous task allocation in highly dynamic environments. To address these challenges, we propose Hierarchical Dynamic Role-Graph Multi-Agent Proximal Policy Optimization (DRG-MAPPO), a novel MARL framework that integrates graph-based relational modeling with dynamic role assignment. Specifically, DRG-MAPPO constructs a graph-based representation of battlefield interactions and leverages graph attention mechanisms to extract critical relational features among allies, enemies, and threats. Subsequently, a high-level policy employs a dynamic role assignment mechanism to determine tactical responsibilities (e.g., ``leader'' and ``supporter''). Conditioned on these roles and encoded graph-relational features, a low-level policy executes discrete maneuver actions, facilitating the joint optimization of tactical strategy and collaborative execution. Furthermore, a target-priority auxiliary task is designed to foster the emergence of behaviors such as focus-fire. Experimental results demonstrate that DRG-MAPPO achieves a state-of-the-art win rate of 87%, suggesting that our framework effectively balances relational modeling, interpretability, and optimization stability for cooperative air combat.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/14/2609.10166v1-future-aware-flow-planning-for-safe-uav-target-following",
+      "section": "quick",
+      "title_en": "Future-Aware Flow Planning for Safe UAV Target Following",
+      "authors": "Boning Feng, Haoran Zhang, Xiaowen Bi, Yanzhen Zhang, Xiaodan Shi",
+      "date": "2026-09-09",
+      "pdf": "https://arxiv.org/pdf/2609.10166v1",
+      "score": "6.0",
+      "evidence": "无人机预测式目标跟随，与追逃/追踪相关",
+      "tldr": "杂乱环境中UAV目标跟随需预测能力，仅看当前状态会滞后转弯、误入阻塞走廊，或牺牲安全换取近时域跟踪。本文提出未来感知流规划：以预测目标未来作为时域对齐残差信号生成UAV轨迹，并在采样循环内嵌入风险评分可执行前缀修复。在固定ID/OOD滚动基准上，它改善安全-跟踪权衡：ID碰撞率为零且安全跟踪时间最高，OOD宏碰撞率与最终跟踪误差最低。消融表明未来适应提升候选生成，前缀修复保障安全，二者互补。",
+      "tags": "query:ui",
+      "abstract_en": "UAV target following in cluttered environments is inherently predictive: current-state followers can lag behind turns, choose blocked corridors, or trade tracking for unsafe near-horizon motion. We propose a future-aware flow planning framework for state-informed UAV target following. Predicted target futures guide clean UAV trajectory generation as horizon-aligned residual signals, while risk-scored executable-prefix repair is embedded inside the sampling loop. On fixed ID/OOD receding-horizon benchmarks, the planner improves the intended safety--tracking trade-off rather than dominating every metric: it matches zero measured ID collision rate with the highest ID safe-tracking time, and gives the lowest OOD macro collision rate and final tracking error among the displayed methods, while Future-MPC remains smoother and stronger on some thresholded OOD success metrics under its hand-designed objective. Ablations show that future adaptation improves candidate generation before safety repair, and simulator-facing stress tests probe interface, sensing, and controller-execution effects. These results support horizon-aligned future adaptation and embedded prefix repair as complementary ingredients for safe UAV target following under the tested simulation conditions.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

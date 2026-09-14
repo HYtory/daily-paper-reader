@@ -1,0 +1,97 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-14T22:24:10.368524+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.11155v1",
+      "source": "arxiv",
+      "title": "DRG-MAPPO: Hierarchical Dynamic Role-Graph Multi-Agent Reinforcement Learning for Cooperative Air Combat",
+      "abstract": "Multi-Agent Reinforcement Learning (MARL) has emerged as a pivotal paradigm for complex decision-making in autonomous systems and air combat. While MARL has demonstrated significant potential in air combat, achieving sophisticated tactical coordination remains a non-trivial challenge. This difficulty is largely attributed to two primary limitations: (1) the absence of structured relational modeling hinders agents from capturing complex, time-varying interactions among battlefield entities; and (2) conventional flat architectures often lack the capability to explicitly model tactical roles, leading to ambiguous task allocation in highly dynamic environments. To address these challenges, we propose Hierarchical Dynamic Role-Graph Multi-Agent Proximal Policy Optimization (DRG-MAPPO), a novel MARL framework that integrates graph-based relational modeling with dynamic role assignment. Specifically, DRG-MAPPO constructs a graph-based representation of battlefield interactions and leverages graph attention mechanisms to extract critical relational features among allies, enemies, and threats. Subsequently, a high-level policy employs a dynamic role assignment mechanism to determine tactical responsibilities (e.g., ``leader'' and ``supporter''). Conditioned on these roles and encoded graph-relational features, a low-level policy executes discrete maneuver actions, facilitating the joint optimization of tactical strategy and collaborative execution. Furthermore, a target-priority auxiliary task is designed to foster the emergence of behaviors such as focus-fire. Experimental results demonstrate that DRG-MAPPO achieves a state-of-the-art win rate of 87%, suggesting that our framework effectively balances relational modeling, interpretability, and optimization stability for cooperative air combat.",
+      "authors": [
+        "Junlin Liu",
+        "Chengwei Li",
+        "Yang Gao",
+        "Hui Chang",
+        "Xinchen Zhang",
+        "Zhijun Zhao",
+        "Hao Zhao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-09-10T07:02:01+00:00",
+      "link": "https://arxiv.org/pdf/2609.11155v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent RL for cooperative air combat coordination",
+      "llm_evidence_cn": "面向协同空战的多智能体强化学习",
+      "llm_evidence": "面向协同空战的多智能体强化学习",
+      "canonical_evidence": "面向协同空战的多智能体强化学习",
+      "llm_tldr_en": "Cooperative air combat needs structured coordination, but flat MARL architectures cannot model time-varying relations or tactical roles. DRG-MAPPO introduces hierarchical dynamic role-graph multi-agent RL to capture entity relations and role allocation, improving tactical coordination in air combat scenarios.",
+      "llm_tldr_cn": "协同空战中多智能体强化学习难以刻画战场实体间动态关系与战术角色分配，导致战术协同能力不足。本文提出DRG-MAPPO，一种分层动态角色图多智能体强化学习框架，用图结构建模实体间时变交互并显式表示战术角色，缓解任务分配模糊问题。实验在协同空战环境中验证其在协同决策与战术配合上优于常规扁平架构。该工作为多无人机协同对抗与围捕类任务提供了可迁移的多智能体协同建模范式。",
+      "llm_tldr": "协同空战中多智能体强化学习难以刻画战场实体间动态关系与战术角色分配，导致战术协同能力不足。本文提出DRG-MAPPO，一种分层动态角色图多智能体强化学习框架，用图结构建模实体间时变交互并显式表示战术角色，缓解任务分配模糊问题。实验在协同空战环境中验证其在协同决策与战术配合上优于常规扁平架构。该工作为多无人机协同对抗与围捕类任务提供了可迁移的多智能体协同建模范式。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2609.10166v1",
+      "source": "arxiv",
+      "title": "Future-Aware Flow Planning for Safe UAV Target Following",
+      "abstract": "UAV target following in cluttered environments is inherently predictive: current-state followers can lag behind turns, choose blocked corridors, or trade tracking for unsafe near-horizon motion. We propose a future-aware flow planning framework for state-informed UAV target following. Predicted target futures guide clean UAV trajectory generation as horizon-aligned residual signals, while risk-scored executable-prefix repair is embedded inside the sampling loop. On fixed ID/OOD receding-horizon benchmarks, the planner improves the intended safety--tracking trade-off rather than dominating every metric: it matches zero measured ID collision rate with the highest ID safe-tracking time, and gives the lowest OOD macro collision rate and final tracking error among the displayed methods, while Future-MPC remains smoother and stronger on some thresholded OOD success metrics under its hand-designed objective. Ablations show that future adaptation improves candidate generation before safety repair, and simulator-facing stress tests probe interface, sensing, and controller-execution effects. These results support horizon-aligned future adaptation and embedded prefix repair as complementary ingredients for safe UAV target following under the tested simulation conditions.",
+      "authors": [
+        "Boning Feng",
+        "Haoran Zhang",
+        "Xiaowen Bi",
+        "Yanzhen Zhang",
+        "Xiaodan Shi"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-09-09T13:40:09+00:00",
+      "link": "https://arxiv.org/pdf/2609.10166v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "UAV target following with predictive planning relates to pursuit",
+      "llm_evidence_cn": "无人机预测式目标跟随，与追逃/追踪相关",
+      "llm_evidence": "无人机预测式目标跟随，与追逃/追踪相关",
+      "canonical_evidence": "无人机预测式目标跟随，与追逃/追踪相关",
+      "llm_tldr_en": "This paper proposes a future-aware flow planning framework for safe UAV target following in cluttered environments, using predicted target futures and risk-scored executable-prefix repair inside sampling.",
+      "llm_tldr_cn": "针对杂乱环境中无人机目标跟随易滞后、选入受阻通道或牺牲安全的问题，本文提出未来感知流规划框架。方法利用预测的目标未来作为与规划时域对齐的残差信号引导轨迹生成，并在采样循环内嵌入风险评分的可执行前缀修复。在固定与分布外滚动时域基准上，规划器在保持零碰撞的同时取得最高的安全跟随时间，并在分布外场景获得最低碰撞率与跟踪误差。该工作为无人机追踪类任务提供了安全与跟踪的平衡方案。",
+      "llm_tldr": "针对杂乱环境中无人机目标跟随易滞后、选入受阻通道或牺牲安全的问题，本文提出未来感知流规划框架。方法利用预测的目标未来作为与规划时域对齐的残差信号引导轨迹生成，并在采样循环内嵌入风险评分的可执行前缀修复。在固定与分布外滚动时域基准上，规划器在保持零碰撞的同时取得最高的安全跟随时间，并在分布外场景获得最低碰撞率与跟踪误差。该工作为无人机追踪类任务提供了安全与跟踪的平衡方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,875 @@
+Title: Future-Aware Flow Planning for Safe UAV Target Following
+
+URL Source: https://arxiv.org/pdf/2609.10166v1
+
+Published Time: Thu, 10 Sep 2026 01:31:11 GMT
+
+Number of Pages: 23
+
+Markdown Content:
+# Future-Aware Flow Planning for Safe UAV Target Following 
+
+Boning Feng 1 Haoran Zhang 2,3 Xiaowen Bi 4,5 
+
+Yanzhen Zhang 2,3 Xiaodan Shi 1
+
+> 1
+
+Department of Computer and Systems Sciences, Stockholm University, Stockholm, Sweden 
+
+> 2
+
+School of Urban Planning and Design, Peking University, Shenzhen, 518055, China 
+
+> 3
+
+Guangdong Provincial Key Laboratory of Risk Perception and Sustainable Governance in Energy Transition, Shenzhen, 518055, Guangdong, China 
+
+> 4
+
+Department of Statistics and Data Science, Beijing Normal-Hong Kong Baptist University, Zhuhai, 519087, China 
+
+> 5
+
+Guangdong Provincial/Zhuhai Key Laboratory of IRADS, Beijing Normal-Hong Kong Baptist University, Zhuhai, 519087, China code: https://github.com/BoningFeng/Future-Aware-Flow-Planning 
+
+Abstract: UAV target following in cluttered environments is inherently predic-tive: current-state followers can lag behind turns, choose blocked corridors, or trade tracking for unsafe near-horizon motion. We propose a future-aware flow planning framework for state-informed UAV target following. Predicted target futures guide clean UAV trajectory generation as horizon-aligned residual sig-nals, while risk-scored executable-prefix repair is embedded inside the sampling loop. On fixed ID/OOD receding-horizon benchmarks, the planner improves the intended safety–tracking trade-off rather than dominating every metric: it matches zero measured ID collision rate with the highest ID safe-tracking time, and gives the lowest OOD macro collision rate and final tracking error among the displayed methods, while Future-MPC remains smoother and stronger on some thresholded OOD success metrics under its hand-designed objective. Ablations show that fu-ture adaptation improves candidate generation before safety repair, and simulator-facing stress tests probe interface, sensing, and controller-execution effects. These results support horizon-aligned future adaptation and embedded prefix repair as complementary ingredients for safe UAV target following under the tested simu-lation conditions. 
+
+Keywords: UAV Path Planning, Future-Aware Flow Planner, Safe Trajectory Generation 
+
+## 1 Introduction 
+
+UAV target following in cluttered environments requires repeated short-horizon planning under moving-target uncertainty, local obstacle observations, collision avoidance, and tight online compu-tation constraints [1, 2, 3, 4, 5]. We focus on the trajectory-planning component of target following rather than full visual detection or re-identification. As illustrated in Fig. 1, the planner receives dis-crete target-state observations, the current UAV state, and ego-frame local obstacles, then executes only a short prefix before replanning [6, 7, 8, 9, 10]. A central difficulty is that target following is predictive: planning only toward the current target can lag behind turns or become unsafe when clutter restricts feasible routes [1, 11, 12]. Without future-aware coupling, a learned follower can reduce instantaneous tracking error yet commit its executable 
+
+10th Conference on Robot Learning (CoRL 2026), Austin TX, USA. arXiv:2609.10166v1 [cs.RO] 9 Sep 2026 UAV Executed Trajectory Target Historical Trajectory 
+
+> Target Future Trajectory UAV Replanned Trajectory Sensing Field of View Static Obstacle Observed Local Obstacles
+
+Figure 1: State-informed UAV target following: the planner conditions on recent target states, the UAV state, and ego-frame local obstacles, then executes a short safe-following prefix before replan-ning. The sensing field denotes the local region used for ego-frame obstacle cropping, rather than a continuous target-visibility requirement. prefix to a soon-obsolete corridor or react late after a target turn. Directly treating the predicted target path as a UAV reference is also unsafe, because the target may pass through narrow or blocked regions that a UAV should avoid. MPC-style systems address anticipation through receding-horizon optimization over predicted target motion [1, 2, 3, 13, 14, 15], but they often depend on online optimization and hand-designed objectives. Learning-based methods can amortize behavior but are commonly reactive or task-specific [4, 5]. The challenge is therefore to convert uncertain target futures into UAV-feasible trajectories that preserve both tracking and executable safety. We propose Future-Aware Flow Planning , a learned receding-horizon trajectory generator that sepa-rates target anticipation from UAV route generation. Predicted target futures enter as horizon-aligned residual guidance for clean-trajectory flow generation, while a Risk-Scored Executable-Prefix Safety Sampler (RSEPSS) is embedded inside each sampling update so risky near-horizon segments shape generation. Fixed-case ID/OOD benchmarks and simulator-facing stress tests show that the final planner improves the safety-constrained following behavior targeted by the method: it reaches zero measured collision rate and the highest STT@8 in ID, and the lowest collision rate and best FDE on the OOD macro average, while ablations show that future adaptation improves candidate generation before RSEPSS supplies the near-horizon safety gain. 
+
+## 2 Related Work 
+
+Classical Replanning and Learning-Based UAV Target Following. UAV target following has been studied through optimization-based aerial tracking, receding-horizon replanning, and learning-based control [1, 2, 3, 15]. Classical tracking and MPC-style planners show the value of predicted target motion [2, 3, 13, 14], and recent aerial trackers similarly separate target-motion prediction from chasing trajectory planning [15]. Quadrotor replanning methods emphasize perception-aware local planning, feasibility, and dynamics [6, 7, 16]. Search-, sampling-, and learning-based methods provide complementary tools, but often require online hand-designed costs or reactive task-specific policies [17, 18, 19, 4, 5]. Our goal is to carry the predictive principle into a learned generative trajectory planner. 
+
+Generative Trajectory Planning and Clean-Trajectory Flow. Generative planners can repre-sent multimodal trajectories and action distributions [20, 21, 22, 23, 24]. Diffusion planners are expressive but costly for online replanning, whereas flow matching offers continuous transport dy-namics for forecasting, generation, and robot planning [25, 26, 27]. Because UAV target following outputs the executable trajectory itself, we use a clean-trajectory x-pred formulation [28, 29, 30]. Target-, intention-, and query-conditioned prediction works show the value of structured future sig-2History token embedding   
+
+> Embed SSM
+
+SSM Fuse  
+
+> Mamba temporal processing Context fusion Target Historical Trajectory
+> Observed Local Obstacles Target State History
+> (A) Motion Predictor
+> N Future Motions
+> Evaluate
+
+... ... 
+
+> Top K future motions
+> (B) Conditional Flow Planner
+> 𝐀 𝐀 (𝐀) : Intermediate Trajectory Sample
+
+𝐀 Flow Sampling Time  
+
+> Observed Local Obstacles UAV State History
+> Condition Injection Future Adapter Cross-Attn + Reliability Gate
+
+... 
+
+> Trajectory Tokens
+
+... 
+
+> Future Tokens
+
+... 
+
+> Condition Tokens
+> Block1
+> self-attn cross-attn FFN
+> Block2
+> self-attn cross-attn FFN
+> BlockL-1
+> self-attn cross-attn FFN
+> BlockL
+> self-attn cross-attn FFN
+> Flow Input Gated Residual
+
+Predictor Backbone Top K Target Future Motions Selection 
+
+> (C)  RSEPSS Refinement
+
+Flow Transformer Blocks  
+
+> Geo-projection & smoothing
+> High risk prefix points Repair set Trigger
+
+Prefix Risk Scoring Event-Triggered Selection Correction and Smoothing 
+
+Clean Trajectory Prediction head    
+
+> 𝐀 𝐀 = (1 − 𝐀)𝐀 0+ 𝐀𝐀 1,
+> 𝐀 𝐀 = 𝐀 𝐀 (𝐀 𝐀 , 𝐀, 𝐀 𝐀 )
+
+Embedded RSEPSS Clean Candidate 
+
+𝐀 𝐀 𝐀 
+
+Corrected 
+
+𝐀 𝐀 𝐀 − 1 Update block Flow Input Update 
+
+> Executable Replanned Trajectory
+> 𝐀 𝐀 0
+> After Final Sampling Step
+
+Figure 2: Overview of the proposed framework, which couples target-future prediction, gated future-adapter flow planning, and embedded executable-prefix safety refinement. The predicted target future enters the planner as gated residual guidance in selected flow blocks, while RSEPSS repairs executable prefixes inside the sampling loop rather than only after final trajectory generation. nals [31, 32, 33], but unreliable references can also mislead tracking [34]; our gated residual future tokens address this tension. 
+
+Safety-Aware Generative Planning and Prefix Refinement. Safety remains difficult when generative planners are deployed in closed-loop cluttered systems. Control barrier functions and related correction mechanisms have been incorporated into diffusion- and flow-based plan-ners [35, 36, 37, 38, 39, 40]. Most operate on the full trajectory or full sampling dynamics. In receding-horizon UAV following, only a short prefix is executed before replanning, so RSEPSS focuses correction on risky prefix points and embeds that correction into the sampling update. 
+
+## 3 Methodology 
+
+3.1 Problem Setup and Framework Overview 
+
+At each replanning step, the UAV observes local obstacles, its motion state, and recent target history, then generates a target-following trajectory and executes only its first prefix before replanning [8, 9, 6, 41, 42]. Fig. 2 summarizes the framework: a target predictor estimates short-horizon futures, a gated future-adapter flow planner uses them as horizon-aligned signals, and RSEPSS corrects risky prefix points during sampling. Future target motion influences the horizon plan, but the generated object remains a UAV-feasible trajectory rather than a copied target path. Let suav 
+
+t be the current UAV state, ˜ot =
+
+{oi}Mi=1 the ego-frame obstacle cloud, htar 
+
+t the target history, and ˆY tar 
+
+t = {ˆytar 
+
+t+1 , . . . , ˆytar 
+
+t+H } the predicted target future. The planner condition is 
+
+ct =  suav 
+
+t , ˜ot, h tar 
+
+t , ˆY tar 
+
+t
+
+. (1) The planner outputs τt = {pt+1 , . . . , p t+H }. In the conditional flow sampler, xts ∈ RH×3 is an intermediate trajectory sample. Each step predicts a clean candidate ˆx(s)1 , applies RSEPSS to obtain 
+
+˜x(s)1 , and updates the flow state. The final corrected prefix is executed before the next replan. 33.2 Target Motion Predictor 
+
+Target following requires estimating how the target may move over the next horizon, because the executed prefix should already account for upcoming target turns. We use a lightweight predictor to produce short-horizon target-motion hypotheses; these guide tracking but do not determine the UAV route. Given the recent target history htar  
+
+> t
+
+, the local obstacle point cloud ˜ot, the UAV state suav  
+
+> t
+
+, the current target state, and a future time grid, the predictor first embeds the target-history tokens and fuses them with the scene and motion context. A Mamba-based temporal backbone then processes the history sequence and outputs K future target hypotheses with confidence logits [43], 
+
+n ˆY (k) 
+
+> t
+
+, ℓ (k)
+
+> t
+
+oKk=1 
+
+= Pϕ
+
+ htar  
+
+> t
+
+, ˜ot, s uav  
+
+> t
+
+, y tar  
+
+> t
+
+, v tar 
+
+> t
+
+ , ˆY (k) 
+
+> t
+
+= {ˆy(k)
+
+> t+1
+
+, . . . , ˆy(k) 
+
+> t+H
+
+}. (2) Here ℓ(k) 
+
+> t
+
+scores the k-th target-future hypothesis and each ˆY (k) 
+
+> t
+
+is represented in the current UAV ego frame. We append the relative future timestamp to each predicted target position to form tem-poral future features F (k) 
+
+> t
+
+= {[ˆ y(k)
+
+> t+i
+
+, ∆ti]}Hi=1 .At inference time, the top-ranked hypotheses and logits are passed to the planner, preserving tem-poral correspondence while allowing obstacle-aware detours. 
+
+3.3 Gated Future-Adapter Conditional Flow Planner 
+
+The predicted target path should not be treated as a UAV trajectory because obstacles, dynamics, or prediction errors may require a different route. We therefore formulate planning as conditional clean-trajectory flow generation: the planner predicts UAV trajectories directly, while target futures resolve horizon-level tracking ambiguity before the prefix is executed. At sampling step s, the planner receives an intermediate full-horizon trajectory sample xts ∈ RH×3,the flow time ts, and the planning context ct. The trajectory sample is embedded as 
+
+H0 = Ex(xts ) + Et(ts) + Epos , (3) where Ex is a pointwise trajectory embedding, Et is a flow-time embedding, and Epos is the horizon-position embedding. In parallel, a scene encoder maps the local obstacle point cloud ˜ot into obstacle tokens, state-history encoders map the UAV state and recent motion information into motion-context tokens, and a future encoder maps the selected target-motion hypotheses into temporal future tokens. These tokens provide obstacle geometry, local motion context, and target-motion anticipation to the planner while keeping the generated object as a UAV trajectory. The main backbone consists of L Flow Transformer blocks. Each block updates the trajectory tokens through trajectory self-attention, cross-attention to condition tokens, and feed-forward layers, 
+
+Hl = Bl
+
+ Hl−1; Zobs  
+
+> t
+
+, Z mot  
+
+> t
+
+, Z fut 
+
+> t
+
+ , l = 1 , . . . , L, (4) where Zobs  
+
+> t
+
+, Zmot  
+
+> t
+
+, and Zfut  
+
+> t
+
+denote obstacle, motion-context, and target-future tokens, respectively. We train the planner with a clean-trajectory prediction objective. Given a clean expert UAV trajec-tory x1 and a random initial trajectory x0, we construct an interpolated flow state 
+
+xλ = (1 − λ)x0 + λx 1, λ ∼ U (0 , 1) . (5) Rather than predicting a velocity or noise target, the planner predicts the clean trajectory endpoint, 
+
+Lxpred = Ex0,x 1,λ,c t
+
+h
+
+∥fθ (xλ, λ, c t) − x1∥22
+
+i
+
+. (6) At inference time, the sampler evaluates the same network at discrete flow times ts. The final hidden tokens are decoded by an x-prediction head to produce a clean candidate trajectory, 
+
+ˆx(s)1 = fθ (xts , t s, c t) = xts + Dθ (HL), (7) where Dθ denotes the clean-trajectory prediction head. 4To refine how target futures affect generation, we add a gated future-adapter to late Flow Transformer blocks. The adapter encodes the selected target future into horizon-aligned tokens Zaux  
+
+> t
+
+and injects them only as a gated residual refinement, avoiding hard coordinate-level anchoring. For a late block 
+
+l, it computes a residual feature by cross-attending from planner hidden tokens to these auxiliary future tokens, 
+
+Rl = Al(CrossAttn (LN( Hl), LN( Zaux  
+
+> t
+
+), LN( Zaux  
+
+> t
+
+))) , (8) where Al is a lightweight bottleneck adapter. A reliability gate controls the residual strength, 
+
+H′ 
+
+> l
+
+= Hl + αlglRl, gl = σ(Gl(Pool( Zaux  
+
+> t
+
+))) , (9) where αl is a small learnable scale. The gate is learned from the future-token summary, so the adapter can modulate the strength of predictor-derived residual features rather than passing them to the planner with a fixed weight. The adapter is deliberately residual and late-stage: it lets target predictions change tracking intent while preserving the obstacle-aware route structure produced by the base planner. The resulting clean candidate ˆx(s)1 is passed to RSEPSS. 
+
+3.4 Embedded RSEPSS Sampling 
+
+The clean candidate ˆx(s)1 may still contain risky near-horizon points. Post-sampling repair is one-shot and cannot affect later sampling states, which can leave a mismatch between the corrected prefix and the remaining trajectory. We therefore embed executable-prefix correction into the sampling loop so each corrected clean candidate participates in the next flow update. At sampling step s, let 
+
+ˆx(s)1 = {ˆq1, ˆq2, . . . , ˆqH } (10) denote the clean candidate trajectory predicted by the planner, and let ˜ot = {oi}Mi=1 denote the local obstacle point cloud. RSEPSS extracts the executable prefix 
+
+ˆx(s)1,pre = {ˆq1, . . . , ˆqHexec }, (11) and evaluates the nearest-obstacle distance for each prefix point, 
+
+dj = min  
+
+> i
+
+∥ˆqj − oi∥2, j = 1 , . . . , H exec . (12) A prefix point is considered risky when its clearance falls below a trigger margin. We define a temporally weighted risk score 
+
+rj = wj [dtrig − dj ]+, (13) where [·]+ is the positive part and wj assigns larger weight to earlier executable points. When the maximum prefix risk exceeds a threshold, RSEPSS selects a sparse repair set from high-risk points and their temporal neighbors. For each selected point, it computes an outward correction direction from the nearest obstacle point, 
+
+uj = ˆqj − onn 
+
+> j
+
+∥ˆqj − onn  
+
+> j
+
+∥2 + ϵ , (14) where onn  
+
+> j
+
+is the nearest obstacle point. The point is then projected away from the obstacle until the desired local safety margin is approached. After geometric correction, a lightweight smoothing step is applied on the repaired prefix to reduce abrupt local changes while keeping the start point consistent with the current UAV state. The corrected prefix is written back into the clean candidate trajectory, producing 
+
+˜x(s)1 = RSEPSS 
+
+
+
+ˆx(s)1 , ˜ot
+
+
+
+. (15) The flow sampler then uses this corrected clean candidate, rather than the raw prediction, to advance the sampling state: 
+
+xts−1 = Update 
+
+
+
+xts , ˜x(s)1 , t s, t s−1
+
+
+
+. (16) 5(a) SafeFlow 15    
+
+> 10
+> 5
+> 0510
+> x (m)
+> 0246810 12 14
+> y (m)
+> 123456
+> z (m)
+> ADE 4.36 FDE 5.19 NoHard 1 Succ8 1 minClear 0.48 Target UAV Start End
+
+(b) SafeFlowMatcher 15    
+
+> 10
+> 5
+> 0510
+> x (m)
+> 0246810 12 14
+> y (m)
+> 123456
+> z (m)
+> ADE 6.55 FDE 9.46 NoHard 1 Succ8 0 minClear 0.15 Target UAV Start End
+
+(c) Future-MPC 15    
+
+> 10
+> 5
+> 0510
+> x (m)
+> 0246810 12 14
+> y (m)
+> 123456
+> z (m)
+> ADE 3.92 FDE 2.86 NoHard 0 Succ8 0 minClear -0.74 Target UAV Start End
+
+(d) Ours 15   
+
+> 10
+> 5
+> 0510
+> x (m)
+> 0246810 12 14
+> y (m)
+> 123456
+> z (m)
+> ADE 4.86 FDE 5.00 NoHard 1 Succ8 1 minClear 0.93 Target UAV Start End
+
+Figure 3: Qualitative comparison on an ID low-density scene. The aligned view highlights how the compared planners trade raw target tracking, clearance, and safe executable prefixes. Table 1: ID macro summary. Values are averaged over low-, medium-, and high-density for-est groups. Full per-density results are in Appendix C.2, and the uncertainty protocol is in Ap-pendix A.4. Smoothness is jerk RMS. 
+
+Method ADE ↓ FDE ↓ CR ↓ Smooth. ↓ STT@8 ↑ STR@8 ↑ Time ↓
+
+SafeFlow 4.128 5.622 0.006 103.116 0.938 0.933 0.213 SafeFlowMatcher 6.042 8.747 0.000 113.782 0.740 0.469 0.046 
+
+Future-MPC 3.881 3.534 0.043 27.555 0.583 0.583 0.125 Ours 4.365 5.448 0.000 82.094 0.960 0.913 0.300 
+
+Thus, safety correction affects the next flow state at every sampling step. After the final sampling step, the corrected executable prefix is sent to the UAV for execution, and the same procedure is repeated at the next replanning time. Thus, RSEPSS is part of trajectory generation rather than a detached output filter. It modifies only the executable prefix, matching the receding-horizon interface while leaving the longer horizon available for target-aware replanning. 
+
+## 4 Experiments 
+
+4.1 Evaluation Questions 
+
+We evaluate the planner along three axes. The ID/OOD benchmark tests whether future-aware generation and embedded prefix repair improve the closed-loop tracking–safety trade-off relative to safety-aware learned flow baselines and a fixed Future-MPC reference. The fixed set contains 150 effective ID forest episodes and 200 OOD episodes, with all methods sharing the horizon, executed prefix, obstacle budget, target predictor, and metrics. Adapter and predictor analyses test whether target futures change the candidate UAV trajectory before safety repair. Finally, a flight-controller-in-the-loop validation streams the planned reference through Isaac Sim, Pegasus, and PX4 SITL [44, 45, 46]. Full benchmark definitions, controlled variables, metrics, statistical uncertainty, and simulator protocols are in Appendix A; implementation and training details are in Appendix B. 
+
+4.2 Closed-Loop Tracking–Safety Trade-off 
+
+Table 1 tests the nominal forest distribution, with full per-density results in Appendix C.2. The ID evidence supports the main claim: the proposed method is the safest displayed planner under the nominal benchmark. It matches the best measured collision rate (0.000) and reaches the highest STT@8 (0.960), improving the safe-tracking objective targeted by the method. Future-MPC illus-trates the different profile of a fixed receding-horizon objective: it gives lower ADE/FDE and jerk, but its collision rate and safe-tracking time degrade in dense clutter (CR 0.043, STT@8 0.583). 6Table 2: OOD macro summary. Values are averaged over shape, distribution, speed, and combined shifts. Full per-shift results are in Appendix C.2, and the uncertainty protocol is in Appendix A.4. Smoothness is jerk RMS. 
+
+Method ADE ↓ FDE ↓ CR ↓ Smooth. ↓ STT@8 ↑ STR@8 ↑ Time ↓
+
+SafeFlow 3.518 3.926 0.014 110.019 0.814 0.812 0.199 SafeFlowMatcher 5.526 7.177 0.010 121.767 0.733 0.562 0.043 
+
+Future-MPC 4.770 4.288 0.003 27.226 0.958 0.958 0.124 Ours 3.653 3.719 0.002 89.830 0.896 0.854 0.287 ID OOD 0.0 0.8 1.6 2.4      
+
+> Ref. RMSE (m)
+> ID OOD 0123
+> Ref. P95 (m)
+> ID OOD 0.0 2.5 5.0 7.5
+> Target RMSE (m)
+> ID OOD 0.00 0.25 0.50 0.75 1.00
+> Collision rate
+> ID OOD 0.00 0.25 0.50 0.75 1.00
+> STT@8
+> ID OOD 0.00 0.25 0.50 0.75 1.00
+> STR@8
+
+Figure 4: PX4 SITL flight-controller-in-the-loop validation over 120 runs. Bars show ID forest-medium and OOD combined-shift wall means; error bars are standard errors over scenes. Fig. 3 makes the trade-off visible: the planner accepts some endpoint-error cost to preserve an exe-cutable safe prefix near obstacles. Table 2 then probes whether the same behavior survives shifted obstacle geometry, obstacle distri-bution, target speed, and their combination. The OOD results show that no method dominates all metrics, but the proposed method retains the advantages most aligned with safe learned target fol-lowing: it gives the lowest collision rate (0.002) and best average FDE (3.719) among the displayed methods. The fixed Future-MPC reference favors lower jerk and thresholded STT@8/STR@8 under its explicit online objective, but it does not dominate tracking accuracy or safety. This bounds the claim: the learned planner improves safety-constrained generation relative to learned flow baselines and remains competitive with a hand-designed receding-horizon reference, especially on collision avoidance and final target tracking under shift. OOD visualizations and per-shift breakdowns in Ap-pendix D and Appendix C.2 show where the regimes separate, while Appendix F gives a conditional risk-decomposition view of these OOD trends without claiming a universal safety certificate. 
+
+4.3 Flight-Controller-in-the-Loop Validation 
+
+The main rollouts isolate planner behavior under a fixed planning interface. To test whether the generated references remain usable by a realistic flight-control stack, we run 120 PX4 SITL off-board executions through Isaac Sim and Pegasus: sixty ID forest-medium scenes and sixty OOD combined-shift wall scenes. The planner reference is streamed as local setpoints to PX4 at 20 Hz; each run uses 36 reference points after the simulated Iris vehicle arms and enters offboard mode. As summarized in Fig. 4, PX4 reference tracking remains stable in both groups (RMSE 1.84 ± 0.20 
+
+m in ID and 2.02 ± 0.22 m in OOD, mean ± SE), with zero hard-collision rate in all 120 runs. Path-aligned task tracking remains high but not saturated (STT@8/STR@8: 0.95/0.83 in ID and 0.82/0.67 in OOD), which keeps the claim at flight-control compatibility rather than physical-flight validation. PX4 bootstrap intervals are reported in Appendix A.4; lighter L1/L2 simulator-facing stress tests and a representative Isaac Sim rollout visualization (Fig. 8) are reported in Appendix E. 7Table 3: Main effect of the gated future adapter without RSEPSS. The control is the base pooled future-conditioned planner without the auxiliary residual future-adapter pathway.                                       
+
+> Split Variant ADE ↓FDE ↓CR ↓Smooth. ↓STT@8 ↑STR@8 ↑Time ↓
+> ID base pooled future-conditioned 4.628 5.032 0.225 91.321 0.148 0.148 0.182
+> gated future-adapter 3.462 4.453 0.140 100.280 0.282 0.282 0.184 OOD base pooled future-conditioned 5.243 4.822 0.104 102.436 0.416 0.396 0.180
+> gated future-adapter 3.002 2.698 0.057 105.067 0.642 0.646 0.211
+
+Table 4: Effect of unreliable predictor futures. Values report metric changes from clean predictor futures to an 8 m spatially biased predictor.                                         
+
+> Split Variant ∆ADE ∆FDE ∆CR ∆Smooth. ∆STT@8 ∆STR@8 ∆Time
+> ID gated future-adapter +0.022 -0.157 +0.011 +5.396 -0.061 -0.061 -0.064 ID gated future-adapter + RSEPSS +0.058 -0.106 +0.000 +1.518 -0.004 -0.027 -0.072 OOD gated future-adapter +0.069 -0.017 +0.008 +0.918 -0.042 -0.042 +0.006 OOD gated future-adapter + RSEPSS +0.147 +0.118 -0.001 -0.522 -0.012 -0.021 +0.005
+
+4.4 Effect of the Gated Future Adapter 4.4.1 Main effect on candidate generation 
+
+Future conditioning is useful only if the predictor is accurate enough and the planner can use it without copying the target path. A held-out probe shows future-target ADE/FDE below 0.28/0.65 m on simple and complex motion bins (Appendix C.1). Table 3 removes RSEPSS and compares the base pooled future-conditioned planner with the residual adapter under the same predictor, interface, training budget, and rollout settings. This isolates the main future-aware question: weakly pooled future information can still leave the candidate generator prone to late or locally risky tracking, while the adapter aligns the UAV route with upcoming target motion. The adapter reduces ID ADE/FDE from 4.628/5.032 to 3.462/4.453 and OOD ADE/FDE from 5.243/4.822 to 3.002/2.698; it also low-ers collision rate and improves safe-tracking metrics before explicit safety repair. Same-scene sup-plementary videos compare the full model with the no-future/no-adapter control, illustrating the closed-loop effect of future-aware coupling after target turns. 
+
+4.4.2 Behavior under unreliable predictor futures 
+
+We also test a key failure mode: biased futures could pull the UAV toward the wrong corridor. With an 8 m inference-time spatial bias, Table 4 shows that the adapter-only planner changes ADE only slightly but can lose safe-tracking time, whereas enabling RSEPSS keeps collision rate essentially unchanged and STT@8 degradation small ( −0.004 ID, −0.012 OOD). This supports treating futures as gated residual guidance while leaving near-horizon safety to prefix repair. Additional ablations are in Appendix G. 
+
+## 5 Conclusion and Limitations 
+
+We introduced Future-Aware Flow Planning to address a gap in state-informed UAV target follow-ing: a follower must anticipate where the target is going, yet using predicted target paths as hard UAV references can make the near-horizon motion brittle or unsafe. Our approach separates what is predicted from what is executed. Target futures provide bounded, horizon-aligned residual guidance for clean UAV trajectory generation, while RSEPSS repairs only the executable prefix inside the sampling process. This turns future information into a planning cue rather than a commanded path, reducing late reactive following while preserving a receding-horizon safety interface. The ID/OOD benchmarks, ablations, and simulator-facing validation support this design as a safety-constrained 8following trade-off, with Future-MPC serving as a complementary hand-designed reference rather than an objective that one method universally dominates. This study also has limitations. Simulator-facing stress tests in Appendix E examine interface pertur-bations and Isaac-style sensing, and the PX4 SITL validation in Section 4.3 still does not replace on-board perception or physical flight validation. The framework still assumes discrete target-state ob-servations and local obstacle inputs, and does not cover end-to-end visual detection, re-identification, dynamic obstacles, or hardware-specific aerodynamics. RSEPSS improves executable safety but in-creases replanning cost, motivating lighter repair, distillation, or adaptive triggering for onboard deployment. 
+
+Acknowledgments 
+
+This work was supported by the Shenzhen Science and Technology Innovation Commission through the Major Science and Technology Project for Innovation and Entrepreneurship (Grant No. Z25306103, 2024). Computational resources were provided by the High-performance Computing Platform of Peking University. 
+
+## References 
+
+[1] J. Chen, T. Liu, and S. Shen. Tracking a moving target in cluttered environments using a quadrotor. In 2016 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) , pages 446–453, 2016. doi:10.1109/IROS.2016.7759092. [2] Z. Han, B. Zhou, F. Gao, C. Wang, and S. Shen. Fast-Tracker: A robust aerial system for track-ing agile target in cluttered environments. In 2021 IEEE International Conference on Robotics and Automation (ICRA) , pages 328–334, 2021. doi:10.1109/ICRA48506.2021.9561948. [3] J. Ji, B. Zhou, and S. Shen. Elastic Tracker: A spatio-temporal trajectory planner for flexible aerial tracking. In 2022 International Conference on Robotics and Automation (ICRA) , pages 47–53, 2022. doi:10.1109/ICRA46639.2022.9811688. [4] S. Li, T. Liu, C. Zhang, D.-Y. Yeung, and S. Shen. Learning unmanned aerial vehicle control for autonomous target following. In Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence (IJCAI-18) , pages 4936–4942, 2018. doi:10.24963/ijcai. 2018/685. [5] S. Bhagat and P. B. Sujit. Uav target tracking in urban environments using deep reinforcement learning. In 2020 International Conference on Unmanned Aircraft Systems (ICUAS) , pages 694–701, 2020. doi:10.1109/ICUAS48674.2020.9213856. [6] B. Zhou, F. Gao, L. Wang, C. Liu, and S. Shen. RAPTOR: Robust and perception-aware trajectory replanning for quadrotor fast flight. IEEE Transactions on Robotics , 37(6):1992– 2009, 2021. doi:10.1109/TRO.2021.3071527. [7] J. Tordesillas, B. Sundaralingam, J. Cifuentes, B. Tavernini, and J. P. How. FASTER: Fast and safe trajectory planner for navigation in unknown environments. IEEE Transactions on Robotics , 38(2):922–938, 2022. doi:10.1109/TRO.2021.3100142. [8] S. Liu, M. Sun, M. Mohta, B. Scherer, and V. Kumar. High speed navigation for quadro-tors with limited onboard sensing. In 2016 IEEE International Conference on Robotics and Automation (ICRA) , pages 1484–1491, 2016. doi:10.1109/ICRA.2016.7487284. [9] K. Mohta, M. Watterson, Y. Mulgaonkar, S. Liu, C. Qu, A. Makineni, K. Saulnier, K. Sun, A. Zhu, J. Delmerico, V. Kumar, D. Lee, J. Leonard, and K. Daniilidis. Fast, autonomous flight in GPS-denied and cluttered environments. Journal of Field Robotics , 35(1):101–120, 2018. doi:10.1002/rob.21774. 9[10] B. Zhou, F. Gao, L. Wang, C. Liu, and S. Shen. Robust and efficient quadrotor trajectory generation for fast autonomous flight. IEEE Robotics and Automation Letters , 4(4):3529– 3536, 2019. doi:10.1109/LRA.2019.2927938. [11] Q. Wang, Y. Gao, J. Ji, C. Xu, and F. Gao. Visibility-aware trajectory optimization with ap-plication to aerial tracking. In 2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) , pages 5249–5256, 2021. doi:10.1109/IROS51168.2021.9636753. [12] H. Gao, P. Wu, Y. Su, K. Zhou, J. Ma, H. Liu, and C. Liu. Probabilistic visibility-aware trajectory planning for target tracking in cluttered environments. In 2024 American Control Conference (ACC) , pages 594–600. IEEE, 2024. doi:10.23919/ACC60939.2024.10644293. [13] R. Tallamraju, S. Rajappa, M. J. Black, K. Karlapalem, and A. Ahmad. Decentralized MPC based obstacle avoidance for multi-robot target tracking scenarios. In 2018 IEEE International Symposium on Safety, Security, and Rescue Robotics (SSRR) , pages 1–8. IEEE, 2018. doi: 10.1109/SSRR.2018.8468655. [14] S. Sun, A. Romero, P. Foehn, E. Kaufmann, and D. Scaramuzza. A comparative study of nonlinear MPC and differential-flatness-based control for quadrotor agile flight. IEEE Trans-actions on Robotics , 38(6):3357–3373, 2022. doi:10.1109/TRO.2022.3177279. [15] Y. Lee, J. Park, B. Jeon, S. Jung, and H. J. Kim. BPMP-Tracker: A versatile aerial target tracker using bernstein polynomial motion primitives. IEEE Robotics and Automation Letters ,9(12):10938–10945, 2024. doi:10.1109/LRA.2024.3475879. [16] Z. Wang, X. Zhou, C. Xu, and F. Gao. Geometrically constrained trajectory optimization for multicopters. IEEE Transactions on Robotics , 38(5):3259–3278, 2022. doi:10.1109/TRO. 2022.3160022. [17] S. Karaman and E. Frazzoli. Sampling-based algorithms for optimal motion planning. 
+
+The International Journal of Robotics Research , 30(7):846–894, 2011. doi:10.1177/ 0278364911406761. [18] J. J. Kuffner and S. M. LaValle. RRT-Connect: An efficient approach to single-query path plan-ning. In Proceedings of the 2000 IEEE International Conference on Robotics and Automation (ICRA) , pages 995–1001, 2000. doi:10.1109/ROBOT.2000.844730. [19] J. D. Gammell, S. S. Srinivasa, and T. D. Barfoot. Batch Informed Trees (BIT*): Sampling-based optimal planning via the heuristically guided search of implicit random geometric graphs. In 2015 IEEE International Conference on Robotics and Automation (ICRA) , pages 3067–3074, 2015. doi:10.1109/ICRA.2015.7139620. [20] M. Janner, Y. Du, J. B. Tenenbaum, and S. Levine. Planning with diffusion for flexible behavior synthesis. arXiv preprint arXiv:2205.09991 , 2022. doi:10.48550/arXiv.2205.09991. [21] C. Chi, Z. Xu, S. Feng, E. Cousineau, Y. Du, B. Burchfiel, R. Tedrake, and S. Song. Diffusion policy: Visuomotor policy learning via action diffusion. In Robotics: Science and Systems (RSS) , 2023. [22] Y. Ze, G. Zhang, K. Zhang, C. Hu, M. Wang, and H. Xu. 3d diffusion policy: Generalizable visuomotor policy learning via simple 3d representations. In Robotics: Science and Systems (RSS) , 2024. [23] M. Reuss, M. Li, X. Jia, and R. Lioutikov. Goal-conditioned imitation learning using score-based diffusion policies. In Robotics: Science and Systems (RSS) , 2023. [24] Y. Shaoul, I. Mishani, S. Vats, J. Li, and M. Likhachev. Multi-robot motion planning with diffusion models. In The Thirteenth International Conference on Learning Representations (ICLR) , 2025. 10 [25] Y. Lipman, R. T. Q. Chen, H. Ben-Hamu, M. Nickel, and M. Le. Flow matching for generative modeling. arXiv preprint arXiv:2210.02747 , 2023. doi:10.48550/arXiv.2210.02747. [26] S. Ye and M. C. Gombolay. Efficient trajectory forecasting and generation with conditional flow matching. In 2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) , pages 2816–2823, 2024. doi:10.1109/IROS58592.2024.10802208. [27] K. Nguyen, A. T. Le, T. Pham, M. Huber, J. Peters, and M. N. Vu. FlowMP: Learning motion fields for robot planning with conditional flow matching. In 2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) , pages 11291–11297, 2025. doi:10. 1109/IROS60139.2025.11246537. [28] T. Karras, M. Aittala, T. Aila, and S. Laine. Elucidating the design space of diffusion-based generative models. In Advances in Neural Information Processing Systems , volume 35, pages 26565–26577, 2022. doi:10.48550/arXiv.2206.00364. [29] T. Li and K. He. Back to basics: Let denoising generative models denoise. arXiv preprint arXiv:2511.13720 , 2025. doi:10.48550/arXiv.2511.13720. [30] W. Song, Z. Chen, T. Xu, X. Zeng, X. Zhou, L. Yang, D. Wang, C. Lu, and Y.-L. Li. L1 sample flow for efficient visuomotor learning. arXiv preprint arXiv:2511.17898 , 2025. doi: 10.48550/arXiv.2511.17898. [31] H. Zhao, J. Gao, T. Lan, C. Sun, B. Sapp, B. Varadarajan, Y. Shen, Y. Shen, Y. Chai, C. Schmid, C. Li, and D. Anguelov. TNT: Target-driven trajectory prediction. In Proceedings of the 2020 Conference on Robot Learning , volume 155 of Proceedings of Machine Learning Research ,pages 895–904. PMLR, 2021. doi:10.48550/arXiv.2008.08294. [32] S. Shi, L. Jiang, D. Dai, and B. Schiele. Motion transformer with global intention localiza-tion and local movement refinement. In Advances in Neural Information Processing Systems ,volume 35, pages 6531–6543, 2022. doi:10.52202/068431-0473. [33] Z. Zhou, J. Wang, Y.-H. Li, and Y.-K. Huang. Query-centric trajectory prediction. In Proceed-ings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , pages 17863–17873, June 2023. [34] Y. Li, C. Fu, Z. Huang, Y. Zhang, and J. Pan. Keyfilter-aware real-time UAV object tracking. In 2020 IEEE International Conference on Robotics and Automation (ICRA) , pages 193–199, 2020. doi:10.1109/ICRA40945.2020.9196943. [35] A. D. Ames, X. Xu, J. W. Grizzle, and P. Tabuada. Control barrier function based quadratic programs for safety critical systems. IEEE Transactions on Automatic Control , 62(8):3861– 3876, 2017. doi:10.1109/TAC.2016.2638961. [36] W. Xiao, T.-H. Wang, C. Gan, R. Hasani, M. Lechner, and D. Rus. SafeDiffuser: Safe planning with diffusion probabilistic models. In The Thirteenth International Conference on Learning Representations , 2025. doi:10.48550/arXiv.2306.00148. OpenReview: https: //openreview.net/forum?id=ig2wk7kK9J .[37] K. Mizuta and K. Leung. CoBL-Diffusion: Diffusion-based conditional robot planning in dynamic environments using control barrier and lyapunov functions. In 2024 IEEE/RSJ In-ternational Conference on Intelligent Robots and Systems (IROS) , pages 13801–13808, 2024. doi:10.1109/IROS58592.2024.10802549. [38] X. Dai, D. Yu, S. Zhang, and Z. Yang. Safe flow matching: Robot motion planning with control barrier functions. arXiv preprint arXiv:2504.08661 , 2025. doi:10.48550/arXiv.2504.08661. [39] J. Yang, S. Jang, and S. Han. Safeflowmatcher: Safe and fast planning using flow matching with control barrier functions. arXiv preprint arXiv:2509.24243 , 2025. doi:10.48550/arXiv. 2509.24243. 11 [40] Z. Yang, X. Dai, D. Yu, Q. Li, Y. Li, and V. L. Mesle. Uniconflow: A unified constrained generalization framework for certified motion planning with flow matching models. arXiv preprint arXiv:2506.02955 , 2025. doi:10.48550/arXiv.2506.02955. [41] X. Wu, Y. Huang, X. Zhang, Q. Xu, and C. Xu. Perception-aware receding horizon trajectory planning for multicopters with visual-inertial odometry. IEEE Access , 10:87911–87922, 2022. doi:10.1109/ACCESS.2022.3200342. [42] J. Tordesillas and J. P. How. PANTHER: Perception-aware trajectory planner in dynamic en-vironments. IEEE Access , 10:22662–22677, 2022. doi:10.1109/ACCESS.2022.3154037. [43] A. Gu and T. Dao. Mamba: Linear-time sequence modeling with selective state spaces, 2023. URL https://arxiv.org/abs/2312.00752 .[44] NVIDIA Corporation. NVIDIA Isaac Sim: Robotics simulation and synthetic data generation. NVIDIA Developer Documentation, 2026. Available at: https://developer.nvidia.com/isaac-sim; accessed 21 May 2026. [45] M. Jacinto, J. Pinto, J. Patrikar, J. Keller, R. Cunha, S. Scherer, and A. Pascoal. Pegasus Simulator: An isaac sim framework for multiple aerial vehicles simulation. In 2024 Inter-national Conference on Unmanned Aircraft Systems (ICUAS) , pages 917–922, 2024. doi: 10.1109/ICUAS60882.2024.10556959. [46] L. Meier, D. Honegger, and M. Pollefeys. PX4: A node-based multithreaded open source robotics framework for deeply embedded platforms. In 2015 IEEE International Conference on Robotics and Automation (ICRA) , pages 6235–6240, 2015. doi:10.1109/ICRA.2015.7140074. [47] J. Tobin, R. Fong, A. Ray, J. Schneider, W. Zaremba, and P. Abbeel. Domain randomization for transferring deep neural networks from simulation to the real world. In 2017 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) , pages 23–30. IEEE, 2017. doi:10.1109/IROS.2017.8202133. [48] X. B. Peng, M. Andrychowicz, W. Zaremba, and P. Abbeel. Sim-to-real transfer of robotic control with dynamics randomization. In 2018 IEEE International Conference on Robotics and Automation (ICRA) , pages 3803–3810. IEEE, 2018. doi:10.1109/ICRA.2018.8460528. [49] K. Cobbe, C. Hesse, J. Hilton, and J. Schulman. Leveraging procedural generation to bench-mark reinforcement learning. In Proceedings of the 37th International Conference on Ma-chine Learning , volume 119 of Proceedings of Machine Learning Research , pages 2048–2056. PMLR, 2020. URL https://proceedings.mlr.press/v119/cobbe20a.html .
+
+## A Evaluation Protocol and Metrics 
+
+A.1 Benchmark, Baselines, and Simulator-Facing Protocol 
+
+We evaluate online receding-horizon UAV target following in cluttered 3D point-cloud environ-ments. The ID benchmark uses forest scenes with low, medium, and high obstacle densities. The OOD benchmark introduces controlled shifts in obstacle shape, obstacle distribution, target speed, and their combination, following common simulation generalization practice where geometry, pro-cedural factors, or dynamics are varied beyond nominal training conditions [47, 48, 49]. All methods use the same saved fixed cases and rollout protocol: 150 effective ID episodes (50 low-density, 50 medium-density, and 50 high-density after one skipped target-path generation case) and 200 OOD episodes (50 per shift). The main comparison includes adapted SafeFlow [38] and SafeFlowMatcher [39] baselines under the same predictor, planner input, sampling budget, obstacle budget, execution prefix, replanning 12 limit, and metrics. We also include Future-MPC as a fixed hand-designed receding-horizon refer-ence that uses the same target predictor and rollout protocol but replaces learned trajectory gen-eration with its native objective and cylinder-geometry clearance. The main tables report tracking accuracy, collision rate, jerk-RMS smoothness, safe tracking time and success at an 8 m threshold (STT@8/STR@8), and seconds per replan. We additionally run method-only simulator-facing stress tests in the appendix. L1 perturbs target-state, point-cloud, and latency interfaces, and L2 uses Isaac-style LiDAR-derived local point clouds under nominal and degraded sensing profiles. Compact summaries are reported in Fig. 7, with protocol details and visualization in Appendix E. The PX4 flight-controller-in-the-loop validation is reported separately in Section 4.3, with uncertainty in Appendix A.4. 
+
+A.2 Metric Definitions 
+
+All metrics are computed from the same fixed receding-horizon rollout protocol used in the main tables. For episode i, let puav  
+
+> i,t
+
+and ptar  
+
+> i,t
+
+denote the executed UAV and target positions at rollout time 
+
+t ∈ { 1, . . . , T i}. Let hi,t ∈ { 0, 1} be the dense hard-collision indicator at that executed state, and let di,t = ∥puav  
+
+> i,t
+
+− ptar  
+
+> i,t
+
+∥2 be the tracking distance. 
+
+Tracking error. Average displacement error and final displacement error are defined as 
+
+ADE = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+1
+
+TiTiX
+
+> t=1
+
+di,t , FDE = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+di,T i . (17) ADE measures rollout-level tracking accuracy, whereas FDE emphasizes the terminal tracking state after repeated replanning. 
+
+Collision rate. The collision rate reported in the main tables is the mean dense hard-collision rate over executed rollout states: 
+
+CR = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+1
+
+TiTiX
+
+> t=1
+
+hi,t . (18) This state-level definition is more informative for receding-horizon tracking than a single episode-level collision flag, because it captures how often the executed prefix enters collision across the closed-loop rollout. 
+
+Trajectory smoothness. Let ∆t be the simulation time step. We compute velocity, acceleration, and jerk by finite differences, 
+
+vi,t = pi,t − pi,t −1
+
+∆t , ai,t = vi,t − vi,t −1
+
+∆t , ji,t = ai,t − ai,t −1
+
+∆t . (19) The smoothness score is jerk RMS, 
+
+Smooth = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+vuut 1
+
+Ti − 3
+
+> Ti
+
+X
+
+> t=4
+
+∥ji,t ∥22. (20) Lower values indicate smoother executed trajectories. 
+
+Safe tracking. For a tracking tolerance r, define the safe-tracking indicator 
+
+s(r) 
+
+> i,t
+
+= (1 − hi,t ) 1{di,t ≤ r}. (21) Safe tracking time is the mean fraction of rollout time satisfying this criterion, 
+
+STT@ r = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+1
+
+TiTiX
+
+> t=1
+
+s(r) 
+
+> i,t
+
+. (22) 13 Safe tracking success rate is the episode-level rate of remaining collision-free and ending within the same tolerance, 
+
+STR@ r = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+1
+
+( TiX
+
+> t=1
+
+hi,t = 0 
+
+)
+
+1{di,T i ≤ r}. (23) The main paper reports r = 8 m .
+
+Online replanning time. Runtime is reported as seconds per replanning call, 
+
+Time = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+wall _time i
+
+Ri
+
+, (24) where Ri is the number of replanning calls in episode i. Timing values are compared only within the same fixed evaluation runner and rollout protocol. 
+
+A.3 Rollout Protocol 
+
+All main-table and paper-facing ablation results use the same fixed benchmark cases and online rollout settings: horizon H = 64 , target-history length L = 16 , executed prefix length Kexec = 4 ,observation interval of 4 simulation steps, 12 flow sampling updates per replan, ∆t = 0 .2 s , local obstacle radius Robs = 8 .0 m , obstacle sample count obs _sample _M = 256 , fixed noise seed 0, episode seed 123, and maximum replanning count 25 . ID evaluation is grouped by obstacle density (low, medium, high). OOD evaluation uses the four controlled shifts described below. The reported main-table entries are fixed-case means; statistical stability is assessed by the bootstrap protocol in Appendix A.4. 
+
+Baseline conditioning and controlled variables. The SafeFlow and SafeFlowMatcher rows are controlled adaptations, not claims of reproducing every system-level detail of the original papers. They use the same target-motion predictor, base learned x-pred planner family, candidate budget, obstacle samples, execution prefix, replanning limit, and metric implementation as our method; the isolated difference is the safety-aware sampling or correction mechanism. Future-MPC uses the same target predictor and fixed online rollout protocol but replaces learned trajectory generation with a receding-horizon target-following objective and local cylinder-geometry clearance. We include it as a fixed hand-designed receding-horizon reference, not as a learned generative-planner ablation. In the gated future-adapter ablation, the base pooled future-conditioned control keeps the predictor and base planner condition unchanged and disables only the auxiliary residual future-adapter pathway. In the RSEPSS ablation, the gated future-adapter planner is held fixed and only embedded executable-prefix repair is toggled. In the x-pred versus v-pred diagnostic, both variants use the same predictor conditioning and no RSEPSS. 
+
+A.4 Statistical Stability 
+
+For fixed-case benchmark tables, uncertainty is estimated by non-parametric bootstrap over evalua-tion episodes. ID resampling is stratified by obstacle-density group, and OOD resampling is strat-ified by shift type, preserving the macro-averaging structure used in Tables 1–2. We use 10,000 bootstrap resamples. Table 5 reports compact uncertainty for the claim-critical safety–tracking metrics in the two main tables: FDE, collision rate, STT@8, and STR@8. For the high-fidelity PX4 flight-controller-in-the-loop subset, all paper-facing statistics are computed over 120 completed runs: sixty ID forest-medium scenes and sixty OOD combined-shift wall scenes. Table 6 reports the corresponding grouped means, standard errors, and bootstrap intervals. 
+
+## B Implementation and Training Details 
+
+All learned planners use a Transformer-style trajectory backbone with dmodel = 256 , 6 layers, 8 attention heads, an obstacle-token cap of 128, and horizon length 64. The target-motion predictor is 14 Table 5: Bootstrap uncertainty for the claim-critical metrics in Tables 1–2. Each cell reports mean (SE) [95% bootstrap CI]; resampling preserves the ID density and OOD shift macro-averaging.                
+
+> Split Method FDE ↓CR ↓STT@8 ↑STR@8 ↑
+> ID SafeFlow 5.622 (0.077) [5.482, 5.785] 0.006 (0.002) [0.002, 0.011] 0.938 (0.018) [0.900, 0.972] 0.933 (0.021) [0.892, 0.973] ID SafeFlowMatcher 8.747 (0.103) [8.545, 8.950] 0.000 (0.000) [0.000, 0.000] 0.740 (0.018) [0.704, 0.775] 0.469 (0.041) [0.389, 0.550] ID Future-MPC 3.534 (0.095) [3.348, 3.719] 0.043 (0.005) [0.033, 0.053] 0.583 (0.040) [0.503, 0.664] 0.583 (0.040) [0.509, 0.664] ID Ours 5.448 (0.119) [5.222, 5.688] 0.000 (0.000) [0.000, 0.000] 0.961 (0.009) [0.942, 0.977] 0.913 (0.023) [0.865, 0.953] OOD SafeFlow 3.927 (0.123) [3.687, 4.165] 0.014 (0.005) [0.006, 0.024] 0.814 (0.046) [0.723, 0.900] 0.812 (0.048) [0.708, 0.896] OOD SafeFlowMatcher 7.177 (0.288) [6.614, 7.747] 0.009 (0.004) [0.002, 0.019] 0.733 (0.042) [0.647, 0.813] 0.562 (0.069) [0.417, 0.688] OOD Future-MPC 4.288 (0.151) [3.982, 4.579] 0.003 (0.002) [0.000, 0.008] 0.958 (0.028) [0.896, 1.000] 0.958 (0.028) [0.896, 1.000] OOD Ours 3.719 (0.366) [3.080, 4.487] 0.002 (0.001) [0.000, 0.005] 0.896 (0.031) [0.831, 0.950] 0.854 (0.041) [0.771, 0.938]
+
+Table 6: Statistical stability for the PX4 flight-controller-in-the-loop validation. Each cell reports mean (SE) [95% bootstrap CI] over scenes. Target metrics are path-aligned to the reference-execution phase.               
+
+> Split Ref. RMSE ↓Target RMSE ↓CR ↓STT@8 ↑STR@8 ↑
+> ID, n= 60 1.84 (0.20) [1.49, 2.19] 5.12 (0.63) [3.99, 6.20] 0.00 (0.00) [0.00, 0.00] 0.95 (0.05) [0.86, 1.00] 0.83 (0.17) [0.50, 1.00] OOD, n= 60 2.02 (0.22) [1.60, 2.39] 5.40 (1.18) [3.42, 7.54] 0.00 (0.00) [0.00, 0.00] 0.82 (0.12) [0.60, 1.00] 0.67 (0.21) [0.33, 1.00] All, n= 120 1.93 (0.14) [1.65, 2.19] 5.26 (0.64) [4.10, 6.52] 0.00 (0.00) [0.00, 0.00] 0.89 (0.06) [0.75, 1.00] 0.75 (0.13) [0.50, 1.00]
+
+a Mamba-based forecaster with history length 16, horizon length 64, and 4 selected future hypothe-ses. The aligned training records are successful expert samples from scene-aligned JSONL files; scenes are split by scene id with seed 0 into 80% training, 10% validation, and 10% test partitions. The expert trajectories in the aligned dataset are generated by four OMPL-style geometric plan-ners (RRTstar, RRTConnect, BITstar, and PRMstar), and only records marked successful are used for model training and evaluation. The predictor is trained for 15 epochs with AdamW, learning rate 2 × 10 −4, weight decay 10 −4, and gradient clipping at 1.0. The clean-trajectory base planner is trained with the direct x1 prediction objective described in Section 3.3; the final gated adapter is then tuned with the predictor and base branch fixed, so that the adapter learns a conservative residual refinement rather than replacing the base generator. For the final adapter run, we use 200 scene-aligned training files, batch size 8, AdamW with learning rate 2 × 10 −4, weight decay 10 −4, gradient clipping at 1.0, and 25 epochs; model selection uses the validation score, with the reported run selecting epoch 5. The adapter uses the last planner block, bottleneck size 64, maximum residual scale 0.015, future-dropout probability 0.05, and a prefix-adapter length of 4 to match the executed prefix. The fixed-evaluation runner uses a fixed noise seed, 12 flow sampling updates per replan, and the rollout parameters in Appendix A.3. RSEPSS is embedded in the inference-time flow sampling loop: each clean candidate is prefix-scored and locally repaired before being used in the next flow update. It does not introduce additional trained parameters or backpropagated losses. Its final correction configuration uses Kcorr = 8 , safety margin dsafe = 0 .60 m , trigger margin dtrigger = 0 .75 m , top-3 risky prefix points, 3 projection iterations, one smoothing iteration with smoothing weight 0.05, world-step cap 0.80 m , and start-point anchoring. 
+
+## C Additional Predictor and Benchmark Results 
+
+C.1 Target Predictor Quality Probe 
+
+Because the planner conditions on predicted target futures, we separately evaluate the target-motion predictor before testing the downstream planner. The open-loop probe uses the same Mamba predic-tor checkpoint as the planner evaluations and samples 160 held-out records from each target-motion complexity bin. Metrics are computed between the predicted target future and the ground-truth target future, not between the UAV and the target. 15 Table 7: Open-loop target predictor quality on held-out records. Complexity is the trajectory-complexity score used for binning; finite rate reports the fraction of numerically valid predicted futures.                
+
+> Motion bin Records Complexity Target ADE ↓Target FDE ↓Finite ↑
+> Simple 160 0.027 0.213 0.448 1.000 Complex 160 0.724 0.278 0.640 1.000
+
+Table 8: Full ID comparison by forest density. Smoothness is measured by jerk RMS. 
+
+Density Method ADE ↓ FDE ↓ CR ↓ Smooth. ↓ STT@8 ↑ STR@8 ↑ Time ↓
+
+Low SafeFlow 4.181 5.570 0.001 104.953 0.968 0.960 0.211 SafeFlowMatcher 5.999 8.706 0.000 115.929 0.764 0.500 0.046 
+
+Future-MPC 3.976 3.458 0.045 27.410 0.600 0.600 0.123 Ours 4.258 5.228 0.000 82.352 0.987 0.980 0.283 Medium SafeFlow 4.187 5.655 0.006 104.036 0.937 0.940 0.216 SafeFlowMatcher 6.105 8.578 0.000 114.038 0.733 0.500 0.046 
+
+Future-MPC 3.898 3.432 0.045 27.909 0.640 0.640 0.126 Ours 4.490 5.601 0.000 82.626 0.947 0.880 0.310 High SafeFlow 4.015 5.641 0.010 100.359 0.910 0.898 0.213 SafeFlowMatcher 6.021 8.957 0.000 111.378 0.723 0.408 0.047 
+
+Future-MPC 3.769 3.713 0.038 27.345 0.510 0.510 0.125 Ours 4.348 5.514 0.000 81.305 0.947 0.878 0.307 
+
+The predictor is not treated as an oracle: its outputs are passed to the planner as uncertain feature guidance, and the biased-future stress test in Table 4 explicitly measures what happens when the predicted futures are wrong. Additional fixed-case ablations show that the predictor improves target-following accuracy when evaluated under a matched rollout protocol. Together with the biased-future stress test, this suggests that predicted target futures are useful guidance but should not be treated as hard trajectory anchors. 
+
+C.2 Detailed Main Comparison Tables 
+
+Tables 8 and 9 provide the full group-wise results summarized in Tables 1 and 2. 
+
+## D OOD Benchmark Design and Qualitative Results 
+
+The OOD benchmark is designed to separate different deployment-time mismatches rather than reporting a single aggregated robustness number. This follows the same principle as domain and dy-namics randomization in robotic simulation and procedurally generated generalization benchmarks: robustness should be tested by controlled changes along interpretable axes, not only by evaluating on another random split [47, 48, 49]. We therefore use four shift types. Shape shift changes obstacle geometry and layout while preserving the online tracking interface. Distribution shift changes the statistics and spatial arrangement of obstacles, which alters the local point observations encountered during rollout. Speed shift changes target-motion dynamics and directly stresses future target antic-ipation. Combined shift applies multiple changes together and serves as the hardest OOD setting. Figure 5 visualizes the scenario-level design. The shape and distribution shifts mainly perturb the obstacle-related condition received by the planner, whereas the speed shift perturbs the target-future condition used by the predictor and future adapter. The combined setting couples these two sources of mismatch, making it useful for testing whether a method can preserve both tracking and exe-cutable safety when scene geometry and target dynamics depart from the ID distribution. 16 Table 9: Full OOD comparison by shift type. Smoothness is measured by jerk RMS.                                                                                                                             
+
+> Shift Method ADE ↓FDE ↓CR ↓Smooth. ↓STT@8 ↑STR@8 ↑Time ↓
+> Shape SafeFlow 3.057 3.766 0.000 102.190 1.000 1.000 0.196 SafeFlowMatcher 4.903 7.603 0.011 122.214 0.845 0.750 0.043
+> Future-MPC 5.205 4.958 0.000 27.445 1.000 1.000 0.122 Ours 2.877 3.058 0.000 87.985 1.000 1.000 0.221 Distribution SafeFlow 2.957 4.141 0.015 103.912 0.750 0.750 0.204 SafeFlowMatcher 4.948 7.855 0.008 117.573 0.795 0.583 0.044
+> Future-MPC 4.953 4.306 0.004 27.323 0.917 0.917 0.124 Ours 2.834 3.536 0.004 86.270 0.917 0.917 0.301 Speed SafeFlow 3.623 3.450 0.000 113.829 0.984 1.000 0.182 SafeFlowMatcher 5.317 5.030 0.000 125.800 0.807 0.583 0.041
+> Future-MPC 4.366 3.726 0.000 27.003 1.000 1.000 0.123 Ours 3.464 2.221 0.000 98.288 0.975 1.000 0.220 Combined SafeFlow 4.434 4.349 0.042 120.145 0.521 0.500 0.215 SafeFlowMatcher 6.935 8.219 0.019 121.482 0.485 0.333 0.044
+> Future-MPC 4.555 4.164 0.008 27.135 0.917 0.917 0.125 Ours 5.438 6.059 0.004 86.777 0.692 0.500 0.405
+
+Figure 6 uses a common 2D rollout visualization protocol for the four displayed methods: each OOD row uses the same selected scene, local obstacle rendering, target trajectory, axis bounds, and method ordering so that qualitative differences can be compared directly. The OOD rollout visu-alization is intended to show the failure modes behind Table 2. SafeFlow improves safety through stronger sampling-time correction, but can become more conservative. SafeFlowMatcher is compu-tationally light yet more prone to weakened tracking in difficult shifts. Future-MPC serves as a fixed optimization-based reference, while the proposed method emphasizes learned generation with local prefix safety in several shifted scenes. 
+
+## E Simulator-Facing Stress Tests 
+
+The main benchmark isolates planner quality under a fixed receding-horizon rollout protocol. To fur-ther probe deployment-facing robustness of the final method, we run two method-only stress tests in the appendix. These tests are not used as an additional baseline comparison; they examine whether the final planner remains stable when its target-state interface, obstacle-observation interface, and sensing profile are made less ideal. Figure 8 shows the corresponding Isaac Sim visualization el-ements for a representative rollout. The higher-fidelity PX4 flight-controller-in-the-loop validation is kept in the main paper to avoid mixing execution-level evidence with the lighter interface and sensing stress plots. 
+
+L1: interface perturbations. L1 keeps the rollout protocol unchanged but perturbs the planner inputs at the interface level. We perturb target states, degrade obstacle point-cloud observations, add observation latency up to 300 ms, and evaluate a combined mild stress profile. Across 682 records, the forest/medium setting remains collision-free under all L1 stresses, and STT@8 stays above 0.93 even under 300 ms latency and combined mild stress (Fig. 7a). In the harder OOD combined-shift setting, performance degrades as expected, but the method still preserves non-zero safe tracking under all tested perturbation profiles. 
+
+L2: Isaac-style sensing. L2 replaces the analytic local obstacle input with a LiDAR-style local point cloud generated from nominal and degraded sensing profiles. The degraded profile shortens range from 8.0 m to 6.5 m, narrows horizontal field of view from 90 degrees to 70 degrees, reduces angular beams by 37.5%, increases dropout from 0.05 to 0.22, and increases target-observation 17 Figure 5: OOD scene design. The benchmark separates obstacle-shape, obstacle-distribution, target-speed, and combined shifts to test different forms of deployment mismatch. noise. Under this sensor-derived observation chain, the method preserves the forest trend, while the OOD combined-shift setting remains the most difficult case (Fig. 7b). 
+
+## F Robustness Analysis under OOD Shifts 
+
+This section gives a conditional robustness analysis for the OOD results. The goal is not to claim a universal safety certificate. Instead, we make explicit how the three planner-side choices used in the method, namely reliability-gated future adaptation, clean-trajectory x-pred generation, and em-bedded executable-prefix repair, reduce distinct terms in an OOD risk decomposition under standard boundedness and Lipschitz assumptions. 
+
+F.1 Notation and Assumptions 
+
+Let c denote the observed planning condition, including UAV state, target history, and local obstacle observations. Let Z be the predicted future-token representation produced from the target predictor, and let Z⋆ denote the ideal future-token representation induced by the ground-truth future target motion. The clean trajectory predicted by the planner before safety repair is written as 
+
+ˆx1 = Π θ (c, Z ), (25) and the embedded RSEPSS repair operator with margin m is written as Sm. The executed candidate is therefore 
+
+τ = Sm(ˆ x1) = Sm
+
+ Πθ (c, Z ). (26) For analysis, let ℓ(τ, c ) be a task loss that can include tracking error, collision risk, smoothness, and executable tracking failure. We assume that ℓ is locally Lipschitz in the trajectory and condition in the neighborhood of the evaluated rollouts. This assumption is standard for local robustness statements and is weaker than requiring global robustness over arbitrary scenes. 18 SafeFlow 
+
+SafeFlow SafeFlowMatcher Future-MPC Ours Shape Shift Distribution Shift Speed Shift Combined Shift Figure 6: OOD qualitative trajectory comparison across the four displayed methods. The visual-ization complements Table 2 by showing how safety-aware flow baselines, Future-MPC, and the proposed method trade target tracking, clearance, and executable smoothness under shifted scenes. Forest clean Forest 300 ms Forest combined OOD clean OOD 300 ms OOD combined     
+
+> 0.00 0.25 0.50 0.75 1.00 STT@8
+> 0.97 0.93 0.94 0.58 0.59 0.62
+> L1 interface perturbation
+
+(a) L1 Forest nom. Forest degr. OOD nom. OOD degr.    
+
+> 0.00 0.25 0.50 0.75 1.00 STT@8
+> 0.99 0.97 0.64 0.57
+> L2 sensor-derived observations
+
+(b) L2 
+
+Figure 7: Simulator-facing stress tests for the final method. L1 reports STT@8 under selected inter-face perturbations; L2 reports STT@8 under nominal and degraded sensor-derived observations. 
+
+F.2 Bounded Influence of Unreliable Future Tokens 
+
+The future adapter is designed so that predicted futures influence the planner as residual feature guidance rather than as hard trajectory anchors. For a late adapted block l, write the future residual as 
+
+∆Hl(Z) = αlgl(Z)Rl(Hl, Z ), (27) where 0 ≤ gl(Z) ≤ 1 is the reliability gate, αl is a small learnable scale, and Rl is the cross-attention adapter output. Assume that, for fixed Hl, Rl is Lipschitz in Z with constant LR, gl is Lipschitz in 
+
+Z with constant Lg , and ∥Rl(Hl, Z )∥ ≤ BR. Then, for a corrupted future token Z + δZ ,
+
+∥∆Hl(Z + δZ ) − ∆Hl(Z)∥ = αl∥gl(Z + δZ )Rl(Hl, Z + δZ ) − gl(Z)Rl(Hl, Z )∥ (28) 
+
+≤ αl (LR + BRLg ) ∥δZ ∥. (29) If the downstream decoder and intermediate blocks from the adapted layers to the clean trajectory head have Lipschitz constant LΠ, the induced clean-trajectory perturbation satisfies 
+
+∥Πθ (c, Z + δZ ) − Πθ (c, Z )∥ ≤ LΠ
+
+X
+
+> l∈A
+
+αl (LR + BRLg ) ∥δZ ∥, (30) 19 Figure 8: Representative simulator-facing visualization in Isaac Sim. The sequence shows closed-loop rollout over time, including the executed UAV trajectory, replanned and planner-reference tra-jectories, target trajectory, sensing field of view, static obstacles, and locally observed obstacles. where A is the set of adapted blocks. Equation 30 formalizes why the adapter is less brittle than coordinate-level future anchoring: the effect of predictor corruption is mediated by the residual scale, the gate, and the feature-level adapter, rather than being imposed directly on the generated UAV trajectory. 
+
+F.3 Clean-Trajectory x-pred and Robust Task Alignment 
+
+We next analyze why predicting the clean trajectory is aligned with robustness for this task. Let 
+
+x1 be a feasible expert trajectory and let R(x) be a task-level risk functional over clean future trajectories, such as tracking error, smoothness, or executable-safety loss. Assume that R is locally Lipschitz near feasible UAV tracking trajectories: 
+
+|R (x) − R (y)| ≤ LR∥x − y∥. (31) For x-pred, the planner outputs ˆx1 directly. Therefore, 
+
+|R (ˆ x1) − R (x1)| ≤ LR∥ˆx1 − x1∥. (32) Thus, reducing the x-pred clean-trajectory error directly reduces task-risk deviation. By contrast, a velocity-style parameterization predicts an auxiliary quantity ˆv and recovers the clean trajectory through a reconstruction map. Under the linear flow interpolation xλ = (1 − λ)x0 + λx 1,the velocity target is v = x1 − x0 and the clean trajectory is reconstructed as 
+
+ˆx1 = Ψ λ(xλ, ˆv) = xλ + (1 − λ)ˆ v. (33) Then 
+
+|R (Ψ λ(xλ, ˆv)) − R (x1)| ≤ LR(1 − λ)∥ˆv − v∥. (34) This bound is valid, but it controls task risk only through an auxiliary reconstruction. More im-portantly for our method, safety and tracking corrections are naturally defined in clean trajectory space. If a clean-space correction ∆x1 must be inserted during sampling, the equivalent change in the velocity parameterization is 
+
+∆v = ∆x1
+
+1 − λ , (35) 20 which becomes ill-conditioned as λ approaches the clean endpoint. In contrast, x-pred allows the corrected clean trajectory Sm(ˆ x1) to be written back directly into the sampling update. This provides a mathematical reason for pairing embedded RSEPSS with a clean-trajectory prediction head. The same conclusion can be stated in terms of feasible trajectory geometry. Let M denote the set of locally feasible target-following trajectories. If the expert trajectory satisfies x1 ∈ M , then x-pred gives 
+
+dist(ˆ x1, M) ≤ ∥ ˆx1 − x1∥. (36) Therefore, x-pred error directly controls distance to the feasible trajectory set. For an auxiliary parameterization, this distance is mediated by Ψλ, making the relation between prediction error and feasible-trajectory deviation less direct. 
+
+F.4 Risk Reduction by Embedded Executable-Prefix Repair 
+
+Let Cm(c) be the locally collision-free prefix set with margin m, and define the prefix violation functional 
+
+ρ(τ, c ) = 1
+
+Kexec 
+
+> Kexec
+
+X
+
+> k=1
+
+1{τk /∈ C m(c)}. (37) For a trajectory point q and local obstacle set O(c), let d(q, O ) = min o∈O(c) ∥q − o∥2 and define the hinge risk r(q, c ) = [ m − d(q, O )] +. If RSEPSS moves a selected risky point q along the outward unit vector from its nearest obstacle, 
+
+q′ = q + η q − onn 
+
+∥q − onn ∥2
+
+, η ≥ 0, (38) and the nearest obstacle remains unchanged locally, then d(q′, O ) ≥ d(q, O ) and hence r(q′, c ) ≤
+
+r(q, c ). Thus each successful projection step does not increase local hinge risk. Let ηrep denote the expected fraction of risky executable-prefix points that are triggered and suc-cessfully repaired, and let ϵsm denote the residual fraction of violations caused by infeasible local geometry or smoothing. Then the repaired prefix satisfies 
+
+Eρ(Sm(τ ), c ) ≤ Eρ(τ, c ) − ηrep + ϵsm . (39) Because our method applies Sm inside the sampling update, the flow update uses the repaired clean trajectory rather than an unsafe candidate that will be corrected only after sampling. If the sampling update Us(xs, ˆx1) is Lipschitz in its clean endpoint with constant LU , then replacing ˆx1 by Sm(ˆ x1)
+
+changes the next flow state by at most 
+
+∥Us(xs, S m(ˆ x1)) − Us(xs, ˆx1)∥ ≤ LU ∥Sm(ˆ x1) − ˆx1∥. (40) Thus embedded repair keeps the correction local and bounded while allowing the safer prefix to influence subsequent sampling states. 
+
+F.5 OOD Risk Decomposition 
+
+Let P be the ID condition distribution and Q an OOD condition distribution. Let W1(Pc, Q c) denote the Wasserstein-1 distance between their condition marginals. Combining the preceding bounds yields the following decomposition for the OOD task risk: 
+
+RQ(Sm ◦ Πθ ) = Ec∼Q [ℓ(Sm(Π θ (c, Z )) , c )] (41) 
+
+≤ R P (Sm ◦ Πθ ) + LcW1(Pc, Q c) + Lz EQ∥Z − Z⋆∥ (42) 
+
++ LxEQ∥Πθ (c, Z ⋆) − x⋆
+
+> 1
+
+(c)∥ − βη rep + ϵsm , (43) where x⋆
+
+> 1
+
+(c) is an ideal feasible tracking trajectory, Lc, Lz , and Lx collect the relevant Lipschitz constants, and β > 0 converts repaired prefix mass into task-risk reduction. The term LcW1(Pc, Q c)
+
+captures the OOD scene shift, the future-token term is controlled by the reliability-gated adapter in 21 Table 10: Embedded RSEPSS ablation on the fixed ID/OOD benchmark. Metrics match the main tables and are macro-averaged over groups.                                       
+
+> Split Variant ADE ↓FDE ↓CR ↓Smooth. ↓STT@8 ↑STR@8 ↑Time ↓
+> ID gated future-adapter 3.462 4.453 0.140 100.280 0.282 0.282 0.184
+> + embedded RSEPSS 4.365 5.448 0.000 82.094 0.961 0.913 0.300 OOD gated future-adapter 3.002 2.698 0.057 105.067 0.642 0.646 0.211
+> + embedded RSEPSS 3.653 3.719 0.002 89.830 0.896 0.854 0.287
+
+Equation 30, the clean-trajectory error term is directly controlled by x-pred as in Equation 32, and the last two terms capture the benefit and residual limitation of embedded RSEPSS from Equation 39. This analysis explains the qualitative pattern observed in the OOD tables. The method is not forced to minimize raw tracking error at all costs. Instead, it reduces the influence of unreliable target fu-tures, keeps generation aligned with the clean feasible trajectory space, and repairs risky executable prefixes during sampling. As a result, under the hardest combined shift, the method may trade safe-tracking success against the MPC reference while retaining the low-collision and final-error behavior targeted by the learned safety-oriented planner. 
+
+## G Safety and Parameterization Ablations 
+
+This appendix reports the two module-level ablations that are most closely tied to the theoretical discussion in Appendix F: the embedded safety-refinement loop and the clean-trajectory flow pa-rameterization. Both ablations are rerun on the same fixed benchmark as the main tables, with 
+
+M = 256 obstacle samples, 12 sampling steps, a fixed noise seed, and at most 25 replans per roll-out. We report macro averages over the three ID obstacle-density groups and the four OOD shift groups. 
+
+G.1 Embedded RSEPSS Ablation 
+
+Table 10 isolates the effect of embedding RSEPSS into the sampling loop. The no-RSEPSS rows correspond to the gated future-adapter planner before safety refinement, while the embedded-RSEPSS rows use the full method. RSEPSS removes nearly all dense collisions and raises safe tracking from 0.282 to 0.913 in ID and from 0.646 to 0.854 in OOD. The cost is a moderate increase in ADE/FDE and replanning time, which is expected because the refinement prioritizes executable safe prefixes over unconstrained geometric tracking. The qualitative rollouts in Figure 9 show the same mechanism at the trajectory level. Without the embedded correction, the generated candidate can follow the target more directly but may enter a high-risk prefix near obstacles. Once RSEPSS is applied inside the sampling loop, the repaired prefix changes the subsequent denoising state rather than merely clipping the final output. This is the empirical counterpart of Equation 39: the projection term reduces local obstacle risk by at least a margin-dependent amount, while the smoothing residual remains bounded. It also explains the OOD pattern in Equation 43, where the safety-repair term reduces task risk even when the raw tracking term increases. 
+
+G.2 x-pred versus v-pred Parameterization 
+
+Table 11 compares clean-trajectory x-pred against a velocity-style v-pred flow baseline. To keep the comparison focused, both variants use the same predictor conditioning and basic sampling interface, without RSEPSS or the gated future adapter. The x-pred parameterization substantially reduces tracking error and improves safe-tracking success, especially under OOD shifts. The v-pred baseline 22 (a) RSEPSS on (b) RSEPSS off 
+
+Figure 9: Qualitative effect of RSEPSS refinement. The embedded correction steers high-risk pre-fixes away from obstacles and yields executable trajectories with substantially higher safe-tracking rates. Table 11: x-pred versus v-pred parameterization ablation on the fixed ID/OOD benchmark. Both variants use the same predictor conditioning and no safety refinement. 
+
+Split Variant ADE ↓ FDE ↓ CR ↓ Smooth. ↓ STT@8 ↑ STR@8 ↑ Time ↓
+
+ID v-pred flow 7.237 10.605 0.098 28.325 0.314 0.074 0.187 ID x-pred flow 3.947 5.553 0.119 103.361 0.307 0.309 0.187 OOD v-pred flow 7.891 10.292 0.069 24.961 0.350 0.146 0.192 OOD x-pred flow 3.490 3.882 0.061 108.478 0.618 0.625 0.190 
+
+produces lower jerk, but this smoothness is coupled to poor tracking and low success; it therefore does not translate into the task-level safe-tracking objective. This diagnostic supports the clean-trajectory design used by the final planner. In Equation 32, the task loss depends directly on the error between the generated clean trajectory and the ideal feasible tracking trajectory. Predicting x1 directly reduces this term, whereas a velocity parameterization must accumulate integration error across the sampling path. The ablation is deliberately narrower than the full method: it does not claim that x-pred alone solves safety. Instead, it shows why the base generator should operate in clean trajectory space, after which the gated future adapter controls future guidance and embedded RSEPSS controls the safety term in Equation 43. 23
