@@ -1,0 +1,56 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-16T21:36:22.671251+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.12758v1",
+      "source": "arxiv",
+      "title": "Curriculum-Based Adversarial Heterogeneous Agent Reinforcement Learning for Autonomous Quad-Copter Landing in Maritime Settings",
+      "abstract": "Recovering unmanned aerial vehicles (UAVs) in maritime environments is challenging due to wind turbulence and ship-deck motion, making it a valuable test case for alternative control and learning approaches as conventional landing approaches often become unreliable. We study simulated mid-air capture of quadrotor UAVs by a ship-mounted robotic arm, learning robust cooperative control policies with Heterogeneous-Agent Proximal Policy Optimization (HAPPO) Reinforcement Learning. We train with HAPPO using a curriculum and an adversarial wind agent (HARL-AC) in NVIDIA Isaac Lab, and compare the obtained control policies against those generated through curriculum-based domain randomization and a benchmark trained on a single sea state. In-distribution evaluation on sea states $0/4/5$ shows comparable success for HARL-AC and domain randomization of up to $97.5\\%$. On out-of-distribution sea states $7/8/10$, HARL-AC generalizes better, achieving up to $16\\%$ higher median success rate at sea state 10, and substantially lower crash rates of up to $14\\%$ compared to the domain randomization policy. Furthermore, we show that the adversarially trained policy shows more cautious behavior, slightly increasing timeouts by $<3\\%$, but yields safer recovery behavior in severe, unseen conditions.",
+      "authors": [
+        "Allan Minh-Tam Nguyen",
+        "Sree Showrya Kotala",
+        "Stefan Banioi-Crijman",
+        "Kurt Driessens",
+        "Rico Möckel"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-09-11T12:09:08+00:00",
+      "link": "https://arxiv.org/pdf/2609.12758v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "mid-air capture of quadrotors via HAPPO multi-agent RL",
+      "llm_evidence_cn": "用HAPPO多智能体强化学习实现四旋翼空中捕获",
+      "llm_evidence": "用HAPPO多智能体强化学习实现四旋翼空中捕获",
+      "canonical_evidence": "用HAPPO多智能体强化学习实现四旋翼空中捕获",
+      "llm_tldr_en": "Studies simulated mid-air capture of quadrotors by a ship-mounted robotic arm, learning robust cooperative policies with HAPPO, a curriculum, and an adversarial wind agent in Isaac Lab.",
+      "llm_tldr_cn": "针对海上风扰与舰船甲板运动导致无人机回收着陆可靠性下降的问题，本文研究由船载机械臂在仿真环境中完成四旋翼空中捕获。方法上采用异构智能体近端策略优化(HAPPO)，结合课程学习与对抗风智能体进行协同控制策略训练，并在NVIDIA Isaac Lab中与课程域随机化基线对比。结果表明所学策略在对抗扰动下更具鲁棒性，为海上无人机空中拦截捕获提供了可行思路。",
+      "llm_tldr": "针对海上风扰与舰船甲板运动导致无人机回收着陆可靠性下降的问题，本文研究由船载机械臂在仿真环境中完成四旋翼空中捕获。方法上采用异构智能体近端策略优化(HAPPO)，结合课程学习与对抗风智能体进行协同控制策略训练，并在NVIDIA Isaac Lab中与课程域随机化基线对比。结果表明所学策略在对抗扰动下更具鲁棒性，为海上无人机空中拦截捕获提供了可行思路。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
