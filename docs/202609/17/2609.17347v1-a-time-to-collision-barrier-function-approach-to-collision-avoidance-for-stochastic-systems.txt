@@ -1,0 +1,729 @@
+Title: A Time-to-Collision Barrier Function Approach to Collision Avoidance for Stochastic Systems
+
+URL Source: https://arxiv.org/pdf/2609.17347v1
+
+Published Time: Wed, 16 Sep 2026 01:39:36 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+Copyright (c) 2026 IEEE 
+
+# A Time-to-Collision Barrier Function Approach to Collision Avoidance for Stochastic Systems 
+
+Benedikt Barthel Sorensen 1 Mitchell Black 2 Erfaun Noorani 2 Themistoklis P. Sapsis 1
+
+Abstract — Collision avoidance constraints for autonomous systems are typically formulated in position or velocity space, implicitly reacting to geometric proximity. We propose an alternative paradigm based on the adversarial time-to-collision (aTTC): the minimum time in which an adversary could achieve a collision given its dynamical constraints. By defining a control barrier function (CBF) directly in the time domain, the resulting controller is inherently anticipatory. The evading agent responds not only to whether a pursuer is on a collision course, but to how quickly it could reach one. This formulation enables velocity modulation that exploits the pursuers dynamic limits as an evasive strategy, a behavior not captured by standard distance-based CBFs. Since exact aTTC computation requires integrating the full system dynamics, we employ a lightweight neural network surrogate that admits a real-time quadratic program-based control law. We validate the approach in a 2D comparative study and a 3D multi-agent pursuit-evasion scenario, where the aTTC-based CBF outperforms a higher-order distance-based baseline by more effectively buying time against superior pursuers with a significant speed advantage. 
+
+I. I NTRODUCTION 
+
+Collision avoidance in multi-agent autonomous systems is a fundamental problem with broad relevance, such as robotic navigation in complex environments to autonomous vehicles operating in dense urban traffic. It requires tracking other agents’ positions, velocities, and behaviors while minimizing collision risk. This is challenging due to dynamic, uncertain interactions, demanding efficient, real-time risk assessment that can be integrated into control policies. One approach is the control barrier function (CBF), which enforces safety through a forward invariance condition that can be encoded as a linear constraint on the control solution to a quadratic program (QP). The domain of safety is defined with respect to the barrier function. Forward invariance, and thus safety, is then obtained by placing a constraint on the rate-of-change of the barrier function, ensuring that no barrier crossings will occur [1]–[4]. Another approach is the velocity obstacle (VO), which defines for a given agent and a moving obstacle the set of velocity vectors which would give rise to a collision if both maintained constant velocity for some time [5]. These ideas have recently been combined in so called Velocity Obstacle CBFs (VO-CBFs)       
+
+> DISTRIBUTION STATEMENT A. Approved for public release. Distri-bution is unlimited. Accepted for presentation at the 65th IEEE Conference on Decision and Control (CDC 2026), Honolulu, Hawaii, USA.
+> 1Department of Mechanical Engineering, Massachusetts Institute of Tech-nology, Cambridge, MA, USA; {bbarthel,sapsis }@mit.edu .
+> 2MIT Lincoln Laboratory, Lexington, MA, USA;
+> first.last@ll.mit.edu .
+
+which construct the barrier function in terms of the VO ge-ometry rather than standard distance-based formulation [6], [7]. Other CBF alternatives have been proposed including the Future-Focused CBF [8], which guarantees safety over arbitrarily long time horizons, and the Collision Cone CBF (C3BF), which is based on line-of-sight to the obstacle [9]. In many situations the obstacles encountered by an agent are not simply neutral moving objects, but other autonomous agents. If these agents are cooperative , the burden of avoid-ing collision between any pairs of agents can be split such that each agent only executes a fraction of the necessary evasive maneuver [10]. Such a control scheme can be de-centralized and parallelized as long as each agent assumes 
+
+that all others obey the same control logic [11]. Adversarial 
+
+collision avoidance is the opposite limiting case where the agent(s) must assume that any other agent is actively seeking 
+
+collision. This problem has been addressed from game-[12] and control-theoretic perspectives such as CBFs [13]. However, these studies were restricted to 2D motion with fixed speed and considered only very short duration missions and thus did not provide statistical analysis of the long term collision avoidance capability. In this work, we propose a temporal CBF formulation where the barrier function is neither defined in Euclidean space nor velocity, but directly in time. To this end, we build on the concept of time-to-collision (TTC), a standard metric in automotive safety [14], [15]. At any instant the TTC is the time to collision between two agents were they to continue on their current trajectory at their current speed. Time is in fact the natural dimension in which to measure collision risk. Consider that when negotiating rush-hour traffic, ski slopes, or a crowded concert venue, we generally navigate by an intuitive sense of our reaction time rather than an explicit evaluation of relative distances and speeds. TTC also captures both distance and speed in one measure: something far away but fast can be more dangerous than something close but still. In fact, this concept has been applied to collision avoidance with static obstacles [16], and integrated with the previously mentioned VO-CBF framework [7]. 
+
+Contributions. The main contributions of this work are:  
+
+> •
+
+Time-to-collision metric: We introduce a worst-case 
+
+extension of TTC called adversarial TTC (aTTC) where it is assumed that one agent drives towards collision under maximum control effort. Assuming controllable dynamics, this metric is always finite and thus serves as a natural fit for real-time control.  
+
+> •
+
+TTC-CBF: We demonstrate how to construct a stochas-tic CBF using aTTC, and show that its use in control arXiv:2609.17347v1 [eess.SY] 15 Sep 2026 Copyright (c) 2026 IEEE design confers a lower bound on the probability that a multi-agent system remains collision-free.  
+
+> •
+
+Experimental validation: We train a differentiable surrogate model for aTTC, synthesize it in a stochastic CBF-QP control law, and compare this approach against existing methods in proactive CBF control on a set of planar collision avoidance trials. We also highlight its efficacy on a 3D pursuit-evasion scenario. The paper is organized as follows. In Section II, we review preliminaries and formalize the problem under consideration. Section III introduces our solution, the TTC-CBF. In Section IV, we demonstrate the efficacy of our method over existing approaches in two simulated case studies, and in Section V, we conclude with a summary and directions for future work. II. P ROBLEM FORMULATION 
+
+Notation : R and R+ denote the set of real and non-negative real numbers respectively. A bolded xt denotes a vector stochastic process at time t. The trace of a ma-trix M ∈ Rn×n is Tr (M ), and blkdiag( M 1, . . . , M n)
+
+denotes the block-diagonal matrix with diagonal blocks 
+
+M 1, . . . , M n. The Lie derivative of a function ψ : Rn → R
+
+along a vector field f : Rn → Rn at a point x ∈ Rn is 
+
+Lf ψ(x) ≜ ∂ψ ∂x f (x).Consider a system of N agents, where each agent i ∈ I 
+
+evolves according to the stochastic differential equation 
+
+dxit = μi(xit, uit) d t + σi(xit) d W it, xi 
+
+> 0
+
+∈ X i 
+
+> 0
+
+, (1) where xit ∈ X i ⊆ Rn denotes the state and X i 
+
+> 0
+
+the compact initial set, the control uit = ki(x1 
+
+> t
+
+, . . . , xNt ) : X 1 × . . . ×X N → U i ⊆ Rm is generated by a memoryless, state-feedback control law, and W it is a standard q-dimensional Wiener process on a complete probability space. The drift is control-affine, 
+
+μi(x, u) ≜ f i(x) + gi(x)u, (2) where f i : X i → Rn, gi : X i → Rn×m, and diffusion term 
+
+σi : X i → Rn×q are all locally Lipschitz. We let Φki
+
+(xi, τ )
+
+denote the flow of the deterministic closed-loop dynamics of (1) under control policy ki, mapping initial condition xi
+
+at time t to the state at time t + τ . Stacking the individual states, inputs, and disturbances yields the joint system 
+
+dxt =  F (xt) + G(xt)ut
+
+ + Σ( xt)d W t, x0 ∈ X 0, (3) where x = (x1, . . . , xN ) ∈ X , u = k(x) =(u1, . . . , uN ) ∈ U, W = (W 1, . . . , W N ), and 
+
+F (x) = [f 1(x1)⊤, . . . , f N (xN )⊤]⊤, and G(x) =blkdiag  g1(x1), . . . , g N (xN ).Over any compact domain D ⊂ X , the above conditions guarantee existence of a strong solution to (3). For strong solutions, the (infinitesimal) generator is defined as follows. 
+
+Definition II.1. [17, Def. 7.3.1] The (infinitesimal) generator 
+
+A of xt is defined by 
+
+Aψ(y) = lim 
+
+> t↓0
+
+E [ψ(xt) | x0 = y] − ψ(y)
+
+t ,
+
+where ψ : Rn 7 → R belongs to DA, the set of all functions such that the limit exists for all x ∈ Rn.
+
+Analogous to the Lie derivative for deterministic systems, the generator characterizes the expectation of the derivative of a function ψ over the trajectories of (3). By [17, Thm. 7.3.3], for a twice continuously differentiable function ψ with compact support, the generator A of xt is described by       
+
+> Aψ(x) = LFψ(x) + LGψ(x)k(x) + 12Tr
+> 
+> Σ( x)T∂2ψ∂x2Σ( x)
+> 
+> ,
+
+alternatively denoted Aψ(x, u) by replacing k(x) with u.The objective of this paper is to design a memoryless, state-feedback controller uit = ki(xt) for each agent i ∈ I 
+
+such that the probability of any inter-agent collision over 
+
+[0 , T ] is bounded from above. The predominant approach in the literature is to define collision-free states as those for which inter-agent spatial distances remain above a safe threshold. We instead use temporal distance: the predicted time remaining until a spatial collision, and thus define the 
+
+time-to-collision (TTC) between agents i and j as 
+
+τ ∗ 
+
+> ij
+
+(x) ≜ inf 
+
+n
+
+τ ≥ 0 ∥Φki
+
+(xi, τ ) − Φkj
+
+(xj , τ )∥ ≤ 2r
+
+o
+
+, (4) where r > 0 is the collision radius. We also introduce a critical time τc > 0 as a lower bound on the admissible inter-agent TTCs so that all states x ∈ X for which τ ∗ 
+
+> ij
+
+(x)−τc ≥ 0
+
+are deemed safe. Practically, τc quantifies the minimum time available for an intervening policy (e.g., emergency braking) to respond before a collision occurs. Stochastic control barrier functions (SCBFs) are one tool for limiting the probability of exiting such a set of safe states. Let B : X → R+ be a twice continuously differentiable function encoding the unsafe (colliding) and safe (collision-free) configurations as C and S respectively, such that 
+
+C = {x ∈ X | B(x) ≥ 1}, (5) 
+
+S = {x ∈ X | 0 ≤ B(x) < 1}. (6) It is assumed that B(x0) ≤ γ < 1. Let ρ denote the probability that the system enters the unsafe set within a time interval of length T < ∞, i.e., 
+
+ρ ≜ P {∃ t ∈ [0 , T ] : x ∈ C | B(x0) ≤ γ} . (7) 
+
+Definition II.2 ([18]) . Given the set S ⊂ D ⊂ X defined by 
+
+(6) for a twice continuously differentiable function B : X → 
+
+R+, the function B is a stochastic control barrier function 
+
+(SCBF) for (3) on D if there exist α, β ≥ 0 such that, for all x ∈ D ,
+
+inf  
+
+> u∈U
+
+AB(x, u) ≤ − αB (x) + β. (8) 
+
+Theorem II.3 ([18]) . Consider a stochastic system of the form (3) and a set S defined by a function B as in (6) . If B
+
+is a SCBF for (3) over S, then 
+
+ρ ≤
+
+
+
+1 − (1 − γ) e−βT ; α > 0 and α ≥ β, 
+
+γ + ( eβT − 1) βα
+
+
+
+e−βT ; α > 0 and α < β, γ + βT ; α = 0 .
+
+(9) Copyright (c) 2026 IEEE 
+
+Because the joint dynamics (3) inherit a block-diagonal structure from the decoupled agent dynamics (1), the Lie derivatives present in AB(x) in (8) decompose as 
+
+LF h(x) = 
+
+> N
+
+X
+
+> i=1
+
+∂h ∂x i
+
+fi(xi), LGh(x)u =
+
+> N
+
+X
+
+> i=1
+
+∂h ∂x i
+
+gi(xi) ui,
+
+so that the SCBF condition can be evaluated and enforced using each agent’s local dynamics, while the safety guarantee remains rigorously defined at the joint level. In Section III, we introduce the notion of TTC-CBFs for collision-free multi-agent control design. III. T IME -TO -C OLLISION CBF S
+
+In this section, we first introduce our time-to-collision (TTC) metric, which we use to formulate our Stochastic TTC-CBF. We then define the adversarial time-to-collision (aTTC), which quantifies the earliest time a pursuing agent could collide with a non-reactive agent. We construct a fast, fully differentiable surrogate model for this metric to enable efficient computation, and incorporate the aTTC model into a predictive control law, providing probabilistic collision avoidance guarantees. 
+
+A. Time-to-Collision 
+
+We are now ready to introduce one of our main contribu-tions, a Stochastic Time-to-Collision CBF. 
+
+Definition III.1. Given two agents i, j ∈ I , the TTC metric 
+
+(4) , and a critical time τc > 0, the Stochastic Time-to-Collision CBF (S-TTC-CBF) is defined as 
+
+Bij (x) = exp( τc − τ ∗ 
+
+> ij
+
+(x)) , (10) 
+
+with the associated safe (collision-free) set 
+
+Sij = x ∈ X | τ ∗ 
+
+> ij
+
+(x) > τ c . (11) The exponential form in (10) is deliberate: by normalizing against τc, the function Bij takes values in (0 , 1) on the set Sij , making it directly compatible with the unit-interval requirements of stochastic CBF theory. For each pair (i, j ), define the set of admissible controls satisfying the SCBF condition: 
+
+Vij (x) ≜ {u ∈ U | A Bij (x, u) ≤ − αB ij (x) + β}. (12) The following theorem establishes the probabilistic safety guarantee provided by S-TTC-CBFs. 
+
+Theorem III.1. Consider the stochastic multi-agent sys-tem (3) with S-TTC-CBFs Bij defined for all pairs (i, j ) ∈P = {(i, j ) : i, j ∈ A, i < j} by (10) for sets Sij 
+
+defined by (11) . Suppose that each Bij (x0) ≤ γij < 1
+
+with SCBF parameters αij , β ij ≥ 0. If a Lipschitz con-tinuous control law satisfies k(x) ∈ T 
+
+> (i,j )∈P
+
+Vij (x), then the trajectories of (3) are collision-free with probability at least 1 − P 
+
+> (i,j )∈P
+
+ρij , where each ρij is given by (9) with 
+
+(α, β, γ ) = ( αij , β ij , γ ij ).Proof. Fix a pair (i, j ) ∈ P . By hypothesis, Bij defined by (10) is an SCBF for (3) with parameters αij , β ij ≥ 0 and initial condition satisfying Bij (x0) ≤ γij < 1. Since k(x) ∈T 
+
+> i,j
+
+Vij (x), the SCBF condition (8) holds for Bij along the closed-loop trajectories of (3). Applying Theorem II.3 to the pair (i, j ) yields 
+
+P{∃ t ∈ [0 , T ] : Bij (xt) ≥ 1} ≤ ρij , (13) where ρij is given by (9) with (α, β, γ ) = ( αij , β ij , γ ij ).A collision in the multi-agent system occurs if and only if at least one pair enters its unsafe set, i.e., 
+
+∃ t ∈ [0 , T ] : xt /∈ T 
+
+> (i,j )∈P
+
+Sij =
+
+[
+
+> (i,j )∈P
+
+∃ t ∈ [0 , T ] : Bij (xt) ≥ 1 .
+
+By the union bound, 
+
+P
+
+n
+
+∃ t ∈ [0 , T ] : xt /∈ T 
+
+> (i,j )∈P
+
+Sij 
+
+o
+
+≤ X
+
+> (i,j )∈P
+
+ρij .
+
+Note that when the SCBF parameters are uniform across all pairs ( αij = α, βij = β, γij = γ for all (i, j )), the above simplifies to ρij = ρ for all pairs and the collision probability is P 
+
+> (i,j )∈P
+
+ρij =  N
+
+> 2
+
+ρ.By considering time-to-collision (TTC) between agents, one can account for the time required to execute a precau-tionary, evasive, or emergency maneuver (commonly referred to as a backup policy), rather than just their instantaneous separation and its rate of change. This approach naturally incorporates the dynamics of the system and ensures that agents have sufficient time to react and avoid collisions. We now define two associated sets: 
+
+Sij  
+
+> 0
+
+= {x ∈ X | τ ∗ 
+
+> ij
+
+(x) > 0}, (14) 
+
+Sij B = {x ∈ X | τ ∗ 
+
+> ij
+
+(x) > 2τc}, (15) comprising, respectively, the states with positive TTC and those with TTC exceeding 2τc.
+
+Assumption 1. For each agent i ∈ I , there exists a backup policy πiB : X i → Ui such that, from any state x with 
+
+τ ∗ 
+
+> ij
+
+(x) ≤ τc for some j̸ = i, the closed-loop trajectory of agent i under πiB satisfies: 
+
+1) (Recovery) For the critical pair (i, j ),
+
+P
+
+n
+
+Φ( xi, t +τ ) ∈ S ij  
+
+> 0
+
+, ∀τ ∈ [0 , τ c], and 
+
+Φ( xi, t +τc) ∈ S ij B
+
+o
+
+≥ pB ,
+
+(16) 2) (Non-interference) For all other pairs (i, ℓ ) with ℓ̸ =
+
+j, the backup policy does not violate the SCBF condi-tion, i.e., 
+
+ABiℓ (x, π iB (xi), uℓ) ≤ − αiℓ Biℓ (x) + βiℓ , (17) 
+
+for all uℓ ∈ U ℓ,for some pB ∈ (0 , 1) .
+
+In short, this assumes that, with probability at least pB ,the backup policy keeps the system collision-free over the interval [t, t + τc] and returns it to the set Sij B by time t + τc.Copyright (c) 2026 IEEE 
+
+Corollary III.0.1. Suppose that Assumption 1 holds in addition to the premises of Theorem III.1. For each agent 
+
+i ∈ I , let mi(t) ∈ { 0, 1} with mi(0) = 0 and dynamics: 
+
+mi(t+) = 
+
+
+
+1, if ∃j̸ = i : τ ∗ 
+
+> ij
+
+(x) ≤ τc,
+
+0, if τ ∗ 
+
+> ij
+
+(x) ≥ 2τc, ∀j̸ = imi(t), otherwise. 
+
+(18) 
+
+Under the control policy where each agent i ∈ I applies 
+
+ki(x) = 
+
+(
+
+ui(x), if mi(t) = 0 ,πiB (x), if mi(t) = 1 , (19) 
+
+where the joint nominal control u(x) = ( u1(x), . . . , u N (x)) 
+
+satisfies u(x) ∈ T 
+
+> (i,j )∈P
+
+Vij (x), the trajectories of (3) 
+
+are collision-free with probability at least 1 − (1 −
+
+pB ) P 
+
+> (i,j )∈P
+
+ρij .Proof. For each pair (i, j ) ∈ P , define the events 
+
+Eij  
+
+> 1
+
+≜ ∃ t ∈ [0 , T ] : τ ∗ 
+
+> ij
+
+(xt) ≤ τc ,Eij  
+
+> 2
+
+≜ ∃ t ∈ [0 , T ] : mi(t−) = 0 , m i(t+) = 1 ,
+
+{Φ( xt, t + τc) /∈ S ij B or 
+
+∃τ ∈ [0 , τ c] : Φ( xt, t +τ ) /∈ S ij  
+
+> 0
+
+} ,Eij C ≜ ∃ t ∈ [0 , T ] : τ ∗ 
+
+> ij
+
+(xt) ≤ 0 .
+
+That is, Eij  
+
+> 1
+
+denotes the CBF condition failing to maintain 
+
+τ ∗ 
+
+> ij
+
+> τ c, Eij  
+
+> 2
+
+denotes backup activation followed by failure to recover to Sij B while remaining collision-free, and Eij C
+
+denotes a collision. A collision between agents i and j requires both a breach of the CBF margin and a subsequent backup failure, so 
+
+Eij C ⊆ Eij  
+
+> 1
+
+∩ Eij  
+
+> 2
+
+. Therefore, 
+
+P[Eij C ] ≤ P[Eij  
+
+> 2
+
+| Eij  
+
+> 1
+
+] P[Eij  
+
+> 1
+
+].
+
+When mi = 0 for all i ∈ I , the joint control satisfies u(x) ∈T 
+
+> (i,j )∈P
+
+Vij (x), so the hypotheses of Theorem III.1 hold and 
+
+P[Eij  
+
+> 1
+
+] ≤ ρij . Conditioned on Eij  
+
+> 1
+
+, when both agents i and j
+
+activate their backup policies the pair recovers successfully with probability at least pB by Assumption 1, so P[Eij  
+
+> 2
+
+|
+
+Eij  
+
+> 1
+
+] ≤ 1 − pB . Hence, 
+
+P[Eij C ] ≤ (1 − pB ) ρij .
+
+Any collision in the system requires at least one pairwise collision, so by the union bound, 
+
+P
+
+ [
+
+> (i,j )∈P
+
+Eij C
+
+ ≤ (1 − pB ) X
+
+> (i,j )∈P
+
+ρij ,
+
+yielding collision-free probability at least 1 − (1 −
+
+pB ) P 
+
+> (i,j )∈P
+
+ρij .Note that when τ ∗ 
+
+> ij
+
+(x) ≤ τc, both agents i and j have 
+
+mi(t+) = mj (t+) = 1 and independently switch to their respective backup policies πiB and πjB . In practice, backup policies depend on the system dynamics and often require pre-coordinated agreement in the multi-agent setting. The theoretical deconfliction probability achieved by a backup policy would be evaluated offline via, e.g., Monte Carlo analysis. Thus far, the control policies governing the closed-loop flow Φ( x, t ) have been left unspecified, intentionally so as to provide a modular framework. We now fix a specific policy pair for defining a worst-case collision metric. 
+
+B. Adversarial Time-to-Collision 
+
+We build on the concept of TTC and define the adversarial time-to-collision (aTTC) between agents i, j ∈ I as the earliest time at which the distance between i and j falls below the collision threshold r under deterministic dynamics and the following assumptions: agent i applies zero control (uit = 0) for all t ∈ [0 , T ], while agent j pursues i at maximum acceleration and velocity. The aTTC thus captures the worst-case collision time between a nonreactive agent i
+
+and a maximally adversarial agent j. We ignore stochasticity when defining aTTC in order to arrive at a deterministic metric whose gradients are well defined and amenable to integration into a QP-based control law. 
+
+Definition III.1 (aTTC) . Given agents i, j ∈ I with xi ∈X i, xj ∈ X j , the adversarial time-to-collision (aTTC) is 
+
+τ ∗ 
+
+> ij
+
+= inf 
+
+n
+
+τ ≥ 0 Φ0(xi, τ ) − ΦπjP
+
+ xj , τ  ≤ 2r
+
+o
+
+, (20) 
+
+where r > 0 is the radius of each agent and πjP : X j ×X i → U j is the pursuit policy that maximizes the closing rate subject to velocity and acceleration bounds of agent j.
+
+Proposition III.2. Consider agents i, j ∈ I governed by (1) 
+
+with agent i applying zero control. If the maximum speed of agent j exceeds that of agent i, i.e., vj 
+
+> max
+
+> v i
+
+> max
+
+, and the dynamics of agent j are controllable, then τ ∗ 
+
+> ij
+
+< ∞ for any initial configuration (xi, xj ) ∈ X i × X j .Proof. Under zero control, agent i follows the drift dynam-ics ˙xi = f i(xi), which, given the bound vi
+
+> max
+
+, traces a trajectory in X i with a speed of at most vi
+
+> max
+
+. Consider the relative displacement xr (t) = xj (t) − Φ( xi, 0, t ). In these coordinates, agent j must drive ∥xr ∥ below 2r. Since 
+
+vj 
+
+> max
+
+> v i
+
+> max
+
+, agent j has a strictly positive surplus speed 
+
+∆v = vj 
+
+> max
+
+− vi 
+
+> max
+
+> 0. By controllability, there exists a finite reorientation time tr ≥ 0 after which agent j can direct its surplus velocity toward agent i, reducing ∥xr (t)∥
+
+at a rate of at least ∆v for all t > t r . During [0 , t r ], the separation grows by at most (vi 
+
+> max
+
++ vj
+
+> max
+
+) tr . Therefore, 
+
+τ ∗ 
+
+> ij
+
+≤ tr + ∥xr (0) ∥ + ( vi 
+
+> max
+
++ vj
+
+> max
+
+) tr − 2r
+
+∆v < ∞, (21) which establishes the existence of a finite aTTC. 
+
+Remark 1. The proposition guarantees that the aTTC is well-defined and finite whenever a pursuer is faster than a nonreactive agent. Conceptually, aTTC quantifies the earliest time an agent would collide with the nonreactive agent under worst-case dynamics, not the agent’s actual intent. As such, aTTC serves as a robust metric of adversarial risk. Copyright (c) 2026 IEEE 
+
+C. Surrogate Modeling 
+
+Direct computation of the aTTC requires integrating the system dynamics forward from the current state to predicted collision, a computationally demanding task in all but the simplest models. Furthermore, integration into an optimiza-tion based control law requires a differentiable representation of the mapping from the system state to the aTTC. In order to build a fast and differentiable surrogate model we use a neural network. For any two agents, the aTTC depends primarily on their relative position ∆x ≡ xi − xj , and their velocities as vi
+
+vj . Secondarily to the relative states, the aTTC also depends on three parameters: the collision radius r, the maximum velocity: vmax , and the maximum acceleration amax . For clarity of exposition we will assume constant r and amax .We then seek a parametric model 
+
+Gθ [∆ x, v i, v j , v max ] : X × R × R × R → R (22) with parameters θ which models the forward integration of (1) implicit in the definition (4). As our surrogate model we utilize a simple 3-layer fully connected neural network (NN) (layer sizes: 128-128-64) which maps ∆x, v i, v j , v max →
+
+τ ∗. As the aTTC is a deterministic function of the system state at any instance in time no recurrent architecture is needed. As previously mentioned, the aTTC depends crit-ically on not just the state but also on the assumed system parameters, most notable the maximum speed of the pursuer. Therefore if the surrogate model is to be applicable to a range of possible pursuer types, its predictions should be condi-tioned on those parameters. In this case, we incorporate the parametric dependence on vmax through Feature-wise Linear Modulation (FiLM) [19] which adds a small parallel fully-connected branch that takes as input the system parameters and modulates the activation function of the main branch. Specifically, for a layer with weights and biases W and b, and activation function a( ·) the standard output yout = a( W x +b)
+
+is replaced by 
+
+z = γ ⊙ (W x + b) + βyout = a( z)
+
+where γ and β are learned by a parallel branch of the NN and ⊙ is the element-wise Hadamard product. The NN is trained using a weighted Huber loss 
+
+L (ˆ τ ∗, τ ∗) = 1
+
+τ ∗ LH (ˆ τ ∗, τ ∗)
+
+where the 1/τ ∗ weight emphasizes low aTTC (high risk) configurations. We utilize this simple weight as opposed to probability-based weighted losses [20], as these overempha-size the rare, but unimportant, large values of τ ∗. The Huber loss itself is defined as 
+
+LH (ˆ τ ∗, τ ∗) = 
+
+( 12 (τ ∗ − ˆτ ∗)2, if |τ ∗ − ˆτ ∗| ≤ δδ  |τ ∗ − ˆτ ∗| − 12 δ , otherwise .
+
+The Huber loss [21] applies a mean-squared-error (MSE) loss to small outputs and a linear loss to larger values. This ensures smooth behavior near zero without overly weighting errors for large values of τ ∗.
+
+D. Control Strategy 
+
+As a control policy, we adopt the following CBF-QP-based control law: 
+
+u∗(x) = arg min 
+
+> u∈U
+
+12 ∥u − u0(x)∥M , (23a) s.t. 
+
+AB(x,u) ≤ − αB (x) + β, (23b) where (23a) seeks to minimize the deviation from the nom-inal controller u0 : X → U under a weighting matrix M ∈
+
+Rm×m, and (23b) enforces the stochastic CBF constraint. We define B in terms of the learned surrogate model for the aTTC (22) 
+
+B(x) = exp ( τc − Gθ [∆ x, ∆v, v max ]) , (24) where τc is a user defined safety threshold. Note that as a NN, Gθ is fully differentiable so the generator in (23b) may be computed at each time step. We note that NNs have also been used to learn forward invariance conditions directly from data [22]–[25] an idea that has recently been extended to multi-agent systems through graph NNs [4]. Additionally, CBFs have been incorporated directly as differentiable layers into the architecture of NNs [26]. These have the advantage of being compatible with any NN based controller and are trainable by existing gradient descent algorithms. IV. S IMULATION & R ESULTS 
+
+A. Comparative Study: Planar Collision Avoidance 
+
+Our first case study examines the proposed aTTC-CBF-based controller on a 2D (planar) double integrator over 1000 stochastic trials. An aTTC-CBF-controlled agent perturbed by Brownian motion process noise travels along the x-axis in the positive direction, while a second, constant-velocity agent travels along the y-axis in the negative direction, creating a potential collision near the origin. The first agent’s diffusion term is taken to be σ(x) = diag(1 , 0, 0, 0) , and it starts at [x, y, v x, v y ] = [ −5, 0, 1, 0] , whereas the second agent begins at [0 , 5, 0, −1] . Under constant-velocity motion and an agent radius of r = 1, this configuration leads to a collision at t ≈ 3.6s. The first agent’s control is restricted to acceleration along the x-axis (i.e., no y-direction input), and the second agent applies zero control. As described in Section III, we train a NN to generate the aTTC value at runtime. For comparison, we also simulate the first agent under a collision cone CBF [9], a velocity obstacle CBF [7], and a relaxed future-focused CBF [8]. Each uses the control law (23) with B(x) = exp( −kh (x)) , where h is the form of (zeroing) CBF of the compared work, k > 0 is chosen so that 
+
+B(x0) = 0 .1, and parameters α = 1 , β = 0 .018 , yielding a collision risk bound of ρ ≤ 0.25 for all controllers. The results of the study are summarized in Table I. The aTTC-CBF controller achieves a safety rate of 0.918, well above the 0.75 guaranteed by Theorem II.3, while also attaining the highest goal rate (the frequency of successfully Copyright (c) 2026 IEEE    
+
+> Fig. 1. Mean and +1 σS-CBF values for the four compared controllers in the planar collision avoidance example over 1000 simulated trials.
+> Fig. 2. Mean and +/-1 σ x -coordinate trajectories for the four compared controllers in the planar collision avoidance example over 1000 simulated trials.
+
+reaching the origin) at 63%. It also records the second-longest average time to first collision, trailing only the VO-CBF method, which is so conservative that it crosses the origin in just 4% of trials. Figure 1 shows the mean values of B(x) for each con-troller, with shaded regions indicating the +1 σ range. The aTTC-CBF maintains consistently low values of B (safe), while the other methods exhibit spikes corresponding to dan-gerous configurations both early and late in the simulation. Figure 2 shows the mean ±1σ x-trajectories of the first agent under each controller. The aTTC-CBF makes steady, collision-free progress toward its goal, whereas the remaining methods either are overly conservative (C3BF, VO-CBF) or collide at rates exceeding the theoretical bound (RFF-CBF), indicating that the S-CBF condition cannot be satisfied at all times. In what follows, we examine the effect of aTTC-CBF control in a multi-agent, pursuit-evasion scenario.                    
+
+> aTTC-CBF C3BF VO-CBF RFF-CBF Safety Rate 0.918 0.976 0.783 0.624 Goal Rate 0.630 0.060 0.043 0.590 Avg. 1 st Collision (s) 7.80 1.49 9.38 3.62 TABLE I SAFETY ,GOAL PROGRESS ,AND COLLISION TIMING STATISTICS FOR THE PLANAR STUDY .
+> Fig. 3. Conditional MAE and MPE for Dubins aTTC NN surrogate model. Training data in dashed lines w/circles, test data in solid lines.
+
+B. Comparative Study: 3D Dubin’s Dynamics 1) Neural Network Training: To generate the training data we construct a series of scenarios where two agents governed by the 3D Dubin’s model described in [27] navigate 3D space, e.g., follow randomly spaced way-points. The various scenarios are chosen to expose the NN to a wide array of relative positions and velocities. For these trajectories we then compute the aTTC for a range of vmax each of which leads to an independent set of paired training data: [∆ x, v i, v j , v max ] → τ ∗(vmax ). The total training data consists of 50,000 seconds of simulation at time steps of 0.1 for which we compute the aTTC at three distinct pursuer-to-evader max speed ratios: 1.2, 2.4, and 3.6. The first 75% of the data is used for training and the remaining 25% is used to evaluate the trained model. Figure 3 shows the conditional mean absolute error (MAE) and mean percentage error (MPE) – that is to say the error when evaluated on samples with τ ∗ < T as a function of T . We note that tor high-risk configurations ( τ ∗ < 10 s) the model achieves an MAE of well under 1s and that the NN generalizes well, having comparable errors on both the training and test data sets. 
+
+2) Numerical Experiment: As a numerical experiment we consider a stochastically forced 3D Dubin’s model [27] where each agent’s state x = [ x, y, z, γ, ψ, v ]T corresponds to the spatial positions x, y, z as well as the pitch, and yaw angles γ, ψ , and speed v. The forcing (process noise) is assumed to be a Weiner process with fixed variance. All agents are equipped with proportional heading and speed control. There is an evader agent, whose nominal control objective is to orbit a fixed way-point at a desired speed of 0.25 km/s while avoiding collisions with five pursuer agents using the aTTC-based CBF introduced in Section III-D. The pursuers attempt to intercept the evader through a proportional control scheme that navigates towards a far off point collinear with the pursuer and agent, which ensure the pursuer attempts to intercept the evader at maximum speed, which is set to vmax,p = 0 .75 km/s (50% higher than that of the evader vmax,e = 0 .5km/s). In order to obtain a statistical Copyright (c) 2026 IEEE view of the collision avoidance skill we run the simulation for Tsim = 50 , 000 s. In order to illustrate the benefits of the aTTC-CBF we compare our method to a higher-order CBF (HOCBF) [28]. To facilitate a fair comparison the CBF parameters were made as similar as possible. Specifically, the aTTC-CBF relies on α and β in (23a) as well as the critical time 
+
+τc in (24). The HOCBF relies on three constants α1, α 2,
+
+β and a critical distance rmin . We fix β = 0 .01 , α =
+
+α1 = 0 .1, α2 = 1 , τc = 5 s, and rcbf = 1 km. We note that for this example, both the aTTC-CBF and the HOCBF have a per-call overhead of less than 1.0 ms in Matlab on a CPU and that due to the challenging setup of this problem, the CBF constraint will almost always be violated and the evader is generally trying to get to safety rather than 
+
+stay safe . We also emphasize that this comparison is not 
+
+intended to demonstrate the superiority of our approach to any specific state-of-the-art method but rather to illustrate phenomenologically the advantages of TTC-based CBFs. The headline results are summarized in Table II, the aTTC-CBF succumbs to 3.7 collisions per 100s vs. 16.2 per 100s for the HOCBF – more than 75% less. The aTTC-CBF is able to achieve this by directly encoding the dynamics con-strained closing speed between it and its pursuers – which allows it to more effectively modulate it’s own velocity. As a proxy for the types of evasive maneuvers demanded by each CBF we show in Figure 4 a scatter plot of the horizontal and vertical velocity components v cos( γ) and 
+
+v sin( γ) at the time of collision. The aTTC-CBF equipped agents exhibit significantly more velocity modulation – with collision speeds being relatively evenly distributed between 0 and the maximum. The HOCBF on the other hand uses very little vertical motion to escape the pursuers, instead relying purely on horizontal maneuvers. This discrepancy is directly a consequence of the dynamics-aware nature of aTTC. In this numerical experiment, the agents have a maximum yaw rate, ˙ψmax (horizontal turns) four-times greater than the maximum pitch rate, ˙γmax (vertical turns). The HOCBF is purely geometric and, knowing nothing of these limits, is biased towards acting in the direction with the highest control authority – in this case yaw. The aTTC-CBF on the other hand has implicitly learned these control limits and knows that the pursuers are subject to the same ˙γmax < ˙ψmax 
+
+constraint which allows it to more effectively apply the appropriate evasive strategy. This improved velocity modulation allows the aTTC-CBF to navigate between the pursuers more effectively. This is illustrated in Figure 5 which shows the probability density function (PDF) of minimum distance between the evader and the nearest pursuer, defined as min j (|x1 − xj |). The aTTC-CBF spends less time in the collision zone but also spends more time at intermediate distances (0.25-1.25km), indicating navigation in-and-among the pursuers. This ma-neuverability means that the aTTC-CBF equipped agents more effectively escape close encounter – defined here as a pursuer coming within twice the collision distance of the evader. For the HOCBF agents 69% of close encounters            
+
+> aTTC-CBF HOCBF Collision Rate (cols/100s) 3.7 16.2 Collision / Close Encounter 0.50 0.69 TABLE II HEADLINE RESULTS FOR MULTI -AGENT PURSUIT EVASION . T OTAL COLLISION RATE AND FRACTION OF CLOSE ENCOUNTERS :d < 4r
+> WHICH RESULTED IN A COLLISION :d < 2rPER EVADER -PURSUER PAIR .
+> Fig. 4. Scatter plot showing distribution of horizontal and vertical velocity at time of collision with mean values indicated with triangles – horizontal spacing is purely to improve readability.
+
+result in collisions, where as the aTTC-CBF agents escape 50% of these – see Table II. Finally, to evaluate the scalability of our framework we repeated the above experiment for increasing number of pursuing agents – holding all other parameters constant. We found that as expected the computational cost and the total collision rate scale linearly with the number of agents, though tabulated data was omitted due to space constraints. All the code needed to reproduce these results as well as videos of the simulation can be found at https://github.com/ ben-barthel/Temporal_Barrier_Functions 
+
+V. C ONCLUSIONS 
+
+In this work, we introduced time-to-collision (TTC) as a basis for proactive CBF-based control in stochastic multi-agent systems. We established a sufficient condition for prob-abilistic collision avoidance and proposed an adversarial TTC variant to provide robustness in the multi-agent setting. We demonstrated the success of our proposed controller on two case studies: a 2D double integrator benchmarked against existing methods, and a multi-agent pursuit-evasion scenario involving fixed-wing aircraft, both of which highlighted the advantages of using TTC in a CBF-based control law. ACKNOWLEDGMENTS 
+
+This material is based upon work supported by the Depart-ment of the Air Force under Air Force Contract No. FA8702-15-D-0001 or FA8702-25-D-B002. Any opinions, findings, Copyright (c) 2026 IEEE 
+
+Fig. 5. Probability density function (PDF) of minimum distance: 
+
+min j (|x1 −xj |) from evader to nearest pursuer. aTTC-CBF (blue), HOCBF (red). 
+
+conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the Department of the Air Force. REFERENCES [1] A. D. Ames, X. Xu, J. W. Grizzle, and P. Tabuada, “Control Barrier Function Based Quadratic Programs for Safety Critical Systems,” 
+
+IEEE Transactions on Automatic Control , vol. 62, no. 8, pp. 3861–3876, Aug. 2017. [Online]. Available: [2] A. D. Ames, S. Coogan, M. Egerstedt, G. Notomista, K. Sreenath, and P. Tabuada, “Control Barrier Functions: Theory and Applications,” Mar. 2019, arXiv:1903.11199 [eess]. [Online]. Available: [3] L. Wang, A. D. Ames, and M. Egerstedt, “Safety barrier certificates for collisions-free multirobot systems,” IEEE Transactions on Robotics ,vol. 33, no. 3, pp. 661–674, 2017. [4] S. Zhang, O. So, K. Garg, and C. Fan, “Gcbf+: A neural graph control barrier function framework for distributed safe multiagent control,” 
+
+IEEE Transactions on Robotics , vol. 41, pp. 1533–1552, 2025. [5] P. Fiorini and Z. Shiller, “Motion Planning in Dynamic Environments Using Velocity Obstacles,” The International Journal of Robotics Research , vol. 17, no. 7, pp. 760–772, Jul. 1998. [Online]. Available: [6] J. Huang, J. Zeng, X. Chi, K. Sreenath, Z. Liu, and H. Su, “Dynamic collision avoidance using velocity obstacle-based control barrier func-tions,” IEEE Transactions on Control Systems Technology , 2025. [7] A. S. Roncero, R. I. C. Muchacho, and P. ¨ Ogren, “Multi-agent obstacle avoidance using velocity obstacles and control barrier functions,” in 
+
+2025 IEEE International Conference on Robotics and Automation (ICRA) . IEEE, 2025, pp. 6638–6644. [8] M. Black, M. Jankovic, A. Sharma, and D. Panagou, “Future-focused control barrier functions for autonomous vehicle control,” in 2023 American Control Conference (ACC) . IEEE, 2023, pp. 3324–3331. [9] M. Tayal, B. G. Goswami, K. Rajgopal, R. Singh, M. T. Rao, J. Keshavan, P. Jagtap, and S. N. Yadukumar, “A collision cone approach for control barrier functions,” IEEE Transactions on Control Systems Technology , 2026. [10] J. Van Den Berg, Ming Lin, and D. Manocha, “Reciprocal Velocity Obstacles for real-time multi-agent navigation,” in 2008 IEEE International Conference on Robotics and Automation . Pasadena, CA, USA: IEEE, May 2008, pp. 1928–1935. [Online]. Available: [11] J. van den Berg, S. J. Guy, M. Lin, and D. Manocha, “Reciprocal n-Body Collision Avoidance,” in Robotics Research , C. Pradalier, R. Siegwart, and G. Hirzinger, Eds. Berlin, Heidelberg: Springer, 2011, pp. 3–19. [12] I. Exarchos, P. Tsiotras, and M. Pachter, “UAV Collision Avoidance based on the Solution of the Suicidal Pedestrian Differential Game,” in AIAA Guidance, Navigation, and Control Conference . San Diego, California, USA: American Institute of Aeronautics and Astronautics, Jan. 2016. [Online]. Available: [13] X. Lv, C. Peng, and J. Ma, “Control Barrier Function-Based Collision Avoidance Guidance Strategy for Multi-Fixed-Wing UAV Pursuit-Evasion Environment,” Drones , vol. 8, no. 8, p. 415, Aug. 2024. [Online]. Available: [14] J. C. Hayward, “Near miss determination through use of a scale of danger,” 1972. [15] O. Barhoumi, M. H. Zaki, and S. Tahar, “Formal Safety Guarantees for Autonomous Vehicles using Barrier Certificates,” Jan. 2026, arXiv:2601.09740 [cs]. [Online]. Available: [16] M. Bosnak and I. Skrjanc, “Efficient time-to-collision estimation for a braking supervision system with lidar,” in 2017 3rd IEEE international conference on cybernetics (CYBCONF) . IEEE, 2017, pp. 1–6. [17] B. Øksendal, Stochastic Differential Equations: An Introduction with Applications , 6th ed. Springer, 2003. [18] S. Yaghoubi, K. Majd, G. Fainekos, T. Yamaguchi, D. Prokhorov, and B. Hoxha, “Risk-bounded control using stochastic barrier functions,” 
+
+IEEE Control Systems Letters , vol. 5, no. 5, pp. 1831–1836, 2021. [19] E. Perez, F. Strub, H. d. Vries, V. Dumoulin, and A. Courville, “FiLM: Visual Reasoning with a General Conditioning Layer,” Dec. 2017, arXiv:1709.07871 [cs]. [Online]. Available: [20] S. Rudy and T. Sapsis, “Output-weighted and relative entropy loss functions for deep learning precursors of extreme events,” Dec. 2021, arXiv:2112.00825 [cs, math]. [Online]. Available: [21] P. J. Huber, “Robust Estimation of a Location Parameter,” The Annals of Mathematical Statistics , vol. 35, no. 1, pp. 73–101, Mar. 1964. [Online]. Available: [22] C. Dawson, Z. Qin, S. Gao, and C. Fan, “Safe Nonlinear Control Using Robust Neural Lyapunov-Barrier Functions,” Oct. 2021, arXiv:2109.06697 [eess]. [Online]. Available: [23] C. Dawson, S. Gao, and C. Fan, “Safe Control with Learned Certificates: A Survey of Neural Lyapunov, Barrier, and Contraction methods,” Dec. 2022, arXiv:2202.11762 [cs]. [Online]. Available: [24] H. Yu, C. Hirayama, C. Yu, S. Herbert, and S. Gao, “Sequential Neural Barriers for Scalable Dynamic Obstacle Avoidance,” Jul. 2023, arXiv:2307.03015 [cs]. [Online]. Available: [25] O. So, Z. Serlin, M. Mann, J. Gonzales, K. Rutledge, N. Roy, and C. Fan, “How to Train Your Neural Control Barrier Function: Learning Safety Filters for Complex Input-Constrained Systems,” Dec. 2023, arXiv:2310.15478 [math]. [Online]. Available: [26] W. Xiao, T.-H. Wang, R. Hasani, M. Chahine, A. Amini, X. Li, and D. Rus, “BarrierNet: Differentiable Control Barrier Functions for Learning of Safe Robot Control,” IEEE Transactions on Robotics ,vol. 39, no. 3, pp. 2289–2307, Jun. 2023. [Online]. Available: [27] T. McLain, R. W. Beard, and M. Owen, “Implementing dubins airplane paths on fixed-wing uavs,” 2014. [28] W. Xiao and C. Belta, “High-order control barrier functions,” IEEE Transactions on Automatic Control , vol. 67, no. 7, pp. 3655–3662, 2021.
