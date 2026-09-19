@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-09-19 <!--dpr-date:20260919-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/19/2609.20629v1-rtk-vision-ppo-for-autonomous-micro-uav-recovery-on-an-airborne-carrier" data-sidebar-item="{&quot;title&quot;: &quot;RTK-Vision PPO for Autonomous Micro UAV Recovery on an Airborne Carrier&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.20629v1-rtk-vision-ppo-for-autonomous-micro-uav-recovery-on-an-airborne-carrier&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;强化学习引导无人机与移动载体会合对接&quot;}">RTK-Vision PPO for Autonomous Micro UAV Recovery on an Airborne Carrier</a>
   * 2026-09-17 <!--dpr-date:20260917-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/17/2609.17265v1-calibrate-once-fly-any-team-residual-grounded-low-fidelity-training-for-cooperative-drone-swarms" data-sidebar-item="{&quot;title&quot;: &quot;Calibrate Once, Fly Any Team: Residual-Grounded Low-Fidelity Training for Cooperative Drone Swarms&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.17265v1-calibrate-once-fly-any-team-residual-grounded-low-fidelity-training-for-cooperative-drone-swarms&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;面向协同无人机集群训练的多智能体强化学习&quot;}">Calibrate Once, Fly Any Team: Residual-Grounded Low-Fidelity Training for Cooperative Drone Swarms</a>

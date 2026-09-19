@@ -1,0 +1,53 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-19T21:07:25.642027+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.20629v1",
+      "source": "arxiv",
+      "title": "RTK-Vision PPO for Autonomous Micro UAV Recovery on an Airborne Carrier",
+      "abstract": "Autonomous recovery of a micro unmanned aerial vehicle (UAV) onto a moving airborne carrier enables reusable deploy-mission-recover operation, but couples long-range rendezvous, close-range perception, carrier motion, aerodynamic interaction, and a discontinuous contact event. This paper presents an RTK-vision-guided reinforcement-learning framework in which a child UAV is physically transported by a larger carrier, takes off from the carrier while airborne, executes an independent sortie, returns to the carrier's current position, redocks, and subsequently descends with the carrier. Both vehicles carry RTK-GNSS, and the carrier continuously shares its navigation state with the child. Near the recovery deck, RTK remains active while a downward-facing camera with a fiducial marker detector provides marker-relative alignment cues. A proximal policy optimization (PPO) policy governing the terminal recovery phase is trained in a physics-based MuJoCo simulation environment with explicit sensor noise models, an aerodynamic disturbance surrogate, and marker-latency randomization, then transferred to hardware. PX4 retains low-level stabilization, and a deterministic safety gate authorizes descent independently of the learned policy. The PPO checkpoint achieves 99.55% success over 2,000 held-out randomized terminal episodes, compared with 78.4% for a tuned PD baseline under identical conditions, with a median planar terminal error of 6.62 cm. Across 14 outdoor trials, the full mission succeeds in 13 trials (92.9%), spanning both near-region recovery and recovery after the carrier translates away from the release point. The results demonstrate a complete autonomous aerial deployment-and-recovery cycle rather than an isolated landing maneuver, establishing a practical basis for reusable carrier-child operation in inspection, surveillance, and mobile-logistics applications.",
+      "authors": [
+        "Aashish Sahu",
+        "R Prasanth Kumar"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-09-17T16:16:37+00:00",
+      "link": "https://arxiv.org/pdf/2609.20629v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "RL-guided UAV rendezvous and docking with moving carrier",
+      "llm_evidence_cn": "强化学习引导无人机与移动载体会合对接",
+      "llm_evidence": "强化学习引导无人机与移动载体会合对接",
+      "canonical_evidence": "强化学习引导无人机与移动载体会合对接",
+      "llm_tldr_en": "Autonomous recovery of a micro UAV onto a moving airborne carrier couples long-range rendezvous, close-range perception and a discontinuous contact event. This RTK-vision-guided reinforcement-learning framework lets a child UAV return, redock and descend with the carrier.",
+      "llm_tldr_cn": "针对微型无人机在移动机载载体上自主回收这一难题，其难点在于远距会合、近距感知、载体运动与不连续接触事件的耦合。本文提出RTK视觉引导的强化学习框架，子机由载机携带并空中起飞执行独立任务，随后返回载机当前位置再对接下降。该框架将导航状态共享与近距视觉相结合，实现了动态目标接近与精确对接，对无人机拦截/追踪类任务具有方法借鉴意义。",
+      "llm_tldr": "针对微型无人机在移动机载载体上自主回收这一难题，其难点在于远距会合、近距感知、载体运动与不连续接触事件的耦合。本文提出RTK视觉引导的强化学习框架，子机由载机携带并空中起飞执行独立任务，随后返回载机当前位置再对接下降。该框架将导航状态共享与近距视觉相结合，实现了动态目标接近与精确对接，对无人机拦截/追踪类任务具有方法借鉴意义。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "autonomous drone interception using deep reinforcement learning",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

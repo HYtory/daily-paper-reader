@@ -1,0 +1,24 @@
+{
+  "label": "2026-09-19",
+  "date": "2026-09-19",
+  "generated_at": "2026-09-19T21:08:27",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202609/19/2609.20629v1-rtk-vision-ppo-for-autonomous-micro-uav-recovery-on-an-airborne-carrier",
+      "section": "quick",
+      "title_en": "RTK-Vision PPO for Autonomous Micro UAV Recovery on an Airborne Carrier",
+      "authors": "Aashish Sahu, R Prasanth Kumar",
+      "date": "2026-09-17",
+      "pdf": "https://arxiv.org/pdf/2609.20629v1",
+      "score": "6.0",
+      "evidence": "强化学习引导无人机与移动载体会合对接",
+      "tldr": "针对微型无人机在移动空中载体上自主回收难题，该工作提出RTK视觉引导的PPO强化学习框架，使子机由载体携载后空中起飞、执行独立任务、返回载体当前位置并重新对接。两机均搭载RTK-GNSS，载体持续共享导航状态；终端阶段融合RTK与下视标记检测，在MuJoCo中建模传感器噪声、气动扰动与标记延迟并迁移至实机。终端回收成功率99.55%，优于PD基线78.4%，中位平面误差6.62 cm；14次户外全任务成功13次，验证了完整空中布放-回收循环。",
+      "tags": "query:ui",
+      "abstract_en": "Autonomous recovery of a micro unmanned aerial vehicle (UAV) onto a moving airborne carrier enables reusable deploy-mission-recover operation, but couples long-range rendezvous, close-range perception, carrier motion, aerodynamic interaction, and a discontinuous contact event. This paper presents an RTK-vision-guided reinforcement-learning framework in which a child UAV is physically transported by a larger carrier, takes off from the carrier while airborne, executes an independent sortie, returns to the carrier's current position, redocks, and subsequently descends with the carrier. Both vehicles carry RTK-GNSS, and the carrier continuously shares its navigation state with the child. Near the recovery deck, RTK remains active while a downward-facing camera with a fiducial marker detector provides marker-relative alignment cues. A proximal policy optimization (PPO) policy governing the terminal recovery phase is trained in a physics-based MuJoCo simulation environment with explicit sensor noise models, an aerodynamic disturbance surrogate, and marker-latency randomization, then transferred to hardware. PX4 retains low-level stabilization, and a deterministic safety gate authorizes descent independently of the learned policy. The PPO checkpoint achieves 99.55% success over 2,000 held-out randomized terminal episodes, compared with 78.4% for a tuned PD baseline under identical conditions, with a median planar terminal error of 6.62 cm. Across 14 outdoor trials, the full mission succeeds in 13 trials (92.9%), spanning both near-region recovery and recovery after the carrier translates away from the release point. The results demonstrate a complete autonomous aerial deployment-and-recovery cycle rather than an isolated landing maneuver, establishing a practical basis for reusable carrier-child operation in inspection, surveillance, and mobile-logistics applications.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
