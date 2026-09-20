@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-09-20 <!--dpr-date:20260920-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/20/2609.18520v1-aeroweaver-an-embodied-agent-harness-for-weaving-aerial-skills-into-distributed-adaptive-swarm-execution" data-sidebar-item="{&quot;title&quot;: &quot;AeroWeaver: An Embodied-Agent Harness for Weaving Aerial Skills into Distributed, Adaptive Swarm Execution&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.18520v1-aeroweaver-an-embodied-agent-harness-for-weaving-aerial-skills-into-distributed-adaptive-swarm-execution&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;无人机集群分布式自适应执行与多机协同任务&quot;}">AeroWeaver: An Embodied-Agent Harness for Weaving Aerial Skills into Distributed, Adaptive Swarm Execution</a>
   * 2026-09-19 <!--dpr-date:20260919-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/19/2609.20629v1-rtk-vision-ppo-for-autonomous-micro-uav-recovery-on-an-airborne-carrier" data-sidebar-item="{&quot;title&quot;: &quot;RTK-Vision PPO for Autonomous Micro UAV Recovery on an Airborne Carrier&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.20629v1-rtk-vision-ppo-for-autonomous-micro-uav-recovery-on-an-airborne-carrier&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;强化学习引导无人机与移动载体会合对接&quot;}">RTK-Vision PPO for Autonomous Micro UAV Recovery on an Airborne Carrier</a>
