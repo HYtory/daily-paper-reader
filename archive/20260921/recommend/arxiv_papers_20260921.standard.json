@@ -1,0 +1,55 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-21T22:51:53.140789+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2609.21005v1",
+      "source": "arxiv",
+      "title": "Project SCOUT: Interceptor Drone for Perimeter Defense",
+      "abstract": "The rapid proliferation of unauthorized unmanned aerial vehicles (UAVs) has created a growing need for robust, jamming-resistant counter-UAV systems for perimeter defense. This paper presents \\textbf{SCOUT} (Spatial Computation for Optimized UAV Tracking), a ROS-integrated onboard perception and control framework for real-time aerial defense against incoming UAVs. SCOUT performs visual detection, target association, track filtering, and control command generation directly onboard the defender UAV, without relying on external sensing infrastructure or ground-station computation. To provide stable control inputs, the perception pipeline combines TensorRT-accelerated drone detection with ByteTrack-based association and a lightweight track-retention state machine. The state machine rejects abrupt target jumps and maintains short-term target continuity during temporary detection degradation, reducing unstable control responses caused by false detections or target switching. We evaluate the proposed architecture through an integrated hardware deployment executing a planar ``goalkeeping'' interception strategy. In this setting, the defender UAV tracks the incoming target and adjusts its motion to maintain a blocking configuration near the protected boundary. Real-world flight results show that SCOUT maintains valid target detections for 92.2\\% of frames while operating at real-time onboard detection rates, demonstrating the feasibility of visual tracking and closed-loop control for UAV perimeter defense. A video demonstration of the end-to-end perimeter defense operation is available online. https://figshare.com/s/497befc033091fc0b84f",
+      "authors": [
+        "Azmain Yousuf",
+        "Siwei Cai",
+        "Knut Peterson",
+        "Lifeng Zhou",
+        "David Han"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-09-17T18:58:24+00:00",
+      "link": "https://arxiv.org/pdf/2609.21005v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Onboard interceptor drone for counter-UAV perimeter defense",
+      "llm_evidence_cn": "机载拦截无人机用于反无人机周界防御",
+      "llm_evidence": "机载拦截无人机用于反无人机周界防御",
+      "canonical_evidence": "机载拦截无人机用于反无人机周界防御",
+      "llm_tldr_en": "To counter unauthorized UAVs, this paper presents SCOUT, an onboard perception and control framework for a single interceptor drone performing detection, tracking and guidance in real time without ground-station computation, directly matching autonomous single-UAV interception though it does not use reinforcement learning.",
+      "llm_tldr_cn": "针对未授权无人机激增带来的周界防御需求，论文指出现有反无人机系统依赖外部感知与地面站算力，难以满足实时性与抗干扰要求。作者提出SCOUT框架，在防御无人机上集成TensorRT加速的检测、ByteTrack目标关联、航迹保持状态机与制导控制，实现机载闭环的检测-跟踪-拦截。系统无需外部基础设施即可实时跟踪并拦截来袭无人机，为单机自主空中拦截提供了工程验证，但控制策略未使用强化学习。",
+      "llm_tldr": "针对未授权无人机激增带来的周界防御需求，论文指出现有反无人机系统依赖外部感知与地面站算力，难以满足实时性与抗干扰要求。作者提出SCOUT框架，在防御无人机上集成TensorRT加速的检测、ByteTrack目标关联、航迹保持状态机与制导控制，实现机载闭环的检测-跟踪-拦截。系统无需外部基础设施即可实时跟踪并拦截来袭无人机，为单机自主空中拦截提供了工程验证，但控制策略未使用强化学习。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

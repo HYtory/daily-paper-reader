@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-09-21 <!--dpr-date:20260921-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/21/2609.21005v1-project-scout-interceptor-drone-for-perimeter-defense" data-sidebar-item="{&quot;title&quot;: &quot;Project SCOUT: Interceptor Drone for Perimeter Defense&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.21005v1-project-scout-interceptor-drone-for-perimeter-defense&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;机载拦截无人机用于反无人机周界防御&quot;}">Project SCOUT: Interceptor Drone for Perimeter Defense</a>
   * 2026-09-20 <!--dpr-date:20260920-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/20/2609.18520v1-aeroweaver-an-embodied-agent-harness-for-weaving-aerial-skills-into-distributed-adaptive-swarm-execution" data-sidebar-item="{&quot;title&quot;: &quot;AeroWeaver: An Embodied-Agent Harness for Weaving Aerial Skills into Distributed, Adaptive Swarm Execution&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.18520v1-aeroweaver-an-embodied-agent-harness-for-weaving-aerial-skills-into-distributed-adaptive-swarm-execution&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;无人机集群分布式自适应执行与多机协同任务&quot;}">AeroWeaver: An Embodied-Agent Harness for Weaving Aerial Skills into Distributed, Adaptive Swarm Execution</a>

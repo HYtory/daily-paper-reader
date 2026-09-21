@@ -1,0 +1,24 @@
+{
+  "label": "2026-09-21",
+  "date": "2026-09-21",
+  "generated_at": "2026-09-21T22:54:05",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202609/21/2609.21005v1-project-scout-interceptor-drone-for-perimeter-defense",
+      "section": "deep",
+      "title_en": "Project SCOUT: Interceptor Drone for Perimeter Defense",
+      "authors": "Azmain Yousuf, Siwei Cai, Knut Peterson, Lifeng Zhou, David Han",
+      "date": "2026-09-17",
+      "pdf": "https://arxiv.org/pdf/2609.21005v1",
+      "score": "8.0",
+      "evidence": "机载拦截无人机用于反无人机周界防御",
+      "tldr": "针对未经授权无人机激增、传统反无人机系统易受干扰的问题，本文提出机载感知与控制框架SCOUT，用于无人机周界防御。该方法在防御无人机上融合TensorRT加速检测、ByteTrack关联与轻量轨迹保持状态机，生成稳定控制指令。实飞采用平面“守门”拦截策略，在实时机载检测下实现92.2%帧有效目标检测。结果验证了纯视觉跟踪与闭环控制用于周界防御的可行性。",
+      "tags": "query:ui",
+      "abstract_en": "The rapid proliferation of unauthorized unmanned aerial vehicles (UAVs) has created a growing need for robust, jamming-resistant counter-UAV systems for perimeter defense. This paper presents \\textbf{SCOUT} (Spatial Computation for Optimized UAV Tracking), a ROS-integrated onboard perception and control framework for real-time aerial defense against incoming UAVs. SCOUT performs visual detection, target association, track filtering, and control command generation directly onboard the defender UAV, without relying on external sensing infrastructure or ground-station computation. To provide stable control inputs, the perception pipeline combines TensorRT-accelerated drone detection with ByteTrack-based association and a lightweight track-retention state machine. The state machine rejects abrupt target jumps and maintains short-term target continuity during temporary detection degradation, reducing unstable control responses caused by false detections or target switching. We evaluate the proposed architecture through an integrated hardware deployment executing a planar ``goalkeeping'' interception strategy. In this setting, the defender UAV tracks the incoming target and adjusts its motion to maintain a blocking configuration near the protected boundary. Real-world flight results show that SCOUT maintains valid target detections for 92.2\\% of frames while operating at real-time onboard detection rates, demonstrating the feasibility of visual tracking and closed-loop control for UAV perimeter defense. A video demonstration of the end-to-end perimeter defense operation is available online. https://figshare.com/s/497befc033091fc0b84f",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
