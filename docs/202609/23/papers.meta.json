@@ -1,0 +1,24 @@
+{
+  "label": "2026-09-23",
+  "date": "2026-09-23",
+  "generated_at": "2026-09-23T22:20:22",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202609/23/2609.23976v1-anticipatory-robot-goalkeeping-via-monotone-optimal-stopping",
+      "section": "quick",
+      "title_en": "Anticipatory Robot Goalkeeping via Monotone Optimal Stopping",
+      "authors": "Hao E. Zhang, Ruize Geng, Yisen Li, Yaru Niu, Yikai Wang, Raihan Haque, Khalil Zbiss, Guanyang Luo, Hui-ping Wang, H. Eric Tseng, Ding Zhao",
+      "date": "2026-09-21",
+      "pdf": "https://arxiv.org/pdf/2609.23976v1",
+      "score": "6.0",
+      "evidence": "预判式机器人拦截，强化学习训练拦截策略",
+      "tldr": "机器人守门等快速物理交互需在对手意图未明时提前行动：等待可获更可靠目标信息，却压缩拦截机会。为此，作者在固定闭环扑救控制器下，将何时启动动作建模为策略条件有限时域最优停止问题，并提出单调最优停止MOS。MOS直接学习“立即行动相对再等一帧”的回报优势，并仅按物理紧迫性施加单调性，以刻画随时间不可逆的拦截机会损失。仿真中平均扑救率由67.7%升至74.4%，反转扑救由52.1%升至66.5%，实机还展示了快速拦截与释放后方向修正。",
+      "tags": "query:ui",
+      "abstract_en": "Robots engaged in fast physical interactions often need to act before the intent of another agent is fully known. Anticipatory goalkeeping illustrates this challenge. Waiting provides more reliable information about the target but reduces the physical opportunity for interception, whereas acting early preserves reachability but requires initiating motion under uncertainty. Given a fixed closed-loop save controller, we formulate the decision of when to initiate motion as a policy-conditional finite-horizon optimal stopping problem. Building on this formulation, we propose monotone optimal stopping (MOS), a structured release-timing method for dynamic robotic interception. The quadruped save policy is trained with reinforcement learning, while MOS determines when the policy should be activated from the evolving robot state and target belief. Rather than predicting a release time or relying on confidence alone, MOS learns the return advantage of acting now over waiting for one more observation. We derive a direct Bellman recursion for this act-versus-wait margin and impose monotonicity only with respect to physical urgency, reflecting the irreversible loss of interception opportunity as time elapses. This structure enables early activation for dynamically demanding saves while preserving closed-loop adaptation when later observations change the predicted target. Under a single-crossing condition, MOS admits a threshold release boundary with a bounded approximation error. Extensive simulation studies show that MOS improves the mean save rate from 67.7% to 74.4% over a parameter-matched learned gate and increases reversal saves from 52.1% to 66.5%. Real-robot experiments further demonstrate rapid interception and post-release direction correction under human shot-direction feints.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

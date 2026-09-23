@@ -1,0 +1,62 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-23T22:19:16.726320+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.23976v1",
+      "source": "arxiv",
+      "title": "Anticipatory Robot Goalkeeping via Monotone Optimal Stopping",
+      "abstract": "Robots engaged in fast physical interactions often need to act before the intent of another agent is fully known. Anticipatory goalkeeping illustrates this challenge. Waiting provides more reliable information about the target but reduces the physical opportunity for interception, whereas acting early preserves reachability but requires initiating motion under uncertainty. Given a fixed closed-loop save controller, we formulate the decision of when to initiate motion as a policy-conditional finite-horizon optimal stopping problem. Building on this formulation, we propose monotone optimal stopping (MOS), a structured release-timing method for dynamic robotic interception. The quadruped save policy is trained with reinforcement learning, while MOS determines when the policy should be activated from the evolving robot state and target belief. Rather than predicting a release time or relying on confidence alone, MOS learns the return advantage of acting now over waiting for one more observation. We derive a direct Bellman recursion for this act-versus-wait margin and impose monotonicity only with respect to physical urgency, reflecting the irreversible loss of interception opportunity as time elapses. This structure enables early activation for dynamically demanding saves while preserving closed-loop adaptation when later observations change the predicted target. Under a single-crossing condition, MOS admits a threshold release boundary with a bounded approximation error. Extensive simulation studies show that MOS improves the mean save rate from 67.7% to 74.4% over a parameter-matched learned gate and increases reversal saves from 52.1% to 66.5%. Real-robot experiments further demonstrate rapid interception and post-release direction correction under human shot-direction feints.",
+      "authors": [
+        "Hao E. Zhang",
+        "Ruize Geng",
+        "Yisen Li",
+        "Yaru Niu",
+        "Yikai Wang",
+        "Raihan Haque",
+        "Khalil Zbiss",
+        "Guanyang Luo",
+        "Hui-ping Wang",
+        "H. Eric Tseng",
+        "Ding Zhao"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-09-21T01:17:28+00:00",
+      "link": "https://arxiv.org/pdf/2609.23976v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "anticipatory robotic interception with RL-trained save policy",
+      "llm_evidence_cn": "预判式机器人拦截，强化学习训练拦截策略",
+      "llm_evidence": "预判式机器人拦截，强化学习训练拦截策略",
+      "canonical_evidence": "预判式机器人拦截，强化学习训练拦截策略",
+      "llm_tldr_en": "Formulates anticipatory robotic interception as a policy-conditional optimal stopping problem and proposes monotone optimal stopping to decide when to launch an RL-trained save policy.",
+      "llm_tldr_cn": "针对快速交互中机器人需在对手意图未明前做出拦截决策的问题，本文以四足机器人守门为例，将何时启动运动建模为策略条件下的有限时域最优停止问题。所提单调最优停止方法确定释放时机，而扑救策略由强化学习训练。实验表明该方法能在信息可靠性与物理可达性之间取得平衡，为动态机器人拦截提供了结构化时机决策框架，可迁移至无人机拦截任务。",
+      "llm_tldr": "针对快速交互中机器人需在对手意图未明前做出拦截决策的问题，本文以四足机器人守门为例，将何时启动运动建模为策略条件下的有限时域最优停止问题。所提单调最优停止方法确定释放时机，而扑救策略由强化学习训练。实验表明该方法能在信息可靠性与物理可达性之间取得平衡，为动态机器人拦截提供了结构化时机决策框架，可迁移至无人机拦截任务。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "autonomous drone interception using deep reinforcement learning",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

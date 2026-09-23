@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-09-23 <!--dpr-date:20260923-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/23/2609.23976v1-anticipatory-robot-goalkeeping-via-monotone-optimal-stopping" data-sidebar-item="{&quot;title&quot;: &quot;Anticipatory Robot Goalkeeping via Monotone Optimal Stopping&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.23976v1-anticipatory-robot-goalkeeping-via-monotone-optimal-stopping&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;预判式机器人拦截，强化学习训练拦截策略&quot;}">Anticipatory Robot Goalkeeping via Monotone Optimal Stopping</a>
   * 2026-09-21 <!--dpr-date:20260921-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/21/2609.21005v1-project-scout-interceptor-drone-for-perimeter-defense" data-sidebar-item="{&quot;title&quot;: &quot;Project SCOUT: Interceptor Drone for Perimeter Defense&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.21005v1-project-scout-interceptor-drone-for-perimeter-defense&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;机载拦截无人机用于反无人机周界防御&quot;}">Project SCOUT: Interceptor Drone for Perimeter Defense</a>
