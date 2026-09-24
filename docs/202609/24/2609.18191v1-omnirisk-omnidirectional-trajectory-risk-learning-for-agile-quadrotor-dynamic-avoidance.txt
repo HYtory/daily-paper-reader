@@ -1,0 +1,429 @@
+Title: OmniRisk: Omnidirectional Trajectory-Risk Learning for Agile Quadrotor Dynamic Avoidance
+
+URL Source: https://arxiv.org/pdf/2609.18191v1
+
+Published Time: Thu, 17 Sep 2026 00:40:53 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+# OmniRisk: Omnidirectional Trajectory-Risk Learning for Agile Quadrotor Dynamic Avoidance 
+
+Yifan He †1 , Yang Liu †1,2 , Wenhao Zhao †1 , Hai Lin 1,Deping Zhang 1, Mingze Ma 1, Fei Gao 1,2 , Huan Yu *1,2 , Zipeng Dai *1 , Ziming Ding *1,2 
+
+> 1
+
+Differential Robotics, Hangzhou, China 2Zhejiang University, Hangzhou, China 
+
+> †
+
+These authors contributed equally to this work. *Corresponding authors. 
+
+Abstract — Agile quadrotor avoidance of fast-moving ob-stacles requires anticipating collisions and selecting feasible maneuvers within short reaction windows. Reliable predictive avoidance remains challenging because sparse range obser-vations do not directly reveal obstacle motion, while online trajectory optimizers either scale poorly with obstacle count or remain efficient at the expense of reliability in dense, high-speed encounters. We present OmniRisk, an omnidirectional planning framework that learns trajectory-level risk offline for efficient onboard evasion. A fixed-dimensional tensor combines LiDAR range panoramas, dynamic masks, and Cartesian surface veloc-ities to represent geometry and motion jointly. We formulate an asymmetric risk field aligned with obstacle velocity that emphasizes approaching interactions and attenuates receding ones. Accumulating this risk along predicted relative trajecto-ries provides dense supervision and discourages unnecessary hesitation after obstacles pass. A dual-branch circular convolu-tional network predicts terminal boundary states and dynamic risks for candidate primitives over an omnidirectional anchor lattice in a single forward pass, followed by selection and closed-form reconstruction of the selected candidate primitive. This formulation removes online risk accumulation along trajectories and makes risk-inference cost independent of obstacle count. OmniRisk enables efficient onboard avoidance, with real-world flights demonstrating consecutive evasive maneuvers at relative encounter speeds up to 15 m/s without fine-tuning. Code is available at https://github.com/VANdexj/OmniRisk .
+
+I. I NTRODUCTION 
+
+Navigating an agile quadrotor among high-speed dynamic obstacles is fundamentally constrained by reaction latency. The viable reaction window before impact is constrained by the platform’s kinodynamic limits and sensing-to-actuation delay. Trajectory planning is the stage of this delay addressed in this work: any time it consumes directly reduces the achievable evasive clearance. Within this narrow reaction margin, the local planner must detect omnidirectional threats and commit to dynamically feasible trajectories before strict control deadlines expire. Consequently, a planning pipeline whose latency scales with dynamic obstacle count can incur severe execution lag or miss control deadlines, precisely when evasive maneuvers are most critical. Online numerical planners, which feed sparse range re-turns and predicted obstacle trajectories directly into opti-mization or search [1]–[3], face a structural trade-off between latency and safety. Planners that enforce full spatiotemporal safety evaluate separating hyperplanes, safe intervals, or collision constraints for every dynamic obstacle and time   
+
+> Fig. 1. Real-world static–dynamic avoidance trial: a thrown ball crosses the quadrotor’s route through rock-shaped static obstacles. The trajectory is colored by flight time; the inset marks the closest-approach distance 𝑑 min .
+
+sample [1], [2], so their latency grows with dynamic obstacle count |O 𝑡 | and overruns control deadlines. Lightweight for-mulations [3] satisfy the timing budget by locally refining a single trajectory against proximity penalties, but in our benchmark their avoidance success drops sharply as threats become dense and fast. Faster onboard compute shortens solve times but resolves neither limitation. We resolve this trade-off by shifting continuous trajectory-risk evaluation out of the onboard flight loop and into offline learning. In simulation, each candidate primitive of an omnidirectional anchor lattice is labeled with a static clearance cost and a dynamic risk computed from ground-truth geometry and relative kinematics. At runtime, the vehicle performs no online risk integration. Asynchronous LiDAR returns and confirmed dynamic tracks are projected into a fixed-dimensional planning input tensor. A dynamic head distilled from a relative-motion risk field then scores every candidate primitive in a single forward pass, and the candidate primitive with the lowest combined static and dynamic score is selected. The corresponding trajectory is then recovered in closed form. Iterative, obstacle-dependent optimization thus reduces to a single inference whose cost is independent of |O 𝑡 |, and because every candidate primitive is scored, selection is not tied to one locally refined trajectory. Fig. 1 illustrates this in real-world flight, directly mapping physical elements to underlying mechanisms: the vehicle tra-verses static rock clutter via the static clearance cost; evades a crossing thrown ball at the marked closest approach 𝑑 min 
+
+through the asymmetric dynamic risk field over Cartesian arXiv:2609.18191v1 [cs.RO] 16 Sep 2026 surface-velocity channels; and reaches the goal along a time-colored quintic trajectory without replanning stalls. A single forward pass jointly accounts for static clearance, dynamic evasion, and goal progress. This paper makes three contributions:  
+
+> •
+
+A unified planning input tensor coupling a metric range panorama, a binary dynamic mask, and Carte-sian surface-velocity channels, making obstacle motion directly observable under sparse LiDAR returns and enabling zero-shot deployment.  
+
+> •
+
+An obstacle-velocity-aligned asymmetric dynamic risk field, continuous in the relative state, penalizing closing threats while attenuating the penalty on receding obsta-cles.  
+
+> •
+
+A trajectory-risk learning paradigm replacing online numerical optimization with offline distillation, scoring all candidate primitives in a single forward pass with 
+
+O( 1) complexity in dynamic obstacle count |O 𝑡 | while retaining high avoidance success in dense, high-speed encounters. II. R ELATED WORK 
+
+A. Omnidirectional Perception and the Planning Interfaces 
+
+Existing dynamic avoidance frameworks rely primar-ily on spatiotemporal corridors or time-indexed occupancy grids [2], [4]–[7], yet the cost of constructing these structures grows with obstacle density, so planning latency rises with scene complexity. While omnidirectional LiDAR systems [8] mitigate sensor blind spots, passing raw occupancy grids and bounding-box lists downstream forces planners to reconstruct collision geometry online. Conversely, event-based avoidance methods [9]–[11] achieve microsecond sensing latency but generate unconstrained single-step reflexes that lack metric scale and dynamically feasible planning horizons. To resolve this trade-off, we consolidate omnidirectional metric range, dynamic cluster masking, and Cartesian surface velocities into a fixed-dimensional planning input tensor, yielding a metric-scale input whose size is independent of dynamic obstacle count. 
+
+B. Spatiotemporal Risk Fields and Trajectory Optimization 
+
+Lightweight penalty formulations [3] remain fast but refine a single trajectory locally; in our benchmark this limits success in dense, high-speed encounters (Sec. VI-E). Formu-lations that enforce full spatiotemporal safety through per-obstacle constraints or safe-interval search [1], [2] instead incur costs that scale with obstacle count, risking deadline misses. Analytical collision metrics such as closest point of approach (CPA) and time to collision (TTC) attempt to alle-viate this burden, yet evaluating exact clearance along high-order polynomials lacks closed-form solutions, forcing frag-ile online numerical root finding over crude spherical bounds. Furthermore, while velocity-dependent potential fields and motion-shaped rewards [12], [13] modulate repulsive forces, they remain causally symmetric—penalizing receding obsta-cles identically to closing threats—or only adjust the current control step without anticipating future interactions. Instead of fragile online optimization or symmetric pointwise poten-tials, we formulate an obstacle-velocity-aligned asymmetric dynamic risk field evaluated via discretized path integrals offline, converting predicted relative motion into continuous training labels for a feed-forward network. 
+
+C. Learning-Based Low-Latency Avoidance 
+
+Learning-based planners circumvent iterative online op-timization, yet agile dynamic evasion simultaneously de-mands metric spatial reasoning, kinodynamically feasible outputs, and computational complexity decoupled from ob-stacle count. Existing frameworks satisfy only subsets of these requirements. Imitation learning pipelines [14] dis-till trajectories from computationally prohibitive numerical experts, inheriting the shortcomings of expert demonstra-tions while enforcing kinodynamic limits solely through soft penalties. Alternative approaches rely on forward-facing depth [15] or sector-partitioned range inputs [16] that lack explicit surface-velocity channels, yielding unconstrained single-step reactive actions [17], [18] without explicit metric safety margins. In contrast, our framework unifies static geometry and Cartesian surface velocities within a metric planning input tensor, evaluating candidate primitives over a fixed omnidirectional anchor lattice in a single forward pass to generate minimum-jerk primitives with kinodynamically bounded terminal states. III. P ROBLEM FORMULATION AND SYSTEM OVERVIEW 
+
+A. Problem Formulation 1) Reformulation: High-speed evasion is governed by a strict timing budget: to prevent execution lag and collision, the local planner must commit a dynamically feasible tra-jectory before the current replanning cycle ends. Numerical planners struggle to reconcile this budget with safety: full spatiotemporal constraints incur runtimes that grow with dynamic obstacle count |O 𝑡 |, whereas lightweight local re-finement remains fast but degrades in dense, high-speed encounters (Sec. I). Rather than accelerating either form of iterative optimization, we recast real-time avoidance as a feed-forward evaluation over a pre-defined omnidirectional anchor lattice, shifting spatiotemporal risk integration en-tirely into offline training. A single forward pass then scores every candidate primitive: trajectory-risk evaluation becomes independent of |O 𝑡 |, selection no longer depends on one locally refined trajectory, and planning latency follows a fixed-size forward pass, not |O 𝑡 |.
+
+2) Notation: Let W denote the inertial world frame and 
+
+P𝑡 the gravity-aligned local planning frame anchored at the vehicle at perception time 𝑡 . The platform state is defined as 𝑥 0 = ( 𝑝 0, 𝑣 0, 𝑎 0)⊤ ∈ X ⊂ R9, bounded by kinodynamic limits ∥𝑣 0 ∥2 ≤ 𝑣 max and ∥𝑎 0 ∥2 ≤ 𝑎 max . Given a navigation goal 𝑔 , the perception front-end streams a non-repetitive LiDAR point set L𝑡 , an odometric state estimate 𝑥 𝑡 , an accu-mulated static background, and a set of confirmed dynamic obstacle tracks O𝑡 = {( 𝑐 𝑜 , 𝑣 𝑜 , 𝑠 𝑜 , 𝜄 𝑜 )} | O 𝑡 | 
+
+> 𝑜 =1
+
+, where each track is parameterized by centroid 𝑐 𝑜 , metric velocity 𝑣 𝑜 , bounding Simulation source       
+
+> inverse-CPA sampling
+> Real-world source
+> MID-360 · FAST-LIO2
+> Shared trunk · identical in both domains C1 · Unified planning input tensor
+> five channels · one H×W grid
+> Dual-branch CNN · one forward pass
+> backbone
+> Static head
+> 36 endpoints
+> Dynamic head
+> risk scores only
+> C2 · Asymmetric dynamic risk field training-time only
+> amplified ahead decays behind velocity-aligned, causally asymmetric
+> closing amplified · receding → 0
+> directed path integral
+> one scalar per primitive
+> C3 · Online stage
+> Score fusion
+> S = S static + λ S dyn
+> endpoint committed quintic · 50 Hz
+> O(N) selection 20 ms inference 15 m/s zero-shot
+> data flow analytic supervision, training only 36 scores fused
+> no online optimization
+
+Fig. 2. System architecture. Offline, the candidate primitives Π are supervised by the static clearance cost and the asymmetric dynamic risk field (C2, dashed arrows). Online, streaming perception is rasterized into the unified planning input tensor 𝐼 𝑡 (C1); a single forward pass over the omnidirectional anchor lattice A scores all candidate primitives for 20 Hz trajectory commitment without online optimization (C3). 
+
+extent 𝑠 𝑜 = (𝑑 𝑜,𝑥 , 𝑑 𝑜,𝑦 , 𝑑 𝑜,𝑧 ) ∈ R3, and persistent tracking identity 𝜄 𝑜 .
+
+3) Planning Input Tensor: Privileged simulation Dsim 
+
+provides ground-truth states and future trajectory risk, whereas real deployment Dreal does not. The policy therefore receives only a calibrated planning input tensor in both domains: 
+
+𝐼 𝑡 = [𝐷 𝑡 , 𝑀 𝑡 , 𝑉 𝑡 ] ∈ R𝐻 ×𝑊 ×5, (1) thereby strictly isolating all privileged simulation labels from deployment. Over an 𝐻 × 𝑊 spherical grid, 𝐼 𝑡 concatenates a metric range panorama 𝐷 𝑡 ∈ R𝐻 ×𝑊 ×1 recording nearest surface distances, a binary dynamic mask 𝑀 𝑡 ∈ { 0, 1}𝐻 ×𝑊 ×1
+
+identifying returns assigned to dynamic tracks O𝑡 , and Carte-sian surface-velocity channels 𝑉 𝑡 ∈ R𝐻 ×𝑊 ×3 encoding metric obstacle velocities 𝑣 𝑜 on dynamic pixels and zeros elsewhere. This fixed-dimensional tensor decouples representation com-plexity from raw point-cloud density and dynamic obstacle count |O 𝑡 |, with cross-domain channel invariance detailed in Sec. IV-C. 
+
+4) Action Space: The action space is built on an om-nidirectional anchor lattice A = { ˆ𝑎 𝑖 }𝑁 𝑖 =1, a fixed set of 
+
+𝑁 = 36 unit-direction anchors expressed in P𝑡 . A comprises 12 azimuth bins that uniformly partition the full 360 ◦ and three elevation bands that span the sensor field of view. Omnidirectional here refers to full 360 ◦ azimuthal coverage, the property exploited by the circular convolutions of Sec. V-C.1. Neither the anchors nor their count 𝑁 varies at runtime. Anchored to A are the candidate primitives Π = {𝜋 𝑖 }𝑁 𝑖 =1
+
+defined over a planning horizon 𝑇 . Each candidate primitive 
+
+𝜋 𝑖 (𝑡 ) : [0, 𝑇 ] → R3 is parameterized as a minimum-jerk quintic polynomial uniquely determined by the initial state 
+
+𝑥 0 = ( 𝑝 0, 𝑣 0, 𝑎 0)⊤ and a terminal boundary state 𝑥 (𝑖 ) 
+
+> 𝑓
+
+=
+
+( 𝑝 (𝑖 ) 
+
+> 𝑓
+
+, 𝑣 (𝑖 ) 
+
+> 𝑓
+
+, 𝑎 (𝑖 ) 
+
+> 𝑓
+
+)⊤ confined to the angular cell of anchor ˆ𝑎 𝑖 .
+
+A thus fixes the anchors and 𝑁 , while the terminal boundary state within each angular cell adapts to the observed static geometry through the static head of Sec. V-C.2. Candidate primitives violating the kinodynamic limits ∥𝑣 (𝑡 )∥ 2 ≤ 𝑣 max 
+
+or ∥𝑎 (𝑡 )∥ 2 ≤ 𝑎 max are marked infeasible and excluded during selection, while the network output remains fixed at 
+
+𝑁 candidates. 
+
+5) Online Objective: Conditioned on the planning input tensor 𝐼 𝑡 and navigation goal 𝑔 , trajectory selection reduces to identifying the selected candidate primitive 𝜋 ∗ ∈ Π
+
+minimizing a composite objective: 
+
+𝜋 ∗ = arg min  
+
+> 𝜋 𝑖 ∈Π
+
+𝐽 prog (𝜋 𝑖 , 𝑔 ) + 𝜆 𝑠 𝐽 smooth (𝜋 𝑖 )+ 𝐽 risk (𝜋 𝑖 , 𝐼 𝑡 ),
+
+(2) where 𝐽 prog penalizes goal displacement and 𝐽 smooth regulates control effort via integrated squared jerk; both admit closed-form evaluation. Crucially, 𝐽 risk is a learned surrogate evalu-ated via feed-forward inference. It estimates the accumulated spatiotemporal risk of the asymmetric dynamic field directly from 𝐼 𝑡 , bypassing iterative online optimization. 
+
+B. System Framework 1) Offline Stage: Fig. 2 summarizes the resulting two-stage architecture. The offline phase constructs the super-vision needed to bypass real-time numerical optimization. Within the privileged simulation domain Dsim , the train-ing pipeline samples randomized dynamic obstacle encoun-ters and accumulates collision risk along candidate primi-tives. Specifically, inverse-CPA sampling first draws a target closest-approach distance and time ( 𝑑 CPA , 𝑡 CPA ) and back-computes the obstacle’s initial state, concentrating training samples in near-collision regimes. A compact neural network is trained via supervised regression to predict this continuous trajectory risk directly from the synthesized planning input tensor 𝐼 𝑡 , embedding non-convex collision reasoning into the network weights prior to deployment and eliminating online numerical integration. 
+
+2) Online Stage: The onboard framework comprises three asynchronously decoupled modules: an omnidirectional per-ception front-end, the trained dual-branch circular convolu-tional network, and an SO (3) geometric tracking controller. At each cycle, the front-end integrates streaming LiDAR points L𝑡 and confirmed dynamic tracks O𝑡 into 𝐼 𝑡 at 20 Hz .Synchronized to this representation, the static and dynamic heads score the candidate primitives Π in parallel at 20 Hz ,selecting 𝜋 ∗ via (2). Concurrently, the SO (3) controller tracks 
+
+𝜋 ∗ at 50 Hz . Owing to this asynchronous decoupling, a delayed planning cycle does not stall control; the controller continues tracking the previously committed trajectory. IV. O MNIDIRECTIONAL PERCEPTION REPRESENTATION 
+
+A. Spherical Projection and the Metric Range Panorama 1) Range Panorama Construction: FAST-LIO2 [19] pro-vides LiDAR–inertial odometry and motion compensation. To structure unorganized point clouds while preserving full 
+
+360 ◦ spatial coverage, raw returns L𝑡 are projected onto a sphere centered at the origin of P𝑡 . Each 3D point 
+
+𝑝 = (𝑥, 𝑦, 𝑧 )⊤ ∈ L𝑡 is mapped to spherical coordinates 
+
+(𝜃, 𝜙, 𝑟 ), where azimuth 𝜃 = atan2 (𝑦, 𝑥 ) ∈ [− 𝜋, 𝜋 ), elevation 
+
+𝜙 = arcsin (𝑧 /∥ 𝑝 ∥2) ∈ [− 𝜙 min , 𝜙 max ], and Euclidean range 
+
+𝑟 = ∥ 𝑝 ∥2. Discretizing azimuth and elevation into an 𝐻 × 𝑊 
+
+grid yields the metric range panorama 𝐷 𝑡 ∈ R𝐻 ×𝑊 ×1, with each cell (𝑢, 𝑣 ) recording the minimum measured range along that bearing: 
+
+𝐷 𝑡 (𝑢, 𝑣 ) = min       
+
+> {𝑝 ∈ L 𝑡 | ⌊ 𝜅 (𝑝 ) ⌋ =(𝑢,𝑣 ) }
+
+∥ 𝑝 ∥2, (3) where 𝜅 : R3 → [ 0, 𝐻 −1] × [ 0, 𝑊 −1] denotes the continuous spherical-to-pixel projection operator. 
+
+2) Temporal Depth Completion: To mitigate the angular sparsity inherent in non-repetitive scanning LiDARs, the front-end maintains a sliding temporal buffer of motion-compensated sweeps over Δ𝑡 acc . Unobserved rays in 𝐷 𝑡 are completed via edge-preserving nearest-neighbor propagation capped at 𝑟 max . This produces a dense, metrically consistent depth panorama capturing both thin obstacles and free-space boundaries with negligible computational overhead. 
+
+B. Dynamic Masking and Velocity Rasterization 
+
+To maintain spatial and temporal consistency with offline training supervision, dynamic tracking estimates obstacle positions and velocities at the planning time within the local frame P𝑡 .M-detector [20], an event-based point-stream detector, segments moving returns from the accumulated static back-ground. The resulting dynamic clusters are associated across successive frames via the Hungarian algorithm based on Euclidean centroid distances, maintaining a six-dimensional state (𝑐 𝑜 , 𝑣 𝑜 ) ∈ R6 per track. A track hypothesis is confirmed after consistent temporal associations over a lifespan 𝜏 track ,with extrapolation bounded within 𝜏 pred .Given measurement delivery latency Δ𝑡 = 𝑡 plan − 𝑡 meas , a closed-form ballistic model propagates each measured state to the planning time: 
+
+𝑐 𝑟 𝑜 = 𝑐 𝑚 𝑜 + 𝑣 𝑚 𝑜 Δ𝑡 + 12 𝑔 Δ𝑡 2, 𝑣 𝑟 𝑜 = 𝑣 𝑚 𝑜 + 𝑔 Δ𝑡, (4) where superscripts 𝑚 and 𝑟 denote raw and synchronized states, respectively, and 𝑔 accounts for vertical gravitational acceleration during the latency interval. These synchronized states are subsequently mapped into the dynamic mask 𝑀 𝑡 and velocity channels 𝑉 𝑡 of 𝐼 𝑡 .
+
+C. Domain Invariance and Sim-to-Real Transfer 1) Channel Alignment: To maintain a consistent interface between Dsim and Dreal , the perception front-end keeps all five channels numerically and geometrically consistent. Both domains share identical spherical discretization ( 𝐻 × 𝑊 ), circular boundary conditions across the azimuthal seam, and matched background accumulation windows. Crucially, depth completion is restricted exclusively to the range chan-nel 𝐷 𝑡 , preventing spatial dilation from corrupting the binary dynamic mask 𝑀 𝑡 or Cartesian surface-velocity channels 𝑉 𝑡 .This consistency ensures that 𝐼 𝑡 encodes the same geometric quantities in both domains, enabling zero-shot policy deploy-ment. 
+
+2) Mask-Channel Corruption: During simulation training, stochastic noise is introduced into the dynamic mask 𝑀 𝑡 via independent false-positive ( 𝑝 fp ) and false-negative ( 𝑝 fn ) per-turbations. Spurious mask regions are assigned zero velocity in 𝑉 𝑡 , whereas unmasked dynamic surfaces retain their metric velocities. This decoupling discourages the policy from rely-ing solely on binary occupancy cues, guiding the network to evaluate trajectory risk primarily through Cartesian surface kinematics. V. T RAJECTORY PLANNING AND RISK LEARNING 
+
+A. Static Clearance Cost 
+
+Within the privileged simulation domain Dsim , the static clearance cost is evaluated against an analytical Euclidean signed distance field (ESDF) in the local planning frame P𝑡 .Each candidate primitive is sampled at 𝐾 uniform collocation points 𝜏 𝑗 = 𝑗 𝐾 𝑇 , yielding 
+
+𝐽 𝑐,𝑖 = 1
+
+𝐾 
+
+> 𝐾
+
+∑︁ 
+
+> 𝑗 =1
+
+exp 
+
+
+
+− 𝑑 (𝜋 𝑖 (𝜏 𝑗 )) − 𝑑 safe 
+
+𝜎 static 
+
+
+
+, (5) where 𝑑 (·) denotes the distance to the nearest static bound-ary, 𝑑 safe is the target clearance, and 𝜎 static scales the decay. This exponential penalty maintains non-vanishing repulsive gradients within nominally safe margins, biasing trajectory selection toward wider corridors. 
+
+B. Asymmetric Dynamic Risk Field 1) Limitations of Proximity Metrics: Dynamic avoidance formulations that evaluate collision risk primarily through instantaneous spatial proximity or isotropic inflation [3], [4], [10] suffer from three fundamental kinematic limitations. First, they are causally symmetric, penalizing receding ob-stacles identically to closing threats, so the penalty persists behind already-cleared obstacles. Second, they are isotropic, failing to elongate along-track safety margins proportionally to obstacle speed. Third, rigid distance thresholds produce step-like collision labels whose gradients vanish almost ev-erywhere, destabilizing network regression. These structural Fig. 3. Asymmetric dynamic risk field in the horizontal plane. The quadro-tor at the origin (velocity 𝑣 0, blue) targets the goal (green), encountering an obstacle (velocity 𝑣 𝑜 , red) at 𝑑 = 2.2 m. Background: pointwise dynamic risk 𝑟 𝑜 under relative obstacle motion. Candidate primitives are colored by dynamic risk 𝐽 𝑑,𝑖 (9). 
+
+deficiencies motivate an obstacle-velocity-aligned, causally asymmetric risk field that provides dense, continuous super-vision over relative obstacle motion. 
+
+2) Anisotropic Relative Metric: To evaluate interaction kinematics over the horizon, we express the relationship between candidate primitive 𝜋 𝑖 (𝑡 ) and obstacle 𝑜 , with synchronized state (𝑐 𝑟 𝑜 , 𝑣 𝑟 𝑜 ), in relative coordinates: 
+
+𝑞 (𝑡 ) = 𝜋 𝑖 (𝑡 ) − ( 𝑐 𝑟 𝑜 + 𝑣 𝑟 𝑜 𝑡 ), 𝑣 rel (𝑡 ) = ¤𝜋 𝑖 (𝑡 ) − 𝑣 𝑟 𝑜 . (6) A constant-velocity forecast enables closed-form evaluation, and the spatial metric aligns with the travel axis 𝑒 𝑜 =
+
+𝑣 𝑟 𝑜 /max (∥ 𝑣 𝑟 𝑜 ∥2, 𝜖 𝑣 ), where 𝜖 𝑣 > 0 prevents numerical sin-gularity. The anisotropic metric tensor is formulated as 
+
+𝐴 𝑜 = 𝜎 −2 
+
+> ⊥
+
+𝐼 3×3 + ( 𝜎 −2 
+
+> ∥
+
+− 𝜎 −2 
+
+> ⊥
+
+)𝑒 𝑜 𝑒 ⊤ 
+
+> 𝑜
+
+, (7) where lateral scale 𝜎 ⊥ reflects obstacle geometry and longi-tudinal scale 𝜎 ∥ expands with speed ∥𝑣 𝑟 𝑜 ∥2. This yields an anisotropic Gaussian base 𝜙 𝑜 (𝑞 ) = exp (− 𝑞 ⊤ 𝐴 𝑜 𝑞 ), elongat-ing along-track clearance while preserving lateral bounds. 
+
+3) Softplus Causal Gate: Although anisotropic, 𝜙 𝑜 (𝑞 ) is symmetric ( 𝜙 𝑜 (𝑞 ) = 𝜙 𝑜 (− 𝑞 )): at the same relative position it cannot distinguish approaching from receding obstacles; the horizon sum (9) separates the two only through future distances. To enforce causal asymmetry, relative velocity is projected onto 𝑛 𝑜 = 𝑔 𝑜 /max (∥ 𝑔 𝑜 ∥2, 𝜖 𝑔 ), where 𝑔 𝑜 =
+
+∇𝑞 𝜙 𝑜 = −2𝜙 𝑜 𝐴 𝑜 𝑞 is the inward normal of the iso-risk ellipsoid and 𝜖 𝑔 > 0 again prevents numerical singularity. With 𝑧 𝑜 = 𝛼𝑣 ⊤
+
+> rel
+
+𝑛 𝑜 (𝛼 > 0), the pointwise risk is 
+
+𝑟 𝑜 (𝑞, 𝑣 rel ) = 𝜙 𝑜 (𝑞 ) softplus (𝑧 𝑜 ) = 𝜙 𝑜 (𝑞 ) ln (1 + 𝑒 𝑧 𝑜 ). (8) Since ¤𝑞 = 𝑣 rel , 𝑧 𝑜 > 0 exactly when 𝑞 ⊤ 𝐴 𝑜 𝑞 decreases, which agrees with the sign of the Euclidean range rate if 𝜎 ∥ = 𝜎 ⊥ or 
+
+𝑞 ∥ 𝑒 𝑜 or 𝑞 ⊥ 𝑒 𝑜 . Approaching risk is amplified and receding risk decays toward zero (Fig. 3), so a crossing obstacle is penalized mainly before its closest approach; deceleration or re-approach violates the constant-velocity forecast and is reflected only after the tracked velocity is updated. 
+
+4) Directed Path Integral: The dynamic risk of candidate primitive 𝜋 𝑖 aggregates the pointwise risk: 
+
+𝐽 𝑑,𝑖 =
+
+> 𝐾
+
+∑︁ 
+
+> 𝑗 =1
+
+∑︁ 𝑜 ∈ O 𝑡 
+
+𝑟 𝑜 
+
+ 𝑞 (𝜏 𝑗 ), 𝑣 rel (𝜏 𝑗 ) . (9) With uniform 𝜏 𝑗 , 𝐽 𝑑,𝑖 is a Riemann sum of the time-integrated risk scaled by 𝐾 /𝑇 , a constant absorbed into 𝑤 scale .Since the quadrotor and each obstacle are evaluated at the same instants 𝜏 𝑗 , 𝐽 𝑑,𝑖 mainly penalizes candidate primitives on a collision course. 
+
+C. Dual-Branch Network Distillation 1) Network Architecture: A dual-branch circular con-volutional network evaluates terminal boundary states and dynamic risks in a single forward pass. The static branch applies a convolutional backbone to the range panorama 
+
+𝐷 𝑡 to extract environmental geometry, while the dynamic branch processes [𝑀 𝑡 , 𝑉 𝑡 ] to capture the Cartesian motion field. Convolutions are circularly padded along the azimuth dimension to preserve 360 ◦ continuity across coordinate seams. Both heads also receive (𝑣 0, 𝑎 0) and the goal 𝑔 in 
+
+P𝑡 , with 𝑔 rescaled to at most unit length. The static head uses only the 𝐷 𝑡 feature to infer terminal boundary states 
+
+𝑥 (𝑖 ) 
+
+> 𝑓
+
+and static costs ˆ𝐽 𝑠,𝑖 , while the dynamic head adds the 
+
+[𝑀 𝑡 , 𝑉 𝑡 ] feature to predict dynamic risks ˆ𝐽 𝑑,𝑖 .
+
+2) Head Isolation: Candidate primitive geometry is gen-erated exclusively by the static head; the dynamic head only evaluates it. Since 𝑥 (𝑖 ) 
+
+> 𝑓
+
+depends only on 𝐷 𝑡 , (𝑣 0, 𝑎 0), and 
+
+𝑔 and its objective excludes dynamic risk, [𝑀 𝑡 , 𝑉 𝑡 ] cannot alter candidate primitive geometry; the dynamic loss reaches the shared 𝐷 𝑡 encoder only through ˆ𝐽 𝑑,𝑖 . This isolation suppresses high-frequency trajectory chattering and promotes spatial consistency across consecutive replanning cycles. 
+
+3) Training Objective: Terminal boundary states are trained by directly minimizing smoothness, static clearance cost (5), anchor alignment, and acceleration effort, excluding dynamic risk. The static head regresses the total static cost 
+
+𝐽 𝑠,𝑖 , which replaces anchor alignment with goal progress, using a smooth-𝐿 1 loss. The dynamic head is trained in a compressed logarithmic domain: 
+
+Lrisk = 1
+
+𝑁 
+
+> 𝑁
+
+∑︁ 
+
+> 𝑖 =1
+
+𝑙 smooth-𝐿 1
+
+  ˆ𝐽 𝑑,𝑖 , sg ln (1 + 𝑤 scale 𝐽 𝑑,𝑖 )  , (10) where 𝑤 scale balances dynamic penalties. Logarithmic scal-ing compresses orders-of-magnitude risk variations across diverse velocities, preventing near-miss extremes from dom-inating gradients. The three losses are summed with equal weights and optimized jointly without freezing either head. Each minibatch recomputes 𝐽 𝑠,𝑖 and 𝐽 𝑑,𝑖 on the current candidate primitives from the privileged ESDF and ground-truth tracks, and the stop-gradient sg [·] blocks gradients through both targets. Fig. 4. Quadrotor platform: (1) Livox Mid-360 LiDAR, (2) NVIDIA Jetson Orin NX, (3) NxtPX4v2 flight controller. 
+
+D. Online Selection 
+
+At runtime, the two heads evaluate all 𝑁 candidate prim-itives in a single forward pass, selecting the candidate index 
+
+𝑖 ∗ according to 
+
+𝑖 ∗ = arg min 
+
+> 𝑖
+
+  ˆ𝐽 𝑠,𝑖 + 𝜆 ˆ𝐽 𝑑,𝑖 + R con (𝑖 ) , (11) where 𝜆 scales dynamic risk and Rcon (𝑖 ) enforces temporal continuity and switching hysteresis to suppress trajectory chattering. Selection is O( 𝑁 ) in 𝑁 but O( 1) with respect to dynamic obstacle count because 𝑁 = 36 is fixed. Here, 
+
+ˆ𝐽 𝑠,𝑖 absorbs 𝐽 prog , 𝐽 smooth , and static clearance cost, while 
+
+𝜆 ˆ𝐽 𝑑,𝑖 instantiates 𝐽 risk in (2). The polynomial coefficients of 
+
+𝜋 ∗ = 𝜋 𝑖 ∗ are then computed in closed form and mapped to attitude-thrust setpoints for tracking. VI. E XPERIMENTAL VALIDATION 
+
+We systematically evaluate the proposed framework across simulated and real-world environments. 
+
+A. Protocol and Baselines 
+
+Each trial requires the quadrotor to navigate from a fixed start to a goal through static clutter and dynamic projectiles. A trial is counted as successful only if the vehicle reaches the goal collision-free within the allotted time; physical contact and kinodynamic infeasibility are recorded as failures. Given our 20 Hz replanning loop, we define a deadline miss as any cycle in which planning latency exceeds the timing budget 
+
+Δ𝑇 budget = 50 ms, forcing the low-level controller to continue tracking the previously committed trajectory; misses are counted per cycle and do not by themselves fail a trial. Planning latency is measured from planning-input arrival to trajectory commitment, covering tensor rasterization and network inference; upstream sensing, detection, and track confirmation are shared by all methods and excluded. Closed-loop simulations run in real time, and all methods share 
+
+50 paired evaluation seeds per condition, disjoint from the training seeds; key success rates (SR) are reported with Wilson 95% confidence intervals (CIs). The entire pipeline runs onboard an NVIDIA Jetson Orin NX under realistic multi-process resource contention on the custom quadrotor shown in Fig. 4. We supply identical synchronized inputs to the state-of-the-art baselines FAPP [3] and SIMP [2]. 
+
+B. Input Representation Ablation 
+
+To evaluate whether spatial depth alone can resolve dy-namic threats under sparse sensing, we benchmark three input variants under identical architectures and training bud-gets: Depth-Only (mask and velocity zeroed), Depth+Mask                         
+
+> TABLE I INPUT REPRESENTATION ABLATION (𝑛 =50 TRIALS PER CELL )Method Static SR ↑
+> Head-on SR ↑
+> Crossing SR ↑
+> Rear SR ↑
+> Avg. DCR ↓
+> Depth-Only 96.0% 62.0% 22.0% 26.0% 47.3% Depth+Mask 96.0% 88.0% 30.0% 34.0% 36.7%
+> Ours 98.0% 96.0% 92.0% 94.0% 4.0%
+
+(velocity channels omitted), and our full planning input tensor (Table I). While Depth-Only navigates static corridors reliably, it experiences severe collisions during crossing en-counters ( 22 .0% SR) and rear pursuits ( 26 .0% SR), yielding an average dynamic collision rate (DCR, the fraction of trials with a dynamic collision) of 47 .3% . Adding the dynamic mask partially improves success in head-on encounters but remains largely ineffective against lateral threats ( 30 .0% SR). In contrast, our full tensor achieves success rates of at least 
+
+92 .0% across all geometries, reducing the average DCR to 
+
+4.0% .This gap arises because range data alone cannot reveal lateral motion. Between sparse sweeps, range signatures from a crossing obstacle closely resemble those of thin static clutter, causing depth-only models to respond to the threat only after the viable reaction window has already closed. While the dynamic mask confirms cluster association, it lacks metric kinematic cues. Encoding Cartesian surface velocities into the tensor makes lateral relative motion directly observ-able, enabling timely evasive maneuvers perpendicular to the obstacle’s path. 
+
+C. Dynamic Risk Field Ablation 
+
+To isolate the constituent mechanisms of the asymmetric dynamic risk field (Sec. V-B), we evaluate four ablations against simulated future-collision ground truth: No Dynamic Supervision , No Future Prediction , Isotropic Field (𝜎 ∥ =
+
+𝜎 ⊥), and Symmetric Field (the causal gate 𝑣 ⊤
+
+> rel
+
+𝑛 𝑜 removed, the forecast retained). Approaching-versus-receding (A–R) accuracy (Table II) compares the maximum candidate risk between velocity-reversed frame pairs, labeled by the sign of the current Euclidean range rate. Omitting the directional projection degrades A–R accuracy to 51 .8% and inflates the DCR to 34 .0% ; we attribute this to residual penalties behind obstacles that have already passed, which prolong evasive maneuvering against cleared obstacles. Similarly, omitting constant-velocity horizon prediction severely degrades risk discrimination, reducing the area under the receiver operating characteristic curve (AUC) for future-collision prediction to 
+
+0.735 . In contrast, our full formulation combines along-track elongation of the risk field with monotonic risk decay for receding obstacles, achieving 96 .2% directional accuracy and reducing the DCR to 4.0% .
+
+D. Computational Scalability 
+
+We benchmark computational scalability on the NVIDIA Jetson Orin NX with |O 𝑡 | ∈ {1, 4, 6} simultaneous dy-namic obstacles (Table III). Benefiting from its lightweight analytical formulation, FAPP achieves the lowest planning Fig. 5. Real-world multi-threat trial in the cluttered indoor flight hall. (a) Three obstacles O1–O3 thrown in sequence; the executed quadrotor trajectory is colored by flight time, with closest-approach events 1–3 marked. (b) Surface-to-surface clearance 𝑑 ⊥ (𝑡 ) to each obstacle over time (accounting for platform and obstacle radii); the vehicle maintains a safe positive margin throughout, reaching a worst-case clearance of 0.24 m. TABLE II DYNAMIC RISK FIELD ABLATION (A VG . DCR AS IN TABLE I) Variant A–R Acc. ↑                 
+
+> Collision AUC ↑
+> Avg. DCR ↓
+> No Dynamic Supervision 58.4% 0.612 42.0% No Future Prediction 71.2% 0.735 28.0% Isotropic Field 86.5% 0.814 18.0% Symmetric Field 51.8% 0.648 34.0%
+> Ours 96.2% 0.946 4.0%
+
+latency ( ∼ 17 ms at the 95th percentile, P95) with zero deadline misses. In comparison, our dual-branch circular convolutional network and tensor processing incur a higher fixed computational overhead under onboard multi-process contention, exhibiting P95 latencies between 42 .2 ms and 
+
+45 .8 ms and a 3.0% deadline-miss rate at |O 𝑡 | = 6. These misses are marginal: the worst case ( 50 .9 ms) exceeds the budget by only 0.9 ms, while the controller keeps track-ing the previously committed trajectory. Network inference remains nearly constant ( 20 .0–20 .5 ms P95); the residual variation comes from rasterization, not inference. Nonethe-less, while SIMP suffers severe combinatorial explosion with latencies exceeding 1400 ms ( 96 .3% misses), our P95 latency stays within 45 .8 ms. Although slower than FAPP, our planner spends this latency on scoring every candidate primitive, whose safety benefit is evaluated in Sec. VI-E. 
+
+E. Multi-Threat Closed-Loop Safety 
+
+We evaluate closed-loop flight safety in simulation across obstacle counts |O| ∈ {1, 4, 6} and speeds 𝑣 𝑜 ∈                        
+
+> TABLE III PLANNING LATENCY SCALABILITY
+> P95 latency (ms) ↓| O | =6
+> Method | O | =1| O | =4| O | =6Max (ms) ↓Miss (%) ↓
+> SIMP 1445.8 1861.5 2110.9 3237.5 96.3 FAPP 18.3 16.6 17.6 22.3 0.0
+> Ours 45.8 42.2 45.6 50.9 3.0
+
+{2.0, 6.0, 10 .0} m/s (Table IV). While numerical baselines perform reliably in sparse, low-speed regimes, their safety degrades sharply as scene density and encounter speeds increase. Under the most adversarial condition with |O| = 6
+
+and 𝑣 𝑜 = 10 m/s (Table V), FAPP’s mean clearance falls to 0.12 m and its DCR reaches 86 .0% , although it incurs no deadline misses in the latency benchmark (Table III). We attribute this to local refinement of a single trajectory, which limits the available evasive alternatives when multiple fast threats converge. In contrast, by scoring every candidate primitive with offline-distilled risk, our framework maintains a 0.46 m mean clearance and an 84 .0% SR (CI [71 .5, 91 .7]
+
+vs. [3.2, 18 .8] for FAPP). 
+
+F. Real-World Flight Performance 
+
+We deploy the trained policy with frozen weights across two novel environments—a cluttered indoor flight hall and an outdoor field—against unseen physical projectiles (a tennis ball, a foam basketball, and a plush toy) at relative encounter speeds up to 15 m/s (Table VI). Fig. 5 demonstrates continu-ous evasive maneuvers against three sequentially thrown dy-TABLE IV CLOSED -LOOP SUCCESS RATE (%) UNDER OBSTACLE COUNT | O | AND SPEED 𝑣 𝑜 IN M /S, 𝑛 = 50 TRIALS PER CELL 
+
+| O | =1 | O | =4 | O | =6
+
+Method 2 6 10 2 6 10 2 6 10 SIMP † 98.0 0.0 0.0 82.0 0.0 0.0 66.0 0.0 0.0 FAPP 100.0 90.0 74.0 88.0 62.0 26.0 74.0 40.0 8.0 
+
+Ours 100.0 98.0 96.0 98.0 94.0 88.0 96.0 90.0 84.0 
+
+> †
+
+SIMP failed all trials when 𝑣 𝑜 ∈ { 6.0, 10 .0} m/s due to optimization infeasibility at high closing speeds. TABLE V ADVERSARIAL -REGIME AVOIDANCE (| O | =6, 𝑣 𝑜 =10 M/S, 𝑛 = 50 )Method SR ↑ DCR ↓ Other ↓ Mean clearance ↑
+
+FAPP 8.0% 86.0% 6.0% 0.12 m 
+
+Ours 84.0% 12.0% 4.0% 0.46 m 
+
+Other: remaining failures (static contact, infeasibility, or timeout). TABLE VI ZERO -SHOT REAL -WORLD PERFORMANCE (𝑛 = 50 TRIALS PER CELL )Metric Indoor Outdoor Tennis SR ↑ 94.0% 90.0% Foam Ball SR ↑ 86.0% 82.0% Plush SR ↑ 92.0% 88.0% 
+
+All-types SR ↑ 90.7% 86.7% 
+
+Mean clearance ↑ 0.42 m 0.38 m 
+
+namic obstacles. The weakly reflective foam basketball poses the greatest challenge, inducing delayed track confirmation and tracking dropouts, and yields the lowest success rates (86 .0% indoor, 82 .0% outdoor). We attribute the successful trials against it to the spatial margins embedded in the dynamic risk field, which absorb perception uncertainty, and to simulation mask corruption (Sec. IV-C.2), which reduces reliance on the binary mask under tracking dropouts. In the trial of Fig. 5, the quadrotor sustained a minimum clearance of 0.24 m, indicating that the policy transfers zero-shot by relying on metric relative motion. VII. C ONCLUSION 
+
+This paper presented a trajectory-risk learning framework that enables agile quadrotors to evade fast-moving dynamic obstacles using purely onboard sensing and computation. By consolidating metric range panoramas, dynamic masks, and Cartesian surface velocities into a unified planning input tensor, the framework evaluates relative obstacle motion via an obstacle-velocity-aligned asymmetric dynamic risk field. Shifting risk evaluation and terminal-state optimization offline into a dual-branch circular convolutional network reduces online planning to a single forward pass over an omnidirectional anchor lattice. The resulting P95 planning latency remains below the 50 ms control budget across obstacle counts, and scoring every candidate primitive sus-tains avoidance success in dense, high-speed encounters. Physical flight experiments confirmed zero-shot transfer with frozen weights, demonstrating continuous evasion against unseen projectiles at relative speeds up to 15 m/s. Extending this offline risk distillation paradigm to decentralized multi-agent cooperative avoidance represents a promising future direction. REFERENCES [1] J. Tordesillas and J. P. How, “PANTHER: Perception-aware trajectory planner in dynamic environments,” IEEE Access , vol. 10, pp. 22 662– 22 677, 2022. [2] S. Huang et al. , “Safe interval motion planning for quadrotors in dynamic environments,” in 2025 IEEE International Conference on Robotics and Automation (ICRA) . IEEE, 2025, pp. 2780–2786. [3] M. Lu et al. , “FAPP: Fast and adaptive perception and planning for UAVs in dynamic cluttered environments,” IEEE Transactions on Robotics , vol. 41, pp. 871–886, 2025. [4] Y. Wang et al. , “Autonomous flights in dynamic environments with onboard vision,” in 2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) . IEEE, 2021, pp. 1966–1973. [5] F. Kong, W. Xu, and F. Zhang, “Avoiding dynamic small obstacles with onboard sensing and computation on aerial robots,” IEEE Robotics and Automation Letters , vol. 6, no. 4, pp. 7869–7876, 2021. [6] M. Lu, H. Chen, and P. Lu, “Perception and avoidance of multiple small fast moving objects for quadrotors with only low-cost RGBD camera,” IEEE Robotics and Automation Letters , vol. 7, no. 4, pp. 11 657–11 664, 2022. [7] J. Zhong et al. , “A safer vision-based autonomous planning system for quadrotor UAVs with dynamic obstacle trajectory prediction and its application with LLMs,” in 2024 IEEE/CVF Winter Conference on Applications of Computer Vision Workshops (WACVW) . IEEE, 2024, pp. 920–929. [8] H. Wu et al. , “Flying through cluttered and dynamic environments with LiDAR,” arXiv preprint arXiv:2504.17569 , 2025. [9] B. He et al. , “FAST-Dynamic-Vision: Detection and tracking dynamic objects with event and depth sensing,” in 2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) . IEEE, 2021, pp. 3071–3078. [10] D. Falanga, K. Kleber, and D. Scaramuzza, “Dynamic obstacle avoid-ance for quadrotors with event cameras,” Science Robotics , vol. 5, no. 40, p. eaaz9712, 2020. [11] N. J. Sanket et al. , “EVDodgeNet: Deep dynamic obstacle dodging with event cameras,” in 2020 IEEE International Conference on Robotics and Automation (ICRA) . IEEE, 2020, pp. 10 651–10 657. [12] M. Ginesi et al. , “Dynamic movement primitives: Volumetric obstacle avoidance using dynamic potential functions,” Journal of Intelligent & Robotic Systems , vol. 101, no. 4, p. 79, 2021. [13] B. Xu et al. , “Flow-aided flight through dynamic clutters from point to motion,” IEEE Robotics and Automation Letters , vol. 11, no. 1, pp. 218–225, 2026. [14] J. Tordesillas and J. P. How, “Deep-PANTHER: Learning-based perception-aware trajectory planner in dynamic environments,” IEEE Robotics and Automation Letters , vol. 8, no. 3, pp. 1399–1406, 2023. [15] J. Lu et al. , “You only plan once: A learning-based one-stage planner with guidance learning,” IEEE Robotics and Automation Letters ,vol. 9, no. 7, pp. 6083–6090, 2024. [16] G. Xu et al. , “Flying on point clouds with reinforcement learning,” in 2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) . IEEE, 2025, pp. 7231–7238. [17] X. Fan et al. , “Flying in highly dynamic environments with end-to-end learning approach,” IEEE Robotics and Automation Letters , vol. 10, no. 4, pp. 3851–3858, 2025. [18] Y. Zhang et al. , “Threat-aware UAV dodging of human-thrown projec-tiles with an RGB-D camera,” IEEE Robotics and Automation Letters ,vol. 11, no. 2, pp. 1178–1185, 2026. [19] W. Xu et al. , “FAST-LIO2: Fast direct LiDAR-inertial odometry,” 
+
+IEEE Transactions on Robotics , vol. 38, no. 4, pp. 2053–2073, 2022. [20] H. Wu et al. , “Moving event detection from LiDAR point streams,” 
+
+Nature Communications , vol. 15, no. 1, p. 345, 2024.

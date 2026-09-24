@@ -1,0 +1,61 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-24T21:42:56.510513+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.18191v1",
+      "source": "arxiv",
+      "title": "OmniRisk: Omnidirectional Trajectory-Risk Learning for Agile Quadrotor Dynamic Avoidance",
+      "abstract": "Agile quadrotor avoidance of fast-moving obstacles requires anticipating collisions and selecting feasible maneuvers within short reaction windows. Reliable predictive avoidance remains challenging because sparse range observations do not directly reveal obstacle motion, while online trajectory optimizers either scale poorly with obstacle count or remain efficient at the expense of reliability in dense, high-speed encounters. We present OmniRisk, an omnidirectional planning framework that learns trajectory-level risk offline for efficient onboard evasion. A fixed-dimensional tensor combines LiDAR range panoramas, dynamic masks, and Cartesian surface velocities to represent geometry and motion jointly. We formulate an asymmetric risk field aligned with obstacle velocity that emphasizes approaching interactions and attenuates receding ones. Accumulating this risk along predicted relative trajectories provides dense supervision and discourages unnecessary hesitation after obstacles pass. A dual-branch circular convolutional network predicts terminal boundary states and dynamic risks for candidate primitives over an omnidirectional anchor lattice in a single forward pass, followed by selection and closed-form reconstruction of the selected candidate primitive. This formulation removes online risk accumulation along trajectories and makes risk-inference cost independent of obstacle count. OmniRisk enables efficient onboard avoidance, with real-world flights demonstrating consecutive evasive maneuvers at relative encounter speeds up to 15 m/s without fine-tuning. Code is available at https://github.com/VANdexj/OmniRisk.",
+      "authors": [
+        "Yifan He",
+        "Yang Liu",
+        "Wenhao Zhao",
+        "Hai Lin",
+        "Deping Zhang",
+        "Mingze Ma",
+        "Fei Gao",
+        "Huan Yu",
+        "Zipeng Dai",
+        "Ziming Ding"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-09-16T06:27:55+00:00",
+      "link": "https://arxiv.org/pdf/2609.18191v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "learning-based trajectory risk for agile quadrotor evasion of moving obstacles",
+      "llm_evidence_cn": "基于学习的轨迹风险用于四旋翼动态规避",
+      "llm_evidence": "基于学习的轨迹风险用于四旋翼动态规避",
+      "canonical_evidence": "基于学习的轨迹风险用于四旋翼动态规避",
+      "llm_tldr_en": "OmniRisk learns trajectory-level risk offline for onboard quadrotor evasion, encoding LiDAR panoramas, dynamic masks and surface velocities into a fixed-dimensional tensor for predictive avoidance.",
+      "llm_tldr_cn": "敏捷四旋翼躲避高速运动障碍需要在极短反应窗口内预判碰撞并选择可行机动。稀疏距离观测无法直接揭示障碍运动，而在线轨迹优化在障碍密集时扩展性差或可靠性不足。本文提出OmniRisk，离线学习轨迹级风险用于机载高效规避，用固定维度张量联合表示LiDAR距离全景、动态掩码与笛卡尔表面速度，并构建非对称风险公式。该方法提升了高速密集遭遇下的预测性规避效率与可靠性。",
+      "llm_tldr": "敏捷四旋翼躲避高速运动障碍需要在极短反应窗口内预判碰撞并选择可行机动。稀疏距离观测无法直接揭示障碍运动，而在线轨迹优化在障碍密集时扩展性差或可靠性不足。本文提出OmniRisk，离线学习轨迹级风险用于机载高效规避，用固定维度张量联合表示LiDAR距离全景、动态掩码与笛卡尔表面速度，并构建非对称风险公式。该方法提升了高速密集遭遇下的预测性规避效率与可靠性。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit evasion strategies using deep reinforcement learning",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

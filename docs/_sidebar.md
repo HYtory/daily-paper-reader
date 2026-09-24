@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-09-24 <!--dpr-date:20260924-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/24/2609.18191v1-omnirisk-omnidirectional-trajectory-risk-learning-for-agile-quadrotor-dynamic-avoidance" data-sidebar-item="{&quot;title&quot;: &quot;OmniRisk: Omnidirectional Trajectory-Risk Learning for Agile Quadrotor Dynamic Avoidance&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.18191v1-omnirisk-omnidirectional-trajectory-risk-learning-for-agile-quadrotor-dynamic-avoidance&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;基于学习的轨迹风险用于四旋翼动态规避&quot;}">OmniRisk: Omnidirectional Trajectory-Risk Learning for Agile Quadrotor Dynamic Avoidance</a>
   * 2026-09-23 <!--dpr-date:20260923-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/23/2609.23976v1-anticipatory-robot-goalkeeping-via-monotone-optimal-stopping" data-sidebar-item="{&quot;title&quot;: &quot;Anticipatory Robot Goalkeeping via Monotone Optimal Stopping&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.23976v1-anticipatory-robot-goalkeeping-via-monotone-optimal-stopping&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;预判式机器人拦截，强化学习训练拦截策略&quot;}">Anticipatory Robot Goalkeeping via Monotone Optimal Stopping</a>

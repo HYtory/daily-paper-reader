@@ -1,0 +1,24 @@
+{
+  "label": "2026-09-24",
+  "date": "2026-09-24",
+  "generated_at": "2026-09-24T21:43:36",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202609/24/2609.18191v1-omnirisk-omnidirectional-trajectory-risk-learning-for-agile-quadrotor-dynamic-avoidance",
+      "section": "quick",
+      "title_en": "OmniRisk: Omnidirectional Trajectory-Risk Learning for Agile Quadrotor Dynamic Avoidance",
+      "authors": "Yifan He, Yang Liu, Wenhao Zhao, Hai Lin, Deping Zhang, Mingze Ma, Fei Gao, Huan Yu, Zipeng Dai, Ziming Ding",
+      "date": "2026-09-16",
+      "pdf": "https://arxiv.org/pdf/2609.18191v1",
+      "score": "6.0",
+      "evidence": "基于学习的轨迹风险用于四旋翼动态规避",
+      "tldr": "四旋翼在高速动态障碍物中避障需短反应窗内预判碰撞，但稀疏测距难显运动，在线轨迹优化在密集场景难兼顾效率与可靠。OmniRisk将LiDAR全景、动态掩码与笛卡尔表面速度编码为固定维张量，构建随障碍速度对齐的非对称风险场，并用双分支环形卷积网络一次性预测候选基元终端状态与动态风险。方法无需在线沿轨迹累积风险，风险推理成本与障碍数量无关，实飞在相对速度达15 m/s下连续规避且无需微调。这为敏捷无人机动态避障提供了高效可靠的学习式规划方案。",
+      "tags": "query:ui",
+      "abstract_en": "Agile quadrotor avoidance of fast-moving obstacles requires anticipating collisions and selecting feasible maneuvers within short reaction windows. Reliable predictive avoidance remains challenging because sparse range observations do not directly reveal obstacle motion, while online trajectory optimizers either scale poorly with obstacle count or remain efficient at the expense of reliability in dense, high-speed encounters. We present OmniRisk, an omnidirectional planning framework that learns trajectory-level risk offline for efficient onboard evasion. A fixed-dimensional tensor combines LiDAR range panoramas, dynamic masks, and Cartesian surface velocities to represent geometry and motion jointly. We formulate an asymmetric risk field aligned with obstacle velocity that emphasizes approaching interactions and attenuates receding ones. Accumulating this risk along predicted relative trajectories provides dense supervision and discourages unnecessary hesitation after obstacles pass. A dual-branch circular convolutional network predicts terminal boundary states and dynamic risks for candidate primitives over an omnidirectional anchor lattice in a single forward pass, followed by selection and closed-form reconstruction of the selected candidate primitive. This formulation removes online risk accumulation along trajectories and makes risk-inference cost independent of obstacle count. OmniRisk enables efficient onboard avoidance, with real-world flights demonstrating consecutive evasive maneuvers at relative encounter speeds up to 15 m/s without fine-tuning. Code is available at https://github.com/VANdexj/OmniRisk.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
