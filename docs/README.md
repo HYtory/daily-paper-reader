@@ -6,24 +6,22 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-09-24
-- 运行时间：2026-09-24 21:43:33 UTC
+- 最新运行日期：2026-09-25
+- 运行时间：2026-09-25 22:30:08 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：0
 - 精读区：0
-- 速读区：1
+- 速读区：0
 
 ### 今日简报（AI）
-今日速读 1 篇，聚焦四旋翼无人机动态避障的轨迹风险学习。唯一值得看的是《OmniRisk》提出的全向轨迹风险学习思路，用学习方式提升敏捷四旋翼的避障能力，但评分 6.0 属中等水平。普通读者可先关注其方法框架是否可迁移到实际飞行场景，再等更多验证结果。
-- 详情：[/202609/24/README](/202609/24/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/202609/25/README](/202609/25/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [OmniRisk: Omnidirectional Trajectory-Risk Learning for Agile Quadrotor Dynamic Avoidance](/202609/24/2609.18191v1-omnirisk-omnidirectional-trajectory-risk-learning-for-agile-quadrotor-dynamic-avoidance)  
-   标签：评分：6.0/10、query:ui
-   evidence：基于学习的轨迹风险用于四旋翼动态规避
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
