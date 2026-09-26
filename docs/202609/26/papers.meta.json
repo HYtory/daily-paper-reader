@@ -1,0 +1,24 @@
+{
+  "label": "2026-09-26",
+  "date": "2026-09-26",
+  "generated_at": "2026-09-26T21:42:52",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202609/26/2609.26010v1-mates-learning-multi-agent-interactions-by-transforming-observations-for-frozen-single-agent-policies",
+      "section": "quick",
+      "title_en": "MATES: Learning Multi-Agent Interactions by Transforming Observations for Frozen Single-Agent Policies",
+      "authors": "Elie Abboud, Oren Gal",
+      "date": "2026-09-22",
+      "pdf": "https://arxiv.org/pdf/2609.26010v1",
+      "score": "6.0",
+      "evidence": "多智能体强化学习协调方法，可迁移至无人机集群任务",
+      "tldr": "多智能体强化学习常需从零训练分散策略，同时学习个体能力与协调，成本高。MATES提出输入侧适配框架，用多智能体经验学习小型适配器，将多智能体观测转换为冻结单智能体策略所需格式，从而在不更新原策略下产生适应共享环境的动作。在路径规划、导航与合作发现等任务中，仅优化3.5%–7.3%参数，却稳定优于从零MARL，接近全量微调，并在未见团队规模下保持性能。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-agent reinforcement learning (MARL) commonly trains decentralized policies from scratch, requiring agents to acquire individual task competence and coordination simultaneously. Yet many multi-agent problems admit a compatible single-agent counterpart in which the underlying task can be learned in isolation. We introduce Multi-Agent Observation Transformation for Existing Single-Agent Policies (MATES), an input-side adaptation framework for tasks whose multi-agent observations preserve the solo-task information while exposing separately identifiable neighbor information. From multi-agent experience, MATES learns a small adapter that maps this observation into the format expected by a frozen single-agent policy, inducing actions suited to the shared environment without updating the single-agent policy itself. MATES leaves the pretrained policy's internal architecture unchanged and retains the objectives and update procedures of the underlying MARL algorithm. We evaluate MATES using both on- and off-policy algorithms on lifelong pathfinding, navigation, and cooperative discovery, spanning discrete and continuous observation and action spaces. Across all evaluated settings, MATES optimizes only 3.5-7.3% as many parameters as full-policy training while consistently outperforming MARL training from scratch. It approaches the performance of full fine-tuning, remains competitive overall with demonstration-based baselines, and retains strong task performance at team sizes not encountered during training. These results provide evidence that, under this observation structure, effective multi-agent behavior can be learned without modifying the policy that encodes individual competence.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

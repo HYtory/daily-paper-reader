@@ -1,0 +1,55 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-26T21:42:14.057928+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.26010v1",
+      "source": "arxiv",
+      "title": "MATES: Learning Multi-Agent Interactions by Transforming Observations for Frozen Single-Agent Policies",
+      "abstract": "Multi-agent reinforcement learning (MARL) commonly trains decentralized policies from scratch, requiring agents to acquire individual task competence and coordination simultaneously. Yet many multi-agent problems admit a compatible single-agent counterpart in which the underlying task can be learned in isolation. We introduce Multi-Agent Observation Transformation for Existing Single-Agent Policies (MATES), an input-side adaptation framework for tasks whose multi-agent observations preserve the solo-task information while exposing separately identifiable neighbor information. From multi-agent experience, MATES learns a small adapter that maps this observation into the format expected by a frozen single-agent policy, inducing actions suited to the shared environment without updating the single-agent policy itself. MATES leaves the pretrained policy's internal architecture unchanged and retains the objectives and update procedures of the underlying MARL algorithm. We evaluate MATES using both on- and off-policy algorithms on lifelong pathfinding, navigation, and cooperative discovery, spanning discrete and continuous observation and action spaces. Across all evaluated settings, MATES optimizes only 3.5-7.3% as many parameters as full-policy training while consistently outperforming MARL training from scratch. It approaches the performance of full fine-tuning, remains competitive overall with demonstration-based baselines, and retains strong task performance at team sizes not encountered during training. These results provide evidence that, under this observation structure, effective multi-agent behavior can be learned without modifying the policy that encodes individual competence.",
+      "authors": [
+        "Elie Abboud",
+        "Oren Gal"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.RO",
+        "eess.SY"
+      ],
+      "published": "2026-09-22T11:10:34+00:00",
+      "link": "https://arxiv.org/pdf/2609.26010v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent reinforcement learning for coordination, transferable to UAV swarm tasks",
+      "llm_evidence_cn": "多智能体强化学习协调方法，可迁移至无人机集群任务",
+      "llm_evidence": "多智能体强化学习协调方法，可迁移至无人机集群任务",
+      "canonical_evidence": "多智能体强化学习协调方法，可迁移至无人机集群任务",
+      "llm_tldr_en": "MATES tackles multi-agent RL where policies train from scratch, needing both competence and coordination. It learns an adapter that transforms multi-agent observations for a frozen single-agent policy, reusing solo-task skills. Experiments show better coordination, offering a transferable framework.",
+      "llm_tldr_cn": "针对多智能体强化学习中从零训练导致个体能力与协调难以兼顾的问题，MATES提出一种输入侧适配框架，学习小型适配器将多智能体观测转换为冻结单智能体策略所需的格式。该方法复用单智能体任务中已学到的技能，在多个多智能体任务上验证了协调性能的提升。其意义在于为无人机集群等需要多智能体协作的场景提供了一种可迁移的协调学习思路。",
+      "llm_tldr": "针对多智能体强化学习中从零训练导致个体能力与协调难以兼顾的问题，MATES提出一种输入侧适配框架，学习小型适配器将多智能体观测转换为冻结单智能体策略所需的格式。该方法复用单智能体任务中已学到的技能，在多个多智能体任务上验证了协调性能的提升。其意义在于为无人机集群等需要多智能体协作的场景提供了一种可迁移的协调学习思路。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
