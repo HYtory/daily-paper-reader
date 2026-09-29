@@ -1,0 +1,39 @@
+{
+  "label": "2026-09-29",
+  "date": "2026-09-29",
+  "generated_at": "2026-09-29T22:49:17",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202609/29/2609.34594v1-aerial-gripper-a-gradient-based-real-time-inverse-game-predictor-and-planner",
+      "section": "deep",
+      "title_en": "Aerial GRIPPER: A Gradient-based Real-time Inverse-game Predictor and Planner",
+      "authors": "Zeshuai Chen, Meng Wang, Jindou Jia, Xiang Yu, Lei Guo",
+      "date": "2026-09-28",
+      "pdf": "https://arxiv.org/pdf/2609.34594v1",
+      "score": "8.0",
+      "evidence": "面向非合作空中目标捕获的广义和追逃博弈",
+      "tldr": "针对非合作目标空中捕获难题，本文提出融合梯度实时逆博弈预测与规划的GRIPPER框架。将交互建模为不完全信息一般和追逃博弈，在线推断目标代价参数并在滚动时域内迭代求解开环纳什均衡。借助隐式微分与快速Hessian向量积，求解器无需显式计算Hessian逆即可超过50 Hz更新。仿真与实机实验完成捕获与运送，验证了高对抗场景下的实时性、鲁棒性与适应性。",
+      "tags": "query:ui",
+      "abstract_en": "Accurate capture of non-cooperative targets is critical. In an attempt to tackle this intractable challenge, an aerial gripper system integrated with a Gradient-based Real-time Inverse-game Predictor and PlannER (GRIPPER) framework is proposed. The interaction is formulated as a general-sum pursuit-evasion game under incomplete information. Specifically, underlying cost parameters of the target are inferred online, and the open-loop Nash equilibrium (OLNE) strategy is iteratively refined within a receding-horizon loop. To ensure high-frequency execution, a computationally friendly gradient-based inverse-game solver is developed. Without explicit computation of the Hessian inverse, the optimized solution is updated (> 50 Hz) based on implicit differentiation and fast Hessian-vector products. Meanwhile, an anti-disturbance controller is developed to overcome disturbances of uncertain payload and gripper actuation, enabling precise tracking of the planned trajectory and accurate grasping of the target. Simulations and real-world experiments illustrate the superior computational efficiency and task performance of GRIPPER. The task of capturing and delivering a non-cooperative target is accomplished, highlighting the robustness, adaptability, and real-time performance of the framework in highly adversarial scenarios.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/29/2609.30690v1-threat-aware-energy-efficient-deployment-for-dynamic-uav-networks-a-multi-agent-rl-approach",
+      "section": "quick",
+      "title_en": "Threat-Aware Energy-Efficient Deployment for Dynamic UAV Networks: A Multi-Agent RL Approach",
+      "authors": "Faisal Al-Kamali, Hussein A. Ammar, Francois Chan, James H. Bayes, Yasser Gadallah, Mohamed H. Ahmed",
+      "date": "2026-09-25",
+      "pdf": "https://arxiv.org/pdf/2609.30690v1",
+      "score": "6.0",
+      "evidence": "多智能体强化学习用于多无人机网络部署与轨迹优化",
+      "tldr": "面向威胁环境下的多无人机空中基站，需兼顾安全与全局能效。提出三阶段框架：威胁感知K-means聚类确定最少无人机与安全初始位置，最优匹配降低能耗，再用威胁感知MATD3动态优化轨迹、功率与用户关联。仿真实现零安全违规，能效更优、收敛更快，在线部署复杂度显著低于启发式优化，并能泛化到未见用户分布、大规模机队和不同威胁几何。",
+      "tags": "query:ui",
+      "abstract_en": "Ensuring operational safety in threat-prone environments remains a critical challenge for multi-UAV networks serving as aerial base stations. This paper proposes an efficient framework to maximize global energy efficiency (EE) while promoting safe operation through threat-aware clustering and reward-based safety enforcement. The proposed framework is executed in three steps. First, a threat-aware K-means (TAKM) algorithm determines the minimum required UAVs and computes safe initial placements. Second, an optimal matching stage assigns physical UAVs to these centroids to minimize energy expenditure. Third, a threat-aware multi-agent twin delayed deep deterministic policy gradient (MATD3) algorithm dynamically optimizes trajectories, power, and user associations. Simulation results show that the proposed framework achieves zero observed safety violations in the considered scenarios while achieving superior EE and faster convergence than other learning methods and non-clustering baselines. Compared to heuristic optimization, the proposed framework outperforms the greedy particle swarm optimization (GPSO) and achieves performance comparable to that of the optimized PSO (OPSO), while incurring significantly lower online deployment computational complexity. Furthermore, the proposed framework demonstrates effective generalization to unseen user distributions, large UAV fleets, and different threat geometries, while maintaining zero safety violations.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

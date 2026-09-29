@@ -1,0 +1,99 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-29T22:46:51.561285+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2609.34594v1",
+      "source": "arxiv",
+      "title": "Aerial GRIPPER: A Gradient-based Real-time Inverse-game Predictor and Planner",
+      "abstract": "Accurate capture of non-cooperative targets is critical. In an attempt to tackle this intractable challenge, an aerial gripper system integrated with a Gradient-based Real-time Inverse-game Predictor and PlannER (GRIPPER) framework is proposed. The interaction is formulated as a general-sum pursuit-evasion game under incomplete information. Specifically, underlying cost parameters of the target are inferred online, and the open-loop Nash equilibrium (OLNE) strategy is iteratively refined within a receding-horizon loop. To ensure high-frequency execution, a computationally friendly gradient-based inverse-game solver is developed. Without explicit computation of the Hessian inverse, the optimized solution is updated (> 50 Hz) based on implicit differentiation and fast Hessian-vector products. Meanwhile, an anti-disturbance controller is developed to overcome disturbances of uncertain payload and gripper actuation, enabling precise tracking of the planned trajectory and accurate grasping of the target. Simulations and real-world experiments illustrate the superior computational efficiency and task performance of GRIPPER. The task of capturing and delivering a non-cooperative target is accomplished, highlighting the robustness, adaptability, and real-time performance of the framework in highly adversarial scenarios.",
+      "authors": [
+        "Zeshuai Chen",
+        "Meng Wang",
+        "Jindou Jia",
+        "Xiang Yu",
+        "Lei Guo"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-09-28T08:30:21+00:00",
+      "link": "https://arxiv.org/pdf/2609.34594v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "general-sum pursuit-evasion game for capturing non-cooperative aerial targets",
+      "llm_evidence_cn": "面向非合作空中目标捕获的广义和追逃博弈",
+      "llm_evidence": "面向非合作空中目标捕获的广义和追逃博弈",
+      "canonical_evidence": "面向非合作空中目标捕获的广义和追逃博弈",
+      "llm_tldr_en": "Aerial GRIPPER integrates an aerial gripper with a gradient-based real-time inverse-game predictor and planner for capturing non-cooperative targets, formulated as a general-sum pursuit-evasion game solved online at over 50 Hz.",
+      "llm_tldr_cn": "针对非合作目标精确捕获这一难题，本文提出集成梯度实时逆博弈预测与规划器（GRIPPER）的空中抓取系统。该方法将交互建模为不完全信息下的广义和追逃博弈，在线推断目标代价参数并在滚动时域内迭代求解开环纳什均衡策略。为满足高频执行，作者设计了无需显式求Hessian逆的梯度逆博弈求解器，更新频率超过50Hz。该工作为空中追逃与目标捕获提供了可实时运行的博弈论规划框架。",
+      "llm_tldr": "针对非合作目标精确捕获这一难题，本文提出集成梯度实时逆博弈预测与规划器（GRIPPER）的空中抓取系统。该方法将交互建模为不完全信息下的广义和追逃博弈，在线推断目标代价参数并在滚动时域内迭代求解开环纳什均衡策略。为满足高频执行，作者设计了无需显式求Hessian逆的梯度逆博弈求解器，更新频率超过50Hz。该工作为空中追逃与目标捕获提供了可实时运行的博弈论规划框架。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2609.30690v1",
+      "source": "arxiv",
+      "title": "Threat-Aware Energy-Efficient Deployment for Dynamic UAV Networks: A Multi-Agent RL Approach",
+      "abstract": "Ensuring operational safety in threat-prone environments remains a critical challenge for multi-UAV networks serving as aerial base stations. This paper proposes an efficient framework to maximize global energy efficiency (EE) while promoting safe operation through threat-aware clustering and reward-based safety enforcement. The proposed framework is executed in three steps. First, a threat-aware K-means (TAKM) algorithm determines the minimum required UAVs and computes safe initial placements. Second, an optimal matching stage assigns physical UAVs to these centroids to minimize energy expenditure. Third, a threat-aware multi-agent twin delayed deep deterministic policy gradient (MATD3) algorithm dynamically optimizes trajectories, power, and user associations. Simulation results show that the proposed framework achieves zero observed safety violations in the considered scenarios while achieving superior EE and faster convergence than other learning methods and non-clustering baselines. Compared to heuristic optimization, the proposed framework outperforms the greedy particle swarm optimization (GPSO) and achieves performance comparable to that of the optimized PSO (OPSO), while incurring significantly lower online deployment computational complexity. Furthermore, the proposed framework demonstrates effective generalization to unseen user distributions, large UAV fleets, and different threat geometries, while maintaining zero safety violations.",
+      "authors": [
+        "Faisal Al-Kamali",
+        "Hussein A. Ammar",
+        "Francois Chan",
+        "James H. Bayes",
+        "Yasser Gadallah",
+        "Mohamed H. Ahmed"
+      ],
+      "primary_category": "cs.IT",
+      "categories": [
+        "cs.IT",
+        "cs.AI",
+        "cs.LG",
+        "eess.SP"
+      ],
+      "published": "2026-09-25T01:52:43+00:00",
+      "link": "https://arxiv.org/pdf/2609.30690v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent RL for multi-UAV network deployment and trajectory optimization",
+      "llm_evidence_cn": "多智能体强化学习用于多无人机网络部署与轨迹优化",
+      "llm_evidence": "多智能体强化学习用于多无人机网络部署与轨迹优化",
+      "canonical_evidence": "多智能体强化学习用于多无人机网络部署与轨迹优化",
+      "llm_tldr_en": "This paper proposes a threat-aware framework for multi-UAV aerial base stations, using threat-aware K-means for safe placement, optimal matching for energy, and a multi-agent twin delayed DDPG algorithm to optimize trajectories and maximize global energy efficiency under safety constraints.",
+      "llm_tldr_cn": "在威胁环境中让多无人机网络作为空中基站安全运行并兼顾能效，是一项关键挑战。本文提出威胁感知框架：先用威胁感知K-means确定最少无人机数量并给出安全初始布点，再通过最优匹配将实体无人机分配到质心以降低能耗，最后用威胁感知多智能体双延迟DDPG算法动态优化轨迹，并以奖励形式强化安全约束。方法在提升全局能效的同时促进安全运行。其意义在于展示了多智能体强化学习在真实多无人机协同任务中的可迁移性。",
+      "llm_tldr": "在威胁环境中让多无人机网络作为空中基站安全运行并兼顾能效，是一项关键挑战。本文提出威胁感知框架：先用威胁感知K-means确定最少无人机数量并给出安全初始布点，再通过最优匹配将实体无人机分配到质心以降低能耗，最后用威胁感知多智能体双延迟DDPG算法动态优化轨迹，并以奖励形式强化安全约束。方法在提升全局能效的同时促进安全运行。其意义在于展示了多智能体强化学习在真实多无人机协同任务中的可迁移性。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
