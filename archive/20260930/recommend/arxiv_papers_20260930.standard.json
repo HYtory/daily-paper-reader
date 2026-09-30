@@ -1,0 +1,56 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-30T22:55:40.460317+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.33563v1",
+      "source": "arxiv",
+      "title": "MA-JEPA: Joint-Embedding World Models for Multi-Agent Reinforcement Learning",
+      "abstract": "World models improve sample efficiency by training policies on imagined trajectories, but their usefulness depends on learning representations that capture the information needed for future control. We study whether self-supervised joint-embedding prediction (JEPA) can provide this learning signal for multi-agent reinforcement learning. We introduce MA-JEPA, a stochastic world model that replaces observation reconstruction with prediction of target representations, enabling model-based multi-agent reinforcement learning with centralized training and decentralized execution. A categorical latent state and a causal Transformer are trained with posterior and action-conditioned dynamics prediction objectives and are then used for actor-critic learning from latent imagination. A training-only joint predictor conditions on all agents' local states and actions to predict each agent's next local observation embedding. These predictions are passed through the same local posterior used during real interaction with a centralized critic that is used only for value learning, with execution remaining decentralized. Our experiments show that this architecture performs strongly on SMAC, matching or exceeding the strongest reported comparator mean win rate on four of eight evaluated maps.",
+      "authors": [
+        "Brandon Gary Kaplowitz",
+        "Osaze James Obahor",
+        "Christian Schroeder de Witt"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-09-27T13:37:30+00:00",
+      "link": "https://arxiv.org/pdf/2609.33563v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Model-based multi-agent RL with self-supervised joint-embedding world models, transferable to UAV swarm control",
+      "llm_evidence_cn": "基于自监督联合嵌入世界模型的模型化多智能体强化学习，可迁移至无人机集群控制",
+      "llm_evidence": "基于自监督联合嵌入世界模型的模型化多智能体强化学习，可迁移至无人机集群控制",
+      "canonical_evidence": "基于自监督联合嵌入世界模型的模型化多智能体强化学习，可迁移至无人机集群控制",
+      "llm_tldr_en": "MA-JEPA replaces observation reconstruction with self-supervised joint-embedding prediction to build stochastic world models for multi-agent RL under centralized training and decentralized execution.",
+      "llm_tldr_cn": "世界模型虽能提升样本效率，但其效果取决于能否学到未来控制所需的表征，多智能体场景下尤为困难。本文提出MA-JEPA，用自监督联合嵌入预测替代观测重构，结合类别隐状态与因果Transformer构建随机世界模型，支持集中训练分散执行。在模型化多智能体强化学习任务上以想象轨迹训练actor-critic，验证了该学习信号的有效性，为UAV集群协同控制等任务提供了可迁移的世界模型方案。",
+      "llm_tldr": "世界模型虽能提升样本效率，但其效果取决于能否学到未来控制所需的表征，多智能体场景下尤为困难。本文提出MA-JEPA，用自监督联合嵌入预测替代观测重构，结合类别隐状态与因果Transformer构建随机世界模型，支持集中训练分散执行。在模型化多智能体强化学习任务上以想象轨迹训练actor-critic，验证了该学习信号的有效性，为UAV集群协同控制等任务提供了可迁移的世界模型方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

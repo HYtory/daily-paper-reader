@@ -1,0 +1,24 @@
+{
+  "label": "2026-09-30",
+  "date": "2026-09-30",
+  "generated_at": "2026-09-30T22:56:45",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202609/30/2609.33563v1-ma-jepa-joint-embedding-world-models-for-multi-agent-reinforcement-learning",
+      "section": "quick",
+      "title_en": "MA-JEPA: Joint-Embedding World Models for Multi-Agent Reinforcement Learning",
+      "authors": "Brandon Gary Kaplowitz, Osaze James Obahor, Christian Schroeder de Witt",
+      "date": "2026-09-27",
+      "pdf": "https://arxiv.org/pdf/2609.33563v1",
+      "score": "6.0",
+      "evidence": "基于自监督联合嵌入世界模型的模型化多智能体强化学习，可迁移至无人机集群控制",
+      "tldr": "世界模型可借助想象轨迹提升样本效率，但关键在于学到利于未来控制的表示。为此，论文提出 MA-JEPA：用自监督联合嵌入预测（JEPA）替代观测重建，在多智能体强化学习中训练随机世界模型。模型采用类别隐状态与因果 Transformer，结合后验与动作条件动力学目标，并仅训练时联合预测各智能体下一局部观测嵌入。在 SMAC 上，该方法在八个地图中的四个匹配或超过已报告最强基线平均胜率。",
+      "tags": "query:ui",
+      "abstract_en": "World models improve sample efficiency by training policies on imagined trajectories, but their usefulness depends on learning representations that capture the information needed for future control. We study whether self-supervised joint-embedding prediction (JEPA) can provide this learning signal for multi-agent reinforcement learning. We introduce MA-JEPA, a stochastic world model that replaces observation reconstruction with prediction of target representations, enabling model-based multi-agent reinforcement learning with centralized training and decentralized execution. A categorical latent state and a causal Transformer are trained with posterior and action-conditioned dynamics prediction objectives and are then used for actor-critic learning from latent imagination. A training-only joint predictor conditions on all agents' local states and actions to predict each agent's next local observation embedding. These predictions are passed through the same local posterior used during real interaction with a centralized critic that is used only for value learning, with execution remaining decentralized. Our experiments show that this architecture performs strongly on SMAC, matching or exceeding the strongest reported comparator mean win rate on four of eight evaluated maps.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -6,26 +6,24 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-09-29
-- 运行时间：2026-09-29 22:49:12 UTC
+- 最新运行日期：2026-09-30
+- 运行时间：2026-09-30 22:56:43 UTC
 - 运行状态：成功
-- 本次总论文数：2
-- 精读区：1
+- 本次总论文数：1
+- 精读区：0
 - 速读区：1
 
 ### 今日简报（AI）
-今日精读1篇、速读1篇，重点聚焦空中机器人与无人机网络的实时规划与部署。最值得看的是《Aerial GRIPPER》提出的基于梯度的实时逆博弈预测与规划器（8.0分），以及动态无人机网络威胁感知能效部署的多智能体强化学习方案（6.0分）。建议普通读者优先从Aerial GRIPPER入手，理解实时博弈规划如何提升空中作业效率。
-- 详情：[/202609/29/README](/202609/29/README)
+今日速读 1 篇，聚焦多智能体强化学习的世界模型新作 MA-JEPA。该论文提出联合嵌入世界模型，尝试把 JEPA 思路引入多智能体场景（评分 6.0/10），值得关注其对多智能体协同建模的改进方向。普通读者可先了解 JEPA 与世界模型基础概念，再判断这篇是否值得跟进。
+- 详情：[/202609/30/README](/202609/30/README)
 
 ### 精读区论文标签
-1. [Aerial GRIPPER: A Gradient-based Real-time Inverse-game Predictor and Planner](/202609/29/2609.34594v1-aerial-gripper-a-gradient-based-real-time-inverse-game-predictor-and-planner)  
-   标签：评分：8.0/10、query:ui
-   evidence：面向非合作空中目标捕获的广义和追逃博弈
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Threat-Aware Energy-Efficient Deployment for Dynamic UAV Networks: A Multi-Agent RL Approach](/202609/29/2609.30690v1-threat-aware-energy-efficient-deployment-for-dynamic-uav-networks-a-multi-agent-rl-approach)  
+1. [MA-JEPA: Joint-Embedding World Models for Multi-Agent Reinforcement Learning](/202609/30/2609.33563v1-ma-jepa-joint-embedding-world-models-for-multi-agent-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：多智能体强化学习用于多无人机网络部署与轨迹优化
+   evidence：基于自监督联合嵌入世界模型的模型化多智能体强化学习，可迁移至无人机集群控制
 
 
 <div class="dpr-home-promo-card">

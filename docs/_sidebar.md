@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-09-30 <!--dpr-date:20260930-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/30/2609.33563v1-ma-jepa-joint-embedding-world-models-for-multi-agent-reinforcement-learning" data-sidebar-item="{&quot;title&quot;: &quot;MA-JEPA: Joint-Embedding World Models for Multi-Agent Reinforcement Learning&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.33563v1-ma-jepa-joint-embedding-world-models-for-multi-agent-reinforcement-learning&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;基于自监督联合嵌入世界模型的模型化多智能体强化学习，可迁移至无人机集群控制&quot;}">MA-JEPA: Joint-Embedding World Models for Multi-Agent Reinforcement Learning</a>
   * 2026-09-29 <!--dpr-date:20260929-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/29/2609.34594v1-aerial-gripper-a-gradient-based-real-time-inverse-game-predictor-and-planner" data-sidebar-item="{&quot;title&quot;: &quot;Aerial GRIPPER: A Gradient-based Real-time Inverse-game Predictor and Planner&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.34594v1-aerial-gripper-a-gradient-based-real-time-inverse-game-predictor-and-planner&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;面向非合作空中目标捕获的广义和追逃博弈&quot;}">Aerial GRIPPER: A Gradient-based Real-time Inverse-game Predictor and Planner</a>
