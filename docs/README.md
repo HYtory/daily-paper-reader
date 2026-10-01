@@ -6,24 +6,27 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-09-30
-- 运行时间：2026-09-30 22:56:43 UTC
+- 最新运行日期：2026-10-01
+- 运行时间：2026-10-01 23:23:34 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：2
 - 精读区：0
-- 速读区：1
+- 速读区：2
 
 ### 今日简报（AI）
-今日速读 1 篇，聚焦多智能体强化学习的世界模型新作 MA-JEPA。该论文提出联合嵌入世界模型，尝试把 JEPA 思路引入多智能体场景（评分 6.0/10），值得关注其对多智能体协同建模的改进方向。普通读者可先了解 JEPA 与世界模型基础概念，再判断这篇是否值得跟进。
-- 详情：[/202609/30/README](/202609/30/README)
+今日速读两篇机器人学习论文，聚焦安全强化学习与多智能体策略优化。可关注《Turning Safety into Competence》用安全过滤RL把安全性转化为能力，以及《MA-FPPO》的多智能体流预训练思路。普通读者可先看这两篇的摘要与实验结论，判断是否值得深入。
+- 详情：[/202610/01/README](/202610/01/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [MA-JEPA: Joint-Embedding World Models for Multi-Agent Reinforcement Learning](/202609/30/2609.33563v1-ma-jepa-joint-embedding-world-models-for-multi-agent-reinforcement-learning)  
+1. [Turning Safety into Competence: Minimally Exploitable Robot Policies via Safety-Filtered Reinforcement Learning](/202610/01/2609.27312v1-turning-safety-into-competence-minimally-exploitable-robot-policies-via-safety-filtered-reinforcement-learning)  
    标签：评分：6.0/10、query:ui
-   evidence：基于自监督联合嵌入世界模型的模型化多智能体强化学习，可迁移至无人机集群控制
+   evidence：将对抗交互建模为安全关键马尔可夫博弈以压制对手
+2. [MA-FPPO: Multi-Agent Flow-Pretrained Policy Optimization](/202610/01/2609.32594v1-ma-fppo-multi-agent-flow-pretrained-policy-optimization)  
+   标签：评分：6.0/10、query:ui
+   evidence：多智能体强化学习协同策略优化与在线微调
 
 
 <div class="dpr-home-promo-card">

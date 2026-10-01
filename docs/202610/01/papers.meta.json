@@ -1,0 +1,39 @@
+{
+  "label": "2026-10-01",
+  "date": "2026-10-01",
+  "generated_at": "2026-10-01T23:23:37",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202610/01/2609.27312v1-turning-safety-into-competence-minimally-exploitable-robot-policies-via-safety-filtered-reinforcement-learning",
+      "section": "quick",
+      "title_en": "Turning Safety into Competence: Minimally Exploitable Robot Policies via Safety-Filtered Reinforcement Learning",
+      "authors": "Ruihan Wu, Rui Yang, Donggeon David Oh, Duy Nguyen, Haimin Hu",
+      "date": "2026-09-23",
+      "pdf": "https://arxiv.org/pdf/2609.27312v1",
+      "score": "6.0",
+      "evidence": "将对抗交互建模为安全关键马尔可夫博弈以压制对手",
+      "tldr": "竞争性机器人任务需兼顾击败对手与安全，但现有安全强化学习将成功与避障耦合在单一策略中，训练困难且易被攻击利用。S2C提出两阶段框架，把安全合成与竞争任务学习分离，将交互建模为安全关键马尔可夫博弈，并用对抗强化学习训练鲁棒安全过滤器。训练任务策略时嵌入过滤器，部署时保持不变，理论上可保持策略不可利用性。仿真触地游戏中，S2C胜过八种安全RL基线，取得最高胜率和Elo、最低可利用性，硬件人机测试也验证其能力。",
+      "tags": "query:ui",
+      "abstract_en": "Robots deployed for competitive tasks must outmaneuver their opponents without sacrificing safety. Existing approaches, including safe reinforcement learning (RL), train a single policy to achieve task success and avoid failures simultaneously. This coupling can complicate training and leave the learned policy exploitable by deliberate attacks. We propose Safety to Competence (S2C), a two-stage RL framework that separates safety synthesis from competitive task learning. We formulate competitive interactions as safety-critical Markov games and prove that perfect filtering preserves policy non-exploitability when all players commit to safe maneuvers. S2C learns a robust safety filter via adversarial RL, embeds it in the environment during task policy training, and retains the same filter at deployment. In simulated touchdown games, S2C outperforms eight safe RL baselines, achieving the highest win rate and Elo rating, and the lowest exploitability. Hardware stress tests against a human opponent confirm S2C's competence.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202610/01/2609.32594v1-ma-fppo-multi-agent-flow-pretrained-policy-optimization",
+      "section": "quick",
+      "title_en": "MA-FPPO: Multi-Agent Flow-Pretrained Policy Optimization",
+      "authors": "Guowei Zou, Haonan Chen, Haitao Wang, Beiwen Zhang, Na Yan, Hejun Wu",
+      "date": "2026-09-26",
+      "pdf": "https://arxiv.org/pdf/2609.32594v1",
+      "score": "6.0",
+      "evidence": "多智能体强化学习协同策略优化与在线微调",
+      "tldr": "多智能体流策略依赖固定离线数据学习协作，但在离线数据未覆盖的新环境中，智能体难以同时适应变化并保持协调。MA-FPPO 通过在线微调，让经流匹配预训练的模型继续与环境交互，并为离散和连续动作空间构建具有显式动作似然的策略。该方法利用共享团队优势更新预训练模型，以团队表现进一步提升协调。在30个设置中，它相对最强离线基线平均提升52.8%，在38项与纯在线学习的对比中平均提升29.8%。",
+      "tags": "query:ui",
+      "abstract_en": "Multi-agent flow policies learn cooperative behavior from fixed offline datasets, but often struggle to complete tasks in situations not covered by the offline data. In these situations, agents must both adapt to changes in the environment and coordinate with one another, yet action patterns learned offline are often insufficient for effective adaptation and coordination. To address this problem, we propose Multi-Agent Flow-Pretrained Policy Optimization (MA-FPPO), which uses online fine-tuning to improve the cooperative behavior of models pretrained with flow matching through new interactions with the environment. Building on the behavior learned during pretraining, we construct policies with explicit action likelihoods for discrete and continuous action spaces. We then update the pretrained model using shared team advantages to further improve coordination based on team performance. Our method achieves, on average, relative gains of 52.8% over the strongest listed offline baselines across 30 settings and 29.8% over purely online learning across 38 comparisons with matched online budgets and evaluation protocols.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
