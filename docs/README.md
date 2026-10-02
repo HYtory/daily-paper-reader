@@ -6,27 +6,22 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-10-01
-- 运行时间：2026-10-01 23:23:34 UTC
+- 最新运行日期：2026-10-02
+- 运行时间：2026-10-02 22:49:04 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：0
 - 精读区：0
-- 速读区：2
+- 速读区：0
 
 ### 今日简报（AI）
-今日速读两篇机器人学习论文，聚焦安全强化学习与多智能体策略优化。可关注《Turning Safety into Competence》用安全过滤RL把安全性转化为能力，以及《MA-FPPO》的多智能体流预训练思路。普通读者可先看这两篇的摘要与实验结论，判断是否值得深入。
-- 详情：[/202610/01/README](/202610/01/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/202610/02/README](/202610/02/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Turning Safety into Competence: Minimally Exploitable Robot Policies via Safety-Filtered Reinforcement Learning](/202610/01/2609.27312v1-turning-safety-into-competence-minimally-exploitable-robot-policies-via-safety-filtered-reinforcement-learning)  
-   标签：评分：6.0/10、query:ui
-   evidence：将对抗交互建模为安全关键马尔可夫博弈以压制对手
-2. [MA-FPPO: Multi-Agent Flow-Pretrained Policy Optimization](/202610/01/2609.32594v1-ma-fppo-multi-agent-flow-pretrained-policy-optimization)  
-   标签：评分：6.0/10、query:ui
-   evidence：多智能体强化学习协同策略优化与在线微调
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
