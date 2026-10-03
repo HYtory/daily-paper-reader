@@ -1,0 +1,95 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-10-03T21:37:24.846663+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.31286v1",
+      "source": "arxiv",
+      "title": "G2MAF: Test-Time Gradient Guidance for Multi-Agent Flow Policies",
+      "abstract": "Offline multi-agent reinforcement learning (MARL) learns cooperative policies from fixed datasets without further environment interaction and a learned policy is frozen at deployment. Such a frozen policy typically proposes a single joint action and executes it directly at deployment time. However, this one-shot deployment often commits to a suboptimal proposal, even when better nearby alternatives remain consistent with the behavior data. To address this issue, we propose Gradient Guided Multi Agent Flow (G2MAF), a refinement framework for optimizing joint policies at test-time. G2MAF applies one globally normalized, projected critic gradient to guide and coordinate all agents' corrections while keeping the action both feasible and close to the frozen policy proposal. Across 24 MPE and SMAC settings, its canonical variant improves 20 frozen settings, with mean relative gains of 9.2% on MPE and 8.9% on SMAC, with model inference latency increased by about 6% only.",
+      "authors": [
+        "Guowei Zou",
+        "Haitao Wang",
+        "Guoxin Wang",
+        "Zhiquan Chen",
+        "Beiwen Zhang",
+        "Guojie Wang",
+        "Hejun Wu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-09-25T13:57:02+00:00",
+      "link": "https://arxiv.org/pdf/2609.31286v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent reinforcement learning for cooperative joint policies",
+      "llm_evidence_cn": "多智能体强化学习协作联合策略",
+      "llm_evidence": "多智能体强化学习协作联合策略",
+      "canonical_evidence": "多智能体强化学习协作联合策略",
+      "llm_tldr_en": "Offline MARL freezes a cooperative policy at deployment, committing to a suboptimal one-shot joint action. G2MAF refines joint policies at test time using a globally normalized projected critic gradient, coordinating all agents while keeping actions feasible and near the frozen policy.",
+      "llm_tldr_cn": "离线多智能体强化学习只能从固定数据集中学习协作策略，部署时策略被冻结，往往一次性输出联合动作而错过更优的邻近选择。本文提出G2MAF测试时细化框架，利用全局归一化的投影评论家梯度统一引导并协调所有智能体的动作修正，同时保证动作可行且贴近冻结策略。实验表明该方法能改善冻结策略的部署性能，为离线多智能体协作提供了一种无需环境交互的即插即用优化手段。",
+      "llm_tldr": "离线多智能体强化学习只能从固定数据集中学习协作策略，部署时策略被冻结，往往一次性输出联合动作而错过更优的邻近选择。本文提出G2MAF测试时细化框架，利用全局归一化的投影评论家梯度统一引导并协调所有智能体的动作修正，同时保证动作可行且贴近冻结策略。实验表明该方法能改善冻结策略的部署性能，为离线多智能体协作提供了一种无需环境交互的即插即用优化手段。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.37316v1",
+      "source": "arxiv",
+      "title": "Battery-Aware Reinforcement Learning for Aggressive Quadrotor Flight",
+      "abstract": "Agile flight tasks such as drone racing and pursuit-evasion require strong acceleration and precise turns, but the available thrust changes as the battery discharges and voltage drops under load. Conservative command limits make this variation easier to tolerate, at the cost of unused performance. We investigate how learned controllers can use that additional thrust while retaining the flight controller's voltage compensation and rate control. Our training simulator couples an identified load-transient battery model to rotor dynamics and firmware saturation. The feedforward policy receives filtered voltage during both training and deployment. Controlled ablations distinguish the benefit of a larger thrust-command range from that of voltage information. On a 38 g Crazyflie Brushless, the resulting policy reduces circle tracking error by 49% relative to stock-authority RL at 3.84 m/s, while preserving easy-task precision. Mean 20-lap race time decreases from 106.22 s to 95.24 s. Compared with a voltage-blind policy with the same increased authority, hardware error and race time are lower by 15.3% and 4.5%, respectively. In simulation, replacing the policy's voltage input with a recording from a different battery condition worsens hard-circle tracking, with a smaller, voltage-dependent effect in racing. Together, these results show where a simple voltage input complements existing actuator compensation in aggressive learned flight.",
+      "authors": [
+        "Alejandro Sanchez Roncero",
+        "Olov Andersson",
+        "Petter Ogren"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-09-29T11:52:34+00:00",
+      "link": "https://arxiv.org/pdf/2609.37316v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Battery-aware RL for aggressive quadrotor flight including pursuit-evasion tasks",
+      "llm_evidence_cn": "面向含追逃任务的激进四旋翼飞行的电池感知强化学习",
+      "llm_evidence": "面向含追逃任务的激进四旋翼飞行的电池感知强化学习",
+      "canonical_evidence": "面向含追逃任务的激进四旋翼飞行的电池感知强化学习",
+      "llm_tldr_en": "Studies battery-aware RL for aggressive quadrotor flight, coupling an identified load-transient battery model with rotor dynamics and firmware saturation, letting a feedforward policy use filtered voltage to exploit extra thrust for racing and pursuit-evasion.",
+      "llm_tldr_cn": "针对无人机竞速与追逃等激进飞行任务需要强加速与精确转弯，但电池放电会使可用推力变化、保守指令限制性能的问题，论文提出电池感知强化学习框架，将辨识的负载瞬态电池模型与旋翼动力学及固件饱和耦合进训练仿真，前馈策略在训练和部署时均接收滤波后的电压信息。消融实验区分了更大推力指令范围与电压信息各自的收益。结果表明学习控制器可在保留电压补偿与速率控制的同时利用额外推力，为高机动追逃飞行提供更稳健的控制方案。",
+      "llm_tldr": "针对无人机竞速与追逃等激进飞行任务需要强加速与精确转弯，但电池放电会使可用推力变化、保守指令限制性能的问题，论文提出电池感知强化学习框架，将辨识的负载瞬态电池模型与旋翼动力学及固件饱和耦合进训练仿真，前馈策略在训练和部署时均接收滤波后的电压信息。消融实验区分了更大推力指令范围与电压信息各自的收益。结果表明学习控制器可在保留电压补偿与速率控制的同时利用额外推力，为高机动追逃飞行提供更稳健的控制方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

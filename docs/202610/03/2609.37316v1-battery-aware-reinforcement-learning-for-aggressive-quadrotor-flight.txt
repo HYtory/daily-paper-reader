@@ -1,0 +1,489 @@
+Title: Battery-Aware Reinforcement Learning for Aggressive Quadrotor Flight
+
+URL Source: https://arxiv.org/pdf/2609.37316v1
+
+Published Time: Wed, 30 Sep 2026 01:39:01 GMT
+
+Number of Pages: 9
+
+Markdown Content:
+# Battery-Aware Reinforcement Learning for Aggressive Quadrotor Flight 
+
+Alejandro S´ anchez Roncero, Olov Andersson and Petter ¨ Ogren 
+
+Abstract — Agile flight tasks such as drone racing and pursuit–evasion require strong acceleration and precise turns, but the available thrust changes as the battery discharges and voltage drops under load. Conservative command limits make this variation easier to tolerate, at the cost of unused performance. We investigate how learned controllers can use that additional thrust while retaining the flight controller’s voltage compensation and rate control. Our training simulator couples an identified load-transient battery model to rotor dynamics and firmware saturation. The feedforward policy receives filtered voltage during both training and deployment. Controlled ablations distinguish the benefit of a larger thrust-command range from that of voltage information. On a 38 g Crazyflie Brushless, the resulting policy reduces circle tracking error by 49% relative to stock-authority RL at 3.84 m/s, while preserving easy-task precision. Mean 20-lap race time decreases from 106.22 s to 95.24 s. Compared with a voltage-blind policy with the same increased authority, hardware error and race time are lower by 15.3% and 4.5%, respectively. In simulation, replacing the policy’s voltage input with a recording from a different battery condition worsens hard-circle tracking, with a smaller, voltage-dependent effect in racing. Together, these results show where a simple voltage input complements existing actuator compensation in aggressive learned flight. 
+
+Index Terms — Aerial Systems: Mechanics and Control, Re-inforcement Learning, Calibration and Identification 
+
+Supplementary video: youtu.be/-JTRXvstFAo 
+
+I. INTRODUCTION Quadrotors trained with reinforcement learning (RL) can race at champion level [1] and learn their path and speed directly from a racing objective [2]. Related approaches enable agile pursuit–evasion and competitive maneuvers [3], [4]. Their performance depends on available thrust, which falls as the battery discharges and drops further under high load. A maneuver that is feasible early in a flight can therefore become harder to execute later. Flight controllers partly address this variation through voltage compensation. Betaflight’s sag compensation and ArduPilot’s voltage scaling are related examples [5], [6]. Our controller raises motor duty as voltage falls to keep thrust response approximately consistent. Conservative command limits leave room for attitude corrections, but can keep useful thrust out of reach. Raising the limit makes saturation more important to the policy. 
+
+This work was partially supported by the Wallenberg AI, Autonomous Systems and Software Program (WASP) funded by the Knut and Alice Wallenberg Foundation. The authors are with the Department of Robotics, Perception and Learning, School of Electrical Engineering and Computer Science, Royal Institute of Technology (KTH), SE-100 44 Stockholm, Sweden. Corresponding author: alesr@kth.se .(a) Tracking at 3.36 m/s  
+
+> RMSE: 3.7 cm (Stock) / 4.0 cm (High-V)
+> (b) Tracking at 3.84 m/s
+> RMSE: 14.3 cm (Stock) / 7.2 cm (High-V)
+> 20 laps: 106.2 s 20 laps: 95.2 s
+> (c) Racing: 10.3% less time over 20 laps
+
+Stock High-V 
+
+Fig. 1. Hardware flights with Stock (default thrust-command limit, no voltage input) and High-V (higher limit with voltage input). (a,b) Tracking at 3 .36 and 3 .84 m/s, with root-mean-square error (RMSE) averaged over repeated flights. (c) Racing over 20 laps. The overlays show measured paths on calibrated camera images and virtual gates in racing. 
+
+Thrust and attitude control share the same four motors. A sharp turn may saturate one motor even when the requested total thrust seems feasible, forcing the mixer to reduce or redistribute commands [7]. Battery sag further lowers what these commands deliver, so the policy must account for both demands on the motors. Exploiting the available thrust requires an electromechan-ical view of the quadrotor, connecting battery supply to motor response and the resulting forces [8]. We bring this view into RL training by modeling how motor load changes voltage, how voltage changes rotor speed, and how the firmware compensates and saturates. A feedforward policy uses a relaxed thrust-command limit and one filtered voltage input during both training and flight, while still commanding collective thrust and rates through the existing onboard controller. Alongside motion feedback, which reflects recent actions, voltage can help identify changes in available thrust before large tracking errors develop. All baselines also train with the battery model, separating the effect of observing voltage from that of simulating it. We ask: does additional command authority improve flight, and does observing voltage help a policy use that authority? 
+
+Stock uses the default thrust-command limit and High raises arXiv:2609.37316v1 [cs.RO] 29 Sep 2026 it, both without voltage input. High-V adds a voltage input with a 10 s filter to High. We test tracking accuracy on fixed-speed circles and evaluate the policies’ own choices of path and speed in racing (Fig. 1). Our contributions are:  
+
+> •
+
+A battery-conditioned control design that combines in-creased thrust-command authority with filtered voltage input, while retaining onboard compensation and rate control. Separate comparisons establish the benefits of additional authority and voltage information.  
+
+> •
+
+A battery-aware actuation model for RL training that captures how discharge and rapid load changes affect available thrust, including onboard compensation and motor saturation. We identify the model from measure-ments and validate its predictions against flight data.  
+
+> •
+
+Hardware validation on the Crazyflie Brushless in cir-cle tracking and drone racing, demonstrating improved performance over both stock-authority and voltage-blind high-authority policies. II. RELATED WORK 
+
+a) Battery-dependent modeling and control: Battery-dependent modeling links electrical behavior to the forces available for flight. Thrust dynamics can be identified from motor commands and measured terminal voltage [9], but pre-dicting future performance also requires accounting for volt-age changes under load. Equivalent-circuit models capture these transients [10], and coupled battery, motor, and aerody-namic models extend prediction to range and endurance [11]. These effects also matter for control, whether balancing altitude-tracking performance against energy use [12], com-pensating voltage-induced force errors [13], or anticipating propulsion limits with battery-constrained nonlinear model predictive control (NMPC) [8]. We focus on rapid load changes in aggressive flight, predicting voltage from duty and rotor-speed history without a current sensor. Our added load-onset term improves high-load prediction on held-out flights. 
+
+b) Actuation in learned flight: In learned racing, the policy can choose its path and speed by optimizing gate progress rather than following a timed reference [2]. The simulated actuator response therefore shapes the maneuvers it learns. Swift already represents battery effects by coupling a power-driven battery model and voltage-dependent rotor speed to Betaflight control and motor saturation [1]. That captures battery effects during training, while its reported actor inputs are vehicle state, gates, and previous action. We investigate the value of an explicit voltage input using the identified Crazyflie Brushless model, whose motor lag and measured thrust and torque curves have supported transfer of learned controllers [14]. We retain its rotor fits and extend the motor response to depend on voltage, alongside calibrated drag and deployed firmware compensation and de-saturation. Dynamics randomization [15] covers uncertainty around this model. This supports separate comparisons of increased thrust-command authority and voltage input with onboard compensation retained. 
+
+c) Adaptation and training information: A controller can also respond to changing dynamics through feedback rather than an explicit voltage input. DATT supplies a learned tracker with a deployed L1 disturbance estimate [16], while adaptation modules can infer dynamics from motion his-tory [17]. In racing, SkyDreamer uses a recurrent world model to estimate attainable rotor speed and adjust its path as the battery depletes, commanding motors directly [18]. We study a scalar voltage input to a model-free feedforward actor that retains the existing collective-thrust/rate controller. Information used during flight is distinct from information that only aids learning. Asymmetric actor–critic training gives simulator information to a critic discarded before deployment [19]. We therefore evaluate critic privilege sepa-rately from the voltage input available to the actor in flight. III. METHOD Our simulator links motor load, battery voltage, and avail-able thrust (Fig. 2). Numerical settings appear in Section IV-A. 
+
+A. Vehicle and Rotor Dynamics 
+
+Let p, v denote world position and velocity, R ∈ SO (3) the body-to-world rotation, ωωω body rates, and Ωi the speed of rotor i ∈ { 1, . . . , 4}. With mass m, body inertia J, and gravity 
+
+g = [ 0, 0, −g]⊤,˙p = v, m˙v = mg + R(fprop + faero ),
+
+˙R = R[ωωω]×, J ˙ωωω = τττprop − ωωω × Jωωω. (1) Here g is gravitational acceleration, [·]× the cross-product matrix, and ez = [ 0, 0, 1]⊤ the body thrust axis. Thrust is 
+
+fprop = ez ∑i Fi(Ωi), using measured cubic fits for rotor thrust 
+
+Fi and aerodynamic/friction torque Qi [14]. With body-frame rotor position ri, rotor inertia Jr, and reaction-torque sign 
+
+si ∈ {− 1, 1}, total rotor moment is 
+
+τττprop = ∑
+
+> i
+
+ri × (Fiez) + si(Qi + Jr ˙Ωi)ez
+
+ . (2) Body-frame drag is faero = −(∑i Ωi)Kaero R⊤v, with diagonal drag coefficients Kaero . The Crazyflie Brushless model [14] uses ˙Ωi = ( Ku i − Ωi)/τm, with motor duty ui ∈ [0, 1], gain 
+
+K, and time constant τm. We retain this lag and the thrust and torque curves, but replace Ku i with a voltage-dependent target (Section III-B). 
+
+B. Voltage-Conditioned Actuation 
+
+We use terminal voltage V , which includes the drop under motor load. Fitted gain α and exponent β set steady-state rotor speed Ωss ,i:
+
+Ωss ,i = α(uiV )β ,
+
+Ωi,k+1 = Ωss ,i + ( Ωi,k − Ωss ,i)e−∆t/τm . (3) Feedforward actor                                 
+
+> πθ(a|o)[pcmd ,qcmd ,˙ψcmd ,Treq ]
+> Firmware control
+> Yaw loop + rate PID Mixer: force requests
+> Compensation
+> ˜ui=νi/Vc
+> Common desaturation
+> Rotor dynamics
+> Ωss ,i=α(uiV)β
+> Motor lag, τm
+> Vehicle dynamics
+> Fi(Ωi),Qi(Ωi)
+> Rigid body + drag
+> uiΩi
+> Battery model
+> L(u),LΩ(Ω)
+> Discharge + load sag
+> V: Eq. (7)
+> Observation model
+> ˆR,ˆvB,ˆωωω
+> Task geometry, at−1
+> Voltage filters
+> Vc: compensation
+> Vf: actor feature
+> Training-only critic
+> Separate input encoders
+> vφ(oc,b)
+> ui,Ωi
+> VVVcVf: optional scalar actor input
+> b: simulator battery inputs
+> oself ,otask : measured flight and task inputs Retained firmware Battery-dependent model Training only Fig. 2. The simulator reproduces the deployed control path. Motor load changes voltage, affecting rotor speed and firmware compensation ( Vc). The actor receives filtered voltage ( Vf), while the training-only critic also receives simulator battery inputs b(Section III-C).
+
+Here k indexes steps of duration ∆t. Even at full duty, rotor speed now depends on voltage. 
+
+a) Command interface: The clipped action a ∈ [−1, 1]4
+
+is decoded as 
+
+[pcmd , qcmd , ˙ψcmd ] = sω ⊙ a1:3 ,
+
+T req = 12 (a4 + 1)Tscale . (4) Here ⊙ is elementwise multiplication, sω gives rate scales, and Tscale scales requested collective thrust T req . Commands 
+
+pcmd , qcmd target roll/pitch rates. Firmware integrates yaw velocity ˙ψcmd into heading for its outer yaw controller. We retain command quantization, clipping, and the deployment yaw-sign conversion. Bitcraze’s firmware converts mixed motor counts to force requests using a per-motor scale [20]. Raising it from 0 .20 to 0.25 N unlocks more of the existing hardware capability, with the corresponding actor scales in Table I. The physical motor model is unchanged, but conversion scales both collective and PID differential requests. High and High-V share this interface. 
+
+b) Compensation and saturation: Rate proportional– integral–derivative (PID) control and motor mixing turn these commands into per-motor force requests. Inverting a nominal cubic thrust curve gives required motor voltage νi.Compensation converts this to duty ˜ ui = νi/Vc, using filtered supply Vc,k = acVc,k−1 + ( 1 − ac)Vk with filter weight ac.If a request exceeds duty limit umax , common desaturation removes the largest excess δ from every motor: 
+
+δ = max (0, max  
+
+> i
+
+˜ui − umax ), ui = clip ( ˜ui − δ , 0, umax ).
+
+(5) This sacrifices collective thrust to accommodate differential commands, but does not exactly preserve physical torque because force is nonlinear in duty. The modeled PID re-tains derivative on measured rate, integer truncation, output clipping, and integral clamping, without mixer-aware back-calculation. Importantly, compensation uses filtered Vc, while the motors respond to terminal V . Physical motor parameters are randomized during training, but the firmware inverse stays nominal, as on the vehicle. Fig. 3 shows the resulting thrust limits under settled compensation. 
+
+C. Load-Transient Battery Model 
+
+Battery voltage falls gradually as the pack is used, but also drops temporarily when motor load rises. We model both effects from duty and rotor speed without measuring current. The internal states summarize load history rather than electrochemical state of charge. We estimate load with L = ∑i uρ 
+
+> i
+
+and LΩ = ∑i(Ωi/ ¯Ω)2,where ρ is a fitted exponent and ¯ Ω a reference rotor speed. Accumulated load qk = qk−1 + ∆tL k captures depletion. To capture sag and recovery, states z j, j ∈ { d, r, z, h}, filter inputs 
+
+x j with time constants τ j:
+
+z j,k = a jz j,k−1 + ( 1 − a j)x j,k, a j = e−∆t/τ j . (6) The duty load drives both zd and zz, with xd = xz = L.Different time constants, τd < τz, let them capture fast and slow voltage responses. The other inputs are rotor load 
+
+xr = LΩ and squared duty load xh = L2. After updating these 2.8 3.2 3.6 4.0 4.2 
+
+Loaded terminal voltage [V]       
+
+> 0.6 0.7 0.8 0.9 1.0 1.1
+> Collective thrust [N]
+> Stock High Full-duty bound
+> Fig. 3. Modeled thrust limits with equal motor commands and settled compensation ( Vc=V). Solid curves use the maximum host command (60000 counts), with force scales of 0 .8 N for Stock and 1 .0 N for High. The dashed curve assumes all four motors at full duty. Attitude corrections can reduce the available collective thrust.
+
+states, terminal voltage is 
+
+Vk = clip  V0 − kqqk − kd zd,k − krzr,k − kzzz,k
+
+− kh max (L2 
+
+> k
+
+− zh,k, 0), Vmin ,Vmax 
+
+. (7) The fitted coefficients kq, kd , kr, kz, kh scale voltage drops from reference V0, with limits Vmin ,Vmax . The last term adds extra sag while load exceeds its recent history and vanishes at steady load. It captures sharp voltage dips without forcing a recovery overshoot (Section IV-B). At reset, q = ( V0 − Vreset )/kq and z j = 0, giving rested-equivalent voltage Vreset , not an in-flight open-circuit measurement. The simulator battery vector b =(V,V0, q, zd , zr, zz, L) ∈ R7 is an optional critic input. Only filtered voltage is available to the actor when enabled (Sec-tion III-D). 
+
+D. Policy and Training Information 
+
+Each task is a partially observable Markov decision pro-cess (POMDP) [21]. At step t, state st includes vehicle, task, motor and battery variables, controller and observer histories, delays, and randomized parameters. Dynamics give 
+
+st+1 ∼ P(· | st , at ), while observations ot ∼ Z(· | st ) expose flight measurements, task geometry, and optional voltage. Battery state affects available force even when unobserved. A Gaussian feedforward actor πθ (at | ot ) maps the current observation to an action. We train it with proximal policy optimization (PPO) [22] to maximize expected discounted reward: max  
+
+> θ
+
+J(θ ), J(θ ) = Eπθ
+
+" ∞
+
+# ∑
+
+> t=0
+
+γt rt
+
+#
+
+. (8) Here rt is reward, γ ∈ [0, 1) the discount, and the expectation covers policy-generated training episodes. Training samples actions, whereas deployment uses their clipped mean. Time-outs bootstrap the value estimate, but failures terminate it. Both tasks share measured flight inputs 
+
+oself  
+
+> t
+
+= [ vec ( ˆRt ), ˆvBt , ˆωωωt , at−1] ∈ R19 . (9) Hats denote estimates, B body coordinates, vec matrix flat-tening, and at−1 the previous action. Circle task inputs are 
+
+otrack  
+
+> t
+
+= [ eBp,t , ∆pB 
+
+> 1:6 ,t
+
+, cos ˜ ψt , sin ˜ ψt ] ∈ R23 , (10) where eBp,t = ˆR⊤ 
+
+> t
+
+(pref (t) − ˆpt ), ∆pBj,t = ˆR⊤ 
+
+> t
+
+[pref (t + h j) −
+
+pref (t)] , with reference position pref , preview offsets h j,and desired-minus-measured yaw ˜ ψt . Thus previews describe future reference-position increments, not reference velocity or acceleration. Racing instead observes the four corners of each of the next two gates: 
+
+orace  
+
+> t
+
+=  ˆR⊤ 
+
+> t
+
+(cg, j − ˆpt )    
+
+> g=gt,gt+1; j=1:4
+
+∈ R24 . (11) Here gt is the active gate and cg, j its world-frame corner. Gate-relative inputs and progress objectives follow estab-lished racing designs [1], [2]. The actor’s observation o combines flight inputs, otask 
+
+(tracking or racing), and optional filtered voltage Vf , sim-ulated during training and measured in flight. We compare 54 ms filtering with slower variants, using 10 s in High-V. Filters initialize from startup voltage. Previous action starts at hover thrust and zero rates, and input normalization is frozen after training. A constant-voltage control tests whether the extra input dimension alone explains a gain. The training-only critic estimates discounted future re-ward. A symmetric critic receives the actor’s observations, while a battery-privileged critic also uses bt and learns parameters φ to approximate 
+
+vφ (oct , bt ) ≈ Eπθ
+
+" ∞
+
+# ∑
+
+> ℓ=0
+
+γℓrt+ℓ oct , bt
+
+#
+
+. (12) The critic input oct shares the actor’s flight and task observa-tions. We process oct and bt with separate networks, then combine their outputs to predict the scalar value without requiring the full hidden state. 
+
+E. Tasks and Rewards a) Circle tracking: A counter-clockwise circle with fixed heading tests tracking at a prescribed speed. For radius 
+
+r and speed v, balancing gravity and centripetal acceleration requires ideal collective Tideal = mpg2 + ( v2/r)2, before drag and differential-control losses. We train a separate policy for each speed. Its reward encourages accurate position and heading tracking while penalizing large body rates and abrupt action changes: 
+
+rtrack  
+
+> t
+
+= wp[( 1 − λp)e−k1e2 
+
+> t
+
++ λpe−k2e2 
+
+> t
+
+] − wψ (1 − cos eψ,t )
+
+− wω (∥ωωω1:2 ,t ∥2 + |ωz,t |) − wa(∥∆a1:3 ,t ∥2 + |∆a4,t |).
+
+(13) Here et = ∥pt − pref (t)∥ is position error and eψ,t is true heading error. The two position terms reward tracking at different error scales, set by k1, k2 and mixed by λp. The remaining terms use roll/pitch rates ωωω1:2 ,t , yaw rate ωz,t ,and raw clipped action changes ∆at = at − at−1. The w
+
+coefficients weight these contributions. Excessive tracking error, invalid state, or arena exit ends the episode with a failure cost. 
+
+b) Gate racing: Racing lets the policy choose its path and speed, provided it crosses the gates through their apertures in the prescribed direction and order. The reward combines progress toward the next gate and a valid-crossing bonus, while penalizing large body rates and deviations from the course: 
+
+rrace  
+
+> t
+
+= wd [dgt (pt−1) − dgt (pt )] + wgIg,t − wr∥ωωωt ∥2
+
+− wc
+
+
+
+clip 
+
+ ct − c0
+
+cmax − c0
+
+, 0, 1
+
+ 2
+
+. (14) Here dg(p) is distance to gate center g, and Ig,t indicates a valid crossing. Progress is measured against the same gate before its index advances. The corridor penalty uses distance ct from the path centerline, starting at c0 and TABLE I LEARNING AND COMMAND SETTINGS 
+
+Parameter Circle Racing Actor hidden layers, ELU 256 , 256 , 128 256 , 256 , 128 Symmetric critic hidden layers 256 , 256 , 128 256 , 256 , 128 Privileged critic: observation 256 , 128 256 , 128 Privileged critic: battery 64 , 64 64 , 64 Privileged critic: value 256 , 128 , 1 256 , 128 , 1No voltage / scalar voltage 42 /43 inputs 43 /44 inputs Training frames 80M 120M Parallel environments 6144 6144 Episode duration 10 s 20 s Rollout / epochs / minibatches 16 /8/16 32 /8/8Initial learning rate 2×10 −4 10 −4
+
+Maximum adaptive rate 10 −2 4×10 −4
+
+KL threshold 0.008 0.008 Initial log standard deviation −0.5 −0.5Discount γ / GAE λ .995 /. 95 .9995 /. 995 Entropy coefficient 0 .002 Policy / value clipping 0.2/0.2 0.2/0.2Gradient clip / value scale 0.5/1.0 0.5/1.0
+
+sω [deg/s] 175 , 175 , 200 225 , 225 , 200 Stock / High Tscale [N] 0.8/1.0 0.8/1.0Firmware force scale, Stock/High [N] 0.20 /0.25 0.20 /0.25 Host command cap [counts] 60000 60000 Applied duty rail umax 1 1Training reset voltage [V] 3.45–4 .20 3.45–4 .20 
+
+> Primary comparisons use the privileged critic. Settings are fixed within each task, and High-V uses the same command scales as High. ELU: exponential linear unit; KL: Kullback–Leibler divergence; GAE: generalized advantage estimation. Thrust sensitivity is one. The host cap limits requested thrust to 0 .732 N for Stock and 0.916 N for High, although actual thrust depends on battery and motor loading.
+
+reaching full weight at failure distance cmax . The four w
+
+coefficients balance these objectives. Missed gates, corridor violation, contact, invalid state, and arena exit incur a failure cost. Training perturbs starts and gate centers and accepts crossings through a smaller aperture while observing full-size corners. IV. EXPERIMENTS We first validate the battery model, then compare hardware performance and examine the effects of actor voltage input and training-only battery information. 
+
+A. Platform and Learning Protocol 
+
+The guardless Crazyflie Brushless weighs 38 g including its SD logging deck and card. Motion capture provides pose at 100 Hz. Onboard logs record voltage, pulse-width modu-lation (PWM), rotor speed in revolutions per minute (RPM), and controller states at up to 500 Hz during identification and 250 Hz in final flights. For training, Isaac Lab on Isaac Sim [23] runs vehicle dynamics and firmware control at 500 Hz, with a 50 Hz actor and 10 ms action latency. We use SKRL’s PPO im-plementation [24] with separate actor and critic observation normalizers and the settings in Tables I and II. All methods, including Stock, train with three seeds per setting. Circle tracking uses a 1 m radius at 1 .15 m height. The prescribed speeds are 3 .36 and 3 .84 m/s, with 4 .08 m/s as a stress test. These span precision tracking and limited thrust headroom: ideal collective demand rises from 0 .57 0 100 200 
+
+Time [s]    
+
+> 3.5 4.0
+> Terminal voltage [V]
+> 025 50 75
+
+Time [s]   
+
+> 3.5 4.0 81 82 83
+
+Time [s]   
+
+> 3.6 3.8
+> Terminal voltage [V]
+> 48 49 50
+
+Time [s] 
+
+> 3.6 3.8
+
+Measured Model No onset term 
+
+Fig. 4. Measured and predicted battery voltage on held-out flights from two excitation missions. The lower panels zoom into the highlighted load increases to show the effect of the load-onset term. 
+
+to 0.73 N before drag and attitude corrections (Fig. 3). Preview offsets are (0.05 , 0.10 , 0.20 , 0.30 , 0.45 , 0.65 ) s, and reference radius and speed vary by ±2% during train-ing. Starts mix entry ramps and perturbed recovery states. Over the first 70% of training, the ramp-start fraction decreases from 75% to 50% without changing reference difficulty. In (13), (wp, λp, k1, k2) = ( 0.1, 0.75 , 5, 50 ) and 
+
+(wψ , wω , wa) = ( 0.025 , 10 −4, 5×10 −4); tracking error above 1.25 m ends the episode. The racing course has twelve upright 0 .60 m virtual gates (Fig. 6(a)). Training uses a 0 .35 m crossing window and gate-center jitter of ±0.05 m, with equal proportions of per-turbed hover starts and recovery starts at 0 .5–2 .5 m/s tangent 
+
+TABLE II PHYSICAL MODEL AND TRAINING RANDOMIZATION 
+
+Quantity Nominal Randomization Mass m [g] 38 ±5% diag J [10 −5 kg m 2] 3.3, 3.6, 5.9 ±20% Rotor inertia Jr [kg m 2] 5×10 −8 Fixed Motor gain multiplier 1 ±3/2% Thrust multiplier 1 ±5/3% Motor lag τm [ms] 50 ±15 /5% Torque multiplier 1 ±10 /5% RP rate PID gains 200 , 400 , 2.5 ±10% Yaw rate PID gains 120 , 16 .7, 0 ±10% Attitude bias std. [deg] 0.8, 0.6, 6 Clip 1 .8, 1.5, 10 Velocity bias mean [m/s] 0, 0, −.051 Std. .02 , . 02 , . 005 PID-history std. [deg/s] 8, 8, 30 Clip 20 , 20 , 80 Battery parameters (fixed) 
+
+kq [V/s]; ρ 7.0212 ×10 −4 1.25 
+
+(kd , kr ) [V] (0.03955847 , 0.10180777 )(kz, kh) [V] (0.04198630 , 0.02943918 )(τd , τr , τz, τh) [s] (0.10 , 0.02 , 6.0, 0.30 )(V0,Vmin ,Vmax ) [V] (4.20 , 2.80 , 4.25 )
+
+¯Ω [rad/s]; update [s] 2900 0.01                      
+
+> Paired percentages give multiplicative perturbations shared by all motors, followed by those sampled per motor. RP denotes roll/pitch. Inertia comes from the identified rotor model, not mass alone. Mean attitude bias is (0.3,0,0)deg. diag Kaero =(3.717 ,3.213 ,2.578 )×10 −6, randomized by ±13 .6/14 .3/40% along the three axes. 3.7 3.9 4.1 4.2
+
+Rested voltage [V]    
+
+> 0246
+> Tracking RMSE [cm]
+> 3.7 3.9 4.1 4.2
+
+Rested voltage [V]    
+
+> 0510 15
+> 3.7 3.9 4.1 4.2
+
+Rested voltage [V]     
+
+> 0510 15 20
+> Stock High High-V Hardware Fig. 5. Circle tracking at 3 .36, 3 .84, and 4 .08 m/s (left to right), with the last serving as a stress test. Hardware (stars) and nominal simulation (lines, shaded standard deviation) are both scored from 1 .5 to 10 s, after the entry ramp. All 50 flights are shown. Preflight voltage uses the first four samples before motor loading.
+
+speed. In (14), (wd , wg, wr, wc) = ( 2, 0.5, 2.5×10 −4, 0.01 ) and 
+
+(c0, cmax ) = ( 0.20 , 0.75 ) m. Both tasks use failure cost 10 and arena bounds [−2.4, 2.4] × [−2, 2] × [0.05 , 2] m. We evaluate final policies deterministically from official starts with nominal parameters, without domain randomiza-tion, over rested-equivalent reset voltages 3 .70–4 .20 V in 0.10 V steps. For each method, we deploy the final policy with the best held-out simulation performance among those satisfy-ing the safety criteria. Selection precedes hardware eval-uation and minimizes mean RMSE or flying-lap time at 3.70 /3.95 /4.20 V, requiring failure and arena-exit rates be-low 1% at each voltage. Primary selection uses three circle seeds and three racing seeds. 
+
+B. Model Identification and Validation 
+
+We identify motor response and the base battery model from command steps and sustained loads with the vehicle rigidly mounted. Recorded duty, RPM, and terminal voltage give α = 880 .35 rad s −1 V−β , β = 0.802, and τm = 50 ms in (3), without a current sensor. Firmware compensation filters terminal voltage with ac =
+
+0.99 at each 2 ms step (about 199 ms). Actor voltage instead uses a 54 ms filter at 100 Hz, optionally followed by a 5 or 10 s filter at 50 Hz. These use (6), initialized from reset voltage. Twenty electrical traces, eighteen with synchronized flight state, support the in-flight extension. Keeping the base model fixed, we fit the nonnegative load-onset coefficient by least squares, weighting recordings equally and sweeping its ex-ponent and time constant (Table II). In leave-one-flight-out validation, this term reduces voltage RMSE from 50 .2 to 32 .1 mV and high-load 95th-percentile absolute error from 161 .9 to 83 .6 mV (Fig. 4). Whole-flight holdouts avoid splitting correlated samples, although model structure was selected during this campaign. This validates voltage predic-tion, not the control benefit of each term. 
+
+C. Hardware Performance and Transfer 
+
+We deploy the policies zero-shot in 50 circle flights, with five or six per condition. Each lasts 20 s including a 1 .5 s entry ramp, with rest periods between flights as voltage naturally changes. −2 02 −1 010.5 1.0 1.5 
+
+X [m] Y [m] Z [m] 0 1234 5678910 11 
+
+3.7 3.9 4.1 4.2 
+
+Rested voltage [V] 
+
+4.8 5.0 5.2 5.4 
+
+> Flying-lap time [s]
+
+(a) Course and hardware paths (b) Flying-lap transfer Stock High High-V  
+
+> Fig. 6. Racing course and sim-to-real comparison. (a) Measured flying laps from flights starting near 4 .0 V, with twelve 0 .60 m virtual gates and arrows indicating the crossing direction. (b) Flying-lap times for the deployed policies in nominal simulation (lines) and hardware (stars).
+
+3.7 3.9 4.1 4.2 
+
+Rested voltage [V] 
+
+3456
+
+> RMSE [cm]
+
+3.7 3.9 4.1 4.2 
+
+Rested voltage [V] 
+
+5.0 7.5 10.0 12.5 15.0 
+
+> RMSE [cm]
+
+54 ms: 56.9--61.6 cm 
+
+3.7 3.9 4.1 4.2 
+
+Rested voltage [V] 
+
+4.8 5.0 5.2 
+
+> Flying-lap time [s]
+
+(a) Circle, 3.84 m/s (b) Circle, 4.08 m/s (stress) (c) Racing No voltage 54 ms 5 s 10 s Constant Fig. 7. Effect of voltage filtering at high authority. Legend entries give filter durations, with 10 s corresponding to High-V. Lines show means with one standard deviation shaded, using matched PPO and critic settings. Crosses mark 54 ms training collapse above the axis range. The constant input is 3 .95 V. 
+
+a) Circle tracking: Over the full 20 s flights, all three methods track at 3 .36 m/s with approximately 4 cm mean error. At 3 .84 m/s, RMSE falls from 14 .26 cm for Stock to 8.53 cm for High and 7 .23 cm for High-V. Thus High-V achieves 15 .3% lower error than High, which uses the same command range, and 49 .3% lower error than Stock. At 4 .08 m/s, High-V still tracks best, while High falls behind Stock. Simulation underestimates error even over the matched 1 .5–10 s window (Fig. 5). A focused High replay finds similar voltage and force-delivery ratios, but lower collective requests and more motor saturation in hardware. Estimator errors, controller history, and maneuver-dependent moments remain possible contributors to this closed-loop mismatch. 
+
+b) Gate racing: All 27 evaluated races complete the requested laps without failures or crashes. We report every completed race: six four-lap and three 20-lap trials per method. The 4 .8 × 4.0 m motion-capture area constrains the course to short acceleration segments, tight turns, and height changes (Fig. 6(a)). Table III summarizes all 252 laps using flight-level statistics. Over 20 laps, High and High-V reduce Stock’s time by 6 .1% and 10 .3%, respectively; High-V is 4 .5% faster 3.7 4.2 025 50 
+
+> Increase [%]
+
++43.6 +44.7 3.7 4.2 050 100 +7.7 +89.0 3.7 4.2 012 +1.84 -0.02 Reset voltage [V] (a) 3.84 m/s (b) 4.08 m/s (c) Racing Reset 3.70 V; observe 4.20 V Reset 4.20 V; observe 3.70 V 
+
+Fig. 8. High-V receives voltage recorded at the other battery condition, not a constant input. Bars show mean paired percentage increases in circle RMSE at (a) 3 .84 and (b) 4 .08 m/s (stress), and (c) racing lap time. Each panel uses its own linear scale. TABLE III HARDWARE RACING PERFORMANCE 
+
+Metric Stock High High-V Four-lap race [s] 21.30 ± 0.10 20.07 ± 0.16 19.26 ±±± 0.27 
+
+Flying lap, short [s] 5.33 ± 0.03 5.04 ± 0.04 4.81 ±±± 0.08 
+
+20-lap race [s] 106.22 ± 0.26 99.76 ± 0.84 95.24 ±±± 0.44 
+
+Flying lap, long [s] 5.31 ± 0.01 4.99 ± 0.04 4.76 ±±± 0.02 
+
+Mean speed, long [m/s] 3.74 3.89 4.10 
+
+Peak speed, long [m/s] 6.08 ± 0.11 6.74 ± 0.46 6.95 ±±± 0.05 
+
+> Flight-level means over six short and three long trials per method, with standard deviation (SD) where shown. Bold marks the best value in each row. Flying laps omit the standing start, whereas total race time includes it. Peak speed averages the maximum of each long flight.
+
+than High. Its mean per-flight peak speed reaches 6 .95 m/s, versus 6 .08 m/s for Stock. For the deployed checkpoints, nominal simulation predicts mean flying-lap time within approximately 0 .10 s of hardware (Fig. 6(b)). All three methods brake at tight reversals (Fig. 6(a)). High-V follows a similar, slightly longer route than High, gaining time through higher mean speed rather than a shorter path. A larger area might allow greater use of its additional authority. Replaying recorded commands through the actuator model gives mean errors of 407–614 PWM counts and 2 .3–3 .6% Circle 3.36 m/s Circle 3.84 m/s Racing Stock High High-V (54 ms) High-V (5 s) High-V -10.8% -4.6% -1.0% +15.0% +25.9% +1.8% +60.3% +46.1% +17.9% +38.9% +12.3% +4.7% +31.9% +20.3% +1.6% −25 025 Improvement [%] 
+
+Fig. 9. Mean paired percentage reduction in error or lap time with a privileged rather than symmetric critic, where positive values indicate improvement. Parentheses identify alternative voltage filters, and colors are capped at ±25%. TABLE IV CRITIC PREDICTION ACCURACY                                                            
+
+> Task Actor Symmetric Privileged Circle 3.36 m/s Stock 0.93 ±0.01 0.99 ±±±0.01
+> High 0.94 ±0.01 0.97 ±±±0.02
+> High-V 0.98 ±±±0.01 0.98 ±±±0.01
+> Circle 3.84 m/s Stock 0.96 ±0.00 0.97 ±±±0.01
+> High 0.96 ±0.00 0.98 ±±±0.00
+> High-V 0.99 ±±±0.00 0.99 ±±±0.00
+> Racing Stock 0.19 ±0.02 0.81 ±±±0.10
+> High 0.18 ±0.00 0.86 ±±±0.03
+> High-V 0.71 ±0.05 0.81 ±±±0.03
+> Mean ±SD across runs, after averaging each run’s final 20 logged explained-variance values. Higher is better; bold marks the largest mean at the displayed precision, including ties.
+
+in rotor speed. Stock has the lowest electrical replay error, while High-V has the closest agreement between simulated and measured lap times. 
+
+D. Which Voltage Input Helps? 
+
+We compare voltage filters at fixed high authority to choose an input that works across both tasks (Fig. 7). Short and slow filters improve circle tracking at 3 .84 m/s, whereas a constant 3 .95 V input stays close to High. Adding an input dimension alone therefore does not reproduce the benefit. At the 4 .08 m/s stress speed, however, training with the 54 ms filter is less reliable, with off-scale error marked in the figure. We retain the 10 s filter in High-V to provide slowly varying battery-condition information while onboard com-pensation handles faster voltage changes. This may reduce sensitivity to short load fluctuations. Neither the 54 ms nor 5 s alternative meets our replacement criteria: at least 3% improvement on both the 3 .84 m/s circle and racing, no more than 3% regression at 3 .36 m/s, and failure below 1%. We test voltage use with paired simulations from identical initial conditions. One receives the correct voltage and the other a recording from the opposite battery condition (3 .70 or 4 .20 V). The policy and physical battery stay unchanged, and both runs evolve freely. With the battery initialized at 4 .20 V, supplying the 3 .70 V recording substantially worsens circle tracking (Fig. 8), while the reverse swap has a more variable effect. In racing, incorrect voltage increases lap time by 1 .84% at 3 .70 V but has approximately zero mean effect at 4 .20 V. The learned response to voltage therefore depends on both the task and battery condition. 
+
+E. Does Battery Information Help the Critic? 
+
+Battery information substantially improves the critic’s re-turn prediction in racing (Table IV). Circle critics already explain most return variation, especially at 3 .84 m/s, leaving less room for improvement in prediction accuracy. In Fig. 9, asymmetric training improves mean performance for every high-authority variant, while Stock regresses. Bat-tery information may stabilize policy updates by explain-ing return differences from changing thrust availability. For Stock, conservative commands and compensation may make this information less useful, while added critic complexity could hinder optimization. V. CONCLUSIONS We presented a battery-aware RL approach that combines higher thrust-command authority with a filtered voltage input while retaining onboard compensation and rate control. Its training model connects battery discharge and load-induced voltage drops to the forces available to the policy. On the Crazyflie Brushless, the approach nearly halves tracking RMSE on the harder operational circle and reduces 20-lap race time by 10 .3% relative to stock-authority poli-cies. It also improves on voltage-blind policies with the same increased command range. Together with the voltage-input tests, these results show that explicit voltage feedback can complement the compensation already provided by the flight controller. Future work will combine voltage feedback with motion-history adaptation and extend the model to current and power prediction, as in battery-constrained NMPC [8]. This would allow policies to balance aggressive flight with energy consumption. ACKNOWLEDGMENT OpenAI ChatGPT/Codex and Anthropic Claude helped draft and revise the abstract, Sections I–V and figure cap-tions, and write analysis and plotting code. The authors reviewed, edited and verified all such content and take full responsibility. REFERENCES 
+
+[1] E. Kaufmann, L. Bauersfeld, A. Loquercio, M. M¨ uller, V. Koltun, and D. Scaramuzza, “Champion-Level Drone Rac-ing Using Deep Reinforcement Learning,” Nature , vol. 620, no. 7976, pp. 982–987, 2023. [2] Y. Song, A. Romero, M. M¨ uller, V. Koltun, and D. Scara-muzza, “Reaching the Limit in Autonomous Racing: Optimal Control versus Reinforcement Learning,” Science Robotics ,vol. 8, no. 82, p. eadg1462, Sep. 2023. [3] A. S. Roncero, Y. Cai, O. Andersson, and P. Ogren, “Learned Controllers for Agile Quadrotors in Pursuit-Evasion Games,” 
+
+arXiv preprint arXiv:2506.02849 , 2025. [4] V. Pasumarti, L. Bianchi, and A. Loquercio, “Agile Flight Emerges from Multi-Agent Competitive Racing,” arXiv preprint arXiv:2512.11781 , 2025. [5] Betaflight, “Betaflight 4.2: Dynamic Battery Sag Compensa-tion,” Official tuning documentation, accessed: 2026-09-13. [Online]. Available: https://betaflight.com/docs/wiki/tuning/4 -2-Tuning-Notes#dynamic-battery-sag-compensation [6] ArduPilot, “Current Limiting and Voltage Scaling,” Official Copter documentation, accessed: 2026-09-13. [Online]. Available: https://ardupilot.org/copter/docs/current-limitin g-and-voltage-scaling.html [7] M. Faessler, D. Falanga, and D. Scaramuzza, “Thrust Mixing, Saturation, and Body-Rate Control for Accurate Aggressive Quadrotor Flight,” IEEE Robotics and Automation Letters ,vol. 2, no. 2, pp. 476–482, 2017. [8] P. M. Gupta, M. Mihulka, M. Novosad, R. Penicka, and M. Saska, “BC-NMPC: Battery-Constrained NMPC with Propulsion Prediction and Replanning for High-Speed Flight,” 
+
+arXiv preprint arXiv:2607.23867 , 2026. [9] N. Staub and A. Franchi, “Battery-Aware Dynamical Modeling and Identification for the Total Thrust in Multi-Rotor UAVs Using Only an Onboard Accelerometer,” in IEEE International Conference on Robotics and Automation (ICRA) , 2015, pp. 3341–3346. [10] M. Chen and G. A. Rinc´ on-Mora, “Accurate Electrical Battery Model Capable of Predicting Runtime and I-V Performance,” 
+
+IEEE Transactions on Energy Conversion , vol. 21, no. 2, pp. 504–511, 2006. [11] L. Bauersfeld and D. Scaramuzza, “Range, Endurance, and Optimal Speed Estimates for Multicopters,” IEEE Robotics and Automation Letters , vol. 7, no. 2, pp. 2953–2960, Apr. 2022. [12] A. H. B. M. Tavares, S. O. D. Luiz, T. P. Nascimento, and A. M. N. Lima, “Trade-Off between Flight Performance and Energy Consumption of a Quadrotor,” Mechatronics , vol. 108, p. 103316, 2025. [13] Y. Liu, J. Jia, Z. Yang, and K. Guo, “Accurate Con-trol under Voltage Drop for Rotor Drones,” arXiv preprint arXiv:2503.09017 , 2025. [14] A. Gr¨ afe, C. Scherer, W. H¨ onig, and S. Trimpe, “How to Model Your Crazyflie Brushless,” in IEEE International Con-ference on Robotics and Automation (ICRA) , 2026. [15] X. B. Peng, M. Andrychowicz, W. Zaremba, and P. Abbeel, “Sim-to-Real Transfer of Robotic Control with Dynamics Ran-domization,” in IEEE International Conference on Robotics and Automation (ICRA) , 2018, pp. 3803–3810. [16] K. Huang, R. Rana, A. Spitzer, G. Shi, and B. Boots, “DATT: Deep Adaptive Trajectory Tracking for Quadrotor Control,” in Conference on Robot Learning (CoRL) , vol. 229, 2023, pp. 326–340. [Online]. Available: https://proceedings.mlr.press/v2 29/huang23a.html [17] A. Kumar, Z. Fu, D. Pathak, and J. Malik, “RMA: Rapid Motor Adaptation for Legged Robots,” in Robotics: Science and Systems (RSS) , 2021. [18] A. Verraest, S. Bahnam, R. Ferede, G. de Croon, and C. De Wagter, “SkyDreamer: Interpretable End-to-End Vision-Based Drone Racing with Model-Based Reinforcement Learn-ing,” arXiv preprint arXiv:2510.14783 , 2025. [19] L. Pinto, M. Andrychowicz, P. Welinder, W. Zaremba, and P. Abbeel, “Asymmetric Actor Critic for Image-Based Robot Learning,” in Robotics: Science and Systems (RSS) , 2018. [20] Bitcraze, “Crazyflie Firmware: Motor Voltage Compensation,” Official firmware source, motors.c, accessed: 2026-09-15. [Online]. Available: https://github.com/bitcraze/crazyflie-fir mware/blob/master/src/drivers/src/motors.c [21] L. P. Kaelbling, M. L. Littman, and A. R. Cassandra, “Plan-ning and Acting in Partially Observable Stochastic Domains,” 
+
+Artificial Intelligence , vol. 101, no. 1–2, pp. 99–134, 1998. [22] J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov, “Proximal Policy Optimization Algorithms,” arXiv preprint arXiv:1707.06347 , 2017. [23] M. Mittal, P. Roth, J. Tigue, A. Richard, O. Zhang, P. Du, A. Serrano-Mu˜ noz, X. Yao, R. Zurbr¨ ugg, N. Rudin 
+
+et al. , “Isaac Lab: A GPU-Accelerated Simulation Frame-work for Multi-Modal Robot Learning,” arXiv preprint arXiv:2511.04831 , 2025. [24] A. Serrano-Mu˜ noz, D. Chrysostomou, S. Bøgh, and N. Arana-Arexolaleiba, “SKRL: Modular and Flexible Library for Rein-forcement Learning,” Journal of Machine Learning Research ,vol. 24, no. 254, pp. 1–9, 2023.
