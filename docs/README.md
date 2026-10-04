@@ -6,27 +6,22 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-10-03
-- 运行时间：2026-10-03 21:38:45 UTC
+- 最新运行日期：2026-10-04
+- 运行时间：2026-10-04 22:39:36 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：0
 - 精读区：0
-- 速读区：2
+- 速读区：0
 
 ### 今日简报（AI）
-2026-10-03 日报：今日筛选2篇速读论文，暂无精读，聚焦多智能体流策略与无人机强化学习两个方向。值得关注的是 G2MAF 用测试时梯度引导改进多智能体流策略，以及面向激进四旋翼飞行的电量感知强化学习，两篇均获6.0分。普通读者可先浏览这两篇的摘要与实验结论，判断是否与你的多智能体控制或无人机续航问题相关。
-- 详情：[/202610/03/README](/202610/03/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/202610/04/README](/202610/04/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [G2MAF: Test-Time Gradient Guidance for Multi-Agent Flow Policies](/202610/03/2609.31286v1-g2maf-test-time-gradient-guidance-for-multi-agent-flow-policies)  
-   标签：评分：6.0/10、query:ui
-   evidence：多智能体强化学习协作联合策略
-2. [Battery-Aware Reinforcement Learning for Aggressive Quadrotor Flight](/202610/03/2609.37316v1-battery-aware-reinforcement-learning-for-aggressive-quadrotor-flight)  
-   标签：评分：6.0/10、query:ui
-   evidence：面向含追逃任务的激进四旋翼飞行的电池感知强化学习
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
