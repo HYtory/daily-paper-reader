@@ -1,16 +1,94 @@
 {
   "mode": "standard",
-  "generated_at": "2026-10-06T00:29:08.259076+00:00",
+  "generated_at": "2026-10-06T23:38:14.458955+00:00",
   "stats": {
     "mode": "standard",
     "tag_count": 1,
     "deep_divecandidates": 0,
     "deep_cap": 6,
     "deep_selected": 0,
-    "quick_candidates": 0,
+    "quick_candidates": 2,
     "quick_skim_target": 11,
-    "quick_selected": 0
+    "quick_selected": 2
   },
   "deep_dive": [],
-  "quick_skim": []
+  "quick_skim": [
+    {
+      "id": "2610.03681v1",
+      "source": "arxiv",
+      "title": "Risk-Aware Input-Constrained Safe Intercept Guidance Against Multiple Moving Defenders",
+      "abstract": "This paper develops a risk-aware guidance law for an attacker to intercept a stationary target in the presence of multiple moving defenders while respecting the control input limits. We represent defender threats via engagement zones (EZs) (regions of state-space from which attacker interception is feasible) and employ the dynamic maneuvering cue (DMC) (minimum heading correction to exit EZs) as a deterministic measure of geometric risk. Safety is enforced through a prescribed bound on the DMC to enable controlled EZ penetration subject to a specified risk tolerance. For multiple defenders, the corresponding safety constraints are combined through a smooth-minimum aggregation. The proposed guidance strategy drives the attacker toward the target when the engagement remains safe and transitions to an avoidance maneuver as the prescribed safety boundary is approached. The resulting online optimization-free guidance law directly bounds the applied lateral acceleration and initiates a bounded preemptive maneuver before corrective action is required. Closed-loop analysis establishes preservation of the prescribed risk constraints under pointwise bounded-input feasibility and finite-time target interception under a sustained target-accessibility condition. Numerical studies validate the proposed strategy and illustrate the tradeoff between allowable geometric risk and interception performance.",
+      "authors": [
+        "Praveen Kumar Ranjan",
+        "Abhinav Sinha",
+        "Yongcan Cao",
+        "Alexander Von Moll",
+        "Isaac E. Weintraub"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-10-02T17:48:16+00:00",
+      "link": "https://arxiv.org/pdf/2610.03681v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "risk-aware guidance law for interception against multiple moving defenders",
+      "llm_evidence_cn": "面向多移动防御者的风险感知拦截制导律",
+      "llm_evidence": "面向多移动防御者的风险感知拦截制导律",
+      "canonical_evidence": "面向多移动防御者的风险感知拦截制导律",
+      "llm_tldr_en": "Proposes a risk-aware, input-constrained guidance law that lets an attacker intercept a stationary target while evading multiple moving defenders, using engagement zones and a dynamic maneuvering cue to bound geometric risk and aggregating multi-defender constraints.",
+      "llm_tldr_cn": "针对存在多个移动防御者且控制输入受限时的安全拦截难题，本文提出一种风险感知制导律。方法以交战区表征防御者威胁，用动态机动提示量化几何风险，并通过平滑最小聚合融合多防御者安全约束。所提策略在满足输入限制下引导攻击者按指定风险容忍度穿越交战区完成拦截，为多防御者场景提供了可调风险的安全制导方案。",
+      "llm_tldr": "针对存在多个移动防御者且控制输入受限时的安全拦截难题，本文提出一种风险感知制导律。方法以交战区表征防御者威胁，用动态机动提示量化几何风险，并通过平滑最小聚合融合多防御者安全约束。所提策略在满足输入限制下引导攻击者按指定风险容忍度穿越交战区完成拦截，为多防御者场景提供了可调风险的安全制导方案。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "single unmanned aerial vehicle interception",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2610.06400v1",
+      "source": "arxiv",
+      "title": "Visual Swarm Navigation via Deep Reinforcement Learning and Evolutionary Hybrid Design",
+      "abstract": "Swarm robotics presents a robust and cost-effective paradigm for advanced automation in complex, dynamic environments, such as those encountered in search and rescue or environmental monitoring. A fundamental challenge for this field is the data-driven design of decentralized controllers capable of generating emergent collective behaviors. This paper proposes a novel, AI-driven hybrid methodology for the automatic synthesis of swarm robotic controllers for autonomous visual navigation. This approach synergistically combines multi-agent reinforcement learning with neuro-evolutionary strategies, specifically leveraging implementations of the cross-entropy method and the covariance matrix adaptation evolution strategy to optimize a pre-trained individual navigation policy. The underlying deep architecture is engineered for low-cost, resource-constrained platforms, utilizing a compact neural network that relies exclusively on monocular camera imagery. This vision-based design emphasizes computational and energy efficiency, a critical requirement for practical swarm deployments. Experiments, performed in a high-fidelity physics simulator, demonstrate that the resulting controllers enable robust and scalable collective exploration of diverse indoor environments. The controller trained using our cross-entropy method achieves superior exploration coverage, visiting 36.20% more regions compared to the covariance matrix adaptation evolution strategy. Critically, our best vision-based policy achieves exploration performance statistically comparable to traditional methods relying on more expensive distance sensors, while delivering a significant 31.40% average reduction in energy consumption. These findings validate an effective and economically viable autonomous control system, establishing a path for deploying highly efficient collective intelligence in real-world engineering applications.",
+      "authors": [
+        "Álvaro Díez",
+        "Fidel Aznar"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.MA",
+        "cs.NE"
+      ],
+      "published": "2026-10-05T14:21:11+00:00",
+      "link": "https://arxiv.org/pdf/2610.06400v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent reinforcement learning for decentralized swarm navigation controllers",
+      "llm_evidence_cn": "用于去中心化群体导航控制器的多智能体强化学习",
+      "llm_evidence": "用于去中心化群体导航控制器的多智能体强化学习",
+      "canonical_evidence": "用于去中心化群体导航控制器的多智能体强化学习",
+      "llm_tldr_en": "Designing decentralized controllers that yield emergent collective behaviors is hard. This paper combines multi-agent reinforcement learning with neuro-evolutionary strategies to synthesize swarm controllers for autonomous visual navigation.",
+      "llm_tldr_cn": "群体机器人需要在复杂动态环境中实现稳健而低成本的自动化，其核心难题是数据驱动地设计能产生涌现集体行为的去中心化控制器。本文提出一种AI驱动的混合方法，将多智能体强化学习与神经进化策略相结合，具体采用交叉熵方法和协方差矩阵自适应进化策略来优化预训练控制器。该方法用于自主视觉导航任务，验证了混合设计在生成群体集体行为方面的有效性，为群体控制器的自动合成提供了新途径。",
+      "llm_tldr": "群体机器人需要在复杂动态环境中实现稳健而低成本的自动化，其核心难题是数据驱动地设计能产生涌现集体行为的去中心化控制器。本文提出一种AI驱动的混合方法，将多智能体强化学习与神经进化策略相结合，具体采用交叉熵方法和协方差矩阵自适应进化策略来优化预训练控制器。该方法用于自主视觉导航任务，验证了混合设计在生成群体集体行为方面的有效性，为群体控制器的自动合成提供了新途径。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
 }

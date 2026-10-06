@@ -1,8 +1,39 @@
 {
   "label": "2026-10-06",
   "date": "2026-10-06",
-  "generated_at": "2026-10-06T00:29:08",
-  "count": 0,
-  "papers": [],
+  "generated_at": "2026-10-06T23:40:16",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202610/06/2610.03681v1-risk-aware-input-constrained-safe-intercept-guidance-against-multiple-moving-defenders",
+      "section": "quick",
+      "title_en": "Risk-Aware Input-Constrained Safe Intercept Guidance Against Multiple Moving Defenders",
+      "authors": "Praveen Kumar Ranjan, Abhinav Sinha, Yongcan Cao, Alexander Von Moll, Isaac E. Weintraub",
+      "date": "2026-10-02",
+      "pdf": "https://arxiv.org/pdf/2610.03681v1",
+      "score": "6.0",
+      "evidence": "面向多移动防御者的风险感知拦截制导律",
+      "tldr": "面向存在多个移动防御者的拦截场景，本文研究受控制输入限制的攻击者如何安全拦截静止目标。方法用交会区EZ描述防御威胁，并以动态机动提示DMC作为几何风险的确定性度量，通过预设DMC上界控制风险容忍下的EZ穿透。多防御者约束经光滑最小值聚合，形成无需在线优化的制导律，直接限制侧向加速度并提前触发有界预机动。闭环分析表明可保持风险约束并实现有限时间拦截，数值仿真验证了风险与拦截性能的权衡。",
+      "tags": "query:ui",
+      "abstract_en": "This paper develops a risk-aware guidance law for an attacker to intercept a stationary target in the presence of multiple moving defenders while respecting the control input limits. We represent defender threats via engagement zones (EZs) (regions of state-space from which attacker interception is feasible) and employ the dynamic maneuvering cue (DMC) (minimum heading correction to exit EZs) as a deterministic measure of geometric risk. Safety is enforced through a prescribed bound on the DMC to enable controlled EZ penetration subject to a specified risk tolerance. For multiple defenders, the corresponding safety constraints are combined through a smooth-minimum aggregation. The proposed guidance strategy drives the attacker toward the target when the engagement remains safe and transitions to an avoidance maneuver as the prescribed safety boundary is approached. The resulting online optimization-free guidance law directly bounds the applied lateral acceleration and initiates a bounded preemptive maneuver before corrective action is required. Closed-loop analysis establishes preservation of the prescribed risk constraints under pointwise bounded-input feasibility and finite-time target interception under a sustained target-accessibility condition. Numerical studies validate the proposed strategy and illustrate the tradeoff between allowable geometric risk and interception performance.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202610/06/2610.06400v1-visual-swarm-navigation-via-deep-reinforcement-learning-and-evolutionary-hybrid-design",
+      "section": "quick",
+      "title_en": "Visual Swarm Navigation via Deep Reinforcement Learning and Evolutionary Hybrid Design",
+      "authors": "Álvaro Díez, Fidel Aznar",
+      "date": "2026-10-05",
+      "pdf": "https://arxiv.org/pdf/2610.06400v1",
+      "score": "6.0",
+      "evidence": "用于去中心化群体导航控制器的多智能体强化学习",
+      "tldr": "针对群体机器人视觉自主导航中分散式控制器难以数据驱动设计的问题，本文提出深度强化学习与神经进化相结合的混合方法。先用多智能体强化学习预训练单体导航策略，再用交叉熵方法与CMA-ES优化，并采用仅依赖单目图像的紧凑网络以降低计算能耗。高保真仿真中，CEM控制器探索覆盖比CMA-ES多36.20%，视觉策略性能媲美距离传感器且平均能耗降低31.40%。",
+      "tags": "query:ui",
+      "abstract_en": "Swarm robotics presents a robust and cost-effective paradigm for advanced automation in complex, dynamic environments, such as those encountered in search and rescue or environmental monitoring. A fundamental challenge for this field is the data-driven design of decentralized controllers capable of generating emergent collective behaviors. This paper proposes a novel, AI-driven hybrid methodology for the automatic synthesis of swarm robotic controllers for autonomous visual navigation. This approach synergistically combines multi-agent reinforcement learning with neuro-evolutionary strategies, specifically leveraging implementations of the cross-entropy method and the covariance matrix adaptation evolution strategy to optimize a pre-trained individual navigation policy. The underlying deep architecture is engineered for low-cost, resource-constrained platforms, utilizing a compact neural network that relies exclusively on monocular camera imagery. This vision-based design emphasizes computational and energy efficiency, a critical requirement for practical swarm deployments. Experiments, performed in a high-fidelity physics simulator, demonstrate that the resulting controllers enable robust and scalable collective exploration of diverse indoor environments. The controller trained using our cross-entropy method achieves superior exploration coverage, visiting 36.20% more regions compared to the covariance matrix adaptation evolution strategy. Critically, our best vision-based policy achieves exploration performance statistically comparable to traditional methods relying on more expensive distance sensors, while delivering a significant 31.40% average reduction in energy consumption. These findings validate an effective and economically viable autonomous control system, establishing a path for deploying highly efficient collective intelligence in real-world engineering applications.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
   "errors": []
 }
