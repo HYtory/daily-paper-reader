@@ -6,27 +6,22 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-10-06
-- 运行时间：2026-10-06 23:40:13 UTC
+- 最新运行日期：2026-10-07
+- 运行时间：2026-10-07 23:29:34 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：0
 - 精读区：0
-- 速读区：2
+- 速读区：0
 
 ### 今日简报（AI）
-今日速读两篇6.0分论文，聚焦风险感知安全拦截与视觉集群导航。值得关注的是多移动防御者下的输入约束拦截制导，以及深度强化学习结合进化混合设计的集群导航方案。普通读者可先看视觉集群导航一文，了解强化学习如何让群体自主飞行。
-- 详情：[/202610/06/README](/202610/06/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/202610/07/README](/202610/07/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Risk-Aware Input-Constrained Safe Intercept Guidance Against Multiple Moving Defenders](/202610/06/2610.03681v1-risk-aware-input-constrained-safe-intercept-guidance-against-multiple-moving-defenders)  
-   标签：评分：6.0/10、query:ui
-   evidence：面向多移动防御者的风险感知拦截制导律
-2. [Visual Swarm Navigation via Deep Reinforcement Learning and Evolutionary Hybrid Design](/202610/06/2610.06400v1-visual-swarm-navigation-via-deep-reinforcement-learning-and-evolutionary-hybrid-design)  
-   标签：评分：6.0/10、query:ui
-   evidence：用于去中心化群体导航控制器的多智能体强化学习
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
