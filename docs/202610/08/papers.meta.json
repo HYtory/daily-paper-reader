@@ -1,0 +1,24 @@
+{
+  "label": "2026-10-08",
+  "date": "2026-10-08",
+  "generated_at": "2026-10-08T23:58:09",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202610/08/2610.07704v1-independent-multi-agent-reinforcement-learning-with-counterfactual-semantic-social-world-models",
+      "section": "quick",
+      "title_en": "Independent Multi-Agent Reinforcement Learning with Counterfactual Semantic-Social World Models",
+      "authors": "Fernando Martinez, Tao Li, Yingdong Lu, Juntao Chen",
+      "date": "2026-10-06",
+      "pdf": "https://arxiv.org/pdf/2610.07704v1",
+      "score": "6.0",
+      "evidence": "去中心化多智能体强化学习",
+      "tldr": "完全去中心化多智能体强化学习中，智能体仅凭局部信息学习，标量奖励难以区分无效自身动作、队友配合不佳还是对手有效应对。CASTLE 采用离线训练、在线上下文引导，结合局部动力学世界模型与语义社会世界模型，通过反事实模拟器推演候选动作的队友与对手响应。两个世界模型在线冻结，仅用局部信息为独立 PPO 提供预测 logits 引导。在 Tag、Spread、Adversary 上，30 个匹配种子中平均最终得分最高，较最强基线分别提升 10.67、6.46、0.33 归一化分。",
+      "tags": "query:ui",
+      "abstract_en": "Fully decentralized multi-agent reinforcement learning (MARL), also referred to as independent learning, requires each agent to learn and act using only its local information and experience, without a centralized critic or inter-agent communication. Such a stringent information structure renders the conventional reward signal ambiguous. A poor return may result from an ineffective ego action, an incompatible teammate response, or an effective opponent response, yet scalar rewards alone do not reveal which explanation is responsible. We argue that agents can learn more effectively by prospectively comparing the consequences of candidate actions rather than diagnosing failures only from realized returns. We introduce CASTLE (Counterfactual Action-conditioned Semantic Tokens for Local Execution in Decentralized MARL), an offline-training, online-in-context guidance framework with two complementary world models. A Local Dynamics World Model, offline pre-trained over agents' local trajectories, summarizes the agent's local trajectory dynamics and partial observability, while a Semantic-Social World Model predicts compact short-horizon task and social consequences for each candidate ego action. The latter is trained from counterfactual simulator rollouts that expose plausible teammate and opponent responses to alternative actions taken from the same logged rollout state. During online learning and execution, both world models remain frozen and are queried by agents using only locally available information. Their prediction logits provide in-context guidance to an independent PPO policy. Across 30 matched seeds on Tag, Spread, and Adversary in the benchmark multi-particle environments, our proposed CASTLE achieves the highest mean final score among the evaluated methods, exceeding the strongest baseline on each task by 10.67, 6.46, and 0.33 normalized points, respectively.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-10-08 <!--dpr-date:20261008-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202610/08/2610.07704v1-independent-multi-agent-reinforcement-learning-with-counterfactual-semantic-social-world-models" data-sidebar-item="{&quot;title&quot;: &quot;Independent Multi-Agent Reinforcement Learning with Counterfactual Semantic-Social World Models&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2610.07704v1-independent-multi-agent-reinforcement-learning-with-counterfactual-semantic-social-world-models&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;去中心化多智能体强化学习&quot;}">Independent Multi-Agent Reinforcement Learning with Counterfactual Semantic-Social World Models</a>
   * 2026-10-06 <!--dpr-date:20261006-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202610/06/2610.03681v1-risk-aware-input-constrained-safe-intercept-guidance-against-multiple-moving-defenders" data-sidebar-item="{&quot;title&quot;: &quot;Risk-Aware Input-Constrained Safe Intercept Guidance Against Multiple Moving Defenders&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2610.03681v1-risk-aware-input-constrained-safe-intercept-guidance-against-multiple-moving-defenders&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ui&quot;}], &quot;evidence&quot;: &quot;面向多移动防御者的风险感知拦截制导律&quot;}">Risk-Aware Input-Constrained Safe Intercept Guidance Against Multiple Moving Defenders</a>
