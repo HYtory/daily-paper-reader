@@ -1,0 +1,54 @@
+{
+  "label": "2026-10-14",
+  "date": "2026-10-14",
+  "generated_at": "2026-10-14T22:27:19",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202610/14/2610.17003v1-multi-agent-deferred-decision-trajectory-optimization-with-anytime-valid-target-retention-for-moving-candidates",
+      "section": "quick",
+      "title_en": "Multi-Agent Deferred-Decision Trajectory Optimization with Anytime-Valid Target Retention for Moving Candidates",
+      "authors": "Farbod Siahkali, Mengxue Hou, Vijay Gupta",
+      "date": "2026-10-12",
+      "pdf": "https://arxiv.org/pdf/2610.17003v1",
+      "score": "7.0",
+      "evidence": "多智能体对移动候选目标的终端拦截",
+      "tldr": "多智能体终端拦截中，多个移动候选里只有一个是未知目标，且目标身份与候选终点位置均不确定。为此提出滚动时域延迟决策轨迹优化（DDTO）控制器，融合共形终点预测、序贯候选剔除、容量约束分配与候选条件规划。在可预测查询与可交换性条件下，证明固定时间终点覆盖与任意时刻有效目标保留，并界定收紧集合方案通过非线性rollout验证却捕获失败的概率。100组配对场景中，严格控制能量预算下捕获79%目标，放宽后达85%。",
+      "tags": "query:ui",
+      "abstract_en": "We study multi-agent terminal interception when one of several moving candidates is the unknown target and both target identity and candidate terminal locations are uncertain. We develop a receding-horizon deferred-decision trajectory optimization (DDTO) controller that combines conformal terminal-location prediction, sequential candidate rejection, capacity-constrained assignment, and candidate-contingent planning. Under exchangeability conditions for terminal and identity residuals, with predictable querying, we establish fixed-time terminal-location coverage and anytime-valid target retention. At the final replan, when one control step remains, we bound the joint probability that a tightened-set DDTO plan passes nonlinear rollout verification but capture fails. The closed-loop controller applies fallback guidance to any agent without a verified DDTO plan and, across 100 paired scenarios, captures 79% of targets under the strict control-effort budget and 85% when that budget is relaxed.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202610/14/2610.18425v1-calm-decentralized-control-of-cooperative-aerial-manipulation-with-multi-agent-reinforcement-learning",
+      "section": "quick",
+      "title_en": "CALM: Decentralized Control of Cooperative Aerial Manipulation with Multi-Agent Reinforcement Learning",
+      "authors": "Jiaxi Huo, Petre Ricioppo, Fausto Francesco Lizzio",
+      "date": "2026-10-13",
+      "pdf": "https://arxiv.org/pdf/2610.18425v1",
+      "score": "7.0",
+      "evidence": "多智能体强化学习实现多无人机协同控制",
+      "tldr": "多无人机协同吊运共享负载时，风扰、负载摆动和噪声目标广播使控制困难。CALM 采用参数共享的多智能体强化学习策略，结合目标估计、单机扩张状态观测器、篮子质量估计与前瞻编队偏航前馈，实现去中心化控制。在留出轨迹上，位置与姿态误差均低于所有基线，包括机械臂基线（7.68 cm 对 10.95 cm，3.3° 对 4.7°）。在未见路径退化下仍与基线相当或更优，验证了分散协同空中操作的有效性。",
+      "tags": "query:ui",
+      "abstract_en": "Cooperative aerial manipulation is difficult under wind, payload motion, and noisy goal broadcasts because multiple Unmanned Aerial Vehicles (UAVs) are coupled through a shared payload. We present CALM (Cooperative Aerial Learned Manipulation), a decentralized controller for aerial manipulators carrying a basket while tracking a moving ground robot. CALM combines a parameter-shared Multi-Agent Reinforcement Learning (MARL) policy, trained using Multi-Agent Proximal Policy Optimization (MAPPO), with goal estimation, per-UAV Extended State Observers (ESOs), basket-mass estimation, and anticipatory formation-yaw feedforward. The anticipatory formation-yaw feedforward uses estimated goal motion to rotate the formation before position error develops, reducing basket-yaw lag without adding net commanded force. A disturbance-conditioned critic supports centralized training while execution remains decentralized. Across held-out trajectories, CALM achieves lower mean position and orientation errors than all evaluated baselines, including the matched arm baseline (7.68 versus 10.95 cm and 3.3 versus 4.7$^\\circ$), the cable-suspended realization, and two model-based controllers. Under unseen full-information-path degradation, CALM remains statistically comparable or superior to the arm baseline. Videos are available at https://petreric.github.io/CALM/.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202610/14/2610.18229v1-when-does-opponent-modeling-pay-off-spatial-inference-stabilises-reinforcement-learning-under-partial-observability",
+      "section": "quick",
+      "title_en": "When Does Opponent Modeling Pay Off? Spatial Inference Stabilises Reinforcement Learning under Partial Observability",
+      "authors": "Marcel Petran, Stefan Edelkamp",
+      "date": "2026-10-13",
+      "pdf": "https://arxiv.org/pdf/2610.18229v1",
+      "score": "6.0",
+      "evidence": "部分可观测对抗博弈中的对手建模稳定强化学习",
+      "tldr": "在部分可观测竞争博弈中，智能体需推断未见对手意图。本文提出空间对手模型：用事后重标注意图训练Transformer，从对手轨迹输出子目标热力图，并早期融合进dueling double DQN。在对称常和觅食游戏中，该模块避免普通TD(0) DQN的退化种子，稳定训练并恢复多数博弈价值，还可零样本迁移到未见对手。盲化消融表明，优势来自训练稳定与部署推断两种机制，其价值受雾厚、对手意图和资源密度约束。",
+      "tags": "query:ui",
+      "abstract_en": "Deep reinforcement learning agents in partially observable competitive games must act on beliefs about an unseen opponent's intent. We study a spatial opponent model: a transformer trained with hindsight-relabelled opponent goals that outputs a subgoal heatmap from the opponent's observed trajectory, fused early into a dueling double DQN. In symmetric constant-sum foraging games with partial observability, the module stabilises training. Plain TD(0) DQN suffers degenerate seeds in three of four one-step configurations, whereas the opponent-model agent never collapses and, wherever training succeeds, recovers the majority of the symmetric game value. Transfers zero-shot to a foraging opponent unseen by the learner, with a positive goal advantage over the baseline, and loses this edge exactly where an information argument predicts: against a full-information tracking adversary whose intent is the learner itself, and on resource-dense maps where both agents saturate. A blindfold ablation, zeroing the heatmap at deployment, decomposes the advantage into two mechanisms: training-time stabilisation, which dominates where the credit assignment is hard and survives blinding on the dense map, and deployment-time inference, whose reliance shrinks as fog thins on the sparse map. We conclude that opponent-goal inference is a stability-and-transfer mechanism whose value is governed by measurable boundary conditions: visibility (fog thickness), opponent intent, and resource density.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

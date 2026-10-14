@@ -1,0 +1,132 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-10-14T22:26:07.978380+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2610.17003v1",
+      "source": "arxiv",
+      "title": "Multi-Agent Deferred-Decision Trajectory Optimization with Anytime-Valid Target Retention for Moving Candidates",
+      "abstract": "We study multi-agent terminal interception when one of several moving candidates is the unknown target and both target identity and candidate terminal locations are uncertain. We develop a receding-horizon deferred-decision trajectory optimization (DDTO) controller that combines conformal terminal-location prediction, sequential candidate rejection, capacity-constrained assignment, and candidate-contingent planning. Under exchangeability conditions for terminal and identity residuals, with predictable querying, we establish fixed-time terminal-location coverage and anytime-valid target retention. At the final replan, when one control step remains, we bound the joint probability that a tightened-set DDTO plan passes nonlinear rollout verification but capture fails. The closed-loop controller applies fallback guidance to any agent without a verified DDTO plan and, across 100 paired scenarios, captures 79% of targets under the strict control-effort budget and 85% when that budget is relaxed.",
+      "authors": [
+        "Farbod Siahkali",
+        "Mengxue Hou",
+        "Vijay Gupta"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-10-12T15:50:27+00:00",
+      "link": "https://arxiv.org/pdf/2610.17003v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent terminal interception of moving candidates",
+      "llm_evidence_cn": "多智能体对移动候选目标的终端拦截",
+      "llm_evidence": "多智能体对移动候选目标的终端拦截",
+      "canonical_evidence": "多智能体对移动候选目标的终端拦截",
+      "llm_tldr_en": "This paper studies multi-agent terminal interception of an unknown moving target among candidates, proposing a deferred-decision trajectory optimization controller with conformal prediction.",
+      "llm_tldr_cn": "针对多智能体终端拦截中目标身份与候选终端位置均不确定的问题，本文提出滚动时域延迟决策轨迹优化控制器，结合保形终端位置预测、序列候选剔除、容量约束分配与候选条件规划。理论上给出了终端位置覆盖与随时有效的目标保留保证。该工作直接面向多智能体拦截问题，与无人机拦截围捕需求高度契合，但未采用强化学习方法。",
+      "llm_tldr": "针对多智能体终端拦截中目标身份与候选终端位置均不确定的问题，本文提出滚动时域延迟决策轨迹优化控制器，结合保形终端位置预测、序列候选剔除、容量约束分配与候选条件规划。理论上给出了终端位置覆盖与随时有效的目标保留保证。该工作直接面向多智能体拦截问题，与无人机拦截围捕需求高度契合，但未采用强化学习方法。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "reinforcement learning for UAV interception and encirclement",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2610.18229v1",
+      "source": "arxiv",
+      "title": "When Does Opponent Modeling Pay Off? Spatial Inference Stabilises Reinforcement Learning under Partial Observability",
+      "abstract": "Deep reinforcement learning agents in partially observable competitive games must act on beliefs about an unseen opponent's intent. We study a spatial opponent model: a transformer trained with hindsight-relabelled opponent goals that outputs a subgoal heatmap from the opponent's observed trajectory, fused early into a dueling double DQN. In symmetric constant-sum foraging games with partial observability, the module stabilises training. Plain TD(0) DQN suffers degenerate seeds in three of four one-step configurations, whereas the opponent-model agent never collapses and, wherever training succeeds, recovers the majority of the symmetric game value. Transfers zero-shot to a foraging opponent unseen by the learner, with a positive goal advantage over the baseline, and loses this edge exactly where an information argument predicts: against a full-information tracking adversary whose intent is the learner itself, and on resource-dense maps where both agents saturate. A blindfold ablation, zeroing the heatmap at deployment, decomposes the advantage into two mechanisms: training-time stabilisation, which dominates where the credit assignment is hard and survives blinding on the dense map, and deployment-time inference, whose reliance shrinks as fog thins on the sparse map. We conclude that opponent-goal inference is a stability-and-transfer mechanism whose value is governed by measurable boundary conditions: visibility (fog thickness), opponent intent, and resource density.",
+      "authors": [
+        "Marcel Petran",
+        "Stefan Edelkamp"
+      ],
+      "primary_category": "cs.GT",
+      "categories": [
+        "cs.GT",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-10-13T11:59:45+00:00",
+      "link": "https://arxiv.org/pdf/2610.18229v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "opponent modeling in partially observable competitive games stabilizes RL",
+      "llm_evidence_cn": "部分可观测对抗博弈中的对手建模稳定强化学习",
+      "llm_evidence": "部分可观测对抗博弈中的对手建模稳定强化学习",
+      "canonical_evidence": "部分可观测对抗博弈中的对手建模稳定强化学习",
+      "llm_tldr_en": "In partially observable competitive games an agent must infer an unseen opponent's intent. A transformer-based spatial opponent model outputs subgoal heatmaps fused into dueling double DQN, stabilizing training where plain DQN collapses; relevant to pursuit-evasion opponent modeling.",
+      "llm_tldr_cn": "部分可观测对抗博弈中智能体需基于信念推断未见对手意图，普通TD(0) DQN训练常退化崩溃。论文提出空间对手模型，用事后重标注的对手目标训练Transformer输出子目标热图，并早期融合进对决双DQN。实验显示该模块稳定训练，多数配置下恢复对称博弈价值并零样本迁移到未见对手，为追逃博弈中的对手建模提供可迁移思路。",
+      "llm_tldr": "部分可观测对抗博弈中智能体需基于信念推断未见对手意图，普通TD(0) DQN训练常退化崩溃。论文提出空间对手模型，用事后重标注的对手目标训练Transformer输出子目标热图，并早期融合进对决双DQN。实验显示该模块稳定训练，多数配置下恢复对称博弈价值并零样本迁移到未见对手，为追逃博弈中的对手建模提供可迁移思路。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "UAV pursuit-evasion game",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2610.18425v1",
+      "source": "arxiv",
+      "title": "CALM: Decentralized Control of Cooperative Aerial Manipulation with Multi-Agent Reinforcement Learning",
+      "abstract": "Cooperative aerial manipulation is difficult under wind, payload motion, and noisy goal broadcasts because multiple Unmanned Aerial Vehicles (UAVs) are coupled through a shared payload. We present CALM (Cooperative Aerial Learned Manipulation), a decentralized controller for aerial manipulators carrying a basket while tracking a moving ground robot. CALM combines a parameter-shared Multi-Agent Reinforcement Learning (MARL) policy, trained using Multi-Agent Proximal Policy Optimization (MAPPO), with goal estimation, per-UAV Extended State Observers (ESOs), basket-mass estimation, and anticipatory formation-yaw feedforward. The anticipatory formation-yaw feedforward uses estimated goal motion to rotate the formation before position error develops, reducing basket-yaw lag without adding net commanded force. A disturbance-conditioned critic supports centralized training while execution remains decentralized. Across held-out trajectories, CALM achieves lower mean position and orientation errors than all evaluated baselines, including the matched arm baseline (7.68 versus 10.95 cm and 3.3 versus 4.7$^\\circ$), the cable-suspended realization, and two model-based controllers. Under unseen full-information-path degradation, CALM remains statistically comparable or superior to the arm baseline. Videos are available at https://petreric.github.io/CALM/.",
+      "authors": [
+        "Jiaxi Huo",
+        "Petre Ricioppo",
+        "Fausto Francesco Lizzio"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.MA"
+      ],
+      "published": "2026-10-13T14:03:36+00:00",
+      "link": "https://arxiv.org/pdf/2610.18425v1",
+      "tags": [
+        "keyword:ui",
+        "query:ui"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "decentralized multi-UAV control via multi-agent RL",
+      "llm_evidence_cn": "多智能体强化学习实现多无人机协同控制",
+      "llm_evidence": "多智能体强化学习实现多无人机协同控制",
+      "canonical_evidence": "多智能体强化学习实现多无人机协同控制",
+      "llm_tldr_en": "Cooperative aerial manipulation is hard due to wind, payload motion and noisy goals coupling multiple UAVs; CALM uses a parameter-shared MARL policy trained with MAPPO plus goal estimation, per-UAV observers and formation-yaw feedforward for decentralized control.",
+      "llm_tldr_cn": "针对多架无人机通过共享负载耦合、在风扰、负载运动与目标广播噪声下协同搬运困难的问题，本文提出CALM去中心化控制器。它结合参数共享的多智能体强化学习策略（用MAPPO训练）与目标估计、每机扩展状态观测器、篮筐质量估计及编队偏航前馈。实验表明该方法能稳定跟踪移动地面机器人并保持编队，验证了多智能体强化学习在多无人机协同任务中的有效性，为无人机集群协同控制提供了可迁移框架。",
+      "llm_tldr": "针对多架无人机通过共享负载耦合、在风扰、负载运动与目标广播噪声下协同搬运困难的问题，本文提出CALM去中心化控制器。它结合参数共享的多智能体强化学习策略（用MAPPO训练）与目标估计、每机扩展状态观测器、篮筐质量估计及编队偏航前馈。实验表明该方法能稳定跟踪移动地面机器人并保持编队，验证了多智能体强化学习在多无人机协同任务中的有效性，为无人机集群协同控制提供了可迁移框架。",
+      "llm_tags": [
+        "query:ui"
+      ],
+      "matched_query_tag": "query:ui",
+      "matched_query_text": "multi-agent reinforcement learning for UAV swarm",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

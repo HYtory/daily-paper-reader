@@ -1,0 +1,690 @@
+Title: Multi-Agent Deferred-Decision Trajectory Optimization with Anytime-Valid Target Retention for Moving Candidates
+
+URL Source: https://arxiv.org/pdf/2610.17003v1
+
+Published Time: Wed, 14 Oct 2026 03:15:39 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+# Multi-Agent Deferred-Decision Trajectory Optimization with Anytime-Valid Target Retention for Moving Candidates 
+
+Farbod Siahkali 1, Mengxue Hou 2, and Vijay Gupta 1
+
+Abstract — We study multi-agent terminal interception when one of several moving candidates is the unknown target and both target identity and candidate terminal locations are uncertain. We develop a receding-horizon deferred-decision trajectory opti-mization (DDTO) controller that combines conformal terminal-location prediction, sequential candidate rejection, capacity-constrained assignment, and candidate-contingent planning. Un-der exchangeability conditions for terminal and identity residuals, with predictable querying, we establish fixed-time terminal-location coverage and anytime-valid target retention. At the final replan, when one control step remains, we bound the joint probability that a tightened-set DDTO plan passes nonlinear rollout verification but capture fails. The closed-loop controller applies fallback guidance to any agent without a verified DDTO plan and, across 100 paired scenarios, captures 79% of targets under the strict control-effort budget and 85% when that budget is relaxed. 
+
+I. I NTRODUCTION 
+
+Multi-robot autonomy naturally couples sensing and control, since motion affects what information can be collected and sensing, in turn, affects subsequent decisions [1]–[4]. We con-sider a team of agents tasked with intercepting one unknown target among several moving candidates, where this coupling arises through both target identification and motion planning. Neither the target identity nor the candidates’ terminal loca-tions are known when motion begins. The agents must therefore make progress toward inter-ception while preserving alternatives that may later become necessary. Committing too early can direct an agent toward a non-target, whereas excessive deferral can leave insufficient time or control authority for capture. The central difficulty is that inference, assignment, and trajectory planning are coupled [5]. Because target identity is unresolved when the current control is applied, each agent must choose a single input that preserves feasible trajectories toward all assigned candidates. Contingency and scenario-based planners maintain plans for multiple future realizations [6]–[8]. Contingency model predictive control (CMPC) shares the currently applied input across nominal and contingency plans [9], while delayed-decision motion planning (DDMP) preserves multiple feasible responses up to a prescribed delayed decision time [10].    
+
+> This work was supported in part by the U.S. Army Research Office under Grant 13001664 and in part by the Air Force Office of Scientific Research (AFOSR) under DEPSCoR Award FA9550-25-1-0283.
+> 1Farbod Siahkali and Vijay Gupta are with the Department of Electrical and Computer Engineering, Purdue University, West Lafayette, IN 47906, USA (Emails: siahkali@purdue.edu ,gupta869@purdue.edu ).
+> 2Mengxue Hou is with the Department of Electrical Engineering, Univer-sity of Notre Dame, Notre Dame, IN 46556, USA (Email: mhou@nd.edu ).
+
+DDTO constructs candidate-contingent branches with a com-mon prefix and delays their separation while preserving ter-minal feasibility [11], [12]. Existing DDTO formulations typically assume fixed can-didate terminal locations. Prior active-sensing DDTO [13], which incorporates sensing into the optimization, still consid-ers one agent, fixed terminal points, and candidate-set guaran-tees assessed at individual times. It leaves terminal-location uncertainty for moving candidates, anytime-valid target re-tention under adaptive querying, and multi-agent assignment unresolved. We consider these issues jointly in a receding-horizon multi-agent setting. Statistical and learning-based methods have been developed across both estimation and prediction settings [14]–[16]. Con-formal prediction (CP) provides model-agnostic uncertainty quantification for regression and classification problems [17], [18]. The two uncertainties considered here require different statistical guarantees. For terminal-location uncertainty, CP can provide marginal coverage of a candidate’s terminal lo-cation at any prespecified replanning index [19]–[22]. Identity decisions, however, are made repeatedly: at each replan, agents select which candidates to query using cur-rent tracking information and controller-visible history, before observing the corresponding identity measurements. Rejected candidates are not reconsidered. Consequently, applying a fixed-time test independently at each replan does not con-trol the probability of ever rejecting the target. The identity procedure must instead provide an anytime-valid retention guarantee under predictable querying, meaning that each query is selected from information available before the queried identity measurement is observed. We combine these components in a closed-loop multi-agent DDTO framework. At each replan, conformal termi-nal regions represent candidate terminal-location uncertainty. Candidate-wise online conformal p-values [23] are converted to e-values and accumulated in an e-process [24]. Threshold crossings then generate nested retained sets. With the target’s adjusted identity residuals conditionally exchangeable given the exogenous scene and other-candidate information, and with predictable querying, Ville’s inequality bounds the probability that the target is ever rejected [25]. The retained candidates are assigned subject to per-agent capacity, and each agent solves a DDTO problem whose branches share the applied control. At the final replan, when one control step remains, the controller uses a tightened terminal set. Target retention and terminal-location coverage then bound the probability that a verified DDTO plan is returned at the final replan but capture fails. When an agent arXiv:2610.17003v1 [eess.SY] 12 Oct 2026 Fig. 1. Closed-loop HoloOcean demonstration of multi-AUV terminal interception at replan k = 12 . (a) HoloOcean state after executing the control applied at the preceding replan. (b) Corresponding planner state, initialized from simulator feedback, showing assignments, predicted terminal centers, conformal terminal regions, common DDTO prefixes, and candidate-contingent branches. (c) HoveringAUV model used for the agents. The target is highlighted in the figure but is not available to the controller. 
+
+has no verified plan, the controller instead applies fallback guidance toward a retained candidate. The contributions are threefold. First, we formulate areceding-horizon multi-agent interception architecture inte-grating terminal-location uncertainty for moving candidates, sequential candidate rejection, capacity-constrained assign-ment, and candidate-contingent control. Second, we integrate candidate-wise online conformal evidence with predictable querying and establish anytime-valid target retention under ex-plicit information assumptions. Third, we combine fixed-time terminal-location coverage and anytime-valid target retention to bound the probability that a verified tightened-set plan is returned at the final replan but capture fails. II. P ROBLEM FORMULATION 
+
+Let A = {1, . . . , M } denote the agent set and J =
+
+{1, . . . , N } the moving-candidate set. Exactly one candidate is the target, with unknown index J⋆ ∈ J . Agent a has assignment capacity κa, and we assume N ≤ P 
+
+> a∈A
+
+κa. We discretize the mission into decision stages t = 0 , . . . , T , where 
+
+T is a prescribed terminal interception deadline. At replan 
+
+k, Hk = T − k denotes the remaining planning horizon. Agent a ∈ A has state xat ∈ Xa ⊆ Rna , control input 
+
+uat ∈ U a ⊆ Rma , and deterministic dynamics 
+
+xat+1 = fa(xat , u at ).
+
+Matrix Pa ∈ Rp×na extracts the agent position. Each agent satisfies the effort budget PT −1 
+
+> t=0
+
+ca(xat , u at ) ≤ Ba, where ca
+
+is the stage effort and Ba > 0 is the available budget. Let yjt ∈ Rp be the true position of candidate j ∈ J ,whose motion is exogenous to the agent controls. We assume a centralized controller: at each replan, the current agent states and candidate tracking histories are available to the controller. For candidate j, Y j 
+
+> 0: k
+
+= ( eyj
+
+> 0
+
+, . . . , eyjk) denotes noisy tracking observations available at the replanning rate and used for terminal prediction, while yjT remains unknown for k < T .Identity information is obtained through active queries. When agent a queries candidate j, it receives the candidate-specific measurement ma,j k , which the identity model uses to assess whether j is the target. Tracking observations are available at every replan, whereas identity measurements are allocated through the query policy. 
+
+Terminal-location uncertainty : For capture radius ρ > 0,define the terminal mission-success event 
+
+Cap := 
+
+
+
+min  
+
+> a∈A
+
+PaxaT − yJ⋆ 
+
+> T2
+
+≤ ρ
+
+
+
+.
+
+We use Cap as the mission-success criterion in both the theo-retical analysis and the closed-loop numerical evaluation. The objective is to generate causal controls for terminal capture while satisfying the dynamics, state, input, effort, assignment, and sensing constraints. From Y j
+
+> 0: k
+
+, the controller constructs a conformal terminal region Zjk for each candidate. For every fixed deterministic k < T , the terminal-prediction objective is 
+
+P
+
+
+
+yJ⋆ 
+
+> T
+
+∈ Z J⋆
+
+> k
+
+
+
+≥ 1 − αtr .
+
+Target-identity uncertainty : Identity information is up-dated through active queries. Let Ck denote the candidate set retained immediately before the replan-k identity query, and let bCk = Ck+1 denote the post-query retained set used for planning at the same replan. The identity objective is the anytime statement 
+
+P(J⋆ ∈ C k for all k = 0 , . . . , T ) ≥ 1 − αid .
+
+After the identity update, each candidate in bCk is assigned exactly once subject to capacity κa. For an assigned pair 
+
+(a, j ), the branch {xa,j h|k, u a,j h|k} starts from xak and must satisfy the dynamics, constraints, remaining budget, and terminal condition induced by Zjk . Because target identity is unresolved when the current control is applied, all branches assigned to one agent share their first input. III. P ROPOSED METHOD 
+
+At each replan, the controller constructs terminal regions, updates identity evidence, assigns retained candidates, and solves one DDTO problem per agent. A plan is verified only if it passes the solver checks and a nonlinear rollout under the planning dynamics satisfies the state, effort, and terminal constraints. Otherwise, fallback guidance is used. Algorithm 1 summarizes the recursion, and Fig. 1 shows one HoloOcean replan. 
+
+A. Conformal Terminal Prediction 
+
+For each deterministic replanning index k < T , let Pred T |k
+
+be a terminal-location predictor fixed before deployment. Given candidate tracking history Y j
+
+> 0: k
+
+, it produces byjT |k =Pred T |k(Y j
+
+> 0: k
+
+). An independent calibration set of ntr trajecto-ries provides the residuals 
+
+R(i)  
+
+> T|k
+
+= y(i) 
+
+> T
+
+− Pred T |k(Y (i)0: k ) 2
+
+, i = 1 , . . . , n tr . (1) Let ℓtr = ⌈(ntr + 1)(1 − αtr )⌉. Write the ordered calibra-tion residuals as RT |k, (1) ≤ · · · ≤ RT |k, (ntr ), and augment them by RT |k, (ntr +1) = + ∞. We define qT |k = RT |k, (ℓtr ).Thus, when ℓtr = ntr + 1 , the conformal radius is infinite and the resulting terminal region is Rp. The terminal region for candidate j is 
+
+Zjk =
+
+n
+
+y ∈ Rp : y − byjT |k 2
+
+≤ qT |k
+
+o
+
+.
+
+The regions define the assignment reach cost and branch termi-nal constraints. Theorem 1 gives fixed-time marginal coverage of the true target’s terminal position at any prespecified replan. 
+
+B. Querying and Online Identity Update 
+
+Let gθ (m, z ) ∈ [0 , 1] be a pre-trained identity predictor, where z is the pre-measurement sensing context. The target-class nonconformity score is s(m, z ) = 1 − gθ (m, z ). A conditional-quantile model bq(z) is fitted on a separate training split and frozen [26], giving the adjusted residual η(m, z ) = 
+
+s(m, z ) − bq(z). This adjustment reduces systematic context-dependent score shifts, but does not by itself establish ex-changeability. The anytime-validity result separately requires the target residual sequence to satisfy Assumption 2. A disjoint held-out target-class split is randomly permuted and partitioned into candidate-specific reference sequences 
+
+Rj = {ηj
+
+> ref ,1
+
+, . . . , η j 
+
+> ref ,n ref
+
+}, j ∈ J .
+
+Each candidate is tested as the target using a separate private reference sequence, avoiding reuse of raw reference residuals across streams. At replan k, a capacity-constrained nearest-center query partition {eIa,k }a∈A of Ck makes each retained candidate query-eligible for at most one agent. This partition is used only for query selection. Let va,j k ≥ 0 be a sensing-quality score and let Qa,k ⊆ eIa,k 
+
+contain the candidates admissible to agent a. The evidence gap is gjk = log(1 /α id ) − log(max {W jk, ε }). The balanced-evidence policy prioritizes, in order, the fewest previous queries, smallest evidence gap, highest sensing quality, and smallest candidate index. Each agent selects at most one admissible candidate and issues no query when Qa,k is empty. Selection may use controller-visible history and policy 
+
+Algorithm 1 Closed-loop multi-agent DDTO controller                                      
+
+> 1: Initialize C0=J,Wj
+> 0=Wj
+> 0= 1 ,nj
+> 0= 0 , and Ba, rem (0) = Ba.2: for k= 0 , . . . , T −1do
+> 3: Construct {Z jk}, select identity queries, and update bCkusing (2)–(3). 4: Form the terminal sets and solve the pruned reach-cost assignment; if infeasible, form nearest-distance fallback groups. 5: If the assignment is feasible, solve (8) with (5) for each agent with
+> Ia,k ̸=∅over r∈ R a,k (Ia,k ).6: For each agent, apply the first control from a verified DDTO plan when available, otherwise apply fallback guidance. 7: Update states, histories, and remaining budgets. 8: end for
+
+randomization, but not the current identity measurement or private residuals. Let njk denote the number of queries of candidate j before replan k. Suppose candidate j is selected for query r =
+
+njk + 1 and produces identity measurement ma,j k under context 
+
+za,j k . The identity update computes ηjr = η(ma,j k , z a,j k ) and appends it to candidate j’s sequence. Let Nr = nref + r and write (ξj
+
+> 1
+
+, . . . , ξ jNr ) = (ηj
+
+> ref ,1
+
+, . . . , η j 
+
+> ref ,n ref
+
+, η j
+
+> 1
+
+, . . . , η jr ). The smoothed online conformal p-value is 
+
+pjr =
+
+PNr 
+
+> i=1
+
+1{ξji > ξ jNr } + U jr
+
+PNr 
+
+> i=1
+
+1{ξji = ξjNr }
+
+Nr
+
+, (2) where U jr ∼ Unif(0 , 1) is independent. Large target-class nonconformity therefore produces a small p-value. Under the true-target hypothesis, the conditions in Section IV make these p-values conditionally uniform relative to the controller-visible pre-query history [23], [27]. For fixed γ ∈ (0 , 1) , define ejr = γ(pjr )γ−1 and Ejk = ejnjk +1 
+
+if candidate j is queried at replan k, and Ejk = 1 otherwise. Starting from W j 
+
+> 0
+
+= W j 
+
+> 0
+
+= 1 , update 
+
+W jk+1 = W jk Ejk, W jk+1 = max {W jk, W jk+1 }. (3) Large e-process values are evidence against candidate j being the target. The retained set is Ck = {j : W jk < 1/α id } and 
+
+bCk = Ck+1 . The running maximum makes rejection perma-nent, while Theorem 2 gives anytime-valid target retention. The set bCk is passed to assignment and DDTO. 
+
+C. Assignment, DDTO, and Applied Control 
+
+Let χa,j,k = 1 when candidate j ∈ bCk is assigned to agent 
+
+a, and define Ia,k = {j : χa,j,k = 1 }. Each retained candidate is assigned exactly once and each agent receives at most κa
+
+candidates: X
+
+> a∈A
+
+χa,j,k = 1 , j ∈ bCk,
+
+X 
+
+> j∈bCk
+
+χa,j,k ≤ κa, a ∈ A (4) Following the reference-branch DDTO construction in [11], [12], consider agent a with an assigned candidate set I. DDTO constructs one state-control branch {xa,j h|k, u a,j h|k} for each j ∈
+
+I. One candidate r ∈ I is used as the reference branch. For every j ∈ I \{ r} and h = 0 , . . . , H k, let δa,j h|k ∈ { 0, 1} indicate whether branch j has separated from the reference branch by stage h. When δa,j h|k = 0 , the branches coincide. When 
+
+δa,j h|k = 1 , they may differ. The resulting DDTO common-prefix constraints are 
+
+δa,j  
+
+> 0|k
+
+= 0 , δa,j h+1 |k ≥ δa,j h|k, h = 0 , . . . , H k − 1, (5a) 
+
+xa,j h|k − xa,r h|k 2 ≤ Mxδa,j h|k, h = 0 , . . . , H k, (5b) 
+
+ua,j h|k − ua,r h|k 2
+
+≤ Muδa,j h|k, h = 0 , . . . , H k − 1. (5c) These constraints hold for every j ∈ I \{ r}. The monotonicity constraint makes separation irreversible over the planning horizon. The condition δa,j  
+
+> 0|k
+
+= 0 forces all branches to share the control applied at the current replan. The constants Mx
+
+and Mu bound feasible differences after separation. Before the final replan, each branch terminates in its can-didate’s conformal region. At k = T − 1, when qT |T −1 ≤ ρ,a tightened set is used: 
+
+T j, reg  
+
+> a,k
+
+= {x ∈ X a : Pax ∈ Z jk },
+
+T j, cap   
+
+> a,T −1
+
+=
+
+n
+
+x ∈ X a : Pax − byjT |T −1 2
+
+≤ ρ − qT |T −1
+
+o
+
+.
+
+(6) Under terminal coverage, membership in the tightened set implies terminal distance at most ρ. Thus, 
+
+X j, term  
+
+> a,k
+
+=
+
+(
+
+T j, cap  
+
+> a,T −1
+
+, k = T − 1, q T |T −1 ≤ ρ, 
+
+T j, reg  
+
+> a,k
+
+, otherwise . (7) For a fixed assigned set I and reference branch r, we solve the DDTO problem of [11], [12], 
+
+Ψra,k (I) := minimize 
+
+> {x,u,δ }
+
+X 
+
+> j∈I\{ r}
+> Hk−1
+
+X
+
+> h=0
+
+δa,j h|k (8a) s.t. xa,j h+1 |k = fa(xa,j h|k, u a,j h|k), h = 0 , . . . , H k − 1, (8b) 
+
+xa,j h|k ∈ X a, h = 0 , . . . , H k, (8c) 
+
+ua,j h|k ∈ U a, h = 0 , . . . , H k − 1, (8d)  
+
+> Hk−1
+
+X
+
+> h=0
+
+ca(xa,j h|k, u a,j h|k) ≤ Ba, rem (k), (8e) 
+
+xa,j Hk |k ∈ X j, term  
+
+> a,k
+
+, xa,j  
+
+> 0|k
+
+= xak. (8f) All constraints apply to each j ∈ I together with (5). The ob-jective delays separation while preserving terminal feasibility. Let Ra,k (I) ⊆ I denote the reference candidates evaluated by the DDTO solver. For r ∈ R a,k (I), we solve (8) and select the feasible reference with the smallest objective value. If none is feasible, the DDTO solve is declared infeasible. In the numerical implementation, we evaluate at most two references, ordered by increasing W jk+1 and then terminal-center distance. The controller minimizes total assignment cost subject to (4). Let rterm  
+
+> j,k
+
+be the position-space radius of (7). The distance from agent a to the terminal set of candidate j is 
+
+da,j,k =
+
+h
+
+Paxak − byjT |k 2
+
+− rterm 
+
+> j,k
+
+i
+
+> +
+
+.
+
+We use casg  
+
+> a,j,k
+
+= (1 + λegjk+1 )da,j,k and prune candidate-agent pairs that fail a coarse remaining-horizon reachability screen. The subsequent DDTO solve and nonlinear rollout verification enforce dynamic, budget, and terminal feasibility. When the pruned reach-cost assignment is feasible, its sets Ia,k define the fallback groups. Otherwise, a capacity-constrained nearest-distance partition defines them. An agent without a verified DDTO plan applies fallback guidance toward the candidate in its fallback group with smallest 
+
+W jk+1 , with ties broken by terminal-center distance and index. Clipping and scaling enforce input and remaining-budget con-straints. After applying controls, Ba, rem (k +1) = Ba, rem (k)−
+
+ca(xak, u ak), and the updated state, budget, histories, and iden-tity evidence initialize the next replan. IV. T HEORETICAL GUARANTEES 
+
+We establish fixed-time terminal coverage, anytime-valid target retention, and a verified final-step capture bound. We condition on the trained models, reference allocation, and query-rule parameters. Controller randomization remains part of the information filtration. Let (Ω , F, P) support all problem data and random variables. For Hj := {J⋆ = j}, write 
+
+Pj (·) = P(· | Hj ) and Ej for expectation under Pj .The pre-query sigma-field H− 
+
+> k
+
+contains states, budgets, tracking histories, past query decisions and conformal outputs, retained sets, previous plans and controls, and the random-ization used for the replan-k queries. It excludes candidate-specific reference residuals and raw identity measurements. Terminal regions, the query partition, query choices, and sensing contexts are therefore H− 
+
+> k
+
+-measurable. After the se-lected measurements are converted internally into conformal p-values, define 
+
+H+ 
+
+> k
+
+= H− 
+
+> k
+
+∨ σ
+
+
+
+{pjnjk +1 : j is queried at k}
+
+
+
+.
+
+The evidence factors, W jk+1 , bCk, assignment, branches, and controls are H+ 
+
+> k
+
+-measurable, and H+ 
+
+> k
+
+⊆ H −
+
+> k+1
+
+. Thus, Ck is the pre-query set and bCk = Ck+1 is used for planning at time 
+
+k.
+
+Assumption 1. For every deterministic k < T and every 
+
+j with P(J⋆ = j) > 0, conditional on the frozen predic-tor Pred T |k, the calibration residuals in (1) and R⋆,j T |k =
+
+yjT − Pred T |k(Y j
+
+> 0: k
+
+) 2
+
+are exchangeable under Hj .
+
+Assumption 1 gives the exchangeability condition required for fixed-time terminal coverage. 
+
+Theorem 1. Under Assumption 1, for every k < T ,
+
+P
+
+
+
+yJ⋆ 
+
+> T
+
+∈ Z J⋆
+
+> k
+
+
+
+≥ 1 − αtr . (9) 
+
+This is a fixed-time marginal statement over calibration and test randomness. Proof. Fix j and condition on Hj . The exchangeable-rank argument applied to the augmented order statistic, with a weak inequality and therefore conservative handling of ties, gives 
+
+Pj (R⋆,j T |k ≤ qT |k) ≥ 1−αtr . This event is yjT ∈ Z jk . Averaging over J⋆ proves (9). This establishes fixed-time terminal-location coverage but does not control errors accumulated through repeated identity rejection. We therefore turn to validity under the adaptive query history. For candidate j, let Gjr−1 denote the controller-visible information immediately before its r-th query. This field contains its previous conformal p-values, the controller-visible outputs of the other candidate streams, tracked geom-etry, previous plans and controls, and policy randomization. It excludes candidate j’s raw reference and runtime residuals and its unused tie-breaking variables. 
+
+Assumption 2. For each candidate j, let Ej contain the ex-ogenous scene, other candidate streams, and controller-visible randomization, but not candidate j’s raw residuals or tie-breaking variables. Under Hj , conditional on Ej , the reference and potential runtime residuals are exchangeable. The vari-ables U j 
+
+> 1
+
+, . . . , U jT are conditionally independent Unif(0 , 1) 
+
+variables and are independent of these residuals given Ej .Finally, the r-th query predictably reveals the next residual and satisfies Gjr−1 ⊆ E j ∨ σ(pj
+
+> 1
+
+, . . . , p jr−1).
+
+Thus, predictable querying reveals the next exchangeable residual rather than selecting among unseen residuals, yielding the following conditional rank-validity result. 
+
+Lemma 1. Under Assumption 2, for every candidate j, query index r = 1 , . . . , T , and u ∈ [0 , 1] ,
+
+Pj
+
+
+
+pjr ≤ u | G jr−1
+
+
+
+= u. 
+
+In particular, pjr is conditionally superuniform relative to the complete controller-visible pre-query history. Proof. Fix j and condition on Ej . The initial reference block and the potential runtime residuals then form one exchange-able sequence. With independent randomized tie breaking, the rank of each newly revealed residual among the refer-ence block and all residuals revealed so far is uniform and independent of the preceding randomized ranks [23], [27]. Predictability ensures that the r-th query reveals the next residual rather than selecting among unseen values. There-fore Pj
+
+
+
+pjr ≤ u | E j , p j
+
+> 1
+
+, . . . , p jr−1
+
+
+
+= u. The inclusion in Assumption 2 and the tower property give the claim. 
+
+Theorem 2. Under Assumption 2, 
+
+P(J⋆ ∈ C k for every k = 0 , . . . , T ) ≥ 1 − αid . (10) 
+
+Proof. Under Hj , Lemma 1 gives Ej [ejr | G jr−1] ≤ 1, while unqueried steps contribute one. Hence {W jk } is a nonnega-tive supermartingale with W j 
+
+> 0
+
+= 1 . Ville’s inequality gives 
+
+Pj (max k≤T W jk ≥ 1/α id ) ≤ αid . Averaging over the true index proves (10). A sufficient condition for Assumption 2 is that, conditional on Ej , the adjusted target residuals are i.i.d. and unaffected by time, querying agent, geometry, or previous controls. Con-ditional independence across candidate streams, together with this within-stream condition, is sufficient. Non-target residuals may follow a different law. We next combine target retention, terminal coverage, and verified feasibility for the regular terminal-set case. Corollary 1 handles the tightened final-replan case. For deterministic k < T , let Fk denote the event that the assignment and required DDTO branches are feasible and pass nonlinear rollout verifi-cation. Let Rk denote the event that the regular terminal set is used. By (7), it holds for k < T − 1 and equals {qT |T −1 > ρ }
+
+at k = T − 1. Let Breg  
+
+> k
+
+denote the event that the target has an assigned branch satisfying Paxa,J ⋆  
+
+> Hk|k
+
+∈ Z J⋆ 
+
+> k
+
+.
+
+Theorem 3. Fix deterministic k < T . Under Assumption 2, 
+
+P(Fk ∩ Rk ∩ (Breg  
+
+> k
+
+)c) ≤ αid . (11) 
+
+Under Assumptions 1 and 2, 
+
+P
+
+
+
+Fk ∩ Rk ∩
+
+
+
+Breg  
+
+> k
+
+∩ { yJ⋆ 
+
+> T
+
+∈ Z J⋆ 
+
+> k
+
+}
+
+c
+
+≤ αid + αtr . (12) 
+
+On Fk, each agent with a nonempty assignment applies the common first input of its returned branches. Both bounds hold at any prespecified replan k < T .Proof. Theorem 2 gives P(J⋆ /∈ bCk) ≤ αid . On the comple-ment, Fk ∩ Rk assigns the target exactly once and enforces its terminal-region constraint, so Fk ∩ Rk ∩ { J⋆ ∈ bCk} ⊆ Breg  
+
+> k
+
+.This proves (11). Theorem 1 and a union bound give (12). Finally, δa,j  
+
+> 0|k
+
+= 0 in (5) forces all first controls assigned to agent a to agree. At k = T − 1, the tightened terminal set T j, cap   
+
+> a,T −1
+
+in (6) is used whenever qT |T −1 ≤ ρ, leading to the following result. 
+
+Corollary 1. Let F cap   
+
+> T−1
+
+be the event that qT |T −1 ≤ ρ, the tightened terminal sets are defined as in (6) , the returned assignment and DDTO problems are feasible, and nonlinear rollout under the planning dynamics fa verifies the resulting control sequence. Under Assumptions 1 and 2, 
+
+P(F cap   
+
+> T−1
+
+∩ Cap c) ≤ αid + αtr .
+
+Proof. On target retention and F cap  
+
+> T−1
+
+, the target is assigned to a verified branch satisfying (6). Because one step remains, its common first input is the applied input. On terminal coverage, the triangle inequality gives PaxaT − yJ⋆  
+
+> T2
+
+≤ (ρ−qT |T −1)+ 
+
+qT |T −1 = ρ. A union bound over target rejection and terminal miscoverage proves the claim. Thus, Corollary 1 bounds capture failure only when a ver-ified tightened-set plan is available at the final replan. It does not bound unconditional failure of the complete controller, whose fallback cases are evaluated empirically in Section V. V. N UMERICAL EVALUATION 
+
+We now test closed-loop capture and control effort against CMPC, DDMP, commitment, and fallback baselines under a strict control-effort budget, then repeat the same paired scenar-ios after relaxing that budget. Second, we use component and fallback ablations to separate the effects of candidate rejection, query selection, assignment, and fallback guidance. Finally, we report planning feasibility and computation. 
+
+A. Setup and Evaluation Protocol 
+
+We use two agents, eight candidates, T = 20 , ∆t =1 s, κa = 4, ρ = 8 m, Mx = 300 , and Mu = 900 .The experiments are stop-the-clock: ∆t is the simulated dynamics/control discretization, not a wall-clock replanning period, and optimization time is not charged to the mission. At each replan, both agent states and all candidate tracking histories are available to the centralized controller without communication delay or loss. The same tracking and identity measurement models are used for both agents. We evaluate 100 independently generated scenarios shared across methods at per-agent budgets Ba ∈ { 150 , 250 } × 10 3 N2s. The candidate 0 4 8 12 16 Observation step k
+
+0.84 0.86 0.88 0.90 0.92 0.94 Terminal coverage 
+
+> 95% Wilson interval Empirical coverage Pre-specified validation indices Nominal 0.90
+
+0 4 8 12 16 Observation step k
+
+0510 15 20 25 Distance (m) 
+
+> 90th-percentile 95% bootstrap interval Mean prediction error 90th-percentile error Conformal radius Capture radius (8 m)
+
+0 4 8 12 16 Query step k
+
+0.0 0.2 0.4 0.6 0.8 1.0 Mean fraction of non-targets rejected                            
+
+> Balanced evidence Uniform random Evidence finishing Nearest candidate Fig. 2. Statistical component validation over 1000 Monte Carlo trials. Terminal coverage, prediction error and conformal radius, and mean non-target rejection are reported. Shading gives pointwise 95% intervals. TABLE I CLOSED -LOOP COMPARISON AT Ba= 150 ×10 3N2S OVER 100 PAIRED SCENARIOS . E FFORT IS REPORTED AS MEDIAN [IQR]. B OLD DENOTES THE HIGHEST OBSERVED CAPTURE RATE .Method Capture (%) ↑Team effort ( 10 3N2s) ↓
+> Proposed DDTO 79.0% 214.9 [164.1, 274.5] CMPC [9] 67.0% 233.4 [168.6, 281.8] DDMP [10] 46.0% 257.3 [187.4, 300.0] Fallback-only 6.0% 300.0 [300.0, 300.0] Fallback-disabled 13.0% 46.6 [34.4, 65.6] Center–commit 13.0% 217.2 [171.9, 300.0] Immediate–commit 53.0% 189.0 [155.2, 223.8]
+
+layout and budgets were selected in preliminary sensitivity experiments and then frozen. The Monte Carlo comparisons use the reduced six-degree-of-freedom Fossen model [28], M ˙ν = τ − Dν , with HoveringAUV mass and actuation parameters [29]. We use 
+
+diag( M ) = (31 .03 , 31 .03 , 31 .03 , 0.182 , 6.690 , 6.690) and 
+
+diag( D) = (1 .552 , 1.552 , 1.552 , 0.071 , 1.153 , 6.690) , with body-force and body-speed norm bounds of 400 N and 10 m/s, respectively, depth limits [−15 , −1] m, and RK4 integration. Thruster dynamics and control allocation are omitted. We separately demonstrate closed-loop execution with the HoloOcean [29] HoveringAUV plant. Simulator feedback ini-tializes each replan, while DDTO optimizes with the reduced model and applies only its first control before receiving new simulator feedback. This is a qualitative execution demonstra-tion under model mismatch, and is not covered by Corollary 1. Figure 1 shows a snapshot at one replan, while the supplemen-tary video presents a separate complete closed-loop episode. The agents start at (±20 , −40 , −5.5) m with zero veloc-ity. We initialize the eight candidates in a sparse-maximin horizontal layout within the 75 m simulation domain. The fixed anchor pattern is randomly permuted across candidate identities and perturbed by 0.5 m horizontal Gaussian jitter. Initial candidate depth is centered at −5.5 m and forward body velocity is centered at 1 m/s. Candidates follow the same vehicle dynamics under bounded AR(1) body forces and are constrained to depths in [−12 , −2] m. Tracking measurements are corrupted by i.i.d. Gaussian noise with covariance 0.25 2I3 m2. We use a constant-velocity predictor for terminal prediction and calibrate the conformal radius separately at each replan using 2000 trajectories. Identity logits follow N (1 , 1) for the target and 
+
+N (1 − 1.875 v, 1) for non-targets, where v =exp( −ra,j k /75) clip( dj
+
+> iso ,k
+
+/10 , 0.35 , 1.35) , ra,j k is agent– candidate range, and dj 
+
+> iso ,k
+
+is the nearest-candidate separation. Thus, target logits do not depend on the sensing context in this study. The experiment does not test validity under context-dependent target-score shifts. Queries are permitted within 60 m. Each candidate has 250 private target-class reference residuals, with (αtr , α id , γ ) = (0 .10 , 0.05 , 0.55) and 
+
+λe = 0 .2. Assignment uses a remaining-horizon reachability screen with 2 m slack. The primary closed-loop configuration uses two sequen-tial convex programming (SCP) iterations, each linearizing the RK4-discretized dynamics by finite differences about the current nominal trajectory and updating the nominal with the accepted solution. We use fixed ℓ∞ trust regions of 100 for state and 400 N for input and solve each convexified problem with MOSEK under a 60 s time limit. A solution is accepted only when its maximum constraint and integrality violations are at most 10 −4. A nonlinear RK4 rollout of the returned controls is then checked against the state, effort, and terminal constraints. Plans failing these checks, including those affected by solver timeouts, are treated as unverified, and the controller applies fallback guidance. A shifted verified-plan tail initializes SCP when avail-able. Otherwise, fallback-guidance rollouts are used. We use 
+
+ca(x, u ) = ∆ t ∥u∥22 and compare per-agent budgets Ba ∈{150 , 250 } × 10 3 N2s, with the same limit applied to each branch-planning problem. All candidate-contingent methods use the same guidance rollout and fallback controller: a saturated proportional– derivative (PD) law toward the predicted terminal center with gains 26 N/m and 34 N s/m. World-frame position and velocity errors generate a body-frame force, saturated at 400 N and scaled when needed to satisfy remaining-budget constraints. TABLE II COMPONENT ABLATIONS AT Ba = 150 × 10 3 N2 S OVER 100 PAIRED SCENARIOS . E FFORT AND COMPLETE VERIFIED -PLAN RATE ARE REPORTED AS MEDIAN [IQR]. B OLD DENOTES THE HIGHEST OBSERVED CAPTURE RATE .Variant Candidate rejection Query rule Assignment Capture ↑ Effort ( 10 3 N2s) ↓ Complete verified-plan rate (%) ↑                        
+
+> Proposed DDTO Yes Balanced evidence Reach cost 79.0% 214.9 [164.1, 274.5] 80.0 [80.0, 85.0] No candidate rejection No Balanced evidence Reach cost 68.0% 268.1 [234.1, 300.0] 80.0 [75.0, 80.0] Uniform-random query Yes Uniform random Reach cost 67.0% 172.7 [121.3, 229.6] 85.0 [80.0, 86.0] Clustered assignment Yes Balanced evidence Terminal clustering 63.0% 260.5 [209.2, 300.0] 80.0 [80.0, 85.0]
+
+B. Compared Controllers 
+
+The CMPC [9] and DDMP [10] baselines use the same sensing, identity update, terminal regions, assignment, dynam-ics, fallback, effort constraints, and replanning procedure as Proposed DDTO. CMPC couples only the first control across branches, whereas DDMP fixes a three-stage common prefix. Proposed DDTO instead minimizes the branch-separation ob-jective in (8). The clustered-assignment variant sorts retained candidates by the first coordinate of their predicted terminal centers and partitions the ordered list into contiguous capacity-feasible assigned sets. Immediate–commit selects, for each agent, the candidate in its assigned set with the smallest W jk+1 , retains that choice until the candidate is rejected, and solves asingleton terminal trajectory problem at every replan. This gives a simpler committed single-trajectory baseline. Center– commit plans toward the centroid of the assigned candidates’ predicted terminal centers until ⌈0.95 T ⌉, after which it selects the candidate with the smallest W jk+1 .Fallback-only uses the same sensing, candidate rejection, reach-cost assignment, and fallback guidance policy as Pro-posed DDTO, but applies fallback guidance at every replan without solving a DDTO problem. Fallback-disabled retains DDTO planning but applies zero body force whenever no verified DDTO plan is available. 
+
+C. Resource-Constrained Performance 
+
+We separately use 1000 Monte Carlo trials to validate the statistical components in Fig. 2. The balanced-evidence policy retains the true target throughout the horizon in 99 .3% of trials, corresponding to an empirical target-rejection rate of 
+
+0.7% over the horizon, below the nominal αid = 5% level. The figure also reports terminal coverage, terminal-region contraction, and non-target rejection. Tables I and III show that Proposed DDTO attains the highest observed capture rate among the primary planners under both budgets: 79% versus 67% CMPC and 46% DDMP under the strict budget, and 85% versus 74% for both baselines under the relaxed budget. Table II evaluates the component ablations in the strict-budget setting, where preserving alternatives is most con-strained by the effort budget. Removing candidate rejection, using uniform-random queries, and replacing reach-cost as-signment reduce observed capture rate from 79% to 68% ,
+
+67% , and 63% , respectively. Effort is reported as median [IQR]. Uniform-random querying uses less effort, indicating an observed capture–effort tradeoff. 345678Planning-set size           
+
+> (a) 04812 16 Replanning step k
+> 0.0 0.2 0.4 0.6 0.8 1.0 Verified hard-plan feasibility  (b)
+> Proposed DDTO CMPC DDMP Center-commit Immediate-commit Fallback-only
+> Fig. 3. Planning diagnostics under the relaxed 250 ×10 3N2s per-agent budget over 100 paired scenarios: (a) post-query retained-set size and (b) complete verified-plan rate for the compared controllers. Shading denotes pointwise 95% intervals.
+
+D. Planning Feasibility and Computation 
+
+Under the relaxed budget, Proposed DDTO has a median complete verified-plan rate of 80 .0% across the 100 scenar-ios, as shown in Fig. 3. Fallback-disabled captures 13 /100 
+
+targets under the strict budget and 14 /100 after the budget is relaxed, while Fallback-only captures 6/100 and 28 /100 ,respectively. Proposed DDTO captures 79 /100 and 85 /100 .Neither Fallback-disabled nor Fallback-only reproduces the capture rate of Proposed DDTO. One fixed-reference problem Ψra,k (I) has O(|Ia,k |Hk(na +
+
+ma)) continuous and O(( |Ia,k | − 1) Hk) binary variables. Monotone separation gives at most (Hk +1) |Ia,k |− 1 separation patterns per reference. We evaluate at most two references with two SCP iterations per agent. We measure computation over 50 Proposed DDTO scenar-ios under the relaxed budget on an Apple M4 Pro MacBook. In the primary closed-loop implementation, the two agent problems are solved in parallel, while up to two reference problems and two SCP iterations are evaluated sequentially within each agent. The median and 95th-percentile end-to-end replan wall times are 5.99 and 16 .12 s, respectively. The fixed-reference DDTO problems are independent and can be TABLE III CLOSED -LOOP COMPARISON AFTER RELAXING THE PER -AGENT EFFORT BUDGET TO Ba = 250 × 10 3 N2 S OVER THE SAME 100 PAIRED SCENARIOS . E FFORT IS REPORTED AS MEDIAN [IQR]. B OLD DENOTES THE HIGHEST OBSERVED CAPTURE RATE .Method Capture (%) ↑ Team effort ( 10 3 N2s) ↓
+
+Proposed DDTO 85.0% 271.3 [181.4, 339.3] CMPC [9] 74.0% 253.2 [162.4, 357.4] DDMP [10] 74.0% 334.7 [246.4, 428.1] Fallback-only 28.0% 500.0 [477.5, 500.0] Fallback-disabled 14.0% 46.8 [34.9, 67.0] Center–commit 12.0% 288.2 [208.2, 380.6] Immediate–commit 52.0% 189.4 [151.0, 232.1] 
+
+evaluated in parallel. On the 50-scenario benchmark, parallel reference evaluation reduces the median and 95th-percentile end-to-end replan times to 4.15 and 11 .49 s, respectively, without changing the DDTO formulation. We additionally evaluated a one-iteration SCP configuration with parallel reference evaluation on the same 100 scenar-ios used for the relaxed-budget two-iteration SCP closed-loop study. Its median and 95th-percentile replan wall times were 2.41 and 6.76 s. In this configuration, an individual fixed-reference solve of Ψra,k (I) had a median solve time of 1.83 s, indicating that the fixed-reference DDTO solves dominate computation. On the same scenarios, one-iteration SCP captured 90 /100 targets versus 85 /100 for two-iteration SCP while reducing wall-clock time. These stop-the-clock timings do not demonstrate 1 s real-time replanning. VI. C ONCLUSION 
+
+We presented a multi-agent DDTO framework for inter-ception under uncertain target identity and terminal location. The analysis establishes fixed-time terminal-location coverage, anytime-valid target retention, and a bound on the probability that a verified tightened-set plan is returned at the final replan but capture fails. Proposed DDTO achieves the highest observed capture rates among the planners: 79% and 85% 
+
+under strict and relaxed effort budgets, respectively. Fallback ablations show that neither Fallback-disabled nor Fallback-only reproduces the performance of the complete controller. REFERENCES [1] M. Norouzi, M. Zhou, and C. Yuan, “A novel adaptive formation control strategy for teams of unmanned vehicles under complete dynamic uncertainty,” in AIAA AVIATION FORUM AND ASCEND 2025 , 2025, p. 3192. [2] Y. Lee, J. Park, and H. J. Kim, “DMVC-Tracker: Distributed multi-agent trajectory planning for target tracking using dynamic buffered voronoi and inter-visibility cells,” IEEE Robotics and Automation Let-ters , vol. 10, no. 5, pp. 4842–4849, 2025. [3] J. Yuan, B. Moon, M. Cao, and S. Scherer, “Hierarchical planning for long-horizon multi-target tracking under target motion uncertainty,” 
+
+IEEE Robotics and Automation Letters , vol. 10, no. 12, pp. 13 113– 13 120, 2025. [4] M. A. Rezaei, G. Manfredi, V. A. Racanelli, L. De Cicco, and S. Mascolo, “An online path planner for bandwidth-aware aerial camera networks,” in 2025 17th International Congress on Ultra Modern Telecommunications and Control Systems and Workshops (ICUMT) .IEEE, 2025, pp. 300–305. [5] A. M. Khass, V. Pandey, G. Liu, A. Cosse, E. Bayrak, and N. Mo-tee, “Multi-agent next-best-view optimization for risk-averse planning,” 
+
+arXiv preprint arXiv:2606.04158 , 2026. [6] L. Peters, A. Bajcsy, C.-Y. Chiu, D. Fridovich-Keil, F. Laine, L. Ferranti, and J. Alonso-Mora, “Contingency games for multi-agent interaction,” 
+
+IEEE Robotics and Automation Letters , vol. 9, no. 3, pp. 2208–2215, 2024. [7] O. de Groot, B. Brito, L. Ferranti, D. Gavrila, and J. Alonso-Mora, “Scenario-based trajectory optimization in uncertain dynamic environ-ments,” IEEE Robotics and Automation Letters , vol. 6, no. 3, pp. 5389– 5396, 2021. [8] G. C. Calafiore and L. Fagiano, “Robust model predictive control via scenario optimization,” IEEE Transactions on Automatic Control ,vol. 58, no. 1, pp. 219–224, 2013. [9] J. P. Alsterda, M. Brown, and J. C. Gerdes, “Contingency model predictive control for automated vehicles,” in 2019 American Control Conference (ACC) , 2019, pp. 717–722. [10] D. Isele, A. M. A˜ non, F. M. Tariq, G. Yeh, A. Singh, and S. Bae, “Delayed-decision motion planning in the presence of multiple pre-dictions,” in 2025 IEEE International Conference on Robotics and Automation (ICRA) , 2025, pp. 11 743–11 749. [11] P. Elango, S. B. Sarsilmaz, and B. Acikmese, “Deferring decision in multi-target trajectory optimization,” in AIAA SciTech 2022 Forum , 2022, p. 1583. [12] ——, “Deferred-decision trajectory optimization,” arXiv preprint arXiv:2502.06623 , 2025. [13] F. Siahkali, M. Hou, and V. Gupta, “Active sensing and deferred-decision trajectory optimization for robust target identification,” IEEE Control Systems Letters , vol. 10, pp. 811–816, 2026. [14] S. Mesforush and R. Parhi, “Lasso universality under linearly dependent covariates in the sparse regime,” arXiv preprint arXiv:2608.08390 , 2026. [15] K. J. Strawn, N. Ayanian, and L. Lindemann, “Conformal predictive safety filter for RL controllers in dynamic environments,” IEEE Robotics and Automation Letters , vol. 8, no. 11, pp. 7833–7840, 2023. [16] S. Mazloom, A. Shafieezadeh, J. Hur, J.-W. Jung, J.-G. Ha, and D. Hahm, “BARL: Batch active regression learning via query-by-committee with application to slope factor of safety prediction,” Applied Soft Computing , vol. 188, p. 114412, 2026. [17] A. N. Angelopoulos and S. Bates, “Conformal prediction: A gentle introduction,” Foundations and Trends in Machine Learning , vol. 16, no. 4, pp. 494–591, 2023. [18] F. Siahkali and V. Gupta, “Conformal prediction-based multi-sensor classification,” Neurocomputing , vol. 678, p. 133182, 2026. [19] L. Lindemann, M. Cleaveland, G. Shim, and G. J. Pappas, “Safe planning in dynamic environments using conformal prediction,” IEEE Robotics and Automation Letters , vol. 8, no. 8, pp. 5116–5123, 2023. [20] S. Sheng, P. Yu, D. Parker, M. Kwiatkowska, and L. Feng, “Safe POMDP online planning among dynamic agents via adaptive conformal prediction,” IEEE Robotics and Automation Letters , vol. 9, no. 11, pp. 9946–9953, 2024. [21] A. Dixit, L. Lindemann, S. X. Wei, M. Cleaveland, G. J. Pappas, and J. W. Burdick, “Adaptive conformal prediction for motion planning among dynamic agents,” in Learning for Dynamics and Control Con-ference . PMLR, 2023, pp. 300–314. [22] A. Muthali, H. Shen, S. Deglurkar, M. H. Lim, R. Roelofs, A. Faust, and C. J. Tomlin, “Multi-agent reachability calibration with conformal prediction,” in 2023 62nd IEEE Conference on Decision and Control (CDC) , 2023, pp. 6596–6603. [23] V. Fedorova, A. Gammerman, I. Nouretdinov, and V. Vovk, “Plug-in martingales for testing exchangeability on-line,” in Proceedings of the 29th International Conference on Machine Learning , 2012, pp. 1639– 1646. [24] V. Vovk and R. Wang, “E-values: Calibration, combination, and appli-cations,” The Annals of Statistics , vol. 49, no. 3, pp. 1736–1754, 2021. [25] J. Ville, ´Etude Critique de la Notion de Collectif , ser. Th` eses de l’entre-deux-guerres. Paris: Gauthier-Villars, 1939, no. 218. [26] Y. Romano, E. Patterson, and E. Cand` es, “Conformalized quantile regression,” in Advances in Neural Information Processing Systems ,vol. 32, 2019. [27] V. Vovk, A. Gammerman, and G. Shafer, Algorithmic Learning in a Random World . New York: Springer, 2005. [28] T. I. Fossen, Handbook of marine craft hydrodynamics and motion control . John Wiley & Sons, 2011. [29] E. Potokar, K. Lay, K. Norman, D. Benham, S. Ashford, R. Peirce, T. B. Neilsen, M. Kaess, and J. G. Mangelson, “HoloOcean: A full-featured marine robotics simulator for perception and autonomy,” IEEE Journal of Oceanic Engineering , vol. 49, no. 4, pp. 1322–1336, 2024.
